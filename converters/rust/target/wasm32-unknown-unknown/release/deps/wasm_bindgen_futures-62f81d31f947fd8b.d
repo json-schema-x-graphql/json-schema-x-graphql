@@ -1,0 +1,9 @@
+/Users/johnhjediny/Documents/GitHub/json-schema-x-graphql/converters/rust/target/wasm32-unknown-unknown/release/deps/wasm_bindgen_futures-62f81d31f947fd8b.d: /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/lib.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/queue.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/task/singlethread.rs
+
+/Users/johnhjediny/Documents/GitHub/json-schema-x-graphql/converters/rust/target/wasm32-unknown-unknown/release/deps/libwasm_bindgen_futures-62f81d31f947fd8b.rlib: /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/lib.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/queue.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/task/singlethread.rs
+
+/Users/johnhjediny/Documents/GitHub/json-schema-x-graphql/converters/rust/target/wasm32-unknown-unknown/release/deps/libwasm_bindgen_futures-62f81d31f947fd8b.rmeta: /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/lib.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/queue.rs /Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/task/singlethread.rs
+
+/Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/lib.rs:
+/Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/queue.rs:
+/Users/johnhjediny/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/wasm-bindgen-futures-0.4.55/src/task/singlethread.rs:

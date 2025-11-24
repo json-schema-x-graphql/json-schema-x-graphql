@@ -1,0 +1,42 @@
+[package]
+name = "json-schema-graphql-converter-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.json-schema-graphql-converter]
+path = ".."
+
+[[bin]]
+name = "fuzz_target_1"
+path = "fuzz_targets/fuzz_target_1.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "json_to_graphql"
+path = "fuzz_targets/json_to_graphql.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "graphql_to_json"
+path = "fuzz_targets/graphql_to_json.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "round_trip"
+path = "fuzz_targets/round_trip.rs"
+test = false
+doc = false
+bench = false

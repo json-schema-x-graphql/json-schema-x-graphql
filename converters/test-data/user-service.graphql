@@ -1,0 +1,189 @@
+# User Service Schema
+# Complete user service schema demonstrating all x-graphql-* extensions compatibility
+
+"""
+User type with full Apollo Federation support
+"""
+type User @key(fields: "id") @extends {
+  """
+  Unique user identifier
+  """
+  id: ID! @external
+
+  """
+  Unique username for login
+  """
+  username: String!
+
+  """
+  User's email address
+  """
+  email: Email!
+
+  """
+  User's first name
+  """
+  firstName: String
+
+  """
+  User's last name
+  """
+  lastName: String
+
+  """
+  User's full name (computed)
+  """
+  fullName: String @requires(fields: "firstName lastName")
+
+  """
+  User's date of birth
+  """
+  dateOfBirth: Date
+
+  """
+  Account creation timestamp
+  """
+  createdAt: DateTime!
+
+  """
+  Last update timestamp
+  """
+  updatedAt: DateTime!
+
+  """
+  Whether the user account is active
+  """
+  isActive: Boolean!
+
+  """
+  Whether the user's email is verified
+  """
+  isVerified: Boolean!
+
+  """
+  User's role in the system
+  """
+  role: UserRole!
+
+  """
+  User's age in years
+  """
+  age: Int
+
+  """
+  Number of profile views
+  """
+  profileViews: Int!
+
+  """
+  User's average rating
+  """
+  rating: Float
+
+  """
+  URL to user's avatar image
+  """
+  avatarUrl: URL
+
+  """
+  User tags for categorization
+  """
+  tags: [String!]!
+
+  """
+  List of user's friends
+  """
+  friends(limit: Int = 10, offset: Int = 0): [User!]
+
+  """
+  User's posts
+  """
+  posts(limit: Int = 20, filter: PostFilter): [Post!]!
+
+  """
+  User preferences and settings
+  """
+  settings: UserSettings
+
+  """
+  Additional user metadata
+  """
+  metadata: JSONObject
+}
+
+"""
+User role enumeration
+"""
+enum UserRole {
+  ADMIN
+  USER
+  GUEST
+}
+
+"""
+User settings and preferences
+"""
+type UserSettings {
+  """
+  Enable or disable notifications
+  """
+  notificationsEnabled: Boolean!
+
+  """
+  UI theme preference
+  """
+  theme: String!
+
+  """
+  Preferred language
+  """
+  language: String!
+}
+
+"""
+Post entity (referenced by User)
+"""
+type Post @key(fields: "id") {
+  id: ID!
+  title: String!
+  content: String!
+  authorId: ID!
+  createdAt: DateTime!
+}
+
+"""
+Post filter input for queries
+"""
+input PostFilter {
+  status: String
+  tags: [String!]
+  dateFrom: DateTime
+  dateTo: DateTime
+}
+
+# Custom Scalars
+
+"""
+Email address scalar
+"""
+scalar Email
+
+"""
+Date scalar (YYYY-MM-DD)
+"""
+scalar Date
+
+"""
+DateTime scalar (ISO 8601)
+"""
+scalar DateTime
+
+"""
+URL scalar
+"""
+scalar URL
+
+"""
+Generic JSON object scalar
+"""
+scalar JSONObject

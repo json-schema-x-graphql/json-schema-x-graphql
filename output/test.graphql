@@ -1,0 +1,15 @@
+# Generated from JSON Schema by json-schema-x-graphql
+
+"Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation"
+type UnnamedType {
+  "Alias for globalRecordId for GraphQL Node interface" id: String
+  systemMetadata: String!
+  commonElements: String!
+  systemExtensions: String
+  "Related contracts via referencedPiid" relatedContracts: String
+  "Procurement Instrument Identifier" piid: String
+  "Vendor information structure" vendorInfo: String
+  "Alias (camelCase) for vendor_info for GraphQL parity" vendorInfo: String
+  "Location data" placeOfPerformance: String
+  "Alias (camelCase) for place_of_performance for GraphQL parity" placeOfPerformance: String
+}

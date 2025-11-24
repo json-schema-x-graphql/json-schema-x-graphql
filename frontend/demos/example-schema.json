@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/user",
+  "title": "User",
+  "description": "A user in the system with federation support",
+  "type": "object",
+  "x-graphql-type-name": "User",
+  "x-graphql-type-kind": "OBJECT",
+  "x-graphql-federation-keys": [
+    {
+      "fields": "id",
+      "resolvable": true
+    }
+  ],
+  "x-graphql-federation-tags": ["public", "v1"],
+  "x-graphql-type-directives": [
+    {
+      "name": "shareable"
+    }
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the user",
+      "x-graphql-field-name": "id",
+      "x-graphql-field-type": "ID",
+      "x-graphql-field-non-null": true,
+      "x-graphql-federation-external": false
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address",
+      "x-graphql-field-name": "email",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true,
+      "x-graphql-field-directives": [
+        {
+          "name": "deprecated",
+          "args": {
+            "reason": "Use contactEmail instead"
+          }
+        }
+      ]
+    },
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50,
+      "description": "User's unique username",
+      "x-graphql-field-name": "username",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 150,
+      "description": "User's age in years",
+      "x-graphql-field-name": "age",
+      "x-graphql-field-type": "Int"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Whether the user account is active",
+      "x-graphql-field-name": "isActive",
+      "x-graphql-field-type": "Boolean",
+      "x-graphql-field-non-null": true,
+      "default": true
+    },
+    "role": {
+      "type": "string",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "description": "User's role in the system",
+      "x-graphql-field-name": "role",
+      "x-graphql-field-type": "UserRole",
+      "x-graphql-field-non-null": true
+    },
+    "posts": {
+      "type": "array",
+      "description": "Posts created by the user",
+      "items": {
+        "$ref": "#/$defs/post"
+      },
+      "x-graphql-field-name": "posts",
+      "x-graphql-field-type": "[Post]",
+      "x-graphql-field-non-null": true,
+      "x-graphql-field-list-item-non-null": false,
+      "x-graphql-field-arguments": [
+        {
+          "name": "limit",
+          "type": "Int",
+          "description": "Maximum number of posts to return",
+          "default-value": 10
+        },
+        {
+          "name": "offset",
+          "type": "Int",
+          "description": "Number of posts to skip",
+          "default-value": 0
+        }
+      ],
+      "x-graphql-federation-list-size-slicing-arguments": ["limit", "offset"],
+      "x-graphql-federation-cost-weight": 10
+    },
+    "profile": {
+      "description": "User's profile information",
+      "x-graphql-field-name": "profile",
+      "x-graphql-field-type": "Profile",
+      "x-graphql-federation-provides": "bio avatarUrl",
+      "$ref": "#/$defs/profile"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the user was created",
+      "x-graphql-field-name": "createdAt",
+      "x-graphql-field-type": "DateTime",
+      "x-graphql-field-non-null": true
+    }
+  },
+  "required": ["id", "email", "username", "isActive", "role", "createdAt"],
+  "$defs": {
+    "user_role": {
+      "type": "string",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "description": "Available user roles",
+      "x-graphql-type-name": "UserRole",
+      "x-graphql-type-kind": "ENUM",
+      "x-graphql-enum-value-configs": {
+        "ADMIN": {
+          "description": "Administrator with full access",
+          "directives": [
+            {
+              "name": "tag",
+              "args": {
+                "name": "internal"
+              }
+            }
+          ]
+        },
+        "USER": {
+          "description": "Regular user with standard access"
+        },
+        "GUEST": {
+          "description": "Guest user with limited access",
+          "deprecated": true,
+          "deprecation-reason": "Guest access is being phased out"
+        }
+      }
+    },
+    "post": {
+      "type": "object",
+      "title": "Post",
+      "description": "A blog post or article",
+      "x-graphql-type-name": "Post",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": [
+        {
+          "fields": "id",
+          "resolvable": true
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the post",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Post title",
+          "x-graphql-field-name": "title",
+          "x-graphql-field-type": "String",
+          "x-graphql-field-non-null": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Post content in markdown",
+          "x-graphql-field-name": "content",
+          "x-graphql-field-type": "String",
+          "x-graphql-field-non-null": true
+        },
+        "published": {
+          "type": "boolean",
+          "description": "Whether the post is published",
+          "x-graphql-field-name": "published",
+          "x-graphql-field-type": "Boolean",
+          "x-graphql-field-non-null": true,
+          "default": false
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Post tags",
+          "x-graphql-field-name": "tags",
+          "x-graphql-field-type": "[String]",
+          "x-graphql-field-non-null": true,
+          "x-graphql-field-list-item-non-null": true
+        }
+      },
+      "required": ["id", "title", "content", "published"]
+    },
+    "profile": {
+      "type": "object",
+      "title": "Profile",
+      "description": "User profile information",
+      "x-graphql-type-name": "Profile",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-shareable": true,
+      "properties": {
+        "bio": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "User biography",
+          "x-graphql-field-name": "bio",
+          "x-graphql-field-type": "String"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to user's avatar image",
+          "x-graphql-field-name": "avatarUrl",
+          "x-graphql-field-type": "String"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "description": "User's website URL",
+          "x-graphql-field-name": "website",
+          "x-graphql-field-type": "String"
+        },
+        "location": {
+          "type": "string",
+          "description": "User's location",
+          "x-graphql-field-name": "location",
+          "x-graphql-field-type": "String"
+        }
+      }
+    }
+  },
+  "x-graphql-schema-config": {
+    "query-type": "Query",
+    "mutation-type": "Mutation",
+    "federation-version": "v2.9"
+  },
+  "x-graphql-link-imports": [
+    {
+      "url": "https://specs.apollo.dev/federation/v2.9",
+      "import": ["@key", "@shareable", "@external", "@provides", "@tag"]
+    }
+  ],
+  "x-graphql-custom-directives": [
+    {
+      "name": "auth",
+      "description": "Requires authentication",
+      "locations": ["OBJECT", "FIELD_DEFINITION"],
+      "arguments": [
+        {
+          "name": "requires",
+          "type": "Role!",
+          "description": "Required role for access"
+        }
+      ],
+      "repeatable": false
+    }
+  ]
+}

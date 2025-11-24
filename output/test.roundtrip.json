@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-graphql-type-name": "UnnamedType",
+  "description": "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation",
+  "type": "object",
+  "x-graphql-type-kind": "type",
+  "properties": {
+    "id": {
+      "x-graphql-field-name": "id",
+      "x-graphql-type": "String",
+      "description": "Alias for globalRecordId for GraphQL Node interface",
+      "type": "string"
+    },
+    "system_metadata": {
+      "x-graphql-field-name": "systemMetadata",
+      "x-graphql-type": "String!",
+      "type": "string"
+    },
+    "common_elements": {
+      "x-graphql-field-name": "commonElements",
+      "x-graphql-type": "String!",
+      "type": "string"
+    },
+    "system_extensions": {
+      "x-graphql-field-name": "systemExtensions",
+      "x-graphql-type": "String",
+      "type": "string"
+    },
+    "related_contracts": {
+      "x-graphql-field-name": "relatedContracts",
+      "x-graphql-type": "String",
+      "description": "Related contracts via referencedPiid",
+      "type": "string"
+    },
+    "piid": {
+      "x-graphql-field-name": "piid",
+      "x-graphql-type": "String",
+      "description": "Procurement Instrument Identifier",
+      "type": "string"
+    },
+    "vendor_info": {
+      "x-graphql-field-name": "vendorInfo",
+      "x-graphql-type": "String",
+      "description": "Alias (camelCase) for vendor_info for GraphQL parity",
+      "type": "string"
+    },
+    "place_of_performance": {
+      "x-graphql-field-name": "placeOfPerformance",
+      "x-graphql-type": "String",
+      "description": "Alias (camelCase) for place_of_performance for GraphQL parity",
+      "type": "string"
+    }
+  },
+  "required": [
+    "system_metadata",
+    "common_elements"
+  ]
+}

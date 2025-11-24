@@ -1,0 +1,553 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://json-schema.org/draft/2020-12/x-graphql-extensions/schema",
+  "title": "JSON Schema with GraphQL Extensions Meta-Schema",
+  "description": "Meta-schema defining x-graphql-* extensions for bidirectional JSON Schema <-> GraphQL SDL conversion with full Apollo Federation v2.9 support. All x-graphql-* keys use hyphen-case for global uniqueness.",
+
+  "$defs": {
+    "graphqlName": {
+      "type": "string",
+      "pattern": "^[_A-Za-z][_0-9A-Za-z]*$",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Valid GraphQL name (letter/underscore followed by letters/digits/underscores)"
+    },
+
+    "graphqlTypeName": {
+      "type": "string",
+      "pattern": "^[A-Z][_0-9A-Za-z]*$",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Valid GraphQL type name (PascalCase)"
+    },
+
+    "graphqlFieldName": {
+      "type": "string",
+      "pattern": "^[a-z][_0-9A-Za-z]*$",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Valid GraphQL field name (camelCase)"
+    },
+
+    "graphqlTypeReference": {
+      "type": "string",
+      "pattern": "^\\[?[_A-Za-z][_0-9A-Za-z]*!?\\]?!?$",
+      "description": "Valid GraphQL type reference (e.g., 'String', 'String!', '[String]', '[String!]!')"
+    },
+
+    "federationSpecUrl": {
+      "type": "string",
+      "pattern": "^https://specs\\.apollo\\.dev/(federation|link|join|tag|inaccessible)/(v[0-9]+\\.[0-9]+)$",
+      "description": "Valid Apollo Federation specification URL"
+    },
+
+    "graphqlFieldSelection": {
+      "type": "string",
+      "pattern": "^[_A-Za-z][_0-9A-Za-z]*(\\s+[_A-Za-z][_0-9A-Za-z]*)*$",
+      "description": "Valid GraphQL field selection set (space-separated field names)"
+    },
+
+    "percentageLabel": {
+      "type": "string",
+      "pattern": "^percent\\((0|[1-9][0-9]?|100)\\)$",
+      "description": "Progressive override percentage (e.g., 'percent(50)')"
+    },
+
+    "graphqlKind": {
+      "type": "string",
+      "enum": ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"],
+      "description": "GraphQL type kind"
+    },
+
+    "graphqlOperationType": {
+      "type": "string",
+      "enum": ["query", "mutation", "subscription"],
+      "description": "GraphQL operation type"
+    },
+
+    "cacheScope": {
+      "type": "string",
+      "enum": ["PUBLIC", "PRIVATE"],
+      "description": "Cache control scope"
+    },
+
+    "subscriptionTransport": {
+      "type": "string",
+      "enum": ["websocket", "sse", "graphql-ws", "graphql-sse"],
+      "description": "Subscription transport protocol"
+    },
+
+    "directiveLocation": {
+      "type": "string",
+      "enum": [
+        "QUERY", "MUTATION", "SUBSCRIPTION", "FIELD", "FRAGMENT_DEFINITION",
+        "FRAGMENT_SPREAD", "INLINE_FRAGMENT", "VARIABLE_DEFINITION",
+        "SCHEMA", "SCALAR", "OBJECT", "FIELD_DEFINITION", "ARGUMENT_DEFINITION",
+        "INTERFACE", "UNION", "ENUM", "ENUM_VALUE", "INPUT_OBJECT",
+        "INPUT_FIELD_DEFINITION"
+      ],
+      "description": "Valid GraphQL directive location"
+    },
+
+    "directive": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/graphqlName",
+          "description": "Directive name without @ prefix"
+        },
+        "args": {
+          "type": "object",
+          "description": "Directive arguments as key-value pairs",
+          "propertyNames": {
+            "$ref": "#/$defs/graphqlFieldName"
+          }
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+
+    "fieldArgument": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/graphqlFieldName",
+          "description": "Argument name (camelCase)"
+        },
+        "type": {
+          "$ref": "#/$defs/graphqlTypeReference",
+          "description": "GraphQL type string"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Argument description"
+        },
+        "default-value": {
+          "description": "Default value for this argument"
+        },
+        "non-null": {
+          "type": "boolean",
+          "description": "Argument is non-nullable"
+        },
+        "directives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/directive"
+          },
+          "description": "Directives applied to this argument"
+        }
+      },
+      "required": ["name", "type"],
+      "additionalProperties": false
+    },
+
+    "enumValueConfig": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Enum value description"
+        },
+        "directives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/directive"
+          },
+          "description": "Directives applied to this enum value"
+        },
+        "deprecated": {
+          "type": "boolean",
+          "description": "Whether this enum value is deprecated"
+        },
+        "deprecation-reason": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Deprecation reason"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "federationKeyConfig": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "$ref": "#/$defs/graphqlFieldSelection",
+          "description": "Field set for entity key (e.g., 'id' or 'id organizationId')"
+        },
+        "resolvable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether this subgraph can resolve the entity"
+        }
+      },
+      "required": ["fields"],
+      "additionalProperties": false
+    },
+
+    "federationContextConfig": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/graphqlName",
+          "description": "Context name identifier"
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+
+    "customDirectiveDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/graphqlName",
+          "description": "Directive name"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1000,
+          "description": "Directive description"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/directiveLocation"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Valid locations for this directive"
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fieldArgument"
+          },
+          "description": "Directive argument definitions"
+        },
+        "repeatable": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether directive can be applied multiple times"
+        }
+      },
+      "required": ["name", "locations"],
+      "additionalProperties": false
+    },
+
+    "graphqlSchemaConfig": {
+      "type": "object",
+      "properties": {
+        "query-type": {
+          "$ref": "#/$defs/graphqlTypeName",
+          "default": "Query",
+          "description": "Root query type name"
+        },
+        "mutation-type": {
+          "$ref": "#/$defs/graphqlTypeName",
+          "description": "Root mutation type name"
+        },
+        "subscription-type": {
+          "$ref": "#/$defs/graphqlTypeName",
+          "description": "Root subscription type name"
+        },
+        "federation-version": {
+          "type": "string",
+          "enum": ["v1.0", "v2.0", "v2.1", "v2.2", "v2.3", "v2.4", "v2.5", "v2.6", "v2.7", "v2.8", "v2.9"],
+          "default": "v2.9",
+          "description": "Apollo Federation version"
+        }
+      },
+      "required": ["query-type"],
+      "additionalProperties": false
+    },
+
+    "linkImport": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "$ref": "#/$defs/federationSpecUrl",
+          "description": "Specification URL"
+        },
+        "as": {
+          "$ref": "#/$defs/graphqlName",
+          "maxLength": 50,
+          "description": "Namespace alias for imported definitions"
+        },
+        "for": {
+          "type": "string",
+          "enum": ["SECURITY", "EXECUTION"],
+          "description": "Purpose of the link"
+        },
+        "import": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^@[_A-Za-z][_0-9A-Za-z]*$",
+                "description": "Directive import"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "pattern": "^@[_A-Za-z][_0-9A-Za-z]*$"
+                  },
+                  "as": {
+                    "type": "string",
+                    "pattern": "^@[_A-Za-z][_0-9A-Za-z]*$"
+                  }
+                },
+                "required": ["name", "as"],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Specific directives/types to import"
+        }
+      },
+      "required": ["url"],
+      "additionalProperties": false
+    }
+  },
+
+  "type": "object",
+  "properties": {
+    "x-graphql-schema-config": {
+      "$ref": "#/$defs/graphqlSchemaConfig",
+      "description": "Root GraphQL schema configuration"
+    },
+    "x-graphql-link-imports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/linkImport"
+      },
+      "description": "Federation @link directive imports"
+    },
+    "x-graphql-custom-directives": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/customDirectiveDefinition"
+      },
+      "description": "Custom directive definitions"
+    }
+  },
+
+  "patternProperties": {
+    "^x-graphql-type-name$": {
+      "$ref": "#/$defs/graphqlTypeName"
+    },
+    "^x-graphql-type-kind$": {
+      "$ref": "#/$defs/graphqlKind"
+    },
+    "^x-graphql-type-directives$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/directive"
+      }
+    },
+    "^x-graphql-type-implements$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphqlTypeName"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "^x-graphql-union-member-types$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphqlTypeName"
+      },
+      "minItems": 2,
+      "uniqueItems": true
+    },
+    "^x-graphql-enum-value-configs$": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/enumValueConfig"
+      }
+    },
+    "^x-graphql-operation-type$": {
+      "$ref": "#/$defs/graphqlOperationType"
+    },
+    "^x-graphql-is-root-type$": {
+      "type": "boolean"
+    },
+    "^x-graphql-field-name$": {
+      "$ref": "#/$defs/graphqlFieldName"
+    },
+    "^x-graphql-field-type$": {
+      "$ref": "#/$defs/graphqlTypeReference"
+    },
+    "^x-graphql-field-non-null$": {
+      "type": "boolean"
+    },
+    "^x-graphql-field-list-item-non-null$": {
+      "type": "boolean"
+    },
+    "^x-graphql-field-directives$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/directive"
+      }
+    },
+    "^x-graphql-field-arguments$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fieldArgument"
+      }
+    },
+    "^x-graphql-federation-keys$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/federationKeyConfig"
+      },
+      "minItems": 1
+    },
+    "^x-graphql-federation-shareable$": {
+      "type": "boolean"
+    },
+    "^x-graphql-federation-inaccessible$": {
+      "type": "boolean"
+    },
+    "^x-graphql-federation-interface-object$": {
+      "type": "boolean"
+    },
+    "^x-graphql-federation-authenticated$": {
+      "type": "boolean"
+    },
+    "^x-graphql-federation-requires-scopes$": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": "Authorization scopes (OR of AND lists)"
+    },
+    "^x-graphql-federation-policy$": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "description": "Authorization policies (OR of AND lists)"
+    },
+    "^x-graphql-federation-tags$": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "^x-graphql-federation-context$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/federationContextConfig"
+      }
+    },
+    "^x-graphql-federation-compose-directives$": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "^x-graphql-federation-external$": {
+      "type": "boolean"
+    },
+    "^x-graphql-federation-requires$": {
+      "$ref": "#/$defs/graphqlFieldSelection"
+    },
+    "^x-graphql-federation-provides$": {
+      "$ref": "#/$defs/graphqlFieldSelection"
+    },
+    "^x-graphql-federation-override-from$": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "^x-graphql-federation-override-label$": {
+      "$ref": "#/$defs/percentageLabel"
+    },
+    "^x-graphql-federation-from-context-field$": {
+      "type": "string"
+    },
+    "^x-graphql-federation-cost-weight$": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "^x-graphql-federation-list-size-assumed-size$": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "^x-graphql-federation-list-size-slicing-arguments$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphqlFieldName"
+      }
+    },
+    "^x-graphql-federation-list-size-sized-fields$": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/graphqlFieldName"
+      }
+    },
+    "^x-graphql-federation-list-size-require-one-slicing-argument$": {
+      "type": "boolean",
+      "default": true
+    },
+    "^x-graphql-resolver-service$": {
+      "type": "string"
+    },
+    "^x-graphql-resolver-complexity$": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "^x-graphql-resolver-cacheable$": {
+      "type": "boolean"
+    },
+    "^x-graphql-resolver-cache-max-age$": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "^x-graphql-resolver-cache-scope$": {
+      "$ref": "#/$defs/cacheScope"
+    },
+    "^x-graphql-resolver-paginated$": {
+      "type": "boolean"
+    },
+    "^x-graphql-resolver-idempotent$": {
+      "type": "boolean"
+    },
+    "^x-graphql-resolver-rate-limit-max$": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "^x-graphql-resolver-rate-limit-window$": {
+      "type": "string",
+      "pattern": "^[0-9]+(ms|s|m|h|d)$"
+    },
+    "^x-graphql-resolver-rate-limit-per-user$": {
+      "type": "boolean"
+    },
+    "^x-graphql-subscription-transport$": {
+      "$ref": "#/$defs/subscriptionTransport"
+    },
+    "^x-graphql-subscription-topic$": {
+      "type": "string"
+    },
+    "^x-graphql-subscription-filter$": {
+      "type": "string"
+    }
+  }
+}

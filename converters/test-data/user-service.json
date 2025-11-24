@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/user-service.json",
+  "title": "User Service Schema",
+  "description": "Complete user service schema demonstrating all x-graphql-* extensions",
+  "type": "object",
+  "x-graphql-type-name": "User",
+  "x-graphql-type-kind": "type",
+  "x-graphql-directives": [
+    {
+      "name": "key",
+      "arguments": {
+        "fields": "\"id\""
+      }
+    },
+    {
+      "name": "extends"
+    }
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique user identifier",
+      "x-graphql-field-name": "id",
+      "x-graphql-type": "ID!",
+      "x-graphql-directives": [
+        {
+          "name": "external"
+        }
+      ],
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "username": {
+      "type": "string",
+      "description": "Unique username for login",
+      "x-graphql-field-name": "username",
+      "x-graphql-type": "String!",
+      "minLength": 3,
+      "maxLength": 50,
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "email": {
+      "type": "string",
+      "description": "User's email address",
+      "x-graphql-field-name": "email",
+      "x-graphql-type": "Email!",
+      "format": "email"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "User's first name",
+      "x-graphql-field-name": "firstName",
+      "x-graphql-type": "String",
+      "maxLength": 100
+    },
+    "last_name": {
+      "type": "string",
+      "description": "User's last name",
+      "x-graphql-field-name": "lastName",
+      "x-graphql-type": "String",
+      "maxLength": 100
+    },
+    "full_name": {
+      "type": "string",
+      "description": "User's full name (computed)",
+      "x-graphql-field-name": "fullName",
+      "x-graphql-type": "String",
+      "x-graphql-directives": [
+        {
+          "name": "requires",
+          "arguments": {
+            "fields": "\"firstName lastName\""
+          }
+        }
+      ]
+    },
+    "date_of_birth": {
+      "type": "string",
+      "description": "User's date of birth",
+      "x-graphql-field-name": "dateOfBirth",
+      "x-graphql-type": "Date",
+      "format": "date"
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Account creation timestamp",
+      "x-graphql-field-name": "createdAt",
+      "x-graphql-type": "DateTime!",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Last update timestamp",
+      "x-graphql-field-name": "updatedAt",
+      "x-graphql-type": "DateTime!",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Whether the user account is active",
+      "x-graphql-field-name": "isActive",
+      "x-graphql-type": "Boolean!",
+      "default": true
+    },
+    "is_verified": {
+      "type": "boolean",
+      "description": "Whether the user's email is verified",
+      "x-graphql-field-name": "isVerified",
+      "x-graphql-type": "Boolean!",
+      "default": false
+    },
+    "role": {
+      "type": "string",
+      "description": "User's role in the system",
+      "x-graphql-field-name": "role",
+      "x-graphql-type": "UserRole!",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "default": "USER"
+    },
+    "age": {
+      "type": "integer",
+      "description": "User's age in years",
+      "x-graphql-field-name": "age",
+      "x-graphql-type": "Int",
+      "minimum": 0,
+      "maximum": 150
+    },
+    "profile_views": {
+      "type": "integer",
+      "description": "Number of profile views",
+      "x-graphql-field-name": "profileViews",
+      "x-graphql-type": "Int!",
+      "default": 0
+    },
+    "rating": {
+      "type": "number",
+      "description": "User's average rating",
+      "x-graphql-field-name": "rating",
+      "x-graphql-type": "Float",
+      "minimum": 0,
+      "maximum": 5
+    },
+    "avatar_url": {
+      "type": "string",
+      "description": "URL to user's avatar image",
+      "x-graphql-field-name": "avatarUrl",
+      "x-graphql-type": "URL",
+      "format": "uri"
+    },
+    "tags": {
+      "type": "array",
+      "description": "User tags for categorization",
+      "x-graphql-field-name": "tags",
+      "x-graphql-type": "[String!]!",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50
+      },
+      "uniqueItems": true
+    },
+    "friends": {
+      "type": "array",
+      "description": "List of user's friends",
+      "x-graphql-field-name": "friends",
+      "x-graphql-type": "[User!]",
+      "x-graphql-arguments": {
+        "limit": {
+          "x-graphql-type": "Int",
+          "default": 10
+        },
+        "offset": {
+          "x-graphql-type": "Int",
+          "default": 0
+        }
+      },
+      "items": {
+        "type": "object",
+        "x-graphql-type-name": "User"
+      }
+    },
+    "posts": {
+      "type": "array",
+      "description": "User's posts",
+      "x-graphql-field-name": "posts",
+      "x-graphql-type": "[Post!]!",
+      "x-graphql-arguments": {
+        "limit": {
+          "x-graphql-type": "Int",
+          "default": 20
+        },
+        "filter": {
+          "x-graphql-type": "PostFilter"
+        }
+      },
+      "items": {
+        "type": "object",
+        "x-graphql-type-name": "Post"
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "User preferences and settings",
+      "x-graphql-field-name": "settings",
+      "x-graphql-type": "UserSettings",
+      "x-graphql-type-name": "UserSettings",
+      "properties": {
+        "notifications_enabled": {
+          "type": "boolean",
+          "x-graphql-field-name": "notificationsEnabled",
+          "x-graphql-type": "Boolean!",
+          "default": true
+        },
+        "theme": {
+          "type": "string",
+          "x-graphql-field-name": "theme",
+          "x-graphql-type": "String!",
+          "enum": ["light", "dark", "auto"],
+          "default": "auto"
+        },
+        "language": {
+          "type": "string",
+          "x-graphql-field-name": "language",
+          "x-graphql-type": "String!",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+          "default": "en"
+        }
+      },
+      "required": ["notifications_enabled", "theme", "language"]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional user metadata",
+      "x-graphql-field-name": "metadata",
+      "x-graphql-type": "JSONObject",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "username",
+    "email",
+    "created_at",
+    "updated_at",
+    "is_active",
+    "is_verified",
+    "role",
+    "profile_views",
+    "tags",
+    "posts"
+  ],
+  "additionalProperties": false
+}

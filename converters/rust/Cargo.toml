@@ -1,0 +1,50 @@
+[package]
+name = "json-schema-graphql-converter"
+version = "0.1.0"
+edition = "2021"
+authors = ["JSON Schema x GraphQL Contributors"]
+description = "Bidirectional, lossless converter between JSON Schema and GraphQL SDL with x-graphql-* extensions"
+license = "MIT"
+repository = "https://github.com/json-schema-x-graphql/rust-converter"
+readme = "README.md"
+keywords = ["json-schema", "graphql", "converter", "wasm", "apollo-federation"]
+categories = ["parsing", "wasm", "web-programming"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+apollo-parser = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0" }
+thiserror = "1.0"
+indexmap = { version = "2.1", features = ["serde"] }
+
+# WASM dependencies
+wasm-bindgen = { version = "0.2", optional = true }
+console_error_panic_hook = { version = "0.1", optional = true }
+
+# Optional caching
+lru = { version = "0.12", optional = true }
+
+[dev-dependencies]
+pretty_assertions = "1.4"
+criterion = "0.5"
+
+[features]
+default = ["wasm"]
+wasm = ["wasm-bindgen", "console_error_panic_hook"]
+caching = ["lru"]
+
+[profile.release]
+opt-level = "z"     # Optimize for size
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+strip = true        # Strip symbols from binary
+
+[profile.release.package."*"]
+opt-level = "z"
+
+# [[bench]]
+# name = "conversion_benchmark"
+# harness = false

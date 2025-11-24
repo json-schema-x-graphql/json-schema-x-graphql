@@ -1,0 +1,57 @@
+[package]
+name = "json-schema-x-graphql"
+version = "0.1.0"
+edition = "2021"
+authors = ["JJediny and Contributors"]
+description = "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support"
+license = "MIT"
+repository = "https://github.com/JJediny/json-schema-x-graphql"
+keywords = ["graphql", "json-schema", "federation", "wasm", "converter"]
+categories = ["web-programming", "wasm", "parser-implementations"]
+readme = "README.md"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+apollo-parser = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# WASM-specific dependencies
+wasm-bindgen = { version = "0.2", optional = true }
+console_error_panic_hook = { version = "0.1", optional = true }
+
+# LRU cache for performance optimization
+lru = "0.12"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[features]
+default = []
+wasm = ["wasm-bindgen", "console_error_panic_hook"]
+
+# Optimize for size in release builds (critical for WASM)
+[profile.release]
+opt-level = "z"     # Optimize for size
+lto = true          # Link-time optimization
+codegen-units = 1   # Better optimization
+panic = "abort"     # Smaller binary
+strip = true        # Strip debug symbols
+
+# Development profile for faster iteration
+[profile.dev]
+opt-level = 0
+
+# Test profile
+[profile.test]
+opt-level = 0
+
+# Benchmark profile
+[profile.bench]
+opt-level = 3
+lto = true
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O4", "-g"]

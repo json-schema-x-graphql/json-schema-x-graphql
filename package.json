@@ -1,0 +1,71 @@
+{
+  "name": "json-schema-x-graphql",
+  "version": "0.1.0",
+  "description": "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "pkg",
+    "schema",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run build:wasm && npm run build:ts",
+    "build:wasm": "wasm-pack build --target web --release --out-dir pkg",
+    "build:ts": "tsc && rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build",
+    "docs": "typedoc src/index.ts"
+  },
+  "keywords": [
+    "graphql",
+    "json-schema",
+    "apollo-federation",
+    "wasm",
+    "schema-conversion",
+    "bidirectional",
+    "validation",
+    "type-system"
+  ],
+  "author": "JJediny and Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJediny/json-schema-x-graphql.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.1.1",
+    "rollup": "^4.9.4",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.25.6",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "graphql": "^16.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
