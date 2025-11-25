@@ -23,6 +23,8 @@ pub struct ConversionOptions {
     pub preserve_field_order: bool,
     /// Apollo Federation version (1 or 2)
     pub federation_version: u8,
+    /// Whether to automatically infer ID scalar for fields named "id", "_id", etc.
+    pub infer_ids: bool,
 }
 
 impl Default for ConversionOptions {
@@ -32,8 +34,39 @@ impl Default for ConversionOptions {
             include_descriptions: true,
             preserve_field_order: true,
             federation_version: 2,
+            infer_ids: false,
         }
     }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum GqlScalar {
+    String,
+    Int,
+    Float,
+    Boolean,
+    Id,
+    Custom(String),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum GqlType {
+    Scalar(GqlScalar),
+    List(Box<GqlType>),
+    NonNull(Box<GqlType>),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum GqlValue {
+    Variable(String),
+    Int(i64),
+    Float(f64),
+    String(String),
+    Boolean(bool),
+    Null,
+    Enum(String),
+    List(Vec<GqlValue>),
+    Object(HashMap<String, GqlValue>),
 }
 
 /// GraphQL type information
@@ -214,7 +247,8 @@ impl GraphQLDirective {
 
         if !self.arguments.is_empty() {
             result.push('(');
-            let args: Vec<String> = self.arguments
+            let args: Vec<String> = self
+                .arguments
                 .iter()
                 .map(|(k, v)| format!("{}: {}", k, v))
                 .collect();
@@ -381,8 +415,7 @@ mod tests {
 
     #[test]
     fn test_directive_to_sdl() {
-        let directive = GraphQLDirective::new("key")
-            .with_arg("fields", "\"id\"");
+        let directive = GraphQLDirective::new("key").with_arg("fields", "\"id\"");
         assert_eq!(directive.to_sdl(), "@key(fields: \"id\")");
 
         let simple = GraphQLDirective::new("deprecated");
@@ -391,7 +424,10 @@ mod tests {
 
     #[test]
     fn test_json_schema_type_conversion() {
-        assert_eq!(JsonSchemaType::from_str("string"), Some(JsonSchemaType::String));
+        assert_eq!(
+            JsonSchemaType::from_str("string"),
+            Some(JsonSchemaType::String)
+        );
         assert_eq!(JsonSchemaType::String.as_str(), "string");
         assert_eq!(JsonSchemaType::String.to_graphql_scalar(), Some("String"));
         assert_eq!(JsonSchemaType::Number.to_graphql_scalar(), Some("Float"));

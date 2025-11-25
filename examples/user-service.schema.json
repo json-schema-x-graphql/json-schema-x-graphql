@@ -1,225 +1,145 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/user-service.schema.json",
-  "title": "User Service Schema",
-  "description": "Comprehensive example demonstrating JSON Schema with x-graphql extensions for a user management service with Apollo Federation support",
-
-  "$defs": {
-    "User": {
-      "type": "object",
-      "description": "A user in the system",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier",
-          "x-graphql-field-name": "id",
-          "x-graphql-field-type": "ID",
-          "x-graphql-field-non-null": true
-        },
-        "username": {
-          "type": "string",
-          "minLength": 3,
-          "maxLength": 50,
-          "pattern": "^[a-zA-Z0-9_]+$",
-          "description": "User's username",
-          "x-graphql-field-name": "username",
-          "x-graphql-field-type": "String",
-          "x-graphql-field-non-null": true,
-          "x-graphql-federation-shareable": true
-        },
-        "email": {
-          "type": "string",
-          "format": "email",
-          "description": "User's email address",
-          "x-graphql-field-name": "email",
-          "x-graphql-field-type": "String",
-          "x-graphql-field-non-null": true,
-          "x-graphql-federation-authenticated": true,
-          "x-graphql-federation-tags": ["pii", "contact"]
-        },
-        "profile": {
-          "$ref": "#/$defs/UserProfile",
-          "description": "User's profile information",
-          "x-graphql-field-name": "profile",
-          "x-graphql-field-type": "UserProfile",
-          "x-graphql-federation-requires": "id",
-          "x-graphql-federation-provides": "name bio"
-        },
-        "posts": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/Post"
-          },
-          "description": "Posts created by the user",
-          "x-graphql-field-name": "posts",
-          "x-graphql-field-type": "Post",
-          "x-graphql-field-non-null": true,
-          "x-graphql-field-list-item-non-null": true,
-          "x-graphql-field-arguments": [
-            {
-              "name": "limit",
-              "type": "Int",
-              "description": "Maximum number of posts to return",
-              "default-value": 10
-            },
-            {
-              "name": "offset",
-              "type": "Int",
-              "description": "Number of posts to skip",
-              "default-value": 0
-            }
-          ],
-          "x-graphql-federation-shareable": true,
-          "x-graphql-resolver-paginated": true,
-          "x-graphql-resolver-complexity": 10,
-          "x-graphql-resolver-cacheable": true,
-          "x-graphql-resolver-cache-max-age": 300,
-          "x-graphql-resolver-cache-scope": "PRIVATE"
-        },
-        "role": {
-          "type": "string",
-          "enum": ["ADMIN", "USER", "GUEST"],
-          "description": "User's role",
-          "x-graphql-field-name": "role",
-          "x-graphql-field-type": "UserRole",
-          "x-graphql-field-non-null": true,
-          "x-graphql-federation-policy": [["admin:read"], ["user:self"]]
-        },
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "When the user was created",
-          "x-graphql-field-name": "createdAt",
-          "x-graphql-field-type": "DateTime",
-          "x-graphql-field-non-null": true
-        }
-      },
-      "required": ["id", "username", "email", "role", "createdAt"],
-      "additionalProperties": false,
-      "x-graphql-type-name": "User",
-      "x-graphql-type-kind": "OBJECT",
-      "x-graphql-federation-keys": [
-        {
-          "fields": "id",
-          "resolvable": true
-        },
-        {
-          "fields": "username",
-          "resolvable": false
-        }
-      ],
-      "x-graphql-federation-shareable": false,
-      "x-graphql-federation-authenticated": true,
-      "x-graphql-federation-requires-scopes": [["read:user", "read:profile"], ["admin:all"]],
-      "x-graphql-federation-tags": ["user-service", "core-entity"]
+  "title": "User",
+  "description": "A comprehensive example schema demonstrating JSON Schema to GraphQL conversion with Federation support",
+  "type": "object",
+  "x-graphql-type-name": "User",
+  "x-graphql-type-kind": "OBJECT",
+  "x-graphql-federation-keys": [
+    {
+      "fields": "id",
+      "resolvable": true
+    }
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the user",
+      "x-graphql-field-name": "id",
+      "x-graphql-field-type": "ID",
+      "x-graphql-field-non-null": true
     },
-
-    "UserProfile": {
-      "type": "object",
-      "description": "User profile information",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Full name",
-          "x-graphql-field-name": "name",
-          "x-graphql-field-type": "String"
-        },
-        "bio": {
-          "type": "string",
-          "maxLength": 500,
-          "description": "User biography",
-          "x-graphql-field-name": "bio",
-          "x-graphql-field-type": "String"
-        },
-        "avatarUrl": {
-          "type": "string",
-          "format": "uri",
-          "description": "Avatar image URL",
-          "x-graphql-field-name": "avatarUrl",
-          "x-graphql-field-type": "String",
-          "x-graphql-federation-override-from": "media-service",
-          "x-graphql-federation-override-label": "percent(75)"
-        }
-      },
-      "x-graphql-type-name": "UserProfile",
-      "x-graphql-type-kind": "OBJECT",
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50,
+      "description": "User's unique username",
+      "x-graphql-field-name": "username",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true,
       "x-graphql-federation-shareable": true
     },
-
-    "Post": {
-      "type": "object",
-      "description": "A blog post",
-      "properties": {
-        "id": {
-          "type": "string",
-          "x-graphql-field-name": "id",
-          "x-graphql-field-type": "ID",
-          "x-graphql-field-non-null": true
-        },
-        "title": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 200,
-          "x-graphql-field-name": "title",
-          "x-graphql-field-type": "String",
-          "x-graphql-field-non-null": true
-        },
-        "content": {
-          "type": "string",
-          "x-graphql-field-name": "content",
-          "x-graphql-field-type": "String",
-          "x-graphql-field-non-null": true,
-          "x-graphql-federation-cost-weight": 5
-        },
-        "author": {
-          "$ref": "#/$defs/User",
-          "x-graphql-field-name": "author",
-          "x-graphql-field-type": "User",
-          "x-graphql-field-non-null": true,
-          "x-graphql-federation-provides": "username"
-        }
-      },
-      "required": ["id", "title", "content"],
-      "x-graphql-type-name": "Post",
-      "x-graphql-type-kind": "OBJECT",
-      "x-graphql-federation-keys": [
-        {
-          "fields": "id",
-          "resolvable": true
-        }
-      ]
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address",
+      "x-graphql-field-name": "email",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true,
+      "x-graphql-federation-authenticated": true
     },
-
-    "UserRole": {
+    "role": {
+      "$ref": "#/$defs/user_role",
+      "description": "User's role in the system",
+      "x-graphql-field-name": "role",
+      "x-graphql-field-non-null": true
+    },
+    "tier": {
+      "type": "string",
+      "description": "User's subscription tier (external field)",
+      "x-graphql-field-name": "tier",
+      "x-graphql-field-type": "String",
+      "x-graphql-federation-external": true
+    },
+    "premiumFeatures": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Features available to the user based on tier (requires 'tier' field)",
+      "x-graphql-field-name": "premiumFeatures",
+      "x-graphql-field-type": "[String!]!",
+      "x-graphql-federation-requires": "tier"
+    },
+    "shippingAddress": {
+      "$ref": "#/$defs/address",
+      "description": "User's shipping address",
+      "x-graphql-field-name": "shippingAddress",
+      "x-graphql-federation-provides": "zipCode"
+    },
+    "preferences": {
+      "$ref": "#/$defs/user_preferences",
+      "description": "User preferences (migrated from legacy service)",
+      "x-graphql-field-name": "preferences",
+      "x-graphql-federation-override-from": "legacy-user-service"
+    },
+    "internalId": {
+      "type": "string",
+      "description": "Internal database ID, not exposed to subgraph",
+      "x-graphql-field-name": "internalId",
+      "x-graphql-field-type": "ID",
+      "x-graphql-federation-inaccessible": true
+    }
+  },
+  "required": ["id", "username", "email", "role"],
+  "$defs": {
+    "user_role": {
       "type": "string",
       "enum": ["ADMIN", "USER", "GUEST"],
-      "description": "User role enumeration",
+      "description": "Available user roles",
       "x-graphql-type-name": "UserRole",
-      "x-graphql-type-kind": "ENUM",
-      "x-graphql-enum-value-configs": {
-        "ADMIN": {
-          "description": "Administrator with full access",
-          "directives": []
+      "x-graphql-type-kind": "ENUM"
+    },
+    "address": {
+      "type": "object",
+      "description": "Physical address",
+      "x-graphql-type-name": "Address",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "street": {
+          "type": "string",
+          "x-graphql-field-name": "street",
+          "x-graphql-field-type": "String"
         },
-        "USER": {
-          "description": "Regular user",
-          "directives": []
+        "city": {
+          "type": "string",
+          "x-graphql-field-name": "city",
+          "x-graphql-field-type": "String"
         },
-        "GUEST": {
-          "description": "Guest user with limited access",
-          "deprecated": true,
-          "deprecation-reason": "Use USER with limited permissions instead"
+        "zipCode": {
+          "type": "string",
+          "x-graphql-field-name": "zipCode",
+          "x-graphql-field-type": "String",
+          "x-graphql-federation-external": true
         }
       }
     },
-
-    "CreateUserInput": {
+    "user_preferences": {
       "type": "object",
+      "description": "User UI preferences",
+      "x-graphql-type-name": "UserPreferences",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "x-graphql-field-name": "theme",
+          "x-graphql-field-type": "String"
+        },
+        "notifications": {
+          "type": "boolean",
+          "x-graphql-field-name": "notifications",
+          "x-graphql-field-type": "Boolean"
+        }
+      }
+    },
+    "user_input": {
+      "type": "object",
+      "description": "Input for creating a user",
+      "x-graphql-type-name": "UserInput",
+      "x-graphql-type-kind": "INPUT_OBJECT",
       "properties": {
         "username": {
           "type": "string",
-          "minLength": 3,
-          "maxLength": 50,
           "x-graphql-field-name": "username",
           "x-graphql-field-type": "String",
           "x-graphql-field-non-null": true
@@ -230,138 +150,8 @@
           "x-graphql-field-name": "email",
           "x-graphql-field-type": "String",
           "x-graphql-field-non-null": true
-        },
-        "password": {
-          "type": "string",
-          "minLength": 8,
-          "writeOnly": true,
-          "x-graphql-field-name": "password",
-          "x-graphql-field-type": "String",
-          "x-graphql-field-non-null": true
         }
-      },
-      "required": ["username", "email", "password"],
-      "additionalProperties": false,
-      "x-graphql-type-name": "CreateUserInput",
-      "x-graphql-type-kind": "INPUT_OBJECT"
-    },
-
-    "Query": {
-      "type": "object",
-      "description": "Root query type",
-      "properties": {
-        "user": {
-          "$ref": "#/$defs/User",
-          "x-graphql-field-name": "user",
-          "x-graphql-field-type": "User",
-          "x-graphql-field-arguments": [
-            {
-              "name": "id",
-              "type": "ID",
-              "non-null": true,
-              "description": "User ID"
-            }
-          ],
-          "x-graphql-resolver-service": "user-service",
-          "x-graphql-resolver-complexity": 1,
-          "x-graphql-resolver-cacheable": true,
-          "x-graphql-resolver-cache-max-age": 600,
-          "x-graphql-resolver-idempotent": true
-        },
-        "users": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/User"
-          },
-          "x-graphql-field-name": "users",
-          "x-graphql-field-type": "User",
-          "x-graphql-field-non-null": true,
-          "x-graphql-field-list-item-non-null": true,
-          "x-graphql-field-arguments": [
-            {
-              "name": "first",
-              "type": "Int",
-              "default-value": 20,
-              "description": "Number of users to fetch"
-            },
-            {
-              "name": "after",
-              "type": "String",
-              "description": "Cursor for pagination"
-            }
-          ],
-          "x-graphql-resolver-paginated": true,
-          "x-graphql-resolver-rate-limit-max": 100,
-          "x-graphql-resolver-rate-limit-window": "1m",
-          "x-graphql-resolver-rate-limit-per-user": true
-        }
-      },
-      "x-graphql-type-name": "Query",
-      "x-graphql-type-kind": "OBJECT",
-      "x-graphql-operation-type": "query",
-      "x-graphql-is-root-type": true
-    },
-
-    "Mutation": {
-      "type": "object",
-      "description": "Root mutation type",
-      "properties": {
-        "createUser": {
-          "$ref": "#/$defs/User",
-          "x-graphql-field-name": "createUser",
-          "x-graphql-field-type": "User",
-          "x-graphql-field-non-null": true,
-          "x-graphql-field-arguments": [
-            {
-              "name": "input",
-              "type": "CreateUserInput",
-              "non-null": true,
-              "description": "User creation input"
-            }
-          ],
-          "x-graphql-resolver-idempotent": false,
-          "x-graphql-federation-authenticated": true,
-          "x-graphql-federation-requires-scopes": [["write:user", "create:user"]]
-        }
-      },
-      "x-graphql-type-name": "Mutation",
-      "x-graphql-type-kind": "OBJECT",
-      "x-graphql-operation-type": "mutation",
-      "x-graphql-is-root-type": true
-    },
-
-    "DateTime": {
-      "type": "string",
-      "format": "date-time",
-      "description": "ISO 8601 date-time string",
-      "x-graphql-type-name": "DateTime",
-      "x-graphql-type-kind": "SCALAR"
+      }
     }
-  },
-
-  "x-graphql-schema-config": {
-    "query-type": "Query",
-    "mutation-type": "Mutation",
-    "federation-version": "v2.9"
-  },
-
-  "x-graphql-link-imports": [
-    {
-      "url": "https://specs.apollo.dev/federation/v2.9",
-      "as": "federation",
-      "for": "EXECUTION",
-      "import": [
-        "@key",
-        "@requires",
-        "@provides",
-        "@external",
-        "@shareable",
-        "@override",
-        "@authenticated",
-        "@requiresScopes",
-        "@policy",
-        "@tag"
-      ]
-    }
-  ]
+  }
 }

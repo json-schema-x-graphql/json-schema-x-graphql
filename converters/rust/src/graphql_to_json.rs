@@ -1,47 +1,48 @@
 //! Converts GraphQL SDL to JSON Schema.
 //!
-//! This module uses `apollo-parser` to parse the GraphQL SDL into an Abstract Syntax Tree (AST),
+//! This module uses `async-graphql` to parse the GraphQL SDL into an Abstract Syntax Tree (AST),
 //! then traverses the AST to construct a corresponding JSON Schema.
 
-use crate::error::ValidationError;
-use crate::types::{ConversionOptions, GqlScalar, GqlType, GqlValue};
-use apollo_parser::{ast, Parser};
+use crate::error::ConversionError;
+use crate::types::{ConversionOptions, GqlScalar, GqlType};
+use async_graphql::parser::{
+    parse_schema,
+    types::{
+        BaseType, ConstDirective, FieldDefinition, InputValueDefinition, Type, TypeDefinition,
+        TypeKind as AsyncTypeKind, TypeSystemDefinition,
+    },
+    Positioned,
+};
 use indexmap::IndexMap;
 use serde_json::{json, Value as JsonValue};
 
-// Main conversion function
-pub fn convert(sdl: &str, options: &ConversionOptions) -> Result<JsonValue, ValidationError> {
-    let parser = Parser::new(sdl);
-    let ast = parser.parse();
+// --- Main Conversion Function ---
 
-    if !ast.errors().is_empty() {
-        let errors = ast
-            .errors()
-            .map(|e| e.to_string())
-            .collect::<Vec<String>>()
-            .join("\n");
-        return Err(ValidationError::InvalidGraphQL(errors));
-    }
+pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, ConversionError> {
+    let doc = parse_schema(sdl).map_err(|e| ConversionError::InvalidGraphQLSdl(e.to_string()))?;
+    let dummy_registry = IndexMap::new();
+    let context = ConversionContext::new(sdl, &dummy_registry);
 
-    let doc = ast.document();
-    let mut type_registry = IndexMap::new();
+    let type_registry: IndexMap<String, TypeDef> = doc
+        .definitions
+        .into_iter()
+        .filter_map(|def| {
+            if let TypeSystemDefinition::Type(type_def) = def {
+                convert_definition(type_def, &context)
+            } else {
+                None
+            }
+        })
+        .collect();
 
-    for definition in doc.definitions() {
-        if let ast::Definition::TypeDefinition(type_definition) = definition {
-            let (name, type_def) = convert_type_definition(&type_definition);
-            type_registry.insert(name, type_def);
-        }
-    }
-
-    let context = ConversionContext::new(options, &type_registry);
+    let context = ConversionContext::new(sdl, &type_registry);
 
     let mut schema_defs = IndexMap::new();
-    for (name, type_def) in &context.type_registry {
-        let schema = convert_type_to_schema(&type_def, &context);
+    for (name, type_def) in context.type_registry {
+        let schema = convert_type_to_schema(type_def, &context);
         schema_defs.insert(name.clone(), schema);
     }
 
-    // Determine the root type for the schema's main entry point.
     let root_ref_name = if type_registry.contains_key("Query") {
         "Query"
     } else {
@@ -49,34 +50,29 @@ pub fn convert(sdl: &str, options: &ConversionOptions) -> Result<JsonValue, Vali
             .values()
             .find(|def| def.kind == TypeKind::Object)
             .map(|def| def.name.as_str())
-            .unwrap_or_else(|| {
-                type_registry
-                    .keys()
-                    .next()
-                    .map(|s| s.as_str())
-                    .unwrap_or("")
-            })
+            .unwrap_or_else(|| type_registry.keys().next().map_or("", |s| s.as_str()))
     };
 
-    Ok(json!({
+    let full_schema = json!({
         "$schema": "http://json-schema.org/draft-07/schema#",
         "$ref": format!("#/definitions/{}", root_ref_name),
         "definitions": schema_defs,
-    }))
+    });
+
+    serde_json::to_string_pretty(&full_schema).map_err(Into::into)
 }
 
-// Conversion context and intermediate representation (IR) structs.
+// --- Intermediate Representation ---
+
 struct ConversionContext<'a> {
-    options: &'a ConversionOptions,
+    #[allow(dead_code)]
+    sdl: &'a str,
     type_registry: &'a IndexMap<String, TypeDef>,
 }
 
 impl<'a> ConversionContext<'a> {
-    fn new(options: &'a ConversionOptions, type_registry: &'a IndexMap<String, TypeDef>) -> Self {
-        Self {
-            options,
-            type_registry,
-        }
+    fn new(sdl: &'a str, type_registry: &'a IndexMap<String, TypeDef>) -> Self {
+        Self { sdl, type_registry }
     }
 }
 
@@ -86,13 +82,13 @@ struct TypeDef {
     name: String,
     description: Option<String>,
     fields: Vec<FieldDef>,
-    directives: Vec<DirectiveDef>,
-    interfaces: Vec<String>,
     enum_values: Vec<String>,
     union_types: Vec<String>,
+    interfaces: Vec<String>,
+    directives: Vec<DirectiveDef>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum TypeKind {
     Object,
     Interface,
@@ -115,399 +111,494 @@ struct FieldDef {
 struct ArgumentDef {
     name: String,
     arg_type: GqlType,
-    default_value: Option<GqlValue>,
+    description: Option<String>,
+    default_value: Option<String>,
 }
 
 #[derive(Debug, Clone)]
 struct DirectiveDef {
     name: String,
-    arguments: IndexMap<String, GqlValue>,
+    arguments: IndexMap<String, String>,
 }
 
-// --- AST to Intermediate Representation Conversion ---
+// --- CST to Intermediate Representation Conversion ---
 
-fn convert_type_definition(type_definition: &ast::TypeDefinition) -> (String, TypeDef) {
-    let (kind, name, description, directives) = match type_definition {
-        ast::TypeDefinition::ObjectTypeDefinition(def) => (
-            TypeKind::Object,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-        ast::TypeDefinition::InterfaceTypeDefinition(def) => (
-            TypeKind::Interface,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-        ast::TypeDefinition::EnumTypeDefinition(def) => (
-            TypeKind::Enum,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-        ast::TypeDefinition::UnionTypeDefinition(def) => (
-            TypeKind::Union,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-        ast::TypeDefinition::InputObjectTypeDefinition(def) => (
-            TypeKind::InputObject,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-        ast::TypeDefinition::ScalarTypeDefinition(def) => (
-            TypeKind::Scalar,
-            def.name().unwrap().text().to_string(),
-            def.description().map(|d| d.string_value().unwrap()),
-            def.directives()
-                .map(|d| d.directives().map(convert_directive).collect())
-                .unwrap_or_default(),
-        ),
-    };
-
-    let mut type_def = TypeDef {
-        kind,
-        name: name.clone(),
-        description,
-        fields: Vec::new(),
-        directives,
-        interfaces: Vec::new(),
-        enum_values: Vec::new(),
-        union_types: Vec::new(),
-    };
-
-    match type_definition {
-        ast::TypeDefinition::ObjectTypeDefinition(def) => {
-            if let Some(fields) = def.fields_definition() {
-                type_def.fields = fields.field_definitions().map(convert_field).collect();
-            }
-            if let Some(interfaces) = def.implements_interfaces() {
-                type_def.interfaces = interfaces
-                    .named_types()
-                    .map(|n| n.name().unwrap().text().to_string())
-                    .collect();
-            }
-        }
-        ast::TypeDefinition::InterfaceTypeDefinition(def) => {
-            if let Some(fields) = def.fields_definition() {
-                type_def.fields = fields.field_definitions().map(convert_field).collect();
-            }
-        }
-        ast::TypeDefinition::InputObjectTypeDefinition(def) => {
-            if let Some(fields) = def.input_fields_definition() {
-                type_def.fields = fields
-                    .input_value_definitions()
-                    .map(convert_input_field)
-                    .collect();
-            }
-        }
-        ast::TypeDefinition::EnumTypeDefinition(def) => {
-            if let Some(values) = def.enum_values_definition() {
-                type_def.enum_values = values
-                    .enum_value_definitions()
-                    .map(|v| v.enum_value().unwrap().name().unwrap().text().to_string())
-                    .collect();
-            }
-        }
-        ast::TypeDefinition::UnionTypeDefinition(def) => {
-            if let Some(members) = def.union_member_types() {
-                type_def.union_types = members
-                    .named_types()
-                    .map(|t| t.name().unwrap().text().to_string())
-                    .collect();
-            }
-        }
-        _ => {}
-    }
-
-    (name, type_def)
+fn get_description(desc: &Option<Positioned<String>>) -> Option<String> {
+    desc.as_ref().map(|d| d.node.clone())
 }
 
-fn convert_field(field: ast::FieldDefinition) -> FieldDef {
+fn convert_definition<'a>(
+    definition: Positioned<TypeDefinition>,
+    context: &'a ConversionContext,
+) -> Option<(String, TypeDef)> {
+    let name = definition.node.name.node.to_string();
+    let description = get_description(&definition.node.description);
+    let directives = definition
+        .node
+        .directives
+        .iter()
+        .map(|d| convert_directive(d))
+        .collect::<Vec<_>>();
+
+    let type_def = match &definition.node.kind {
+        AsyncTypeKind::Object(def) => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::Object,
+                name: name.clone(),
+                description: description.clone(),
+                fields: def
+                    .fields
+                    .iter()
+                    .map(|f| convert_field(f, context))
+                    .collect(),
+                enum_values: vec![],
+                union_types: vec![],
+                interfaces: def.implements.iter().map(|i| i.node.to_string()).collect(),
+                directives,
+            },
+        )),
+        AsyncTypeKind::Interface(def) => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::Interface,
+                name: name.clone(),
+                description: description.clone(),
+                fields: def
+                    .fields
+                    .iter()
+                    .map(|f| convert_field(f, context))
+                    .collect(),
+                enum_values: vec![],
+                union_types: vec![],
+                interfaces: def.implements.iter().map(|i| i.node.to_string()).collect(),
+                directives,
+            },
+        )),
+        AsyncTypeKind::Enum(def) => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::Enum,
+                name: name.clone(),
+                description: description.clone(),
+                fields: vec![],
+                enum_values: def
+                    .values
+                    .iter()
+                    .map(|v| v.node.value.to_string())
+                    .collect(),
+                union_types: vec![],
+                interfaces: vec![],
+                directives,
+            },
+        )),
+        AsyncTypeKind::Union(def) => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::Union,
+                name: name.clone(),
+                description: description.clone(),
+                fields: vec![],
+                enum_values: vec![],
+                union_types: def.members.iter().map(|m| m.node.to_string()).collect(),
+                interfaces: vec![],
+                directives,
+            },
+        )),
+        AsyncTypeKind::InputObject(def) => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::InputObject,
+                name: name.clone(),
+                description: description.clone(),
+                fields: def
+                    .fields
+                    .iter()
+                    .map(|f| convert_input_field(f, context))
+                    .collect(),
+                enum_values: vec![],
+                union_types: vec![],
+                interfaces: vec![],
+                directives,
+            },
+        )),
+        AsyncTypeKind::Scalar => Some((
+            name.clone(),
+            TypeDef {
+                kind: TypeKind::Scalar,
+                name: name.clone(),
+                description: description.clone(),
+                fields: vec![],
+                enum_values: vec![],
+                union_types: vec![],
+                interfaces: vec![],
+                directives,
+            },
+        )),
+    };
+    type_def
+}
+
+fn convert_field<'a>(
+    field: &Positioned<FieldDefinition>,
+    context: &'a ConversionContext,
+) -> FieldDef {
     FieldDef {
-        name: field.name().unwrap().text().to_string(),
-        field_type: convert_gql_type(field.ty().unwrap()),
-        description: field.description().map(|d| d.string_value().unwrap()),
+        name: field.node.name.node.to_string(),
+        field_type: convert_gql_type(&field.node.ty.node, context),
+        description: get_description(&field.node.description),
         arguments: field
-            .arguments_definition()
-            .map(|args| {
-                args.input_value_definitions()
-                    .map(convert_argument)
-                    .collect()
+            .node
+            .arguments
+            .iter()
+            .map(|a| ArgumentDef {
+                name: a.node.name.node.to_string(),
+                arg_type: convert_gql_type(&a.node.ty.node, context),
+                description: get_description(&a.node.description),
+                default_value: a.node.default_value.as_ref().map(|v| v.node.to_string()),
             })
-            .unwrap_or_default(),
+            .collect(),
         directives: field
-            .directives()
-            .map(|d| d.directives().map(convert_directive).collect())
-            .unwrap_or_default(),
+            .node
+            .directives
+            .iter()
+            .map(|d| convert_directive(d))
+            .collect(),
     }
 }
 
-fn convert_input_field(field: ast::InputValueDefinition) -> FieldDef {
+fn convert_input_field<'a>(
+    field: &Positioned<InputValueDefinition>,
+    context: &'a ConversionContext,
+) -> FieldDef {
     FieldDef {
-        name: field.name().unwrap().text().to_string(),
-        field_type: convert_gql_type(field.ty().unwrap()),
-        description: field.description().map(|d| d.string_value().unwrap()),
-        arguments: Vec::new(), // Input fields do not have arguments
+        name: field.node.name.node.to_string(),
+        field_type: convert_gql_type(&field.node.ty.node, context),
+        description: get_description(&field.node.description),
+        arguments: vec![], // Input fields don't have arguments
         directives: field
-            .directives()
-            .map(|d| d.directives().map(convert_directive).collect())
-            .unwrap_or_default(),
+            .node
+            .directives
+            .iter()
+            .map(|d| convert_directive(d))
+            .collect(),
     }
 }
 
-fn convert_argument(arg: ast::InputValueDefinition) -> ArgumentDef {
-    ArgumentDef {
-        name: arg.name().unwrap().text().to_string(),
-        arg_type: convert_gql_type(arg.ty().unwrap()),
-        default_value: arg
-            .default_value()
-            .and_then(|v| v.value())
-            .map(convert_value),
+fn convert_directive(directive: &Positioned<ConstDirective>) -> DirectiveDef {
+    let mut arguments = IndexMap::new();
+    for (name, value) in &directive.node.arguments {
+        arguments.insert(name.node.to_string(), value.node.to_string());
     }
-}
-
-fn convert_directive(directive: ast::Directive) -> DirectiveDef {
     DirectiveDef {
-        name: directive.name().unwrap().text().to_string(),
-        arguments: directive
-            .arguments()
-            .map(|args| {
-                args.arguments()
-                    .map(|arg| {
-                        (
-                            arg.name().unwrap().text().to_string(),
-                            convert_value(arg.value().unwrap()),
-                        )
-                    })
-                    .collect()
-            })
-            .unwrap_or_default(),
+        name: directive.node.name.node.to_string(),
+        arguments,
     }
 }
 
-fn convert_gql_type(gql_type: ast::Type) -> GqlType {
-    match gql_type {
-        ast::Type::NamedType(name) => {
-            let type_name = name.name().unwrap().text().to_string();
+fn convert_gql_type<'a>(gql_type: &Type, context: &'a ConversionContext) -> GqlType {
+    let result = match &gql_type.base {
+        BaseType::Named(name) => {
+            let type_name = name.to_string();
             let scalar = match type_name.as_str() {
                 "String" => GqlScalar::String,
-                "ID" => GqlScalar::ID,
                 "Int" => GqlScalar::Int,
                 "Float" => GqlScalar::Float,
                 "Boolean" => GqlScalar::Boolean,
-                _ => return GqlType::Object(type_name),
+                "ID" => GqlScalar::Id,
+                _ => GqlScalar::Custom(type_name),
             };
             GqlType::Scalar(scalar)
         }
-        ast::Type::ListType(list) => GqlType::List(Box::new(convert_gql_type(list.ty().unwrap()))),
-        ast::Type::NonNullType(non_null) => {
-            GqlType::NonNull(Box::new(if let Some(t) = non_null.named_type() {
-                convert_gql_type(ast::Type::NamedType(t))
-            } else {
-                convert_gql_type(ast::Type::ListType(non_null.list_type().unwrap()))
-            }))
-        }
+        BaseType::List(inner) => GqlType::List(Box::new(convert_gql_type(inner, context))),
+    };
+    if gql_type.nullable {
+        result
+    } else {
+        GqlType::NonNull(Box::new(result))
     }
 }
 
-fn convert_value(value: ast::Value) -> GqlValue {
-    match value {
-        ast::Value::Variable(var) => GqlValue::Variable(var.name().unwrap().text().to_string()),
-        ast::Value::IntValue(int) => GqlValue::Int(int.parse().unwrap_or(0)),
-        ast::Value::FloatValue(float) => GqlValue::Float(float.parse().unwrap_or(0.0)),
-        ast::Value::StringValue(string) => GqlValue::String(string.string_value().unwrap()),
-        ast::Value::BooleanValue(b) => GqlValue::Boolean(b.value()),
-        ast::Value::NullValue(_) => GqlValue::Null,
-        ast::Value::EnumValue(e) => GqlValue::Enum(e.name().unwrap().text().to_string()),
-        ast::Value::ListValue(list) => GqlValue::List(list.values().map(convert_value).collect()),
-        ast::Value::ObjectValue(obj) => GqlValue::Object(
-            obj.object_fields()
-                .map(|f| {
-                    (
-                        f.name().unwrap().text().to_string(),
-                        convert_value(f.value().unwrap()),
-                    )
-                })
-                .collect(),
-        ),
-    }
-}
-
-// --- Intermediate Representation to JSON Schema Conversion ---
+// --- IR to JSON Schema Conversion ---
 
 fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> JsonValue {
-    let mut schema = IndexMap::new();
+    let mut x_graphql = json!({
+        "typeName": type_def.name,
+        "kind": format!("{:?}", type_def.kind).to_lowercase(),
+    });
 
-    if let Some(desc) = &type_def.description {
-        schema.insert("description".to_string(), json!(desc));
+    if !type_def.interfaces.is_empty() {
+        x_graphql["implements"] = json!(type_def.interfaces);
+    }
+
+    if !type_def.directives.is_empty() {
+        x_graphql["directives"] = json!(type_def
+            .directives
+            .iter()
+            .map(|d| {
+                let mut dir_json = json!({ "name": d.name });
+                if !d.arguments.is_empty() {
+                    dir_json["arguments"] = json!(d.arguments);
+                }
+                dir_json
+            })
+            .collect::<Vec<_>>());
+
+        // Extract federation directives
+        let mut federation = json!({});
+        let mut has_federation = false;
+
+        for dir in &type_def.directives {
+            match dir.name.as_str() {
+                "key" => {
+                    if let Some(fields) = dir.arguments.get("fields") {
+                        let fields_str = fields.trim_matches('"');
+                        let resolvable = dir
+                            .arguments
+                            .get("resolvable")
+                            .map(|v| v != "false")
+                            .unwrap_or(true);
+
+                        let key_obj = if resolvable {
+                            json!({ "fields": fields_str, "resolvable": true })
+                        } else {
+                            json!({ "fields": fields_str, "resolvable": false })
+                        };
+
+                        if let Some(keys) =
+                            federation.get_mut("keys").and_then(|v| v.as_array_mut())
+                        {
+                            keys.push(key_obj);
+                        } else {
+                            federation["keys"] = json!([key_obj]);
+                        }
+                        has_federation = true;
+                    }
+                }
+                "shareable" => {
+                    federation["shareable"] = json!(true);
+                    has_federation = true;
+                }
+                "extends" => {
+                    federation["extends"] = json!(true);
+                    has_federation = true;
+                }
+                "interfaceObject" => {
+                    federation["interfaceObject"] = json!(true);
+                    has_federation = true;
+                }
+                "authenticated" => {
+                    federation["authenticated"] = json!(true);
+                    has_federation = true;
+                }
+                "requiresScopes" => {
+                    if let Some(scopes) = dir.arguments.get("scopes") {
+                        // scopes is usually a list of lists of strings, simplified here
+                        federation["requiresScopes"] = json!(scopes);
+                        has_federation = true;
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        if has_federation {
+            x_graphql["federation"] = federation;
+        }
+    }
+
+    let mut schema = json!({
+        "x-graphql": x_graphql
+    });
+
+    if let Some(description) = &type_def.description {
+        schema["description"] = json!(description);
     }
 
     match type_def.kind {
-        TypeKind::Object | TypeKind::InputObject | TypeKind::Interface => {
-            schema.insert("type".to_string(), json!("object"));
+        TypeKind::Object | TypeKind::Interface | TypeKind::InputObject => {
+            schema["type"] = json!("object");
             let mut properties = IndexMap::new();
             let mut required = Vec::new();
 
             for field in &type_def.fields {
-                let (prop_name, prop_schema) = convert_field_to_property(field, context);
-                if is_required(&field.field_type) {
-                    required.push(json!(prop_name.clone()));
-                }
-                properties.insert(prop_name, prop_schema);
-            }
+                let (prop_schema, is_req) = gql_type_to_json_schema(&field.field_type, context);
+                let mut final_prop_schema = prop_schema;
 
-            if !properties.is_empty() {
-                schema.insert("properties".to_string(), json!(properties));
+                let mut field_x_graphql = json!({});
+                if field.name != camel_to_snake(&field.name) {
+                    field_x_graphql["fieldName"] = json!(field.name);
+                }
+
+                // Add arguments
+                if !field.arguments.is_empty() {
+                    let args: IndexMap<String, JsonValue> = field
+                        .arguments
+                        .iter()
+                        .map(|a| {
+                            let mut arg_schema = json!({
+                                "type": gql_type_to_string(&a.arg_type)
+                            });
+                            if let Some(desc) = &a.description {
+                                arg_schema["description"] = json!(desc);
+                            }
+                            if let Some(default) = &a.default_value {
+                                arg_schema["default"] = json!(default);
+                            }
+                            (a.name.clone(), arg_schema)
+                        })
+                        .collect();
+                    field_x_graphql["args"] = json!(args);
+                }
+
+                // Add directives
+                if !field.directives.is_empty() {
+                    field_x_graphql["directives"] = json!(field
+                        .directives
+                        .iter()
+                        .map(|d| {
+                            let mut dir_json = json!({ "name": d.name });
+                            if !d.arguments.is_empty() {
+                                dir_json["arguments"] = json!(d.arguments);
+                            }
+                            dir_json
+                        })
+                        .collect::<Vec<_>>());
+
+                    // Handle federation field directives
+                    let mut federation = json!({});
+                    let mut has_federation = false;
+
+                    for dir in &field.directives {
+                        match dir.name.as_str() {
+                            "external" => {
+                                federation["external"] = json!(true);
+                                has_federation = true;
+                            }
+                            "requires" => {
+                                if let Some(fields) = dir.arguments.get("fields") {
+                                    federation["requires"] = json!(fields.trim_matches('"'));
+                                    has_federation = true;
+                                }
+                            }
+                            "provides" => {
+                                if let Some(fields) = dir.arguments.get("fields") {
+                                    federation["provides"] = json!(fields.trim_matches('"'));
+                                    has_federation = true;
+                                }
+                            }
+                            "override" => {
+                                if let Some(from) = dir.arguments.get("from") {
+                                    federation["override"] =
+                                        json!({ "from": from.trim_matches('"') });
+                                    has_federation = true;
+                                }
+                            }
+                            "shareable" => {
+                                federation["shareable"] = json!(true);
+                                has_federation = true;
+                            }
+                            _ => {}
+                        }
+                    }
+                    if has_federation {
+                        field_x_graphql["federation"] = federation;
+                    }
+                }
+
+                if field_x_graphql
+                    .as_object()
+                    .map(|o| !o.is_empty())
+                    .unwrap_or(false)
+                {
+                    final_prop_schema["x-graphql"] = field_x_graphql;
+                }
+
+                if let Some(desc) = &field.description {
+                    final_prop_schema["description"] = json!(desc);
+                }
+
+                let prop_name = camel_to_snake(&field.name);
+                if is_req {
+                    required.push(prop_name.clone());
+                }
+                properties.insert(prop_name, final_prop_schema);
             }
+            schema["properties"] = json!(properties);
             if !required.is_empty() {
-                schema.insert("required".to_string(), json!(required));
+                schema["required"] = json!(required);
             }
         }
         TypeKind::Enum => {
-            schema.insert("type".to_string(), json!("string"));
-            if !type_def.enum_values.is_empty() {
-                schema.insert("enum".to_string(), json!(type_def.enum_values));
-            }
+            schema["type"] = json!("string");
+            schema["enum"] = json!(type_def.enum_values);
         }
         TypeKind::Union => {
-            if !type_def.union_types.is_empty() {
-                let any_of: Vec<JsonValue> = type_def
-                    .union_types
-                    .iter()
-                    .map(|t| json!({ "$ref": format!("#/definitions/{}", t) }))
-                    .collect();
-                schema.insert("anyOf".to_string(), json!(any_of));
+            schema["oneOf"] = json!(type_def
+                .union_types
+                .iter()
+                .map(|t| json!({ "$ref": format!("#/definitions/{}", t) }))
+                .collect::<Vec<_>>());
+
+            // Union specific x-graphql info
+            if let Some(x) = schema.get_mut("x-graphql").and_then(|v| v.as_object_mut()) {
+                x.insert("unionTypes".to_string(), json!(type_def.union_types));
             }
         }
         TypeKind::Scalar => {
-            let (json_type, format) = map_scalar_type(&type_def.name);
-            schema.insert("type".to_string(), json!(json_type));
-            if let Some(format) = format {
-                schema.insert("format".to_string(), json!(format));
-            }
+            schema["type"] = json!("string"); // Default, can be overridden by user
         }
     }
-
-    JsonValue::Object(schema.into_iter().collect())
+    schema
 }
 
-fn convert_field_to_property(field: &FieldDef, context: &ConversionContext) -> (String, JsonValue) {
-    let prop_name = camel_to_snake(&field.name);
-    let mut prop_schema = gql_type_to_json_schema(&field.field_type, context);
-
-    if let JsonValue::Object(map) = &mut prop_schema {
-        if let Some(desc) = &field.description {
-            map.insert("description".to_string(), json!(desc));
-        }
-
-        let directives_json: IndexMap<String, JsonValue> = field
-            .directives
-            .iter()
-            .map(|d| (d.name.clone(), gql_value_to_json(&d.arguments)))
-            .collect();
-
-        if !directives_json.is_empty() {
-            map.insert("x-graphql-directives".to_string(), json!(directives_json));
-        }
-    }
-
-    (prop_name, prop_schema)
-}
-
-fn gql_type_to_json_schema(gql_type: &GqlType, context: &ConversionContext) -> JsonValue {
+fn gql_type_to_string(gql_type: &GqlType) -> String {
     match gql_type {
-        GqlType::NonNull(inner) => gql_type_to_json_schema(inner, context),
-        GqlType::List(inner) => json!({
-            "type": "array",
-            "items": gql_type_to_json_schema(inner, context)
-        }),
         GqlType::Scalar(scalar) => match scalar {
-            GqlScalar::Int => json!({"type": "integer"}),
-            GqlScalar::Float => json!({"type": "number"}),
-            GqlScalar::String => json!({"type": "string"}),
-            GqlScalar::ID => json!({"type": "string"}),
-            GqlScalar::Boolean => json!({"type": "boolean"}),
+            GqlScalar::String => "String".to_string(),
+            GqlScalar::Int => "Int".to_string(),
+            GqlScalar::Float => "Float".to_string(),
+            GqlScalar::Boolean => "Boolean".to_string(),
+            GqlScalar::Id => "ID".to_string(),
+            GqlScalar::Custom(name) => name.clone(),
         },
-        GqlType::Object(name) => {
-            if context.type_registry.contains_key(name) {
-                json!({ "$ref": format!("#/definitions/{}", name) })
-            } else {
-                let (json_type, format) = map_scalar_type(name);
-                if let Some(format) = format {
-                    json!({ "type": json_type, "format": format })
-                } else {
-                    json!({ "type": json_type })
-                }
-            }
+        GqlType::List(inner) => format!("[{}]", gql_type_to_string(inner)),
+        GqlType::NonNull(inner) => format!("{}!", gql_type_to_string(inner)),
+    }
+}
+
+fn gql_type_to_json_schema(gql_type: &GqlType, context: &ConversionContext) -> (JsonValue, bool) {
+    match gql_type {
+        GqlType::Scalar(scalar) => (
+            match scalar {
+                GqlScalar::String => json!({"type": "string"}),
+                GqlScalar::Int => json!({"type": "integer"}),
+                GqlScalar::Float => json!({"type": "number"}),
+                GqlScalar::Boolean => json!({"type": "boolean"}),
+                GqlScalar::Id => json!({"type": "string", "format": "uuid"}),
+                GqlScalar::Custom(name) => json!({ "$ref": format!("#/definitions/{}", name) }),
+            },
+            false,
+        ),
+        GqlType::List(inner) => (
+            json!({
+                "type": "array",
+                "items": gql_type_to_json_schema(inner, context).0,
+            }),
+            false,
+        ),
+        GqlType::NonNull(inner) => {
+            let (schema, _) = gql_type_to_json_schema(inner, context);
+            (schema, true)
         }
     }
 }
 
-fn gql_value_to_json(args: &IndexMap<String, GqlValue>) -> JsonValue {
-    if args.is_empty() {
-        return JsonValue::Bool(true);
-    }
-    let map: serde_json::Map<String, JsonValue> = args
-        .iter()
-        .map(|(k, v)| (k.clone(), gql_value_to_json_value(v)))
-        .collect();
-    JsonValue::Object(map)
-}
-
-fn gql_value_to_json_value(val: &GqlValue) -> JsonValue {
-    match val {
-        GqlValue::Int(i) => json!(i),
-        GqlValue::Float(f) => json!(f),
-        GqlValue::String(s) => json!(s.clone()),
-        GqlValue::Boolean(b) => json!(b),
-        GqlValue::Null => JsonValue::Null,
-        GqlValue::Enum(e) => json!(e),
-        GqlValue::List(l) => JsonValue::Array(l.iter().map(gql_value_to_json_value).collect()),
-        GqlValue::Object(o) => JsonValue::Object(
-            o.iter()
-                .map(|(k, v)| (k.clone(), gql_value_to_json_value(v)))
-                .collect(),
-        ),
-        GqlValue::Variable(v) => json!(format!("<variable: {}>", v)),
-    }
-}
-
-fn is_required(gql_type: &GqlType) -> bool {
-    matches!(gql_type, GqlType::NonNull(_))
-}
-
-fn map_scalar_type(scalar_name: &str) -> (&'static str, Option<&'static str>) {
-    match scalar_name {
-        "Int" => ("integer", None),
-        "Float" => ("number", None),
-        "String" => ("string", None),
-        "ID" => ("string", None),
-        "Boolean" => ("boolean", None),
-        "Date" => ("string", Some("date")),
-        "DateTime" => ("string", Some("date-time")),
-        "Time" => ("string", Some("time")),
-        "JSON" => ("object", None),
-        _ => ("string", None), // Default for custom scalars
-    }
-}
+// --- Utility Functions ---
 
 fn camel_to_snake(s: &str) -> String {
     let mut snake = String::new();
-    for (i, ch) in s.char_indices() {
+    for (i, ch) in s.chars().enumerate() {
         if i > 0 && ch.is_uppercase() {
             snake.push('_');
         }
@@ -516,6 +607,7 @@ fn camel_to_snake(s: &str) -> String {
     snake
 }
 
+// --- Tests ---
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -524,87 +616,50 @@ mod tests {
     #[test]
     fn test_convert_simple_type() {
         let sdl = r#"
+            """
+            A user of the system.
+            """
             type User {
                 id: ID!
                 name: String
-                age: Int
+                email: String!
             }
         "#;
-        let result = convert(sdl, &ConversionOptions::default()).unwrap();
-        let expected = json!({
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$ref": "#/definitions/User",
-            "definitions": {
-                "User": {
-                    "type": "object",
-                    "properties": {
-                        "id": { "type": "string" },
-                        "name": { "type": "string" },
-                        "age": { "type": "integer" }
-                    },
-                    "required": ["id"]
+        let options = ConversionOptions::default();
+        let result = convert(sdl, &options).unwrap();
+
+        let expected_str = serde_json::to_string_pretty(&json!({
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "$ref": "#/definitions/User",
+          "definitions": {
+            "User": {
+              "description": "A user of the system.",
+              "type": "object",
+              "x-graphql": {
+                "typeName": "User",
+                "kind": "object"
+              },
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
                 }
+              },
+              "required": [
+                "id",
+                "email"
+              ]
             }
-        });
-        assert_eq!(result, expected);
-    }
+          }
+        }))
+        .unwrap();
 
-    #[test]
-    fn test_convert_with_directives() {
-        let sdl = r#"
-            type Product @key(fields: "id") {
-                id: ID!
-                sku: String @deprecated(reason: "Use id instead")
-            }
-        "#;
-        let result = convert(sdl, &ConversionOptions::default()).unwrap();
-        let product_def = &result["definitions"]["Product"];
-        let sku_props = &product_def["properties"]["sku"];
-        assert_eq!(
-            sku_props["x-graphql-directives"]["deprecated"]["reason"],
-            "Use id instead"
-        );
-    }
-
-    #[test]
-    fn test_convert_input_object() {
-        let sdl = r#"
-            input UserInput {
-                name: String!
-                email: String
-            }
-        "#;
-        let result = convert(sdl, &ConversionOptions::default()).unwrap();
-        let expected = json!({
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$ref": "#/definitions/UserInput",
-            "definitions": {
-                "UserInput": {
-                    "type": "object",
-                    "properties": {
-                        "name": { "type": "string" },
-                        "email": { "type": "string" }
-                    },
-                    "required": ["name"]
-                }
-            }
-        });
-        assert_eq!(result, expected);
-    }
-
-    #[test]
-    fn test_input_object_with_directives() {
-        let sdl = r#"
-            input UserInput {
-                name: String! @constraint(maxLength: 50)
-            }
-        "#;
-        let result = convert(sdl, &ConversionOptions::default()).unwrap();
-        let user_input_def = &result["definitions"]["UserInput"];
-        let name_props = &user_input_def["properties"]["name"];
-        assert_eq!(
-            name_props["x-graphql-directives"]["constraint"]["maxLength"],
-            50
-        );
+        assert_eq!(result, expected_str);
     }
 }

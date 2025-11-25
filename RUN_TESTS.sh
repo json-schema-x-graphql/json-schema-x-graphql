@@ -8,31 +8,36 @@ echo "  JSON Schema x GraphQL - Test Execution Summary"
 echo "======================================================================"
 echo ""
 
-# Navigate to the Node.js converter directory.
-# All subsequent commands are run from this directory.
-cd converters/node
+# Navigate to the Rust converter directory to build the WASM module.
+echo "→ Building Rust WASM module for Node.js..."
+(cd converters/rust && pnpm run build:nodejs)
+echo "✅ WASM module built."
+echo ""
+
+# Navigate to the Node.js converter directory for the rest of the script.
+cd ../node
 
 echo "→ Running comprehensive test suite for Node.js converter..."
 echo ""
 
 echo "1. Running linter..."
-npm run lint
+pnpm run lint
 echo "✅ Linter passed."
 echo ""
 
 echo "2. Building project..."
-npm run build
+pnpm run build
 echo "✅ Build successful."
 echo ""
 
 echo "3. Running tests..."
 # Running all tests defined in the package.json test script
-npm test
+pnpm test
 echo "✅ Tests completed."
 echo ""
 
 echo "4. Running WASM tests..."
-npm run test:wasm
+pnpm run test:wasm
 echo "✅ WASM tests completed."
 echo "  ✅ ALL CHECKS PASSED"
 echo "======================================================================"

@@ -11,7 +11,7 @@
 import init, {
   jsonSchemaToGraphQL as wasmJsonSchemaToGraphQL,
   graphqlToJsonSchema as wasmGraphqlToJsonSchema,
-} from "../../../../converters/rust/pkg/json_schema_graphql_converter.js";
+} from "./wasm/json_schema_graphql_converter.js";
 
 // 2. Initialize the WASM module.
 //    This is an asynchronous operation. We create a promise that resolves
@@ -28,19 +28,10 @@ const wasmReady = init().catch((err) => {
   return Promise.reject(err);
 });
 
-// Define a common options interface for type-safety and consistency with the Rust converter.
-interface ConversionOptions {
-  validate?: boolean;
-  includeDescriptions?: boolean;
-  preserveFieldOrder?: boolean;
-  federationVersion?: number | null;
-}
-
 /**
  * Converts a JSON Schema string to a GraphQL SDL string using the Rust WASM converter.
  *
  * @param {string} jsonSchemaStr - The JSON Schema provided as a string.
- * @param {ConversionOptions} options - Configuration for the conversion process.
  * @returns {Promise<string>} A promise that resolves to the generated GraphQL SDL string.
  */
 export async function jsonSchemaToGraphQL(
@@ -67,8 +58,14 @@ export async function jsonSchemaToGraphQL(
   } catch (error) {
     console.error("❌ WASM conversion (JSON Schema -> GraphQL) failed:", error);
     // Re-throw a standardized error message to be handled by the UI.
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : typeof error === "object"
+          ? JSON.stringify(error)
+          : String(error);
     throw new Error(
-      `Failed to convert JSON Schema to GraphQL: ${String(error)}`,
+      `Failed to convert JSON Schema to GraphQL: ${errorMessage}`,
     );
   }
 }
@@ -77,7 +74,6 @@ export async function jsonSchemaToGraphQL(
  * Converts a GraphQL SDL string to a JSON Schema string using the Rust WASM converter.
  *
  * @param {string} graphqlSdl - The GraphQL SDL provided as a string.
- * @param {ConversionOptions} options - Configuration for the conversion process.
  * @returns {Promise<string>} A promise that resolves to the generated JSON Schema, pretty-printed.
  */
 export async function graphqlToJsonSchema(graphqlSdl: string): Promise<string> {
@@ -87,23 +83,27 @@ export async function graphqlToJsonSchema(graphqlSdl: string): Promise<string> {
   try {
     console.log("🚀 Calling WASM -> graphqlToJsonSchema");
 
-    // Execute the WASM function. With `serde-wasm-bindgen`, a `serde_json::Value`
-    // from Rust is automatically converted into a JavaScript object.
-    const schemaObject = wasmGraphqlToJsonSchema(graphqlSdl);
+    // Execute the WASM function. The Rust function returns a JSON string.
+    const schemaString = wasmGraphqlToJsonSchema(graphqlSdl);
 
-    if (typeof schemaObject !== "object" || schemaObject === null) {
+    if (typeof schemaString !== "string") {
       // Sanity check for the return type.
       throw new Error(
-        "Unexpected return type from WASM. Expected a JSON Schema object.",
+        "Unexpected return type from WASM. Expected a JSON Schema string.",
       );
     }
 
-    // Pretty-print the resulting JSON object for readability in the editor.
-    return JSON.stringify(schemaObject, null, 2);
+    return schemaString;
   } catch (error) {
     console.error("❌ WASM conversion (GraphQL -> JSON Schema) failed:", error);
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : typeof error === "object"
+          ? JSON.stringify(error)
+          : String(error);
     throw new Error(
-      `Failed to convert GraphQL to JSON Schema: ${String(error)}`,
+      `Failed to convert GraphQL to JSON Schema: ${errorMessage}`,
     );
   }
 }

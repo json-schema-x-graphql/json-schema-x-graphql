@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Loro } from "loro-crdt";
+import userServiceSchema from "../../../../examples/user-service.schema.json";
+import federalProcurementGraphql from "../../../../examples/federal-procurement.graphql?raw";
 
 export interface User {
   id: string;
@@ -33,6 +35,7 @@ export interface EditorState {
 
   // Sync state
   isSyncing: boolean;
+  isAutoSyncEnabled: boolean;
   lastSyncTimestamp: number | null;
 
   // UI State
@@ -69,6 +72,7 @@ export interface EditorState {
   setGraphqlSdl: (sdl: string) => void;
   setActiveEditor: (editor: "json" | "graphql") => void;
   setConverting: (isConverting: boolean) => void;
+  toggleAutoSync: () => void;
   setConnectionStatus: (status: ConnectionStatus) => void;
   addConnectedUser: (user: User) => void;
   removeConnectedUser: (userId: string) => void;
@@ -116,89 +120,8 @@ export const useEditorStore = create<EditorState>()(
     (set, get) => ({
       // Initial state
       loroDoc: null,
-      jsonSchema: `{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "User",
-  "description": "A user in the system with federation support",
-  "type": "object",
-  "x-graphql-type-name": "User",
-  "x-graphql-type-kind": "OBJECT",
-  "x-graphql-federation-keys": [
-    {
-      "fields": "id",
-      "resolvable": true
-    }
-  ],
-  "properties": {
-    "id": {
-      "type": "string",
-      "description": "Unique identifier for the user",
-      "x-graphql-field-name": "id",
-      "x-graphql-field-type": "ID",
-      "x-graphql-field-non-null": true
-    },
-    "username": {
-      "type": "string",
-      "minLength": 3,
-      "maxLength": 50,
-      "description": "User's unique username",
-      "x-graphql-field-name": "username",
-      "x-graphql-field-type": "String",
-      "x-graphql-field-non-null": true
-    },
-    "email": {
-      "type": "string",
-      "format": "email",
-      "description": "User's email address",
-      "x-graphql-field-name": "email",
-      "x-graphql-field-type": "String",
-      "x-graphql-field-non-null": true
-    },
-    "role": {
-      "type": "string",
-      "enum": ["ADMIN", "USER", "GUEST"],
-      "description": "User's role in the system",
-      "x-graphql-field-name": "role",
-      "x-graphql-field-type": "UserRole",
-      "x-graphql-field-non-null": true
-    }
-  },
-  "required": ["id", "username", "email", "role"],
-  "$defs": {
-    "user_role": {
-      "type": "string",
-      "enum": ["ADMIN", "USER", "GUEST"],
-      "description": "Available user roles",
-      "x-graphql-type-name": "UserRole",
-      "x-graphql-type-kind": "ENUM"
-    }
-  }
-}`,
-      graphqlSdl: `# User with federation support
-type User @key(fields: "id") {
-  "Unique identifier for the user"
-  id: ID!
-
-  "User's unique username"
-  username: String!
-
-  "User's email address"
-  email: String!
-
-  "User's role in the system"
-  role: UserRole!
-}
-
-"Available user roles"
-enum UserRole {
-  ADMIN
-  USER
-  GUEST
-}
-
-type Query {
-  user(id: ID!): User
-}`,
+      jsonSchema: JSON.stringify(userServiceSchema, null, 2),
+      graphqlSdl: federalProcurementGraphql,
       currentUser: {
         id: generateUserId(),
         name: "Anonymous",
@@ -211,6 +134,7 @@ type Query {
       },
       isSyncing: false,
       lastSyncTimestamp: null,
+      isAutoSyncEnabled: false,
       activeEditor: "json",
       isConverting: false,
       showSettings: false,
@@ -340,6 +264,9 @@ type Query {
       setActiveEditor: (editor) => set({ activeEditor: editor }),
 
       setConverting: (isConverting) => set({ isConverting }),
+
+      toggleAutoSync: () =>
+        set((state) => ({ isAutoSyncEnabled: !state.isAutoSyncEnabled })),
 
       setConnectionStatus: (status) => set({ connectionStatus: status }),
 

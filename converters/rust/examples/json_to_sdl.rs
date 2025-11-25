@@ -35,6 +35,7 @@ fn main() {
         include_descriptions: true,
         preserve_field_order: true,
         federation_version: 2,
+        infer_ids: false,
     };
 
     let converter = Converter::with_options(options);

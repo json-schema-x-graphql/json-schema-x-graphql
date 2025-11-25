@@ -1,12 +1,14 @@
 //! Error types for JSON Schema x GraphQL conversion
 
+use serde::Serialize;
 use thiserror::Error;
 
 /// Result type for conversion operations
 pub type Result<T> = std::result::Result<T, ConversionError>;
 
 /// Errors that can occur during conversion
-#[derive(Error, Debug)]
+#[derive(Error, Debug, Serialize)]
+#[serde(tag = "type", content = "details")]
 pub enum ConversionError {
     /// Invalid JSON Schema input
     #[error("Invalid JSON Schema: {0}")]
@@ -62,11 +64,11 @@ pub enum ConversionError {
 
     /// JSON serialization/deserialization error
     #[error("JSON error: {0}")]
-    JsonError(#[from] serde_json::Error),
+    JsonError(String),
 
     /// Regex error
     #[error("Regex error: {0}")]
-    RegexError(#[from] regex::Error),
+    RegexError(String),
 
     /// Internal conversion error
     #[error("Internal error: {0}")]
@@ -115,6 +117,26 @@ impl ConversionError {
         } else {
             Self::MultipleErrors(errors)
         }
+    }
+}
+
+impl From<serde_json::Error> for ConversionError {
+    fn from(err: serde_json::Error) -> Self {
+        ConversionError::JsonError(err.to_string())
+    }
+}
+
+impl From<regex::Error> for ConversionError {
+    fn from(err: regex::Error) -> Self {
+        ConversionError::RegexError(err.to_string())
+    }
+}
+
+#[cfg(feature = "wasm")]
+impl From<ConversionError> for wasm_bindgen::JsValue {
+    fn from(err: ConversionError) -> Self {
+        serde_wasm_bindgen::to_value(&err)
+            .unwrap_or_else(|_| wasm_bindgen::JsValue::from_str(&err.to_string()))
     }
 }
 

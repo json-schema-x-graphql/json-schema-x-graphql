@@ -1,0 +1,19 @@
+{
+  "name": "@json-schema-x-graphql/rust-converter-build-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Build scripts for the Rust WASM converter.",
+  "scripts": {
+    "clean": "rimraf pkg pkg-bundler pkg-web",
+    "build": "pnpm run build:nodejs",
+    "build:nodejs": "wasm-pack build --target nodejs --out-dir ./pkg",
+    "build:web": "wasm-pack build --target web --out-dir ./pkg-web",
+    "build:bundler": "wasm-pack build --target bundler --out-dir ./pkg-bundler",
+    "test": "cargo test --all-features"
+  },
+  "author": "The Guild",
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^5.0.5"
+  }
+}

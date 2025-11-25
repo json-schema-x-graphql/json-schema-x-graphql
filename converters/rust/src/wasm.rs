@@ -18,6 +18,7 @@ pub struct WasmConversionOptions {
     include_descriptions: bool,
     preserve_field_order: bool,
     federation_version: u8,
+    infer_ids: bool,
 }
 
 #[wasm_bindgen]
@@ -29,6 +30,7 @@ impl WasmConversionOptions {
             include_descriptions: true,
             preserve_field_order: true,
             federation_version: 2,
+            infer_ids: false,
         }
     }
 
@@ -72,6 +74,16 @@ impl WasmConversionOptions {
         self.federation_version = value;
     }
 
+    #[wasm_bindgen(getter)]
+    pub fn infer_ids(&self) -> bool {
+        self.infer_ids
+    }
+
+    #[wasm_bindgen(setter)]
+    pub fn set_infer_ids(&mut self, value: bool) {
+        self.infer_ids = value;
+    }
+
     /// Convert to internal options type
     fn to_internal(&self) -> ConversionOptions {
         ConversionOptions {
@@ -79,6 +91,7 @@ impl WasmConversionOptions {
             include_descriptions: self.include_descriptions,
             preserve_field_order: self.preserve_field_order,
             federation_version: self.federation_version,
+            infer_ids: self.infer_ids,
         }
     }
 }
@@ -118,7 +131,7 @@ impl WasmConverter {
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String, JsValue> {
         self.converter
             .json_schema_to_graphql(json_schema)
-            .map_err(|e| JsValue::from_str(&format!("Conversion error: {}", e)))
+            .map_err(Into::into)
     }
 
     /// Convert GraphQL SDL to JSON Schema
@@ -126,7 +139,7 @@ impl WasmConverter {
     pub fn graphql_to_json_schema(&self, graphql_sdl: &str) -> Result<String, JsValue> {
         self.converter
             .graphql_to_json_schema(graphql_sdl)
-            .map_err(|e| JsValue::from_str(&format!("Conversion error: {}", e)))
+            .map_err(Into::into)
     }
 
     /// Convert between formats (bidirectional)
@@ -142,9 +155,7 @@ impl WasmConverter {
             }
         };
 
-        self.converter
-            .convert(input, dir)
-            .map_err(|e| JsValue::from_str(&format!("Conversion error: {}", e)))
+        self.converter.convert(input, dir).map_err(Into::into)
     }
 
     /// Clear the conversion cache (if caching is enabled)
@@ -167,7 +178,7 @@ pub fn json_schema_to_graphql(json_schema: &str) -> Result<String, JsValue> {
     let converter = Converter::new();
     converter
         .json_schema_to_graphql(json_schema)
-        .map_err(|e| JsValue::from_str(&format!("Conversion error: {}", e)))
+        .map_err(Into::into)
 }
 
 /// Standalone function to convert GraphQL SDL to JSON Schema
@@ -176,20 +187,21 @@ pub fn graphql_to_json_schema(graphql_sdl: &str) -> Result<String, JsValue> {
     let converter = Converter::new();
     converter
         .graphql_to_json_schema(graphql_sdl)
-        .map_err(|e| JsValue::from_str(&format!("Conversion error: {}", e)))
+        .map_err(Into::into)
 }
 
 /// Validate JSON Schema
 #[wasm_bindgen(js_name = validateJsonSchema)]
 pub fn validate_json_schema(json_schema: &str) -> Result<bool, JsValue> {
+    use crate::error::ConversionError;
     use crate::validator;
 
-    let schema: serde_json::Value = serde_json::from_str(json_schema)
-        .map_err(|e| JsValue::from_str(&format!("Invalid JSON: {}", e)))?;
+    let schema: serde_json::Value =
+        serde_json::from_str(json_schema).map_err(ConversionError::from)?;
 
     validator::validate_json_schema(&schema)
         .map(|_| true)
-        .map_err(|e| JsValue::from_str(&format!("Validation error: {}", e)))
+        .map_err(Into::into)
 }
 
 /// Validate GraphQL SDL
@@ -199,7 +211,7 @@ pub fn validate_graphql_sdl(graphql_sdl: &str) -> Result<bool, JsValue> {
 
     validator::validate_graphql_sdl(graphql_sdl)
         .map(|_| true)
-        .map_err(|e| JsValue::from_str(&format!("Validation error: {}", e)))
+        .map_err(Into::into)
 }
 
 /// Validate a GraphQL name
@@ -209,7 +221,7 @@ pub fn validate_graphql_name(name: &str) -> Result<bool, JsValue> {
 
     validator::validate_graphql_name(name)
         .map(|_| true)
-        .map_err(|e| JsValue::from_str(&format!("Validation error: {}", e)))
+        .map_err(Into::into)
 }
 
 /// Get library version

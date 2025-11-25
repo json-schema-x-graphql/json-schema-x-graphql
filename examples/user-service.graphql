@@ -1,0 +1,87 @@
+"""
+A comprehensive example schema demonstrating JSON Schema to GraphQL conversion with Federation support
+"""
+type User @key(fields: "id") {
+  """
+  Unique identifier for the user
+  """
+  id: ID!
+
+  """
+  User's unique username
+  """
+  username: String! @shareable
+
+  """
+  User's email address
+  """
+  email: String! @authenticated
+
+  """
+  User's role in the system
+  """
+  role: UserRole!
+
+  """
+  User's subscription tier (external field)
+  """
+  tier: String @external
+
+  """
+  Features available to the user based on tier (requires 'tier' field)
+  """
+  premiumFeatures: [String!]! @requires(fields: "tier")
+
+  """
+  User's shipping address
+  """
+  shippingAddress: Address @provides(fields: "zipCode")
+
+  """
+  User preferences (migrated from legacy service)
+  """
+  preferences: UserPreferences @override(from: "legacy-user-service")
+
+  """
+  Internal database ID, not exposed to subgraph
+  """
+  internalId: ID @inaccessible
+}
+
+"""
+Available user roles
+"""
+enum UserRole {
+  ADMIN
+  USER
+  GUEST
+}
+
+"""
+Physical address
+"""
+type Address {
+  street: String
+  city: String
+  zipCode: String @external
+}
+
+"""
+User UI preferences
+"""
+type UserPreferences {
+  theme: String
+  notifications: Boolean
+}
+
+"""
+Input for creating a user
+"""
+input UserInput {
+  username: String!
+  email: String!
+}
+
+type Query {
+  user(id: ID!): User
+}

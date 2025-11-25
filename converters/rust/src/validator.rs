@@ -17,14 +17,6 @@ fn graphql_type_regex() -> &'static Regex {
     REGEX.get_or_init(|| Regex::new(r"^(\[)?[_A-Za-z][_0-9A-Za-z]*!?(\])?!?$").unwrap())
 }
 
-/// Regex for valid federation field selections: fields(id, "name")
-fn federation_fields_regex() -> &'static Regex {
-    static REGEX: OnceLock<Regex> = OnceLock::new();
-    REGEX.get_or_init(|| {
-        Regex::new(r#"^[_A-Za-z][_0-9A-Za-z]*(\s+[_A-Za-z][_0-9A-Za-z]*|\s+"[^"]+")*(,\s*[_A-Za-z][_0-9A-Za-z]*(\s+[_A-Za-z][_0-9A-Za-z]*|\s+"[^"]+"))*$"#).unwrap()
-    })
-}
-
 /// Regex for valid URLs
 fn url_regex() -> &'static Regex {
     static REGEX: OnceLock<Regex> = OnceLock::new();
@@ -256,9 +248,24 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
     let mut errors = Vec::new();
     let mut brace_count = 0;
     let mut in_type_definition = false;
+    let mut is_enum_definition = false;
+    let mut in_block_string = false;
 
     for (line_num, line) in lines.iter().enumerate() {
         let trimmed = line.trim();
+
+        // Handle block strings
+        if trimmed.contains("\"\"\"") {
+            let count = trimmed.matches("\"\"\"").count();
+            if count % 2 != 0 {
+                in_block_string = !in_block_string;
+            }
+            continue;
+        }
+
+        if in_block_string {
+            continue;
+        }
 
         // Skip empty lines and comments
         if trimmed.is_empty() || trimmed.starts_with('#') {
@@ -278,6 +285,7 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
             || trimmed.starts_with("scalar ")
         {
             in_type_definition = true;
+            is_enum_definition = trimmed.starts_with("enum ");
 
             // Extract type name after keyword
             let parts: Vec<&str> = trimmed.split_whitespace().collect();
@@ -294,13 +302,14 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
         }
 
         // Check for field syntax inside type definitions
-        if in_type_definition && brace_count > 0 && trimmed.contains(':') {
+        if in_type_definition && !is_enum_definition && brace_count > 0 && trimmed.contains(':') {
             // Basic field validation: should have "name: Type" format
             if !trimmed.starts_with("type ")
                 && !trimmed.starts_with("interface ")
                 && !trimmed.starts_with("enum ")
                 && !trimmed.starts_with("union ")
                 && !trimmed.starts_with("input ")
+                && !trimmed.starts_with("scalar ")
             {
                 let parts: Vec<&str> = trimmed.split(':').collect();
                 if parts.len() < 2 {
@@ -314,6 +323,7 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
 
         // Check for text without colons inside type bodies (likely invalid)
         if in_type_definition
+            && !is_enum_definition
             && brace_count > 0
             && !trimmed.is_empty()
             && !trimmed.contains(':')
@@ -326,18 +336,27 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
             && !trimmed.starts_with("enum ")
             && !trimmed.starts_with("union ")
             && !trimmed.starts_with("input ")
+            && !trimmed.starts_with("scalar ")
         {
             // Check if it looks like it should be a field (has alphanumeric chars)
             if trimmed.chars().any(|c| c.is_alphanumeric()) {
+                let msg = if trimmed.contains('(') && trimmed.contains(')') {
+                    "Invalid field/argument definition - check syntax"
+                } else {
+                    "Invalid field definition - missing colon between name and type"
+                };
+
                 errors.push(ConversionError::InvalidGraphQLSdl(format!(
-                    "Line {}: Invalid field syntax - missing colon or type",
-                    line_num + 1
+                    "Line {}: {}",
+                    line_num + 1,
+                    msg
                 )));
             }
         }
 
         if brace_count == 0 && in_type_definition {
             in_type_definition = false;
+            is_enum_definition = false;
         }
     }
 

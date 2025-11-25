@@ -23,11 +23,11 @@
 //! let result = converter.convert(json_schema, ConversionDirection::JsonSchemaToGraphQL);
 //! ```
 
-pub mod types;
-pub mod json_to_graphql;
-pub mod graphql_to_json;
-pub mod validator;
 pub mod error;
+pub mod graphql_to_json;
+pub mod json_to_graphql;
+pub mod types;
+pub mod validator;
 
 #[cfg(feature = "wasm")]
 pub mod wasm;
@@ -62,11 +62,7 @@ impl Converter {
     }
 
     /// Convert between JSON Schema and GraphQL SDL
-    pub fn convert(
-        &self,
-        input: &str,
-        direction: ConversionDirection,
-    ) -> Result<String> {
+    pub fn convert(&self, input: &str, direction: ConversionDirection) -> Result<String> {
         #[cfg(feature = "caching")]
         {
             let cache_key = format!("{:?}:{}", direction, input);
@@ -78,12 +74,8 @@ impl Converter {
         }
 
         let result = match direction {
-            ConversionDirection::JsonSchemaToGraphQL => {
-                self.json_schema_to_graphql(input)?
-            }
-            ConversionDirection::GraphQLToJsonSchema => {
-                self.graphql_to_json_schema(input)?
-            }
+            ConversionDirection::JsonSchemaToGraphQL => self.json_schema_to_graphql(input)?,
+            ConversionDirection::GraphQLToJsonSchema => self.graphql_to_json_schema(input)?,
         };
 
         #[cfg(feature = "caching")]
@@ -115,7 +107,8 @@ impl Converter {
             validator::validate_graphql_sdl(graphql_sdl)?;
         }
 
-        graphql_to_json::convert(graphql_sdl, &self.options)
+        let schema = graphql_to_json::convert(graphql_sdl, &self.options)?;
+        serde_json::to_string_pretty(&schema).map_err(Into::into)
     }
 
     /// Get current options
@@ -155,6 +148,7 @@ mod tests {
             include_descriptions: true,
             preserve_field_order: true,
             federation_version: 2,
+            infer_ids: false,
         };
         let converter = Converter::with_options(options);
         assert_eq!(converter.options().validate, false);

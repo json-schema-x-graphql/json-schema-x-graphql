@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { MonacoEditor } from "./MonacoEditor";
+import { GraphQLVisualEditor } from "./GraphQLVisualEditor";
 import { useEditorStore as useStore } from "./store";
 import {
   jsonSchemaToGraphQL,
@@ -26,6 +27,12 @@ const App = () => {
     initializeLoro,
     disconnectLoro,
     addError,
+    setJsonSchema,
+    setGraphqlSdl,
+    activeEditor,
+    setActiveEditor,
+    isAutoSyncEnabled,
+    toggleAutoSync,
   } = useStore();
 
   const [docId, setDocId] = useState("loro-collaboration-doc");
@@ -33,13 +40,45 @@ const App = () => {
     `User-${Math.random().toString(36).substring(7)}`,
   );
   const [isConnected, setIsConnected] = useState(false);
-  const [showConnectionDialog, setShowConnectionDialog] = useState(true);
+  const [showConnectionDialog, setShowConnectionDialog] = useState(false);
 
-  const Editor = MonacoEditor as any;
+  // Resize state
+  const [leftPaneWidth, setLeftPaneWidth] = useState(50);
+  const [isResizing, setIsResizing] = useState(false);
+
+  const startResizing = useCallback(() => {
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resize = useCallback(
+    (mouseMoveEvent: MouseEvent) => {
+      if (isResizing) {
+        const newWidth =
+          (mouseMoveEvent.clientX / document.body.offsetWidth) * 100;
+        if (newWidth >= 20 && newWidth <= 80) {
+          setLeftPaneWidth(newWidth);
+        }
+      }
+    },
+    [isResizing],
+  );
+
+  useEffect(() => {
+    window.addEventListener("mousemove", resize);
+    window.addEventListener("mouseup", stopResizing);
+    return () => {
+      window.removeEventListener("mousemove", resize);
+      window.removeEventListener("mouseup", stopResizing);
+    };
+  }, [resize, stopResizing]);
 
   const handleConnect = useCallback(() => {
     if (docId && username) {
-      initializeLoro(docId, username);
+      initializeLoro(docId, "ws://localhost:8080", username);
       setIsConnected(true);
       setShowConnectionDialog(false);
     }
@@ -48,7 +87,6 @@ const App = () => {
   const handleDisconnect = useCallback(() => {
     disconnectLoro();
     setIsConnected(false);
-    setShowConnectionDialog(true);
   }, [disconnectLoro]);
 
   const handleConvert = useCallback(
@@ -118,6 +156,37 @@ const App = () => {
     }
   }, [isConnected]);
 
+  // Auto-sync JSON -> GraphQL
+  useEffect(() => {
+    if (!isAutoSyncEnabled || activeEditor !== "json" || isConverting) return;
+    const timer = setTimeout(() => {
+      handleConvert("json-to-graphql");
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [
+    jsonSchema,
+    isAutoSyncEnabled,
+    activeEditor,
+    isConverting,
+    handleConvert,
+  ]);
+
+  // Auto-sync GraphQL -> JSON
+  useEffect(() => {
+    if (!isAutoSyncEnabled || activeEditor !== "graphql" || isConverting)
+      return;
+    const timer = setTimeout(() => {
+      handleConvert("graphql-to-json");
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [
+    graphqlSdl,
+    isAutoSyncEnabled,
+    activeEditor,
+    isConverting,
+    handleConvert,
+  ]);
+
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white font-sans">
       <header className="flex items-center justify-between p-2 bg-gray-800 border-b border-gray-700">
@@ -142,7 +211,7 @@ const App = () => {
       </header>
 
       {showConnectionDialog && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="p-6 bg-gray-800 rounded-lg shadow-xl">
             <h2 className="mb-4 text-2xl font-bold">Connect to a session</h2>
             <input
@@ -170,16 +239,32 @@ const App = () => {
       )}
 
       <main className="flex flex-1 overflow-hidden">
-        <div className="flex-1 w-1/2 border-r border-gray-700">
-          <Editor
-            doc={loroDoc}
-            id="jsonSchema"
+        <div
+          style={{ width: `${leftPaneWidth}%` }}
+          className="border-r border-gray-700"
+          onClick={() => {
+            if (activeEditor !== "json") setActiveEditor("json");
+          }}
+        >
+          <MonacoEditor
+            value={jsonSchema}
+            onChange={(val) => {
+              if (activeEditor !== "json") setActiveEditor("json");
+              setJsonSchema(val);
+            }}
+            loroDoc={loroDoc}
+            textKey="jsonSchema"
             language="json"
-            title="JSON Schema"
           />
         </div>
-        <div className="flex flex-col items-center justify-center px-2 bg-gray-800">
+        <div
+          className="flex flex-col items-center justify-center px-2 bg-gray-800 cursor-col-resize hover:bg-gray-700 transition-colors z-10 select-none"
+          onMouseDown={startResizing}
+          title="Drag to resize"
+        >
+          <div className="w-1 h-4 mb-2 bg-gray-600 rounded-full opacity-50" />
           <button
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={() => handleConvert("json-to-graphql")}
             disabled={isConverting || !isConnected}
             className={cn(
@@ -193,6 +278,7 @@ const App = () => {
               : "→"}
           </button>
           <button
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={() => handleConvert("graphql-to-json")}
             disabled={isConverting || !isConnected}
             className={cn(
@@ -205,13 +291,35 @@ const App = () => {
               ? "Converting..."
               : "←"}
           </button>
+          <div className="w-1 h-4 mt-2 bg-gray-600 rounded-full opacity-50" />
+          <button
+            onMouseDown={(e) => e.stopPropagation()}
+            onClick={toggleAutoSync}
+            className={cn(
+              "px-2 py-1 my-2 text-xs font-semibold text-white rounded-md shadow-md",
+              isAutoSyncEnabled
+                ? "bg-green-600 hover:bg-green-700"
+                : "bg-gray-500 hover:bg-gray-600",
+            )}
+            title="Toggle Auto-Sync"
+          >
+            {isAutoSyncEnabled ? "Sync On" : "Sync Off"}
+          </button>
         </div>
-        <div className="flex-1 w-1/2">
-          <Editor
-            doc={loroDoc}
-            id="graphqlSdl"
-            language="graphql"
-            title="GraphQL SDL"
+        <div
+          className="flex-1 min-w-0"
+          onClick={() => {
+            if (activeEditor !== "graphql") setActiveEditor("graphql");
+          }}
+        >
+          <GraphQLVisualEditor
+            value={graphqlSdl}
+            onChange={(val) => {
+              if (activeEditor !== "graphql") setActiveEditor("graphql");
+              setGraphqlSdl(val);
+            }}
+            loroDoc={loroDoc}
+            textKey="graphqlSdl"
           />
         </div>
       </main>
@@ -232,4 +340,5 @@ const App = () => {
   );
 };
 
+export { App };
 export default App;

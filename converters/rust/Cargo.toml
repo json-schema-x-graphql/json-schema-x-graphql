@@ -10,19 +10,28 @@ readme = "README.md"
 keywords = ["json-schema", "graphql", "converter", "wasm", "apollo-federation"]
 categories = ["parsing", "wasm", "web-programming"]
 
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-apollo-parser = "0.8"
+async-graphql = { version = "7.0.5" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0" }
 thiserror = "1.0"
 indexmap = { version = "2.1", features = ["serde"] }
+regex = "1.7"
+clap = { version = "4.5", features = ["derive"] }
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+tokio = { version = "1.0", features = ["full"] }
+anyhow = "1.0"
 
 # WASM dependencies
 wasm-bindgen = { version = "0.2", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
 
 # Optional caching
 lru = { version = "0.12", optional = true }
@@ -31,9 +40,10 @@ lru = { version = "0.12", optional = true }
 pretty_assertions = "1.4"
 criterion = "0.5"
 
+
 [features]
 default = ["wasm"]
-wasm = ["wasm-bindgen", "console_error_panic_hook"]
+wasm = ["wasm-bindgen", "console_error_panic_hook", "serde-wasm-bindgen"]
 caching = ["lru"]
 
 [profile.release]
@@ -45,6 +55,10 @@ strip = true        # Strip symbols from binary
 [profile.release.package."*"]
 opt-level = "z"
 
-# [[bench]]
-# name = "conversion_benchmark"
-# harness = false
+[[bin]]
+name = "jxql"
+path = "src/bin/jxql.rs"
+
+[[bench]]
+name = "conversion_benchmark"
+harness = false

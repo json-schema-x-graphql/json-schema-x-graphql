@@ -1,0 +1,28 @@
+{
+  "name": "petrified-graphql-editor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone Vite-powered GraphQL Editor app for the Petrified Forest project",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5174",
+    "clean": "rimraf dist .vite node_modules",
+    "format": "prettier --write \"src/**/*\" \"index.html\""
+  },
+  "dependencies": {
+    "graphql-editor": "^7.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^5.1.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "prettier": "^3.6.2",
+    "rimraf": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

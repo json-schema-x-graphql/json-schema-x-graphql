@@ -2,7 +2,7 @@
 //!
 //! Tests bidirectional conversion, federation support, and edge cases.
 
-use json_schema_graphql_converter::{ConversionDirection, ConversionOptions, Converter};
+use json_schema_graphql_converter::{ConversionOptions, Converter};
 use serde_json::json;
 
 // ============================================================================
@@ -15,6 +15,7 @@ fn default_options() -> ConversionOptions {
         include_descriptions: true,
         preserve_field_order: true,
         federation_version: 2,
+        infer_ids: false,
     }
 }
 

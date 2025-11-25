@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Comprehensive Test Schema",
+  "description": "A test schema demonstrating advanced x-graphql overrides",
+  "type": "object",
+  "x-graphql": {
+    "type": "object",
+    "typeName": "Query",
+    "federation": {
+      "extends": true
+    }
+  },
+  "properties": {
+    "user": {
+      "$ref": "#/$defs/User",
+      "x-graphql": {
+        "args": {
+          "id": {
+            "type": "string",
+            "x-graphql": { "type": "ID!" }
+          }
+        }
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Product" },
+      "x-graphql": {
+        "nullable": false,
+        "args": {
+          "first": { "type": "integer", "default": 10 }
+        }
+      }
+    },
+    "search": {
+      "$ref": "#/$defs/SearchResult",
+      "x-graphql": {
+        "args": {
+          "query": { "type": "string", "x-graphql": { "type": "String!" } }
+        }
+      }
+    },
+    "node": {
+      "$ref": "#/$defs/Node",
+      "x-graphql": {
+        "args": {
+          "id": { "type": "string", "x-graphql": { "type": "ID!" } }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "User": {
+      "type": "object",
+      "x-graphql": {
+        "typeName": "User",
+        "implements": ["Node"],
+        "federation": {
+          "keys": [{ "fields": "id", "resolvable": true }]
+        },
+        "directives": [
+          { "name": "cacheControl", "arguments": { "maxAge": 300 } }
+        ]
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql": { "type": "ID" }
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's login name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql": {
+            "directives": [{ "name": "sensitive" }]
+          }
+        },
+        "role": {
+          "type": "string",
+          "enum": ["ADMIN", "USER", "GUEST"],
+          "x-graphql": { "type": "UserRole" }
+        },
+        "oldField": {
+          "type": "string",
+          "x-graphql": {
+            "deprecation": { "reason": "Use something else" }
+          }
+        }
+      },
+      "required": ["id", "username", "email", "role"]
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql": {
+        "typeName": "Product",
+        "implements": ["Node"],
+        "federation": {
+          "keys": ["upc"],
+          "shareable": true
+        }
+      },
+      "properties": {
+        "upc": {
+          "type": "string",
+          "x-graphql": { "type": "ID" }
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer",
+          "x-graphql": {
+            "type": "Int",
+            "federation": { "requires": "upc" }
+          }
+        },
+        "reviews": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Review" },
+          "x-graphql": {
+            "nullableItems": true,
+            "federation": {
+              "provides": "author { username }"
+            }
+          }
+        }
+      },
+      "required": ["upc", "name"]
+    },
+    "Review": {
+      "type": "object",
+      "x-graphql": { "typeName": "Review" },
+      "properties": {
+        "body": { "type": "string" },
+        "author": { "$ref": "#/$defs/User" }
+      }
+    },
+    "SearchResult": {
+      "x-graphql": {
+        "type": "union",
+        "typeName": "SearchResult",
+        "unionTypes": ["User", "Product"]
+      }
+    },
+    "UserRole": {
+      "type": "string",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "x-graphql": {
+        "type": "enum",
+        "typeName": "UserRole"
+      }
+    },
+    "Node": {
+      "type": "object",
+      "x-graphql": {
+        "type": "interface",
+        "typeName": "Node"
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql": { "type": "ID!" }
+        }
+      },
+      "required": ["id"]
+    },
+    "CreateUserInput": {
+      "type": "object",
+      "x-graphql": {
+        "type": "input",
+        "typeName": "CreateUserInput"
+      },
+      "properties": {
+        "username": { "type": "string" },
+        "email": { "type": "string" }
+      },
+      "required": ["username"]
+    }
+  }
+}

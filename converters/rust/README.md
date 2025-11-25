@@ -12,6 +12,78 @@ Bidirectional, lossless converter between JSON Schema and GraphQL SDL using stan
 - ✅ **Fast**: Optimized for performance with optional LRU caching
 - ✅ **Standards Compliant**: Follows JSON Schema 2020-12 and GraphQL spec
 
+## Simplified Extension System & Type Inference
+
+The converter favors **implicit first inferred schema**, handling inference automatically where possible, while allowing explicit overrides via extensions.
+
+### Core Principles
+
+1.  **Inference over Declaration** - Infer GraphQL types from JSON Schema wherever possible
+2.  **Minimal Extensions** - Only add extensions when transformation is needed
+3.  **Leverage JSON Schema Semantics** - Use `required`, property names, and types directly
+
+### Automatic Type Mapping
+
+| JSON Schema | GraphQL |
+|---|---|
+| `string` | `String` |
+| `integer` | `Int` |
+| `number` | `Float` |
+| `boolean` | `Boolean` |
+| `array` | `[ItemType]` |
+| `object` | Custom type or JSON scalar |
+
+### Format-Based Inference
+
+| JSON Format | GraphQL Type |
+|---|---|
+| `uuid` | `ID` |
+| `date-time` | `DateTime` |
+| `date` | `Date` |
+| `time` | `Time` |
+| `email` | `Email` |
+| `uri` | `URL` |
+
+### Extension Usage
+
+#### 1. Type Definition
+Use `x-graphql-type-name` or `title` to name your types. `x-graphql-type-kind` is optional and inferred.
+
+```json
+{
+  "title": "User",
+  "type": "object",
+  "properties": { ... }
+}
+```
+
+#### 2. Field Type Override
+Use `x-graphql-type` to override inferred types.
+
+```json
+"id": {
+  "type": "string",
+  "x-graphql-type": "ID" // Override only if needed (e.g. if format: uuid is missing)
+}
+```
+
+#### 3. Unions and Interfaces
+- **Unions**: Use `oneOf` to infer union types.
+- **Interfaces**: Use `allOf` to infer interface implementation.
+
+#### 4. Arguments
+Use `x-graphql-args` for field arguments.
+
+```json
+"posts": {
+  "type": "array",
+  "items": { "$ref": "#/$defs/Post" },
+  "x-graphql-args": {
+    "limit": { "type": "integer", "default": 10 }
+  }
+}
+```
+
 ## Installation
 
 ### As a Rust Library

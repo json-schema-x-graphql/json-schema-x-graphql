@@ -362,6 +362,105 @@ Optimized for real-time editing and CI/CD pipelines:
 ----
 ## Diagrams
 
+## Overview
+
+```mermaid
+graph LR
+    %% Data Sources
+    subgraph "Data Sources"
+        DB[(Databricks)]
+        REST1[REST API 1]
+        REST2[REST API 2]
+        KAFKA[Kafka Stream]
+        S3[(S3/Data Lake)]
+    end
+
+    %% JSON Schema Validation Layer
+    subgraph "JSON Schema"
+        VAL[Schema Validator]
+        TRANSFORM[ETL Transform]
+        
+        subgraph "Schemas"
+            JS1[System 1 Schema]
+            JS2[System 2 Schema]
+            JS3[System 3 Schema]
+        end
+    end
+
+    %% Converter
+    subgraph "GraphQL Schema"
+        CONV[x-graphql<br/>Converter]
+        INFER[Type Inference<br/>Engine]
+    end
+
+    %% GraphQL Subgraphs
+    subgraph "GraphQL Federation"
+        subgraph "Subgraphs"
+            SG1[System 1<br/>Subgraph]
+            SG2[System 2<br/>Subgraph]
+            SG3[System 3<br/>Subgraph]
+        end
+        
+        GATEWAY[Supergraph / API gateway]
+        
+        subgraph "Clients"
+            WEB[GraphQL API]
+            MOBILE[REST API]
+            API[Gen AI]
+        end
+    end
+
+    %% Data Flow
+    DB -->|Raw Data| VAL
+    REST1 -->|JSON| VAL
+    REST2 -->|JSON| VAL
+    KAFKA -->|Stream| VAL
+    S3 -->|Batch| VAL
+    
+    VAL -->|Validate| JS1
+    VAL -->|Validate| JS2
+    VAL -->|Validate| JS3
+    
+    JS1 -->|Transform| TRANSFORM
+    JS2 -->|Transform| TRANSFORM
+    JS3 -->|Transform| TRANSFORM
+    
+    TRANSFORM -->|Enhanced Schema| CONV
+    CONV -->|Infer Types| INFER
+    
+    INFER -->|Generate SDL| SG1
+    INFER -->|Generate SDL| SG2
+    INFER -->|Generate SDL| SG3
+    
+    SG1 -->|Compose| GATEWAY
+    SG2 -->|Compose| GATEWAY
+    SG3 -->|Compose| GATEWAY
+    
+    GATEWAY -->|GraphQL| WEB
+    GATEWAY -->|GraphQL| MOBILE
+    GATEWAY -->|GraphQL| API
+
+    %% Styling
+    classDef datasource fill:#2c3e50,stroke:#34495e,color:#fff
+    classDef validation fill:#e67e22,stroke:#d35400,color:#fff
+    classDef converter fill:#e74c3c,stroke:#c0392b,color:#fff
+    classDef subgraphNode fill:#3498db,stroke:#2980b9,color:#fff
+    classDef gateway fill:#9b59b6,stroke:#8e44ad,color:#fff
+    classDef client fill:#1abc9c,stroke:#16a085,color:#fff
+    
+    class DB,REST1,REST2,KAFKA,S3 datasource
+    class VAL,TRANSFORM,JS1,JS2,JS3 validation
+    class CONV,INFER converter
+    class SG1,SG2,SG3 subgraphNode
+    class GATEWAY gateway
+    class WEB,MOBILE,API client
+
+    %% Labels
+    DB -.->|"ETL Pipeline"| VAL
+    CONV -.->|"x-graphql extensions"| INFER
+    GATEWAY -.->|"Federated Schema"| WEB
+```
+
 ## 1. Overview: JSON Schema to GraphQL SDL Transformation
 
 ```mermaid
@@ -611,21 +710,25 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 ```bash
 # Clone repository
 git clone https://github.com/JJediny/json-schema-x-graphql.git
-cd json-schema-x-graphql
+# json-schema-x-graphql
 
-# Install Rust dependencies
-cargo build
+> **Advanced Usage**: For a deep dive into `x-graphql` overrides, Apollo Federation support, and complex type definitions, please refer to the [Comprehensive Guide](docs/COMPREHENSIVE_GUIDE.md).
+
+# Build WASM module
+npm run build:wasm
+
+# OR manually:
+cd converters/rust
+wasm-pack build --target web --release
+cd ../..
 
 # Install frontend dependencies
 cd frontend
 npm install
 
 # Run tests
-cargo test
 npm test
-
-# Build WASM module
-wasm-pack build --target web --release
+# Rust tests: cd converters/rust && cargo test
 ```
 
 ---
