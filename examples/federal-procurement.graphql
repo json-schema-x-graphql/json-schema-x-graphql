@@ -210,10 +210,7 @@ type AnalyticsBreakdown {
   percentage: Float!
 }
 
-"""
-System-Specific Program Types
-"""
-
+"System-Specific Program Types"
 type FPDSProgram {
   programId: ID!
   programNumber: String!
@@ -561,9 +558,7 @@ enum BusinessSize {
   LARGE
 }
 
-"""
-Location Types
-"""
+"Location Types"
 type PlaceOfPerformance {
   streetAddress: String
   city: String
@@ -580,9 +575,7 @@ type GeographicCoordinates {
   longitude: Float!
 }
 
-"""
-Financial Types
-"""
+"Financial Types"
 type FinancialInfo {
   totalContractValue: Decimal
   baseAndAllOptionsValue: Decimal
@@ -1028,9 +1021,7 @@ type CompetitionMetrics {
   competitionType: CompetitionType!
 }
 
-"""
-Business Classification Types
-"""
+"Business Classification Types"
 type PerformanceMetrics {
   onTimeDeliveryRate: Float
   budgetVariance: Float

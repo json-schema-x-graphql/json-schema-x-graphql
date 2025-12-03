@@ -17,4 +17,13 @@ directive @authenticated on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENU
 directive @requiresScopes(scopes: [[Scope!]!]!) on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
 
 scalar Scope
+
+# Common Custom Scalars
+scalar Email
+scalar DateTime
+scalar Date
+scalar JSON
+scalar JSONObject
+scalar URL
+scalar Decimal
 `;

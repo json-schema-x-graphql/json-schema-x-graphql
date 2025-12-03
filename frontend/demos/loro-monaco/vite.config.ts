@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig, searchForWorkspaceRoot } from "vite";
 import react from "@vitejs/plugin-react";
 import wasm from "vite-plugin-wasm";
@@ -32,5 +33,11 @@ export default defineConfig({
   worker: {
     format: "es",
     plugins: () => [wasm(), topLevelAwait()],
+  },
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/test/setup.ts",
+    css: true,
   },
 });

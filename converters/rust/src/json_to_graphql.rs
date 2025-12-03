@@ -59,9 +59,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
 
 struct ConversionContext<'a> {
     options: &'a ConversionOptions,
-    #[allow(dead_code)]
     type_names: HashMap<String, String>,
-    #[allow(dead_code)]
     root_schema: Option<&'a JsonValue>,
 }
 
@@ -71,6 +69,68 @@ impl<'a> ConversionContext<'a> {
             options,
             type_names: HashMap::new(),
             root_schema: Some(root_schema),
+        }
+    }
+
+    fn resolve_ref_type_name(&mut self, ref_path: &str) -> Option<String> {
+        if let Some(name) = self.type_names.get(ref_path) {
+            return Some(name.clone());
+        }
+
+        let schema = self.resolve_ref_schema(ref_path)?;
+        let type_name = schema
+            .as_object()
+            .and_then(|obj| {
+                obj.get("x-graphql-type-name")
+                    .and_then(|v| v.as_str())
+                    .or_else(|| obj.get("title").and_then(|v| v.as_str()))
+                    .or_else(|| {
+                        obj.get("x-graphql")
+                            .and_then(|x| x.as_object())
+                            .and_then(|x| x.get("typeName"))
+                            .and_then(|v| v.as_str())
+                    })
+            })
+            .map(|value| value.to_string())
+            .or_else(|| extract_type_name_from_ref(ref_path))?;
+
+        self.type_names
+            .insert(ref_path.to_string(), type_name.clone());
+        Some(type_name)
+    }
+
+    fn resolve_ref_schema(&self, ref_path: &str) -> Option<&'a JsonValue> {
+        let root = self.root_schema?;
+        let pointer = Self::normalize_ref_path(ref_path)?;
+        if pointer.is_empty() {
+            Some(root)
+        } else {
+            root.pointer(&pointer)
+        }
+    }
+
+    fn normalize_ref_path(ref_path: &str) -> Option<String> {
+        let trimmed = ref_path.trim();
+        if trimmed.is_empty() {
+            return Some(String::new());
+        }
+
+        if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
+            return None;
+        }
+
+        if let Some(stripped) = trimmed.strip_prefix('#') {
+            if stripped.is_empty() {
+                Some(String::new())
+            } else if stripped.starts_with('/') {
+                Some(stripped.to_string())
+            } else {
+                Some(format!("/{}", stripped))
+            }
+        } else if trimmed.starts_with('/') {
+            Some(trimmed.to_string())
+        } else {
+            Some(format!("/{}", trimmed))
         }
     }
 }
@@ -291,7 +351,9 @@ fn convert_type_definition(
                 for item in one_of {
                     // Extract ref
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
-                        if let Some(name) = extract_type_name_from_ref(ref_path) {
+                        if let Some(name) = context.resolve_ref_type_name(ref_path) {
+                            members.push(name);
+                        } else if let Some(name) = extract_type_name_from_ref(ref_path) {
                             members.push(name);
                         }
                     } else if let Some(title) = item.get("title").and_then(|v| v.as_str()) {
@@ -333,8 +395,10 @@ fn convert_type_definition(
             if let Some(all_of) = obj.get("allOf").and_then(|v| v.as_array()) {
                 for item in all_of {
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
-                        if let Some(name) = extract_type_name_from_ref(ref_path) {
+                        if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             // Assuming all refs in allOf are interfaces if this is an object type
+                            implements.push(name);
+                        } else if let Some(name) = extract_type_name_from_ref(ref_path) {
                             implements.push(name);
                         }
                     }
@@ -419,11 +483,11 @@ fn convert_field(
         .or_else(|| obj.get("x-graphql-args"))
         .or_else(|| obj.get("x-graphql-arguments"))
     {
-        output.push_str(&format_field_arguments(args)?);
+        output.push_str(&format_field_arguments(args, context)?);
     }
 
     // Type
-    let mut field_type = infer_graphql_type(schema, is_required)?;
+    let mut field_type = infer_graphql_type(schema, is_required, context)?;
 
     if context.options.infer_ids
         && (field_name == "id" || field_name == "_id")
@@ -561,7 +625,11 @@ fn convert_field(
     Ok(output)
 }
 
-fn infer_graphql_type(schema: &JsonValue, is_required: bool) -> Result<String> {
+fn infer_graphql_type(
+    schema: &JsonValue,
+    is_required: bool,
+    context: &mut ConversionContext,
+) -> Result<String> {
     let obj = schema
         .as_object()
         .ok_or_else(|| ConversionError::InvalidType("schema must be an object".to_string()))?;
@@ -596,7 +664,9 @@ fn infer_graphql_type(schema: &JsonValue, is_required: bool) -> Result<String> {
 
     // 2. Reference
     if let Some(ref_path) = obj.get("$ref").and_then(|v| v.as_str()) {
-        if let Some(type_name) = extract_type_name_from_ref(ref_path) {
+        if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
+            return Ok(finalize(type_name));
+        } else if let Some(type_name) = extract_type_name_from_ref(ref_path) {
             return Ok(finalize(type_name));
         }
     }
@@ -637,7 +707,7 @@ fn infer_graphql_type(schema: &JsonValue, is_required: bool) -> Result<String> {
                     false
                 };
 
-                let item_type = infer_graphql_type(items, item_is_required)?;
+                let item_type = infer_graphql_type(items, item_is_required, context)?;
                 format!("[{}]", item_type)
             } else {
                 "JSON".to_string()
@@ -660,7 +730,7 @@ fn infer_graphql_type(schema: &JsonValue, is_required: bool) -> Result<String> {
     Ok(finalize(gql_type))
 }
 
-fn format_field_arguments(args: &JsonValue) -> Result<String> {
+fn format_field_arguments(args: &JsonValue, context: &mut ConversionContext) -> Result<String> {
     let mut output = String::new();
     output.push('(');
 
@@ -680,7 +750,7 @@ fn format_field_arguments(args: &JsonValue) -> Result<String> {
             output.push_str(arg_name);
             output.push_str(": ");
 
-            let arg_type = infer_graphql_type(arg_schema, false)?;
+            let arg_type = infer_graphql_type(arg_schema, false, context)?;
             output.push_str(&arg_type);
 
             if let Some(default) = arg_schema.get("default") {
@@ -834,26 +904,39 @@ mod tests {
 
     #[test]
     fn test_infer_graphql_type() {
+        let options = ConversionOptions::default();
+        let root_schema = json!({});
+        let mut context = ConversionContext::with_root(&options, &root_schema);
+
         let schema = json!({"type": "string"});
-        assert_eq!(infer_graphql_type(&schema, false).unwrap(), "String");
-        assert_eq!(infer_graphql_type(&schema, true).unwrap(), "String!");
+        assert_eq!(
+            infer_graphql_type(&schema, false, &mut context).unwrap(),
+            "String"
+        );
+        assert_eq!(
+            infer_graphql_type(&schema, true, &mut context).unwrap(),
+            "String!"
+        );
 
         let schema_uuid = json!({"type": "string", "format": "uuid"});
-        assert_eq!(infer_graphql_type(&schema_uuid, false).unwrap(), "ID");
+        assert_eq!(
+            infer_graphql_type(&schema_uuid, false, &mut context).unwrap(),
+            "ID"
+        );
 
         let schema_override = json!({"type": "string", "x-graphql-type": "MyScalar"});
         assert_eq!(
-            infer_graphql_type(&schema_override, false).unwrap(),
+            infer_graphql_type(&schema_override, false, &mut context).unwrap(),
             "MyScalar"
         );
         // Test double-bang prevention
         assert_eq!(
-            infer_graphql_type(&schema_override, true).unwrap(),
+            infer_graphql_type(&schema_override, true, &mut context).unwrap(),
             "MyScalar!"
         );
         let schema_override_bang = json!({"type": "string", "x-graphql-type": "MyScalar!"});
         assert_eq!(
-            infer_graphql_type(&schema_override_bang, true).unwrap(),
+            infer_graphql_type(&schema_override_bang, true, &mut context).unwrap(),
             "MyScalar!"
         );
     }
@@ -896,6 +979,41 @@ mod tests {
         });
         let result = convert(&schema, &options).unwrap();
         assert!(result.contains("union SearchResult = User | Post"));
+    }
+
+    #[test]
+    fn test_nested_ref_uses_explicit_name() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "title": "Root",
+            "type": "object",
+            "x-graphql-type-name": "Root",
+            "properties": {
+                "deep": { "$ref": "#/$defs/Structure/properties/data" }
+            },
+            "$defs": {
+                "Structure": {
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "value": { "type": "integer" }
+                            },
+                            "x-graphql-type-name": "DeepData"
+                        }
+                    }
+                }
+            }
+        });
+
+        let mut context = ConversionContext::with_root(&options, &schema);
+        let deep_schema = schema
+            .get("properties")
+            .and_then(|props| props.get("deep"))
+            .expect("deep property");
+        let field_type = infer_graphql_type(deep_schema, false, &mut context).unwrap();
+        assert_eq!(field_type, "DeepData");
     }
 
     #[test]

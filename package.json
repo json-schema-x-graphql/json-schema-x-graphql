@@ -11,6 +11,9 @@
     "README.md",
     "LICENSE"
   ],
+  "workspaces": [
+    "converters/node"
+  ],
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --release",
@@ -19,7 +22,14 @@
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepublishOnly": "npm run build",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts",
+    "converters:node:install": "npm install --prefix converters/node",
+    "converters:node:build": "npm run build --prefix converters/node",
+    "converters:node:test": "npm test --prefix converters/node",
+    "converters:rust:build": "cd converters/rust && cargo build --release",
+    "converters:rust:test": "cd converters/rust && cargo test",
+    "converters:test": "npm run converters:node:test && npm run converters:rust:test",
+    "converters:compare": "node scripts/test-both-converters.js"
   },
   "keywords": [
     "graphql",

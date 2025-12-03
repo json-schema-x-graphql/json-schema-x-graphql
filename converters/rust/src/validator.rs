@@ -235,6 +235,50 @@ fn validate_directive(directive: &JsonValue) -> Result<()> {
     Ok(())
 }
 
+fn find_field_type_separator(line: &str) -> Option<usize> {
+    let mut paren_depth = 0;
+    let mut bracket_depth = 0;
+    let mut brace_depth = 0;
+    let mut in_string = false;
+    let mut last_was_escape = false;
+
+    for (idx, ch) in line.char_indices() {
+        if in_string {
+            if ch == '\\' && !last_was_escape {
+                last_was_escape = true;
+                continue;
+            }
+
+            if ch == '"' && !last_was_escape {
+                in_string = false;
+                last_was_escape = false;
+            } else {
+                last_was_escape = false;
+            }
+
+            continue;
+        }
+
+        last_was_escape = false;
+
+        match ch {
+            '"' => in_string = true,
+            '(' => paren_depth += 1,
+            ')' if paren_depth > 0 => paren_depth -= 1,
+            '[' => bracket_depth += 1,
+            ']' if bracket_depth > 0 => bracket_depth -= 1,
+            '{' => brace_depth += 1,
+            '}' if brace_depth > 0 => brace_depth -= 1,
+            ':' if paren_depth == 0 && bracket_depth == 0 && brace_depth == 0 => {
+                return Some(idx);
+            }
+            _ => {}
+        }
+    }
+
+    None
+}
+
 /// Validate GraphQL SDL syntax (basic validation)
 pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
     if sdl.trim().is_empty() {
@@ -302,7 +346,12 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
         }
 
         // Check for field syntax inside type definitions
-        if in_type_definition && !is_enum_definition && brace_count > 0 && trimmed.contains(':') {
+        if in_type_definition
+            && !is_enum_definition
+            && brace_count > 0
+            && trimmed.contains(':')
+            && !trimmed.starts_with('@')
+        {
             // Basic field validation: should have "name: Type" format
             if !trimmed.starts_with("type ")
                 && !trimmed.starts_with("interface ")
@@ -311,11 +360,60 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
                 && !trimmed.starts_with("input ")
                 && !trimmed.starts_with("scalar ")
             {
-                let parts: Vec<&str> = trimmed.split(':').collect();
-                if parts.len() < 2 {
+                let line_without_comment = trimmed.split('#').next().unwrap_or(trimmed).trim_end();
+                if let Some(idx) = find_field_type_separator(line_without_comment) {
+                    let field_segment = line_without_comment[..idx].trim();
+                    let type_segment = line_without_comment[idx + 1..].trim();
+
+                    if field_segment.is_empty() {
+                        errors.push(ConversionError::InvalidGraphQLSdl(format!(
+                            "Line {}: Field name cannot be empty",
+                            line_num + 1
+                        )));
+                        continue;
+                    }
+
+            <|vq_14871|>                    if type_segment.is_empty()
+                        || type_segment.starts_with('@')
+                        || type_segment.starts_with('}')
+                    {
+                        errors.push(ConversionError::InvalidGraphQLSdl(format!(
+                            "Line {}: Field '{}' must specify a type after ':'",
+                            line_num + 1,
+                            field_segment
+                        )));
+                        continue;
+                    }
+
+                    let field_token = field_segment
+                        .split(|c: char| c == '(' || c.is_whitespace())
+                        .next()
+                        .unwrap_or("");
+                    if let Err(e) = validate_graphql_name(field_token) {
+                        errors.push(ConversionError::InvalidGraphQLSdl(format!(
+                            "Line {}: {}",
+                            line_num + 1,
+                            e
+                        )));
+                    }
+
+                    let field_type_token = type_segment.split_whitespace().next().unwrap_or("");
+                    if let Err(e) = validate_graphql_type(field_type_token) {
+                        errors.push(ConversionError::InvalidGraphQLSdl(format!(
+                            "Line {}: {}",
+                            line_num + 1,
+                            e
+                        )));
+                    }
+                } else {
+                    let display_name = line_without_comment
+                        .split_whitespace()
+                        .next()
+                        .unwrap_or("<unknown field>");
                     errors.push(ConversionError::InvalidGraphQLSdl(format!(
-                        "Line {}: Invalid field syntax",
-                        line_num + 1
+                        "Line {}: Field '{}' must specify a type after ':'",
+                        line_num + 1,
+                        display_name
                     )));
                 }
             }

@@ -1,0 +1,16 @@
+type SimpleString {
+}
+
+type Structure {
+  data: DeepData
+}
+
+"""
+Test schema for deeply nested $ref resolution
+"""
+type Root {
+  deep: Data
+  simple: SimpleString
+}
+
+

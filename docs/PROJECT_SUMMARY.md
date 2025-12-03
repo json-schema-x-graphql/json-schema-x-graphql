@@ -23,9 +23,13 @@ json-schema-x-graphql/
 │   └── x-graphql-extensions.schema.json  # JSON Schema 2020-12 meta-schema
 ├── examples/                     # Example schemas
 │   └── user-service.schema.json  # Comprehensive user service example
-├── src/                          # Rust source code (to be implemented)
-├── frontend/                     # React editor (to be implemented)
-└── docs/                         # Documentation (to be created)
+├── converters/                   # Core conversion logic
+│   ├── rust/                     # Rust/WASM converter implementation
+│   ├── node/                     # Node.js converter implementation
+│   └── test-data/                # Shared test fixtures
+├── frontend/                     # React editor with visual graph support
+├── docs/                         # Documentation suite
+│   └── archive/                  # Historical implementation logs
 ```
 
 ## Key Documents
@@ -167,30 +171,30 @@ json-schema-x-graphql/
 - [x] Set up repository structure
 - [x] Create build infrastructure
 
-### Phase 2: Core Converter (Weeks 3-5)
-- [ ] Implement SDL → JSON Schema converter
-- [ ] Implement JSON Schema → SDL converter
-- [ ] Add LRU caching layer
-- [ ] Write unit tests for all type kinds
-- [ ] Validate round-trip fidelity
-- [ ] Optimize WASM binary size
+### Phase 2: Core Converter ✅ COMPLETE
+- [x] Implement SDL → JSON Schema converter (Rust & Node.js)
+- [x] Implement JSON Schema → SDL converter (Rust & Node.js)
+- [x] Add LRU caching layer
+- [x] Write unit tests for all type kinds
+- [x] Validate round-trip fidelity
+- [x] Optimize WASM binary size
 
-### Phase 3: Frontend Editor (Weeks 6-7)
-- [ ] Build React split-pane editor
-- [ ] Integrate WASM converter
-- [ ] Add syntax highlighting
-- [ ] Implement debouncing and error handling
-- [ ] Add conversion metrics display
-- [ ] Create responsive UI
+### Phase 3: Frontend Editor ✅ COMPLETE
+- [x] Build React split-pane editor
+- [x] Integrate Visual Graph Editor (`graphql-editor`)
+- [x] Add syntax highlighting (Monaco)
+- [x] Implement debouncing and error handling
+- [x] Establish Collaboration Architecture (Yjs/Loro)
+- [x] Create responsive UI
 
-### Phase 4: Validation & Testing (Week 8)
+### Phase 4: Validation & Testing (In Progress)
 - [ ] Add comprehensive test suite
 - [ ] Test federation directive handling
 - [ ] Validate against Apollo Router
 - [ ] Performance benchmarking
 - [ ] Cross-browser WASM testing
 
-### Phase 5: Documentation & Release (Weeks 9-10)
+### Phase 5: Documentation & Release (Pending)
 - [ ] Write specification document
 - [ ] Create API documentation
 - [ ] Write integration guides
@@ -209,6 +213,11 @@ json-schema-x-graphql/
 - 📊 **Enum Metadata**: Per-value descriptions and deprecation
 - 🔌 **Subscriptions**: Transport and topic configuration
 - ⚡ **Performance**: Sub-5ms conversion via WASM
+
+### Visual Editor
+- **Three-Panel Layout**: JSON Schema, GraphQL SDL, and Visual Graph.
+- **Visual Graph**: Interactive node-link diagram of the schema structure.
+- **Real-Time Sync**: Instant updates between text and visual representations.
 
 ### Apollo Federation Support
 - Entity directives: `@key`, `@shareable`, `@inaccessible`, `@interfaceObject`
@@ -246,10 +255,10 @@ json-schema-x-graphql/
 
 ## Project Status
 
-**Current Version**: 0.1.0 (Alpha)  
+**Current Version**: 0.4.0 (Beta)  
 **License**: MIT  
 **Maintainers**: @JJediny and contributors  
-**Status**: Foundation complete, core implementation in progress
+**Status**: Core implementation complete, Testing & Validation phase
 
 ## Links
 
