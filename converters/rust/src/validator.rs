@@ -107,7 +107,11 @@ pub fn validate_url(url: &str) -> Result<()> {
 pub fn validate_json_schema(schema: &JsonValue) -> Result<()> {
     let mut errors = Vec::new();
 
-    // Check if it's an object
+    // Check if it's an object or boolean
+    if schema.is_boolean() {
+        return Ok(());
+    }
+
     if !schema.is_object() {
         return Err(ConversionError::InvalidJsonSchema(
             "schema must be an object".to_string(),
@@ -163,14 +167,7 @@ pub fn validate_json_schema(schema: &JsonValue) -> Result<()> {
     // Validate properties recursively
     if let Some(properties) = obj.get("properties") {
         if let Some(props_obj) = properties.as_object() {
-            for (prop_name, prop_schema) in props_obj {
-                // Validate property name format
-                if prop_name.is_empty() {
-                    errors.push(ConversionError::validation(
-                        "property name cannot be empty".to_string(),
-                    ));
-                }
-
+            for (_prop_name, prop_schema) in props_obj {
                 // Recursively validate nested schemas
                 if let Err(e) = validate_json_schema(prop_schema) {
                     errors.push(e);
@@ -181,7 +178,13 @@ pub fn validate_json_schema(schema: &JsonValue) -> Result<()> {
 
     // Validate items for arrays
     if let Some(items) = obj.get("items") {
-        if let Err(e) = validate_json_schema(items) {
+        if let Some(items_array) = items.as_array() {
+            for item in items_array {
+                if let Err(e) = validate_json_schema(item) {
+                    errors.push(e);
+                }
+            }
+        } else if let Err(e) = validate_json_schema(items) {
             errors.push(e);
         }
     }

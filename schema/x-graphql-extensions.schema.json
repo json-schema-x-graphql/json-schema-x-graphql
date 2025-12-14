@@ -31,26 +31,25 @@
 
     "graphqlTypeReference": {
       "type": "string",
-      "pattern": "^\\[?[_A-Za-z][_0-9A-Za-z]*!?\\]?!?$",
-      "description": "Valid GraphQL type reference (e.g., 'String', 'String!', '[String]', '[String!]!')"
+      "pattern": "^\\[*[_A-Za-z][_0-9A-Za-z]*!?(\\]!?)*$",
+      "description": "Valid GraphQL type reference (e.g., 'String', 'String!', '[String]', '[[String!]!]!')"
     },
 
     "federationSpecUrl": {
       "type": "string",
-      "pattern": "^https://specs\\.apollo\\.dev/(federation|link|join|tag|inaccessible)/(v[0-9]+\\.[0-9]+)$",
+      "pattern": "^https://specs\\.apollo\\.dev/(federation|link|join|tag|inaccessible|cost|cache)/(v[0-9]+\\.[0-9]+)$",
       "description": "Valid Apollo Federation specification URL"
     },
 
     "graphqlFieldSelection": {
       "type": "string",
-      "pattern": "^[_A-Za-z][_0-9A-Za-z]*(\\s+[_A-Za-z][_0-9A-Za-z]*)*$",
-      "description": "Valid GraphQL field selection set (space-separated field names)"
+      "description": "Valid GraphQL field selection set (e.g. 'id', 'id organizationId', 'address { street city }')"
     },
 
-    "percentageLabel": {
+    "overrideLabel": {
       "type": "string",
-      "pattern": "^percent\\((0|[1-9][0-9]?|100)\\)$",
-      "description": "Progressive override percentage (e.g., 'percent(50)')"
+      "pattern": "^(percent\\([0-9]+(\\.[0-9]+)?\\)|[_A-Za-z][_0-9A-Za-z]*)$",
+      "description": "Progressive override label (e.g., 'percent(50)', 'experimental')"
     },
 
     "graphqlKind": {
@@ -337,6 +336,32 @@
         "$ref": "#/$defs/customDirectiveDefinition"
       },
       "description": "Custom directive definitions"
+    },
+    "x-graphql-converter-options": {
+      "type": "object",
+      "properties": {
+        "description-block-threshold": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Threshold in characters above which descriptions are rendered as block strings"
+        },
+        "emit-empty-types": {
+          "type": "boolean",
+          "description": "Whether to emit GraphQL object definitions for objects that have no fields"
+        },
+        "inline-object-threshold": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Maximum number of properties for which anonymous objects are emitted as a JSON scalar"
+        },
+        "ref-naming": {
+          "type": "string",
+          "enum": ["basename", "file_and_path", "hash"],
+          "description": "Strategy for deriving GraphQL type names from $ref values"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Global converter configuration options"
     }
   },
 
@@ -477,7 +502,7 @@
       "maxLength": 255
     },
     "^x-graphql-federation-override-label$": {
-      "$ref": "#/$defs/percentageLabel"
+      "$ref": "#/$defs/overrideLabel"
     },
     "^x-graphql-federation-from-context-field$": {
       "type": "string"
@@ -522,26 +547,6 @@
     },
     "^x-graphql-resolver-cache-scope$": {
       "$ref": "#/$defs/cacheScope"
-    },
-    "^x-graphql-resolver-paginated$": {
-      "type": "boolean"
-    },
-    "^x-graphql-resolver-idempotent$": {
-      "type": "boolean"
-    },
-    "^x-graphql-resolver-rate-limit-max$": {
-      "type": "integer",
-      "minimum": 1
-    },
-    "^x-graphql-resolver-rate-limit-window$": {
-      "type": "string",
-      "pattern": "^[0-9]+(ms|s|m|h|d)$"
-    },
-    "^x-graphql-resolver-rate-limit-per-user$": {
-      "type": "boolean"
-    },
-    "^x-graphql-subscription-transport$": {
-      "$ref": "#/$defs/subscriptionTransport"
     },
     "^x-graphql-subscription-topic$": {
       "type": "string"

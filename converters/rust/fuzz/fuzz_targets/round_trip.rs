@@ -13,6 +13,7 @@ fuzz_target!(|data: &[u8]| {
             preserve_field_order: true,
             federation_version: 2,
             infer_ids: false,
+            ..Default::default()
         };
         let converter = Converter::with_options(options);
 

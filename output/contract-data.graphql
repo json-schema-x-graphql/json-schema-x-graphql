@@ -14,8 +14,25 @@ scalar Email
 "Uniform Resource Identifier or URL string"
 scalar Uri
 
+"""Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."""
+type Fpdsrecord {
+  systemMetadata: SystemMetadata!
+  identifiers: Identifiers!
+  financial: Financial
+  vendor: Vendor
+  agency: Agency
+  dates: Dates
+  classification: Classification
+  competition: Competition
+  placeOfPerformance: Placeofperformance
+  idvReference: Idvreference
+  compliance: Compliance
+  "Description of requirement"
+  description: String
+}
+
 "System-level metadata for record tracking, versioning, and lineage."
-type SystemMetadata  @shareable {
+type SystemMetadata @shareable {
   "Constant system identifier"
   systemName: String!
   "Primary identifier of the record within Contract Data"
@@ -88,6 +105,37 @@ type Financial {
   totalNonGovernmentValue: Float
 }
 
+"""Vendor information including identity, address, contact, and business classifications."""
+type Vendor {
+  "Legal vendor name"
+  vendorName: String
+  "Unique Entity Identifier (Entity Management.gov)"
+  vendorUei: String
+  "DUNS number (deprecated)"
+  vendorDunsNumber: String
+  "Commercial and Government Entity code"
+  cageCode: String
+  "DBA name"
+  doingBusinessAsName: String
+  vendorAddress: Address
+  "Vendor phone"
+  vendorPhoneNumber: String
+  "Vendor email"
+  emailAddress: Email
+  "Annual revenue"
+  annualRevenue: Float
+  "Employee count"
+  numberOfEmployees: Int
+  "Organization type"
+  organizationalType: String
+  "Incorporation state"
+  stateOfIncorporation: String
+  "Incorporation country"
+  countryOfIncorporation: String
+  parent: Parentorganization
+  businessClassifications: Businessclassifications
+}
+
 "Physical address structure."
 type Address {
   "Address line 1"
@@ -148,37 +196,6 @@ type Businessclassifications {
   hospitalFlag: String
   "Nonprofit organization"
   nonprofitOrganizationFlag: String
-}
-
-"Vendor information including identity, address, contact, and business classifications."
-type Vendor {
-  "Legal vendor name"
-  vendorName: String
-  "Unique Entity Identifier (Entity Management.gov)"
-  vendorUei: String
-  "DUNS number (deprecated)"
-  vendorDunsNumber: String
-  "Commercial and Government Entity code"
-  cageCode: String
-  "DBA name"
-  doingBusinessAsName: String
-  vendorAddress: Address
-  "Vendor phone"
-  vendorPhoneNumber: String
-  "Vendor email"
-  emailAddress: Email
-  "Annual revenue"
-  annualRevenue: Float
-  "Employee count"
-  numberOfEmployees: Int
-  "Organization type"
-  organizationalType: String
-  "Incorporation state"
-  stateOfIncorporation: String
-  "Incorporation country"
-  countryOfIncorporation: String
-  parent: Parentorganization
-  businessClassifications: Businessclassifications
 }
 
 "Agency and organizational information."
@@ -293,7 +310,7 @@ type Placeofperformance {
   popZipCode: String
 }
 
-"IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts."
+"""IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts."""
 type Idvreference {
   "Type of indefinite delivery contract"
   typeOfIdc: String
@@ -325,24 +342,7 @@ type Compliance {
   walshHealeyAct: String
 }
 
-"Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."
-type Fpdsrecord {
-  systemMetadata: SystemMetadata!
-  identifiers: Identifiers!
-  financial: Financial
-  vendor: Vendor
-  agency: Agency
-  dates: Dates
-  classification: Classification
-  competition: Competition
-  placeOfPerformance: Placeofperformance
-  idvReference: Idvreference
-  compliance: Compliance
-  "Description of requirement"
-  description: String
-}
-
-"Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."
+"""Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
 type ContractDataCanonicalSchema {
   contractDataRecord: Fpdsrecord
 }

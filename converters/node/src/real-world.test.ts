@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { jsonSchemaToGraphQL } from './converter';
 
 const EXAMPLES_DIR = path.resolve(__dirname, '../../../examples/real-world-schemas');

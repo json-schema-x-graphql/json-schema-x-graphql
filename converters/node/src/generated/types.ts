@@ -7,7 +7,7 @@ export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -86,7 +86,7 @@ export type ConverterOptions = {
   includeFederationDirectives?: InputMaybe<Scalars['Boolean']['input']>;
   /** Strategy for naming GraphQL types and fields. */
   namingConvention?: InputMaybe<NamingConvention>;
-  /** If true, attempts to infer the ID scalar for fields named 'id', '_id', etc. (Deprecated: use idStrategy) */
+  /** If true, attempts to infer the ID scalar for fields named 'id', '_id', etc. (Deprecated: use idStrategy). If both `idStrategy` and `inferIds` are provided, `idStrategy` takes precedence. */
   inferIds?: InputMaybe<Scalars['Boolean']['input']>;
   /** Strategy for inferring ID fields. Default: NONE */
   idStrategy?: InputMaybe<IdInferenceStrategy>;
@@ -98,6 +98,14 @@ export type ConverterOptions = {
   excludeTypes?: InputMaybe<Array<Scalars['String']['input']>>;
   /** List of regex patterns to exclude fields or types. */
   excludePatterns?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Threshold at which descriptions become block strings (characters). Default: 80 */
+  descriptionBlockThreshold?: InputMaybe<Scalars['Int']['input']>;
+  /** When false, do not emit empty object types (no fields). Default: false */
+  emitEmptyTypes?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Maximum number of properties for an anonymous object to be inlined as `JSON`. Default: 3 */
+  inlineObjectThreshold?: InputMaybe<Scalars['Int']['input']>;
+  /** Strategy for naming types derived from $ref values */
+  refNaming?: InputMaybe<('basename' | 'file_and_path' | 'hash')>;
 };
 
 /** Strategies for inferring ID fields from JSON Schema properties. */
@@ -122,6 +130,10 @@ export type NamingConvention =
 export type OutputFormat =
   | 'SDL'
   | 'SDL_WITH_FEDERATION_METADATA'
+  /**
+   * JSON representation of the GraphQL AST.
+   * The JSON format is stable and versioned according to this library's semantic version, making it suitable as a stable interface boundary for downstream tooling.
+   */
   | 'AST_JSON';
 
 /** Input payload for the conversion mutation. */

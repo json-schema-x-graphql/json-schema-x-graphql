@@ -19,6 +19,7 @@ fn default_options() -> ConversionOptions {
         naming_convention: NamingConvention::GraphqlIdiomatic,
         exclude_types: vec![],
         exclude_patterns: vec![],
+        ..Default::default()
     }
 }
 

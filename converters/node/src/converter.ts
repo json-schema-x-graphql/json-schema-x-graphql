@@ -10,11 +10,15 @@ import {
   ConverterOptions,
   FederationVersion,
   NamingConvention,
+  IdInferenceStrategy,
+  OutputFormat,
   ConvertInput,
   ConversionResult,
   Diagnostic,
-  DiagnosticSeverity
+  DiagnosticSeverity,
+  DiagnosticKind
 } from './generated/types';
+import { parse } from 'graphql';
 import { IJsonSchemaConverter } from './interfaces';
 
 export { ConverterOptions };
@@ -27,13 +31,21 @@ interface NormalizedConverterOptions {
   validate: boolean;
   includeDescriptions: boolean;
   preserveFieldOrder: boolean;
-  federationVersion: number;
+  federationVersion: FederationVersion;
+  includeFederationDirectives: boolean;
   namingConvention: NamingConvention;
   inferIds: boolean;
+  idStrategy: IdInferenceStrategy;
+  outputFormat: OutputFormat;
+  failOnWarning: boolean;
   maxDepth: number;
   excludeTypes: string[];
   excludePatterns: string[];
   excludeRegexes: RegExp[];
+  descriptionBlockThreshold: number;
+  emitEmptyTypes: boolean;
+  inlineObjectThreshold: number;
+  refNaming: 'basename' | 'file_and_path' | 'hash';
 }
 
 interface JsonSchema {
@@ -113,6 +125,7 @@ interface ConversionContext {
   generatedTypes: Set<string>;
   generating: Set<string>;
   output: string[];
+  typeNames: Map<string, string>;
 }
 
 type JsonSchemaInput = string | JsonSchema;
@@ -139,12 +152,20 @@ export function jsonSchemaToGraphQL(
       : jsonSchemaInput;
 
   const normalized = normalizeOptions(options);
+  const resolvedFederation = normalized.federationVersion === 'AUTO'
+    ? detectFederationVersion(schema)
+    : normalized.federationVersion;
+  const resolvedOptions: NormalizedConverterOptions = {
+    ...normalized,
+    federationVersion: resolvedFederation,
+  };
   const context: ConversionContext = {
     rootSchema: schema,
-    options: normalized,
+    options: resolvedOptions,
     generatedTypes: new Set<string>(),
     generating: new Set<string>(),
     output: [],
+    typeNames: new Map(),
   };
 
   emitCustomScalars(schema, context);
@@ -155,9 +176,31 @@ export function jsonSchemaToGraphQL(
       ? Object.entries(definitions)
       : Object.entries(definitions).sort(([a], [b]) => a.localeCompare(b));
 
+    // First pass: assign names to all definitions to handle collisions
+    const assignedNames = new Set<string>(context.generatedTypes);
+
     for (const [defKey, defSchema] of entries) {
-      const typeName = getTypeName(defSchema, context, defKey);
-      convertTypeDefinition(defSchema, typeName, context);
+      const rawTypeName = getTypeName(defSchema, context, defKey) || defKey;
+      let uniqueName = rawTypeName;
+      let idx = 1;
+      while (assignedNames.has(uniqueName)) {
+        uniqueName = `${rawTypeName}${idx}`;
+        idx++;
+      }
+      assignedNames.add(uniqueName);
+
+      context.typeNames.set(`/$defs/${defKey}`, uniqueName);
+      context.typeNames.set(`/definitions/${defKey}`, uniqueName);
+    }
+
+    // Second pass: generate types
+    for (const [defKey, defSchema] of entries) {
+      const typeName =
+        context.typeNames.get(`/$defs/${defKey}`) ||
+        context.typeNames.get(`/definitions/${defKey}`);
+      if (typeName) {
+        convertTypeDefinition(defSchema, typeName, context);
+      }
     }
   }
 
@@ -170,11 +213,11 @@ export function jsonSchemaToGraphQL(
     .join("\n")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
+  
+  // If no types are generated, return empty string instead of throwing,
+  // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
   if (!finalSDL) {
-    throw new ConversionError(
-      "No GraphQL types found in schema. Provide x-graphql-type-name or $defs entries.",
-      "NO_TYPES",
-    );
+    return "";
   }
 
   return finalSDL;
@@ -270,11 +313,14 @@ function convertTypeDefinition(
   const { options } = context;
 
   if (schema["x-graphql-enum"] || schema.enum) {
-    context.output.push(renderEnum(typeName, schema, options));
+    const r = renderEnum(typeName, schema, options);
+    if (r) context.output.push(r);
   } else if (schema.oneOf || schema["x-graphql-union-types"]) {
-    context.output.push(renderUnion(typeName, schema, context));
+    const r = renderUnion(typeName, schema, context);
+    if (r) context.output.push(r);
   } else if (schema.type === "object" || schema.properties || schema.allOf) {
-    context.output.push(renderObject(typeName, schema, context));
+    const r = renderObject(typeName, schema, context);
+    if (r) context.output.push(r);
   } else if (schema["x-graphql-type"] === "scalar") {
     context.output.push(`scalar ${typeName}\n`);
   }
@@ -290,10 +336,10 @@ function renderEnum(
 ): string {
   const lines: string[] = [];
   if (options.includeDescriptions && schema.description) {
-    lines.push(formatDescription(schema.description));
+    lines.push(formatDescription(schema.description, options));
   }
 
-  lines.push(`enum ${typeName}${formatDirectives(schema)} {`);
+  lines.push(`enum ${typeName}${formatDirectives(schema, options)} {`);
   let values: any[] = [];
   const enumConfig = schema["x-graphql-enum"];
 
@@ -317,7 +363,7 @@ function renderEnum(
       const valName = raw.name ?? raw.value;
       if (!valName) continue;
       if (raw.description && options.includeDescriptions) {
-        lines.push(`  ${formatDescription(raw.description).trim()}`);
+        lines.push(`  ${formatDescription(raw.description, options).trim()}`);
       }
       lines.push(`  ${valName}`);
     } else {
@@ -368,10 +414,10 @@ function renderUnion(
 
   const description =
     context.options.includeDescriptions && schema.description
-      ? `${formatDescription(schema.description)}\n`
+      ? `${formatDescription(schema.description, context.options)}\n`
       : "";
 
-  return `${description}union ${typeName}${formatDirectives(schema)} = ${[
+  return `${description}union ${typeName}${formatDirectives(schema, context.options)} = ${[
     ...members,
   ].join(" | ")}\n`;
 }
@@ -382,23 +428,7 @@ function renderObject(
   context: ConversionContext,
 ): string {
   const { options } = context;
-  const lines: string[] = [];
-
-  if (options.includeDescriptions && schema.description) {
-    lines.push(formatDescription(schema.description));
-  }
-
-  const implementsList = collectInterfaces(schema, context);
-  const header = [
-    schema["x-graphql-type"] === "interface" ? "interface" : "type",
-    typeName,
-    implementsList.length ? `implements ${implementsList.join(" & ")}` : "",
-    formatDirectives(schema),
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  lines.push(`${header} {`);
+  const fields: string[] = [];
 
   const properties = schema.properties ?? {};
   const propEntries = options.preserveFieldOrder
@@ -415,17 +445,39 @@ function renderObject(
       context,
     );
     if (field) {
-      lines.push(`  ${field}`);
+      fields.push(`  ${field}`);
     }
   }
 
+  // If there are no rendered fields, respect the emitEmptyTypes option to
+  // avoid emitting empty GraphQL type declarations which are invalid and
+  // cause parse errors.
+  if (fields.length === 0 && !options.emitEmptyTypes) return "";
+
+  const lines: string[] = [];
+  if (options.includeDescriptions && schema.description) {
+    lines.push(formatDescription(schema.description, options));
+  }
+
+  const implementsList = collectInterfaces(schema, context);
+  const header = [
+    schema["x-graphql-type"] === "interface" ? "interface" : "type",
+    typeName,
+    implementsList.length ? `implements ${implementsList.join(" & ")}` : "",
+    formatDirectives(schema, context.options),
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  lines.push(`${header.replace(/\s+/g, ' ').trim()} {`);
+  lines.push(...fields);
   lines.push("}\n");
   return lines.join("\n");
 }
 
 function toCamelCase(str: string): string {
   return str
-    .replace(/[-_]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
     .replace(/^[A-Z]/, (c) => c.toLowerCase());
 }
 
@@ -438,7 +490,7 @@ function convertField(
   const { options } = context;
   const description =
     options.includeDescriptions && schema.description
-      ? `${formatDescription(schema.description)}\n  `
+      ? `${formatDescription(schema.description, options)}\n  `
       : "";
 
   const fieldName =
@@ -446,12 +498,18 @@ function convertField(
     (options.namingConvention === "PRESERVE"
       ? propName
       : toCamelCase(propName));
+  const safeFieldName = sanitizeFieldName(fieldName, options.namingConvention);
   const args = formatArgs(schema);
-  const typeRef = inferGraphQLType(schema, isRequired, context);
+  let typeRef = inferGraphQLType(schema, isRequired, context, 0, propName);
+
+  const baseType = stripNonNull(typeRef);
+  if (shouldPromoteToId(propName, baseType, schema, options)) {
+    typeRef = isRequired ? 'ID!' : 'ID';
+  }
   if (!typeRef) return null;
 
-  const directives = formatDirectives(schema);
-  return `${description}${fieldName}${args}: ${typeRef}${directives}`;
+  const directives = formatDirectives(schema, context.options);
+  return `${description}${safeFieldName}${args}: ${typeRef}${directives}`;
 }
 
 // --- Type inference & $ref resolution ------------------------------------------
@@ -461,6 +519,7 @@ function inferGraphQLType(
   isRequired: boolean,
   context: ConversionContext,
   depth = 0,
+  nameHint?: string,
 ): string {
   const { options } = context;
   if (depth > options.maxDepth) {
@@ -481,6 +540,15 @@ function inferGraphQLType(
       sanitizeTypeName(schema["x-graphql-scalar"], options.namingConvention),
       isRequired,
     );
+  }
+
+  const multiType = Array.isArray(schema.type) ? schema.type : null;
+  if (multiType && multiType.length > 1) {
+    return finalizeType("JSON", isRequired);
+  }
+
+  if (schema.oneOf || schema.anyOf || schema.allOf) {
+    return finalizeType("JSON", isRequired);
   }
 
   if (schema.$ref) {
@@ -505,14 +573,48 @@ function inferGraphQLType(
       );
     case "boolean":
       return finalizeType("Boolean", isRequired);
+    case "null":
+      return finalizeType("JSON", isRequired);
     case "array": {
       const items = schema.items ?? {};
-      const itemType = inferGraphQLType(items, false, context, depth + 1);
+      const itemType = inferGraphQLType(
+        items,
+        false,
+        context,
+        depth + 1,
+        nameHint,
+      );
       return finalizeType(`[${itemType}]`, isRequired);
     }
     case "object": {
-      const fallback = propFallbackName(schema);
-      const typeName = getTypeName(schema, context, fallback);
+      const fallback = nameHint ?? propFallbackName(schema);
+      const isAnonymous = !schema.title && !schema["x-graphql-type-name"] && !schema["x-graphql-type"];
+      const propCount = Object.keys(schema.properties ?? {}).length;
+      const inlineThreshold = typeof schema["x-graphql-inline-object-threshold"] === 'number'
+        ? schema["x-graphql-inline-object-threshold"]
+        : options.inlineObjectThreshold;
+
+      // Only inline anonymous objects without name hints when explicitly allowed by threshold.
+      const shouldInline =
+        !nameHint &&
+        isAnonymous &&
+        inlineThreshold > 0 &&
+        propCount <= inlineThreshold &&
+        !(schema.required && schema.required.length > 0) &&
+        !schema.oneOf &&
+        !schema.anyOf &&
+        !schema.allOf;
+      if (shouldInline) {
+        return finalizeType("JSON", isRequired);
+      }
+
+      let typeName = getTypeName(schema, context, fallback);
+      // If this is an anonymous nested object (uses the generic fallback),
+      // generate a unique inline type name to avoid collisions and circular
+      // resolution when the same fallback name would otherwise be reused.
+      if (typeName && fallback === "NestedObject") {
+        typeName = uniqueInlineTypeName(fallback, context, options.namingConvention);
+      }
 
       if (typeName) {
         convertTypeDefinition(schema, typeName, context);
@@ -529,7 +631,8 @@ function ensureReferencedType(
   refPath: string,
   context: ConversionContext,
 ): string | null {
-  const { schema: target } = resolveRef(refPath, context);
+  const { schema: target, pointer } = resolveRef(refPath, context);
+
   if (!target || typeof target !== "object") {
     return null;
   }
@@ -537,6 +640,10 @@ function ensureReferencedType(
   const primitive = derivePrimitiveGraphQLType(target);
   if (primitive) {
     return primitive;
+  }
+
+  if (context.typeNames.has(pointer)) {
+    return context.typeNames.get(pointer)!;
   }
 
   const fallback = pointerLastSegment(refPath);
@@ -555,14 +662,24 @@ function resolveRef(
   visited: Set<string> = new Set(),
 ): { schema: JsonSchema; pointer: string } {
   if (!refPath.startsWith("#")) {
-    // Treat external refs as opaque objects for now to avoid crashing
-    const name =
-      refPath
-        .split("/")
-        .pop()
-        ?.replace(".schema.json", "")
-        .replace(/[^a-zA-Z0-9]/g, "_") || "ExternalType";
-    const pascalName = name.charAt(0).toUpperCase() + name.slice(1);
+    // Treat external refs as opaque objects; derive a stable name according
+    // to the configured `refNaming` strategy to avoid collisions.
+    const strategy = context.options.refNaming || 'basename';
+    const rawSegments = refPath.split("/").filter(Boolean);
+    let rawName = rawSegments[rawSegments.length - 1] ?? "ExternalType";
+    if (strategy === 'file_and_path') {
+      rawName = rawSegments.slice(Math.max(0, rawSegments.length - 2)).join("_");
+    } else if (strategy === 'hash') {
+      // FNV-1a 32-bit hash, base36 encoded for compactness
+      let h = 2166136261 >>> 0;
+      for (let i = 0; i < refPath.length; i++) {
+        h ^= refPath.charCodeAt(i);
+        h = Math.imul(h, 16777619) >>> 0;
+      }
+      rawName = `H${h.toString(36)}`;
+    }
+    rawName = rawName.replace(/\.schema\.json$/i, "");
+    const pascalName = sanitizeTypeName(rawName, context.options.namingConvention);
     return {
       schema: {
         type: "object",
@@ -623,7 +740,7 @@ function emitCustomScalars(schema: JsonSchema, context: ConversionContext) {
   context.output.push("# Custom Scalars");
   for (const [scalarName, scalarDef] of Object.entries(scalars)) {
     if (scalarDef.description && context.options.includeDescriptions) {
-      context.output.push(formatDescription(scalarDef.description));
+      context.output.push(formatDescription(scalarDef.description, context.options));
     }
     context.output.push(`scalar ${toPascalCase(scalarName)}\n`);
   }
@@ -639,7 +756,7 @@ function emitOperations(schema: JsonSchema, context: ConversionContext) {
     const lines = ["type Query {"];
     for (const [name, def] of Object.entries(ops.queries)) {
       if (def.description && context.options.includeDescriptions) {
-        lines.push(`  ${formatDescription(def.description).trim()}`);
+        lines.push(`  ${formatDescription(def.description, context.options).trim()}`);
       }
       const args = formatOperationArgs(def.args);
       const resultType = def.type ?? "String";
@@ -655,7 +772,7 @@ function emitOperations(schema: JsonSchema, context: ConversionContext) {
     const lines = ["type Mutation {"];
     for (const [name, def] of Object.entries(ops.mutations)) {
       if (def.description && context.options.includeDescriptions) {
-        lines.push(`  ${formatDescription(def.description).trim()}`);
+        lines.push(`  ${formatDescription(def.description, context.options).trim()}`);
       }
       const args = formatOperationArgs(def.args);
       const resultType = def.type ?? "String";
@@ -671,23 +788,27 @@ function emitOperations(schema: JsonSchema, context: ConversionContext) {
 function normalizeOptions(
   options: ExtendedConverterOptions,
 ): NormalizedConverterOptions {
-  let federationVersion = 2;
-  if (options.federationVersion === 'V1') {
-    federationVersion = 1;
-  } else if (options.federationVersion === 'NONE') {
-    federationVersion = 0;
-  }
-
   const validate = options.validate ?? true;
   const includeDescriptions = options.includeDescriptions ?? true;
   const preserveFieldOrder = options.preserveFieldOrder ?? true;
   const namingConvention = options.namingConvention ?? 'GRAPHQL_IDIOMATIC';
   const inferIds = options.inferIds ?? false;
+  const requestedIdStrategy = options.idStrategy ?? 'NONE';
+  const idStrategy = requestedIdStrategy !== 'NONE' ? requestedIdStrategy : (inferIds ? 'COMMON_PATTERNS' : 'NONE');
+  const outputFormat = options.outputFormat ?? 'SDL';
+  const failOnWarning = options.failOnWarning ?? false;
+  const includeFederationDirectives = options.includeFederationDirectives ?? true;
+  const federationVersion = options.federationVersion ?? 'V2';
   const maxDepth = options.maxDepth ?? 25;
 
   const excludeTypes = Array.from(new Set(options.excludeTypes ?? []));
   const excludePatterns = Array.from(new Set(options.excludePatterns ?? []));
   const excludeRegexes = excludePatterns.map((pattern) => new RegExp(pattern));
+
+  const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
+  const emitEmptyTypes = options.emitEmptyTypes ?? false;
+  const inlineObjectThreshold = options.inlineObjectThreshold ?? 3;
+  const refNaming = (options.refNaming as any) ?? 'basename';
 
   return {
     validate,
@@ -695,12 +816,64 @@ function normalizeOptions(
     preserveFieldOrder,
     namingConvention,
     inferIds,
+    idStrategy,
+    outputFormat,
+    failOnWarning,
+    includeFederationDirectives,
     maxDepth,
     federationVersion,
     excludeTypes,
     excludePatterns,
     excludeRegexes,
+    descriptionBlockThreshold,
+    emitEmptyTypes,
+    inlineObjectThreshold,
+    refNaming,
   };
+}
+
+function detectFederationVersion(schema: JsonSchema): FederationVersion {
+  const stack: JsonSchema[] = [schema];
+
+  while (stack.length) {
+    const current = stack.pop();
+    if (!current || typeof current !== 'object') continue;
+
+    if (
+      current["x-graphql-federation-keys"] ||
+      current["x-graphql-federation-shareable"] ||
+      current["x-graphql-federation-inaccessible"] ||
+      current["x-graphql-federation-authenticated"] ||
+      current["x-graphql-federation-interface-object"] ||
+      current["x-graphql-federation-requires-scopes"]
+    ) {
+      return 'V2';
+    }
+
+    const directives = current["x-graphql-directives"];
+    if (Array.isArray(directives)) {
+      for (const dir of directives) {
+        const name = (dir as GraphQLDirective | undefined)?.name;
+        if (name === 'key' || name === 'shareable' || name === 'inaccessible' || name === 'extends') {
+          return 'V2';
+        }
+      }
+    }
+
+    if (current.properties) {
+      stack.push(...Object.values(current.properties));
+    }
+    if (current.items && typeof current.items === 'object') {
+      stack.push(current.items as JsonSchema);
+    }
+    if (Array.isArray(current.oneOf)) stack.push(...current.oneOf);
+    if (Array.isArray(current.anyOf)) stack.push(...current.anyOf);
+    if (Array.isArray(current.allOf)) stack.push(...current.allOf);
+    if (current.$defs) stack.push(...Object.values(current.$defs));
+    if (current.definitions) stack.push(...Object.values(current.definitions));
+  }
+
+  return 'NONE';
 }
 
 export class Converter implements IJsonSchemaConverter {
@@ -709,24 +882,55 @@ export class Converter implements IJsonSchemaConverter {
       const jsonSchema = typeof input.jsonSchema === 'string'
         ? JSON.parse(input.jsonSchema)
         : input.jsonSchema;
+      const rawOptions = (input.options ?? {}) as ExtendedConverterOptions;
+      const normalized = normalizeOptions(rawOptions);
+      const resolvedFederation = normalized.federationVersion === 'AUTO'
+        ? detectFederationVersion(jsonSchema)
+        : normalized.federationVersion;
+      const resolvedOptions: NormalizedConverterOptions = {
+        ...normalized,
+        federationVersion: resolvedFederation,
+      };
 
-      const sdl = jsonSchemaToGraphQL(jsonSchema, input.options || {});
+      const sdl = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
+
+      let output = sdl;
+      if (resolvedOptions.outputFormat === 'AST_JSON') {
+        if (!sdl) {
+          output = 'null';
+        } else {
+          const ast = parse(sdl, { noLocation: true });
+          output = JSON.stringify(ast);
+        }
+      }
+
+      const diagnostics: Diagnostic[] = [];
+      const warningCount = diagnostics.filter((d) => d.severity === 'WARNING').length;
+      const errorCount = diagnostics.filter((d) => d.severity === 'ERROR').length;
+      const success = errorCount === 0 && (!resolvedOptions.failOnWarning || warningCount === 0);
 
       return {
-        sdl,
-        diagnostics: [],
-        success: true
+        output,
+        diagnostics,
+        success,
+        errorCount,
+        warningCount,
       };
     } catch (error: any) {
+      const diagnostic: Diagnostic = {
+        severity: 'ERROR' as DiagnosticSeverity,
+        kind: 'OTHER' as DiagnosticKind,
+        message: error.message || String(error),
+        path: null,
+        code: 'CONVERSION_ERROR'
+      };
+
       return {
-        sdl: null,
-        diagnostics: [{
-          severity: 'ERROR' as DiagnosticSeverity,
-          message: error.message || String(error),
-          path: null,
-          code: 'CONVERSION_ERROR'
-        }],
-        success: false
+        output: null,
+        diagnostics: [diagnostic],
+        success: false,
+        errorCount: 1,
+        warningCount: 0
       };
     }
   }
@@ -788,18 +992,57 @@ function getTypeName(
   return null;
 }
 
+// Generate a unique type name for anonymous inlined objects when the
+// fallback is the generic `NestedObject` to avoid accidental name
+// collisions which can lead to circular resolution during conversion.
+function uniqueInlineTypeName(
+  fallback: string,
+  context?: ConversionContext,
+  namingConvention: NamingConvention = 'GRAPHQL_IDIOMATIC',
+): string {
+  const base = sanitizeTypeName(fallback, namingConvention);
+  if (!context) return base;
+  let candidate = base;
+  let i = 1;
+  while (context.generatedTypes.has(candidate) || context.generating.has(candidate)) {
+    candidate = `${base}${i}`;
+    i += 1;
+  }
+  return candidate;
+}
+
 function sanitizeTypeName(
   value: string,
   namingConvention: NamingConvention = "GRAPHQL_IDIOMATIC",
 ): string {
   if (namingConvention === "PRESERVE") {
-    return value.replace(/[^a-zA-Z0-9_]/g, "_");
+    let v = value.replace(/[^a-zA-Z0-9_]/g, "_");
+    if (/^[0-9]/.test(v)) v = `_${v}`;
+    return v;
   }
   return value
-    .replace(/[^a-zA-Z0-9_]/g, " ")
+    .replace(/[_]+/g, " ")
+    .replace(/[^a-zA-Z0-9]+/g, " ")
     .split(" ")
+    .filter(Boolean)
     .map(toPascalCase)
-    .join("");
+    .join("")
+    .replace(/[^_0-9A-Za-z]/g, "_")
+    .replace(/^([0-9]+)/, "_$1");
+}
+
+
+function sanitizeFieldName(name: string, namingConvention: NamingConvention) {
+  let base: string;
+  if (namingConvention === "PRESERVE") {
+    base = name.replace(/[^a-zA-Z0-9_]/g, "_");
+  } else {
+    // Replace non alphanumeric chunks with spaces so toCamelCase converts them
+    base = toCamelCase(name.replace(/[^a-zA-Z0-9]+/g, " "));
+  }
+  // Ensure it starts with a letter or underscore and contains only valid chars
+  const cleaned = base.replace(/[^_0-9A-Za-z]/g, "_");
+  return /^[A-Za-z_]/.test(cleaned) ? cleaned : `_${cleaned}`;
 }
 
 function propFallbackName(schema: JsonSchema): string {
@@ -843,7 +1086,11 @@ function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
     return toPascalCase(schema["x-graphql-scalar"]);
   }
 
-  const schemaType = Array.isArray(schema.type) ? schema.type[0] : schema.type;
+  const schemaType = Array.isArray(schema.type)
+    ? schema.type.length > 1
+      ? null
+      : schema.type[0]
+    : schema.type;
 
   switch (schemaType) {
     case "string":
@@ -890,6 +1137,29 @@ function finalizeType(typeName: string, required: boolean): string {
   return typeName;
 }
 
+function stripNonNull(typeName: string): string {
+  return typeName.endsWith('!') ? typeName.slice(0, -1) : typeName;
+}
+
+function shouldPromoteToId(
+  propName: string,
+  baseType: string,
+  schema: JsonSchema,
+  options: NormalizedConverterOptions,
+): boolean {
+  const strategy = options.idStrategy;
+  if (strategy === 'NONE') return false;
+  if (baseType !== 'String') return false;
+
+  const nameLower = propName.toLowerCase();
+  if (strategy === 'COMMON_PATTERNS') {
+    return nameLower === 'id' || nameLower === '_id' || nameLower.endsWith('id');
+  }
+
+  // ALL_STRINGS: any string-like field qualifies unless explicitly typed otherwise
+  return schema.type === undefined || schema.type === 'string' || (Array.isArray(schema.type) && schema.type.includes('string'));
+}
+
 function collectInterfaces(
   schema: JsonSchema,
   context: ConversionContext,
@@ -914,48 +1184,60 @@ function collectInterfaces(
   return [...implementsList];
 }
 
-function formatDescription(description: string): string {
-  if (description.includes("\n")) {
-    return `"""${description.replace(/"""/g, '\\"""')}"""`;
+function formatDescription(description: string, options?: NormalizedConverterOptions): string {
+  const BLOCK_THRESHOLD = options?.descriptionBlockThreshold ?? 80;
+  const shouldBlock = description.includes("\n") || description.length >= BLOCK_THRESHOLD;
+  if (shouldBlock) {
+    return `"""${description.replace(/"""/g, '\\"\"\"')}"""`;
   }
   return `"${description.replace(/"/g, '\\"')}"`;
 }
 
-function formatDirectives(schema: JsonSchema): string {
+function formatDirectives(schema: JsonSchema, options?: NormalizedConverterOptions): string {
   const directives: GraphQLDirective[] = [];
 
+  const includeFederation =
+    (options?.includeFederationDirectives ?? true) &&
+    options?.federationVersion !== 'NONE';
+
   if (Array.isArray(schema["x-graphql-directives"])) {
-    directives.push(...schema["x-graphql-directives"]);
+    for (const dir of schema["x-graphql-directives"]) {
+      if (!dir?.name) continue;
+      if (!includeFederation && isFederationDirective(dir.name)) continue;
+      directives.push(dir);
+    }
   }
 
-  if (schema["x-graphql-federation-shareable"]) {
-    directives.push({ name: "shareable" });
-  }
-  if (schema["x-graphql-federation-inaccessible"]) {
-    directives.push({ name: "inaccessible" });
-  }
-  if (schema["x-graphql-federation-authenticated"]) {
-    directives.push({ name: "authenticated" });
-  }
-  if (schema["x-graphql-federation-interface-object"]) {
-    directives.push({ name: "interfaceObject" });
-  }
-  if (schema["x-graphql-federation-requires-scopes"]) {
-    directives.push({
-      name: "requiresScopes",
-      arguments: { scopes: schema["x-graphql-federation-requires-scopes"] },
-    });
-  }
+  if (includeFederation) {
+    if (schema["x-graphql-federation-shareable"]) {
+      directives.push({ name: "shareable" });
+    }
+    if (schema["x-graphql-federation-inaccessible"]) {
+      directives.push({ name: "inaccessible" });
+    }
+    if (schema["x-graphql-federation-authenticated"]) {
+      directives.push({ name: "authenticated" });
+    }
+    if (schema["x-graphql-federation-interface-object"]) {
+      directives.push({ name: "interfaceObject" });
+    }
+    if (schema["x-graphql-federation-requires-scopes"]) {
+      directives.push({
+        name: "requiresScopes",
+        arguments: { scopes: schema["x-graphql-federation-requires-scopes"] },
+      });
+    }
 
-  if (Array.isArray(schema["x-graphql-federation-keys"])) {
-    for (const key of schema["x-graphql-federation-keys"]) {
-      if (typeof key === "string") {
-        directives.push({ name: "key", arguments: { fields: key } });
-      } else if (key && typeof key === "object" && key.fields) {
-        directives.push({
-          name: "key",
-          arguments: { fields: key.fields, resolvable: key.resolvable },
-        });
+    if (Array.isArray(schema["x-graphql-federation-keys"])) {
+      for (const key of schema["x-graphql-federation-keys"]) {
+        if (typeof key === "string") {
+          directives.push({ name: "key", arguments: { fields: key } });
+        } else if (key && typeof key === "object" && key.fields) {
+          directives.push({
+            name: "key",
+            arguments: { fields: key.fields, resolvable: key.resolvable },
+          });
+        }
       }
     }
   }
@@ -977,7 +1259,7 @@ function formatDirectives(schema: JsonSchema): string {
                       .map((s: string) => `"${s}"`)
                       .join(", ")}]`,
                 )
-                .join(", ")}]`;
+                .join(", ")} ]`;
             }
             return `${key}: ${JSON.stringify(value)}`;
           })
@@ -988,6 +1270,17 @@ function formatDirectives(schema: JsonSchema): string {
 
   const joined = parts.filter(Boolean).join(" ");
   return joined ? ` ${joined}` : "";
+}
+
+function isFederationDirective(name: string): boolean {
+  return (
+    name === 'key' ||
+    name === 'shareable' ||
+    name === 'inaccessible' ||
+    name === 'requiresScopes' ||
+    name === 'authenticated' ||
+    name === 'interfaceObject'
+  );
 }
 
 function formatArgs(schema: JsonSchema): string {

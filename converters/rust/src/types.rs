@@ -31,6 +31,14 @@ pub struct ConversionOptions {
     pub exclude_types: Vec<String>,
     /// List of regex patterns to exclude fields or types
     pub exclude_patterns: Vec<String>,
+    /// Threshold in characters for descriptions to become block strings
+    pub description_block_threshold: usize,
+    /// Whether to emit empty object types (no fields)
+    pub emit_empty_types: bool,
+    /// Maximum number of properties for anonymous objects to be inlined as JSON
+    pub inline_object_threshold: usize,
+    /// Strategy for naming types derived from $ref values
+    pub ref_naming: RefNaming,
 }
 
 impl Default for ConversionOptions {
@@ -44,8 +52,20 @@ impl Default for ConversionOptions {
             naming_convention: NamingConvention::GraphqlIdiomatic,
             exclude_types: vec![],
             exclude_patterns: vec![],
+            description_block_threshold: 80,
+            emit_empty_types: false,
+            inline_object_threshold: 3,
+            ref_naming: RefNaming::Basename,
         }
     }
+}
+
+/// Strategies for deriving names from $ref values
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum RefNaming {
+    Basename,
+    FileAndPath,
+    Hash,
 }
 
 /// Naming conventions for generated GraphQL artifacts

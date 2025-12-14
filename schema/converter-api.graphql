@@ -42,6 +42,7 @@ input ConverterOptions {
     """
     If true, attempts to infer the ID scalar for fields named 'id', '_id', etc.
     Deprecated: Use idStrategy instead.
+    If both `inferIds` and `idStrategy` are provided, `idStrategy` takes precedence.
     """
     inferIds: Boolean = false
 
@@ -144,6 +145,7 @@ enum OutputFormat {
     SDL_WITH_FEDERATION_METADATA
     """
     JSON representation of the GraphQL AST.
+    The JSON format is stable and versioned according to this library's semantic version, making it suitable as an interface boundary for downstream tooling.
     """
     AST_JSON
 }

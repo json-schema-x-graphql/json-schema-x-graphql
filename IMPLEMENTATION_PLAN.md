@@ -2,7 +2,24 @@
 
 This plan outlines the steps to unify the Node.js and Rust converters under a single, strictly typed API defined by the GraphQL SDL (`schema/converter-api.graphql`).
 
-**Status Update**: The GraphQL SDL has been updated with improved semantics for federation, ID inference, output formats, and diagnostics.
+**Status Update**: The GraphQL SDL has been updated with improved semantics for federation, ID inference, output formats, and diagnostics. Type generation for Node has been completed (`converters/node/src/generated/types.ts`). The Rust API types in `converters/rust/src/api_types.rs` match the SDL. **Node converter refactor is complete and the parity harness now passes end-to-end.** The workspace test runner still fails due to the Rust example path rejecting `fuzz_edge_cases` (`InvalidType("schema must be an object")`); outputs are cleared to avoid stale comparisons.
+
+**Parity Progress**:
+- **Sanitization**: Aligned.
+- **Empty Objects**: Aligned.
+- **Collision Detection**: Aligned (Rust implements two-pass strategy).
+- **Inline Objects**: Aligned (Rust implements recursive generation).
+- **Validation**: Aligned (Rust validation relaxed).
+- **Tests**: Parity harness passing for all fixtures when run via `src/parity.test.ts`. Workspace `pnpm -w -C converters/node test --silent` still fails because the Rust example runner returns `InvalidType("schema must be an object")` on `fuzz_edge_cases`.
+
+**Remaining Parity Work**:
+- Address the Rust example runner failure on `fuzz_edge_cases` (either handle empty objects consistently or skip in example path).
+- Minor formatting differences (whitespace) are acceptable.
+- Recursion depth handling differences are acceptable.
+
+**Immediate Next Steps**:
+1.  **Phase 3 (Rust Refactor)**: Update the Rust converter to fully implement the new `ConverterOptions` interface and handle problematic fixtures (e.g., `fuzz_edge_cases`) without hard failures.
+2.  **Verification**: Ensure both converters pass the comprehensive test suite with the new options enabled, including workspace-level runners.
 
 ## Phase 1: Type Generation
 
@@ -32,7 +49,7 @@ This plan outlines the steps to unify the Node.js and Rust converters under a si
     };
     export default config;
     ```
-3.  **Generate**: Run `graphql-codegen` to produce `src/generated/types.ts`.
+3.  **Generate**: Run `graphql-codegen` to produce `src/generated/types.ts`. (Completed) The TypeScript types have been updated to reflect the SDL edits — see `converters/node/src/generated/types.ts` for the resulting declarations (includes `inferIds` precedence note and `AST_JSON` stability note).
 
 ### 1.2 Rust
 1.  **Tooling**: Use `async-graphql` or a dedicated codegen tool like `graphql-client` (though we are implementing the server-side of the interface, so we might need to manually map structs or use a schema-derive macro if available).
@@ -145,6 +162,12 @@ This plan outlines the steps to unify the Node.js and Rust converters under a si
     *   Run the benchmark.
     *   Compare outputs. The Node converter (now with `toCamelCase` and Federation support) should produce output much closer to the Rust converter.
     *   Verify `Diagnostic` structures match between implementations.
+
+3.  **New Feature Verification**:
+    *   **ID Strategy**: Create a test case with `idStrategy: PROVIDED` vs `idStrategy: AUTO` and verify both converters produce identical output for each mode.
+    *   **Federation**: Create a test case with `includeFederationDirectives: true` and `federationVersion: 2.0` and verify `@key` directives are generated identically.
+    *   **Output Format**: Verify `outputFormat: JSON` (if implemented) produces identical AST JSON.
+    *   **Error Handling**: Create a schema that triggers a warning and verify `failOnWarning: true` causes both converters to error out with the same diagnostic code.
 
 ## Phase 5: Documentation
 

@@ -3,6 +3,13 @@ import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
 import { jsonSchemaToGraphQL } from './converter';
+import {
+  FederationVersion,
+  NamingConvention,
+  IdInferenceStrategy,
+  OutputFormat,
+  ConverterOptions,
+} from './generated/types';
 
 const { values, positionals } = parseArgs({
   options: {
@@ -16,11 +23,41 @@ const { values, positionals } = parseArgs({
     },
     descriptions: {
       type: 'boolean',
-      default: false,
     },
     'preserve-order': {
       type: 'boolean',
+    },
+    'include-federation-directives': {
+      type: 'boolean',
+      default: true,
+    },
+    'federation-version': {
+      type: 'string',
+    },
+    'naming-convention': {
+      type: 'string',
+    },
+    'infer-ids': {
+      type: 'boolean',
       default: false,
+    },
+    'id-strategy': {
+      type: 'string',
+    },
+    'output-format': {
+      type: 'string',
+    },
+    'fail-on-warning': {
+      type: 'boolean',
+      default: false,
+    },
+    'exclude-type': {
+      type: 'string',
+      multiple: true,
+    },
+    'exclude-pattern': {
+      type: 'string',
+      multiple: true,
     },
     help: {
       type: 'boolean',
@@ -43,6 +80,15 @@ Options:
   -o, --output <OUTPUT>  Output file path (defaults to stdout)
       --descriptions     Include descriptions in output
       --preserve-order   Preserve field order
+      --include-federation-directives  Emit federation directives (default: true)
+      --federation-version <NONE|V1|V2|AUTO>  Target federation version (default: V2)
+      --naming-convention <PRESERVE|GRAPHQL_IDIOMATIC>  Naming strategy
+      --infer-ids        Infer ID scalars for common patterns (deprecated in favor of --id-strategy)
+      --id-strategy <NONE|COMMON_PATTERNS|ALL_STRINGS>  ID inference strategy
+      --output-format <SDL|SDL_WITH_FEDERATION_METADATA|AST_JSON>  Output format
+      --fail-on-warning  Treat warnings as errors
+      --exclude-type <NAME>          Exclude a type (repeatable)
+      --exclude-pattern <REGEX>      Exclude types/fields matching pattern (repeatable)
   -h, --help             Print help
   -v, --version          Print version
 `);
@@ -65,12 +111,31 @@ if (!inputPath) {
 try {
   const schemaContent = fs.readFileSync(inputPath, 'utf-8');
   const schema = JSON.parse(schemaContent);
+  const toEnum = <T extends string>(value: string | undefined, fallback: T): T => {
+    return (value ? value.toUpperCase() : fallback) as T;
+  };
 
-  const sdl = jsonSchemaToGraphQL(schema, {
+  const converterOptions: ConverterOptions = {
     includeDescriptions: values.descriptions,
     preserveFieldOrder: values['preserve-order'],
-    federationVersion: 'V2', // Defaulting to federation 2 for parity with Rust/Legacy
-  });
+    includeFederationDirectives: values['include-federation-directives'],
+    federationVersion: toEnum<FederationVersion>(values['federation-version'], 'V2'),
+    namingConvention: values['naming-convention']
+      ? toEnum<NamingConvention>(values['naming-convention'], 'GRAPHQL_IDIOMATIC')
+      : undefined,
+    inferIds: values['infer-ids'],
+    idStrategy: values['id-strategy']
+      ? toEnum<IdInferenceStrategy>(values['id-strategy'], 'NONE')
+      : undefined,
+    outputFormat: values['output-format']
+      ? toEnum<OutputFormat>(values['output-format'], 'SDL')
+      : undefined,
+    failOnWarning: values['fail-on-warning'],
+    excludeTypes: values['exclude-type'],
+    excludePatterns: values['exclude-pattern'],
+  };
+
+  const sdl = jsonSchemaToGraphQL(schema, converterOptions);
 
   if (values.output) {
     fs.writeFileSync(values.output, sdl);

@@ -34,6 +34,7 @@ impl MutationRoot {
                 FederationVersion::None => 0,
                 FederationVersion::V1 => 1,
                 FederationVersion::V2 => 2,
+                FederationVersion::Auto => 2,
             },
             infer_ids: options.infer_ids,
             naming_convention: match options.naming_convention {
@@ -44,25 +45,34 @@ impl MutationRoot {
             },
             exclude_types: options.exclude_types,
             exclude_patterns: options.exclude_patterns,
+            description_block_threshold: 80,
+            emit_empty_types: false,
+            inline_object_threshold: 3,
+            ref_naming: crate::types::RefNaming::Basename,
         };
 
         let converter = Converter::with_options(internal_options);
 
         match converter.convert(&input.json_schema, ConversionDirection::JsonSchemaToGraphQL) {
             Ok(sdl) => Ok(ConversionResult {
-                sdl: Some(sdl),
+                output: Some(sdl),
                 diagnostics: vec![], // TODO: Capture actual diagnostics if converter supports them
                 success: true,
+                error_count: 0,
+                warning_count: 0,
             }),
             Err(e) => Ok(ConversionResult {
-                sdl: None,
+                output: None,
                 diagnostics: vec![Diagnostic {
                     severity: DiagnosticSeverity::Error,
+                    kind: None,
                     message: e.to_string(),
                     path: None,
                     code: None,
                 }],
                 success: false,
+                error_count: 1,
+                warning_count: 0,
             }),
         }
     }

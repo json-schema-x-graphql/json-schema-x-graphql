@@ -178,8 +178,8 @@ fn main() {
 
     try {
       // Try to run using cargo script
-      const cmd = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}" 2>&1`;
-      const output = execSync(cmd, { encoding: "utf-8", stdio: "pipe" });
+      const cmd = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}"`;
+      execSync(cmd, { encoding: "utf-8", stdio: "inherit" });
 
       const duration = Date.now() - startTime;
       const result = readFileSync(outputFile, "utf-8");
@@ -361,6 +361,13 @@ async function main() {
       console.log();
       const rustResult = await testRustConverter(inputFile, rustOutputFile);
       console.log();
+
+      if (!nodeResult.success || !rustResult.success) {
+        // Ensure deterministic outputs even when one converter fails so parity
+        // checks do not reuse stale files from previous runs.
+        writeFileSync(nodeOutputFile, "", "utf-8");
+        writeFileSync(rustOutputFile, "", "utf-8");
+      }
 
       compareOutputs(nodeResult, rustResult);
     } catch (error) {

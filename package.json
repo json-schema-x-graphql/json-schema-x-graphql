@@ -14,6 +14,7 @@
   "workspaces": [
     "converters/node"
   ],
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --release",
@@ -29,7 +30,8 @@
     "converters:rust:build": "cd converters/rust && cargo build --release",
     "converters:rust:test": "cd converters/rust && cargo test",
     "converters:test": "npm run converters:node:test && npm run converters:rust:test",
-    "converters:compare": "node scripts/test-both-converters.js"
+    "converters:compare": "node scripts/test-both-converters.js",
+    "test:parity": "jest converters/node/src/parity.test.ts"
   },
   "keywords": [
     "graphql",
@@ -64,7 +66,8 @@
     "rollup": "^4.9.4",
     "ts-jest": "^29.1.1",
     "typedoc": "^0.25.6",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "graphql": "^16.7.0"
   },
   "dependencies": {},
   "peerDependencies": {

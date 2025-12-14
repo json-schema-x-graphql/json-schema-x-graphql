@@ -39,6 +39,7 @@ fn main() {
         naming_convention: NamingConvention::GraphqlIdiomatic,
         exclude_types: vec![],
         exclude_patterns: vec![],
+        ..Default::default()
     };
 
     let converter = Converter::with_options(options);

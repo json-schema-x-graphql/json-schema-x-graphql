@@ -53,7 +53,10 @@ Unacceptable behavior will not be tolerated and may result in removal from the p
 
 3. **Install Node.js dependencies**:
    ```bash
-   npm install
+   # Use Corepack + pnpm (preferred)
+   corepack enable
+   corepack prepare pnpm@10.13.1 --activate
+   pnpm -w install
    ```
 
 4. **Build WASM module**:
@@ -73,9 +76,21 @@ Unacceptable behavior will not be tolerated and may result in removal from the p
 6. **Run the development server** (frontend):
    ```bash
    cd frontend
-   npm install
+    pnpm install
    npm run dev
    ```
+
+**Note (CI):** We recommend enabling Corepack in CI and preparing the pinned `pnpm` version before running `pnpm install`. Example (GitHub Actions):
+
+```yaml
+- name: Enable Corepack
+   run: |
+      corepack enable
+      corepack prepare pnpm@10.13.1 --activate
+
+- name: Install dependencies
+   run: pnpm -w install
+```
 
 ---
 

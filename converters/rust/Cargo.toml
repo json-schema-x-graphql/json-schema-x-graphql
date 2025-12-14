@@ -19,7 +19,7 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 async-graphql = { version = "7.0.5" }
 serde = { version = "1.0", features = ["derive"] }
-serde_json = { version = "1.0" }
+serde_json = { version = "1.0", features = ["preserve_order"] }
 thiserror = "1.0"
 indexmap = { version = "2.1", features = ["serde"] }
 regex = "1.7"

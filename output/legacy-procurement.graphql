@@ -17,8 +17,18 @@ scalar Email
 "Valid URI/URL"
 scalar Uri
 
+"""Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
+type AssistRecord {
+  "System-level metadata for lineage, versioning, and ingestion."
+  systemMetadata: SystemMetadata!
+  "Legacy Procurement-specific domain fields."
+  legacyProcurementSpecific: AssistSpecificData!
+  """Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."""
+  iaPiidOrUniqueId: String
+}
+
 "Metadata describing the source system, identifiers, and lifecycle timestamps."
-type SystemMetadata  @shareable {
+type SystemMetadata @shareable {
   "Constant system identifier string"
   systemName: String!
   "Primary identifier of the record within Legacy Procurement"
@@ -31,12 +41,34 @@ type SystemMetadata  @shareable {
   lastModified: DateTime
 }
 
+"Container for Legacy Procurement-specific data slices."
+type AssistSpecificData {
+  "Acquisition-related data coming from Legacy Procurement."
+  acquisitionData: AssistAcquisitionData
+  "Client organization data associated with the Legacy Procurement record."
+  clientData: AssistClientData
+  "Award-related metadata specific to Legacy Procurement."
+  awardData: AssistAwardData
+}
+
 "Acquisition data including agreement identifiers and acquisition nature."
 type AssistAcquisitionData {
   "Interagency agreement PIID or unique identifier within Legacy Procurement"
   iaPiidOrUniqueId: String!
   "Nature of acquisition (taxonomy specific to Legacy Procurement)"
   natureOfAcquisition: String!
+}
+
+"Client organization identity and related information."
+type AssistClientData {
+  "Name of the client organization"
+  clientOrganizationName: String!
+  "Client office address"
+  officeAddress: AssistOfficeAddress
+  "Primary client point-of-contact email"
+  primaryContactEmail: Email
+  "Primary client point-of-contact phone"
+  primaryContactPhone: String
 }
 
 "Address structure for client organizations in Legacy Procurement."
@@ -55,26 +87,6 @@ type AssistOfficeAddress {
   country: String
 }
 
-"Client organization identity and related information."
-type AssistClientData {
-  "Name of the client organization"
-  clientOrganizationName: String!
-  "Client office address"
-  officeAddress: AssistOfficeAddress
-  "Primary client point-of-contact email"
-  primaryContactEmail: Email
-  "Primary client point-of-contact phone"
-  primaryContactPhone: String
-}
-
-"Start and end dates for a period of performance."
-type PeriodOfPerformance {
-  "Start date (YYYY-MM-DD)"
-  startDate: Date
-  "End date (YYYY-MM-DD)"
-  endDate: Date
-}
-
 "Award-related settings and timelines within Legacy Procurement."
 type AssistAwardData {
   "Type of indefinite delivery contract (if applicable)"
@@ -87,27 +99,15 @@ type AssistAwardData {
   optionPeriods: [PeriodOfPerformance]
 }
 
-"Container for Legacy Procurement-specific data slices."
-type AssistSpecificData {
-  "Acquisition-related data coming from Legacy Procurement."
-  acquisitionData: AssistAcquisitionData
-  "Client organization data associated with the Legacy Procurement record."
-  clientData: AssistClientData
-  "Award-related metadata specific to Legacy Procurement."
-  awardData: AssistAwardData
+"Start and end dates for a period of performance."
+type PeriodOfPerformance {
+  "Start date (YYYY-MM-DD)"
+  startDate: Date
+  "End date (YYYY-MM-DD)"
+  endDate: Date
 }
 
-"Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."
-type AssistRecord {
-  "System-level metadata for lineage, versioning, and ingestion."
-  systemMetadata: SystemMetadata!
-  "Legacy Procurement-specific domain fields."
-  legacyProcurementSpecific: AssistSpecificData!
-  "Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."
-  iaPiidOrUniqueId: String
-}
-
-"Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields."
+"""Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields."""
 type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
   legacyProcurementRecord: AssistRecord

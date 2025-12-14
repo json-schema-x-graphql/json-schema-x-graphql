@@ -1,16 +1,15 @@
-type SimpleString {
+type DeepData {
+  value: Int
 }
 
 type Structure {
   data: DeepData
 }
 
-"""
-Test schema for deeply nested $ref resolution
-"""
+"Test schema for deeply nested $ref resolution"
 type Root {
-  deep: Data
-  simple: SimpleString
+  simple: String
+  deep: DeepData
 }
 
 

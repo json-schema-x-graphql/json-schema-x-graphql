@@ -28,6 +28,7 @@
     "url": "https://github.com/JJediny/json-schema-x-graphql.git",
     "directory": "converters/node"
   },
+  "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/typescript": "^5.0.6",

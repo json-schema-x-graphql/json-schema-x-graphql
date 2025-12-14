@@ -78,6 +78,7 @@ async fn main() -> Result<()> {
         naming_convention,
         exclude_types: args.exclude_types,
         exclude_patterns: args.exclude_patterns,
+        ..Default::default()
     };
 
     let converter = Converter::with_options(options);

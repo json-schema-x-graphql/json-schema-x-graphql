@@ -1,0 +1,139 @@
+# 0007: Canonical rules for object inlining, naming, and converter options
+Date: 2025-12-14
+
+## Status
+
+Proposed
+
+## Context
+
+During cross-language parity work between the Node and Rust converters we discovered a set of small but recurring semantic mismatches that are best resolved by choosing and documenting canonical rules. The disagreements center on:
+
+- When to emit an anonymous object as a named GraphQL type vs treat it as an opaque `JSON` value
+- How to format GraphQL descriptions (inline vs block) deterministically
+- How to produce stable, sanitized GraphQL identifiers for types and fields
+- How `$ref` naming should map to GraphQL type names in deterministic ways
+
+Without a documented, agreed baseline, parity tests will keep surfacing behavioral differences that are design choices rather than bugs. This ADR captures the canonical defaults and the configuration surface by which they can be overridden.
+
+## Decision
+
+We adopt the following canonical rules (defaults) and surface them as `ConverterOptions` (converter-level options) and per-schema overrides via extension fields (prefixed with `x-graphql-` in JSON Schema).
+
+1. Description formatting
+   - Rule: Emit a block string (GraphQL triple-quoted) when the description contains a newline or its length exceeds `descriptionBlockThreshold` characters; otherwise emit an inline string.
+   - Default: `descriptionBlockThreshold = 80`.
+   - Inline descriptions must end with a single newline when rendered (to ensure separation from type definition lines).
+
+2. Empty object types
+   - Rule: Do not emit an explicit GraphQL object definition for an object that has no fields *and* does not declare useful constraints (e.g. `enum`, `additionalProperties` with known structure). Omit emitting a type to avoid creating invalid or useless SDL.
+   - Default: `emitEmptyTypes = false`.
+
+3. Anonymous inline objects
+   - Rule: For anonymous objects that are small and not referenced elsewhere, prefer representing them as the `JSON` scalar instead of emitting a new named GraphQL object type. This significantly reduces anonymous type churn and yields more pragmatic SDL.
+   - Heuristics for inlining as `JSON` (defaults):
+     - `inlineObjectThreshold` (max properties) = 3
+     - object has no `required` fields that must be surfaced as GraphQL fields
+     - object does not have schema features that require structural typing in GraphQL (e.g. `oneOf`, `anyOf` where alternatives map to GraphQL unions)
+   - If these heuristics are not met, or the object is referenced multiple times, emit a named type.
+
+4. Naming & sanitization
+   - Type names: Use PascalCase, strip or replace invalid characters, collapse separators (spaces, `-`, `_`, `.`) into word boundaries, and prefix with `T` if the name would start with a digit. Examples:
+     - `my-type.json` -> `MyTypeJson`
+     - `123-foo` -> `T123Foo`
+   - Field names: Use camelCase, strip invalid characters, and replace separators with word boundaries. If a field name would start with a digit, prefix with `f`.
+   - Default sanitizers are conservative and deterministic to minimize surprises.
+
+5. `$ref` naming strategy
+   - Rule: By default, derive type names from the last non-empty path segment of the `$ref` (filename or fragment) then sanitize according to the Type naming rules above (this is called `basename` strategy).
+   - Option: Expose `refNaming` with allowed values `basename` (default), `file_and_path` (include parent directories), or `hash` (stable hash when name collisions require it).
+
+6. Unique inline type names
+   - Rule: When an inline object must be named (e.g., to render fields this is emitted as an actual GraphQL type) and it would collide with another generated name or participate in cycles, generate an appended numeric suffix (e.g. `NestedObject`, `NestedObject#1`, `NestedObject#2`) in a deterministic order.
+
+7. Options & schema extensions
+   - Expose these options as a typed `ConverterOptions` on the converter API and allow schema-scoped overrides using `x-graphql-*` extension fields. The converters must accept these options and use them consistently.
+
+Representative `ConverterOptions` (informal JSON schema)
+
+```
+{
+  "descriptionBlockThreshold": { "type": "number", "default": 80 },
+  "emitEmptyTypes": { "type": "boolean", "default": false },
+  "inlineObjectThreshold": { "type": "number", "default": 3 },
+  "refNaming": { "type": "string", "enum": ["basename","file_and_path","hash"], "default": "basename" },
+  "typeNameSanitizer": { "type": "string", "enum": ["pascal"], "default": "pascal" },
+  "fieldNameSanitizer": { "type": "string", "enum": ["camel"], "default": "camel" }
+}
+```
+
+Suggested per-schema overrides:
+
+- `x-graphql-description-block-threshold` : number
+- `x-graphql-emit-empty-types` : boolean
+- `x-graphql-inline-object-threshold` : number
+- `x-graphql-ref-naming` : one of `basename|file_and_path|hash`
+
+## Examples
+
+1) Long description -> block string
+
+Input schema excerpt:
+
+```
+{
+  "description": "This is a very long description... ( >80 chars )\nIt contains additional lines."
+}
+```
+
+Output SDL (canonical):
+
+"""
+This is a very long description...
+It contains additional lines.
+"""
+type Foo { ... }
+
+2) Small anonymous object -> `JSON`
+
+Input:
+
+```
+{"type":"object","properties":{"a":{"type":"string"},"b":{"type":"number"}}}
+```
+
+Output (canonical):
+
+type Foo { data: JSON }
+
+3) Larger or referenced object -> named type
+
+Input (referenced or > threshold):
+
+Output:
+
+type Parent { nested: NestedObject }
+type NestedObject { a: String b: Int }
+
+## Consequences
+
+- Tests & fixtures: Add parity fixtures that exercise every option and edge case (inline-vs-named, description length, unusual `$ref` forms, empty objects, sanitizer edgecases). These fixtures will lock the behavior and prevent regressions.
+- Backwards compatibility: Some existing fixtures may change their canonicalSDL; the parity suite will be the authoritative signal. Changes should be applied in small, reviewed commits.
+- API surface: Both Node and Rust converters must accept `ConverterOptions` and the per-schema overrides. The default behavior should mirror the rules above so that current behavior is preserved unless explicitly overridden.
+
+## Implementation Plan
+
+1. Create this ADR (done).
+2. Add 2–4 parity fixtures to `converters/test-data/` to cover: long descriptions, empty objects, small anonymous object inlining, `$ref` naming collisions.
+3. Add `ConverterOptions` type to both Node and Rust implementations and update parsing of `x-graphql-*` schema extensions.
+4. Update converters to follow these defaults and add unit tests for sanitizer, description formatting, and naming.
+5. Re-run parity tests and iterate on any remaining diffs; if diffs represent acceptable deviations, update fixtures and tests to lock the intended behavior.
+
+## Alternatives Considered
+
+- Do nothing and continue to allow converters to differ. Rejected — this leaves parity tests noisy and slows progress.
+- Hard-code behaviours into tests (i.e., make parity more permissive). Rejected — it hides real design decisions that should be explicit and documented.
+
+## Next Steps
+
+- If accepted, I will add the proposed `ConverterOptions` shape to `converters/node` and `converters/rust` codepaths, add the new fixtures under `converters/test-data/`, and update `converters/node/src/parity.test.ts` to include tests that assert the default options and per-schema overrides produce the expected SDL/AST.

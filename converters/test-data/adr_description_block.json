@@ -1,0 +1,10 @@
+{
+  "$id": "http://example.com/adr/description_block.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DescriptionBlock",
+  "description": "This is a deliberately long description intended to exceed the default descriptionBlockThreshold of eighty characters.\nIt has multiple lines and should be emitted as a GraphQL block string by canonical converters.",
+  "type": "object",
+  "properties": {
+    "a": { "type": "string" }
+  }
+}

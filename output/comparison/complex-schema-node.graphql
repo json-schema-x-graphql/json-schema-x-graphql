@@ -1,23 +1,97 @@
-"A comprehensive test schema covering all JSON Schema features for round-trip validation"
-type ComplexTestSchema @auth {
-  "Unique identifier" id: ID!
-  "Name field with length constraints" name: String!
-  "Email address" email: Email!
-  "Age in years" age: Int
-  "Score value" score: Int
-  "Active status flag" isActive: Boolean
-  "Array of tags" tags: [String]
-  "User roles" roles: [String]
-  "Additional metadata" metadata: JSON
-  "Current status" status: String
-  address: JSON
-  phoneNumbers: [JSON]
-  preferences: JSON
-  "Field that can be null" nullableField: String
-  "Array with mixed types" mixedArray: [String]
-  dateFields: JSON
-  complexNested: JSON
-  conditionalField: JSON
-  "Field that accepts either email or URI" anyOfExample: String
-  "Combined schema using allOf" allOfExample: String
+"Additional metadata"
+type Metadata {
+  createdAt: DateTime
+  updatedAt: DateTime
+  version: Int
+}
+
+type Address {
+  street: String!
+  city: String!
+  state: String
+  zipCode: String
+  country: String!
+}
+
+type Phonenumbers {
+  type: String!
+  number: String!
+  primary: Boolean
+}
+
+type Notifications {
+  email: Boolean
+  sms: Boolean
+  push: Boolean
+}
+
+type Preferences {
+  theme: String
+  notifications: Notifications
+  language: String
+}
+
+type Datefields {
+  birthDate: Date
+  registrationTime: DateTime
+  lastLogin: DateTime
+}
+
+type Level3 {
+  deepValue: String
+}
+
+type Level2 {
+  level3: Level3
+}
+
+type Level1 {
+  level2: Level2
+}
+
+type Complexnested {
+  level1: Level1
+}
+
+type Conditionalfield {
+  type: String!
+  taxId: String
+}
+
+"""A comprehensive test schema covering all JSON Schema features for round-trip validation"""
+type Complextestschema @auth {
+  "Unique identifier"
+  id: ID!
+  "Name field with length constraints"
+  name: String!
+  "Email address"
+  email: Email!
+  "Age in years"
+  age: Int
+  "Score value"
+  score: Float
+  "Active status flag"
+  isActive: Boolean
+  "Array of tags"
+  tags: [String]
+  "User roles"
+  roles: [String]
+  "Additional metadata"
+  metadata: Metadata
+  "Current status"
+  status: String
+  address: Address
+  phoneNumbers: [Phonenumbers]
+  preferences: Preferences
+  "Field that can be null"
+  nullableField: JSON
+  "Array with mixed types"
+  mixedArray: [JSON]
+  dateFields: Datefields
+  complexNested: Complexnested
+  conditionalField: Conditionalfield
+  "Field that accepts either email or URI"
+  anyOfExample: JSON
+  "Combined schema using allOf"
+  allOfExample: JSON
 }

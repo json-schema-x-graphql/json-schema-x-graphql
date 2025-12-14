@@ -3,11 +3,10 @@
 use crate::error::{ConversionError, Result};
 use crate::types::{ConversionOptions, NamingConvention};
 use serde_json::Value as JsonValue;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 /// Convert JSON Schema to GraphQL SDL
 pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String> {
-    let mut output = String::new();
     let mut context = ConversionContext::with_root(options, schema);
 
     // Process the schema
@@ -15,6 +14,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         // Check for $defs/definitions section
         if let Some(defs) = obj.get("$defs").or_else(|| obj.get("definitions")) {
             if let Some(defs_obj) = defs.as_object() {
+                // First pass: assign names and populate type_names
                 for (def_key, def_schema) in defs_obj {
                     // Determine type name: x-graphql-type-name > x-graphql-type.name > title > def_key
                     let raw_type_name = def_schema
@@ -31,14 +31,41 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
 
                     let type_name = sanitize_type_name(raw_type_name, options.naming_convention);
 
-                    if options.exclude_types.contains(&type_name)
-                        || is_excluded(&type_name, &options.exclude_patterns)
+                    // Ensure uniqueness of top-level definition type names
+                    let mut unique_type_name = type_name.clone();
+                    let mut idx = 1;
+                    while context.type_names.values().any(|v| v == &unique_type_name) {
+                        unique_type_name = format!("{}{}", type_name, idx);
+                        idx += 1;
+                    }
+
+                    if options.exclude_types.contains(&unique_type_name)
+                        || is_excluded(&unique_type_name, &options.exclude_patterns)
                     {
                         continue;
                     }
 
-                    let type_def = convert_type_definition(def_schema, &type_name, &mut context)?;
-                    output.push_str(&type_def);
+                    // Record mapping from definition path to resolved type name so
+                    // that references can be resolved deterministically.
+                    context
+                        .type_names
+                        .insert(format!("#/$defs/{}", def_key), unique_type_name.clone());
+                    context
+                        .type_names
+                        .insert(format!("#/definitions/{}", def_key), unique_type_name.clone());
+                }
+
+                // Second pass: convert definitions
+                for (def_key, def_schema) in defs_obj {
+                    let unique_type_name = context
+                        .type_names
+                        .get(&format!("#/$defs/{}", def_key))
+                        .or_else(|| context.type_names.get(&format!("#/definitions/{}", def_key)))
+                        .cloned();
+
+                    if let Some(name) = unique_type_name {
+                        convert_type_definition(def_schema, &name, &mut context)?;
+                    }
                 }
             }
         }
@@ -55,8 +82,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
             if !options.exclude_types.contains(&sanitized_name)
                 && !is_excluded(&sanitized_name, &options.exclude_patterns)
             {
-                let type_def = convert_type_definition(schema, &sanitized_name, &mut context)?;
-                output.push_str(&type_def);
+                convert_type_definition(schema, &sanitized_name, &mut context)?;
             }
         } else if obj.contains_key("properties")
             && !obj.contains_key("$defs")
@@ -68,19 +94,19 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         }
     }
 
-    if output.is_empty() {
-        return Err(ConversionError::InvalidJsonSchema(
-            "No GraphQL types found in schema. Ensure types have 'title' or 'x-graphql-type-name' or are in '$defs'.".to_string(),
-        ));
-    }
-
-    Ok(output)
+    // If there are no types rendered, return an empty SDL string rather than an error
+    // so the parity harness can compare empty outputs deterministically.
+    let final_output = context.output.join("");
+    Ok(final_output)
 }
 
 struct ConversionContext<'a> {
     options: &'a ConversionOptions,
     type_names: HashMap<String, String>,
     root_schema: Option<&'a JsonValue>,
+    external_schemas: HashMap<String, JsonValue>,
+    generated_types: HashSet<String>,
+    output: Vec<String>,
 }
 
 impl<'a> ConversionContext<'a> {
@@ -89,6 +115,9 @@ impl<'a> ConversionContext<'a> {
             options,
             type_names: HashMap::new(),
             root_schema: Some(root_schema),
+            external_schemas: HashMap::new(),
+            generated_types: HashSet::new(),
+            output: Vec::new(),
         }
     }
 
@@ -118,21 +147,59 @@ impl<'a> ConversionContext<'a> {
                     })
             })
             .map(|value| value.to_string())
-            .or_else(|| extract_type_name_from_ref(ref_path, self.options.naming_convention))?;
+            .or_else(|| extract_type_name_from_ref(ref_path, self.options.naming_convention, self.options.ref_naming))?;
 
+        // Ensure uniqueness of the derived type name to avoid collisions.
+        let mut candidate = type_name.clone();
+        let mut i = 1;
+        while self.type_names.values().any(|v| v == &candidate) {
+            candidate = format!("{}{}", type_name, i);
+            i += 1;
+        }
         self.type_names
-            .insert(ref_path.to_string(), type_name.clone());
-        Some(type_name)
+            .insert(ref_path.to_string(), candidate.clone());
+
+        Some(candidate)
     }
 
-    fn resolve_ref_schema(&self, ref_path: &str) -> Option<&'a JsonValue> {
+    fn resolve_ref_schema(&mut self, ref_path: &str) -> Option<&JsonValue> {
+        // First, try to resolve as a local pointer inside the root schema
         let root = self.root_schema?;
-        let pointer = Self::normalize_ref_path(ref_path)?;
-        if pointer.is_empty() {
-            Some(root)
-        } else {
-            root.pointer(&pointer)
+        if let Some(pointer) = Self::normalize_ref_path(ref_path) {
+            // If the ref is a pure fragment (e.g., "#/definitions/Foo"), resolve locally
+            if pointer.starts_with('/') && !pointer[1..].contains('.') {
+                if pointer == "" {
+                    return Some(root);
+                }
+                if let Some(v) = root.pointer(&pointer) {
+                    return Some(v);
+                }
+            }
         }
+
+        // Otherwise attempt to resolve as an external file reference.
+        // We treat external references as opaque objects with a placeholder property,
+        // matching the Node converter's behavior (ADR 0007).
+        
+        if !self.external_schemas.contains_key(ref_path) {
+            let type_name = extract_type_name_from_ref(ref_path, self.options.naming_convention, self.options.ref_naming)
+                .unwrap_or_else(|| "ExternalType".to_string());
+
+            let placeholder = serde_json::json!({
+                "type": "object",
+                "description": format!("External reference to {}", ref_path),
+                "x-graphql-type-name": type_name,
+                "properties": {
+                    "_external_ref": {
+                        "type": "string",
+                        "description": "Placeholder for external reference"
+                    }
+                }
+            });
+            self.external_schemas.insert(ref_path.to_string(), placeholder);
+        }
+
+        self.external_schemas.get(ref_path)
     }
 
     fn normalize_ref_path(ref_path: &str) -> Option<String> {
@@ -165,19 +232,22 @@ fn convert_type_definition(
     schema: &JsonValue,
     type_name: &str,
     context: &mut ConversionContext,
-) -> Result<String> {
+) -> Result<()> {
+    if context.generated_types.contains(type_name) {
+        return Ok(());
+    }
+    context.generated_types.insert(type_name.to_string());
+
     let obj = schema.as_object().ok_or_else(|| {
         ConversionError::InvalidJsonSchema("schema must be an object".to_string())
     })?;
 
     let mut output = String::new();
 
-    // Description
-    if context.options.include_descriptions {
-        if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
-            output.push_str(&format_description(description));
-        }
-    }
+    // Description is emitted per-kind where appropriate. For object types we
+    // delay emitting the description until we know we will render the type
+    // (i.e., it has fields) to avoid orphaned description strings when the
+    // type is omitted due to having no properties.
 
     // Determine Type Kind
     let x_graphql = obj.get("x-graphql").and_then(|v| v.as_object());
@@ -352,6 +422,12 @@ fn convert_type_definition(
     match kind {
         "enum" => {
             output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
+            // Description for enum
+            if context.options.include_descriptions {
+                    if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                        output.push_str(&format_description(description, context.options));
+                    }
+                }
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
@@ -366,6 +442,12 @@ fn convert_type_definition(
             output.push_str("}\n\n");
         }
         "union" => {
+            // Description for union
+            if context.options.include_descriptions {
+                if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                    output.push_str(&format_description(description, context.options));
+                }
+            }
             output.push_str(&format!("union {}{} = ", type_name, directives_str));
             let mut members = Vec::new();
 
@@ -385,7 +467,7 @@ fn convert_type_definition(
                         if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             members.push(name);
                         } else if let Some(name) =
-                            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+                            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
                         {
                             members.push(name);
                         }
@@ -404,11 +486,18 @@ fn convert_type_definition(
             output.push_str("\n\n");
         }
         "scalar" => {
+            // Description for scalar
+            if context.options.include_descriptions {
+                if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                    output.push_str(&format_description(description, context.options));
+                }
+            }
             output.push_str(&format!("scalar {}{}\n\n", type_name, directives_str));
         }
         _ => {
             // Object, Interface, Input
-            output.push_str(&format!("{} {}", kind, type_name));
+            // Build fields first, then emit the type only if there are fields
+            let mut field_lines: Vec<String> = Vec::new();
 
             // Interfaces (implements)
             let mut implements = Vec::new();
@@ -433,7 +522,7 @@ fn convert_type_definition(
                             // Assuming all refs in allOf are interfaces if this is an object type
                             implements.push(name);
                         } else if let Some(name) =
-                            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+                            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
                         {
                             implements.push(name);
                         }
@@ -445,9 +534,6 @@ fn convert_type_definition(
                 output.push_str(&format!(" implements {}", implements.join(" & ")));
             }
 
-            output.push_str(&directives_str);
-            output.push_str(" {\n");
-
             // Properties
             if let Some(properties) = obj.get("properties").and_then(|v| v.as_object()) {
                 let required_fields = obj
@@ -457,7 +543,28 @@ fn convert_type_definition(
                     .unwrap_or_default();
 
                 let mut prop_names: Vec<_> = properties.keys().collect();
-                if !context.options.preserve_field_order {
+
+                if context.options.preserve_field_order {
+                    // Mirror JS property enumeration: integer-like keys first (ascending),
+                    // then the remaining keys in insertion order.
+                    let mut numeric_keys: Vec<(u64, &String)> = Vec::new();
+                    let mut other_keys: Vec<&String> = Vec::new();
+
+                    for key in properties.keys() {
+                        if let Ok(n) = key.parse::<u64>() {
+                            numeric_keys.push((n, key));
+                        } else {
+                            other_keys.push(key);
+                        }
+                    }
+
+                    numeric_keys.sort_by_key(|(n, _)| *n);
+                    prop_names = numeric_keys
+                        .into_iter()
+                        .map(|(_, k)| k)
+                        .chain(other_keys.into_iter())
+                        .collect();
+                } else {
                     prop_names.sort();
                 }
 
@@ -470,17 +577,42 @@ fn convert_type_definition(
                             context,
                         )?;
                         if !field_def.is_empty() {
-                            output.push_str(&format!("  {}\n", field_def));
+                            let indented = field_def
+                                .lines()
+                                .map(|line| format!("  {}", line))
+                                .collect::<Vec<_>>()
+                                .join("\n");
+                            field_lines.push(format!("{}\n", indented));
                         }
                     }
                 }
             }
 
-            output.push_str("}\n\n");
+            // Only emit the type declaration if there are fields to render.
+            if !field_lines.is_empty() {
+                // Emit the description for object-like kinds now that we know
+                // the type will be rendered.
+                if context.options.include_descriptions {
+                    if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                        output.push_str(&format_description(description, context.options));
+                    }
+                }
+                output.push_str(&format!("{} {}", kind, type_name));
+                if !implements.is_empty() {
+                    output.push_str(&format!(" implements {}", implements.join(" & ")));
+                }
+                output.push_str(&directives_str);
+                output.push_str(" {\n");
+                for line in field_lines {
+                    output.push_str(&line);
+                }
+                output.push_str("}\n\n");
+            }
         }
     }
 
-    Ok(output)
+    context.output.push(output);
+    Ok(())
 }
 
 fn convert_field(
@@ -496,9 +628,9 @@ fn convert_field(
     let mut output = String::new();
 
     // Description
-    if context.options.include_descriptions {
+        if context.options.include_descriptions {
         if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
-            output.push_str(&format_description(description));
+            output.push_str(&format_description(description, context.options));
         }
     }
 
@@ -529,7 +661,7 @@ fn convert_field(
     }
 
     // Type
-    let mut field_type = infer_graphql_type(schema, is_required, context)?;
+    let mut field_type = infer_graphql_type(schema, is_required, context, Some(field_name))?;
 
     if context.options.infer_ids
         && (field_name == "id" || field_name == "_id")
@@ -671,7 +803,23 @@ fn infer_graphql_type(
     schema: &JsonValue,
     is_required: bool,
     context: &mut ConversionContext,
+    name_hint: Option<&str>,
 ) -> Result<String> {
+    // Be lenient with tuple/boolean schemas: treat arrays/booleans as generic JSON
+    if schema.is_boolean() {
+        return Ok(if is_required { "JSON!".to_string() } else { "JSON".to_string() });
+    }
+
+    // Tuple validation (`items` as array) – use the first entry to infer a representative type,
+    // otherwise fall back to JSON so we don't hard-fail on empty tuples.
+    if let Some(items) = schema.as_array() {
+        if let Some(first) = items.first() {
+            let t = infer_graphql_type(first, false, context, name_hint)?;
+            return Ok(if is_required && !t.ends_with('!') { format!("{}!", t) } else { t });
+        }
+        return Ok(if is_required { "JSON!".to_string() } else { "JSON".to_string() });
+    }
+
     let obj = schema
         .as_object()
         .ok_or_else(|| ConversionError::InvalidType("schema must be an object".to_string()))?;
@@ -711,11 +859,51 @@ fn infer_graphql_type(
 
     // 2. Reference
     if let Some(ref_path) = obj.get("$ref").and_then(|v| v.as_str()) {
+        // Check if the referenced schema is a primitive type
+        if let Some(schema) = context.resolve_ref_schema(ref_path) {
+            // Clone schema to avoid borrow checker issues
+            let schema_clone = schema.clone();
+            
+            // Check if it's a primitive
+            let is_primitive = schema_clone.get("type").and_then(|v| v.as_str()).map(|t| 
+                matches!(t, "string" | "integer" | "number" | "boolean")
+            ).unwrap_or(false);
+            
+            if is_primitive {
+                // If it's a primitive, infer its type directly
+                if let Ok(primitive_type) = infer_graphql_type(&schema_clone, false, context, name_hint) {
+                    return Ok(finalize(primitive_type));
+                }
+            }
+        }
+
+        let is_top_level_def = |path: &str| {
+            if let Some(rest) = path.strip_prefix("#/definitions/") {
+                !rest.contains('/')
+            } else if let Some(rest) = path.strip_prefix("#/$defs/") {
+                !rest.contains('/')
+            } else {
+                false
+            }
+        };
+
         if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
+            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
+                if let Some(s) = context.resolve_ref_schema(ref_path) {
+                    let schema_clone = s.clone();
+                    convert_type_definition(&schema_clone, &type_name, context)?;
+                }
+            }
             return Ok(finalize(type_name));
         } else if let Some(type_name) =
-            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
         {
+            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
+                if let Some(s) = context.resolve_ref_schema(ref_path) {
+                    let schema_clone = s.clone();
+                    convert_type_definition(&schema_clone, &type_name, context)?;
+                }
+            }
             return Ok(finalize(type_name));
         }
     }
@@ -736,14 +924,30 @@ fn infer_graphql_type(
         }
     }
 
-    // 4. Type Mapping
-    let schema_type = obj.get("type").and_then(|v| v.as_str());
+    // 3a. Combinators map to JSON in GraphQL
+    if obj.get("oneOf").is_some() || obj.get("anyOf").is_some() || obj.get("allOf").is_some() {
+        return Ok(finalize("JSON".to_string()));
+    }
 
-    let gql_type = match schema_type {
+    // 4. Type Mapping
+    let mut schema_type: Option<String> = obj.get("type").and_then(|v| v.as_str()).map(|s| s.to_string());
+
+    if let Some(type_array) = obj.get("type").and_then(|v| v.as_array()) {
+        if type_array.len() > 1 {
+            return Ok(finalize("JSON".to_string()));
+        }
+
+        if let Some(first) = type_array.first().and_then(|v| v.as_str()) {
+            schema_type = Some(first.to_string());
+        }
+    }
+
+    let gql_type = match schema_type.as_deref() {
         Some("string") => "String".to_string(),
         Some("integer") => "Int".to_string(),
         Some("number") => "Float".to_string(),
         Some("boolean") => "Boolean".to_string(),
+        Some("null") => "JSON".to_string(),
         Some("array") => {
             if let Some(items) = obj.get("items") {
                 // Check for nullableItems override
@@ -756,7 +960,7 @@ fn infer_graphql_type(
                     false
                 };
 
-                let item_type = infer_graphql_type(items, item_is_required, context)?;
+                let item_type = infer_graphql_type(items, item_is_required, context, name_hint)?;
                 format!("[{}]", item_type)
             } else {
                 "JSON".to_string()
@@ -768,12 +972,38 @@ fn infer_graphql_type(
                 .or_else(|| obj.get("x-graphql-type-name"))
                 .and_then(|v| v.as_str())
             {
-                name.to_string()
+                let name_str = name.to_string();
+
+                if !context.generated_types.contains(&name_str) {
+                    convert_type_definition(schema, &name_str, context)?;
+                }
+
+                name_str
+            } else if let Some(hint) = name_hint {
+                // Generate inline type
+                let raw_name = sanitize_type_name(hint, context.options.naming_convention);
+                let mut unique_name = raw_name.clone();
+                let mut idx = 1;
+
+                while context.type_names.values().any(|v| v == &unique_name)
+                    || context.generated_types.contains(&unique_name)
+                {
+                    unique_name = format!("{}{}", raw_name, idx);
+                    idx += 1;
+                }
+
+                // Eagerly materialize inline object types so they appear before
+                // the parent type, matching the Node converter's depth-first order.
+                if !context.generated_types.contains(&unique_name) {
+                    convert_type_definition(schema, &unique_name, context)?;
+                }
+
+                unique_name
             } else {
                 "JSON".to_string()
             }
         }
-        _ => "JSON".to_string(),
+        _ => "String".to_string(),
     };
 
     Ok(finalize(gql_type))
@@ -799,7 +1029,7 @@ fn format_field_arguments(args: &JsonValue, context: &mut ConversionContext) -> 
             output.push_str(arg_name);
             output.push_str(": ");
 
-            let arg_type = infer_graphql_type(arg_schema, false, context)?;
+            let arg_type = infer_graphql_type(arg_schema, false, context, Some(arg_name))?;
             output.push_str(&arg_type);
 
             if let Some(default) = arg_schema.get("default") {
@@ -895,40 +1125,120 @@ fn format_directives(directives: &JsonValue) -> Result<String> {
     Ok(output)
 }
 
-fn format_description(description: &str) -> String {
-    format!(
-        "\"\"\"\n{}\n\"\"\"\n",
-        description.replace("\"\"\"", "\\\"\"\"")
-    )
+fn format_description(description: &str, options: &crate::types::ConversionOptions) -> String {
+    let block_threshold = options.description_block_threshold;
+    let should_block = description.contains('\n') || description.len() >= block_threshold;
+    if should_block {
+        return format!(
+            "\"\"\"{}\"\"\"\n",
+            description.replace("\"\"\"", "\\\"\"\"")
+        );
+    }
+    // Inline string - escape double quotes and ensure we end with a newline
+    format!("\"{}\"\n", description.replace('"', "\\\""))
 }
 
-fn snake_to_camel(snake: &str) -> String {
+fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {
+    use NamingConvention::*;
+    match naming {
+        Preserve => {
+            let mut v = value
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .collect::<String>();
+            if v.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false) {
+                v = format!("_{}", v);
+            }
+            v
+        }
+        _ => {
+            // Replace non-alnum/_ with space, split, pascal-case each segment
+            let replaced = value
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { ' ' })
+                .collect::<String>();
+            let mut parts: Vec<String> = Vec::new();
+            for s in replaced.split_whitespace() {
+                for p in s.split(|c: char| !c.is_ascii_alphanumeric()) {
+                    if p.is_empty() { continue; }
+                    let mut cs = p.chars();
+                    let first = cs.next().unwrap_or(' ');
+                    let rest = cs.as_str().to_lowercase();
+                    parts.push(format!("{}{}", first.to_ascii_uppercase(), rest));
+                }
+            }
+            let joined = parts.join("");
+            let cleaned = joined
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .collect::<String>();
+            if cleaned.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false) {
+                format!("_{}", cleaned)
+            } else {
+                cleaned
+            }
+        }
+    }
+}
+
+fn to_camel_case(value: &str) -> String {
     let mut result = String::new();
     let mut capitalize_next = false;
-    for c in snake.chars() {
-        if c == '_' {
+    for c in value.chars() {
+        if c == '_' || c == '-' || c == '.' || c.is_whitespace() {
             capitalize_next = true;
-        } else if capitalize_next {
+            continue;
+        }
+        if capitalize_next {
             result.push(c.to_ascii_uppercase());
             capitalize_next = false;
         } else {
             result.push(c);
         }
     }
+    // lowercase first char
+    if let Some(first) = result.chars().next() {
+        let mut chars = result.chars();
+        chars.next();
+        return format!("{}{}", first.to_ascii_lowercase(), chars.as_str());
+    }
     result
 }
 
-fn sanitize_type_name(name: &str, convention: NamingConvention) -> String {
-    match convention {
-        NamingConvention::Preserve => name.to_string(),
-        NamingConvention::GraphqlIdiomatic => snake_to_pascal(name),
-    }
-}
+fn sanitize_field_name(name: &str, naming: NamingConvention) -> String {
+    use NamingConvention::*;
+    match naming {
+        Preserve => {
+            let cleaned = name
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .collect::<String>();
+            if cleaned.chars().next().map(|c| c.is_ascii_alphabetic() || c == '_').unwrap_or(false) {
+                cleaned
+            } else {
+                format!("_{}", cleaned)
+            }
+        }
+        _ => {
+            // Align with Node: replace non-alphanumeric with space, then camelCase
+            let pre_processed = name
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() { c } else { ' ' })
+                .collect::<String>();
 
-fn sanitize_field_name(name: &str, convention: NamingConvention) -> String {
-    match convention {
-        NamingConvention::Preserve => name.to_string(),
-        NamingConvention::GraphqlIdiomatic => snake_to_camel(name),
+            let base = to_camel_case(&pre_processed);
+            
+            let cleaned = base
+                .chars()
+                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .collect::<String>();
+            
+            if cleaned.chars().next().map(|c| c.is_ascii_alphabetic() || c == '_').unwrap_or(false) {
+                cleaned
+            } else {
+                format!("_{}", cleaned)
+            }
+        }
     }
 }
 
@@ -943,39 +1253,42 @@ fn is_excluded(name: &str, patterns: &[String]) -> bool {
     false
 }
 
-fn extract_type_name_from_ref(ref_path: &str, convention: NamingConvention) -> Option<String> {
-    let parts: Vec<&str> = ref_path.split('/').collect();
-    if let Some(last) = parts.last() {
-        return Some(sanitize_type_name(last, convention));
+fn extract_type_name_from_ref(ref_path: &str, convention: NamingConvention, strategy: crate::types::RefNaming) -> Option<String> {
+    let parts: Vec<&str> = ref_path.split('/').filter(|s| !s.is_empty()).collect();
+    if parts.is_empty() {
+        return None;
     }
-    None
-}
 
-fn snake_to_pascal(snake: &str) -> String {
-    let mut result = String::new();
-    let mut capitalize_next = true;
-    for c in snake.chars() {
-        if c == '_' || c == ' ' || c == '-' {
-            capitalize_next = true;
-        } else if capitalize_next {
-            result.push(c.to_ascii_uppercase());
-            capitalize_next = false;
-        } else {
-            result.push(c);
+    let mut raw = parts.last().copied().unwrap_or("ExternalType").to_string();
+    match strategy {
+        crate::types::RefNaming::Basename => {
+            // keep last segment
+        }
+        crate::types::RefNaming::FileAndPath => {
+            let take = if parts.len() >= 2 { 2 } else { parts.len() };
+            raw = parts[parts.len().saturating_sub(take)..].join("_");
+        }
+        crate::types::RefNaming::Hash => {
+            // FNV-1a 32-bit
+            let mut h: u32 = 2166136261;
+            for b in ref_path.as_bytes() {
+                h ^= *b as u32;
+                h = h.wrapping_mul(16777619);
+            }
+            raw = format!("H{:x}", h);
         }
     }
-    result
+
+    // strip common suffix
+    raw = raw.replace(".schema.json", "");
+
+    Some(sanitize_type_name(&raw, convention))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use serde_json::json;
-
-    #[test]
-    fn test_snake_to_camel() {
-        assert_eq!(snake_to_camel("user_id"), "userId");
-    }
 
     #[test]
     fn test_infer_graphql_type() {

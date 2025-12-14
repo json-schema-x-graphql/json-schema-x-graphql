@@ -1,0 +1,31 @@
+type Product @key @interfaceObject {
+  id: String!
+  price: Float @external
+  weight: Float @inaccessible
+}
+
+type User @key @shareable {
+  id: String!
+  username: String @authenticated
+  email: String @requires
+  metadata: Usermetadata @provides
+}
+
+type Usermetadata {
+  lastLogin: String
+}
+
+type Review @key {
+  id: String!
+  body: String @deprecated
+  content: String
+  tags: [String] @tag
+}
+
+type Directivescoverage {
+  product: Product
+  user: User
+  review: Review
+}
+
+
