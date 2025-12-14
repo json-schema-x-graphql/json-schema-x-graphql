@@ -1,0 +1,97 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar DateTime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"High-precision decimal number"
+scalar Decimal
+
+"Arbitrary JSON value"
+scalar Json
+
+"Valid email address"
+scalar Email
+
+"Valid URI/URL"
+scalar Uri
+
+"Metadata describing origin system, identifiers, and lifecycle timestamps."
+type SystemMetadata  @shareable {
+  "Constant system identifier string."
+  systemName: String!
+  "Primary identifier of the record within Intake Process."
+  sourceRecordId: String!
+  "Version of the canonical Intake Process schema."
+  schemaVersion: String
+  "Timestamp when this record was ingested into the data fabric."
+  ingestedAt: DateTime
+  "Timestamp when this record was last modified at source."
+  lastModified: DateTime
+}
+
+"Pricing term grouping (derived abstraction, non-structural change)."
+type EasiPricingTerms {
+  "Pricing model or strategy label."
+  pricingModel: String
+  "Method used for price escalation (if any)."
+  escalationMethod: String
+  "Billing cycle descriptor (monthly, quarterly, annual, etc.)."
+  billingCycle: String
+}
+
+"Start and end dates defining a performance interval."
+type PeriodOfPerformance {
+  "Start date (YYYY-MM-DD)."
+  startDate: Date
+  "End date (YYYY-MM-DD)."
+  endDate: Date
+}
+
+"Primary business and pricing attributes specific to Intake Process."
+type EasiSpecificData {
+  "Business owner name or identifier."
+  businessOwner: String!
+  "System owner name or identifier."
+  systemOwner: String!
+  "Unit price as stored in Intake Process."
+  unitPrice: Float
+  "Unit of measure description or code."
+  unitOfMeasure: String
+  "Optional flag or descriptor captured as string in original system."
+  optional: String
+  "NTE value (raw string representation)."
+  notToExceed: String
+  "Indicates items not separately priced (raw representation)."
+  notSeparatelyPriced: String
+  "Structured pricing term attributes."
+  pricingTerms: EasiPricingTerms
+  "Ordered list of performance periods (base + options if present)."
+  performancePeriods: [PeriodOfPerformance]
+}
+
+"Root Intake Process entity combining system metadata and Intake Process-specific extension data."
+type EasiRecord {
+  "System-level lineage and ingestion metadata."
+  systemMetadata: SystemMetadata!
+  "Domain-specific fields unique to Intake Process."
+  intakeProcessSpecific: EasiSpecificData!
+  "Mirror of intake_process_specific.business_owner for federated key selection."
+  businessOwner: String
+  "Mirror of intake_process_specific.system_owner for federated key selection."
+  systemOwner: String
+}
+
+"Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics."
+type IntakeProcessCanonicalSchema {
+  "Root Intake Process entity."
+  intakeProcessRecord: EasiRecord
+}
+
+type Query {
+  "Fetch a single Intake Process record by composite key (business_owner + system_owner) or source_record_id."
+  intake_process_record(business_owner: String, system_owner: String, source_record_id: ID): EasiRecord
+  "Return a list of Intake Process records (non-paginated snapshot)."
+  intake_process_records: [EasiRecord!]!
+}

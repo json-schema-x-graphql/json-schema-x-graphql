@@ -1,0 +1,178 @@
+{
+  "systemMetadata": {
+    "primarySystem": "Intake Process",
+    "globalRecordId": "GLOBAL-CONTRACT-2024-001",
+    "schemaVersion": "2.0",
+    "lastModified": "2024-01-15T16:20:00Z",
+    "systemChain": [
+      {
+        "systemName": "Logistics Mgmt",
+        "recordId": "Logistics Mgmt-SBA-001-2024",
+        "processedDate": "2024-01-10T09:00:00Z",
+        "transformationRules": ["logistics_mgmt_to_legacy_procurement_mapping", "sba_client_defaults"],
+        "dataQuality": {
+          "completenessScore": 0.72,
+          "validationErrors": ["Missing IGE - defaulted to 1.0"],
+          "lastValidated": "2024-01-10T09:00:00Z"
+        }
+      },
+      {
+        "systemName": "Legacy Procurement",
+        "recordId": "Legacy Procurement-GSA-001-2024",
+        "processedDate": "2024-01-12T14:30:00Z",
+        "transformationRules": ["legacy_procurement_template_processing", "ucf_simplified_rules"],
+        "dataQuality": {
+          "completenessScore": 0.85,
+          "validationErrors": [],
+          "lastValidated": "2024-01-12T14:30:00Z"
+        }
+      },
+      {
+        "systemName": "Intake Process",
+        "recordId": "Intake Process-CLIN-001-2024",
+        "processedDate": "2024-01-15T16:20:00Z",
+        "transformationRules": ["legacy_procurement_to_intake_process_clin_mapping", "contract_data_field_preparation"],
+        "dataQuality": {
+          "completenessScore": 0.95,
+          "validationErrors": [],
+          "lastValidated": "2024-01-15T16:20:00Z"
+        }
+      }
+    ]
+  },
+  "commonElements": {
+    "contractIdentification": {
+      "piid": "47QSWA20D0001",
+      "originalAwardPiid": "47QSWA19D0001",
+      "referencedPiid": "47QSWA18D0001",
+      "contractTitle": "IT Services Support Contract",
+      "contractType": "IDIQ",
+      "descriptionOfRequirement": "Comprehensive IT support services for federal agency operations"
+    },
+    "organizationInfo": {
+      "contractingAgency": {
+        "code": "047",
+        "name": "General Services Administration"
+      },
+      "contractingDepartment": {
+        "code": "047-10",
+        "name": "Federal Acquisition Service"
+      },
+      "fundingAgency": {
+        "code": "073",
+        "name": "Small Business Administration"
+      },
+      "fundingDepartment": {
+        "code": "073-00",
+        "name": "Small Business Administration"
+      }
+    },
+    "vendorInfo": {
+      "vendorName": "ABC Technology Solutions Inc",
+      "vendorUei": "ABCDEFGH1234"
+    },
+    "placeOfPerformance": {
+      "streetAddress": "1800 F Street NW",
+      "city": "Washington",
+      "county": "District of Columbia",
+      "state": "DC",
+      "zip": "20405",
+      "country": "USA",
+      "congressionalDistrict": "DC-00"
+    },
+    "financialInfo": {
+      "totalContractValue": 1500000.0,
+      "baseAndAllOptionsValue": 2500000.0,
+      "independentGovernmentEstimate": 1400000.0,
+      "amountSpentOnProduct": 750000.0,
+      "contractFiscalYear": "2024"
+    },
+    "businessClassification": {
+      "naicsCode": "541511",
+      "naicsDescription": "Custom Computer Programming Services",
+      "pscCode": "D302",
+      "pscDescription": "ADP Systems Development",
+      "categoryOfProduct": "Information Technology Services",
+      "typeOfProduct": "Software Development Services",
+      "setAsideType": "Small Business Set-Aside",
+      "localAreaSetAside": false,
+      "coSizeDetermination": "Small Business"
+    },
+    "contractCharacteristics": {
+      "emergencyAcquisition": "No",
+      "governmentFurnishedProperty": false,
+      "includesCui": true,
+      "recurringService": true,
+      "recurringUtilities": false
+    },
+    "contacts": [
+      {
+        "name": "John Smith",
+        "title": "Contracting Officer",
+        "email": "john.smith@gsa.gov",
+        "phone": "202-555-0123",
+        "role": "contracting_officer"
+      },
+      {
+        "name": "Jane Doe",
+        "title": "Technical Point of Contact",
+        "email": "jane.doe@sba.gov",
+        "phone": "202-555-0124",
+        "role": "technical"
+      }
+    ],
+    "statusInfo": {
+      "isActive": true,
+      "isLatest": true,
+      "isFunded": true,
+      "status": "awarded",
+      "publishedDate": "2024-01-10T09:00:00Z",
+      "lastModifiedDate": "2024-01-15T10:30:00Z",
+      "contractCompleteDate": "2025-12-31",
+      "lastCarDateSigned": "2024-01-12"
+    }
+  },
+  "systemExtensions": {
+    "legacy_procurement": [
+      {
+        "fieldName": "iaPiidOrUniqueId",
+        "fieldType": "string",
+        "value": "IA-SBA-2024-001",
+        "legacy_procurementSpecific": {
+          "acquisitionData": {
+            "iaPiidOrUniqueId": "IA-SBA-2024-001",
+            "natureOfAcquisition": "ADMIN_CONTINUE_TRANSFER"
+          },
+          "clientData": {
+            "clientOrganizationName": "Small Business Administration",
+            "officeAddress": {
+              "streetAddress1": "409 3rd Street SW",
+              "city": "Washington",
+              "state": "DC"
+            }
+          },
+          "awardData": {
+            "typeOfIdc": "Multiple Award IDIQ",
+            "whoCanUseIdc": "SBA and Authorized Users"
+          }
+        }
+      }
+    ],
+    "intake_process": [
+      {
+        "fieldName": "unitPrice",
+        "fieldType": "number",
+        "value": 150.0,
+        "intake_processSpecific": {
+          "businessOwner": "SBA IT Director",
+          "systemOwner": "GSA FAS Technology Services",
+          "unitPrice": 150.0,
+          "unitOfMeasure": "Hour",
+          "optional": "Base Period",
+          "notToExceed": "2500000.00",
+          "notSeparatelyPriced": "N/A"
+        }
+      }
+    ]
+  }
+}

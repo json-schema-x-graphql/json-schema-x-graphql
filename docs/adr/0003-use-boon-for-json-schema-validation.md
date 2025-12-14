@@ -27,7 +27,7 @@ We will use the `boon` crate for all JSON Schema validation within the Rust conv
 
 *   **Multi-Version Compatibility**: `Boon`'s primary strength is its support for multiple JSON Schema drafts. This eliminates the need for us to write complex, version-aware validation logic and ensures broad compatibility for our users.
 *   **Performance**: Being a native Rust crate, `boon` offers excellent performance suitable for real-time validation within the WASM environment.
-*   **Correctness**: The crate is well-tested and focuses on correctly implementing the JSON Schema specification, increasing the reliability of our conversion tool.
+*   **Correctness**: The crate is well-tested and focuses on correctly implementing the JSON Schema specification, incrintake_processng the reliability of our conversion tool.
 *   **Simplified Logic**: By offloading the complexity of validation, our core converter logic can focus solely on the transformation from a valid schema to GraphQL SDL.
 
 ### Negative

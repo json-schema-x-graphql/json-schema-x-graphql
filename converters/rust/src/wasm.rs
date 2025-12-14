@@ -1,5 +1,10 @@
 //! WASM bindings for JSON Schema x GraphQL converter
 
+use crate::api_types::{
+    ConversionResult, ConvertInput, Diagnostic, DiagnosticSeverity, FederationVersion,
+    NamingConvention,
+};
+use crate::types::NamingConvention as InternalNamingConvention;
 use crate::{ConversionDirection, ConversionOptions, Converter};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -92,6 +97,9 @@ impl WasmConversionOptions {
             preserve_field_order: self.preserve_field_order,
             federation_version: self.federation_version,
             infer_ids: self.infer_ids,
+            naming_convention: InternalNamingConvention::GraphqlIdiomatic,
+            exclude_types: vec![],
+            exclude_patterns: vec![],
         }
     }
 }
@@ -228,6 +236,55 @@ pub fn validate_graphql_name(name: &str) -> Result<bool, JsValue> {
 #[wasm_bindgen(js_name = getVersion)]
 pub fn get_version() -> String {
     env!("CARGO_PKG_VERSION").to_string()
+}
+
+/// Standardized API conversion function
+#[wasm_bindgen(js_name = convert)]
+pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
+    let input: ConvertInput = serde_wasm_bindgen::from_value(input)?;
+
+    let options = input.options.unwrap_or_default();
+
+    let internal_options = ConversionOptions {
+        validate: options.validate,
+        include_descriptions: options.include_descriptions,
+        preserve_field_order: options.preserve_field_order,
+        federation_version: match options.federation_version {
+            FederationVersion::None => 0,
+            FederationVersion::V1 => 1,
+            FederationVersion::V2 => 2,
+        },
+        infer_ids: options.infer_ids,
+        naming_convention: match options.naming_convention {
+            NamingConvention::Preserve => InternalNamingConvention::Preserve,
+            NamingConvention::GraphqlIdiomatic => InternalNamingConvention::GraphqlIdiomatic,
+        },
+        exclude_types: options.exclude_types,
+        exclude_patterns: options.exclude_patterns,
+    };
+
+    let converter = Converter::with_options(internal_options);
+
+    let result =
+        match converter.convert(&input.json_schema, ConversionDirection::JsonSchemaToGraphQL) {
+            Ok(sdl) => ConversionResult {
+                sdl: Some(sdl),
+                diagnostics: vec![],
+                success: true,
+            },
+            Err(e) => ConversionResult {
+                sdl: None,
+                diagnostics: vec![Diagnostic {
+                    severity: DiagnosticSeverity::Error,
+                    message: e.to_string(),
+                    path: None,
+                    code: None,
+                }],
+                success: false,
+            },
+        };
+
+    Ok(serde_wasm_bindgen::to_value(&result)?)
 }
 
 #[cfg(test)]

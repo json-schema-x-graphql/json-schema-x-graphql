@@ -1,0 +1,670 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://gov/gsa/ebuy/connect/webservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="java:gov.gsa.ebuy.connect.exception" name="SolicitationWebServiceService" targetNamespace="http://gov/gsa/ebuy/connect/webservice">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="java:gov.gsa.ebuy.connect.exception" targetNamespace="java:gov.gsa.ebuy.connect.exception" version="1.0">
+
+  <xs:element name="EbuyServiceException" type="tns:EbuyServiceException"/>
+
+  <xs:complexType name="EbuyServiceException">
+    <xs:sequence>
+      <xs:element form="qualified" name="ErrorCode" nillable="true" type="xs:string"/>
+      <xs:element form="qualified" name="ErrorMessage" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.ebuy.gsa.gov/schema" elementFormDefault="qualified" targetNamespace="http://www.ebuy.gsa.gov/schema" version="1.0">
+
+  <xs:element name="Acknowledgement" type="tns:AcknowledgementType"/>
+
+  <xs:element name="Attachment" type="tns:DocumentType"/>
+
+  <xs:element name="AwardNoAward" type="tns:AwardNoAwardType"/>
+
+  <xs:element name="ResponseDetail" type="tns:ResponseDetailType"/>
+
+  <xs:element name="Solicitation" type="tns:SolicitationType"/>
+
+  <xs:element name="SolicitationAmendment" type="tns:AmendmentType"/>
+
+  <xs:element name="SolicitationCancellation" type="tns:CancellationType"/>
+
+  <xs:element name="SolicitationResponses" type="tns:SolicitationResponsesType"/>
+
+  <xs:element name="SolicitationStatus">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:SolicitationStatusType">
+          <xs:sequence/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SolicitationStatusType">
+    <xs:complexContent>
+      <xs:extension base="tns:SolicitationStatusBaseType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Transaction" type="tns:TransactionType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SolicitationStatusBaseType">
+    <xs:sequence>
+      <xs:element name="SolicitationId" type="xs:string"/>
+      <xs:element name="EbuyRfqId" type="xs:string"/>
+      <xs:element name="Status" type="tns:StatusType"/>
+      <xs:element name="IssueTime" type="xs:anySimpleType"/>
+      <xs:element name="CloseTime" type="xs:anySimpleType"/>
+    </xs:sequence>
+    <xs:attribute name="SourcesSought" type="xs:boolean"/>
+  </xs:complexType>
+
+  <xs:complexType name="TransactionType">
+    <xs:sequence>
+      <xs:element name="TransactionType" type="xs:string"/>
+      <xs:element name="TransactionIdentifier" type="xs:string"/>
+      <xs:element name="TransactionTime" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SolicitationResponsesType">
+    <xs:complexContent>
+      <xs:extension base="tns:SolicitationStatusBaseType">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="Response" type="tns:ResponseHeaderType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseHeaderType">
+    <xs:sequence>
+      <xs:element name="QuoteId" type="xs:string"/>
+      <xs:element name="ResponseType" type="xs:string"/>
+      <xs:element name="ContractNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AcknowledgementType">
+    <xs:sequence>
+      <xs:element name="OperationName" type="xs:string"/>
+      <xs:element name="OperationStatus" type="tns:OperationStatusType"/>
+      <xs:element name="OperationTime" type="xs:anySimpleType"/>
+      <xs:element minOccurs="0" name="ForwardURL" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Errors" type="tns:ErrorType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ErrorType">
+    <xs:sequence>
+      <xs:element name="ErrorCode" type="xs:string"/>
+      <xs:element name="ErrorMessage" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AmendmentType">
+    <xs:complexContent>
+      <xs:extension base="tns:SolicitationType">
+        <xs:sequence>
+          <xs:element name="AmendmentInfo" type="tns:AmendmentFieldsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SolicitationType">
+    <xs:sequence>
+      <xs:element name="SolicitationId" type="xs:string"/>
+      <xs:element name="Title" type="xs:string"/>
+      <xs:element minOccurs="0" name="Description" type="xs:string"/>
+      <xs:element name="CloseTime" type="xs:anySimpleType"/>
+      <xs:element name="Delivery" type="tns:DeliveryType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="LineItem" type="tns:LineItemType"/>
+      <xs:element name="ShippingAddress" type="tns:ShippingAddressType"/>
+      <xs:element minOccurs="0" name="OverseasCRPAddress" type="tns:AddressType"/>
+      <xs:element minOccurs="0" name="OverseasFreightAddress" type="tns:AddressType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="tns:DocumentType"/>
+      <xs:element minOccurs="0" name="Buyer" type="tns:BuyerType"/>
+    </xs:sequence>
+    <xs:attribute name="sourcesSought" type="xs:boolean"/>
+  </xs:complexType>
+
+  <xs:complexType name="AmendmentFieldsType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AmendmentIdentifier" type="xs:string"/>
+      <xs:element minOccurs="0" name="Note" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DeliveryType">
+    <xs:sequence>
+      <xs:element name="Type" type="xs:string"/>
+      <xs:element minOccurs="0" name="DeliveryDays" type="xs:int"/>
+      <xs:element minOccurs="0" name="POPBeginDate" type="xs:anySimpleType"/>
+      <xs:element minOccurs="0" name="POPEndDate" type="xs:anySimpleType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LineItemType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RfqItemId" type="xs:string"/>
+      <xs:element minOccurs="0" name="ManufacturerName" type="xs:string"/>
+      <xs:element minOccurs="0" name="PartNumber" type="xs:string"/>
+      <xs:element minOccurs="0" name="ProductDescription" type="xs:string"/>
+      <xs:element name="Unit" type="xs:string"/>
+      <xs:element name="Quantity" type="xs:int"/>
+      <xs:element minOccurs="0" name="Price" type="xs:double"/>
+      <xs:element minOccurs="0" name="LineItemAddress" type="tns:ShippingAddressType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ShippingAddressType">
+    <xs:complexContent>
+      <xs:extension base="tns:AddressType">
+        <xs:sequence>
+          <xs:element name="IndividualReceivingShipment" type="tns:ContactPersonType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AddressType">
+    <xs:sequence>
+      <xs:element name="Address1" type="xs:string"/>
+      <xs:element name="Address2" type="xs:string"/>
+      <xs:element minOccurs="0" name="Address3" type="xs:string"/>
+      <xs:element name="City" type="xs:string"/>
+      <xs:element name="State" type="xs:string"/>
+      <xs:element name="Zip" type="xs:string"/>
+      <xs:element minOccurs="0" name="Zip4" type="xs:string"/>
+      <xs:element name="Country" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ContactPersonType">
+    <xs:sequence>
+      <xs:element name="Name" type="xs:string"/>
+      <xs:element name="Phone" type="xs:string"/>
+      <xs:element name="Email" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="BuyerType">
+    <xs:complexContent>
+      <xs:extension base="tns:ContactPersonType">
+        <xs:sequence>
+          <xs:element name="UserId" type="xs:string"/>
+          <xs:element name="FirstName" type="xs:string"/>
+          <xs:element name="LastName" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentType">
+    <xs:sequence>
+      <xs:element name="DocumentName" type="xs:string"/>
+      <xs:element name="DocumentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="DocumentURL" type="xs:string"/>
+      <xs:element minOccurs="0" name="DocumentContent" type="tns:DocumentContentType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DocumentContentType">
+    <xs:sequence>
+      <xs:element name="FileName" type="xs:string"/>
+      <xs:element name="FileContent" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CancellationType">
+    <xs:sequence>
+      <xs:element name="SolicitationId" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="tns:DocumentType"/>
+      <xs:element name="CancellationInfo" type="tns:AmendmentFieldsType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseDetailType">
+    <xs:sequence>
+      <xs:element name="SolicitationId" type="xs:string"/>
+      <xs:element name="EbuyRfqId" type="xs:string"/>
+      <xs:element name="QuoteId" type="xs:string"/>
+      <xs:element name="QuoteStatus" type="tns:QuoteStatusType"/>
+      <xs:element name="Contractor" type="tns:ContractorType"/>
+      <xs:element minOccurs="0" name="QuoteComment" type="xs:string"/>
+      <xs:element name="LineItems">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="LineItem" type="tns:LineItemType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Attachments">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Attachment" type="tns:DocumentType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TotalPrice" type="xs:double"/>
+      <xs:element minOccurs="0" name="TotalShipCost" type="xs:double"/>
+      <xs:element minOccurs="0" name="TotalAttachCost" type="xs:double"/>
+      <xs:element minOccurs="0" name="DiscountDays" type="xs:int"/>
+      <xs:element minOccurs="0" name="DiscountPercentage" type="xs:int"/>
+      <xs:element minOccurs="0" name="DiscountTerm" type="xs:string"/>
+      <xs:element minOccurs="0" name="NoQuoteReason" type="xs:string"/>
+      <xs:element name="QuoteExpirationTime" type="xs:anySimpleType"/>
+      <xs:element name="QuoteReceivedTime" type="xs:anySimpleType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ContractorType">
+    <xs:sequence>
+      <xs:element name="ContractNumber" type="xs:string"/>
+      <xs:element name="DunsNumber" type="xs:string"/>
+      <xs:element name="VendorName" type="xs:string"/>
+      <xs:element name="VendorPOC" type="tns:ContactPersonType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AwardNoAwardType">
+    <xs:sequence>
+      <xs:element name="SolicitationId" type="xs:string"/>
+      <xs:element name="EbuyRfqId" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Award" type="tns:AwardType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AwardType">
+    <xs:sequence>
+      <xs:element name="AwardType" type="tns:AwardEnum"/>
+      <xs:element name="QuoteId" type="xs:string"/>
+      <xs:element name="ContractNumber" type="xs:string"/>
+      <xs:element name="AwardDate" type="xs:anySimpleType"/>
+      <xs:element minOccurs="0" name="AwardAmount" type="xs:double"/>
+      <xs:element minOccurs="0" name="PurchaseOrderNumber" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="StatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Open"/>
+      <xs:enumeration value="Closed"/>
+      <xs:enumeration value="Cancelled"/>
+      <xs:enumeration value="Saved to Draft"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="OperationStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="success"/>
+      <xs:enumeration value="failure"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="QuoteStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Pending Response"/>
+      <xs:enumeration value="No Quote"/>
+      <xs:enumeration value="Awarded"/>
+      <xs:enumeration value="Not Awarded"/>
+      <xs:enumeration value="Cancelled"/>
+      <xs:enumeration value="Awarded(Partial)"/>
+      <xs:enumeration value="Sources Sought"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AwardEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Award"/>
+      <xs:enumeration value="Partial Award"/>
+      <xs:enumeration value="No Award"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.ebuy.gsa.gov/schema" xmlns="http://gov/gsa/ebuy/connect/webservice" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://gov/gsa/ebuy/connect/webservice" version="1.0">
+  <xs:import namespace="http://www.ebuy.gsa.gov/schema"/>
+  <xs:element name="amendSolicitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="userId" type="xs:string"/>
+        <xs:element form="qualified" name="SolicitationAmendment" type="ns1:AmendmentType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="amendSolicitationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Acknowledgement" type="ns1:AcknowledgementType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cancelSolicitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="userId" type="xs:string"/>
+        <xs:element form="qualified" name="SolicitationCancellation" type="ns1:CancellationType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cancelSolicitationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Acknowledgement" type="ns1:AcknowledgementType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAttachment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="documentId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAttachmentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Attachment" type="ns1:DocumentType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getResponseDetail">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="responseId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getResponseDetailResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="ResponseDetail" type="ns1:ResponseDetailType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getResponses">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="solicitationId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getResponsesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="SolicitationResponses" type="ns1:SolicitationResponsesType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getSolicitationStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="solicitationId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getSolicitationStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:SolicitationStatus"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publishAwardNoaward">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="AwardNoAward" type="ns1:AwardNoAwardType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publishAwardNoawardResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Acknowledgement" type="ns1:AcknowledgementType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publishSolicitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="userId" type="xs:string"/>
+        <xs:element form="qualified" name="Solicitation" type="ns1:SolicitationType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publishSolicitationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Acknowledgement" type="ns1:AcknowledgementType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="test">
+    <xs:complexType>
+      <xs:sequence/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="return" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="viewSolicitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="tradePartnerId" type="xs:string"/>
+        <xs:element form="qualified" name="tradePartnerPassword" type="xs:string"/>
+        <xs:element form="qualified" name="userId" type="xs:string"/>
+        <xs:element form="qualified" name="solicitationId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="viewSolicitationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Acknowledgement" type="ns1:AcknowledgementType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="viewSolicitationResponse">
+    <wsdl:part element="tns:viewSolicitationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="test">
+    <wsdl:part element="tns:test" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="amendSolicitationResponse">
+    <wsdl:part element="tns:amendSolicitationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishSolicitationResponse">
+    <wsdl:part element="tns:publishSolicitationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelSolicitationResponse">
+    <wsdl:part element="tns:cancelSolicitationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EbuyServiceException_Exception">
+    <wsdl:part element="ns1:EbuyServiceException" name="EbuyServiceException_Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSolicitationStatus">
+    <wsdl:part element="tns:getSolicitationStatus" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="viewSolicitation">
+    <wsdl:part element="tns:viewSolicitation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getSolicitationStatusResponse">
+    <wsdl:part element="tns:getSolicitationStatusResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="testResponse">
+    <wsdl:part element="tns:testResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="amendSolicitation">
+    <wsdl:part element="tns:amendSolicitation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="publishSolicitation">
+    <wsdl:part element="tns:publishSolicitation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelSolicitation">
+    <wsdl:part element="tns:cancelSolicitation" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SolicitationWebService">
+    <wsdl:operation name="getSolicitationStatus">
+      <wsdl:input message="tns:getSolicitationStatus" name="getSolicitationStatus">
+    </wsdl:input>
+      <wsdl:output message="tns:getSolicitationStatusResponse" name="getSolicitationStatusResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EbuyServiceException_Exception" name="EbuyServiceException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="viewSolicitation">
+      <wsdl:input message="tns:viewSolicitation" name="viewSolicitation">
+    </wsdl:input>
+      <wsdl:output message="tns:viewSolicitationResponse" name="viewSolicitationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EbuyServiceException_Exception" name="EbuyServiceException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="test">
+      <wsdl:input message="tns:test" name="test">
+    </wsdl:input>
+      <wsdl:output message="tns:testResponse" name="testResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="amendSolicitation">
+      <wsdl:input message="tns:amendSolicitation" name="amendSolicitation">
+    </wsdl:input>
+      <wsdl:output message="tns:amendSolicitationResponse" name="amendSolicitationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EbuyServiceException_Exception" name="EbuyServiceException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="publishSolicitation">
+      <wsdl:input message="tns:publishSolicitation" name="publishSolicitation">
+    </wsdl:input>
+      <wsdl:output message="tns:publishSolicitationResponse" name="publishSolicitationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EbuyServiceException_Exception" name="EbuyServiceException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelSolicitation">
+      <wsdl:input message="tns:cancelSolicitation" name="cancelSolicitation">
+    </wsdl:input>
+      <wsdl:output message="tns:cancelSolicitationResponse" name="cancelSolicitationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:EbuyServiceException_Exception" name="EbuyServiceException_Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SolicitationWebServiceServiceSoapBinding" type="tns:SolicitationWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="viewSolicitation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="viewSolicitation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="viewSolicitationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EbuyServiceException_Exception">
+        <soap:fault name="EbuyServiceException_Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getSolicitationStatus">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getSolicitationStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getSolicitationStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EbuyServiceException_Exception">
+        <soap:fault name="EbuyServiceException_Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="test">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="test">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="testResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="amendSolicitation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="amendSolicitation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="amendSolicitationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EbuyServiceException_Exception">
+        <soap:fault name="EbuyServiceException_Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="publishSolicitation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="publishSolicitation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="publishSolicitationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EbuyServiceException_Exception">
+        <soap:fault name="EbuyServiceException_Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cancelSolicitation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cancelSolicitation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelSolicitationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="EbuyServiceException_Exception">
+        <soap:fault name="EbuyServiceException_Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SolicitationWebServiceService">
+    <wsdl:port binding="tns:SolicitationWebServiceServiceSoapBinding" name="SolicitationWebServiceSoapPort">
+      <soap:address location="http://f04bmm-advapp01t.fas.gsa.gov:27401/connect/webservice/solicitation"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -91,7 +91,7 @@ When this directory is extracted to its own repository or git submodule, copy it
 
 ---
 
-## Releasing
+## Relintake_processng
 
 1. Ensure `npm run build` and `npm test` pass.
 2. Bump the version in `package.json` (keep it aligned with the Rust crate when possible).

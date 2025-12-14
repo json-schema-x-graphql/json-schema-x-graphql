@@ -198,7 +198,7 @@ Open http://localhost:5173 to see the live editor.
 
 ### Option 1: Fix a Typo or Improve Docs
 
-The easiest way to contribute!
+The intake_processest way to contribute!
 
 1. Find a typo or unclear section
 2. Click "Edit" on GitHub or clone the repo

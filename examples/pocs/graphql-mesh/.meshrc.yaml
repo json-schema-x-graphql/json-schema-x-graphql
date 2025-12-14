@@ -1,0 +1,110 @@
+# GraphQL Mesh Configuration
+# Schema Unification Forest Gateway POC
+
+serve:
+  port: 4000
+  hostname: 0.0.0.0
+  playground: true
+  endpoint: /graphql
+
+# Supergraph SDL source
+sources:
+  - name: Schema UnificationSupergraph
+    handler:
+      graphql:
+        endpoint: http://localhost:4000/graphql
+        source: ../../generated-schemas/schema_unification.supergraph.graphql
+
+  # Mock REST API for development
+  - name: MockSolicitations
+    handler:
+      openapi:
+        source: ./schemas/mock-openapi.json
+        baseUrl: "{env.DATABRICKS_BASE_URL:http://localhost:3000}"
+        operationHeaders:
+          Authorization: "Bearer {env.DATABRICKS_TOKEN}"
+          Content-Type: application/json
+    transforms:
+      # Transform snake_case to camelCase
+      - rename:
+          mode: wrap
+          renames:
+            - from:
+                type: Solicitation
+                field: solicitation_number
+              to:
+                type: Solicitation
+                field: solicitationNumber
+            - from:
+                type: Solicitation
+                field: award_date
+              to:
+                type: Solicitation
+                field: awardDate
+            - from:
+                type: Solicitation
+                field: created_at
+              to:
+                type: Solicitation
+                field: createdAt
+      
+      # Filter out internal fields
+      - filterSchema:
+          filters:
+            - Type.!_internal*
+            - Query.!_admin*
+
+# Federation support
+federation:
+  types:
+    - name: AssistRecord
+      config:
+        key:
+          fields: ia_piid_or_unique_id
+    - name: AssistRecord
+      config:
+        key:
+          fields: source_record_id
+
+# Cache configuration (per-day refresh with heavy caching)
+cache:
+  - field: Query.solicitationById
+    invalidate:
+      ttl: 86400  # 24 hours
+  - field: Query.allSolicitations
+    invalidate:
+      ttl: 86400
+
+# Plugins
+plugins:
+  # Mock data for development
+  - mock:
+      if: "{env.ENABLE_MOCKS}"
+      mocks:
+        Solicitation:
+          id: "{random.uuid}"
+          solicitationNumber: "{random.alphanumeric 10}"
+          title: "{lorem.sentence}"
+          amount: "{random.number 1000000}"
+          awardDate: "{date.recent}"
+        AssistRecord:
+          iaPiidOrUniqueId: "{random.alphanumeric 12}"
+          sourceRecordId: "{random.uuid}"
+
+  # Response validation
+  - responseCache:
+      ttl: 3600
+      includeExtensionMetadata: true
+
+# Additional type definitions for federation
+additionalTypeDefs: |
+  extend schema @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external", "@requires", "@provides"]
+  )
+
+# Custom scalars
+customScalars:
+  DateTime: string
+  Date: string
+  Email: string

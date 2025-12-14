@@ -82,7 +82,7 @@ cargo run --example json_to_sdl -- ../../schema/test.json
 
 **Generated SDL:**
 ```graphql
-"Unified schema for FPDS, ASSIST, and EASi systems..."
+"Unified schema for Contract Data, Legacy Procurement, and EASi systems..."
 type Contract implements Node {
   commonElements: CommonElements!
   "Alias for globalRecordId for GraphQL Node interface" id: ID!

@@ -25,6 +25,12 @@ pub struct ConversionOptions {
     pub federation_version: u8,
     /// Whether to automatically infer ID scalar for fields named "id", "_id", etc.
     pub infer_ids: bool,
+    /// Strategy for naming GraphQL types and fields
+    pub naming_convention: NamingConvention,
+    /// List of type names to exclude from generation
+    pub exclude_types: Vec<String>,
+    /// List of regex patterns to exclude fields or types
+    pub exclude_patterns: Vec<String>,
 }
 
 impl Default for ConversionOptions {
@@ -35,8 +41,20 @@ impl Default for ConversionOptions {
             preserve_field_order: true,
             federation_version: 2,
             infer_ids: false,
+            naming_convention: NamingConvention::GraphqlIdiomatic,
+            exclude_types: vec![],
+            exclude_patterns: vec![],
         }
     }
+}
+
+/// Naming conventions for generated GraphQL artifacts
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum NamingConvention {
+    /// Preserve the exact casing from the JSON Schema
+    Preserve,
+    /// Enforce GraphQL idioms: PascalCase for Types, camelCase for fields
+    GraphqlIdiomatic,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]

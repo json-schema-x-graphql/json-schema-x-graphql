@@ -1,0 +1,156 @@
+"""High-precision decimal"""
+scalar Decimal
+"""Arbitrary JSON value"""
+scalar JSON
+"""ISO 8601 date"""
+scalar Date
+"""ISO 8601 date and time"""
+scalar DateTime
+"""Valid email address"""
+scalar Email
+"""Valid URI/URL"""
+scalar URI
+
+type Gsdm {
+  award: GsdmAward
+}
+
+type GsdmAward {
+  award_contract_id: GsdmAwardAwardContractId
+  competition: GsdmAwardCompetition
+  contacts: [GsdmAwardContactsItem]
+  contract_data: GsdmAwardContractData
+  dollar_values: GsdmAwardDollarValues
+  place_of_performance: GsdmAwardPlaceOfPerformance
+  purchaser_information: GsdmAwardPurchaserInformation
+  referenced_idv: GsdmAwardReferencedIdv
+  total_dollar_values: GsdmAwardTotalDollarValues
+  transaction_information: GsdmAwardTransactionInformation
+  vendor: GsdmAwardVendor
+}
+
+type GsdmAwardAwardContractId {
+  agency_id: String
+  piid: String
+}
+
+type GsdmAwardCompetition {
+  local_area_set_aside: GsdmAwardCompetitionLocalAreaSetAside
+  solicitation_procedures: GsdmAwardCompetitionSolicitationProcedures
+  type_of_set_aside: GsdmAwardCompetitionTypeOfSetAside
+}
+
+type GsdmAwardCompetitionLocalAreaSetAside {
+  code: Boolean
+}
+
+type GsdmAwardCompetitionSolicitationProcedures {
+  code: String
+  description: String
+}
+
+type GsdmAwardCompetitionTypeOfSetAside {
+  code: String
+}
+
+type GsdmAwardContactsItem {
+  email: Email
+  name: String
+}
+
+type GsdmAwardContractData {
+  description_of_contract_requirement: String
+  national_interest_action_code: GsdmAwardContractDataNationalInterestActionCode
+}
+
+type GsdmAwardContractDataNationalInterestActionCode {
+  code: String
+}
+
+type GsdmAwardDollarValues {
+  base_and_all_options_value: Decimal
+  independent_government_estimate: Decimal
+  obligated_amount: Decimal
+}
+
+type GsdmAwardPlaceOfPerformance {
+  principal_place: GsdmAwardPlaceOfPerformancePrincipalPlace
+  zip_code: GsdmAwardPlaceOfPerformanceZipCode
+}
+
+type GsdmAwardPlaceOfPerformancePrincipalPlace {
+  city: String
+  state: GsdmAwardPlaceOfPerformancePrincipalPlaceState
+  street_address: String
+}
+
+type GsdmAwardPlaceOfPerformancePrincipalPlaceState {
+  code: String
+}
+
+type GsdmAwardPlaceOfPerformanceZipCode {
+  zip4a: String
+}
+
+type GsdmAwardPurchaserInformation {
+  contracting_office_agency: GsdmAwardPurchaserInformationContractingOfficeAgency
+  funding_requesting_agency: GsdmAwardPurchaserInformationFundingRequestingAgency
+  funding_requesting_office: GsdmAwardPurchaserInformationFundingRequestingOffice
+}
+
+type GsdmAwardPurchaserInformationContractingOfficeAgency {
+  code: String
+  id: String
+  name: String
+}
+
+type GsdmAwardPurchaserInformationFundingRequestingAgency {
+  code: String
+  name: String
+}
+
+type GsdmAwardPurchaserInformationFundingRequestingOffice {
+  code: String
+  name: String
+}
+
+type GsdmAwardReferencedIdv {
+  piid: String
+}
+
+type GsdmAwardTotalDollarValues {
+  total_base_and_all_options_value: Decimal
+}
+
+type GsdmAwardTransactionInformation {
+  approved_date: DateTime
+  last_modified_date: DateTime
+}
+
+type GsdmAwardVendor {
+  contracting_officer_business_size_determination: GsdmAwardVendorContractingOfficerBusinessSizeDetermination
+  line_of_business: GsdmAwardVendorLineOfBusiness
+  socio_economic_indicators: GsdmAwardVendorSocioEconomicIndicators
+  uei: String
+  uei_legal_business_name: String
+}
+
+type GsdmAwardVendorContractingOfficerBusinessSizeDetermination {
+  code: String
+}
+
+type GsdmAwardVendorLineOfBusiness {
+  naics_code: String
+  psc_code: String
+}
+
+type GsdmAwardVendorSocioEconomicIndicators {
+  is_sba_certified_8a_program_participant: String
+  is_sba_certified_hub_zone: String
+  is_service_related_disabled_veteran_owned_business: String
+  is_women_owned_small_business: String
+}
+
+type Query {
+  unified_model: Gsdm
+}

@@ -1,0 +1,35 @@
+# Cloud Native Buildpack configuration (project.toml)
+# For use with `pack build` command
+
+[_]
+schema-version = "0.2"
+
+[io.buildpacks]
+include = [
+  "*.go",
+  "go.mod",
+  "go.sum",
+  "graph/",
+  "datasources/",
+  "schemas/"
+]
+
+[[io.buildpacks.group]]
+id = "paketo-buildpacks/go"
+version = "4.0.0"
+
+[[io.buildpacks.build.env]]
+name = "BP_GO_VERSION"
+value = "1.21.*"
+
+[[io.buildpacks.build.env]]
+name = "BP_GO_BUILD_FLAGS"
+value = "-buildmode=default"
+
+[[io.buildpacks.build.env]]
+name = "BP_GO_TARGETS"
+value = "./server.go"
+
+[[io.buildpacks.build.env]]
+name = "BP_KEEP_FILES"
+value = "schemas/*"

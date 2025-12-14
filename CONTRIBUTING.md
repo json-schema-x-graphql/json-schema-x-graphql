@@ -95,7 +95,7 @@ We welcome all types of contributions:
 ### Finding Work
 
 - Check [Good First Issues](https://github.com/JJediny/json-schema-x-graphql/labels/good%20first%20issue) for beginner-friendly tasks
-- Look at [Help Wanted](https://github.com/JJediny/json-schema-x-graphql/labels/help%20wanted) for areas needing assistance
+- Look at [Help Wanted](https://github.com/JJediny/json-schema-x-graphql/labels/help%20wanted) for areas needing legacy_procurementance
 - Review the [Roadmap](CONTEXT.md#development-roadmap) for upcoming work
 - Ask in [Discussions](https://github.com/JJediny/json-schema-x-graphql/discussions) if you want to tackle something new
 

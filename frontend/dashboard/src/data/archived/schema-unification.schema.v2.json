@@ -1,0 +1,677 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GSA-TTS/enterprise-schema-unification/schemas/contract-v2",
+  "title": "Enhanced Government Contract Management Schema v2.0",
+  "description": "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types)",
+  "definitions": {
+    "DataQuality": {
+      "type": "object",
+      "description": "Data quality metrics for system chain entry",
+      "properties": {
+        "completenessScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "validationErrors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lastValidated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "SystemChainEntry": {
+      "type": "object",
+      "description": "Entry in the system chain showing data flow",
+      "properties": {
+        "systemName": {
+          "type": "string",
+          "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"]
+        },
+        "recordId": {
+          "type": "string"
+        },
+        "processedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "transformationRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dataQuality": {
+          "$ref": "#/definitions/DataQuality"
+        }
+      },
+      "required": ["systemName", "recordId", "processedDate"]
+    },
+    "SystemMetadata": {
+      "type": "object",
+      "description": "Metadata supporting multiple nested systems",
+      "properties": {
+        "primarySystem": {
+          "type": "string",
+          "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"]
+        },
+        "systemChain": {
+          "type": "array",
+          "description": "Chain of systems data has flowed through",
+          "items": {
+            "$ref": "#/definitions/SystemChainEntry"
+          }
+        },
+        "schemaVersion": {
+          "type": "string",
+          "default": "2.0"
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "globalRecordId": {
+          "type": "string",
+          "description": "Global unique identifier across all systems"
+        }
+      },
+      "required": ["primarySystem", "systemChain", "globalRecordId"]
+    },
+    "ContractIdentification": {
+      "type": "object",
+      "description": "Contract identification information",
+      "properties": {
+        "piid": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Procurement Instrument Identifier"
+        },
+        "originalAwardPiid": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Original Award PIID (Preceding Reference Info)"
+        },
+        "referencedPiid": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Referenced PIID for related contracts"
+        },
+        "contractTitle": {
+          "type": "string",
+          "description": "Title or description of the contract"
+        },
+        "contractType": {
+          "type": "string",
+          "description": "Type of contract instrument"
+        },
+        "descriptionOfRequirement": {
+          "type": "string",
+          "description": "Detailed description of contract requirements"
+        }
+      },
+      "required": ["piid"]
+    },
+    "AgencyInfo": {
+      "type": "object",
+      "description": "Agency or department information",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Agency or Department Code"
+        },
+        "name": {
+          "type": "string",
+          "description": "Agency or Department Name"
+        }
+      }
+    },
+    "OrganizationInfo": {
+      "type": "object",
+      "description": "Organization information for contracts",
+      "properties": {
+        "contractingAgency": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/AgencyInfo"
+            },
+            {
+              "required": ["code"]
+            }
+          ]
+        },
+        "contractingDepartment": {
+          "$ref": "#/definitions/AgencyInfo"
+        },
+        "fundingAgency": {
+          "$ref": "#/definitions/AgencyInfo"
+        },
+        "fundingDepartment": {
+          "$ref": "#/definitions/AgencyInfo"
+        }
+      },
+      "required": ["contractingAgency"]
+    },
+    "VendorInfo": {
+      "type": "object",
+      "description": "Vendor information",
+      "properties": {
+        "vendorName": {
+          "type": "string",
+          "description": "Name of the vendor providing goods/services"
+        },
+        "vendorUei": {
+          "type": "string",
+          "description": "Vendor Unique Entity Identifier"
+        }
+      }
+    },
+    "PlaceOfPerformance": {
+      "type": "object",
+      "description": "Place of performance location details",
+      "properties": {
+        "streetAddress": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "congressionalDistrict": {
+          "type": "string"
+        }
+      }
+    },
+    "FinancialInfo": {
+      "type": "object",
+      "description": "Financial information and values",
+      "properties": {
+        "totalContractValue": {
+          "type": "number",
+          "description": "Total contract value including all modifications"
+        },
+        "baseAndAllOptionsValue": {
+          "type": "number",
+          "description": "Base contract value plus all option periods"
+        },
+        "independentGovernmentEstimate": {
+          "type": "number",
+          "description": "IGE amount"
+        },
+        "amountSpentOnProduct": {
+          "type": "number",
+          "description": "Amount spent on specific products"
+        },
+        "contractFiscalYear": {
+          "type": "string",
+          "description": "Fiscal year when contract was awarded"
+        }
+      }
+    },
+    "BusinessClassification": {
+      "type": "object",
+      "description": "Business classification codes and categories",
+      "properties": {
+        "naicsCode": {
+          "type": "string",
+          "description": "NAICS classification code"
+        },
+        "naicsDescription": {
+          "type": "string"
+        },
+        "pscCode": {
+          "type": "string",
+          "description": "Product Service Code"
+        },
+        "pscDescription": {
+          "type": "string",
+          "description": "Product Service Code Description"
+        },
+        "categoryOfProduct": {
+          "type": "string",
+          "description": "General category under which the product falls"
+        },
+        "typeOfProduct": {
+          "type": "string",
+          "description": "Specific type of product being contracted"
+        },
+        "setAsideType": {
+          "type": "string",
+          "description": "Type of set-aside program"
+        },
+        "localAreaSetAside": {
+          "type": "boolean"
+        },
+        "coSizeDetermination": {
+          "type": "string",
+          "description": "Contracting Officer size determination"
+        }
+      }
+    },
+    "ContractCharacteristics": {
+      "type": "object",
+      "description": "Contract characteristics and flags",
+      "properties": {
+        "emergencyAcquisition": {
+          "type": "string"
+        },
+        "governmentFurnishedProperty": {
+          "type": "boolean"
+        },
+        "includesCui": {
+          "type": "boolean",
+          "description": "Includes Controlled Unclassified Information"
+        },
+        "recurringService": {
+          "type": "boolean"
+        },
+        "recurringUtilities": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "description": "Contact information for contract personnel",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["primary", "technical", "administrative", "contracting_officer"]
+        }
+      }
+    },
+    "StatusInfo": {
+      "type": "object",
+      "description": "Contract status information",
+      "properties": {
+        "isActive": {
+          "type": "boolean"
+        },
+        "isLatest": {
+          "type": "boolean"
+        },
+        "isFunded": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "published", "awarded", "completed", "cancelled"]
+        },
+        "publishedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "contractCompleteDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when contract was completed"
+        },
+        "lastCarDateSigned": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when last Contract Action Report was signed"
+        }
+      }
+    },
+    "CommonElements": {
+      "type": "object",
+      "description": "Fields common across all systems",
+      "properties": {
+        "contractIdentification": {
+          "$ref": "#/definitions/ContractIdentification"
+        },
+        "organizationInfo": {
+          "$ref": "#/definitions/OrganizationInfo"
+        },
+        "vendorInfo": {
+          "$ref": "#/definitions/VendorInfo"
+        },
+        "placeOfPerformance": {
+          "$ref": "#/definitions/PlaceOfPerformance"
+        },
+        "financialInfo": {
+          "$ref": "#/definitions/FinancialInfo"
+        },
+        "businessClassification": {
+          "$ref": "#/definitions/BusinessClassification"
+        },
+        "contractCharacteristics": {
+          "$ref": "#/definitions/ContractCharacteristics"
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contact"
+          }
+        },
+        "statusInfo": {
+          "$ref": "#/definitions/StatusInfo"
+        }
+      },
+      "required": ["contractIdentification", "organizationInfo", "statusInfo"]
+    },
+    "Contract DataAssistanceType": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer"
+        }
+      }
+    },
+    "Contract DataApplicantBeneficiaryType": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "Contract DataEligibility": {
+      "type": "object",
+      "properties": {
+        "applicantTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contract DataApplicantBeneficiaryType"
+          }
+        },
+        "beneficiaryTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contract DataApplicantBeneficiaryType"
+          }
+        },
+        "additionalInfo": {
+          "type": "string"
+        }
+      }
+    },
+    "Contract DataUsage": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "type": "string"
+        },
+        "restrictions": {
+          "type": "string"
+        },
+        "loanTerms": {
+          "type": "string"
+        },
+        "discretionaryFund": {
+          "type": "string"
+        }
+      }
+    },
+    "Contract DataSpecificData": {
+      "type": "object",
+      "description": "Contract Data-specific data fields",
+      "properties": {
+        "programNumber": {
+          "type": "string"
+        },
+        "alternativeNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "objective": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri"
+        },
+        "legacy_procurementanceTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Contract DataAssistanceType"
+          }
+        },
+        "eligibility": {
+          "$ref": "#/definitions/Contract DataEligibility"
+        },
+        "usage": {
+          "$ref": "#/definitions/Contract DataUsage"
+        }
+      }
+    },
+    "Contract DataExtension": {
+      "type": "object",
+      "description": "Contract Data-specific field extension",
+      "properties": {
+        "fieldName": {
+          "type": "string"
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "value": {},
+        "contract_dataSpecific": {
+          "$ref": "#/definitions/Contract DataSpecificData"
+        }
+      }
+    },
+    "AssistAcquisitionData": {
+      "type": "object",
+      "properties": {
+        "iaPiidOrUniqueId": {
+          "type": "string",
+          "maxLength": 50,
+          "description": "IA PIID or user-generated unique ID for the Interagency Agreement"
+        },
+        "natureOfAcquisition": {
+          "type": "string",
+          "description": "Nature of Acquisition or Relationship between GSA and Requesting Agency",
+          "default": "ADMIN_CONTINUE_TRANSFER"
+        }
+      },
+      "required": ["iaPiidOrUniqueId", "natureOfAcquisition"]
+    },
+    "AssistOfficeAddress": {
+      "type": "object",
+      "properties": {
+        "streetAddress1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        }
+      }
+    },
+    "AssistClientData": {
+      "type": "object",
+      "properties": {
+        "clientOrganizationName": {
+          "type": "string"
+        },
+        "officeAddress": {
+          "$ref": "#/definitions/AssistOfficeAddress"
+        }
+      },
+      "required": ["clientOrganizationName", "officeAddress"]
+    },
+    "AssistAwardData": {
+      "type": "object",
+      "properties": {
+        "typeOfIdc": {
+          "type": "string"
+        },
+        "whoCanUseIdc": {
+          "type": "string"
+        }
+      }
+    },
+    "AssistSpecificData": {
+      "type": "object",
+      "description": "Legacy Procurement-specific data fields",
+      "properties": {
+        "acquisitionData": {
+          "$ref": "#/definitions/AssistAcquisitionData"
+        },
+        "clientData": {
+          "$ref": "#/definitions/AssistClientData"
+        },
+        "awardData": {
+          "$ref": "#/definitions/AssistAwardData"
+        }
+      }
+    },
+    "AssistExtension": {
+      "type": "object",
+      "description": "Legacy Procurement-specific field extension",
+      "properties": {
+        "fieldName": {
+          "type": "string"
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "value": {},
+        "legacy_procurementSpecific": {
+          "$ref": "#/definitions/AssistSpecificData"
+        }
+      }
+    },
+    "EasiSpecificData": {
+      "type": "object",
+      "description": "EASi-specific data fields",
+      "properties": {
+        "businessOwner": {
+          "type": "string",
+          "description": "EASi Business Owner"
+        },
+        "systemOwner": {
+          "type": "string",
+          "description": "EASi System Owner"
+        },
+        "unitPrice": {
+          "type": "number",
+          "description": "Unit Price field available at the CLIN level"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "Unit of Measure field available at the CLIN level"
+        },
+        "optional": {
+          "type": "string",
+          "description": "Option Period or Not Applicable"
+        },
+        "notToExceed": {
+          "type": "string",
+          "description": "Not to Exceed field"
+        },
+        "notSeparatelyPriced": {
+          "type": "string",
+          "description": "Maps to Qualifier field at CLIN level"
+        }
+      }
+    },
+    "EasiExtension": {
+      "type": "object",
+      "description": "EASi-specific field extension",
+      "properties": {
+        "fieldName": {
+          "type": "string"
+        },
+        "fieldType": {
+          "type": "string"
+        },
+        "value": {},
+        "intake_processSpecific": {
+          "$ref": "#/definitions/EasiSpecificData"
+        }
+      }
+    },
+    "SystemExtensions": {
+      "type": "object",
+      "description": "System-specific fields and extensions",
+      "properties": {
+        "contract_data": {
+          "type": "array",
+          "description": "Contract Data-specific fields and extensions",
+          "items": {
+            "$ref": "#/definitions/Contract DataExtension"
+          }
+        },
+        "legacy_procurement": {
+          "type": "array",
+          "description": "Legacy Procurement-specific fields and extensions",
+          "items": {
+            "$ref": "#/definitions/AssistExtension"
+          }
+        },
+        "intake_process": {
+          "type": "array",
+          "description": "EASi-specific fields and extensions",
+          "items": {
+            "$ref": "#/definitions/EasiExtension"
+          }
+        }
+      }
+    },
+    "Contract": {
+      "type": "object",
+      "title": "Enhanced Government Contract Management Normalized Schema",
+      "description": "Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure",
+      "properties": {
+        "systemMetadata": {
+          "$ref": "#/definitions/SystemMetadata"
+        },
+        "commonElements": {
+          "$ref": "#/definitions/CommonElements"
+        },
+        "systemExtensions": {
+          "$ref": "#/definitions/SystemExtensions"
+        }
+      },
+      "required": ["systemMetadata", "commonElements"]
+    }
+  },
+  "$ref": "#/definitions/Contract"
+}

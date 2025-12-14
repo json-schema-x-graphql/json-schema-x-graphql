@@ -7,7 +7,7 @@ type SystemMetadata {
   "Last modification timestamp" lastModified: DateTime
   "Global unique identifier across all systems" globalRecordId: String!
 }
-"Unified schema for FPDS, ASSIST, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure"
+"Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure"
 type Contract implements Node {
   "Alias for globalRecordId for GraphQL Node interface" id: String
   systemMetadata: SystemMetadata!

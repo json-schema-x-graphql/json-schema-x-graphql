@@ -1,0 +1,330 @@
+"""
+Calendar date in ISO 8601 format (YYYY-MM-DD).
+scalar Date
+
+Arbitrary precision decimal represented as a string to avoid float rounding issues.
+scalar Decimal
+Email address conforming to RFC 5322 (simplified).
+scalar Email
+Uniform Resource Identifier or URL string.
+scalar URI
+A custom scalar representing a date and time in ISO 8601 format
+scalar DateTime
+A custom scalar for arbitrary JSON values
+scalar JSON
+Federation entity key directive
+directive @key(
+  """
+  Space-delimited list of fields forming the entity key
+  fields: String!
+) on OBJECT | INTERFACE
+enum Unipriced_flag {
+  Y
+  N
+  YES
+  NO
+  NULL
+}
+type Site {
+  site_code: Int! # The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
+  site_description: String # - type: string
+type Person {
+  prism_user_id: String # - type: string
+  first_name: String # - type: string
+  last_name: String # - type: string
+  email: Email # - type: string
+type Address {
+  address_code: String # - type: string
+  office_address_name: String # - type: string
+  address1: String # - type: string
+  address2: String # - type: string
+  address3: String # - type: string
+  address4: String # - type: string
+  city: String # - type: string
+  state: String # - type: string
+  zipcode: String # - type: string
+  country: String # - type: string
+  phone: String # - type: string
+  fax: String # - type: string
+  region_code: String # - type: string
+  province: String # - type: string
+  county: String # - type: string
+  cust_address1: String # - type: string
+  cust_address2: String # - type: string
+  cust_address3: String # - type: string
+  cust_address4: String # - type: string
+  cust_address5: String # - type: string
+type Solicitation @key(fields: "solicitation_number amendment_number") {
+  destination: String # - type: string
+  origin: String # - type: string
+  create_by: String # - type: string
+  create_date: DateTime # - type: string
+  last_updated_by: String # - type: string
+  last_updated_date: DateTime # - type: string
+  solicitation_number: String # - type: string
+  amendment_number: String # - type: string
+  solicitation_document_description: String # - type: string
+  header_text: String # - type: string
+  change_text: String # - type: string
+  footer_text: String # - type: string
+  num_items: Int # - type: integer | string | null
+  amount: Decimal # - type: number | string | null
+  pop_start_date: DateTime # - type: string
+  pop_end_date: DateTime # - type: string
+  preference_award: String # - type: string
+  percent_setaside: Decimal # - type: number | string | null
+  unipriced_flag: Unipriced_flag # - type: string
+  subsistence_flag: Boolean # - type: boolean | string | null
+  primary_product_code: String # - type: string
+  primary_naics_code: String # - type: string
+  project_id: String # - type: string
+  project_title: String # - type: string
+  base_currency_code: String # - type: string
+  print_currency_code: String # - type: string
+  security_classification_code: String # - type: string
+  post_to_ebuy: String # - type: string
+  major_systems: String # - type: string
+  high_risk: String # - type: string
+  source_system_evaluation_type: String # - type: string
+  document_status: String # - type: string
+  status_date: DateTime # - type: string
+  pending_date: DateTime # - type: string
+  approved_date: DateTime # - type: string
+  released_date: DateTime # - type: string
+  cancelled_date: DateTime # - type: string
+  closed_date: DateTime # - type: string
+  this_version_funded_amount: Decimal # - type: number | string | null
+  total_released_funded_amount: Decimal # - type: number | string | null
+  this_version_recovery_act_funds_amount: Decimal # - type: number | string | null
+  total_released_recovery_act_funds_amount: Decimal # - type: number | string | null
+  criticality_designator: String # - type: string
+  solicitation_purpose: String # - type: string
+  potential_amount: Decimal # - type: number | string | null
+  issued_date: DateTime # - type: string
+  response_due_date: Date # - type: string
+  response_due_time: String # - type: string
+  response_due_time_zone: String # - type: string
+  solicitation_type: String # - type: string
+  gwac_gsa_purchase_flag: Boolean # - type: boolean | string | null
+  special_circumstances_code: String # - type: string
+  multi_award_idv: String # - type: string
+  bundled_contract: String # - type: string
+  consolidated_contract: String # - type: string
+  emergency_request_contract_flag: Boolean # - type: boolean | string | null
+  solicitation_procedure: String # - type: string
+  extent_competed: String # - type: string
+  justification_and_approval_number: String # - type: string
+  anticipated_type_of_vehicle: String # - type: string
+  anticipated_type_of_contract: String # - type: string
+  small_disadvantaged_business_percentage: Decimal # - type: number | string | null
+  hubzone_percentage: Decimal # - type: number | string | null
+  set_aside: String # - type: string
+  payment_bond_required_flag: Boolean # - type: boolean | string | null
+  performance_bond_required_flag: Boolean # - type: boolean | string | null
+  depository_code: String # - type: string
+  depository_description: String # - type: string
+  place_of_performance_name: String # - type: string
+  place_of_performance_zip: String # - type: string
+  place_of_performance_country: String # - type: string
+  place_of_performance_primary: String # - type: string
+  geographic_region: String # - type: string
+  place_of_performance_code: String # - type: string
+  fed_connect_link: URI # - type: string
+  fed_connect_url: URI # - type: string
+  workspace_number: String # - type: string
+  site: Site # - required: false
+  owner: Person # - required: false
+  buyer: Person # NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
+  contracting_officer: Person # - required: false
+  agreements_officer: Person # - required: false
+  contracting_officer_representative: Person # - required: false
+  admin_contracting_officer: Person # - required: false
+  originating_office_address: Address # - required: false
+  issuing_office_address: Address # - required: false
+  admin_office_address: Address # - required: false
+  invoice_office_address: Address # - required: false
+  payment_office_address: Address # - required: false
+  solicitation_lines: [SolicitationLineItem!] # - type: array
+  solicitation_clauses: [SolicitationClause!] # - type: array
+type SolicitationLineItem {
+  accountable_property_flag: Boolean # - type: boolean | string | null
+  add_edit_cancel_indicator: String # - type: string
+  allow_delivery_orders_flag: Boolean # - type: boolean | string | null
+  solicitation_line_amount: Decimal # - type: number | string | null
+  award_fee: Decimal # - type: number | string | null
+  base_fee: Decimal # - type: number | string | null
+  completed_form_flag: Boolean # - type: boolean | string | null
+  credit_amount: Decimal # - type: number | string | null
+  delivery_order_obligates_flag: Boolean # - type: boolean | string | null
+  economic_price_adjustment_award_type_indicator: Decimal # - type: string
+  solicitation_line_item_description: String # - type: string
+  fixed_fee: Decimal # - type: number | string | null
+  freight_on_board_indicator: String # - type: string
+  government_furnished_property_indicator: String # - type: string
+  government_share_percentage: Decimal # - type: number | string | null
+  guarantee_flag: Boolean # - type: boolean | string | null
+  incrementally_funded_indicator: Decimal # - type: string
+  incrementally_funded_amount: Decimal # - type: number | string | null
+  incrementally_funded_thru_date: DateTime # - type: string
+  inspection_text: String # - type: string
+  internal_notes_text: String # - type: string
+  item_award_type: String # - type: string
+  item_number: String # - type: string
+  line_item_type_code: String # - type: string
+  invoice_matching_rule: String # - type: string
+  minimum_amount: Decimal # - type: number | string | null
+  minimum_quantity: Int # - type: integer | string | null
+  notes_to_the_buyer_text: String # - type: string
+  obligated_amount: Decimal # - type: number | string | null
+  option_anticipated_exercise_date: DateTime # - type: string
+  option_days: Int # - type: integer | string | null
+  option_exercised_date: DateTime # - type: string
+  option_line_item_indicator: String # - type: string
+  origin_city: String # - type: string
+  origin_state: String # - type: string
+  payment_terms_custom_1: String # - type: string
+  payment_terms_custom_2: String # - type: string
+  period_of_performance_end_date: DateTime # - type: string
+  period_of_performance_start_date: DateTime # - type: string
+  price_ceiling: Decimal # - type: number | string | null
+  priority_code: String # - type: string
+  product_service_code: String # - type: string
+  profit_adjustment_formula: String # - type: string
+  profit_fee: Decimal # - type: number | string | null
+  line_item_qualifier: String # - type: string
+  line_item_quantity: Decimal # - type: number | string | null
+  sequence_number: String # - type: string
+  special_handling_code: String # - type: string
+  solicitation_line_item_status_code: String # - type: string
+  sub_item_number: String # - type: string
+  target_cost: Decimal # - type: number | string | null
+  target_fee: Decimal # - type: number | string | null
+  target_fee_high: Decimal # - type: number | string | null
+  target_fee_low: Decimal # - type: number | string | null
+  total_obligated_amount: Decimal # - type: number | string | null
+  trade_discount: Decimal # - type: number | string | null
+  unit_of_measure_code: String # - type: string
+  unit_price: Decimal # - type: number | string | null
+  user_defined_product_code: String # - type: string
+  user_product_code_description: String # - type: string
+  ussgl_trans_code: String # - type: string
+  last_amendment_version_number: String # - type: string
+  deliveries: [SolicitationLineDelivery!] # - type: array
+type SolicitationLineDelivery {
+  solicitation_line_delivery_amount: Decimal # - type: number | string | null
+  days_after_type_code: String # - type: string
+  delivery_date: DateTime # - type: string
+  delivery_days_after_award: Int # - type: integer | string | null
+  solicitation_line_delivery_quantity: Decimal # - type: number | string | null
+  solicitation_line_delivery_ship_to_sequence_number: String # - type: string
+  tank_size: String # - type: string
+  tank_description: String # - type: string
+  mark_for_address: Address # - required: false
+  ship_to_address: Address # - required: false
+type SolicitationClause {
+  clause_globally_unique_id: String # - type: string
+  clause_database_name: String # - type: string
+  clause_number: String # - type: string
+  clause_effective_date: DateTime # - type: string
+  clause_full_text: String # - type: string
+type Requisition @key(fields: "requisition_number amendment_number") {
+  external_finance_doc: String # - type: string
+  external_finance_approved_date: DateTime # - type: string
+  requisition_for_mod_flag: Boolean # - type: boolean | string | null
+  associated_award_number: String # - type: string
+  prior_all_zero_flag: Boolean # - type: boolean | string | null
+  finance_change_type: String # - type: string
+  action_request_type: String # - type: string
+  requisition_number: String # - type: string
+  description: String # - type: string
+  internal_note_text: String # - type: string
+  note_to_buyer_text: String # - type: string
+  items: Int # - type: integer | string | null
+  total_committed_amount: Decimal # - type: number | string | null
+  requisition_purpose: String # - type: string
+  accounting_period: String # - type: string
+  legacy_pegasys_document: String # - type: string
+  status: String # - type: string
+  fully_awarded_flag: Boolean # - type: boolean | string | null
+  paper_requisition_received_date: DateTime # - type: string
+  requisition_approved_date: DateTime # - type: string
+  canceled_date: DateTime # - type: string
+  buyer_assigned_date: DateTime # - type: string
+  faa_pre_upiid_flag: Boolean # - type: boolean | string | null
+  transaction_indicator: String # - type: string
+  requestor_full_name: String # - type: string
+  requestor_phone_number: String # - type: string
+  requisitioner: Person # - required: false
+  buyer: Person # - required: false
+  technical_point_of_contact: Person # - required: false
+  issuing_office_address: Address # NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  admin_office_address: Address # NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  approval_history: [RequisitionApprovalHistory!] # - type: array
+  requisition_lines: [RequisitionLineItem!] # - type: array
+  associated_requisition_info: AssociatedRequisitionInfo # - required: false
+type RequisitionApprovalHistory {
+  approver_sequence_number: String # - type: string
+  approver_route_role: String # - type: string
+  approver_requisition_approved_date: DateTime # - type: string
+  approver_comments: String # - type: string
+  approver_user: Person # - required: false
+type RequisitionLineItem {
+  add_edit_cancel_flag: String # - type: string
+  supplies_or_services_flag: Boolean # - type: boolean | string | null
+  quantity: Decimal # - type: number | string | null
+  unit: String # - type: string
+  committed_amount: Decimal # - type: number | string | null
+  remaining_committed_amount: Decimal # - type: number | string | null
+  option_flag: Boolean # - type: boolean | string | null
+  anticipated_exercise_date: DateTime # - type: string
+  option_exercise_date: DateTime # - type: string
+  product_code: String # - type: string
+  user_product_code: String # - type: string
+  gfe_flag: Boolean # - type: boolean | string | null
+  renewal_date: DateTime # - type: string
+  version_number: String # - type: string
+  fob_indicator: String # - type: string
+  status_indicator: String # - type: string
+  shipments: [RequisitionShipment!] # - type: array
+  accounts: [RequisitionAccount!] # - type: array
+type RequisitionShipment {
+  ship_to_sequence_number: String # - type: string
+  delivery_days_afteraward: Int # - type: integer | string | null
+  financial_change_type: String # - type: string
+  days_after_type: String # - type: string
+type RequisitionAccount {
+  account_sequence_number: String # - type: string
+  fin_change_type: String # - type: string
+  account_code: String # - type: string
+  account_funding_line_fund: Decimal # - type: string
+  account_funding_line_beginning_budget_fiscal_year: Decimal # - type: string
+  account_funding_line_program: Decimal # - type: string
+  account_funding_line_organization: Decimal # - type: string
+  account_funding_line_activity: Decimal # - type: string
+  account_funding_line_subject_object_class: Decimal # - type: string
+  account_funding_line_region: Decimal # - type: string
+  account_funding_line_ending_budget_fiscal_year: Decimal # - type: string
+  account_funding_line_project_code: Decimal # - type: string
+  account_funding_line_location_system: Decimal # - type: string
+  account_funding_line_cost_organization: Decimal # - type: string
+  account_funding_line_year_of_budget_authority: Decimal # - type: string
+  account_funding_line_prompt_pay_type: Decimal # - type: string
+  funds_type: Decimal # - type: string
+  includes_recovery_act_funds_flag: Boolean # - type: boolean | string | null
+  tas_segment1: String # - type: string
+  tas_segment2: String # - type: string
+  tas_segment3: String # - type: string
+  tas: String # - type: string
+  award_amount: Decimal # - type: number | string | null
+  total_amount: Decimal # - type: number | string | null
+  remaining_amount: Decimal # - type: number | string | null
+  subject_to_funding_flag: Boolean # - type: boolean | string | null
+type AssociatedRequisitionInfo {
+  associated_requisition_number: String # - type: string
+  associated_requisition_line_item_number: String # - type: string
+  associated_requisition_sub_line_item_number: String # - type: string
+  associated_requisition_ship_to_sequence_number: String # - type: string
+  associated_requisition_account_sequence_number: String # - type: string
+type Query {
+  solicitation: Solicitation # - required: false
+  requisition: Requisition # - required: false

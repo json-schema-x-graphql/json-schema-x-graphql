@@ -1,0 +1,262 @@
+services:
+  # SQLite Database (shared volume)
+  db-init:
+    image: alpine:latest
+    volumes:
+      - mock-data:/data
+    command: sh -c "touch /data/mock-data.db && chmod 666 /data/mock-data.db"
+  
+  # Contract Data Mock Service
+  contract_data-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-contract_data-mock
+    environment:
+      - PORT=4001
+      - SYSTEM=contract_data
+      - NODE_ENV=development
+    volumes:
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+      - ./seed-data:/workspace/seed-data:ro
+      - ./mockforge.config.js:/workspace/mockforge.config.js:ro
+      - mock-data:/workspace/data
+    ports:
+      - "4001:4001"
+    depends_on:
+      - db-init
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:4001/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Public Spending Mock Service
+  public_spending-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-public_spending-mock
+    environment:
+      - PORT=4002
+      - SYSTEM=public_spending
+      - NODE_ENV=development
+    volumes:
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+      - ./seed-data:/workspace/seed-data:ro
+      - ./mockforge.config.js:/workspace/mockforge.config.js:ro
+      - mock-data:/workspace/data
+    ports:
+      - "4002:4002"
+    depends_on:
+      - db-init
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:4002/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Legacy Procurement Mock Service
+  legacy_procurement-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-legacy_procurement-mock
+    environment:
+      - PORT=4003
+      - SYSTEM=legacy_procurement
+      - NODE_ENV=development
+    volumes:
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+      - ./seed-data:/workspace/seed-data:ro
+      - ./mockforge.config.js:/workspace/mockforge.config.js:ro
+      - mock-data:/workspace/data
+    ports:
+      - "4003:4003"
+    depends_on:
+      - db-init
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:4003/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Intake Process Mock Service
+  intake_process-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-intake_process-mock
+    environment:
+      - PORT=4004
+      - SYSTEM=intake_process
+      - NODE_ENV=development
+    volumes:
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+      - ./seed-data:/workspace/seed-data:ro
+      - ./mockforge.config.js:/workspace/mockforge.config.js:ro
+      - mock-data:/workspace/data
+    ports:
+      - "4004:4004"
+    depends_on:
+      - db-init
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:4004/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Logistics Mgmt Mock Service
+  logistics_mgmt-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-logistics_mgmt-mock
+    environment:
+      - PORT=4005
+      - SYSTEM=logistics_mgmt
+      - NODE_ENV=development
+    volumes:
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+      - ./seed-data:/workspace/seed-data:ro
+      - ./mockforge.config.js:/workspace/mockforge.config.js:ro
+      - mock-data:/workspace/data
+    ports:
+      - "4005:4005"
+    depends_on:
+      - db-init
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:4005/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # GraphQL Mesh Gateway
+  mesh:
+    build:
+      context: .
+      dockerfile: Dockerfile.mesh
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-mesh-gateway
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./.meshrc.yaml:/workspace/.meshrc.yaml:ro
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+    ports:
+      - "5050:5050"
+    depends_on:
+      - contract_data-mock
+      - public_spending-mock
+      - legacy_procurement-mock
+      - intake_process-mock
+      - logistics_mgmt-mock
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5050/graphql"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # GraphQL Hive Gateway (The Guild's federation gateway)
+  hive-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+      args:
+        BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
+    container_name: schema_unification-hive-gateway
+    environment:
+      - NODE_ENV=development
+      - PORT=5100
+    volumes:
+      - ./gateway.config.ts:/workspace/gateway.config.ts:ro
+      - ../../../generated-schemas:/workspace/generated-schemas:ro
+    ports:
+      - "5100:5100"
+    depends_on:
+      contract_data-mock:
+        condition: service_healthy
+      public_spending-mock:
+        condition: service_healthy
+      legacy_procurement-mock:
+        condition: service_healthy
+      intake_process-mock:
+        condition: service_healthy
+      logistics_mgmt-mock:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5100/graphql?query=%7B__typename%7D"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # Legacy MockForge (single service - for backwards compatibility)
+  mockforge:
+    image: rust:1.75-bookworm
+    container_name: schema_unification-mockforge
+    working_dir: /workspace
+    profiles: ["legacy"]  # Only starts with: docker compose --profile legacy up
+    volumes:
+      - ../../../:/workspace
+    ports:
+      - "3000:3000"
+    environment:
+      - RUST_LOG=info
+    tty: true
+    stdin_open: true
+    command:
+      - bash
+      - -c
+      - |
+        echo "🔨 Installing MockForge CLI..."
+        cargo install --locked mockforge-cli 2>/dev/null || cargo install mockforge-cli
+        
+        SUPERGRAPH="generated-schemas/schema_unification.supergraph.graphql"
+        
+        if [ ! -f "$$SUPERGRAPH" ]; then
+          echo "❌ Supergraph not found: $$SUPERGRAPH"
+          echo "   Run: pnpm run generate:supergraph"
+          exit 1
+        fi
+        
+        echo "✅ Starting MockForge server..."
+        echo "   Supergraph: $$SUPERGRAPH"
+        echo "   Endpoint: http://localhost:3000/graphql"
+        echo ""
+        
+        mockforge serve --spec "$$SUPERGRAPH" --port 3000 --host 0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  mock-data:
+    driver: local
+
+networks:
+  default:
+    name: schema_unification-mock-network
+

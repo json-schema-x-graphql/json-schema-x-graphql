@@ -1,0 +1,1996 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "logistics_mgmt.schema.json",
+  "title": "Procurement Data Schema",
+  "description": "JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.\n\nNOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.\n\nNOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.",
+  "type": "object",
+  "x-graphql-enums": {
+    "SystemName": {
+      "description": "Enumeration of system identifiers",
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+    },
+    "UnipricedFlag": {
+      "description": "Indicates whether items are unpriced",
+      "values": ["Y", "N", "UNKNOWN"]
+    }
+  },
+  "x-graphql-scalars": {
+    "Date": { "description": "Calendar date in ISO 8601 format (YYYY-MM-DD)." },
+    "DateTime": {
+      "description": "Timestamp in ISO 8601 format (includes time and optional offset)."
+    },
+    "Time": {
+      "description": "Time in HH:mm:ss format"
+    },
+    "Decimal": {
+      "description": "Arbitrary precision decimal represented as a string to avoid float rounding issues."
+    },
+    "Email": { "description": "Email address conforming to RFC 5322 (simplified)." },
+    "URI": { "description": "Uniform Resource Identifier or URL string." },
+    "JSON": { "description": "Arbitrary JSON value serialized as a string." }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "_empty": {
+        "type": "String",
+        "description": "Placeholder query for library-only subgraph"
+      }
+    }
+  },
+
+  "properties": {
+    "solicitation": {
+      "$ref": "#/$defs/Solicitation"
+    },
+    "requisition": {
+      "$ref": "#/$defs/Requisition"
+    }
+  },
+  "$defs": {
+    "Site": {
+      "type": "object",
+      "x-graphql-type-name": "Site",
+      "x-graphql-type-directives": "@shareable",
+      "properties": {
+        "site_code": {
+          "type": ["integer", "string", "null"],
+          "description": "The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.",
+          "x-original-type": "integer"
+        },
+        "site_description": {
+          "type": "string"
+        }
+      },
+      "required": ["site_code"]
+    },
+    "Person": {
+      "type": "object",
+      "x-graphql-type-name": "Person",
+      "x-graphql-type-directives": "@shareable",
+      "properties": {
+        "prism_user_id": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "x-graphql-type-name": "Address",
+      "x-graphql-type-directives": "@shareable",
+      "properties": {
+        "address_code": {
+          "type": "string"
+        },
+        "office_address_name": {
+          "type": "string"
+        },
+        "address1": {
+          "type": "string"
+        },
+        "address2": {
+          "type": "string"
+        },
+        "address3": {
+          "type": "string"
+        },
+        "address4": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zipcode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "fax": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "region_code": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "cust_address1": {
+          "type": "string"
+        },
+        "cust_address2": {
+          "type": "string"
+        },
+        "cust_address3": {
+          "type": "string"
+        },
+        "cust_address4": {
+          "type": "string"
+        },
+        "cust_address5": {
+          "type": "string"
+        }
+      }
+    },
+    "Solicitation": {
+      "type": "object",
+      "x-graphql-type-name": "Solicitation",
+      "x-graphql-federation": {
+        "keys": ["solicitation_number amendment_number"]
+      },
+      "properties": {
+        "destination": {
+          "type": "string",
+          "x-source-field-name": "destination"
+        },
+        "origin": {
+          "type": "string",
+          "x-source-field-name": "origin"
+        },
+        "create_by": {
+          "type": "string",
+          "x-source-field-name": "createdby"
+        },
+        "create_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "createdate"
+        },
+        "last_updated_by": {
+          "type": "string",
+          "x-source-field-name": "lastupdatedby"
+        },
+        "last_updated_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "lastupdatedate"
+        },
+        "solicitation_number": {
+          "type": "string",
+          "x-source-field-name": "solnum"
+        },
+        "amendment_number": {
+          "type": "string",
+          "x-source-field-name": "amdnum"
+        },
+        "solicitation_document_description": {
+          "type": "string",
+          "x-source-field-name": "descr"
+        },
+        "header_text": {
+          "type": "string",
+          "x-source-field-name": "headertext"
+        },
+        "change_text": {
+          "type": "string",
+          "x-source-field-name": "changetext"
+        },
+        "footer_text": {
+          "type": "string",
+          "x-source-field-name": "footertext"
+        },
+        "num_items": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "num_items",
+          "x-original-type": "integer"
+        },
+        "amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "pop_start_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_startdate"
+        },
+        "pop_end_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_enddate"
+        },
+        "preference_award": {
+          "type": "string",
+          "x-source-field-name": "preferenceaward"
+        },
+        "percent_setaside": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "setasidepercent",
+          "x-original-type": "number"
+        },
+        "unipriced_flag": {
+          "type": "string",
+          "enum": ["Y", "N", "Yes", "No", null],
+          "x-source-field-name": "unpricedyn"
+        },
+        "subsistence_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "subsistence",
+          "x-original-type": "boolean"
+        },
+        "primary_product_code": {
+          "type": "string",
+          "x-source-field-name": "primaryprodcode"
+        },
+        "primary_naics_code": {
+          "type": "string",
+          "x-source-field-name": "primarynaicscode"
+        },
+        "project_id": {
+          "type": "string",
+          "x-source-field-name": "projectid"
+        },
+        "project_title": {
+          "type": "string",
+          "x-source-field-name": "projecttitle"
+        },
+        "base_currency_code": {
+          "type": "string",
+          "x-source-field-name": "basecurrencycode"
+        },
+        "print_currency_code": {
+          "type": "string",
+          "x-source-field-name": "printcurrencycode"
+        },
+        "security_classification_code": {
+          "type": "string",
+          "x-source-field-name": "securityclassificationcode"
+        },
+        "post_to_ebuy": {
+          "type": "string",
+          "x-source-field-name": "generic2"
+        },
+        "major_systems": {
+          "type": "string",
+          "x-source-field-name": "generic6"
+        },
+        "high_risk": {
+          "type": "string",
+          "x-source-field-name": "generic7"
+        },
+        "source_system_evaluation_type": {
+          "type": "string",
+          "x-source-field-name": "generic12"
+        },
+        "document_status": {
+          "type": "string",
+          "x-source-field-name": "status"
+        },
+        "status_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "statusdate"
+        },
+        "pending_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pendingdate"
+        },
+        "approved_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "approveddate"
+        },
+        "released_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "releaseddate"
+        },
+        "cancelled_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "canceleddate"
+        },
+        "closed_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "closeddate"
+        },
+        "this_version_funded_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "thisversionfundedamt",
+          "x-original-type": "number"
+        },
+        "total_released_funded_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalreleasedfundedamt",
+          "x-original-type": "number"
+        },
+        "this_version_recovery_act_funds_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "thisversionrecoveryactfunds",
+          "x-original-type": "number"
+        },
+        "total_released_recovery_act_funds_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalreleasedrecoveryactfunds",
+          "x-original-type": "number"
+        },
+        "criticality_designator": {
+          "type": "string",
+          "x-source-field-name": "criticality_designator"
+        },
+        "solicitation_purpose": {
+          "type": "string",
+          "x-source-field-name": "purpose"
+        },
+        "potential_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "potential_amount",
+          "x-original-type": "number"
+        },
+        "issued_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "issue_date"
+        },
+        "response_due_date": {
+          "type": "string",
+          "format": "date",
+          "x-source-field-name": "response_due_date"
+        },
+        "response_due_time": {
+          "type": "string",
+          "format": "time",
+          "x-source-field-name": "response_due_time"
+        },
+        "response_due_time_zone": {
+          "type": "string",
+          "x-source-field-name": "response_due_time_zone"
+        },
+        "solicitation_type": {
+          "type": "string",
+          "x-source-field-name": "type_of_solicitation"
+        },
+        "gwac_gsa_purchase_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "gwac_gsa_purchase",
+          "x-original-type": "boolean"
+        },
+        "special_circumstances_code": {
+          "type": "string",
+          "x-source-field-name": "special_circumstances_code"
+        },
+        "multi_award_idv": {
+          "type": "string",
+          "x-source-field-name": "multiawardidv"
+        },
+        "bundled_contract": {
+          "type": "string",
+          "x-source-field-name": "bundled_contract"
+        },
+        "consolidated_contract": {
+          "type": "string",
+          "x-source-field-name": "consolidated_contract"
+        },
+        "emergency_request_contract_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "emergency_request_contract",
+          "x-original-type": "boolean"
+        },
+        "solicitation_procedure": {
+          "type": "string",
+          "x-source-field-name": "solicitation_procedure"
+        },
+        "extent_competed": {
+          "type": "string",
+          "x-source-field-name": "extent_competed"
+        },
+        "justification_and_approval_number": {
+          "type": "string",
+          "x-source-field-name": "j_a_number"
+        },
+        "anticipated_type_of_vehicle": {
+          "type": "string",
+          "x-source-field-name": "anticipated_type_of_vehicle"
+        },
+        "anticipated_type_of_contract": {
+          "type": "string",
+          "x-source-field-name": "anticipated_type_of_contract"
+        },
+        "small_disadvantaged_business_percentage": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "sdb_percentage",
+          "x-original-type": "number"
+        },
+        "hubzone_percentage": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "hubzone_percentage",
+          "x-original-type": "number"
+        },
+        "set_aside": {
+          "type": "string",
+          "x-source-field-name": "set_aside"
+        },
+        "payment_bond_required_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "payment_bond_required",
+          "x-original-type": "boolean"
+        },
+        "performance_bond_required_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "performance_bond_required",
+          "x-original-type": "boolean"
+        },
+        "depository_code": {
+          "type": "string",
+          "x-source-field-name": "depository_code"
+        },
+        "depository_description": {
+          "type": "string",
+          "x-source-field-name": "depository_description"
+        },
+        "place_of_performance_name": {
+          "type": "string",
+          "x-source-field-name": "place_of_performance_name"
+        },
+        "place_of_performance_zip": {
+          "type": "string",
+          "x-source-field-name": "place_of_performance_zip"
+        },
+        "place_of_performance_country": {
+          "type": "string",
+          "x-source-field-name": "place_of_performance_country"
+        },
+        "place_of_performance_primary": {
+          "type": "string",
+          "x-source-field-name": "place_of_performance_primary"
+        },
+        "geographic_region": {
+          "type": "string",
+          "x-source-field-name": "geographic_region"
+        },
+        "place_of_performance_code": {
+          "type": "string",
+          "x-source-field-name": "place_of_performance_code"
+        },
+        "fed_connect_link": {
+          "type": "string",
+          "format": "uri",
+          "x-source-field-name": "fedconnectlink"
+        },
+        "fed_connect_url": {
+          "type": "string",
+          "format": "uri",
+          "x-source-field-name": "fedconnecturl"
+        },
+        "workspace_number": {
+          "type": "string",
+          "x-source-field-name": "workspacenumber"
+        },
+        "site": {
+          "$ref": "#/$defs/Site",
+          "x-source-field-map": {
+            "site_code": "siteid",
+            "site_description": "sitedescr"
+          }
+        },
+        "owner": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "owner_userid",
+            "first_name": "owner_firstname",
+            "last_name": "owner_lastname",
+            "email": "owner_email"
+          }
+        },
+        "buyer": {
+          "$ref": "#/$defs/Person",
+          "description": "NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.",
+          "x-source-field-map": {
+            "prism_user_id": "buyer_userid",
+            "first_name": "buyer_firstname",
+            "last_name": "buyer_lastname",
+            "email": ["buyerr_email", "buyer_email"]
+          }
+        },
+        "contracting_officer": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "co_userid",
+            "first_name": "co_firstname",
+            "last_name": "co_lastname",
+            "email": "co_email"
+          }
+        },
+        "agreements_officer": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "agreementsofficer_userid",
+            "first_name": "agreementsofficer_firstname",
+            "last_name": "agreementsofficer_lastname",
+            "email": "agreementsofficer_email"
+          }
+        },
+        "contracting_officer_representative": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "cor_userid",
+            "first_name": "cor_firstname",
+            "last_name": "cor_lastname",
+            "email": "cor_email"
+          }
+        },
+        "admin_contracting_officer": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "acofficer_userid",
+            "first_name": "acofficer_firstname",
+            "last_name": "acofficer_lastname",
+            "email": "acofficer_email"
+          }
+        },
+        "originating_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "origofficeaddr_code",
+            "office_address_name": "origofficeaddr_name",
+            "address1": "origofficeaddr_address1",
+            "address2": "origofficeaddr_address2",
+            "address3": "origofficeaddr_address3",
+            "address4": "origofficeaddr_address4",
+            "city": "origofficeaddr_city",
+            "state": "origofficeaddr_state",
+            "zipcode": "origofficeaddr_zip",
+            "country": "origofficeaddr_country",
+            "phone": "origofficeaddr_phone",
+            "fax": "origofficeaddr_fax",
+            "email": "origofficeaddr_email",
+            "region_code": "origofficeaddr_regioncode",
+            "province": "origofficeaddr_province",
+            "county": "origofficeaddr_county",
+            "cust_address1": "origofficeaddr_custom1",
+            "cust_address2": "origofficeaddr_custom2",
+            "cust_address3": "origofficeaddr_custom3",
+            "cust_address4": "origofficeaddr_custom4",
+            "cust_address5": "origofficeaddr_custom5"
+          }
+        },
+        "issuing_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "issuingaddr_code",
+            "office_address_name": "issuingaddr_name",
+            "address1": "issuingaddr_address1",
+            "address2": "issuingaddr_address2",
+            "address3": "issuingaddr_address3",
+            "address4": "issuingaddr_address4",
+            "city": "issuingaddr_city",
+            "state": "issuingaddr_state",
+            "zipcode": "issuingaddr_zip",
+            "country": "issuingaddr_country",
+            "phone": "issuingaddr_phone",
+            "fax": "issuingaddr_fax",
+            "email": "issuingaddr_email",
+            "region_code": "issuingofficeaddr_regioncode",
+            "province": "issuingofficeaddr_province",
+            "county": "issuingofficeaddr_county",
+            "cust_address1": "issuingofficeaddr_custom1",
+            "cust_address2": "issuingofficeaddr_custom2",
+            "cust_address3": "issuingofficeaddr_custom3",
+            "cust_address4": "issuingofficeaddr_custom4",
+            "cust_address5": "issuingofficeaddr_custom5"
+          }
+        },
+        "admin_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "adminaddr_code",
+            "office_address_name": "adminaddr_name",
+            "address1": "adminaddr_address1",
+            "address2": "adminaddr_address2",
+            "address3": "adminaddr_address3",
+            "address4": "adminaddr_address4",
+            "city": "adminaddr_city",
+            "state": "adminaddr_state",
+            "zipcode": "adminaddr_zip",
+            "country": "adminaddr_country",
+            "phone": "adminaddr_phone",
+            "fax": "adminaddr_fax",
+            "email": "adminaddr_email",
+            "region_code": "adminofficeaddr_regioncode",
+            "province": "adminofficeaddr_province",
+            "county": "adminofficeaddr_county",
+            "cust_address1": "adminofficeaddr_custom1",
+            "cust_address2": "adminofficeaddr_custom2",
+            "cust_address3": "adminofficeaddr_custom3",
+            "cust_address4": "adminofficeaddr_custom4",
+            "cust_address5": "adminofficeaddr_custom5"
+          }
+        },
+        "invoice_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "invaddr_code",
+            "office_address_name": "invaddr_name",
+            "address1": "invaddr_address1",
+            "address2": "invaddr_address2",
+            "address3": "invaddr_address3",
+            "address4": "invaddr_address4",
+            "city": "invaddr_city",
+            "state": "invaddr_state",
+            "zipcode": "invaddr_zip",
+            "country": "invaddr_country",
+            "phone": "invaddr_phone",
+            "fax": "invaddr_fax",
+            "email": "invaddr_email",
+            "region_code": "invofficeaddr_regioncode",
+            "province": "invofficeaddr_province",
+            "county": "invofficeaddr_county",
+            "cust_address1": "invofficeaddr_custom1",
+            "cust_address2": "invofficeaddr_custom2",
+            "cust_address3": "invofficeaddr_custom3",
+            "cust_address4": "invofficeaddr_custom4",
+            "cust_address5": "invofficeaddr_custom5"
+          }
+        },
+        "payment_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "paymentaddr_code",
+            "office_address_name": "paymentaddr_name",
+            "address1": "paymentaddr_address1",
+            "address2": "paymentaddr_address2",
+            "address3": "paymentaddr_address3",
+            "address4": "paymentaddr_address4",
+            "city": "paymentaddr_city",
+            "state": "paymentaddr_state",
+            "zipcode": "paymentaddr_zip",
+            "country": "paymentaddr_country",
+            "phone": "paymentaddr_phone",
+            "fax": "paymentaddr_fax",
+            "email": "paymentaddr_email",
+            "region_code": "paymentaddr_regioncode",
+            "province": "paymentaddr_province",
+            "county": "paymentaddr_county",
+            "cust_address1": "paymentaddr_custom1",
+            "cust_address2": "paymentaddr_custom2",
+            "cust_address3": "paymentaddr_custom3",
+            "cust_address4": "paymentaddr_custom4",
+            "cust_address5": "paymentaddr_custom5"
+          }
+        },
+        "solicitation_lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SolicitationLineItem"
+          }
+        },
+        "solicitation_clauses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SolicitationClause"
+          }
+        }
+      }
+    },
+    "SolicitationLineItem": {
+      "type": "object",
+      "x-graphql-type-name": "SolicitationLineItem",
+      "properties": {
+        "accountable_property_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "accountableproperty",
+          "x-original-type": "boolean"
+        },
+        "add_edit_cancel_indicator": {
+          "type": "string",
+          "x-source-field-name": "addeditcancel"
+        },
+        "allow_delivery_orders_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "allowdeliveryorders",
+          "x-original-type": "boolean"
+        },
+        "solicitation_line_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "award_fee": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "awardfee",
+          "x-original-type": "number"
+        },
+        "base_fee": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "basefee",
+          "x-original-type": "number"
+        },
+        "completed_form_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "compform",
+          "x-original-type": "boolean"
+        },
+        "credit_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "creditamt",
+          "x-original-type": "number"
+        },
+        "delivery_order_obligates_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "deliveryorderobligates",
+          "x-original-type": "boolean"
+        },
+        "economic_price_adjustment_award_type_indicator": {
+          "type": "string",
+          "x-source-field-name": "ecopriceadjust"
+        },
+        "solicitation_line_item_description": {
+          "type": "string",
+          "x-source-field-name": "descr"
+        },
+        "fixed_fee": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "fixedfee",
+          "x-original-type": "number"
+        },
+        "freight_on_board_indicator": {
+          "type": "string",
+          "x-source-field-name": "fob"
+        },
+        "footer_text": {
+          "type": "string",
+          "x-source-field-name": "footertext"
+        },
+        "government_furnished_property_indicator": {
+          "type": "string",
+          "x-source-field-name": "gfe"
+        },
+        "government_share_percentage": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "govtshare",
+          "x-original-type": "number"
+        },
+        "guarantee_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "guarantee",
+          "x-original-type": "boolean"
+        },
+        "header_text": {
+          "type": "string",
+          "x-source-field-name": "headertext"
+        },
+        "incrementally_funded_indicator": {
+          "type": "string",
+          "x-source-field-name": "incrfunded"
+        },
+        "incrementally_funded_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "incrfundedamt",
+          "x-original-type": "number"
+        },
+        "incrementally_funded_thru_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "incrfundedthrudate"
+        },
+        "inspection_text": {
+          "type": "string",
+          "x-source-field-name": "insptext"
+        },
+        "internal_notes_text": {
+          "type": "string",
+          "x-source-field-name": "internalnotetext"
+        },
+        "item_award_type": {
+          "type": "string",
+          "x-source-field-name": "itemawardtype"
+        },
+        "item_number": {
+          "type": "string",
+          "x-source-field-name": "itemnum"
+        },
+        "line_item_type_code": {
+          "type": "string",
+          "x-source-field-name": "lineitemtype"
+        },
+        "invoice_matching_rule": {
+          "type": "string",
+          "x-source-field-name": "matchrule"
+        },
+        "minimum_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "minamt",
+          "x-original-type": "number"
+        },
+        "minimum_quantity": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "minqty",
+          "x-original-type": "integer"
+        },
+        "notes_to_the_buyer_text": {
+          "type": "string",
+          "x-source-field-name": "notetobuyertext"
+        },
+        "obligated_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "obligatedamt",
+          "x-original-type": "number"
+        },
+        "option_anticipated_exercise_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "optionanticexerdate"
+        },
+        "option_days": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "optiondays",
+          "x-original-type": "integer"
+        },
+        "option_exercised_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "optionexercisedate"
+        },
+        "option_line_item_indicator": {
+          "type": "string",
+          "x-source-field-name": "optionli"
+        },
+        "origin_city": {
+          "type": "string",
+          "x-source-field-name": "origincity"
+        },
+        "origin_state": {
+          "type": "string",
+          "x-source-field-name": "originstate"
+        },
+        "payment_terms_custom_1": {
+          "type": "string",
+          "x-source-field-name": "paymtterms1"
+        },
+        "payment_terms_custom_2": {
+          "type": "string",
+          "x-source-field-name": "paymtterms2"
+        },
+        "period_of_performance_end_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_enddate"
+        },
+        "period_of_performance_start_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_startdate"
+        },
+        "price_ceiling": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "priceceiling",
+          "x-original-type": "number"
+        },
+        "priority_code": {
+          "type": "string",
+          "x-source-field-name": "priority"
+        },
+        "product_service_code": {
+          "type": "string",
+          "x-source-field-name": "prodcode"
+        },
+        "profit_adjustment_formula": {
+          "type": "string",
+          "x-source-field-name": "profitadjformula"
+        },
+        "profit_fee": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "profitfee",
+          "x-original-type": "number"
+        },
+        "line_item_qualifier": {
+          "type": "string",
+          "x-source-field-name": "qualifier"
+        },
+        "line_item_quantity": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "quantity",
+          "x-original-type": "number"
+        },
+        "security_classification_code": {
+          "type": "string",
+          "x-source-field-name": "securityclassificationcode"
+        },
+        "sequence_number": {
+          "type": "string",
+          "x-source-field-name": "seqnum"
+        },
+        "special_handling_code": {
+          "type": "string",
+          "x-source-field-name": "spechandling"
+        },
+        "solicitation_line_item_status_code": {
+          "type": "string",
+          "x-source-field-name": "status"
+        },
+        "status_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "statusdate"
+        },
+        "sub_item_number": {
+          "type": "string",
+          "x-source-field-name": "subnum"
+        },
+        "target_cost": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "targetcost",
+          "x-original-type": "number"
+        },
+        "target_fee": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "targetfee",
+          "x-original-type": "number"
+        },
+        "target_fee_high": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "targetfeehigh",
+          "x-original-type": "number"
+        },
+        "target_fee_low": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "targetfeelow",
+          "x-original-type": "number"
+        },
+        "total_obligated_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalobligatedamt",
+          "x-original-type": "number"
+        },
+        "trade_discount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "tradediscount",
+          "x-original-type": "number"
+        },
+        "unit_of_measure_code": {
+          "type": "string",
+          "x-source-field-name": "unit"
+        },
+        "unit_price": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "unitprice",
+          "x-original-type": "number"
+        },
+        "user_defined_product_code": {
+          "type": "string",
+          "x-source-field-name": "userproductcode"
+        },
+        "user_product_code_description": {
+          "type": "string",
+          "x-source-field-name": "userproductcodedescr"
+        },
+        "ussgl_trans_code": {
+          "type": "string",
+          "x-source-field-name": "ussgltranscode"
+        },
+        "last_amendment_version_number": {
+          "type": "string",
+          "x-source-field-name": "version_no"
+        },
+        "deliveries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SolicitationLineDelivery"
+          }
+        }
+      }
+    },
+    "SolicitationLineDelivery": {
+      "type": "object",
+      "x-graphql-type-name": "SolicitationLineDelivery",
+      "properties": {
+        "solicitation_line_delivery_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "days_after_type_code": {
+          "type": "string",
+          "x-source-field-name": "daysaftertype"
+        },
+        "delivery_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "deliverydate"
+        },
+        "delivery_days_after_award": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "deliverydaysafteraward",
+          "x-original-type": "integer"
+        },
+        "solicitation_line_delivery_quantity": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "quantity",
+          "x-original-type": "number"
+        },
+        "solicitation_line_delivery_ship_to_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "shiptoseqnum"
+        },
+        "tank_size": {
+          "type": "string",
+          "x-source-field-name": "tanksize"
+        },
+        "tank_description": {
+          "type": "string",
+          "x-source-field-name": "tankdesc"
+        },
+        "mark_for_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "markforaddr_code",
+            "office_address_name": "markforaddr_name",
+            "address1": "markforaddr_address1",
+            "address2": "markforaddr_address2",
+            "address3": "markforaddr_address3",
+            "address4": "markforaddr_address4",
+            "city": "markforaddr_city",
+            "state": "markforaddr_state",
+            "zipcode": "markforaddr_zip",
+            "country": "markforaddr_country",
+            "phone": "markforaddr_phone",
+            "fax": "markforaddr_fax",
+            "email": "markforaddr_email",
+            "region_code": "markforaddr_regioncode",
+            "province": "markforaddr_province",
+            "county": "markforaddr_county",
+            "cust_address1": "markforaddr_custom1",
+            "cust_address2": "markforaddr_custom2",
+            "cust_address3": "markforaddr_custom3",
+            "cust_address4": "markforaddr_custom4",
+            "cust_address5": "markforaddr_custom5"
+          }
+        },
+        "ship_to_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "shiptoaddr_code",
+            "office_address_name": "shiptoaddr_name",
+            "address1": "shiptoaddr_address1",
+            "address2": "shiptoaddr_address2",
+            "address3": "shiptoaddr_address3",
+            "address4": "shiptoaddr_address4",
+            "city": "shiptoaddr_city",
+            "state": "shiptoaddr_state",
+            "zipcode": "shiptoaddr_zip",
+            "country": "shiptoaddr_country",
+            "phone": "shiptoaddr_phone",
+            "fax": "shiptoaddr_fax",
+            "email": "shiptoaddr_email",
+            "region_code": "shiptoaddr_regioncode",
+            "province": "shiptoaddr_province",
+            "county": "shiptoaddr_county",
+            "cust_address1": "shiptoaddr_custom1",
+            "cust_address2": "shiptoaddr_custom2",
+            "cust_address3": "shiptoaddr_custom3",
+            "cust_address4": "shiptoaddr_custom4",
+            "cust_address5": "shiptoaddr_custom5"
+          }
+        }
+      }
+    },
+    "SolicitationClause": {
+      "type": "object",
+      "x-graphql-type-name": "SolicitationClause",
+      "properties": {
+        "clause_globally_unique_id": {
+          "type": "string",
+          "x-source-field-name": "guid"
+        },
+        "clause_database_name": {
+          "type": "string",
+          "x-source-field-name": "clausedatabasename"
+        },
+        "clause_number": {
+          "type": "string",
+          "x-source-field-name": "clausenumber"
+        },
+        "clause_effective_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "clauseeffectivedate"
+        },
+        "clause_full_text": {
+          "type": "string",
+          "x-source-field-name": "fulltext"
+        }
+      }
+    },
+    "Requisition": {
+      "type": "object",
+      "x-graphql-type-name": "Requisition",
+      "x-graphql-federation": {
+        "keys": ["requisition_number amendment_number"]
+      },
+      "properties": {
+        "criticality_designator": {
+          "type": "string",
+          "x-source-field-name": "criticality_designator"
+        },
+        "origin": {
+          "type": "string",
+          "x-source-field-name": "origin"
+        },
+        "external_finance_doc": {
+          "type": "string",
+          "x-source-field-name": "extfinancedoc"
+        },
+        "external_finance_approved_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "extfinapproveddate"
+        },
+        "requisition_for_mod_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "requisitionformod",
+          "x-original-type": "boolean"
+        },
+        "associated_award_number": {
+          "type": "string",
+          "x-source-field-name": "associatedawardnum"
+        },
+        "prior_all_zero_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "priorallzeroflag",
+          "x-original-type": "boolean"
+        },
+        "finance_change_type": {
+          "type": "string",
+          "x-source-field-name": "finchangetype"
+        },
+        "action_request_type": {
+          "type": "string",
+          "x-source-field-name": "actionrequesttype"
+        },
+        "create_by": {
+          "type": "string",
+          "x-source-field-name": "createdby"
+        },
+        "create_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "createdate"
+        },
+        "last_updated_by": {
+          "type": "string",
+          "x-source-field-name": "lastupdatedby"
+        },
+        "last_updated_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "lastupdatedate"
+        },
+        "requisition_number": {
+          "type": "string",
+          "x-source-field-name": "requisitionnum"
+        },
+        "amendment_number": {
+          "type": "string",
+          "x-source-field-name": "amendmentnum"
+        },
+        "description": {
+          "type": "string",
+          "x-source-field-name": "descr"
+        },
+        "header_text": {
+          "type": "string",
+          "x-source-field-name": "headertext"
+        },
+        "footer_text": {
+          "type": "string",
+          "x-source-field-name": "footertext"
+        },
+        "change_text": {
+          "type": "string",
+          "x-source-field-name": "changetext"
+        },
+        "internal_note_text": {
+          "type": "string",
+          "x-source-field-name": "internalnotetext"
+        },
+        "note_to_buyer_text": {
+          "type": "string",
+          "x-source-field-name": "notetobuyertext"
+        },
+        "items": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "items",
+          "x-original-type": "integer"
+        },
+        "amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "total_committed_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalcommittedamt",
+          "x-original-type": "number"
+        },
+        "pop_start_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_startdate"
+        },
+        "pop_end_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_enddate"
+        },
+        "primary_product_code": {
+          "type": "string",
+          "x-source-field-name": "primaryprodcode"
+        },
+        "project_id": {
+          "type": "string",
+          "x-source-field-name": "projectid"
+        },
+        "project_title": {
+          "type": "string",
+          "x-source-field-name": "projecttitle"
+        },
+        "requisition_purpose": {
+          "type": "string",
+          "x-source-field-name": "purpose"
+        },
+        "base_currency_code": {
+          "type": "string",
+          "x-source-field-name": "basecurrencycode"
+        },
+        "print_currency_code": {
+          "type": "string",
+          "x-source-field-name": "printcurrencycode"
+        },
+        "security_classification_code": {
+          "type": "string",
+          "x-source-field-name": "securityclassificationcode"
+        },
+        "accounting_period": {
+          "type": "string",
+          "x-source-field-name": "generic3"
+        },
+        "major_systems": {
+          "type": "string",
+          "x-source-field-name": "generic6"
+        },
+        "high_risk": {
+          "type": "string",
+          "x-source-field-name": "generic7"
+        },
+        "legacy_pegasys_document": {
+          "type": "string",
+          "x-source-field-name": "generic14"
+        },
+        "status": {
+          "type": "string",
+          "x-source-field-name": "status"
+        },
+        "status_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "statusdate"
+        },
+        "fully_awarded_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "fullyawarded",
+          "x-original-type": "boolean"
+        },
+        "paper_requisition_received_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "paperreqreceived"
+        },
+        "requisition_approved_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "reqdocsapprovedate"
+        },
+        "pending_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pendingdate"
+        },
+        "approved_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "approveddate"
+        },
+        "released_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "releaseddate"
+        },
+        "canceled_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "canceleddate"
+        },
+        "closed_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "closeddate"
+        },
+        "buyer_assigned_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "buyerassigndate"
+        },
+        "faa_pre_upiid_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "faa_pre_upiid",
+          "x-original-type": "boolean"
+        },
+        "transaction_indicator": {
+          "type": "string",
+          "x-source-field-name": "transactionindicator"
+        },
+        "requestor_full_name": {
+          "type": "string",
+          "x-source-field-name": "requestor"
+        },
+        "requestor_phone_number": {
+          "type": "string",
+          "x-source-field-name": "requestor_phone"
+        },
+        "site": {
+          "$ref": "#/$defs/Site",
+          "x-source-field-map": {
+            "site_code": "siteid",
+            "site_description": "sitedescr"
+          }
+        },
+        "owner": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "owner_userid",
+            "first_name": "owner_firstname",
+            "last_name": "owner_lastname",
+            "email": "owner_email"
+          }
+        },
+        "requisitioner": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "requisitioner_userid",
+            "first_name": "requisitioner_firstname",
+            "last_name": "requisitioner_lastname",
+            "email": "requisitioner_email"
+          }
+        },
+        "buyer": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "buyer_userid",
+            "first_name": "buyer_firstname",
+            "last_name": "buyer_lastname",
+            "email": "buyer_email"
+          }
+        },
+        "technical_point_of_contact": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "tpoc_userid",
+            "first_name": "tpoc_firstname",
+            "last_name": "tpoc_lastname",
+            "email": "tpoc_email"
+          }
+        },
+        "originating_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "origofficeaddr_code",
+            "office_address_name": "origofficeaddr_name",
+            "address1": "origofficeaddr_address1",
+            "address2": "origofficeaddr_address2",
+            "address3": "origofficeaddr_address3",
+            "address4": "origofficeaddr_address4",
+            "city": "origofficeaddr_city",
+            "state": "origofficeaddr_state",
+            "zipcode": "origofficeaddr_zip",
+            "country": "origofficeaddr_country",
+            "phone": "origofficeaddr_phone",
+            "fax": "origofficeaddr_fax",
+            "email": "origofficeaddr_email",
+            "region_code": "origofficeaddr_regioncode",
+            "province": "origofficeaddr_province",
+            "county": "origofficeaddr_county",
+            "cust_address1": "origofficeaddr_custom1",
+            "cust_address2": "origofficeaddr_custom2",
+            "cust_address3": "origofficeaddr_custom3",
+            "cust_address4": "origofficeaddr_custom4",
+            "cust_address5": "origofficeaddr_custom5"
+          }
+        },
+        "issuing_office_address": {
+          "$ref": "#/$defs/Address",
+          "description": "NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.",
+          "x-source-field-map": {
+            "address_code": "issuingaddr_code",
+            "office_address_name": "issuingaddr_name",
+            "address1": "issuingaddr_address1",
+            "address2": "issuingaddr_address2",
+            "address3": "issuingaddr_address3"
+          }
+        },
+        "admin_office_address": {
+          "$ref": "#/$defs/Address",
+          "description": "NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.",
+          "x-source-field-map": {
+            "address_code": "adminaddr_code"
+          }
+        },
+        "payment_office_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "paymentaddr_code",
+            "office_address_name": "paymentaddr_name",
+            "address1": "paymentaddr_address1",
+            "address2": "paymentaddr_address2",
+            "address3": "paymentaddr_address3",
+            "address4": "paymentaddr_address4",
+            "city": "paymentaddr_city",
+            "state": "paymentaddr_state",
+            "zipcode": "paymentaddr_zip",
+            "country": "paymentaddr_country",
+            "phone": "paymentaddr_phone",
+            "fax": "paymentaddr_fax",
+            "email": "paymentaddr_email",
+            "region_code": "paymentaddr_regioncode",
+            "province": "paymentaddr_province",
+            "county": "paymentaddr_county",
+            "cust_address1": "paymentaddr_custom1",
+            "cust_address2": "paymentaddr_custom2",
+            "cust_address3": "paymentaddr_custom3",
+            "cust_address4": "paymentaddr_custom4",
+            "cust_address5": "paymentaddr_custom5"
+          }
+        },
+        "approval_history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequisitionApprovalHistory"
+          }
+        },
+        "requisition_lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequisitionLineItem"
+          }
+        },
+        "associated_requisition_info": {
+          "$ref": "#/$defs/AssociatedRequisitionInfo"
+        }
+      }
+    },
+    "RequisitionApprovalHistory": {
+      "type": "object",
+      "x-graphql-type-name": "RequisitionApprovalHistory",
+      "properties": {
+        "approver_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "appr_seqnum"
+        },
+        "approver_route_role": {
+          "type": "string",
+          "x-source-field-name": "appr_routerole"
+        },
+        "approver_requisition_approved_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "appr_approvedate"
+        },
+        "approver_comments": {
+          "type": "string",
+          "x-source-field-name": "appr_comments"
+        },
+        "approver_user": {
+          "$ref": "#/$defs/Person",
+          "x-source-field-map": {
+            "prism_user_id": "appr_userid",
+            "first_name": "appr_firstname",
+            "last_name": "appr_lastname",
+            "email": "appr_email"
+          }
+        }
+      }
+    },
+    "RequisitionLineItem": {
+      "type": "object",
+      "x-graphql-type-name": "RequisitionLineItem",
+      "properties": {
+        "add_edit_cancel_flag": {
+          "type": "string",
+          "x-source-field-name": "addeditcancel"
+        },
+        "item_number": {
+          "type": "string",
+          "x-source-field-name": "itemnum"
+        },
+        "sequence_number": {
+          "type": "string",
+          "x-source-field-name": "seqnum"
+        },
+        "sub_item_number": {
+          "type": "string",
+          "x-source-field-name": "subnum"
+        },
+        "supplies_or_services_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "suppliesorservices",
+          "x-original-type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "x-source-field-name": "descr"
+        },
+        "internal_note_text": {
+          "type": "string",
+          "x-source-field-name": "internalnotetext"
+        },
+        "header_text": {
+          "type": "string",
+          "x-source-field-name": "headertext"
+        },
+        "footer_text": {
+          "type": "string",
+          "x-source-field-name": "footertext"
+        },
+        "inspection_text": {
+          "type": "string",
+          "x-source-field-name": "insptext"
+        },
+        "note_to_buyer_text": {
+          "type": "string",
+          "x-source-field-name": "notetobuyertext"
+        },
+        "line_item_qualifier": {
+          "type": "string",
+          "x-source-field-name": "qualifier"
+        },
+        "quantity": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "quantity",
+          "x-original-type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "x-source-field-name": "unit"
+        },
+        "unit_price": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "unitprice",
+          "x-original-type": "number"
+        },
+        "amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "committed_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "committedamt",
+          "x-original-type": "number"
+        },
+        "total_committed_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalcommittedamt",
+          "x-original-type": "number"
+        },
+        "remaining_committed_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "remainingcommittedamt",
+          "x-original-type": "number"
+        },
+        "option_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "optionli",
+          "x-original-type": "boolean"
+        },
+        "anticipated_exercise_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "optionanticexerdate"
+        },
+        "option_days": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "optiondays",
+          "x-original-type": "integer"
+        },
+        "option_exercise_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "optionexercisedate"
+        },
+        "pop_start_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_startdate"
+        },
+        "pop_end_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "pop_enddate"
+        },
+        "product_code": {
+          "type": "string",
+          "x-source-field-name": "prodcode"
+        },
+        "user_product_code": {
+          "type": "string",
+          "x-source-field-name": "userproductcode"
+        },
+        "user_product_code_description": {
+          "type": "string",
+          "x-source-field-name": "userproductcodedescr"
+        },
+        "project_id": {
+          "type": "string",
+          "x-source-field-name": "projectid"
+        },
+        "project_title": {
+          "type": "string",
+          "x-source-field-name": "projecttitle"
+        },
+        "gfe_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "gfe",
+          "x-original-type": "boolean"
+        },
+        "priority_code": {
+          "type": "string",
+          "x-source-field-name": "priority"
+        },
+        "special_handling_code": {
+          "type": "string",
+          "x-source-field-name": "spechandling"
+        },
+        "renewal_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "renewaldate"
+        },
+        "ussgl_trans_code": {
+          "type": "string",
+          "x-source-field-name": "ussgltranscode"
+        },
+        "version_number": {
+          "type": "string",
+          "x-source-field-name": "version_no"
+        },
+        "security_classification_code": {
+          "type": "string",
+          "x-source-field-name": "securityclassificationcode"
+        },
+        "fob_indicator": {
+          "type": "string",
+          "x-source-field-name": "fob"
+        },
+        "origin_city": {
+          "type": "string",
+          "x-source-field-name": "origincity"
+        },
+        "origin_state": {
+          "type": "string",
+          "x-source-field-name": "originstate"
+        },
+        "status_indicator": {
+          "type": "string",
+          "x-source-field-name": "status"
+        },
+        "status_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "statusdate"
+        },
+        "fully_awarded_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "fullyawarded",
+          "x-original-type": "boolean"
+        },
+        "shipments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequisitionShipment"
+          }
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RequisitionAccount"
+          }
+        }
+      }
+    },
+    "RequisitionShipment": {
+      "type": "object",
+      "x-graphql-type-name": "RequisitionShipment",
+      "properties": {
+        "ship_to_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "shiptoseqnum"
+        },
+        "quantity": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "quantity",
+          "x-original-type": "number"
+        },
+        "amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "delivery_date": {
+          "type": "string",
+          "format": "date-time",
+          "x-source-field-name": "deliverydate"
+        },
+        "delivery_days_afteraward": {
+          "type": ["integer", "string", "null"],
+          "x-source-field-name": "deliverydaysafteraward",
+          "x-original-type": "integer"
+        },
+        "financial_change_type": {
+          "type": "string",
+          "x-source-field-name": "finchangetype"
+        },
+        "days_after_type": {
+          "type": "string",
+          "x-source-field-name": "daysaftertype"
+        },
+        "tank_size": {
+          "type": "string",
+          "x-source-field-name": "tanksize"
+        },
+        "tank_description": {
+          "type": "string",
+          "x-source-field-name": "tankdesc"
+        },
+        "ship_to_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "shiptoaddr_code",
+            "office_address_name": "shiptoaddr_name",
+            "address1": "shiptoaddr_address1",
+            "address2": "shiptoaddr_address2",
+            "address3": "shiptoaddr_address3",
+            "address4": "shiptoaddr_address4",
+            "city": "shiptoaddr_city",
+            "state": "shiptoaddr_state",
+            "zipcode": "shiptoaddr_zip",
+            "country": "shiptoaddr_country",
+            "phone": "shiptoaddr_phone",
+            "fax": "shiptoaddr_fax",
+            "email": "shiptoaddr_email",
+            "region_code": "shiptoaddr_regioncode",
+            "province": "shiptoaddr_province",
+            "county": "shiptoaddr_county",
+            "cust_address1": "shiptoaddr_custom1",
+            "cust_address2": "shiptoaddr_custom2",
+            "cust_address3": "shiptoaddr_custom3",
+            "cust_address4": "shiptoaddr_custom4",
+            "cust_address5": "shiptoaddr_custom5"
+          }
+        },
+        "mark_for_address": {
+          "$ref": "#/$defs/Address",
+          "x-source-field-map": {
+            "address_code": "markforaddr_code",
+            "office_address_name": "markforaddr_name",
+            "address1": "markforaddr_address1",
+            "address2": "markforaddr_address2",
+            "address3": "markforaddr_address3",
+            "address4": "markforaddr_address4",
+            "city": "markforaddr_city",
+            "state": "markforaddr_state",
+            "zipcode": "markforaddr_zip",
+            "country": "markforaddr_country",
+            "phone": "markforaddr_phone",
+            "fax": "markforaddr_fax",
+            "email": "markforaddr_email",
+            "region_code": "markforaddr_regioncode",
+            "province": "markforaddr_province",
+            "county": "markforaddr_county",
+            "cust_address1": "markforaddr_custom1",
+            "cust_address2": "markforaddr_custom2",
+            "cust_address3": "markforaddr_custom3",
+            "cust_address4": "markforaddr_custom4",
+            "cust_address5": "markforaddr_custom5"
+          }
+        }
+      }
+    },
+    "RequisitionAccount": {
+      "type": "object",
+      "x-graphql-type-name": "RequisitionAccount",
+      "properties": {
+        "account_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "acctseqnum"
+        },
+        "fin_change_type": {
+          "type": "string",
+          "x-source-field-name": "finchangetype"
+        },
+        "account_code": {
+          "type": "string",
+          "x-source-field-name": "accountcode"
+        },
+        "account_funding_line_fund": {
+          "type": "string",
+          "x-source-field-name": "acctfield1"
+        },
+        "account_funding_line_beginning_budget_fiscal_year": {
+          "type": "string",
+          "x-source-field-name": "acctfield2"
+        },
+        "account_funding_line_program": {
+          "type": "string",
+          "x-source-field-name": "acctfield3"
+        },
+        "account_funding_line_organization": {
+          "type": "string",
+          "x-source-field-name": "acctfield4"
+        },
+        "account_funding_line_activity": {
+          "type": "string",
+          "x-source-field-name": "acctfield5"
+        },
+        "account_funding_line_subject_object_class": {
+          "type": "string",
+          "x-source-field-name": "acctfield6"
+        },
+        "account_funding_line_region": {
+          "type": "string",
+          "x-source-field-name": "acctfield10"
+        },
+        "account_funding_line_ending_budget_fiscal_year": {
+          "type": "string",
+          "x-source-field-name": "acctfield11"
+        },
+        "account_funding_line_project_code": {
+          "type": "string",
+          "x-source-field-name": "acctfield12"
+        },
+        "account_funding_line_location_system": {
+          "type": "string",
+          "x-source-field-name": "acctfield13"
+        },
+        "account_funding_line_cost_organization": {
+          "type": "string",
+          "x-source-field-name": "acctfield14"
+        },
+        "account_funding_line_year_of_budget_authority": {
+          "type": "string",
+          "x-source-field-name": "acctfield15"
+        },
+        "account_funding_line_prompt_pay_type": {
+          "type": "string",
+          "x-source-field-name": "acctfield16"
+        },
+        "funds_type": {
+          "type": "string",
+          "x-source-field-name": "fundstype"
+        },
+        "includes_recovery_act_funds_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "includesrecoveryactfunds",
+          "x-original-type": "boolean"
+        },
+        "tas_segment1": {
+          "type": "string",
+          "x-source-field-name": "tasseg1"
+        },
+        "tas_segment2": {
+          "type": "string",
+          "x-source-field-name": "tasseg2"
+        },
+        "tas_segment3": {
+          "type": "string",
+          "x-source-field-name": "tasseg3"
+        },
+        "tas": {
+          "type": "string",
+          "x-source-field-name": "tas"
+        },
+        "quantity": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "quantity",
+          "x-original-type": "number"
+        },
+        "amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amount",
+          "x-original-type": "number"
+        },
+        "award_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "amt",
+          "x-original-type": "number"
+        },
+        "total_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "totalamt",
+          "x-original-type": "number"
+        },
+        "remaining_amount": {
+          "type": ["number", "string", "null"],
+          "x-source-field-name": "remainingamt",
+          "x-original-type": "number"
+        },
+        "subject_to_funding_flag": {
+          "type": ["boolean", "string", "null"],
+          "x-source-field-name": "subjecttofunding",
+          "x-original-type": "boolean"
+        }
+      }
+    },
+    "AssociatedRequisitionInfo": {
+      "type": "object",
+      "x-graphql-type-name": "AssociatedRequisitionInfo",
+      "properties": {
+        "associated_requisition_number": {
+          "type": "string",
+          "x-source-field-name": "assocreqnum"
+        },
+        "associated_requisition_line_item_number": {
+          "type": "string",
+          "x-source-field-name": "assocreqli"
+        },
+        "associated_requisition_sub_line_item_number": {
+          "type": "string",
+          "x-source-field-name": "assocreqsubli"
+        },
+        "associated_requisition_ship_to_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "assocreqshiptoseqnum"
+        },
+        "associated_requisition_account_sequence_number": {
+          "type": "string",
+          "x-source-field-name": "assocreqacctid"
+        }
+      }
+    }
+  },
+  "x-schema-version": "2.0-flexible",
+  "x-last-updated": "2025-11-07",
+  "x-update-note": "Updated to accept string representations of numbers and booleans to match actual PRISM API response format"
+}

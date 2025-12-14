@@ -1,6 +1,6 @@
 use anyhow::{Context, Result};
 use clap::Parser;
-use json_schema_graphql_converter::{ConversionOptions, Converter};
+use json_schema_graphql_converter::{ConversionOptions, Converter, NamingConvention};
 use std::fs;
 use std::path::PathBuf;
 
@@ -31,6 +31,18 @@ struct Args {
     /// Preserve field order
     #[arg(long, default_value_t = true)]
     preserve_order: bool,
+
+    /// Naming convention (preserve, graphql-idiomatic)
+    #[arg(long, default_value = "graphql-idiomatic")]
+    naming: String,
+
+    /// Types to exclude (comma separated)
+    #[arg(long, value_delimiter = ',')]
+    exclude_types: Vec<String>,
+
+    /// Regex patterns to exclude (comma separated)
+    #[arg(long, value_delimiter = ',')]
+    exclude_patterns: Vec<String>,
 }
 
 #[tokio::main]
@@ -51,6 +63,11 @@ async fn main() -> Result<()> {
             .context(format!("Failed to read local file: {}", args.input))?
     };
 
+    let naming_convention = match args.naming.to_lowercase().as_str() {
+        "preserve" => NamingConvention::Preserve,
+        _ => NamingConvention::GraphqlIdiomatic,
+    };
+
     // Configure converter
     let options = ConversionOptions {
         validate: !args.no_validate,
@@ -58,6 +75,9 @@ async fn main() -> Result<()> {
         preserve_field_order: args.preserve_order,
         federation_version: 2,
         infer_ids: args.infer_ids,
+        naming_convention,
+        exclude_types: args.exclude_types,
+        exclude_patterns: args.exclude_patterns,
     };
 
     let converter = Converter::with_options(options);

@@ -5,15 +5,12 @@
  * and produces deterministic GraphQL SDL output that mirrors the behavior of the
  * Rust implementation as closely as possible.
  */
-export interface ConverterOptions {
-    validate?: boolean;
-    includeDescriptions?: boolean;
-    preserveFieldOrder?: boolean;
-    federationVersion?: number;
+import { ConverterOptions, ConvertInput, ConversionResult } from './generated/types';
+import { IJsonSchemaConverter } from './interfaces';
+export { ConverterOptions };
+export type ExtendedConverterOptions = ConverterOptions & {
     maxDepth?: number;
-    excludeTypes?: string[];
-    excludePatterns?: string[];
-}
+};
 interface JsonSchema {
     $schema?: string;
     title?: string;
@@ -80,6 +77,8 @@ interface GraphQLScalarConfig {
     [key: string]: unknown;
 }
 type JsonSchemaInput = string | JsonSchema;
-export declare function jsonSchemaToGraphQL(jsonSchemaInput: JsonSchemaInput, options?: ConverterOptions): string;
+export declare function jsonSchemaToGraphQL(jsonSchemaInput: JsonSchemaInput, options?: ExtendedConverterOptions): string;
 export declare function graphqlToJsonSchema(graphqlSdl: string, options?: ConverterOptions): string;
-export {};
+export declare class Converter implements IJsonSchemaConverter {
+    convert(input: ConvertInput): Promise<ConversionResult>;
+}

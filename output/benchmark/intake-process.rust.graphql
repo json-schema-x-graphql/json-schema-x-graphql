@@ -1,0 +1,132 @@
+"""
+Pricing term grouping (derived abstraction, non-structural change).
+"""
+type EasiPricingTerms {
+  """
+Billing cycle descriptor (monthly, quarterly, annual, etc.).
+"""
+billingCycle: String
+  """
+Method used for price escalation (if any).
+"""
+escalationMethod: String
+  """
+Pricing model or strategy label.
+"""
+pricingModel: String
+}
+
+"""
+Root Intake Process entity combining system metadata and Intake Process-specific extension data.
+"""
+type EasiRecord {
+  """
+Mirror of intake_process_specific.business_owner for federated key selection.
+"""
+businessOwner: String
+  """
+Domain-specific fields unique to Intake Process.
+"""
+intakeProcessSpecific: EasiSpecificData!
+  """
+System-level lineage and ingestion metadata.
+"""
+systemMetadata: SystemMetadata!
+  """
+Mirror of intake_process_specific.system_owner for federated key selection.
+"""
+systemOwner: String
+}
+
+"""
+Primary business and pricing attributes specific to Intake Process.
+"""
+type EasiSpecificData {
+  """
+Business owner name or identifier.
+"""
+businessOwner: String!
+  """
+Indicates items not separately priced (raw representation).
+"""
+notSeparatelyPriced: String
+  """
+NTE value (raw string representation).
+"""
+notToExceed: String
+  """
+Optional flag or descriptor captured as string in original system.
+"""
+optional: String
+  """
+Ordered list of performance periods (base + options if present).
+"""
+performancePeriods: [PeriodOfPerformance]
+  """
+Structured pricing term attributes.
+"""
+pricingTerms: EasiPricingTerms
+  """
+System owner name or identifier.
+"""
+systemOwner: String!
+  """
+Unit of measure description or code.
+"""
+unitOfMeasure: String
+  """
+Unit price as stored in Intake Process.
+"""
+unitPrice: Float
+}
+
+"""
+Start and end dates defining a performance interval.
+"""
+type PeriodOfPerformance {
+  """
+End date (YYYY-MM-DD).
+"""
+endDate: Date
+  """
+Start date (YYYY-MM-DD).
+"""
+startDate: Date
+}
+
+"""
+Metadata describing origin system, identifiers, and lifecycle timestamps.
+"""
+type SystemMetadata @shareable {
+  """
+Timestamp when this record was ingested into the data fabric.
+"""
+ingestedAt: DateTime
+  """
+Timestamp when this record was last modified at source.
+"""
+lastModified: DateTime
+  """
+Version of the canonical Intake Process schema.
+"""
+schemaVersion: String
+  """
+Primary identifier of the record within Intake Process.
+"""
+sourceRecordId: String!
+  """
+Constant system identifier string.
+"""
+systemName: String!
+}
+
+"""
+Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics.
+"""
+type IntakeProcessCanonicalSchema {
+  """
+Root Intake Process entity.
+"""
+intakeProcessRecord: EasiRecord
+}
+

@@ -1,0 +1,719 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contract_data.schema.json",
+  "title": "Contract Data Canonical Schema",
+  "description": "Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.",
+  "type": "object",
+  "x-graphql-enums": {
+    "SystemName": {
+      "description": "Enumeration of system identifiers",
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+    }
+  },
+  "x-graphql-scalars": {
+    "DateTime": {
+      "description": "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+    },
+    "Date": {
+      "description": "ISO 8601 date string (YYYY-MM-DD)"
+    },
+    "Decimal": {
+      "description": "Decimal number as string to preserve precision"
+    },
+    "Email": {
+      "description": "Email address conforming to RFC 5322 (simplified)"
+    },
+    "URI": {
+      "description": "Uniform Resource Identifier or URL string"
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "contract_dataRecord": {
+        "description": "Fetch a single Contract Data record by PIID and agency code",
+        "args": {
+          "piid": {
+            "type": "String!",
+            "description": "Procurement Instrument Identifier"
+          },
+          "agency_code": {
+            "type": "String",
+            "description": "Agency code for disambiguation"
+          }
+        },
+        "type": "FpdsRecord"
+      },
+      "contract_dataRecords": {
+        "description": "Return a list of Contract Data records (non-paginated)",
+        "type": "[FpdsRecord!]!"
+      }
+    }
+  },
+  "properties": {
+    "contract_data_record": {
+      "$ref": "#/$defs/FpdsRecord"
+    }
+  },
+  "$defs": {
+    "FpdsRecord": {
+      "type": "object",
+      "description": "Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.",
+      "x-graphql-type-directives": "@key(fields: \"piid\") @key(fields: \"id\")",
+      "properties": {
+        "system_metadata": {
+          "$ref": "#/$defs/SystemMetadata"
+        },
+        "identifiers": {
+          "$ref": "#/$defs/Identifiers"
+        },
+        "financial": {
+          "$ref": "#/$defs/Financial"
+        },
+        "vendor": {
+          "$ref": "#/$defs/Vendor"
+        },
+        "agency": {
+          "$ref": "#/$defs/Agency"
+        },
+        "dates": {
+          "$ref": "#/$defs/Dates"
+        },
+        "classification": {
+          "$ref": "#/$defs/Classification"
+        },
+        "competition": {
+          "$ref": "#/$defs/Competition"
+        },
+        "place_of_performance": {
+          "$ref": "#/$defs/PlaceOfPerformance"
+        },
+        "idv_reference": {
+          "$ref": "#/$defs/IdvReference"
+        },
+        "compliance": {
+          "$ref": "#/$defs/Compliance"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of requirement"
+        }
+      },
+      "required": ["system_metadata", "identifiers"]
+    },
+    "SystemMetadata": {
+      "type": "object",
+      "x-graphql-type-name": "SystemMetadata",
+      "x-graphql-federation-shareable": true,
+      "description": "System-level metadata for record tracking, versioning, and lineage.",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "enum": ["Contract Data"],
+          "description": "Constant system identifier",
+          "x-graphql-field-type": "SystemName"
+        },
+        "source_record_id": {
+          "type": "string",
+          "description": "Primary identifier of the record within Contract Data"
+        },
+        "schema_version": {
+          "type": "string",
+          "description": "Version of the canonical Contract Data schema"
+        },
+        "ingested_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when record was ingested"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when record was last modified at source"
+        }
+      },
+      "required": ["system_name", "source_record_id"]
+    },
+    "Identifiers": {
+      "type": "object",
+      "description": "Core contract identifiers and reference numbers.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique identifier for each record in the dataset"
+        },
+        "piid": {
+          "type": "string",
+          "description": "Procurement Instrument Identifier - unique contract identifier"
+        },
+        "old_piid": {
+          "type": "string",
+          "description": "Legacy PIID from previous system"
+        },
+        "original_piid": {
+          "type": "string",
+          "description": "Original PIID for reference"
+        },
+        "reference_piid": {
+          "type": "string",
+          "description": "Reference to parent contract"
+        },
+        "agency_code": {
+          "type": "string",
+          "description": "Code for the agency involved"
+        },
+        "piid_agency_name": {
+          "type": "string",
+          "description": "Name of the agency associated with PIID"
+        },
+        "award_or_idv": {
+          "type": "string",
+          "description": "Indicates whether record is an award or IDV"
+        },
+        "transaction_number": {
+          "type": "integer",
+          "description": "Transaction sequence number"
+        },
+        "modification_number": {
+          "type": "string",
+          "description": "Contract modification number"
+        },
+        "solicitation_id": {
+          "type": "string",
+          "description": "Solicitation identifier"
+        },
+        "award_fiscal_year": {
+          "type": "string",
+          "description": "Fiscal year of the award"
+        },
+        "version": {
+          "type": "string",
+          "description": "Record version number"
+        }
+      },
+      "required": ["piid"]
+    },
+    "Financial": {
+      "type": "object",
+      "description": "Financial information including obligations, values, and fees.",
+      "properties": {
+        "dollars_obligated": {
+          "type": "number",
+          "description": "Total dollars obligated"
+        },
+        "dollars_obligated_per_action": {
+          "type": "number",
+          "description": "Dollars obligated per action"
+        },
+        "current_contract_value": {
+          "type": "number",
+          "description": "Current contract value"
+        },
+        "ultimate_contract_value": {
+          "type": "number",
+          "description": "Ultimate expected contract value"
+        },
+        "base_dollars_obligated": {
+          "type": "number",
+          "description": "Base obligation amount"
+        },
+        "max_order_limit": {
+          "type": "number",
+          "description": "Maximum order limit"
+        },
+        "fee_paid_for_use_of_service": {
+          "type": "number",
+          "description": "Service fee paid"
+        },
+        "fee_range_lower_value": {
+          "type": "number",
+          "description": "Lower fee range value"
+        },
+        "fee_range_upper_value": {
+          "type": "number",
+          "description": "Upper fee range value"
+        },
+        "fixed_fee_value": {
+          "type": "number",
+          "description": "Fixed fee amount"
+        },
+        "non_federal_funding_amount": {
+          "type": "number",
+          "description": "Non-federal funding amount"
+        },
+        "non_government_value": {
+          "type": "number",
+          "description": "Non-government contribution"
+        },
+        "total_non_government_value": {
+          "type": "number",
+          "description": "Total non-government value"
+        }
+      }
+    },
+    "Vendor": {
+      "type": "object",
+      "description": "Vendor information including identity, address, contact, and business classifications.",
+      "properties": {
+        "vendor_name": {
+          "type": "string",
+          "description": "Legal vendor name"
+        },
+        "vendor_uei": {
+          "type": "string",
+          "description": "Unique Entity Identifier (Entity Management.gov)"
+        },
+        "vendor_duns_number": {
+          "type": "string",
+          "description": "DUNS number (deprecated)"
+        },
+        "cage_code": {
+          "type": "string",
+          "description": "Commercial and Government Entity code"
+        },
+        "doing_business_as_name": {
+          "type": "string",
+          "description": "DBA name"
+        },
+        "vendor_address": {
+          "$ref": "#/$defs/Address"
+        },
+        "vendor_phone_number": {
+          "type": "string",
+          "description": "Vendor phone"
+        },
+        "email_address": {
+          "type": "string",
+          "format": "email",
+          "description": "Vendor email"
+        },
+        "annual_revenue": {
+          "type": "number",
+          "description": "Annual revenue"
+        },
+        "number_of_employees": {
+          "type": "integer",
+          "description": "Employee count"
+        },
+        "organizational_type": {
+          "type": "string",
+          "description": "Organization type"
+        },
+        "state_of_incorporation": {
+          "type": "string",
+          "description": "Incorporation state"
+        },
+        "country_of_incorporation": {
+          "type": "string",
+          "description": "Incorporation country"
+        },
+        "parent": {
+          "$ref": "#/$defs/ParentOrganization"
+        },
+        "business_classifications": {
+          "$ref": "#/$defs/BusinessClassifications"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "description": "Physical address structure.",
+      "properties": {
+        "line_1": {
+          "type": "string",
+          "description": "Address line 1"
+        },
+        "line_2": {
+          "type": "string",
+          "description": "Address line 2"
+        },
+        "line_3": {
+          "type": "string",
+          "description": "Address line 3"
+        },
+        "city": {
+          "type": "string",
+          "description": "City"
+        },
+        "state_code": {
+          "type": "string",
+          "description": "State code"
+        },
+        "state_name": {
+          "type": "string",
+          "description": "State name"
+        },
+        "zip_code": {
+          "type": "string",
+          "description": "ZIP/postal code"
+        },
+        "country_code": {
+          "type": "string",
+          "description": "Country code"
+        },
+        "country_name": {
+          "type": "string",
+          "description": "Country name"
+        }
+      }
+    },
+    "ParentOrganization": {
+      "type": "object",
+      "description": "Parent organization information.",
+      "properties": {
+        "parent_duns_number": {
+          "type": "string",
+          "description": "Parent DUNS"
+        },
+        "parent_vendor_name": {
+          "type": "string",
+          "description": "Parent name"
+        },
+        "parent_uei": {
+          "type": "string",
+          "description": "Parent UEI"
+        }
+      }
+    },
+    "BusinessClassifications": {
+      "type": "object",
+      "description": "Business classification flags for vendor categories.",
+      "properties": {
+        "small_business_flag": {
+          "type": "string",
+          "description": "Small business indicator"
+        },
+        "veteran_owned_flag": {
+          "type": "string",
+          "description": "Veteran-owned indicator"
+        },
+        "women_owned_flag": {
+          "type": "string",
+          "description": "Women-owned indicator"
+        },
+        "minority_owned_business_flag": {
+          "type": "string",
+          "description": "Minority-owned indicator"
+        },
+        "hubzone_flag": {
+          "type": "string",
+          "description": "HUBZone certified indicator"
+        },
+        "eight_a_flag": {
+          "type": "string",
+          "description": "8(a) program participant"
+        },
+        "sdb_flag": {
+          "type": "string",
+          "description": "Small disadvantaged business"
+        },
+        "srdvob_flag": {
+          "type": "string",
+          "description": "Service-disabled veteran-owned"
+        },
+        "wosb_flag": {
+          "type": "string",
+          "description": "Women-owned small business"
+        },
+        "edwosb_flag": {
+          "type": "string",
+          "description": "Economically disadvantaged WOSB"
+        },
+        "educational_institution_flag": {
+          "type": "string",
+          "description": "Educational institution"
+        },
+        "hospital_flag": {
+          "type": "string",
+          "description": "Hospital"
+        },
+        "nonprofit_organization_flag": {
+          "type": "string",
+          "description": "Nonprofit organization"
+        }
+      }
+    },
+    "Agency": {
+      "type": "object",
+      "description": "Agency and organizational information.",
+      "properties": {
+        "contracting_agency_id": {
+          "type": "string",
+          "description": "Contracting agency ID"
+        },
+        "contracting_agency_name": {
+          "type": "string",
+          "description": "Contracting agency name"
+        },
+        "contracting_office_id": {
+          "type": "string",
+          "description": "Contracting office ID"
+        },
+        "contracting_office_name": {
+          "type": "string",
+          "description": "Contracting office name"
+        },
+        "department_id": {
+          "type": "string",
+          "description": "Department ID"
+        },
+        "department_name": {
+          "type": "string",
+          "description": "Department name"
+        },
+        "funding_agency_code": {
+          "type": "string",
+          "description": "Funding agency code"
+        },
+        "funding_agency_name": {
+          "type": "string",
+          "description": "Funding agency name"
+        },
+        "funding_office_code": {
+          "type": "string",
+          "description": "Funding office code"
+        },
+        "funding_office_name": {
+          "type": "string",
+          "description": "Funding office name"
+        },
+        "funding_department_id": {
+          "type": "string",
+          "description": "Funding department ID"
+        },
+        "funding_department_name": {
+          "type": "string",
+          "description": "Funding department name"
+        },
+        "region_code": {
+          "type": "string",
+          "description": "Regional code"
+        }
+      }
+    },
+    "Dates": {
+      "type": "object",
+      "description": "Timeline and date information.",
+      "properties": {
+        "date_signed": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Contract signature date"
+        },
+        "effective_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Effective date"
+        },
+        "current_completion_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Expected completion date"
+        },
+        "ultimate_completion_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Ultimate completion deadline"
+        },
+        "cancellation_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Cancellation date"
+        },
+        "reveal_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Public reveal date"
+        },
+        "prepared_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Record preparation date"
+        },
+        "last_modified_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modification date"
+        }
+      }
+    },
+    "Classification": {
+      "type": "object",
+      "description": "Contract classification codes and categories.",
+      "properties": {
+        "naics_code": {
+          "type": "string",
+          "description": "NAICS industry classification code"
+        },
+        "naics_description": {
+          "type": "string",
+          "description": "NAICS description"
+        },
+        "product_or_service_code": {
+          "type": "string",
+          "description": "Product or service code (PSC)"
+        },
+        "product_or_service_description": {
+          "type": "string",
+          "description": "PSC description"
+        },
+        "system_equipment_code": {
+          "type": "string",
+          "description": "System equipment code"
+        },
+        "system_equipment_desc": {
+          "type": "string",
+          "description": "System equipment description"
+        },
+        "contract_financing": {
+          "type": "string",
+          "description": "Contract financing type"
+        },
+        "type_of_contract_pricing": {
+          "type": "string",
+          "description": "Contract pricing type"
+        },
+        "commercial_item_acquisition": {
+          "type": "string",
+          "description": "Commercial item acquisition indicator"
+        }
+      }
+    },
+    "Competition": {
+      "type": "object",
+      "description": "Competition and procurement procedure information.",
+      "properties": {
+        "extent_competed": {
+          "type": "string",
+          "description": "Extent of competition"
+        },
+        "solicitation_procedures": {
+          "type": "string",
+          "description": "Solicitation procedures used"
+        },
+        "type_of_set_aside": {
+          "type": "string",
+          "description": "Type of set-aside"
+        },
+        "evaluated_preference": {
+          "type": "string",
+          "description": "Evaluated preference applied"
+        },
+        "number_of_offers_received": {
+          "type": "integer",
+          "description": "Number of offers received"
+        },
+        "reason_not_competed": {
+          "type": "string",
+          "description": "Reason for non-competition"
+        },
+        "fair_opportunity_description": {
+          "type": "string",
+          "description": "Fair opportunity explanation"
+        }
+      }
+    },
+    "PlaceOfPerformance": {
+      "type": "object",
+      "description": "Place of performance location details.",
+      "properties": {
+        "pop_location_code": {
+          "type": "string",
+          "description": "Performance location code"
+        },
+        "pop_location_name": {
+          "type": "string",
+          "description": "Performance location name"
+        },
+        "pop_location_state_cd": {
+          "type": "string",
+          "description": "Performance state code"
+        },
+        "pop_location_state_name": {
+          "type": "string",
+          "description": "Performance state name"
+        },
+        "pop_county_code": {
+          "type": "string",
+          "description": "Performance county code"
+        },
+        "pop_county_name": {
+          "type": "string",
+          "description": "Performance county name"
+        },
+        "pop_country_code": {
+          "type": "string",
+          "description": "Performance country code"
+        },
+        "pop_country_name": {
+          "type": "string",
+          "description": "Performance country name"
+        },
+        "pop_zip_code": {
+          "type": "string",
+          "description": "Performance ZIP code"
+        }
+      }
+    },
+    "IdvReference": {
+      "type": "object",
+      "description": "IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts.",
+      "properties": {
+        "type_of_idc": {
+          "type": "string",
+          "description": "Type of indefinite delivery contract"
+        },
+        "multiple_or_single_award_idc": {
+          "type": "string",
+          "description": "Multiple or single award IDC"
+        },
+        "idv_last_date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "IDV last date"
+        },
+        "who_can_use": {
+          "type": "string",
+          "description": "Who can use the IDV"
+        }
+      }
+    },
+    "Compliance": {
+      "type": "object",
+      "description": "Compliance and regulatory information.",
+      "properties": {
+        "cost_acct_standards": {
+          "type": "string",
+          "description": "Cost accounting standards"
+        },
+        "cost_or_pricing_data": {
+          "type": "string",
+          "description": "Cost or pricing data requirement"
+        },
+        "subcontract_plan": {
+          "type": "string",
+          "description": "Subcontracting plan"
+        },
+        "use_of_epa_products": {
+          "type": "string",
+          "description": "Use of EPA products"
+        },
+        "recovered_material_clauses": {
+          "type": "string",
+          "description": "Recovered material clauses"
+        },
+        "davis_bacon_act": {
+          "type": "string",
+          "description": "Davis-Bacon Act applicability"
+        },
+        "service_contract_act": {
+          "type": "string",
+          "description": "Service Contract Act applicability"
+        },
+        "walsh_healey_act": {
+          "type": "string",
+          "description": "Walsh-Healey Act applicability"
+        }
+      }
+    }
+  }
+}

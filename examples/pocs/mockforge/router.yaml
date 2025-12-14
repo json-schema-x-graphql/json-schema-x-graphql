@@ -1,0 +1,19 @@
+# Apollo Router Configuration for Schema Unification Forest Mock Services
+
+# Subgraph URL overrides
+override_subgraph_url:
+  contract_data: http://contract_data-mock:4001/graphql
+  public_spending: http://public_spending-mock:4002/graphql
+  legacy_procurement: http://legacy_procurement-mock:4003/graphql
+  intake_process: http://intake_process-mock:4004/graphql
+  logistics_mgmt: http://logistics_mgmt-mock:4005/graphql
+
+# CORS configuration
+cors:
+  origins:
+    - https://*.cloud.gov
+    - http://localhost:*
+
+# Health check endpoint
+health_check:
+  listen: 0.0.0.0:8088

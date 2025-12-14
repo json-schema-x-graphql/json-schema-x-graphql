@@ -1,0 +1,6 @@
+{
+  "$id": "https://ttse-schema-unification-project.app.cloud.gov/schemas/schema_unification-graphql.json",
+  "title": "Schema Unification Forest GraphQL Schema",
+  "description": "JSON Schema generated from schema_unification.graphql SDL (snake_case)",
+  "definitions": {}
+}

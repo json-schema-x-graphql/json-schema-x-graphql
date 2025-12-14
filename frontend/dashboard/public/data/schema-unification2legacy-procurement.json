@@ -1,0 +1,167 @@
+{
+  "systemMetadata": {
+    "primarySystem": "Legacy Procurement",
+    "globalRecordId": "GLOBAL-CONTRACT-2024-002",
+    "schemaVersion": "2.0",
+    "lastModified": "2024-01-12T14:30:00Z",
+    "systemChain": [
+      {
+        "systemName": "Logistics Mgmt",
+        "recordId": "Logistics Mgmt-SBA-002-2024",
+        "processedDate": "2024-01-10T08:15:00Z",
+        "transformationRules": ["logistics_mgmt_to_legacy_procurement_mapping", "sba_legacy_data_cleanup", "piid_validation"],
+        "dataQuality": {
+          "completenessScore": 0.68,
+          "validationErrors": ["Missing vendor UEI", "Incomplete place of performance"],
+          "lastValidated": "2024-01-10T08:15:00Z"
+        }
+      },
+      {
+        "systemName": "Legacy Procurement",
+        "recordId": "Legacy Procurement-GSA-002-2024",
+        "processedDate": "2024-01-12T14:30:00Z",
+        "transformationRules": ["legacy_procurement_template_generation", "gsa_interagency_defaults", "template_validation"],
+        "dataQuality": {
+          "completenessScore": 0.82,
+          "validationErrors": [],
+          "lastValidated": "2024-01-12T14:30:00Z"
+        }
+      }
+    ]
+  },
+  "commonElements": {
+    "contractIdentification": {
+      "piid": "acquisitionData.originalAwardPiid",
+      "originalAwardPiid": "acquisitionData.originalAwardPiid",
+      "referencedPiid": "acquisitionData.iaPiidOrUniqueId",
+      "contractTitle": "awardData.purpose",
+      "contractType": "awardData.typeOfContract",
+      "descriptionOfRequirement": "awardData.descriptionOfRequirement"
+    },
+    "organizationInfo": {
+      "contractingAgency": {
+        "code": "clientData.agencyCode",
+        "name": "clientData.clientOrganizationName"
+      },
+      "contractingDepartment": {
+        "code": "clientData.contractingDepartmentCode",
+        "name": "clientData.contractingDepartmentName"
+      },
+      "fundingAgency": {
+        "code": "clientData.fundingAgencyCode",
+        "name": "clientData.fundingAgencyName"
+      },
+      "fundingDepartment": {
+        "code": "clientData.fundingDepartmentCode",
+        "name": "clientData.fundingDepartmentName"
+      }
+    },
+    "vendorInfo": {
+      "vendorName": "clientData.clientOrganizationName",
+      "vendorUei": "awardData.vendorUei"
+    },
+    "placeOfPerformance": {
+      "streetAddress": "acquisitionData.placeOfPerformance.streetAddress",
+      "city": "acquisitionData.placeOfPerformance.city",
+      "county": "acquisitionData.placeOfPerformance.county",
+      "state": "acquisitionData.placeOfPerformance.state",
+      "zip": "acquisitionData.placeOfPerformance.zip",
+      "country": "acquisitionData.placeOfPerformance.country",
+      "congressionalDistrict": "acquisitionData.placeOfPerformance.congressionalDistrict"
+    },
+    "financialInfo": {
+      "totalContractValue": "awardData.totalContractValue",
+      "baseAndAllOptionsValue": "awardData.baseAndAllOptionsValue",
+      "independentGovernmentEstimate": "awardData.independentGovernmentEstimate",
+      "amountSpentOnProduct": "lineItemData.extendedAmount",
+      "contractFiscalYear": "awardData.contractFiscalYear"
+    },
+    "businessClassification": {
+      "naicsCode": "awardData.naicsCode",
+      "naicsDescription": "awardData.naicsDescription",
+      "pscCode": "awardData.pscCode",
+      "pscDescription": "awardData.pscDescription",
+      "categoryOfProduct": "awardData.categoryOfProduct",
+      "typeOfProduct": "awardData.typeOfProduct",
+      "setAsideType": "awardData.setAsideType",
+      "localAreaSetAside": "awardData.setAsideForLocalFirms",
+      "coSizeDetermination": "awardData.coSizeDetermination"
+    },
+    "contractCharacteristics": {
+      "emergencyAcquisition": "awardData.emergencyAcquisition",
+      "governmentFurnishedProperty": "awardData.governmentFurnishedProperty",
+      "includesCui": "awardData.includesCui",
+      "recurringService": "awardData.recurringService",
+      "recurringUtilities": "awardData.recurringUtilities"
+    },
+    "contacts": [
+      {
+        "name": "clientData.primaryContact.name",
+        "title": "clientData.primaryContact.title",
+        "email": "clientData.primaryContact.email",
+        "phone": "clientData.primaryContact.phone",
+        "role": "clientData.primaryContact.role"
+      }
+    ],
+    "statusInfo": {
+      "isActive": "awardData.contractStatus.isActive",
+      "isLatest": "awardData.contractStatus.isLatest",
+      "isFunded": "awardData.contractStatus.isFunded",
+      "status": "awardData.contractStatus.currentStatus",
+      "publishedDate": "awardData.contractStatus.publishedDate",
+      "lastModifiedDate": "awardData.contractStatus.lastModifiedDate",
+      "contractCompleteDate": "awardData.contractStatus.contractCompleteDate",
+      "lastCarDateSigned": "awardData.contractStatus.lastCarDateSigned"
+    }
+  },
+  "systemExtensions": {
+    "legacy_procurement": [
+      {
+        "fieldName": "iaPiidOrUniqueId",
+        "fieldType": "string",
+        "value": "acquisitionData.iaPiidOrUniqueId",
+        "legacy_procurementSpecific": {
+          "acquisitionData": {
+            "iaPiidOrUniqueId": "IA-SBA-47QSWA20D0002",
+            "natureOfAcquisition": "ADMIN_CONTINUE_TRANSFER"
+          },
+          "clientData": {
+            "clientOrganizationName": "Small Business Administration",
+            "officeAddress": {
+              "streetAddress1": "409 3rd Street SW",
+              "city": "Washington",
+              "state": "DC"
+            }
+          },
+          "awardData": {
+            "typeOfIdc": "Single Award IDIQ",
+            "whoCanUseIdc": "SBA Only"
+          }
+        }
+      },
+      {
+        "fieldName": "templateProcessing",
+        "fieldType": "json",
+        "value": "legacy_procurement.templates",
+        "legacy_procurementSpecific": {
+          "acquisitionData": {
+            "iaPiidOrUniqueId": "IA-SBA-47QSWA20D0002",
+            "natureOfAcquisition": "ADMIN_CONTINUE_TRANSFER"
+          },
+          "clientData": {
+            "clientOrganizationName": "Small Business Administration",
+            "officeAddress": {
+              "streetAddress1": "409 3rd Street SW",
+              "city": "Washington",
+              "state": "DC"
+            }
+          },
+          "awardData": {
+            "typeOfIdc": "Single Award IDIQ",
+            "whoCanUseIdc": "SBA Only"
+          }
+        }
+      }
+    ]
+  }
+}

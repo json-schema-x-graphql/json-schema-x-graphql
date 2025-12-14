@@ -655,7 +655,7 @@ Before committing code:
 - [ ] Coverage meets thresholds (80%+)
 - [ ] Documentation updated
 
-Before releasing:
+Before relintake_processng:
 
 - [ ] All tests pass on all platforms
 - [ ] No known security vulnerabilities

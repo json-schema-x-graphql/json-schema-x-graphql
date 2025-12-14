@@ -1,0 +1,195 @@
+{
+  "types": {
+    "Contract": {
+      "fields": {
+        "globalRecordId": "/systemMetadata/globalRecordId",
+        "primarySystem": "/systemMetadata/primarySystem",
+        "schemaVersion": "/systemMetadata/schemaVersion",
+        "lastModified": "/systemMetadata/lastModified",
+        "systemChain": "/systemMetadata/systemChain",
+        "piid": "/commonElements/contractIdentification/piid",
+        "originalAwardPiid": "/commonElements/contractIdentification/originalAwardPiid",
+        "referencedPiid": "/commonElements/contractIdentification/referencedPiid",
+        "contractTitle": "/commonElements/contractIdentification/contractTitle",
+        "contractType": "/commonElements/contractIdentification/contractType",
+        "descriptionOfRequirement": "/commonElements/contractIdentification/descriptionOfRequirement",
+        "organizationInfo": "/commonElements/organizationInfo",
+        "vendorInfo": "/commonElements/vendorInfo",
+        "placeOfPerformance": "/commonElements/placeOfPerformance",
+        "financialInfo": "/commonElements/financialInfo",
+        "businessClassification": "/commonElements/businessClassification",
+        "contractCharacteristics": "/commonElements/contractCharacteristics",
+        "contacts": "/commonElements/contacts",
+        "statusInfo": "/commonElements/statusInfo",
+        "systemExtensions": "/systemExtensions"
+      }
+    },
+    "SystemChainEntry": {
+      "fields": {
+        "systemName": "/systemMetadata/systemChain/items/systemName",
+        "recordId": "/systemMetadata/systemChain/items/recordId",
+        "processedDate": "/systemMetadata/systemChain/items/processedDate",
+        "transformationRules": "/systemMetadata/systemChain/items/transformationRules",
+        "dataQuality": "/systemMetadata/systemChain/items/dataQuality"
+      }
+    },
+    "DataQuality": {
+      "fields": {
+        "completenessScore": "/systemMetadata/systemChain/items/dataQuality/completenessScore",
+        "validationErrors": "/systemMetadata/systemChain/items/dataQuality/validationErrors",
+        "lastValidated": "/systemMetadata/systemChain/items/dataQuality/lastValidated"
+      }
+    },
+    "OrganizationInfo": {
+      "fields": {
+        "contractingAgency": "/commonElements/organizationInfo/contractingAgency",
+        "contractingDepartment": "/commonElements/organizationInfo/contractingDepartment",
+        "fundingAgency": "/commonElements/organizationInfo/fundingAgency",
+        "fundingDepartment": "/commonElements/organizationInfo/fundingDepartment"
+      }
+    },
+    "Agency": {
+      "fields": {
+        "code": "/commonElements/organizationInfo/contractingAgency/code",
+        "name": "/commonElements/organizationInfo/contractingAgency/name"
+      }
+    },
+    "Department": {
+      "fields": {
+        "code": "/commonElements/organizationInfo/contractingDepartment/code",
+        "name": "/commonElements/organizationInfo/contractingDepartment/name"
+      }
+    },
+    "VendorInfo": {
+      "fields": {
+        "vendorName": "/commonElements/vendorInfo/vendorName",
+        "vendorUei": "/commonElements/vendorInfo/vendorUei"
+      }
+    },
+    "PlaceOfPerformance": {
+      "fields": {
+        "streetAddress": "/commonElements/placeOfPerformance/streetAddress",
+        "city": "/commonElements/placeOfPerformance/city",
+        "county": "/commonElements/placeOfPerformance/county",
+        "state": "/commonElements/placeOfPerformance/state",
+        "zip": "/commonElements/placeOfPerformance/zip",
+        "country": "/commonElements/placeOfPerformance/country",
+        "congressionalDistrict": "/commonElements/placeOfPerformance/congressionalDistrict"
+      }
+    },
+    "FinancialInfo": {
+      "fields": {
+        "totalContractValue": "/commonElements/financialInfo/totalContractValue",
+        "baseAndAllOptionsValue": "/commonElements/financialInfo/baseAndAllOptionsValue",
+        "independentGovernmentEstimate": "/commonElements/financialInfo/independentGovernmentEstimate",
+        "amountSpentOnProduct": "/commonElements/financialInfo/amountSpentOnProduct",
+        "contractFiscalYear": "/commonElements/financialInfo/contractFiscalYear"
+      }
+    },
+    "BusinessClassification": {
+      "fields": {
+        "naicsCode": "/commonElements/businessClassification/naicsCode",
+        "naicsDescription": "/commonElements/businessClassification/naicsDescription",
+        "pscCode": "/commonElements/businessClassification/pscCode",
+        "pscDescription": "/commonElements/businessClassification/pscDescription",
+        "categoryOfProduct": "/commonElements/businessClassification/categoryOfProduct",
+        "typeOfProduct": "/commonElements/businessClassification/typeOfProduct",
+        "setAsideType": "/commonElements/businessClassification/setAsideType",
+        "localAreaSetAside": "/commonElements/businessClassification/localAreaSetAside",
+        "coSizeDetermination": "/commonElements/businessClassification/coSizeDetermination"
+      }
+    },
+    "ContractCharacteristics": {
+      "fields": {
+        "emergencyAcquisition": "/commonElements/contractCharacteristics/emergencyAcquisition",
+        "governmentFurnishedProperty": "/commonElements/contractCharacteristics/governmentFurnishedProperty",
+        "includesCui": "/commonElements/contractCharacteristics/includesCui",
+        "recurringService": "/commonElements/contractCharacteristics/recurringService",
+        "recurringUtilities": "/commonElements/contractCharacteristics/recurringUtilities"
+      }
+    },
+    "Contact": {
+      "fields": {
+        "name": "/commonElements/contacts/items/name",
+        "title": "/commonElements/contacts/items/title",
+        "email": "/commonElements/contacts/items/email",
+        "phone": "/commonElements/contacts/items/phone",
+        "role": "/commonElements/contacts/items/role"
+      }
+    },
+    "StatusInfo": {
+      "fields": {
+        "isActive": "/commonElements/statusInfo/isActive",
+        "isLatest": "/commonElements/statusInfo/isLatest",
+        "isFunded": "/commonElements/statusInfo/isFunded",
+        "status": "/commonElements/statusInfo/status",
+        "publishedDate": "/commonElements/statusInfo/publishedDate",
+        "lastModifiedDate": "/commonElements/statusInfo/lastModifiedDate",
+        "contractCompleteDate": "/commonElements/statusInfo/contractCompleteDate",
+        "lastCarDateSigned": "/commonElements/statusInfo/lastCarDateSigned"
+      }
+    },
+    "AssistSpecificData": {
+      "fields": {
+        "acquisitionData": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData",
+        "clientData": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData",
+        "awardData": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData"
+      }
+    },
+    "AssistAcquisitionData": {
+      "fields": {
+        "iaPiidOrUniqueId": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData/iaPiidOrUniqueId",
+        "natureOfAcquisition": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData/natureOfAcquisition"
+      }
+    },
+    "AssistClientData": {
+      "fields": {
+        "clientOrganizationName": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/clientOrganizationName",
+        "officeAddress": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress"
+      }
+    },
+    "AssistAwardData": {
+      "fields": {
+        "typeOfIdc": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/typeOfIdc",
+        "whoCanUseIdc": "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/whoCanUseIdc"
+      }
+    },
+    "EasiSpecificData": {
+      "fields": {
+        "businessOwner": "/systemExtensions/intake_process/items/intake_processSpecific/businessOwner",
+        "systemOwner": "/systemExtensions/intake_process/items/intake_processSpecific/systemOwner",
+        "unitPrice": "/systemExtensions/intake_process/items/intake_processSpecific/unitPrice",
+        "unitOfMeasure": "/systemExtensions/intake_process/items/intake_processSpecific/unitOfMeasure",
+        "optional": "/systemExtensions/intake_process/items/intake_processSpecific/optional",
+        "notToExceed": "/systemExtensions/intake_process/items/intake_processSpecific/notToExceed",
+        "notSeparatelyPriced": "/systemExtensions/intake_process/items/intake_processSpecific/notSeparatelyPriced"
+      }
+    },
+    "Contract DataSpecificData": {
+      "fields": {
+        "programNumber": "/systemExtensions/contract_data/items/contract_dataSpecific/programNumber",
+        "alternativeNames": "/systemExtensions/contract_data/items/contract_dataSpecific/alternativeNames",
+        "objective": "/systemExtensions/contract_data/items/contract_dataSpecific/objective",
+        "website": "/systemExtensions/contract_data/items/contract_dataSpecific/website",
+        "legacy_procurementanceTypes": "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes",
+        "eligibility": "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility",
+        "usage": "/systemExtensions/contract_data/items/contract_dataSpecific/usage"
+      }
+    },
+    "AssistanceType": {
+      "fields": {
+        "code": "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/code",
+        "value": "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/value",
+        "level": "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/level"
+      }
+    },
+    "Contract DataUsage": {
+      "fields": {
+        "rules": "/systemExtensions/contract_data/items/contract_dataSpecific/usage/rules",
+        "restrictions": "/systemExtensions/contract_data/items/contract_dataSpecific/usage/restrictions",
+        "loanTerms": "/systemExtensions/contract_data/items/contract_dataSpecific/usage/loanTerms",
+        "discretionaryFund": "/systemExtensions/contract_data/items/contract_dataSpecific/usage/discretionaryFund"
+      }
+    }
+  }
+}

@@ -147,9 +147,15 @@ pub fn validate_json_schema(schema: &JsonValue) -> Result<()> {
             if let Err(e) = validate_graphql_type(type_str) {
                 errors.push(e);
             }
+        } else if let Some(type_obj) = gql_type.as_object() {
+            if let Some(name) = type_obj.get("name").and_then(|v| v.as_str()) {
+                if let Err(e) = validate_graphql_name(name) {
+                    errors.push(e);
+                }
+            }
         } else {
             errors.push(ConversionError::invalid_extension(
-                "x-graphql-type must be a string",
+                "x-graphql-type must be a string or object",
             ));
         }
     }
@@ -373,7 +379,7 @@ pub fn validate_graphql_sdl(sdl: &str) -> Result<()> {
                         continue;
                     }
 
-            <|vq_14871|>                    if type_segment.is_empty()
+                    if type_segment.is_empty()
                         || type_segment.starts_with('@')
                         || type_segment.starts_with('}')
                     {

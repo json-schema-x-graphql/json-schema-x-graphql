@@ -29,6 +29,8 @@
     "directory": "converters/node"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^6.1.0",
+    "@graphql-codegen/typescript": "^5.0.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
     "jest": "^29.7.0",

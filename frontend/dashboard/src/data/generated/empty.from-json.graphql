@@ -1,0 +1,265 @@
+"""Normalized contract record derived from the JSON Schema."""
+type Contract {
+  """Unique global record identifier."""
+  globalRecordId: ID!
+
+  """Primary system for the contract."""
+  primarySystem: String!
+
+  """Schema version."""
+  schemaVersion: String
+
+  """Last modified date/time."""
+  lastModified: DateTime
+
+  """System chain entries for contract lifecycle."""
+  systemChain: [SystemChainEntry!]!
+
+  """Procurement Instrument Identifier (PIID)."""
+  piid: String!
+
+  """Original award PIID."""
+  originalAwardPiid: String
+
+  """Referenced PIID."""
+  referencedPiid: String
+
+  """Title of the contract."""
+  contractTitle: String
+
+  """Type of contract."""
+  contractType: String
+
+  """Description of requirement."""
+  descriptionOfRequirement: String
+
+  """Organization information."""
+  organizationInfo: OrganizationInfo!
+
+  """Vendor information."""
+  vendorInfo: VendorInfo
+
+  """Place of performance."""
+  placeOfPerformance: PlaceOfPerformance
+
+  """Financial information."""
+  financialInfo: FinancialInfo
+
+  """Business classification."""
+  businessClassification: BusinessClassification
+
+  """Contract characteristics."""
+  contractCharacteristics: ContractCharacteristics
+
+  """Contract contacts."""
+  contacts: [Contact!]
+
+  """Status information."""
+  statusInfo: StatusInfo!
+
+  """System extensions."""
+  systemExtensions: SystemExtensions
+}
+
+scalar DateTime
+
+type SystemChainEntry {
+  systemName: String!
+  recordId: ID!
+  processedDate: DateTime!
+  transformationRules: [String!]
+  dataQuality: DataQuality
+}
+
+type DataQuality {
+  completenessScore: Decimal
+  validationErrors: [String!]
+  lastValidated: DateTime
+}
+
+scalar Decimal
+
+type OrganizationInfo {
+  contractingAgency: Agency!
+  contractingDepartment: Department
+  fundingAgency: Agency
+  fundingDepartment: Department
+}
+
+type Agency {
+  code: String!
+  name: String
+}
+
+type Department {
+  code: String
+  name: String
+}
+
+type VendorInfo {
+  vendorName: String
+  vendorUei: String
+}
+
+type PlaceOfPerformance {
+  streetAddress: String
+  city: String
+  county: String
+  state: String
+  zip: String
+  country: String
+  congressionalDistrict: String
+}
+
+type FinancialInfo {
+  totalContractValue: Decimal
+  baseAndAllOptionsValue: Decimal
+  independentGovernmentEstimate: Decimal
+  amountSpentOnProduct: Decimal
+  contractFiscalYear: String
+}
+
+type BusinessClassification {
+  naicsCode: String
+  naicsDescription: String
+  pscCode: String
+  pscDescription: String
+  categoryOfProduct: String
+  typeOfProduct: String
+  setAsideType: String
+  localAreaSetAside: Boolean
+  coSizeDetermination: String
+}
+
+type ContractCharacteristics {
+  emergencyAcquisition: String
+  governmentFurnishedProperty: Boolean
+  includesCui: Boolean
+  recurringService: Boolean
+  recurringUtilities: Boolean
+}
+
+type Contact {
+  name: String
+  title: String
+  email: String
+  phone: String
+  role: String
+}
+
+type StatusInfo {
+  isActive: Boolean
+  isLatest: Boolean
+  isFunded: Boolean
+  status: String
+  publishedDate: DateTime
+  lastModifiedDate: DateTime
+  contractCompleteDate: Date
+  lastCarDateSigned: Date
+}
+
+scalar Date
+
+type SystemExtensions {
+  contract_data: [Contract DataExtension!]
+  legacy_procurement: [AssistExtension!]
+  intake_process: [EasiExtension!]
+}
+
+type Contract DataExtension {
+  fieldName: String
+  fieldType: String
+  value: JSON
+  contract_dataSpecific: Contract DataSpecificData
+}
+
+scalar JSON
+
+type Contract DataSpecificData {
+  programNumber: String
+  alternativeNames: [String!]
+  objective: String
+  website: String
+  legacy_procurementanceTypes: [AssistanceType!]
+  eligibility: Contract DataEligibility
+  usage: Contract DataUsage
+}
+
+type AssistanceType {
+  code: String
+  value: String
+  level: Int
+}
+
+type Contract DataEligibility {
+  applicantTypes: [EligibilityType!]
+  beneficiaryTypes: [EligibilityType!]
+  additionalInfo: String
+}
+
+type EligibilityType {
+  value: String
+  code: String
+}
+
+type Contract DataUsage {
+  rules: String
+  restrictions: String
+  loanTerms: String
+  discretionaryFund: String
+}
+
+type AssistExtension {
+  fieldName: String
+  fieldType: String
+  value: JSON
+  legacy_procurementSpecific: AssistSpecificData
+}
+
+type AssistSpecificData {
+  acquisitionData: AssistAcquisitionData
+  clientData: AssistClientData
+  awardData: AssistAwardData
+}
+
+type AssistAcquisitionData {
+  iaPiidOrUniqueId: String!
+  natureOfAcquisition: String!
+}
+
+type AssistClientData {
+  clientOrganizationName: String!
+  officeAddress: AssistOfficeAddress!
+}
+
+type AssistOfficeAddress {
+  streetAddress1: String
+  city: String
+  state: String
+}
+
+type AssistAwardData {
+  typeOfIdc: String
+  whoCanUseIdc: String
+}
+
+type EasiExtension {
+  fieldName: String
+  fieldType: String
+  value: JSON
+  intake_processSpecific: EasiSpecificData
+}
+
+type EasiSpecificData {
+  businessOwner: String
+  systemOwner: String
+  unitPrice: Decimal
+  unitOfMeasure: String
+  optional: String
+  notToExceed: String
+  notSeparatelyPriced: String
+}
+
+type Query {
+  root: Contract
+}

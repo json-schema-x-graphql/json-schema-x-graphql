@@ -23,9 +23,11 @@
 //! let result = converter.convert(json_schema, ConversionDirection::JsonSchemaToGraphQL);
 //! ```
 
+pub mod api_types;
 pub mod error;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
+pub mod schema;
 pub mod types;
 pub mod validator;
 
@@ -33,7 +35,7 @@ pub mod validator;
 pub mod wasm;
 
 pub use error::{ConversionError, Result};
-pub use types::{ConversionDirection, ConversionOptions};
+pub use types::{ConversionDirection, ConversionOptions, NamingConvention};
 
 use serde_json::Value as JsonValue;
 
@@ -149,6 +151,9 @@ mod tests {
             preserve_field_order: true,
             federation_version: 2,
             infer_ids: false,
+            naming_convention: types::NamingConvention::GraphqlIdiomatic,
+            exclude_types: vec![],
+            exclude_patterns: vec![],
         };
         let converter = Converter::with_options(options);
         assert_eq!(converter.options().validate, false);

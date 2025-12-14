@@ -1,0 +1,241 @@
+# Local development stack:
+# - Postgres (persistent volume + optional init scripts)
+# - Hasura GraphQL Engine (proxies Postgres with a GraphQL API and console)
+#
+# Usage:
+#   cd enterprise-schema-unification/dev/hasura-ddn
+#   docker compose up -d
+#   # Hasura Console: http://localhost:8080 (admin secret: changeit)
+#   # Postgres: localhost:5441 (db: localdb, user: postgres, pass: postgres)
+#
+# Optional DB init scripts:
+#   Place *.sql or *.sh files in ./postgres/init — they will run on first startup.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ddn_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-localdb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      TZ: ${TZ:-UTC}
+    ports:
+      - "${POSTGRES_PORT:-5441}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d localdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - ddn-net
+
+  hasura:
+    image: hasura/graphql-engine:v2.40.0
+    container_name: ddn_hasura
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Default database (data source)
+      HASURA_GRAPHQL_DATABASE_URL: ${HASURA_GRAPHQL_DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/localdb}
+      # Metadata store (optional; using same Postgres here)
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: ${HASURA_GRAPHQL_METADATA_DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/postgres}
+
+      # Dev/console
+      HASURA_GRAPHQL_ENABLE_CONSOLE: ${HASURA_GRAPHQL_ENABLE_CONSOLE:-true}
+      HASURA_GRAPHQL_DEV_MODE: ${HASURA_GRAPHQL_DEV_MODE:-true}
+
+      # Admin secret (local only — change as needed)
+      HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET:-changeit}
+
+      # CORS and logs
+      HASURA_GRAPHQL_CORS_DOMAIN: ${HASURA_GRAPHQL_CORS_DOMAIN:-*}
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: ${HASURA_GRAPHQL_ENABLED_LOG_TYPES:-startup, http-log, webhook-log, websocket-log, query-log}
+
+      # Telemetry (opt-out if desired)
+      HASURA_GRAPHQL_ENABLE_TELEMETRY: ${HASURA_GRAPHQL_ENABLE_TELEMETRY:-false}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/healthz >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - ddn-net
+
+  hasura-metadata:
+    image: curlimages/curl:8.6.0
+    container_name: ddn_hasura_metadata
+    depends_on:
+      hasura:
+        condition: service_healthy
+    environment:
+      HASURA_ENDPOINT: ${HASURA_ENDPOINT:-http://hasura:8080}
+      HASURA_ADMIN_SECRET: ${HASURA_ADMIN_SECRET:-changeit}
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      set -e
+      echo "Waiting for Hasura to be ready..."
+      for i in $(seq 1 30); do
+        curl -sSf -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" "$$HASURA_ENDPOINT/healthz" && break || sleep 2
+      done
+      echo "Applying metadata (track tables and views) ..."
+      # Track base tables
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"awards"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"award_contacts"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # Track materialized view and JSON projection views
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"mv_awards_enriched"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_unified_model"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_contacts_unified_model"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      set +e
+      # Track typed Unified Model component views
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_typed_base"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_award_contract_id_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_referenced_idv_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_contract_data_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_dollar_values_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_total_dollar_values_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_transaction_information_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_place_of_performance_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_purchaser_info_contracting_office_agency_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_purchaser_info_funding_requesting_agency_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_purchaser_info_funding_requesting_office_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_competition_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_vendor_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_vendor_co_biz_size_determination_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_vendor_line_of_business_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_vendor_socio_economic_indicators_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_track_table","args":{"source":"default","table":{"schema":"unified_model","name":"v_award_contacts_typed"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+
+      echo "Creating relationships ..."
+      # award_contacts -> award (FK)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_object_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"award_contacts"},"name":"award","using":{"foreign_key_constraint_on":"award_id"}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # awards -> award_contacts (FK array)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_array_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"awards"},"name":"award_contacts","using":{"foreign_key_constraint_on":{"table":{"schema":"unified_model","name":"award_contacts"},"columns":["award_id"]}}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # v_awards_unified_model -> award_contacts (manual array; avoid name clash with JSON column `contacts`)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_array_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_unified_model"},"name":"contacts_rows","using":{"manual_configuration":{"remote_table":{"schema":"unified_model","name":"award_contacts"},"column_mapping":{"id":"award_id"}}}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # v_awards_contacts_unified_model -> v_awards_unified_model (manual object)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_object_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_contacts_unified_model"},"name":"award","using":{"manual_configuration":{"remote_table":{"schema":"unified_model","name":"v_awards_unified_model"},"column_mapping":{"award_id":"id"}}}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # Typed relationships from v_awards_typed_base -> component views (1:1)
+      for rel in \
+        'award_contract_id:v_award_contract_id_typed' \
+        'referenced_idv:v_referenced_idv_typed' \
+        'contract_data:v_contract_data_typed' \
+        'dollar_values:v_dollar_values_typed' \
+        'total_dollar_values:v_total_dollar_values_typed' \
+        'transaction_information:v_transaction_information_typed' \
+        'place_of_performance:v_place_of_performance_typed' \
+        'purchaser_information_contracting_office_agency:v_purchaser_info_contracting_office_agency_typed' \
+        'purchaser_information_funding_requesting_agency:v_purchaser_info_funding_requesting_agency_typed' \
+        'purchaser_information_funding_requesting_office:v_purchaser_info_funding_requesting_office_typed' \
+        'competition:v_competition_typed' \
+        'vendor:v_vendor_typed' \
+        'vendor_contracting_officer_business_size_determination:v_vendor_co_biz_size_determination_typed' \
+        'vendor_line_of_business:v_vendor_line_of_business_typed' \
+        'vendor_socio_economic_indicators:v_vendor_socio_economic_indicators_typed'
+      do
+        NAME="$${rel%%:*}"; TBL="$${rel##*:}";
+        curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+          -d "{\"type\":\"pg_create_object_relationship\",\"args\":{\"source\":\"default\",\"table\":{\"schema\":\"unified_model\",\"name\":\"v_awards_typed_base\"},\"name\":\"$${NAME}\",\"using\":{\"manual_configuration\":{\"remote_table\":{\"schema\":\"unified_model\",\"name\":\"$${TBL}\"},\"column_mapping\":{\"award_id\":\"award_id\"}}}}}" \
+          "$$HASURA_ENDPOINT/v1/metadata"
+      done
+      # Typed array relationship: v_awards_typed_base -> v_award_contacts_typed (1:N)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_array_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"v_awards_typed_base"},"name":"contacts","using":{"manual_configuration":{"remote_table":{"schema":"unified_model","name":"v_award_contacts_typed"},"column_mapping":{"award_id":"award_id"}}}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      # Back-link: v_award_contacts_typed -> v_awards_typed_base (N:1)
+      curl -sSf -H "Content-Type: application/json" -H "x-hasura-admin-secret: $$HASURA_ADMIN_SECRET" \
+        -d '{"type":"pg_create_object_relationship","args":{"source":"default","table":{"schema":"unified_model","name":"v_award_contacts_typed"},"name":"award","using":{"manual_configuration":{"remote_table":{"schema":"unified_model","name":"v_awards_typed_base"},"column_mapping":{"award_id":"award_id"}}}}}' \
+        "$$HASURA_ENDPOINT/v1/metadata"
+      set -e
+      echo "Done."
+    restart: "no"
+    networks:
+      - ddn-net
+
+  mv-refresher:
+    image: postgres:16-alpine
+    container_name: ddn_mv_refresher
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MV_DATABASE_URL: ${MV_DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/data_store_api}
+      MV_REFRESH_INTERVAL: ${MV_REFRESH_INTERVAL:-300}
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      set -e
+      echo "Starting MV refresher..."
+      while true; do
+        psql "$$MV_DATABASE_URL" -v ON_ERROR_STOP=1 -c "REFRESH MATERIALIZED VIEW CONCURRENTLY unified_model.mv_awards_enriched" || true
+        sleep $$MV_REFRESH_INTERVAL
+      done
+    restart: unless-stopped
+    networks:
+      - ddn-net
+
+volumes:
+  pg_data:
+
+networks:
+  ddn-net:
+    driver: bridge

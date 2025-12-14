@@ -1,5 +1,5 @@
 # Common Core GraphQL Schema
-# Version 2.0 - Federal Procurement Data Fabric (FPDF) by Petrified Forest Project
+# Version 2.0 - Federal Procurement Data Fabric (FPDF) by Schema Unification Forest Project
 
 scalar DateTime
 scalar Date
@@ -17,9 +17,9 @@ type Query {
   ): ContractConnection!
 
   # System-Specific Queries
-  fpdsPrograms(filter: FPDSFilter): [FPDSProgram!]!
-  assistContracts(filter: AssistFilter): [AssistContract!]!
-  easiContracts(filter: EasiFilter): [EasiContract!]!
+  contract_dataPrograms(filter: Contract DataFilter): [Contract DataProgram!]!
+  legacy_procurementContracts(filter: AssistFilter): [AssistContract!]!
+  intake_processContracts(filter: EasiFilter): [EasiContract!]!
 
   # Analytics and Reporting
   contractAnalytics(timeRange: TimeRangeInput!, groupBy: [AnalyticsGroupBy!]!): [AnalyticsResult!]!
@@ -135,10 +135,10 @@ type PageInfo {
 }
 
 # System-Specific Filter Inputs
-input FPDSFilter {
+input Contract DataFilter {
   programNumber: String
   programNumberContains: String
-  assistanceType: String
+  legacy_procurementanceType: String
   isActive: Boolean
   isFunded: Boolean
   publishedAfter: DateTime
@@ -211,16 +211,16 @@ type AnalyticsBreakdown {
 }
 
 "System-Specific Program Types"
-type FPDSProgram {
+type Contract DataProgram {
   programId: ID!
   programNumber: String!
   title: String!
   objective: String
   website: String
   alternativeNames: [String!]!
-  assistanceTypes: [AssistanceType!]!
-  eligibility: FPDSEligibility
-  usage: FPDSUsage
+  legacy_procurementanceTypes: [AssistanceType!]!
+  eligibility: Contract DataEligibility
+  usage: Contract DataUsage
   organizationHierarchy: [OrganizationHierarchyLevel!]!
   isActive: Boolean!
   isLatest: Boolean!
@@ -261,7 +261,7 @@ type EasiContract {
   placeOfPerformance: PlaceOfPerformance
   financialInfo: FinancialInfo
   clinData: [CLINData!]!
-  fpdsFieldMappings: [FPDSFieldMapping!]!
+  contract_dataFieldMappings: [Contract DataFieldMapping!]!
   ingestedAt: DateTime!
 }
 
@@ -458,10 +458,10 @@ type Contract {
 
 # System Metadata Types
 enum SystemType {
-  FPDS
-  ASSIST
-  EASI
-  CALM
+  Contract Data
+  Legacy Procurement
+  Intake Process
+  Logistics Mgmt
 }
 
 type SystemChainEntry {
@@ -794,24 +794,24 @@ type OptionPeriod {
 }
 
 # System Extensions (Union Types)
-union SystemExtension = FPDSExtension | AssistExtension | EasiExtension
+union SystemExtension = Contract DataExtension | AssistExtension | EasiExtension
 
-type FPDSExtension {
+type Contract DataExtension {
   fieldName: String!
   fieldType: String!
   value: JSON
-  fpdsSpecific: FPDSSpecificData!
+  contract_dataSpecific: Contract DataSpecificData!
 }
 
-type FPDSSpecificData {
+type Contract DataSpecificData {
   programNumber: String!
   alternativeNames: [String!]!
   objective: String
   website: String
-  assistanceTypes: [AssistanceType!]!
-  eligibility: FPDSEligibility
-  usage: FPDSUsage
-  projects: [FPDSProject!]!
+  legacy_procurementanceTypes: [AssistanceType!]!
+  eligibility: Contract DataEligibility
+  usage: Contract DataUsage
+  projects: [Contract DataProject!]!
   relatedPrograms: [RelatedProgram!]!
   historicalIndex: [HistoricalIndexEntry!]!
 }
@@ -825,7 +825,7 @@ type AssistanceType {
   children: [AssistanceType!]!
 }
 
-type FPDSEligibility {
+type Contract DataEligibility {
   applicantTypes: [EligibilityType!]!
   beneficiaryTypes: [EligibilityType!]!
   additionalInfo: String
@@ -837,14 +837,14 @@ type EligibilityType {
   description: String
 }
 
-type FPDSUsage {
+type Contract DataUsage {
   rules: String
   restrictions: String
   loanTerms: String
   discretionaryFund: String
 }
 
-type FPDSProject {
+type Contract DataProject {
   year: String!
   description: String!
   fundingAmount: Decimal
@@ -873,7 +873,7 @@ type AssistExtension {
   fieldName: String!
   fieldType: String!
   value: JSON
-  assistSpecific: AssistSpecificData!
+  legacy_procurementSpecific: AssistSpecificData!
 }
 
 type AssistSpecificData {
@@ -919,7 +919,7 @@ type EasiExtension {
   fieldName: String!
   fieldType: String!
   value: JSON
-  easiSpecific: EasiSpecificData!
+  intake_processSpecific: EasiSpecificData!
 }
 
 type EasiSpecificData {
@@ -931,7 +931,7 @@ type EasiSpecificData {
   notToExceed: String
   notSeparatelyPriced: String
   clinData: [CLINData!]!
-  fpdsFieldMappings: [FPDSFieldMapping!]!
+  contract_dataFieldMappings: [Contract DataFieldMapping!]!
 }
 
 type CLINData {
@@ -952,9 +952,9 @@ enum CLINType {
   NOT_SEPARATELY_PRICED
 }
 
-type FPDSFieldMapping {
-  easiFieldName: String!
-  fpdsFieldName: String!
+type Contract DataFieldMapping {
+  intake_processFieldName: String!
+  contract_dataFieldName: String!
   mappingRule: String!
   transformationApplied: String
 }
@@ -1044,8 +1044,8 @@ type SeasonalPattern {
 }
 
 enum TrendDirection {
-  INCREASING
-  DECREASING
+  INCRIntake ProcessNG
+  DECRIntake ProcessNG
   STABLE
   VOLATILE
 }

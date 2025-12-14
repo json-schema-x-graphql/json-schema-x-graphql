@@ -1,0 +1,400 @@
+{
+  "systemMetadata": {
+    "primarySystem": "Contract Data",
+    "globalRecordId": "Contract Data-10.001-2024-001",
+    "schemaVersion": "2.0",
+    "lastModified": "2024-01-18T10:45:00Z",
+    "systemChain": [
+      {
+        "systemName": "Contract Data",
+        "recordId": "Contract Data-10.001-2024",
+        "processedDate": "2024-01-18T10:45:00Z",
+        "transformationRules": [
+          "contract_data_program_ingestion",
+          "federal_legacy_procurementance_validation",
+          "hierarchy_processing",
+          "financial_obligations_aggregation"
+        ],
+        "dataQuality": {
+          "completenessScore": 0.93,
+          "validationErrors": [],
+          "lastValidated": "2024-01-18T10:45:00Z"
+        }
+      }
+    ]
+  },
+  "commonElements": {
+    "contractIdentification": {
+      "piid": "10.001",
+      "originalAwardPiid": "10.001",
+      "referencedPiid": "59.006",
+      "contractTitle": "SBA 8(a) Business Development Program",
+      "contractType": "Project Grants",
+      "descriptionOfRequirement": "To legacy_procurement eligible small disadvantaged businesses to compete in the American economy through business development legacy_procurementance including technical legacy_procurementance, training, and counseling services"
+    },
+    "organizationInfo": {
+      "contractingAgency": {
+        "code": "073",
+        "name": "Small Business Administration"
+      },
+      "contractingDepartment": {
+        "code": "073-01",
+        "name": "Office of Business Development"
+      },
+      "fundingAgency": {
+        "code": "073",
+        "name": "Small Business Administration"
+      },
+      "fundingDepartment": {
+        "code": "073-01",
+        "name": "Office of Business Development"
+      },
+      "organizationHierarchy": [
+        {
+          "organizationId": "073",
+          "name": "Small Business Administration",
+          "level": 1,
+          "status": "active",
+          "type": "agency"
+        },
+        {
+          "organizationId": "073-01",
+          "name": "Office of Business Development",
+          "level": 2,
+          "status": "active",
+          "type": "office"
+        },
+        {
+          "organizationId": "073-01-001",
+          "name": "8(a) Business Development Division",
+          "level": 3,
+          "status": "active",
+          "type": "office"
+        }
+      ]
+    },
+    "vendorInfo": {
+      "vendorName": "Program Administrator - SBA Headquarters",
+      "vendorUei": "SBA000000001",
+      "vendorType": "government",
+      "socioEconomicCategories": []
+    },
+    "placeOfPerformance": {
+      "streetAddress": "409 3rd Street SW",
+      "city": "Washington",
+      "county": "District of Columbia",
+      "state": "DC",
+      "zip": "20416",
+      "country": "USA",
+      "congressionalDistrict": "DC-00"
+    },
+    "financialInfo": {
+      "totalContractValue": 45000000.0,
+      "baseAndAllOptionsValue": 45000000.0,
+      "independentGovernmentEstimate": null,
+      "amountSpentOnProduct": 42500000.0,
+      "contractFiscalYear": "2024",
+      "reportSubmittedFiscalYear": "2024",
+      "obligations": [
+        {
+          "fiscalYear": "2024",
+          "amount": 15000000.0,
+          "type": "Grant Obligation",
+          "obligationDate": "2023-10-01"
+        },
+        {
+          "fiscalYear": "2025",
+          "amount": 15500000.0,
+          "type": "Grant Obligation",
+          "obligationDate": "2024-10-01"
+        },
+        {
+          "fiscalYear": "2026",
+          "amount": 14500000.0,
+          "type": "Grant Obligation",
+          "obligationDate": "2025-10-01"
+        }
+      ]
+    },
+    "businessClassification": {
+      "naicsCode": "541611",
+      "naicsDescription": "Administrative Management and General Management Consulting Services",
+      "pscCode": "R425",
+      "pscDescription": "Support- Professional: Engineering/Technical",
+      "categoryOfProduct": "Professional Services",
+      "typeOfProduct": "Business Development Services",
+      "setAsideType": "Small Disadvantaged Business",
+      "localAreaSetAside": false,
+      "coSizeDetermination": "Small Business",
+      "competitionType": "set_aside"
+    },
+    "contractCharacteristics": {
+      "emergencyAcquisition": "No",
+      "governmentFurnishedProperty": false,
+      "includesCui": false,
+      "recurringService": true,
+      "recurringUtilities": false,
+      "competitionType": "set_aside",
+      "contractVehicle": "Other"
+    },
+    "contacts": [
+      {
+        "name": "Maria Rodriguez",
+        "title": "Program Officer",
+        "email": "maria.rodriguez@sba.gov",
+        "phone": "202-205-6750",
+        "address": {
+          "streetAddress": "409 3rd Street SW",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20416"
+        },
+        "role": "primary"
+      },
+      {
+        "name": "James Chen",
+        "title": "Deputy Associate Administrator",
+        "email": "james.chen@sba.gov",
+        "phone": "202-205-6751",
+        "address": {
+          "streetAddress": "409 3rd Street SW",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20416"
+        },
+        "role": "administrative"
+      }
+    ],
+    "statusInfo": {
+      "isActive": true,
+      "isLatest": true,
+      "isFunded": true,
+      "status": "published",
+      "publishedDate": "2023-09-15T09:00:00Z",
+      "lastModifiedDate": "2024-01-18T10:45:00Z",
+      "contractCompleteDate": "2026-09-30",
+      "lastCarDateSigned": "2024-01-15",
+      "periodOfPerformance": {
+        "startDate": "2023-10-01",
+        "endDate": "2026-09-30",
+        "basePerformancePeriod": {
+          "startDate": "2023-10-01",
+          "endDate": "2024-09-30"
+        },
+        "optionPeriods": [
+          {
+            "optionNumber": 1,
+            "startDate": "2024-10-01",
+            "endDate": "2025-09-30",
+            "exercised": true
+          },
+          {
+            "optionNumber": 2,
+            "startDate": "2025-10-01",
+            "endDate": "2026-09-30",
+            "exercised": true
+          }
+        ]
+      }
+    },
+    "compliance": {
+      "auditRequirements": [
+        {
+          "questionCode": "CFR200.501",
+          "isSelected": true,
+          "description": "Single Audit Act compliance required"
+        },
+        {
+          "questionCode": "CFR200.303",
+          "isSelected": true,
+          "description": "Internal controls over federal awards"
+        }
+      ],
+      "environmentalImpact": {
+        "required": false,
+        "reports": null
+      },
+      "securityRequirements": {
+        "clearanceRequired": false,
+        "clearanceLevel": null,
+        "facilitySecurityRequired": false
+      }
+    }
+  },
+  "systemExtensions": {
+    "contract_data": [
+      {
+        "fieldName": "programNumber",
+        "fieldType": "string",
+        "value": "10.001",
+        "contract_dataSpecific": {
+          "programNumber": "10.001",
+          "alternativeNames": [
+            "SBA Business Development Program",
+            "8(a) Business Development Program",
+            "8(a) BD Program",
+            "Section 8(a) Program"
+          ],
+          "objective": "To legacy_procurement eligible small disadvantaged businesses to compete in the American economy through business development legacy_procurementance including technical legacy_procurementance, training, counseling, marketing legacy_procurementance, and high-level executive development provided by the agency or obtained by the agency from public or private sector entities.",
+          "website": "https://www.sba.gov/federal-contracting/contracting-legacy_procurementance-programs/8a-business-development-program",
+          "legacy_procurementanceTypes": [
+            {
+              "code": "B",
+              "value": "Project Grants",
+              "level": 1,
+              "elementId": "GRANT_001"
+            },
+            {
+              "code": "B01",
+              "value": "Business Development Grants",
+              "level": 2,
+              "elementId": "GRANT_BUS_001"
+            }
+          ],
+          "eligibility": {
+            "applicantTypes": [
+              {
+                "value": "Small businesses",
+                "code": "25",
+                "description": "Small businesses that meet SBA size standards"
+              },
+              {
+                "value": "Socially and economically disadvantaged businesses",
+                "code": "21",
+                "description": "Businesses owned and controlled by socially and economically disadvantaged individuals"
+              }
+            ],
+            "beneficiaryTypes": [
+              {
+                "value": "Small Business Person",
+                "code": "10",
+                "description": "Individual small business owners"
+              },
+              {
+                "value": "Minority group",
+                "code": "11",
+                "description": "Businesses owned by minority individuals"
+              },
+              {
+                "value": "Economically Disadvantaged",
+                "code": "13",
+                "description": "Businesses owned by economically disadvantaged individuals"
+              }
+            ],
+            "additionalInfo": "Applicants must be at least 51% unconditionally owned by socially and economically disadvantaged individuals who are U.S. citizens. The business must also demonstrate potential for success and meet SBA size standards for their primary industry."
+          },
+          "usage": {
+            "rules": "Assistance is provided through business development including technical legacy_procurementance, training, counseling, marketing legacy_procurementance, and high-level executive development. Participants receive specialized business training, counseling, marketing legacy_procurementance, and high-level executive development.",
+            "restrictions": "Participants are limited to a 9-year program term with annual reviews. Businesses must maintain eligibility requirements throughout participation. Cannot be used for working capital, debt refinancing, or real estate acquisition not directly related to business operations.",
+            "loanTerms": "Not applicable - this is a business development legacy_procurementance program, not a loan program",
+            "discretionaryFund": "Funding is subject to congressional appropriations and SBA resource allocation decisions. Annual funding levels may vary based on budget availability."
+          },
+          "projects": [
+            {
+              "year": "2024",
+              "description": "Business development legacy_procurementance for 4,500 certified 8(a) firms including technical legacy_procurementance, training, and counseling services"
+            },
+            {
+              "year": "2025",
+              "description": "Expansion of online training programs and enhanced mentor-protégé matching services for 8(a) participants"
+            },
+            {
+              "year": "2026",
+              "description": "Implementation of advanced analytics platform for tracking participant business growth and success metrics"
+            }
+          ],
+          "relatedPrograms": [
+            {
+              "id": "59.006",
+              "programNumber": "59.006",
+              "title": "8(a) Business Development/Emerging Leaders",
+              "relationship": "complementary"
+            },
+            {
+              "id": "59.007",
+              "programNumber": "59.007",
+              "title": "7(j) Management and Technical Assistance",
+              "relationship": "supporting"
+            }
+          ],
+          "historicalIndex": [
+            {
+              "historicalIndexId": "HI-10.001-2024-001",
+              "isManual": false,
+              "actionType": "PROGRAM_UPDATE",
+              "organizationId": "073",
+              "body": "Updated program objectives to include enhanced digital training components and expanded mentor-protégé program features",
+              "fiscalYear": "2024",
+              "statusCode": "ACTIVE",
+              "index": "001",
+              "createdDate": "2024-01-18T10:45:00Z"
+            },
+            {
+              "historicalIndexId": "HI-10.001-2023-012",
+              "isManual": false,
+              "actionType": "ANNUAL_REVIEW",
+              "organizationId": "073",
+              "body": "Completed annual program review with recommendations for technology improvements and expanded outreach to underserved communities",
+              "fiscalYear": "2023",
+              "statusCode": "COMPLETED",
+              "index": "012",
+              "createdDate": "2023-09-30T17:00:00Z"
+            }
+          ],
+          "suggestion": {
+            "input": [
+              "sba 8a business development program",
+              "small business administration legacy_procurementance",
+              "disadvantaged business development",
+              "minority business enterprise program"
+            ],
+            "contexts": {
+              "isActive": true,
+              "programType": "business_development",
+              "targetAudience": "small_disadvantaged_businesses"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "dataQuality": {
+    "overallScore": 0.93,
+    "completenessScore": 0.95,
+    "validityScore": 0.92,
+    "consistencyScore": 0.91,
+    "timelinessScore": 0.94,
+    "enrichmentScore": 0.89,
+    "certificationLevel": "CERTIFIED",
+    "analyticsReadiness": "READY",
+    "qualityIssues": [
+      {
+        "issueType": "MINOR_FORMATTING",
+        "field": "website",
+        "severity": "LOW",
+        "description": "URL could be normalized to standard format",
+        "autoCorrect": true
+      }
+    ],
+    "lastQualityCheck": "2024-01-18T10:45:00Z"
+  },
+  "transformationHistory": {
+    "sourceToCommonCore": {
+      "transformedAt": "2024-01-18T10:45:00Z",
+      "sourceRecordCount": 1,
+      "outputRecordCount": 1,
+      "fieldsTransformed": 47,
+      "businessRulesApplied": [
+        "contract_data_program_structure_mapping",
+        "financial_obligations_aggregation",
+        "organization_hierarchy_flattening",
+        "contact_information_standardization"
+      ],
+      "dataEnhancements": [
+        "reference_data_enrichment",
+        "geographic_standardization",
+        "compliance_mapping"
+      ]
+    }
+  }
+}

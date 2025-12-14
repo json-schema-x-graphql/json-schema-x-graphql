@@ -1,0 +1,21 @@
+Found 6 schemas to benchmark.
+Iterations: 5, Warmup: 2
+
+Benchmarking contract-data...
+Benchmarking intake-process...
+Benchmarking legacy-procurement...
+Benchmarking logistics-mgmt...
+Benchmarking public-spending...
+Benchmarking schema-unification...
+
+Benchmark Results (Average Time in ms):
+Schema                        Node (ms)      Rust (ms)      Speedup (x)    
+---------------------------------------------------------------------------
+contract-data                 23.20          4.63           5.01           
+intake-process                21.78          4.97           4.38           
+legacy-procurement            22.12          4.27           5.18           
+logistics-mgmt                23.74          5.05           4.70           
+public-spending               22.55          4.57           4.93           
+schema-unification            23.59          4.70           5.02           
+---------------------------------------------------------------------------
+Average Speedup: 4.87x

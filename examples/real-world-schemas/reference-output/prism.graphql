@@ -1,0 +1,452 @@
+"""
+Federation key directive (minimal definition for composition)
+"""
+directive @key(fields: String!) on OBJECT | INTERFACE
+
+"""ISO 8601 date and time"""
+scalar DateTime
+"""ISO 8601 date"""
+scalar Date
+"""High-precision decimal"""
+scalar Decimal
+"""Arbitrary JSON value"""
+scalar JSON
+
+type Site {
+  """
+  The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
+  """
+  site_code: Int!
+  site_description: String
+}
+
+type Person {
+  prism_user_id: String
+  first_name: String
+  last_name: String
+  email: String
+}
+
+type Address {
+  address_code: String
+  office_address_name: String
+  address1: String
+  address2: String
+  address3: String
+  address4: String
+  city: String
+  state: String
+  zipcode: String
+  country: String
+  phone: String
+  fax: String
+  email: String
+  region_code: String
+  province: String
+  county: String
+  cust_address1: String
+  cust_address2: String
+  cust_address3: String
+  cust_address4: String
+  cust_address5: String
+}
+
+type Solicitation @key(fields: "solicitation_number amendment_number") {
+  destination: String
+  origin: String
+  create_by: String
+  create_date: DateTime
+  last_updated_by: String
+  last_updated_date: DateTime
+  solicitation_number: String
+  amendment_number: String
+  solicitation_document_description: String
+  header_text: String
+  change_text: String
+  footer_text: String
+  num_items: Int
+  amount: Float
+  pop_start_date: DateTime
+  pop_end_date: DateTime
+  preference_award: String
+  percent_setaside: Float
+  unipriced_flag: SolicitationUnipricedFlagEnum
+  subsistence_flag: Boolean
+  primary_product_code: String
+  primary_naics_code: String
+  project_id: String
+  project_title: String
+  base_currency_code: String
+  print_currency_code: String
+  security_classification_code: String
+  post_to_ebuy: String
+  major_systems: String
+  high_risk: String
+  source_system_evaluation_type: String
+  document_status: String
+  status_date: DateTime
+  pending_date: DateTime
+  approved_date: DateTime
+  released_date: DateTime
+  cancelled_date: DateTime
+  closed_date: DateTime
+  this_version_funded_amount: Float
+  total_released_funded_amount: Float
+  this_version_recovery_act_funds_amount: Float
+  total_released_recovery_act_funds_amount: Float
+  criticality_designator: String
+  solicitation_purpose: String
+  potential_amount: Float
+  issued_date: DateTime
+  response_due_date: Date
+  response_due_time: String
+  response_due_time_zone: String
+  solicitation_type: String
+  gwac_gsa_purchase_flag: Boolean
+  special_circumstances_code: String
+  multi_award_idv: String
+  bundled_contract: String
+  consolidated_contract: String
+  emergency_request_contract_flag: Boolean
+  solicitation_procedure: String
+  extent_competed: String
+  justification_and_approval_number: String
+  anticipated_type_of_vehicle: String
+  anticipated_type_of_contract: String
+  small_disadvantaged_business_percentage: Float
+  hubzone_percentage: Float
+  set_aside: String
+  payment_bond_required_flag: Boolean
+  performance_bond_required_flag: Boolean
+  depository_code: String
+  depository_description: String
+  place_of_performance_name: String
+  place_of_performance_zip: String
+  place_of_performance_country: String
+  place_of_performance_primary: String
+  geographic_region: String
+  place_of_performance_code: String
+  fed_connect_link: String
+  fed_connect_url: String
+  workspace_number: String
+  site: Site
+  owner: Person
+  """
+  NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
+  """
+  buyer: Person
+  contracting_officer: Person
+  agreements_officer: Person
+  contracting_officer_representative: Person
+  admin_contracting_officer: Person
+  originating_office_address: Address
+  issuing_office_address: Address
+  admin_office_address: Address
+  invoice_office_address: Address
+  payment_office_address: Address
+  solicitation_lines: [SolicitationLineItem]
+  solicitation_clauses: [SolicitationClause]
+}
+
+type SolicitationLineItem {
+  accountable_property_flag: Boolean
+  add_edit_cancel_indicator: String
+  allow_delivery_orders_flag: Boolean
+  solicitation_line_amount: Float
+  award_fee: Float
+  base_fee: Float
+  completed_form_flag: Boolean
+  credit_amount: Float
+  delivery_order_obligates_flag: Boolean
+  economic_price_adjustment_award_type_indicator: String
+  solicitation_line_item_description: String
+  fixed_fee: Float
+  freight_on_board_indicator: String
+  footer_text: String
+  government_furnished_property_indicator: String
+  government_share_percentage: Float
+  guarantee_flag: Boolean
+  header_text: String
+  incrementally_funded_indicator: String
+  incrementally_funded_amount: Float
+  incrementally_funded_thru_date: DateTime
+  inspection_text: String
+  internal_notes_text: String
+  item_award_type: String
+  item_number: String
+  line_item_type_code: String
+  invoice_matching_rule: String
+  minimum_amount: Float
+  minimum_quantity: Int
+  notes_to_the_buyer_text: String
+  obligated_amount: Float
+  option_anticipated_exercise_date: DateTime
+  option_days: Int
+  option_exercised_date: DateTime
+  option_line_item_indicator: String
+  origin_city: String
+  origin_state: String
+  payment_terms_custom_1: String
+  payment_terms_custom_2: String
+  period_of_performance_end_date: DateTime
+  period_of_performance_start_date: DateTime
+  price_ceiling: Float
+  priority_code: String
+  product_service_code: String
+  profit_adjustment_formula: String
+  profit_fee: Float
+  line_item_qualifier: String
+  line_item_quantity: Float
+  security_classification_code: String
+  sequence_number: String
+  special_handling_code: String
+  solicitation_line_item_status_code: String
+  status_date: DateTime
+  sub_item_number: String
+  target_cost: Float
+  target_fee: Float
+  target_fee_high: Float
+  target_fee_low: Float
+  total_obligated_amount: Float
+  trade_discount: Float
+  unit_of_measure_code: String
+  unit_price: Float
+  user_defined_product_code: String
+  user_product_code_description: String
+  ussgl_trans_code: String
+  last_amendment_version_number: String
+  deliveries: [SolicitationLineDelivery]
+}
+
+type SolicitationLineDelivery {
+  solicitation_line_delivery_amount: Float
+  days_after_type_code: String
+  delivery_date: DateTime
+  delivery_days_after_award: Int
+  solicitation_line_delivery_quantity: Float
+  solicitation_line_delivery_ship_to_sequence_number: String
+  tank_size: String
+  tank_description: String
+  mark_for_address: Address
+  ship_to_address: Address
+}
+
+type SolicitationClause {
+  clause_globally_unique_id: String
+  clause_database_name: String
+  clause_number: String
+  clause_effective_date: DateTime
+  clause_full_text: String
+}
+
+type Requisition @key(fields: "requisition_number amendment_number") {
+  criticality_designator: String
+  origin: String
+  external_finance_doc: String
+  external_finance_approved_date: DateTime
+  requisition_for_mod_flag: Boolean
+  associated_award_number: String
+  prior_all_zero_flag: Boolean
+  finance_change_type: String
+  action_request_type: String
+  create_by: String
+  create_date: DateTime
+  last_updated_by: String
+  last_updated_date: DateTime
+  requisition_number: String
+  amendment_number: String
+  description: String
+  header_text: String
+  footer_text: String
+  change_text: String
+  internal_note_text: String
+  note_to_buyer_text: String
+  items: Int
+  amount: Float
+  total_committed_amount: Float
+  pop_start_date: DateTime
+  pop_end_date: DateTime
+  primary_product_code: String
+  project_id: String
+  project_title: String
+  requisition_purpose: String
+  base_currency_code: String
+  print_currency_code: String
+  security_classification_code: String
+  accounting_period: String
+  major_systems: String
+  high_risk: String
+  legacy_pegasys_document: String
+  status: String
+  status_date: DateTime
+  fully_awarded_flag: Boolean
+  paper_requisition_received_date: DateTime
+  requisition_approved_date: DateTime
+  pending_date: DateTime
+  approved_date: DateTime
+  released_date: DateTime
+  canceled_date: DateTime
+  closed_date: DateTime
+  buyer_assigned_date: DateTime
+  faa_pre_upiid_flag: Boolean
+  transaction_indicator: String
+  requestor_full_name: String
+  requestor_phone_number: String
+  site: Site
+  owner: Person
+  requisitioner: Person
+  buyer: Person
+  technical_point_of_contact: Person
+  originating_office_address: Address
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
+  issuing_office_address: Address
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
+  admin_office_address: Address
+  payment_office_address: Address
+  approval_history: [RequisitionApprovalHistory]
+  requisition_lines: [RequisitionLineItem]
+  associated_requisition_info: AssociatedRequisitionInfo
+}
+
+type RequisitionApprovalHistory {
+  approver_sequence_number: String
+  approver_route_role: String
+  approver_requisition_approved_date: DateTime
+  approver_comments: String
+  approver_user: Person
+}
+
+type RequisitionLineItem {
+  add_edit_cancel_flag: String
+  item_number: String
+  sequence_number: String
+  sub_item_number: String
+  supplies_or_services_flag: Boolean
+  description: String
+  internal_note_text: String
+  header_text: String
+  footer_text: String
+  inspection_text: String
+  note_to_buyer_text: String
+  line_item_qualifier: String
+  quantity: Float
+  unit: String
+  unit_price: Float
+  amount: Float
+  committed_amount: Float
+  total_committed_amount: Float
+  remaining_committed_amount: Float
+  option_flag: Boolean
+  anticipated_exercise_date: DateTime
+  option_days: Int
+  option_exercise_date: DateTime
+  pop_start_date: DateTime
+  pop_end_date: DateTime
+  product_code: String
+  user_product_code: String
+  user_product_code_description: String
+  project_id: String
+  project_title: String
+  gfe_flag: Boolean
+  priority_code: String
+  special_handling_code: String
+  renewal_date: DateTime
+  ussgl_trans_code: String
+  version_number: String
+  security_classification_code: String
+  fob_indicator: String
+  origin_city: String
+  origin_state: String
+  status_indicator: String
+  status_date: DateTime
+  fully_awarded_flag: Boolean
+  shipments: [RequisitionShipment]
+  accounts: [RequisitionAccount]
+}
+
+type RequisitionShipment {
+  ship_to_sequence_number: String
+  quantity: Float
+  amount: Float
+  delivery_date: DateTime
+  delivery_days_afteraward: Int
+  financial_change_type: String
+  days_after_type: String
+  tank_size: String
+  tank_description: String
+  ship_to_address: Address
+  mark_for_address: Address
+}
+
+type RequisitionAccount {
+  account_sequence_number: String
+  fin_change_type: String
+  account_code: String
+  account_funding_line_fund: String
+  account_funding_line_beginning_budget_fiscal_year: String
+  account_funding_line_program: String
+  account_funding_line_organization: String
+  account_funding_line_activity: String
+  account_funding_line_subject_object_class: String
+  account_funding_line_region: String
+  account_funding_line_ending_budget_fiscal_year: String
+  account_funding_line_project_code: String
+  account_funding_line_location_system: String
+  account_funding_line_cost_organization: String
+  account_funding_line_year_of_budget_authority: String
+  account_funding_line_prompt_pay_type: String
+  funds_type: String
+  includes_recovery_act_funds_flag: Boolean
+  tas_segment1: String
+  tas_segment2: String
+  tas_segment3: String
+  tas: String
+  quantity: Float
+  amount: Float
+  award_amount: Float
+  total_amount: Float
+  remaining_amount: Float
+  subject_to_funding_flag: Boolean
+}
+
+type AssociatedRequisitionInfo {
+  associated_requisition_number: String
+  associated_requisition_line_item_number: String
+  associated_requisition_sub_line_item_number: String
+  associated_requisition_ship_to_sequence_number: String
+  associated_requisition_account_sequence_number: String
+}
+
+enum SolicitationUnipricedFlagEnum {
+  Y
+  N
+  YES
+  NO
+  NULL
+}
+
+type Query {
+  """
+  Fetch a single solicitation record
+  """
+  solicitation: Solicitation
+
+  """
+  Fetch a single requisition record
+  """
+  requisition: Requisition
+
+  """
+  List query for solicitation records (non-paginated snapshot)
+  """
+  solicitations(limit: Int = 50): [Solicitation!]!
+
+  """
+  List query for requisition records (non-paginated snapshot)
+  """
+  requisitions(limit: Int = 50): [Requisition!]!
+}

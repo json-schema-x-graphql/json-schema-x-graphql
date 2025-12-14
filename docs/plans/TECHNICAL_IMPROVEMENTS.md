@@ -315,7 +315,7 @@ pub fn camel_to_snake(s: &str) -> String {
 
 ## 💡 Tips
 
-1. **Start small:** Circular ref protection is easiest
+1. **Start small:** Circular ref protection is intake_processest
 2. **Test incrementally:** Run tests after each change
 3. **Use production scripts:** Copy patterns, not code
 4. **Handle errors gracefully:** Good messages help debugging

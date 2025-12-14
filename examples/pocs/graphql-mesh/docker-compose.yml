@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # GraphQL Mesh gateway
+  mesh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - ENABLE_MOCKS=true
+      - DATABRICKS_BASE_URL=http://mock-api:3000
+      - DATABRICKS_TOKEN=${DATABRICKS_TOKEN:-dev-token}
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ../../generated-schemas:/app/generated-schemas:ro
+    depends_on:
+      - mock-api
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:4000/.well-known/ready', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - schema_unification
+
+  # Mock REST API (json-server)
+  mock-api:
+    image: clue/json-server:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./mocks:/data:ro
+    command: --watch /data/db.json --host 0.0.0.0 --port 3000
+    networks:
+      - schema_unification
+
+networks:
+  schema_unification:
+    driver: bridge

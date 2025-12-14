@@ -1,0 +1,400 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contract Data to Schema Unification Mapping (x-graphql Hinted Example)",
+  "description": "Example schema demonstrating x-graphql-* hints for optimal GraphQL generation",
+  "type": "object",
+  "definitions": {
+    "Contract": {
+      "type": "object",
+      "x-graphql-type": "interface",
+      "x-graphql-description": "Base contract interface implemented by all contract types",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "description": "Unique contract identifier from Contract Data",
+          "x-graphql-description": "Unique contract identifier",
+          "x-graphql-nullable": false
+        },
+        "piid": {
+          "type": "string",
+          "description": "Procurement Instrument Identifier",
+          "x-graphql-field-name": "procurementInstrumentId"
+        },
+        "modNumber": {
+          "type": "string",
+          "description": "Modification number",
+          "x-graphql-field-name": "modificationNumber"
+        },
+        "status": {
+          "$ref": "#/definitions/ContractStatus"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-description": "When the contract becomes effective"
+        },
+        "obligatedAmount": {
+          "type": "number",
+          "x-graphql-description": "Current obligated amount in USD",
+          "x-graphql-directives": [
+            {
+              "name": "currency",
+              "args": {
+                "code": "USD"
+              }
+            }
+          ]
+        }
+      },
+      "required": ["contractId", "piid", "status"]
+    },
+    "ContractStatus": {
+      "type": "string",
+      "enum": ["ACTIVE", "COMPLETED", "CANCELLED", "PENDING"],
+      "x-graphql-description": "Current status of the contract lifecycle"
+    },
+    "IDVContract": {
+      "type": "object",
+      "x-graphql-implements": ["Contract"],
+      "x-graphql-description": "Indefinite Delivery Vehicle (IDV) contract with child orders",
+      "properties": {
+        "contractId": {
+          "type": "string"
+        },
+        "piid": {
+          "type": "string"
+        },
+        "modNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/ContractStatus"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "obligatedAmount": {
+          "type": "number"
+        },
+        "idvType": {
+          "type": "string",
+          "enum": ["GWAC", "IDIQ_SINGLE", "IDIQ_MULTIPLE", "BOA"],
+          "x-graphql-description": "Type of IDV vehicle"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          },
+          "x-graphql-description": "Task/delivery orders under this IDV"
+        }
+      },
+      "required": ["contractId", "piid", "status", "idvType"]
+    },
+    "Order": {
+      "type": "object",
+      "x-graphql-implements": ["Contract"],
+      "x-graphql-description": "Task or delivery order issued against an IDV",
+      "properties": {
+        "contractId": {
+          "type": "string"
+        },
+        "piid": {
+          "type": "string"
+        },
+        "modNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/ContractStatus"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "obligatedAmount": {
+          "type": "number"
+        },
+        "parentIdv": {
+          "type": "string",
+          "x-graphql-description": "Reference to parent IDV contract ID"
+        },
+        "orderType": {
+          "type": "string",
+          "enum": ["TASK_ORDER", "DELIVERY_ORDER"],
+          "x-graphql-description": "Type of order"
+        }
+      },
+      "required": ["contractId", "piid", "status", "parentIdv", "orderType"]
+    },
+    "Vendor": {
+      "type": "object",
+      "x-graphql-description": "Vendor or contractor performing work",
+      "properties": {
+        "duns": {
+          "type": "string",
+          "description": "DUNS number",
+          "x-graphql-description": "Dun & Bradstreet DUNS number",
+          "x-graphql-nullable": false
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-nullable": false
+        },
+        "cageCode": {
+          "type": "string",
+          "description": "Commercial and Government Entity Code",
+          "x-graphql-field-name": "cageCode"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "businessType": {
+          "$ref": "#/definitions/BusinessType"
+        }
+      },
+      "required": ["duns", "name"]
+    },
+    "Address": {
+      "type": "object",
+      "x-graphql-description": "Physical or mailing address",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string",
+          "x-graphql-description": "Two-letter state code"
+        },
+        "zipCode": {
+          "type": "string",
+          "x-graphql-field-name": "postalCode"
+        },
+        "country": {
+          "type": "string",
+          "default": "USA",
+          "x-graphql-description": "ISO country code"
+        }
+      }
+    },
+    "BusinessType": {
+      "type": "object",
+      "x-graphql-description": "Socioeconomic business classifications",
+      "properties": {
+        "isSmallBusiness": {
+          "type": "boolean",
+          "x-graphql-nullable": false
+        },
+        "isWomanOwned": {
+          "type": "boolean",
+          "x-graphql-nullable": false
+        },
+        "isVeteranOwned": {
+          "type": "boolean",
+          "x-graphql-nullable": false
+        },
+        "is8A": {
+          "type": "boolean",
+          "description": "SBA 8(a) Program participant",
+          "x-graphql-field-name": "isSBA8A",
+          "x-graphql-nullable": false
+        },
+        "isHUBZone": {
+          "type": "boolean",
+          "description": "Historically Underutilized Business Zone",
+          "x-graphql-nullable": false
+        }
+      }
+    },
+    "ContractAction": {
+      "type": "object",
+      "x-graphql-description": "Individual transaction or modification action",
+      "properties": {
+        "actionDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-nullable": false
+        },
+        "actionType": {
+          "type": "string",
+          "x-graphql-nullable": false
+        },
+        "amount": {
+          "type": "number",
+          "x-graphql-description": "Action amount in USD"
+        },
+        "description": {
+          "type": "string",
+          "x-graphql-description": "Narrative description of the action"
+        },
+        "performedBy": {
+          "type": "string",
+          "x-graphql-description": "Contracting officer who performed action"
+        }
+      },
+      "required": ["actionDate", "actionType"]
+    },
+    "ContractSearchResult": {
+      "x-graphql-type": "union",
+      "x-graphql-union-types": ["IDVContract", "Order"],
+      "x-graphql-description": "Result type for contract searches (can be IDV or Order)",
+      "oneOf": [{ "$ref": "#/definitions/IDVContract" }, { "$ref": "#/definitions/Order" }]
+    },
+    "ContractMetadata": {
+      "type": "object",
+      "x-graphql-description": "Metadata about the contract record",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-description": "When the record was created",
+          "x-graphql-nullable": false
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-description": "When the record was last updated",
+          "x-graphql-nullable": false
+        },
+        "source": {
+          "type": "string",
+          "x-graphql-description": "Source system (Contract Data, Legacy Procurement, etc.)",
+          "x-graphql-nullable": false
+        },
+        "version": {
+          "type": "integer",
+          "x-graphql-description": "Record version number",
+          "x-graphql-nullable": false
+        }
+      },
+      "required": ["createdAt", "updatedAt", "source", "version"]
+    },
+    "ContractRecord": {
+      "type": "object",
+      "x-graphql-description": "Complete contract record with metadata, contract data, vendor, and actions",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-type-name": "ID",
+          "x-graphql-description": "Global unique identifier for this contract record",
+          "x-graphql-nullable": false
+        },
+        "metadata": {
+          "$ref": "#/definitions/ContractMetadata",
+          "x-graphql-description": "Record metadata",
+          "x-graphql-nullable": false
+        },
+        "contractData": {
+          "$ref": "#/definitions/ContractSearchResult",
+          "x-graphql-description": "The contract data (IDVContract or Order)",
+          "x-graphql-nullable": false
+        },
+        "vendor": {
+          "$ref": "#/definitions/Vendor",
+          "x-graphql-description": "Vendor performing the work",
+          "x-graphql-nullable": false
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContractAction"
+          },
+          "x-graphql-description": "History of contract actions and modifications",
+          "x-graphql-nullable": false
+        }
+      },
+      "required": ["id", "metadata", "contractData", "vendor", "actions"]
+    }
+  },
+  "properties": {
+    "contractRecord": {
+      "$ref": "#/definitions/ContractRecord",
+      "x-graphql-description": "Get a complete contract record by ID with all related data",
+      "x-graphql-nullable": true,
+      "x-graphql-args": {
+        "id": {
+          "type": "ID!",
+          "description": "Contract record ID to retrieve"
+        }
+      }
+    },
+    "contractRecords": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ContractRecord"
+      },
+      "x-graphql-description": "Search for contract records with complete data",
+      "x-graphql-args": {
+        "piid": {
+          "type": "String",
+          "description": "Filter by procurement instrument ID"
+        },
+        "vendorDuns": {
+          "type": "String",
+          "description": "Filter by vendor DUNS number"
+        },
+        "status": {
+          "type": "ContractStatus",
+          "description": "Filter by contract status"
+        },
+        "limit": {
+          "type": "Int",
+          "defaultValue": 100,
+          "description": "Maximum results to return"
+        }
+      }
+    },
+    "contracts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ContractSearchResult"
+      },
+      "x-graphql-description": "Search for contracts by various criteria",
+      "x-graphql-args": {
+        "piid": {
+          "type": "String",
+          "description": "Filter by procurement instrument ID"
+        },
+        "vendorDuns": {
+          "type": "String",
+          "description": "Filter by vendor DUNS number"
+        },
+        "status": {
+          "type": "ContractStatus",
+          "description": "Filter by contract status"
+        },
+        "limit": {
+          "type": "Int",
+          "defaultValue": 100,
+          "description": "Maximum results to return"
+        }
+      }
+    },
+    "contract": {
+      "$ref": "#/definitions/ContractSearchResult",
+      "x-graphql-description": "Get a single contract by ID",
+      "x-graphql-nullable": true,
+      "x-graphql-args": {
+        "id": {
+          "type": "ID!",
+          "description": "Contract ID to retrieve"
+        }
+      }
+    },
+    "vendor": {
+      "$ref": "#/definitions/Vendor",
+      "x-graphql-description": "Get vendor information by DUNS",
+      "x-graphql-nullable": true,
+      "x-graphql-args": {
+        "duns": {
+          "type": "String!",
+          "description": "DUNS number"
+        }
+      }
+    }
+  }
+}

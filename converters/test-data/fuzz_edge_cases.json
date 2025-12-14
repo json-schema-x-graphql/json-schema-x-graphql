@@ -1,0 +1,121 @@
+{
+  "title": "FuzzEdgeCases",
+  "description": "A schema designed to test edge cases, unusual characters, and potential parsing pitfalls.",
+  "type": "object",
+  "properties": {
+    "empty_object_def": {
+      "type": "object",
+      "properties": {}
+    },
+    "empty_array_def": {
+      "type": "array",
+      "items": {}
+    },
+    "special_keys_object": {
+      "type": "object",
+      "properties": {
+        "": { "type": "string", "description": "Empty key" },
+        "null": { "type": "string", "description": "String 'null' as key" },
+        "undefined": { "type": "string" },
+        "true": { "type": "boolean" },
+        "123": { "type": "integer" },
+        "key-with-dashes": { "type": "string" },
+        "key_with_underscores": { "type": "string" },
+        "key.with.dots": { "type": "string" },
+        "key with spaces": { "type": "string" },
+        "key$with#special&chars": { "type": "string" },
+        "👍_emoji_key": { "type": "string" },
+        "newline\nkey": { "type": "string" },
+        "tab\tkey": { "type": "string" }
+      }
+    },
+    "unusual_types": {
+      "type": "object",
+      "properties": {
+        "null_type": { "type": "null" },
+        "multi_type_simple": { "type": ["string", "integer"] },
+        "multi_type_with_null": { "type": ["string", "null"] },
+        "any_type": {}
+      }
+    },
+    "boundary_values": {
+      "type": "object",
+      "properties": {
+        "max_int": { "type": "integer", "maximum": 9007199254740991 },
+        "min_int": { "type": "integer", "minimum": -9007199254740991 },
+        "large_float": { "type": "number", "maximum": 1.7976931348623157e+308 },
+        "small_float": { "type": "number", "minimum": 5e-324 }
+      }
+    },
+    "deeply_nested_inline": {
+      "type": "object",
+      "properties": {
+        "level1": {
+          "type": "object",
+          "properties": {
+            "level2": {
+              "type": "object",
+              "properties": {
+                "level3": {
+                  "type": "object",
+                  "properties": {
+                    "level4": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "combinator_edge_cases": {
+      "type": "object",
+      "properties": {
+        "one_of_empty": { "oneOf": [] },
+        "any_of_single": { "anyOf": [{ "type": "string" }] },
+        "all_of_conflict": {
+          "allOf": [
+            { "type": "string" },
+            { "type": "number" }
+          ]
+        }
+      }
+    },
+    "array_edge_cases": {
+      "type": "object",
+      "properties": {
+        "tuple_validation": {
+          "type": "array",
+          "items": [
+            { "type": "string" },
+            { "type": "number" }
+          ]
+        },
+        "array_with_additional_items": {
+          "type": "array",
+          "items": [
+            { "type": "string" }
+          ],
+          "additionalItems": { "type": "boolean" }
+        }
+      }
+    },
+    "reserved_words_collision": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "properties": { "type": "string" },
+        "items": { "type": "string" },
+        "required": { "type": "string" },
+        "enum": { "type": "string" },
+        "const": { "type": "string" },
+        "if": { "type": "string" },
+        "then": { "type": "string" },
+        "else": { "type": "string" }
+      }
+    }
+  },
+  "required": ["empty_object_def"]
+}

@@ -4,7 +4,7 @@
 //!   cargo run --example json_to_sdl -- <input.json>
 //!   cargo run --example json_to_sdl -- <input.json> > output.graphql
 
-use json_schema_graphql_converter::{ConversionOptions, Converter};
+use json_schema_graphql_converter::{ConversionOptions, Converter, NamingConvention};
 use std::env;
 use std::fs;
 use std::process;
@@ -36,6 +36,9 @@ fn main() {
         preserve_field_order: true,
         federation_version: 2,
         infer_ids: false,
+        naming_convention: NamingConvention::GraphqlIdiomatic,
+        exclude_types: vec![],
+        exclude_patterns: vec![],
     };
 
     let converter = Converter::with_options(options);

@@ -1,0 +1,156 @@
+{
+  "title": "DirectivesCoverage",
+  "type": "object",
+  "properties": {
+    "product": {
+      "$ref": "#/definitions/Product"
+    },
+    "user": {
+      "$ref": "#/definitions/User"
+    },
+    "review": {
+      "$ref": "#/definitions/Review"
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "x-graphql-directives": [
+        {
+          "name": "key",
+          "args": {
+            "fields": "id"
+          }
+        },
+        {
+          "name": "interfaceObject"
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "x-graphql-directives": [
+            {
+              "name": "external"
+            }
+          ]
+        },
+        "weight": {
+          "type": "number",
+          "x-graphql-directives": [
+            {
+              "name": "inaccessible"
+            }
+          ]
+        }
+      },
+      "required": ["id"]
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-directives": [
+        {
+          "name": "key",
+          "args": {
+            "fields": "id"
+          }
+        },
+        {
+          "name": "shareable"
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-directives": [
+            {
+              "name": "authenticated"
+            }
+          ]
+        },
+        "email": {
+          "type": "string",
+          "x-graphql-directives": [
+            {
+              "name": "requires",
+              "args": {
+                "fields": "username"
+              }
+            }
+          ]
+        },
+        "metadata": {
+          "$ref": "#/definitions/UserMetadata",
+          "x-graphql-directives": [
+            {
+              "name": "provides",
+              "args": {
+                "fields": "lastLogin"
+              }
+            }
+          ]
+        }
+      },
+      "required": ["id"]
+    },
+    "UserMetadata": {
+      "type": "object",
+      "properties": {
+        "lastLogin": {
+          "type": "string"
+        }
+      }
+    },
+    "Review": {
+      "type": "object",
+      "x-graphql-directives": [
+        {
+          "name": "key",
+          "args": {
+            "fields": "id"
+          }
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string",
+          "x-graphql-directives": [
+            {
+              "name": "deprecated",
+              "args": {
+                "reason": "Use content instead"
+              }
+            }
+          ]
+        },
+        "content": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-directives": [
+            {
+              "name": "tag",
+              "args": {
+                "name": "internal"
+              }
+            }
+          ]
+        }
+      },
+      "required": ["id"]
+    }
+  }
+}

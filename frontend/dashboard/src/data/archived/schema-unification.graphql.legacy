@@ -1,0 +1,58 @@
+# ARCHIVED: Legacy GraphQL SDL (December 2025)
+#
+# This file was previously marked as "canonical" but has been superseded by
+# x-graphql-* annotations in src/data/schema_unification.schema.json.
+#
+# All GraphQL SDL is now GENERATED from JSON Schema sources, not manually edited.
+#
+# Reason for archiving:
+# - Not used as input by generator scripts
+# - Not imported by any Next.js code
+# - x-graphql annotations are the true source of truth
+#
+# For current GraphQL SDL, see:
+# - generated-schemas/*.subgraph.graphql (federation subgraphs)
+# - generated-schemas/schema_unification.supergraph.graphql (composed supergraph)
+# - src/data/generated/ (CI auto-populated mirror for website imports)
+#
+# Original file preserved below for historical reference.
+# ============================================================================
+
+# Common Core GraphQL Schema
+# Version 2.0 - Federal Procurement Data Fabric (FPDF) by Schema Unification Forest Project
+
+scalar DateTime
+scalar Date
+scalar JSON
+scalar Decimal
+
+# Root Query Type
+type Query {
+  # Contract Queries
+  contract(id: ID!): Contract
+  contracts(
+    filter: ContractFilter
+    pagination: PaginationInput
+    sort: [ContractSortInput!]
+  ): ContractConnection!
+
+  # System-Specific Queries
+  contract_dataPrograms(filter: Contract DataFilter): [Contract DataProgram!]!
+  legacy_procurementContracts(filter: AssistFilter): [AssistContract!]!
+  intake_processContracts(filter: EasiFilter): [EasiContract!]!
+
+  # Analytics and Reporting
+  contractAnalytics(timeRange: TimeRangeInput!, groupBy: [AnalyticsGroupBy!]!): [AnalyticsResult!]!
+
+  # Data Quality and Monitoring
+  dataQualityMetrics(systemName: SystemType, timeRange: TimeRangeInput): DataQualityMetrics!
+
+  # Reference Data
+  agencies: [Agency!]!
+  naicsCodes(search: String): [NAICSCode!]!
+  pscCodes(search: String): [PSCCode!]!
+}
+
+# [Rest of original content would continue here - 1065 lines total]
+# Note: Content truncated in this archived version for brevity
+

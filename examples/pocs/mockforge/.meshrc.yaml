@@ -1,0 +1,51 @@
+# GraphQL Mesh Configuration
+# Federation-aware data source integration for Schema Unification Forest
+
+sources:
+  # Contract Data Mock Source
+  - name: contract_data
+    handler:
+      graphql:
+        endpoint: http://contract_data-mock:4001/graphql
+        operationHeaders:
+          X-Source-System: Contract Data
+
+  # Public Spending Mock Source
+  - name: public_spending
+    handler:
+      graphql:
+        endpoint: http://public_spending-mock:4002/graphql
+        operationHeaders:
+          X-Source-System: Public Spending
+
+  # Legacy Procurement Mock Source
+  - name: legacy_procurement
+    handler:
+      graphql:
+        endpoint: http://legacy_procurement-mock:4003/graphql
+        operationHeaders:
+          X-Source-System: Legacy Procurement
+
+  # Intake Process Mock Source
+  - name: intake_process
+    handler:
+      graphql:
+        endpoint: http://intake_process-mock:4004/graphql
+        operationHeaders:
+          X-Source-System: Intake Process
+
+  # Logistics Mgmt Mock Source
+  - name: logistics_mgmt
+    handler:
+      graphql:
+        endpoint: http://logistics_mgmt-mock:4005/graphql
+        operationHeaders:
+          X-Source-System: Logistics Mgmt
+
+# Server configuration
+serve:
+  port: 5050
+  endpoint: /graphql
+  cors:
+    origin: '*'
+    credentials: true

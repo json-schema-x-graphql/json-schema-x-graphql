@@ -1,0 +1,29 @@
+# Cloud.gov manifest for gqlgen POC
+applications:
+  - name: schema_unification-gqlgen-poc
+    memory: 256M
+    instances: 1
+    buildpacks:
+      - go_buildpack
+    stack: cflinuxfs4
+    
+    # Environment variables
+    env:
+      GO_ENV: production
+      PORT: 8080
+      ENABLE_MOCKS: true
+      GRAPHQL_PLAYGROUND: false
+      GOPACKAGENAME: github.com/gsa-tts/schema-unification-project/gqlgen-poc
+      GO_INSTALL_PACKAGE_SPEC: ./...
+    
+    # Health check
+    health-check-type: http
+    health-check-http-endpoint: /health
+    timeout: 30
+    
+    # Routes
+    routes:
+      - route: schema_unification-gqlgen-poc.app.cloud.gov
+    
+    # Logging
+    no-route: false

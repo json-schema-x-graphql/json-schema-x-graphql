@@ -1,0 +1,71 @@
+{
+  "name": "@schema-unification-project/mockforge-poc",
+  "version": "1.0.0",
+  "description": "Federation-aware mock GraphQL services with faker.js and GraphQL Mesh",
+  "type": "module",
+  "scripts": {
+    "services:start": "concurrently \"npm:service:*\"",
+    "services:stop": "pkill -f mockforge || true",
+    "services:restart": "npm run data:reset && npm run services:start",
+    "services:watch": "nodemon --watch ../../../generated-schemas --exec 'npm run services:restart'",
+    "service:contract_data": "PORT=4001 SYSTEM=contract_data node mock-server.js",
+    "service:public_spending": "PORT=4002 SYSTEM=public_spending node mock-server.js",
+    "service:legacy_procurement": "PORT=4003 SYSTEM=legacy_procurement node mock-server.js",
+    "service:intake_process": "PORT=4004 SYSTEM=intake_process node mock-server.js",
+    "service:logistics_mgmt": "PORT=4005 SYSTEM=logistics_mgmt node mock-server.js",
+    "mesh:dev": "mesh dev",
+    "mesh:start": "mesh start",
+    "mesh:validate": "mesh validate",
+    "mesh:build": "mesh build",
+    "router:dev": "rover dev --supergraph-config router-config.yaml",
+    "router:start": "./router --config router.yaml --supergraph ../../../generated-schemas/schema_unification.supergraph.graphql",
+    "data:seed": "node scripts/seed-database.js",
+    "data:reset": "rm -f data/mock-data.db && npm run data:seed",
+    "data:export": "node scripts/export-data.js",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:restart": "docker compose restart",
+    "test": "node --test test/**/*.test.js",
+    "test:integration": "node --test test/integration/**/*.test.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.0",
+    "@graphql-hive/gateway": "^1.0.0",
+    "@graphql-mesh/cli": "^0.90.6",
+    "@graphql-mesh/graphql": "^0.96.6",
+    "@graphql-mesh/runtime": "^0.96.6",
+    "@graphql-mesh/store": "^0.95.8",
+    "@graphql-mesh/types": "^0.96.6",
+    "@graphql-tools/executor-http": "^1.0.0",
+    "@graphql-tools/graphql-file-loader": "^8.0.0",
+    "@graphql-tools/load": "^8.0.0",
+    "@graphql-tools/merge": "^9.0.0",
+    "@graphql-tools/mock": "^9.0.0",
+    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/stitch": "^9.0.0",
+    "@graphql-tools/utils": "^10.0.0",
+    "@graphql-tools/wrap": "^10.0.0",
+    "csv-parse": "^5.5.3",
+    "csv-stringify": "^6.4.5",
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.1.0",
+    "better-sqlite3": "^9.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "@apollo/rover": "^0.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "graphql",
+    "federation",
+    "mock",
+    "faker",
+    "mesh",
+    "apollo"
+  ]
+}

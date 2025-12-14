@@ -1,0 +1,6 @@
+/* Intentionally empty.
+   This file is used as a replacement target for editor CSS imports
+   via webpack.NormalModuleReplacementPlugin (configured in next.config.js)
+   so that global CSS coming from node_modules doesn't trigger Next.js'
+   "Global CSS cannot be imported from within node_modules" errors.
+*/

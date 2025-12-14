@@ -1,0 +1,232 @@
+erDiagram
+    NORMALIZED_SCHEMA {
+        string schemaVersion "Schema version number for compatibility tracking"
+        string sourceSystem "Source system: Contract Data, Legacy Procurement, Intake Process, or Logistics Mgmt"
+        datetime lastModified "Timestamp of last record modification"
+        string recordId PK "Unique identifier across all systems"
+        decimal completenessScore "Data quality score from 0-1"
+        datetime lastValidated "Timestamp of last data validation"
+    }
+    
+    COMMON_ELEMENTS {
+        string recordId PK "FK to NORMALIZED_SCHEMA - Record identifier"
+        string contractTitle "Title or description of the contract"
+        string contractType "Type of contract instrument"
+        string contractingAgencyCode "Code identifying contracting agency"
+        string contractingAgencyName "Name of contracting agency"
+        string vendorName "Name of vendor providing goods/services"
+        string vendorUei "Vendor Unique Entity Identifier"
+        boolean isActive "Whether the contract is currently active"
+        boolean isLatest "Whether this is the latest version"
+        boolean isFunded "Whether the contract is currently funded"
+    }
+    
+    CONTRACT_IDENTIFICATION {
+        string piid PK "Procurement Instrument Identifier"
+        string originalAwardPiid "Original Award PIID for reference tracking"
+        string referencedPiid "Referenced PIID for related contracts"
+        string contractTitle "Title or description of the contract"
+        string contractType "Type of contract instrument"
+        string descriptionOfRequirement "Detailed description of contract requirements"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    ORGANIZATION_INFO {
+        string orgId PK "Organization record identifier"
+        string contractingAgencyCode "Code for agency handling contract"
+        string contractingAgencyName "Name of contracting agency"
+        string contractingDepartmentCode "Code for contracting department"
+        string contractingDepartmentName "Name of contracting department"
+        string fundingAgencyCode "Code for agency providing funding"
+        string fundingAgencyName "Name of funding agency"
+        string fundingDepartmentCode "Code for funding department"
+        string fundingDepartmentName "Name of funding department"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    VENDOR_INFO {
+        string vendorId PK "Vendor record identifier"
+        string vendorName "Legal name of vendor organization"
+        string vendorUei "Unique Entity Identifier in Entity Management"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    PLACE_OF_PERFORMANCE {
+        string perfId PK "Performance location identifier"
+        string streetAddress "Street address where work performed"
+        string city "City where contract work carried out"
+        string county "County for performance location"
+        string state "State where contract work performed"
+        string zip "ZIP code for performance location"
+        string country "Country where work delivered"
+        string congressionalDistrict "Congressional district for location"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    FINANCIAL_INFO {
+        string finId PK "Financial record identifier"
+        decimal totalContractValue "Total contract value including modifications"
+        decimal baseAndAllOptionsValue "Base contract plus all option periods"
+        decimal independentGovernmentEstimate "IGE amount for procurement"
+        decimal amountSpentOnProduct "Amount spent on specific products"
+        string contractFiscalYear "Fiscal year when contract awarded"
+        string reportSubmittedFiscalYear "Fiscal year when report submitted"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    BUSINESS_CLASSIFICATION {
+        string bizId PK "Business classification identifier"
+        string naicsCode "NAICS classification code"
+        string naicsDescription "NAICS code description"
+        string pscCode "Product Service Code identifier"
+        string pscDescription "PSC detailed description"
+        string categoryOfProduct "General product category classification"
+        string typeOfProduct "Specific product type being contracted"
+        string setAsideType "Type of set-aside program applied"
+        boolean localAreaSetAside "Whether local area set-aside applies"
+        string coSizeDetermination "Contracting Officer size determination"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    CONTRACT_CHARACTERISTICS {
+        string charId PK "Contract characteristics identifier"
+        string emergencyAcquisition "Emergency acquisition classification"
+        boolean governmentFurnishedProperty "Whether GFP provided under action"
+        boolean includesCui "Includes Controlled Unclassified Information"
+        boolean recurringService "Whether involves recurring services"
+        boolean recurringUtilities "Whether involves recurring utilities"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    CONTACTS {
+        string contactId PK "Contact record identifier"
+        string name "Full name of contact person"
+        string title "Job title or position"
+        string email "Contact email address"
+        string phone "Contact phone number"
+        string role "Contact role: CO, COR, technical, admin"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    STATUS_INFO {
+        string statusId PK "Status record identifier"
+        boolean isActive "Contract currently active status"
+        boolean isLatest "Latest version indicator"
+        boolean isFunded "Current funding status"
+        string status "Contract lifecycle status"
+        datetime publishedDate "Date when contract published"
+        datetime lastModifiedDate "Date of last modification"
+        date contractCompleteDate "Date when contract completed"
+        date lastCarDateSigned "Date last Contract Action Report signed"
+        string recordId FK "to COMMON_ELEMENTS - Record link"
+    }
+    
+    SYSTEM_EXTENSIONS {
+        string extensionId PK "Extension record identifier"
+        string systemType "System type: Contract Data, Legacy Procurement, Intake Process"
+        json extensionData "System-specific data payload"
+        string recordId FK "to NORMALIZED_SCHEMA - Record link"
+    }
+    
+    Contract Data_EXTENSIONS {
+        string contract_dataId PK "Contract Data extension identifier"
+        string programNumber "Contract Data program number identifier"
+        string objective "Program objective description"
+        string website "Program website URL"
+        string fieldName "Contract Data field name"
+        string fieldType "Contract Data field data type"
+        json value "Contract Data field value"
+        json legacy_procurementanceTypes "Hierarchical legacy_procurementance type structure"
+        json eligibility "Applicant and beneficiary eligibility rules"
+        json usage "Usage rules, restrictions, loan terms"
+        json projects "Program projects by fiscal year"
+        json relatedPrograms "Related program references"
+        json historicalIndex "Historical program index data"
+        json suggestion "Program search suggestion data"
+        json alternativeNames "Alternative program names"
+        json applicantTypes "Eligible applicant type codes"
+        json beneficiaryTypes "Eligible beneficiary type codes"
+        string extensionId FK "to SYSTEM_EXTENSIONS - Extension link"
+    }
+    
+    Legacy Procurement_EXTENSIONS {
+        string legacy_procurementId PK "Legacy Procurement extension identifier"
+        string iaPiidOrUniqueId "IA PIID or unique interagency ID"
+        string natureOfAcquisition "GSA-agency relationship type"
+        string clientOrganizationName "Name of requesting agency"
+        string typeOfIdc "Type of Indefinite Delivery Contract"
+        string whoCanUseIdc "IDC usage authorization rules"
+        json acquisitionData "Legacy Procurement acquisition template data"
+        json clientData "Legacy Procurement client template data"
+        json awardData "Legacy Procurement award template data"
+        json templates "Legacy Procurement template references"
+        json officeAddress "Client office address details"
+        string extensionId FK "to SYSTEM_EXTENSIONS - Extension link"
+    }
+    
+    Intake Process_EXTENSIONS {
+        string intake_processId PK "EASi extension identifier"
+        string businessOwner "EASi business process owner"
+        string systemOwner "EASi technical system owner"
+        decimal unitPrice "Unit price for quantity-based CLINs"
+        string unitOfMeasure "Unit of measure for CLIN pricing"
+        string optional "Option period designation"
+        string notToExceed "Contract ceiling amount"
+        string notSeparatelyPriced "CLIN qualifier for pricing"
+        json intake_processTemplates "EASi template configurations"
+        json contract_dataFieldMappings "Direct Contract Data field mapping rules"
+        json clinData "Contract Line Item Number details"
+        string extensionId FK "to SYSTEM_EXTENSIONS - Extension link"
+    }
+    
+    %% Core Schema Relationships
+    NORMALIZED_SCHEMA ||--|| COMMON_ELEMENTS : contains
+    NORMALIZED_SCHEMA ||--|| SYSTEM_EXTENSIONS : has
+    COMMON_ELEMENTS ||--|| CONTRACT_IDENTIFICATION : includes
+    COMMON_ELEMENTS ||--|| ORGANIZATION_INFO : includes
+    COMMON_ELEMENTS ||--|| VENDOR_INFO : includes
+    COMMON_ELEMENTS ||--|| PLACE_OF_PERFORMANCE : includes
+    COMMON_ELEMENTS ||--|| FINANCIAL_INFO : includes
+    COMMON_ELEMENTS ||--|| BUSINESS_CLASSIFICATION : includes
+    COMMON_ELEMENTS ||--|| CONTRACT_CHARACTERISTICS : includes
+    COMMON_ELEMENTS ||--o{ CONTACTS : includes
+    COMMON_ELEMENTS ||--|| STATUS_INFO : includes
+    SYSTEM_EXTENSIONS ||--o| Contract Data_EXTENSIONS : "extends as"
+    SYSTEM_EXTENSIONS ||--o| Legacy Procurement_EXTENSIONS : "extends as"
+    SYSTEM_EXTENSIONS ||--o| Intake Process_EXTENSIONS : "extends as"
+    
+    %% Cross-System Data Transformation Relationships
+    CONTRACT_IDENTIFICATION }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt PIID maps to Legacy Procurement iaPiidOrUniqueId via acquisition template"
+    Legacy Procurement_EXTENSIONS }o--o{ Intake Process_EXTENSIONS : "Legacy Procurement award data transforms to EASi CLIN structure with UCF/Simplified rules"
+    Intake Process_EXTENSIONS }o--o{ Contract Data_EXTENSIONS : "EASi fields map directly to Contract Data Principal NAICS Code and GFP reporting"
+    
+    %% Vendor and Client Data Flow
+    VENDOR_INFO }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt vendor becomes Legacy Procurement client via clientOrganizationName mapping"
+    ORGANIZATION_INFO }o--o{ Legacy Procurement_EXTENSIONS : "Agency codes flow from Logistics Mgmt to Legacy Procurement Client Data template"
+    
+    %% Address and Performance Location Mapping  
+    PLACE_OF_PERFORMANCE }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt place of performance maps to Legacy Procurement Acquisition Data template address fields"
+    PLACE_OF_PERFORMANCE }o--o{ Intake Process_EXTENSIONS : "Shared address structure flows from Legacy Procurement through EASi to Contract Data reporting"
+    
+    %% Business Classification and Codes
+    BUSINESS_CLASSIFICATION }o--o{ Legacy Procurement_EXTENSIONS : "NAICS and PSC codes flow from Logistics Mgmt through Legacy Procurement Award Base Data"
+    BUSINESS_CLASSIFICATION }o--o{ Intake Process_EXTENSIONS : "Legacy Procurement NAICS/PSC codes transform to EASi business classification"
+    BUSINESS_CLASSIFICATION }o--o{ Contract Data_EXTENSIONS : "EASi business codes map to Contract Data Principal NAICS and legacy_procurementance types"
+    
+    %% Financial Data Transformation
+    FINANCIAL_INFO }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt IGE defaults to 1.0 in Legacy Procurement Award Base Data when unavailable"
+    FINANCIAL_INFO }o--o{ Intake Process_EXTENSIONS : "Legacy Procurement financial data transforms to EASi CLIN-level pricing structure"
+    FINANCIAL_INFO }o--o{ Contract Data_EXTENSIONS : "EASi aggregated financials report to Contract Data obligations structure"
+    
+    %% Contract Characteristics Flow
+    CONTRACT_CHARACTERISTICS }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt contract flags flow through Legacy Procurement Award Base Data template"
+    CONTRACT_CHARACTERISTICS }o--o{ Intake Process_EXTENSIONS : "Legacy Procurement characteristics map to EASi with null defaults for missing data"
+    CONTRACT_CHARACTERISTICS }o--o{ Contract Data_EXTENSIONS : "EASi GFP and emergency flags report to Contract Data compliance fields"
+    
+    %% Template and Scope Management
+    Legacy Procurement_EXTENSIONS }o--o{ Intake Process_EXTENSIONS : "SBA and OPM migration scope limited to contracts in approved contract list"
+    Intake Process_EXTENSIONS }o--o{ Contract Data_EXTENSIONS : "Current and future CLIN periods only included per EASi template rules"
+    
+    %% Contact and Communication
+    CONTACTS }o--o{ Legacy Procurement_EXTENSIONS : "Logistics Mgmt contact data flows to Legacy Procurement Client Data with email/address mapping"
+    CONTACTS }o--o{ Intake Process_EXTENSIONS : "Legacy Procurement contact info transforms to EASi business owner assignments"

@@ -1,0 +1,31 @@
+# Cloud.gov manifest for GraphQL Mesh POC
+applications:
+  - name: schema_unification-mesh-poc
+    memory: 512M
+    instances: 1
+    buildpacks:
+      - nodejs_buildpack
+    stack: cflinuxfs4
+    
+    # Environment variables
+    env:
+      NODE_ENV: production
+      PORT: 8080
+      ENABLE_MOCKS: true
+      NPM_CONFIG_PRODUCTION: false
+    
+    # Health check
+    health-check-type: http
+    health-check-http-endpoint: /.well-known/ready
+    timeout: 60
+    
+    # Routes
+    routes:
+      - route: schema_unification-mesh-poc.app.cloud.gov
+    
+    # Services (uncomment if using managed services)
+    # services:
+    #   - schema_unification-redis
+    
+    # Logging
+    no-route: false

@@ -1,0 +1,495 @@
+"""
+Educational institution classifications
+"""
+type EducationClassifications {
+  """
+1862 Land Grant College
+"""
+c1862LandGrantCollege: Boolean
+  """
+1890 Land Grant College
+"""
+c1890LandGrantCollege: Boolean
+  """
+1994 Land Grant College
+"""
+c1994LandGrantCollege: Boolean
+  """
+Educational institution
+"""
+educationalInstitution: Boolean
+  """
+Historically Black college or university
+"""
+historicallyBlackCollege: Boolean
+  """
+Minority institution
+"""
+minorityInstitution: Boolean
+  """
+Tribal college
+"""
+tribalCollege: Boolean
+}
+
+"""
+Entity structure classifications
+"""
+type EntityStructureClassifications {
+  """
+Corporate entity tax exempt
+"""
+corporateEntityTaxExempt: Boolean
+  """
+For-profit organization
+"""
+forProfitOrganization: Boolean
+  """
+Limited liability corporation
+"""
+limitedLiabilityCorporation: Boolean
+  """
+Manufacturer of goods
+"""
+manufacturerOfGoods: Boolean
+  """
+Nonprofit organization
+"""
+nonprofitOrganization: Boolean
+  """
+Partnership or limited liability partnership
+"""
+partnershipOrLimitedLiability: Boolean
+  """
+Sole proprietorship
+"""
+soleProprietorship: Boolean
+  """
+Subchapter S corporation
+"""
+subchapterSCorporation: Boolean
+}
+
+"""
+Government entity classifications
+"""
+type GovernmentClassifications {
+  """
+Foreign government
+"""
+foreignGovernment: Boolean
+  """
+U.S. federal government
+"""
+usFederalGovernment: Boolean
+  """
+U.S. local government
+"""
+usLocalGovernment: Boolean
+  """
+U.S. state government
+"""
+usStateGovernment: Boolean
+  """
+U.S. tribal government
+"""
+usTribalGovernment: Boolean
+}
+
+"""
+Public Spending award_procurement table record
+"""
+type PublicSpendingProcurement {
+  """
+Action date
+"""
+actionDate: String
+  """
+Action type code
+"""
+actionType: String
+  """
+Award description
+"""
+awardDescription: String
+  """
+Award modification/amendment number
+"""
+awardModificationAmendment: String
+  """
+Primary key in award_procurement table
+"""
+awardProcurementId: Int!
+  """
+Awardee or recipient legal business name
+"""
+awardeeOrRecipientLegalName: String
+  """
+Awardee or recipient UEI
+"""
+awardeeOrRecipientUei: String
+  """
+Awardee or recipient unique identifier (DUNS)
+"""
+awardeeOrRecipientDuns: String
+  """
+Awarding agency code
+"""
+awardingAgencyCode: String
+  """
+Awarding agency name
+"""
+awardingAgencyName: String
+  """
+Awarding office code
+"""
+awardingOfficeCode: String
+  """
+Awarding office name
+"""
+awardingOfficeName: String
+  """
+Awarding sub-tier agency code
+"""
+awardingSubTierAgencyCode: String
+  """
+Awarding sub-tier agency name
+"""
+awardingSubTierAgencyName: String
+  """
+Base and all options value (as text)
+"""
+baseAndAllOptionsValue: String
+  """
+Base exercised options value (as text)
+"""
+baseExercisedOptionsValue: String
+  """
+Commercial and Government Entity (CAGE) code
+"""
+cageCode: String
+  """
+Contract award type code
+"""
+contractAwardType: String
+  """
+Record creation timestamp
+"""
+createdAt: DateTime
+  """
+Current total value of award (as text)
+"""
+currentTotalValueAward: String
+  """
+DoD claimant program code
+"""
+dodClaimantProgramCode: String
+  """
+Entity doing business as name
+"""
+entityDoingBusinessAsName: String
+  """
+Entity fax number
+"""
+entityFaxNumber: String
+  """
+Entity phone number
+"""
+entityPhoneNumber: String
+  """
+Extent competed
+"""
+extentCompeted: String
+  """
+Federal action obligation amount
+"""
+federalActionObligation: Float
+  """
+Funding agency code
+"""
+fundingAgencyCode: String
+  """
+Funding agency name
+"""
+fundingAgencyName: String
+  """
+Funding office code
+"""
+fundingOfficeCode: String
+  """
+Funding office name
+"""
+fundingOfficeName: String
+  """
+Funding sub-tier agency code
+"""
+fundingSubTierAgencyCode: String
+  """
+Funding sub-tier agency name
+"""
+fundingSubTierAgencyName: String
+  """
+Job ID
+"""
+jobId: Int!
+  """
+Last modified timestamp
+"""
+lastModified: String
+  """
+Legal entity address line 1
+"""
+legalEntityAddressLine1: String
+  """
+Legal entity address line 2
+"""
+legalEntityAddressLine2: String
+  """
+Legal entity address line 3
+"""
+legalEntityAddressLine3: String
+  """
+Legal entity city
+"""
+legalEntityCityName: String
+  """
+Legal entity congressional district
+"""
+legalEntityCongressional: String
+  """
+Legal entity country code
+"""
+legalEntityCountryCode: String
+  """
+Legal entity country name
+"""
+legalEntityCountryName: String
+  """
+Legal entity state code
+"""
+legalEntityStateCode: String
+  """
+Legal entity ZIP+4
+"""
+legalEntityZip4: String
+  """
+NAICS code
+"""
+naics: String
+  """
+NAICS description
+"""
+naicsDescription: String
+  """
+Ordering period end date
+"""
+orderingPeriodEndDate: String
+  """
+Parent award identifier
+"""
+parentAwardId: String
+  """
+Period of performance potential end date
+"""
+periodOfPerformancePotentialEnd: String
+  """
+Period of performance current end date
+"""
+periodOfPerformanceCurrent: String
+  """
+Period of performance start date
+"""
+periodOfPerformanceStart: String
+  """
+Procurement Instrument Identifier (join key)
+"""
+piid: String!
+  """
+Place of performance country name
+"""
+placeOfPerformanceCountryName: String
+  """
+Place of performance county name
+"""
+placeOfPerformanceCountyName: String
+  """
+Place of performance state name
+"""
+placeOfPerformanceStateName: String
+  """
+Place of performance city
+"""
+placeOfPerformanceCity: String
+  """
+Place of performance congressional district
+"""
+placeOfPerformanceCongressional: String
+  """
+Place of performance ZIP+4
+"""
+placeOfPerformanceZip4: String
+  """
+Potential total value of award (as text)
+"""
+potentialTotalValueAward: String
+  """
+Product or service code (PSC)
+"""
+productOrServiceCode: String
+  """
+Referenced IDV agency identifier
+"""
+referencedIdvAgencyIdentifier: String
+  """
+Row number in batch
+"""
+rowNumber: Int!
+  """
+Solicitation date
+"""
+solicitationDate: String
+  """
+Solicitation identifier
+"""
+solicitationIdentifier: String
+  """
+Solicitation procedures
+"""
+solicitationProcedures: String
+  """
+Submission ID
+"""
+submissionId: Int!
+  """
+Total obligated amount (as text)
+"""
+totalObligatedAmount: String
+  """
+Type of contract pricing
+"""
+typeOfContractPricing: String
+  """
+Type of set-aside
+"""
+typeSetAside: String
+  """
+Ultimate parent legal entity name
+"""
+ultimateParentLegalEntity: String
+  """
+Ultimate parent UEI
+"""
+ultimateParentUei: String
+  """
+Ultimate parent unique identifier (DUNS)
+"""
+ultimateParentDuns: String
+  """
+Unique award identifier
+"""
+uniqueAwardKey: String!
+  """
+Last update timestamp
+"""
+updatedAt: DateTime
+  vendorClassifications: VendorClassifications
+}
+
+"""
+Small business classifications
+"""
+type SmallBusinessClassifications {
+  """
+8(a) program participant
+"""
+c8aProgramParticipant: Boolean
+  """
+Emerging small business
+"""
+emergingSmallBusiness: Boolean
+  """
+Historically underutilized business zone (HUBZone) firm
+"""
+historicallyUnderutilized: Boolean
+  """
+SBA certified 8(a) joint venture
+"""
+sbaCertified8aJointVenture: Boolean
+  """
+Small business competitive
+"""
+smallBusinessCompetitive: Boolean
+  """
+Small disadvantaged business
+"""
+smallDisadvantagedBusiness: Boolean
+}
+
+"""
+Socioeconomic classifications
+"""
+type SocioeconomicClassifications {
+  """
+Alaskan Native-owned corporation
+"""
+alaskanNativeOwnedCorporation: Boolean
+  """
+American Indian-owned business
+"""
+americanIndianOwnedBusiness: Boolean
+  """
+Asian-Pacific American-owned business
+"""
+asianPacificAmericanOwned: Boolean
+  """
+Black American-owned business
+"""
+blackAmericanOwnedBusiness: Boolean
+  """
+Hispanic American-owned business
+"""
+hispanicAmericanOwnedBusiness: Boolean
+  """
+Minority-owned business
+"""
+minorityOwnedBusiness: Boolean
+  """
+Native Hawaiian-owned business
+"""
+nativeHawaiianOwnedBusiness: Boolean
+  """
+Service-disabled veteran-owned business
+"""
+serviceDisabledVeteranOwned: Boolean
+  """
+Veteran-owned business
+"""
+veteranOwnedBusiness: Boolean
+  """
+Woman-owned business
+"""
+womanOwnedBusiness: Boolean
+  """
+Women-owned small business (WOSB)
+"""
+womenOwnedSmallBusiness: Boolean
+}
+
+"""
+Vendor business type classifications (100+ boolean flags)
+"""
+type VendorClassifications {
+  education: EducationClassifications
+  entityStructure: EntityStructureClassifications
+  government: GovernmentClassifications
+  smallBusiness: SmallBusinessClassifications
+  socioeconomic: SocioeconomicClassifications
+}
+
+"""
+Canonical schema for Public Spending (GDSM) procurement contract data from award_procurement table
+"""
+type PublicSpendingProcurementSchema {
+  publicSpendingProcurement: Public SpendingProcurement
+}
+

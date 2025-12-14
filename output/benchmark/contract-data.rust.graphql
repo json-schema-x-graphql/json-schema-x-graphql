@@ -1,0 +1,619 @@
+"""
+Physical address structure.
+"""
+type Address {
+  """
+City
+"""
+city: String
+  """
+Country code
+"""
+countryCode: String
+  """
+Country name
+"""
+countryName: String
+  """
+Address line 1
+"""
+line1: String
+  """
+Address line 2
+"""
+line2: String
+  """
+Address line 3
+"""
+line3: String
+  """
+State code
+"""
+stateCode: String
+  """
+State name
+"""
+stateName: String
+  """
+ZIP/postal code
+"""
+zipCode: String
+}
+
+"""
+Agency and organizational information.
+"""
+type Agency {
+  """
+Contracting agency ID
+"""
+contractingAgencyId: String
+  """
+Contracting agency name
+"""
+contractingAgencyName: String
+  """
+Contracting office ID
+"""
+contractingOfficeId: String
+  """
+Contracting office name
+"""
+contractingOfficeName: String
+  """
+Department ID
+"""
+departmentId: String
+  """
+Department name
+"""
+departmentName: String
+  """
+Funding agency code
+"""
+fundingAgencyCode: String
+  """
+Funding agency name
+"""
+fundingAgencyName: String
+  """
+Funding department ID
+"""
+fundingDepartmentId: String
+  """
+Funding department name
+"""
+fundingDepartmentName: String
+  """
+Funding office code
+"""
+fundingOfficeCode: String
+  """
+Funding office name
+"""
+fundingOfficeName: String
+  """
+Regional code
+"""
+regionCode: String
+}
+
+"""
+Business classification flags for vendor categories.
+"""
+type BusinessClassifications {
+  """
+Educational institution
+"""
+educationalInstitutionFlag: String
+  """
+Economically disadvantaged WOSB
+"""
+edwosbFlag: String
+  """
+8(a) program participant
+"""
+eightAFlag: String
+  """
+Hospital
+"""
+hospitalFlag: String
+  """
+HUBZone certified indicator
+"""
+hubzoneFlag: String
+  """
+Minority-owned indicator
+"""
+minorityOwnedBusinessFlag: String
+  """
+Nonprofit organization
+"""
+nonprofitOrganizationFlag: String
+  """
+Small disadvantaged business
+"""
+sdbFlag: String
+  """
+Small business indicator
+"""
+smallBusinessFlag: String
+  """
+Service-disabled veteran-owned
+"""
+srdvobFlag: String
+  """
+Veteran-owned indicator
+"""
+veteranOwnedFlag: String
+  """
+Women-owned indicator
+"""
+womenOwnedFlag: String
+  """
+Women-owned small business
+"""
+wosbFlag: String
+}
+
+"""
+Contract classification codes and categories.
+"""
+type Classification {
+  """
+Commercial item acquisition indicator
+"""
+commercialItemAcquisition: String
+  """
+Contract financing type
+"""
+contractFinancing: String
+  """
+NAICS industry classification code
+"""
+naicsCode: String
+  """
+NAICS description
+"""
+naicsDescription: String
+  """
+Product or service code (PSC)
+"""
+productOrServiceCode: String
+  """
+PSC description
+"""
+productOrServiceDescription: String
+  """
+System equipment code
+"""
+systemEquipmentCode: String
+  """
+System equipment description
+"""
+systemEquipmentDesc: String
+  """
+Contract pricing type
+"""
+typeOfContractPricing: String
+}
+
+"""
+Competition and procurement procedure information.
+"""
+type Competition {
+  """
+Evaluated preference applied
+"""
+evaluatedPreference: String
+  """
+Extent of competition
+"""
+extentCompeted: String
+  """
+Fair opportunity explanation
+"""
+fairOpportunityDescription: String
+  """
+Number of offers received
+"""
+numberOfOffersReceived: Int
+  """
+Reason for non-competition
+"""
+reasonNotCompeted: String
+  """
+Solicitation procedures used
+"""
+solicitationProcedures: String
+  """
+Type of set-aside
+"""
+typeOfSetAside: String
+}
+
+"""
+Compliance and regulatory information.
+"""
+type Compliance {
+  """
+Cost accounting standards
+"""
+costAcctStandards: String
+  """
+Cost or pricing data requirement
+"""
+costOrPricingData: String
+  """
+Davis-Bacon Act applicability
+"""
+davisBaconAct: String
+  """
+Recovered material clauses
+"""
+recoveredMaterialClauses: String
+  """
+Service Contract Act applicability
+"""
+serviceContractAct: String
+  """
+Subcontracting plan
+"""
+subcontractPlan: String
+  """
+Use of EPA products
+"""
+useOfEpaProducts: String
+  """
+Walsh-Healey Act applicability
+"""
+walshHealeyAct: String
+}
+
+"""
+Timeline and date information.
+"""
+type Dates {
+  """
+Cancellation date
+"""
+cancellationDate: DateTime
+  """
+Expected completion date
+"""
+currentCompletionDate: DateTime
+  """
+Contract signature date
+"""
+dateSigned: DateTime
+  """
+Effective date
+"""
+effectiveDate: DateTime
+  """
+Last modification date
+"""
+lastModifiedDate: DateTime
+  """
+Record preparation date
+"""
+preparedDate: DateTime
+  """
+Public reveal date
+"""
+revealDate: DateTime
+  """
+Ultimate completion deadline
+"""
+ultimateCompletionDate: DateTime
+}
+
+"""
+Financial information including obligations, values, and fees.
+"""
+type Financial {
+  """
+Base obligation amount
+"""
+baseDollarsObligated: Float
+  """
+Current contract value
+"""
+currentContractValue: Float
+  """
+Total dollars obligated
+"""
+dollarsObligated: Float
+  """
+Dollars obligated per action
+"""
+dollarsObligatedPerAction: Float
+  """
+Service fee paid
+"""
+feePaidForUseOfService: Float
+  """
+Lower fee range value
+"""
+feeRangeLowerValue: Float
+  """
+Upper fee range value
+"""
+feeRangeUpperValue: Float
+  """
+Fixed fee amount
+"""
+fixedFeeValue: Float
+  """
+Maximum order limit
+"""
+maxOrderLimit: Float
+  """
+Non-federal funding amount
+"""
+nonFederalFundingAmount: Float
+  """
+Non-government contribution
+"""
+nonGovernmentValue: Float
+  """
+Total non-government value
+"""
+totalNonGovernmentValue: Float
+  """
+Ultimate expected contract value
+"""
+ultimateContractValue: Float
+}
+
+"""
+Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.
+"""
+type FpdsRecord {
+  agency: Agency
+  classification: Classification
+  competition: Competition
+  compliance: Compliance
+  dates: Dates
+  """
+Description of requirement
+"""
+description: String
+  financial: Financial
+  identifiers: Identifiers!
+  idvReference: IdvReference
+  placeOfPerformance: PlaceOfPerformance
+  systemMetadata: SystemMetadata!
+  vendor: Vendor
+}
+
+"""
+Core contract identifiers and reference numbers.
+"""
+type Identifiers {
+  """
+Code for the agency involved
+"""
+agencyCode: String
+  """
+Fiscal year of the award
+"""
+awardFiscalYear: String
+  """
+Indicates whether record is an award or IDV
+"""
+awardOrIdv: String
+  """
+Unique identifier for each record in the dataset
+"""
+id: Int
+  """
+Contract modification number
+"""
+modificationNumber: String
+  """
+Legacy PIID from previous system
+"""
+oldPiid: String
+  """
+Original PIID for reference
+"""
+originalPiid: String
+  """
+Procurement Instrument Identifier - unique contract identifier
+"""
+piid: String!
+  """
+Name of the agency associated with PIID
+"""
+piidAgencyName: String
+  """
+Reference to parent contract
+"""
+referencePiid: String
+  """
+Solicitation identifier
+"""
+solicitationId: String
+  """
+Transaction sequence number
+"""
+transactionNumber: Int
+  """
+Record version number
+"""
+version: String
+}
+
+"""
+IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts.
+"""
+type IdvReference {
+  """
+IDV last date
+"""
+idvLastDate: DateTime
+  """
+Multiple or single award IDC
+"""
+multipleOrSingleAwardIdc: String
+  """
+Type of indefinite delivery contract
+"""
+typeOfIdc: String
+  """
+Who can use the IDV
+"""
+whoCanUse: String
+}
+
+"""
+Parent organization information.
+"""
+type ParentOrganization {
+  """
+Parent DUNS
+"""
+parentDunsNumber: String
+  """
+Parent UEI
+"""
+parentUei: String
+  """
+Parent name
+"""
+parentVendorName: String
+}
+
+"""
+Place of performance location details.
+"""
+type PlaceOfPerformance {
+  """
+Performance country code
+"""
+popCountryCode: String
+  """
+Performance country name
+"""
+popCountryName: String
+  """
+Performance county code
+"""
+popCountyCode: String
+  """
+Performance county name
+"""
+popCountyName: String
+  """
+Performance location code
+"""
+popLocationCode: String
+  """
+Performance location name
+"""
+popLocationName: String
+  """
+Performance state code
+"""
+popLocationStateCd: String
+  """
+Performance state name
+"""
+popLocationStateName: String
+  """
+Performance ZIP code
+"""
+popZipCode: String
+}
+
+"""
+System-level metadata for record tracking, versioning, and lineage.
+"""
+type SystemMetadata @shareable {
+  """
+Timestamp when record was ingested
+"""
+ingestedAt: DateTime
+  """
+Timestamp when record was last modified at source
+"""
+lastModified: DateTime
+  """
+Version of the canonical Contract Data schema
+"""
+schemaVersion: String
+  """
+Primary identifier of the record within Contract Data
+"""
+sourceRecordId: String!
+  """
+Constant system identifier
+"""
+systemName: String!
+}
+
+"""
+Vendor information including identity, address, contact, and business classifications.
+"""
+type Vendor {
+  """
+Annual revenue
+"""
+annualRevenue: Float
+  businessClassifications: BusinessClassifications
+  """
+Commercial and Government Entity code
+"""
+cageCode: String
+  """
+Incorporation country
+"""
+countryOfIncorporation: String
+  """
+DBA name
+"""
+doingBusinessAsName: String
+  """
+Vendor email
+"""
+emailAddress: Email
+  """
+Employee count
+"""
+numberOfEmployees: Int
+  """
+Organization type
+"""
+organizationalType: String
+  parent: ParentOrganization
+  """
+Incorporation state
+"""
+stateOfIncorporation: String
+  vendorAddress: Address
+  """
+DUNS number (deprecated)
+"""
+vendorDunsNumber: String
+  """
+Legal vendor name
+"""
+vendorName: String
+  """
+Vendor phone
+"""
+vendorPhoneNumber: String
+  """
+Unique Entity Identifier (Entity Management.gov)
+"""
+vendorUei: String
+}
+
+"""
+Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.
+"""
+type ContractDataCanonicalSchema {
+  contractDataRecord: FpdsRecord
+}
+

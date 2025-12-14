@@ -1,0 +1,355 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar Datetime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"Decimal number as string to preserve precision"
+scalar Decimal
+
+"Email address conforming to RFC 5322 (simplified)"
+scalar Email
+
+"Uniform Resource Identifier or URL string"
+scalar Uri
+
+"Physical address structure."
+type Address {
+  "City"
+  city: String
+  "Country code"
+  country_code: String
+  "Country name"
+  country_name: String
+  "Address line 1"
+  line_1: String
+  "Address line 2"
+  line_2: String
+  "Address line 3"
+  line_3: String
+  "State code"
+  state_code: String
+  "State name"
+  state_name: String
+  "ZIP/postal code"
+  zip_code: String
+}
+
+"Agency and organizational information."
+type Agency {
+  "Contracting agency ID"
+  contracting_agency_id: String
+  "Contracting agency name"
+  contracting_agency_name: String
+  "Contracting office ID"
+  contracting_office_id: String
+  "Contracting office name"
+  contracting_office_name: String
+  "Department ID"
+  department_id: String
+  "Department name"
+  department_name: String
+  "Funding agency code"
+  funding_agency_code: String
+  "Funding agency name"
+  funding_agency_name: String
+  "Funding department ID"
+  funding_department_id: String
+  "Funding department name"
+  funding_department_name: String
+  "Funding office code"
+  funding_office_code: String
+  "Funding office name"
+  funding_office_name: String
+  "Regional code"
+  region_code: String
+}
+
+"Business classification flags for vendor categories."
+type Businessclassifications {
+  "Educational institution"
+  educational_institution_flag: String
+  "Economically disadvantaged WOSB"
+  edwosb_flag: String
+  "8(a) program participant"
+  eight_a_flag: String
+  "Hospital"
+  hospital_flag: String
+  "HUBZone certified indicator"
+  hubzone_flag: String
+  "Minority-owned indicator"
+  minority_owned_business_flag: String
+  "Nonprofit organization"
+  nonprofit_organization_flag: String
+  "Small disadvantaged business"
+  sdb_flag: String
+  "Small business indicator"
+  small_business_flag: String
+  "Service-disabled veteran-owned"
+  srdvob_flag: String
+  "Veteran-owned indicator"
+  veteran_owned_flag: String
+  "Women-owned indicator"
+  women_owned_flag: String
+  "Women-owned small business"
+  wosb_flag: String
+}
+
+"Contract classification codes and categories."
+type Classification {
+  "Commercial item acquisition indicator"
+  commercial_item_acquisition: String
+  "Contract financing type"
+  contract_financing: String
+  "NAICS industry classification code"
+  naics_code: String
+  "NAICS description"
+  naics_description: String
+  "Product or service code (PSC)"
+  product_or_service_code: String
+  "PSC description"
+  product_or_service_description: String
+  "System equipment code"
+  system_equipment_code: String
+  "System equipment description"
+  system_equipment_desc: String
+  "Contract pricing type"
+  type_of_contract_pricing: String
+}
+
+"Competition and procurement procedure information."
+type Competition {
+  "Evaluated preference applied"
+  evaluated_preference: String
+  "Extent of competition"
+  extent_competed: String
+  "Fair opportunity explanation"
+  fair_opportunity_description: String
+  "Number of offers received"
+  number_of_offers_received: Int
+  "Reason for non-competition"
+  reason_not_competed: String
+  "Solicitation procedures used"
+  solicitation_procedures: String
+  "Type of set-aside"
+  type_of_set_aside: String
+}
+
+"Compliance and regulatory information."
+type Compliance {
+  "Cost accounting standards"
+  cost_acct_standards: String
+  "Cost or pricing data requirement"
+  cost_or_pricing_data: String
+  "Davis-Bacon Act applicability"
+  davis_bacon_act: String
+  "Recovered material clauses"
+  recovered_material_clauses: String
+  "Service Contract Act applicability"
+  service_contract_act: String
+  "Subcontracting plan"
+  subcontract_plan: String
+  "Use of EPA products"
+  use_of_epa_products: String
+  "Walsh-Healey Act applicability"
+  walsh_healey_act: String
+}
+
+"Timeline and date information."
+type Dates {
+  "Cancellation date"
+  cancellation_date: DateTime
+  "Expected completion date"
+  current_completion_date: DateTime
+  "Contract signature date"
+  date_signed: DateTime
+  "Effective date"
+  effective_date: DateTime
+  "Last modification date"
+  last_modified_date: DateTime
+  "Record preparation date"
+  prepared_date: DateTime
+  "Public reveal date"
+  reveal_date: DateTime
+  "Ultimate completion deadline"
+  ultimate_completion_date: DateTime
+}
+
+"Financial information including obligations, values, and fees."
+type Financial {
+  "Base obligation amount"
+  base_dollars_obligated: Float
+  "Current contract value"
+  current_contract_value: Float
+  "Total dollars obligated"
+  dollars_obligated: Float
+  "Dollars obligated per action"
+  dollars_obligated_per_action: Float
+  "Service fee paid"
+  fee_paid_for_use_of_service: Float
+  "Lower fee range value"
+  fee_range_lower_value: Float
+  "Upper fee range value"
+  fee_range_upper_value: Float
+  "Fixed fee amount"
+  fixed_fee_value: Float
+  "Maximum order limit"
+  max_order_limit: Float
+  "Non-federal funding amount"
+  non_federal_funding_amount: Float
+  "Non-government contribution"
+  non_government_value: Float
+  "Total non-government value"
+  total_non_government_value: Float
+  "Ultimate expected contract value"
+  ultimate_contract_value: Float
+}
+
+"Core contract identifiers and reference numbers."
+type Identifiers {
+  "Code for the agency involved"
+  agency_code: String
+  "Fiscal year of the award"
+  award_fiscal_year: String
+  "Indicates whether record is an award or IDV"
+  award_or_idv: String
+  "Unique identifier for each record in the dataset"
+  id: Int
+  "Contract modification number"
+  modification_number: String
+  "Legacy PIID from previous system"
+  old_piid: String
+  "Original PIID for reference"
+  original_piid: String
+  "Procurement Instrument Identifier - unique contract identifier"
+  piid: String!
+  "Name of the agency associated with PIID"
+  piid_agency_name: String
+  "Reference to parent contract"
+  reference_piid: String
+  "Solicitation identifier"
+  solicitation_id: String
+  "Transaction sequence number"
+  transaction_number: Int
+  "Record version number"
+  version: String
+}
+
+"IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts."
+type Idvreference {
+  "IDV last date"
+  idv_last_date: DateTime
+  "Multiple or single award IDC"
+  multiple_or_single_award_idc: String
+  "Type of indefinite delivery contract"
+  type_of_idc: String
+  "Who can use the IDV"
+  who_can_use: String
+}
+
+"Place of performance location details."
+type Placeofperformance {
+  "Performance country code"
+  pop_country_code: String
+  "Performance country name"
+  pop_country_name: String
+  "Performance county code"
+  pop_county_code: String
+  "Performance county name"
+  pop_county_name: String
+  "Performance location code"
+  pop_location_code: String
+  "Performance location name"
+  pop_location_name: String
+  "Performance state code"
+  pop_location_state_cd: String
+  "Performance state name"
+  pop_location_state_name: String
+  "Performance ZIP code"
+  pop_zip_code: String
+}
+
+"System-level metadata for record tracking, versioning, and lineage."
+type SystemMetadata {
+  "Timestamp when record was ingested"
+  ingested_at: DateTime
+  "Timestamp when record was last modified at source"
+  last_modified: DateTime
+  "Version of the canonical Contract Data schema"
+  schema_version: String
+  "Primary identifier of the record within Contract Data"
+  source_record_id: String!
+  "Constant system identifier"
+  system_name: String!
+}
+
+"Parent organization information."
+type Parentorganization {
+  "Parent DUNS"
+  parent_duns_number: String
+  "Parent UEI"
+  parent_uei: String
+  "Parent name"
+  parent_vendor_name: String
+}
+
+"Vendor information including identity, address, contact, and business classifications."
+type Vendor {
+  "Annual revenue"
+  annual_revenue: Float
+  business_classifications: Businessclassifications
+  "Commercial and Government Entity code"
+  cage_code: String
+  "Incorporation country"
+  country_of_incorporation: String
+  "DBA name"
+  doing_business_as_name: String
+  "Vendor email"
+  email_address: Email
+  "Employee count"
+  number_of_employees: Int
+  "Organization type"
+  organizational_type: String
+  parent: Parentorganization
+  "Incorporation state"
+  state_of_incorporation: String
+  vendor_address: Address
+  "DUNS number (deprecated)"
+  vendor_duns_number: String
+  "Legal vendor name"
+  vendor_name: String
+  "Vendor phone"
+  vendor_phone_number: String
+  "Unique Entity Identifier (Entity Management.gov)"
+  vendor_uei: String
+}
+
+"Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."
+type Fpdsrecord {
+  agency: Agency
+  classification: Classification
+  competition: Competition
+  compliance: Compliance
+  dates: Dates
+  "Description of requirement"
+  description: String
+  financial: Financial
+  identifiers: Identifiers!
+  idv_reference: Idvreference
+  place_of_performance: Placeofperformance
+  system_metadata: SystemMetadata!
+  vendor: Vendor
+}
+
+"Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."
+type ContractDataCanonicalSchema {
+  contract_data_record: Fpdsrecord
+}
+
+type Query {
+  "Fetch a single Contract Data record by PIID and agency code"
+  contract_dataRecord(piid: String!, agency_code: String): FpdsRecord
+  "Return a list of Contract Data records (non-paginated)"
+  contract_dataRecords: [FpdsRecord!]!
+}

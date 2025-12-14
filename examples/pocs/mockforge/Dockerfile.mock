@@ -1,0 +1,31 @@
+# Dockerfile for Mock GraphQL Services
+FROM node:20-alpine
+
+ARG BUILD_ENV=PRODUCTION
+
+WORKDIR /workspace
+
+# Install build dependencies for better-sqlite3
+RUN apk add --no-cache python3 make g++ sqlite ca-certificates
+
+# Add the zscaler certificate to the trusted certs only on local builds
+# COPY cannot be conditional, but RUN can run conditional code.
+COPY .docker/zscaler_cert.pem /tmp/zscaler.crt
+RUN if [ x"${BUILD_ENV}" = x"LOCAL" ] ; then cp /tmp/zscaler.crt /usr/local/share/ca-certificates/zscaler.crt ; update-ca-certificates ; fi
+
+# Copy package files
+COPY package.json ./
+
+# Install dependencies (disable TLS verification for node-gyp during build)
+RUN NODE_TLS_REJECT_UNAUTHORIZED=0 npm install --omit=dev --legacy-peer-deps
+
+# Copy application files
+COPY mock-server.js ./
+COPY mockforge.config.js ./
+
+# Create data directory
+RUN mkdir -p /workspace/data && chmod 777 /workspace/data
+
+EXPOSE 3000
+
+CMD ["node", "mock-server.js"]

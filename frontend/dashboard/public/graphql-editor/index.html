@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GraphQL Editor — Schema Unification Forest</title>
+
+    <!--
+      If you plan to serve the built app under a subpath such as
+      /graphql-editor/ (e.g. copy dist -> public/graphql-editor),
+      uncomment and adjust the <base> tag below so asset URLs resolve correctly.
+
+      <base href="/graphql-editor/">
+    -->
+
+    <meta name="description" content="Standalone GraphQL Editor for the Schema Unification Forest schema" />
+    <style>
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+
+      /* Simple loader while the JS bundle initializes */
+      .loader {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-direction: column;
+      }
+
+      .loader .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6b21a8;
+        animation: blink 1s infinite ease-in-out;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 0.25; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.15); }
+      }
+
+      .small {
+        font-size: 0.9rem;
+        color: #475569;
+      }
+    </style>
+    <script type="module" crossorigin src="/graphql-editor/assets/index-TTO7nICV.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loader" aria-live="polite" role="status">
+        <div class="dot" aria-hidden="true"></div>
+        <div class="small">Loading GraphQL Editor…</div>
+        <noscript style="margin-top:8px;color:#7f8a98;">
+          JavaScript is required to run the editor. Please enable JavaScript.
+        </noscript>
+      </div>
+    </div>
+
+    <!-- Vite entry. During dev this loads /src/main.jsx; when built, the bundler rewrites this to the hashed asset. -->
+  </body>
+</html>

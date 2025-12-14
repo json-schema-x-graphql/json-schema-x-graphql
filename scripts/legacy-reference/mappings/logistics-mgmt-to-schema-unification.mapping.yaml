@@ -1,0 +1,146 @@
+# Logistics Mgmt → Schema Unification canonical field mapping (flat YAML)
+# Keys:   Fully-qualified Logistics Mgmt paths (Type.nested.path)
+# Values: Fully-qualified Schema Unification canonical paths (Contract.nested.path)
+# Notes:
+# - Keep this file flat (no nested YAML). The coverage tool reads simple key: value pairs.
+# - Extend incrementally. Validate with:
+#     node scripts/generate-logistics_mgmt-to-schema_unification-coverage.mjs --mapping scripts/mappings/logistics_mgmt-to-schema_unification.mapping.yaml --verbose
+
+# ----------------------------------------------------------------------
+# Core Identifiers
+# ----------------------------------------------------------------------
+"Solicitation.solicitation_number": "Contract.common_elements.contract_identification.piid"
+"Solicitation.amendment_number": "Contract.common_elements.contract_identification.referenced_piid"
+"Requisition.requisition_number": "Contract.common_elements.contract_identification.referenced_piid"
+"Requisition.amendment_number": "Contract.common_elements.contract_identification.original_award_piid"
+
+# ----------------------------------------------------------------------
+# Dates (Header / Lifecycle)
+# ----------------------------------------------------------------------
+"Solicitation.issued_date": "Contract.common_elements.status_info.published_date"
+"Solicitation.released_date": "Contract.common_elements.status_info.published_date"
+"Solicitation.closed_date": "Contract.common_elements.status_info.contract_complete_date"
+"Solicitation.status_date": "Contract.common_elements.status_info.last_modified_date"
+"Solicitation.pop_start_date": "Contract.common_elements.place_of_performance.start_date"
+"Solicitation.pop_end_date": "Contract.common_elements.place_of_performance.end_date"
+
+"Requisition.released_date": "Contract.common_elements.status_info.published_date"
+"Requisition.closed_date": "Contract.common_elements.status_info.contract_complete_date"
+"Requisition.status_date": "Contract.common_elements.status_info.last_modified_date"
+"Requisition.pop_start_date": "Contract.common_elements.place_of_performance.start_date"
+"Requisition.pop_end_date": "Contract.common_elements.place_of_performance.end_date"
+
+# ----------------------------------------------------------------------
+# Organizational / Site / Person
+# ----------------------------------------------------------------------
+"Solicitation.site.site_code": "Contract.common_elements.organization_info.contracting_agency.code"
+"Solicitation.site.site_description": "Contract.common_elements.organization_info.contracting_agency.name"
+"Requisition.site.site_code": "Contract.common_elements.organization_info.contracting_agency.code"
+"Requisition.site.site_description": "Contract.common_elements.organization_info.contracting_agency.name"
+
+"Solicitation.owner.prism_user_id": "Contract.common_elements.contacts.name"
+"Solicitation.owner.email": "Contract.common_elements.contacts.email"
+"Requisition.owner.prism_user_id": "Contract.common_elements.contacts.name"
+"Requisition.owner.email": "Contract.common_elements.contacts.email"
+
+"Solicitation.buyer.prism_user_id": "Contract.common_elements.contacts.name"
+"Solicitation.buyer.email": "Contract.common_elements.contacts.email"
+"Requisition.buyer.prism_user_id": "Contract.common_elements.contacts.name"
+"Requisition.buyer.email": "Contract.common_elements.contacts.email"
+
+# ----------------------------------------------------------------------
+# Vendor / Product / Codes
+# ----------------------------------------------------------------------
+"Solicitation.primary_product_code": "Contract.common_elements.business_classification.psc_code"
+"Solicitation.primary_naics_code": "Contract.common_elements.business_classification.naics_code"
+"Requisition.primary_product_code": "Contract.common_elements.business_classification.psc_code"
+"Requisition.project_title": "Contract.common_elements.contract_identification.contract_title"
+
+# ----------------------------------------------------------------------
+# Financial Aggregates (Header Level)
+# ----------------------------------------------------------------------
+"Solicitation.amount": "Contract.common_elements.financial_info.total_contract_value"
+"Solicitation.total_released_funded_amount": "Contract.common_elements.financial_info.base_and_all_options_value"
+"Solicitation.potential_amount": "Contract.common_elements.financial_info.independent_government_estimate"
+
+"Requisition.amount": "Contract.common_elements.financial_info.total_contract_value"
+"Requisition.total_committed_amount": "Contract.common_elements.financial_info.base_and_all_options_value"
+"Requisition.total_released_funded_amount": "Contract.common_elements.financial_info.base_and_all_options_value"
+
+"Solicitation.total_released_recovery_act_funds_amount": "Contract.common_elements.financial_info.independent_government_estimate"
+"Requisition.remaining_committed_amount": "Contract.common_elements.financial_info.independent_government_estimate"
+
+# ----------------------------------------------------------------------
+# Line Item Financials
+# ----------------------------------------------------------------------
+"SolicitationLineItem.solicitation_line_amount": "Contract.common_elements.financial_info.amount_spent_on_product"
+"SolicitationLineItem.obligated_amount": "Contract.common_elements.financial_info.independent_government_estimate"
+"SolicitationLineItem.unit_price": "Contract.common_elements.financial_info.independent_government_estimate"
+"SolicitationLineItem.trade_discount": "Contract.common_elements.financial_info.independent_government_estimate"
+
+"RequisitionLineItem.unit_price": "Contract.common_elements.financial_info.independent_government_estimate"
+"RequisitionLineItem.amount": "Contract.common_elements.financial_info.amount_spent_on_product"
+"RequisitionLineItem.committed_amount": "Contract.common_elements.financial_info.amount_spent_on_product"
+"RequisitionLineItem.total_committed_amount": "Contract.common_elements.financial_info.base_and_all_options_value"
+
+# ----------------------------------------------------------------------
+# Delivery / Shipment Dates & Quantities
+# ----------------------------------------------------------------------
+"SolicitationLineDelivery.delivery_date": "Contract.common_elements.status_info.last_modified_date"
+"SolicitationLineDelivery.solicitation_line_delivery_quantity": "Contract.common_elements.financial_info.amount_spent_on_product"
+"RequisitionShipment.delivery_date": "Contract.common_elements.status_info.last_modified_date"
+"RequisitionShipment.quantity": "Contract.common_elements.financial_info.amount_spent_on_product"
+
+# ----------------------------------------------------------------------
+# Account / Funding Fields (mapped to financial_info placeholders)
+# ----------------------------------------------------------------------
+"RequisitionAccount.quantity": "Contract.common_elements.financial_info.amount_spent_on_product"
+"RequisitionAccount.amount": "Contract.common_elements.financial_info.amount_spent_on_product"
+"RequisitionAccount.remaining_amount": "Contract.common_elements.financial_info.independent_government_estimate"
+"RequisitionAccount.award_amount": "Contract.common_elements.financial_info.total_contract_value"
+"RequisitionAccount.total_amount": "Contract.common_elements.financial_info.base_and_all_options_value"
+
+# ----------------------------------------------------------------------
+# Status / Flags
+# ----------------------------------------------------------------------
+"Solicitation.document_status": "Contract.common_elements.status_info.status"
+"Solicitation.high_risk": "Contract.common_elements.contract_characteristics.emergency_acquisition"
+"Requisition.status": "Contract.common_elements.status_info.status"
+"Requisition.high_risk": "Contract.common_elements.contract_characteristics.emergency_acquisition"
+"Solicitation.fully_awarded_flag": "Contract.common_elements.status_info.is_funded"
+"Requisition.fully_awarded_flag": "Contract.common_elements.status_info.is_funded"
+
+# ----------------------------------------------------------------------
+# Period of Performance (Line-Level)
+# ----------------------------------------------------------------------
+"SolicitationLineItem.period_of_performance_start_date": "Contract.common_elements.place_of_performance.start_date"
+"SolicitationLineItem.period_of_performance_end_date": "Contract.common_elements.place_of_performance.end_date"
+"RequisitionLineItem.pop_start_date": "Contract.common_elements.place_of_performance.start_date"
+"RequisitionLineItem.pop_end_date": "Contract.common_elements.place_of_performance.end_date"
+
+# ----------------------------------------------------------------------
+# Justification / Notes
+# ----------------------------------------------------------------------
+"Solicitation.justification_and_approval_number": "Contract.common_elements.contract_identification.original_award_piid"
+"Solicitation.header_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Solicitation.footer_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Solicitation.change_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Requisition.header_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Requisition.footer_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Requisition.change_text": "Contract.common_elements.contract_identification.description_of_requirement"
+"Requisition.note_to_buyer_text": "Contract.common_elements.contract_identification.description_of_requirement"
+
+# ----------------------------------------------------------------------
+# Owner / Buyer Assignment Dates
+# ----------------------------------------------------------------------
+"Solicitation.status_date": "Contract.common_elements.status_info.last_modified_date"
+"Requisition.buyer_assigned_date": "Contract.common_elements.status_info.last_modified_date"
+
+# ----------------------------------------------------------------------
+# Place of Performance (Primary)
+# ----------------------------------------------------------------------
+"Solicitation.place_of_performance_zip": "Contract.common_elements.place_of_performance.zip"
+"Solicitation.place_of_performance_country": "Contract.common_elements.place_of_performance.country"
+"Solicitation.place_of_performance_city": "Contract.common_elements.place_of_performance.city"
+"Solicitation.place_of_performance_state": "Contract.common_elements.place_of_performance.state"
+"Requisition.project_id": "Contract.common_elements.contract_identification.original_award_piid"

@@ -204,7 +204,7 @@ The production scripts in `scripts/tmp/scripts` contain **critical capabilities*
 - Copy proven patterns from scripts
 - Incremental implementation with tests
 - Reference conversation thread for context
-- Start with easiest task (circular ref protection)
+- Start with intake_processest task (circular ref protection)
 
 ---
 

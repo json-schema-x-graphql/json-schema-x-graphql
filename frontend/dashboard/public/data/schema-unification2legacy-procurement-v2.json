@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "sourceSystem": "Legacy Procurement",
+    "recordId": "Legacy Procurement-2024-GRANT-001",
+    "schemaVersion": "2.0",
+    "lastModified": "2024-02-10T09:15:00Z",
+    "mappingType": "legacy_procurement-to-schema_unification-v2",
+    "description": "Maps Legacy Procurement awards data to Schema Unification Forest V2 definitions-based schema"
+  },
+  "mappings": {
+    "systemMetadata": {
+      "primarySystem": "Legacy Procurement",
+      "systemChain[0].systemName": "Legacy Procurement",
+      "systemChain[0].recordId": "award.awardNumber",
+      "systemChain[0].processedDate": "metadata.processingDate",
+      "systemChain[0].transformationRules": [
+        "legacy_procurement-to-schema_unification-v2",
+        "normalize-recipient-data",
+        "extract-funding-info"
+      ],
+      "systemChain[0].dataQuality.completenessScore": "metadata.dataQuality.score",
+      "systemChain[0].dataQuality.validationErrors": "metadata.dataQuality.errors",
+      "systemChain[0].dataQuality.lastValidated": "metadata.dataQuality.validated",
+      "schemaVersion": "2.0",
+      "lastModified": "metadata.lastUpdate",
+      "globalRecordId": "PETRIFIED-Legacy Procurement-{award.awardNumber}"
+    },
+    "contractIdentification": {
+      "$ref": "#/definitions/ContractIdentification",
+      "piid": "award.awardNumber",
+      "originalAwardPiid": "award.originalAwardNumber",
+      "referencedPiid": "award.parentAwardNumber",
+      "contractTitle": "award.projectTitle",
+      "contractType": "award.legacy_procurementanceType",
+      "descriptionOfRequirement": "award.projectDescription"
+    },
+    "organizationInfo": {
+      "$ref": "#/definitions/OrganizationInfo",
+      "contractingAgency": {
+        "$ref": "#/definitions/AgencyInfo",
+        "code": "agency.code",
+        "name": "agency.name"
+      },
+      "contractingDepartment": {
+        "$ref": "#/definitions/AgencyInfo",
+        "code": "agency.subAgency.code",
+        "name": "agency.subAgency.name"
+      },
+      "fundingAgency": {
+        "$ref": "#/definitions/AgencyInfo",
+        "code": "funding.agencyCode",
+        "name": "funding.agencyName"
+      },
+      "fundingDepartment": {
+        "$ref": "#/definitions/AgencyInfo",
+        "code": "funding.officeCode",
+        "name": "funding.officeName"
+      }
+    },
+    "vendorInfo": {
+      "$ref": "#/definitions/VendorInfo",
+      "vendorName": "recipient.legalName",
+      "vendorUei": "recipient.uei"
+    },
+    "placeOfPerformance": {
+      "$ref": "#/definitions/PlaceOfPerformance",
+      "streetAddress": "placeOfPerformance.address.street",
+      "city": "placeOfPerformance.address.city",
+      "county": "placeOfPerformance.address.county",
+      "state": "placeOfPerformance.address.stateCode",
+      "zip": "placeOfPerformance.address.zipCode",
+      "country": "placeOfPerformance.address.countryCode",
+      "congressionalDistrict": "placeOfPerformance.congressionalDistrict"
+    },
+    "financialInfo": {
+      "$ref": "#/definitions/FinancialInfo",
+      "totalContractValue": "funding.totalAwardAmount",
+      "baseAndAllOptionsValue": "funding.potentialAwardAmount",
+      "independentGovernmentEstimate": null,
+      "amountSpentOnProduct": "funding.currentObligatedAmount"
+    },
+    "businessClassification": {
+      "$ref": "#/definitions/BusinessClassification",
+      "naicsCode": "recipient.naics.code",
+      "naicsDescription": "recipient.naics.description",
+      "pscCode": null,
+      "pscDescription": null
+    },
+    "contractCharacteristics": {
+      "$ref": "#/definitions/ContractCharacteristics",
+      "effectiveDate": "period.startDate",
+      "expirationDate": "period.endDate",
+      "currentCompletionDate": "period.currentEndDate",
+      "ultimateCompletionDate": "period.ultimateEndDate",
+      "solicitationId": "opportunity.number",
+      "solicitationDate": "opportunity.postedDate",
+      "competitionType": "award.competitionType",
+      "setAsideType": "award.setAsideType"
+    },
+    "contacts": {
+      "$ref": "#/definitions/Contact",
+      "arrayMapping": "contacts.programOfficers",
+      "role": {
+        "$ref": "#/definitions/ContactRole",
+        "mapping": {
+          "PO": "PROGRAM_MANAGER",
+          "GO": "GRANTS_OFFICER",
+          "PI": "TECHNICAL_LEAD"
+        }
+      },
+      "name": "programOfficers[].name",
+      "email": "programOfficers[].email",
+      "phone": "programOfficers[].telephone"
+    },
+    "statusInfo": {
+      "$ref": "#/definitions/StatusInfo",
+      "currentStatus": {
+        "$ref": "#/definitions/ContractStatus",
+        "mapping": {
+          "active": "ACTIVE",
+          "closed": "COMPLETED",
+          "cancelled": "TERMINATED",
+          "pending": "PENDING"
+        }
+      },
+      "statusDate": "award.statusDate",
+      "lastModifiedDate": "award.lastModifiedDate",
+      "fiscalYear": "award.fiscalYear"
+    },
+    "systemExtensions.legacy_procurement": {
+      "$ref": "#/definitions/AssistExtension",
+      "description": "Legacy Procurement-specific data extensions - typed structure",
+      "acquisitionData": {
+        "cfda": {
+          "number": "program.cfdaNumber",
+          "title": "program.cfdaTitle"
+        },
+        "awardType": "award.type",
+        "legacy_procurementanceCategory": "award.category"
+      },
+      "officeAddress": {
+        "street": "agency.office.address.street",
+        "city": "agency.office.address.city",
+        "state": "agency.office.address.state",
+        "zip": "agency.office.address.zip"
+      },
+      "clientData": {
+        "businessType": "recipient.businessTypes",
+        "minorityOwned": "recipient.minorityOwned",
+        "womenOwned": "recipient.womenOwned"
+      },
+      "awardData": {
+        "fundingAgencyId": "funding.agencyId",
+        "fundingOfficeId": "funding.officeId",
+        "awardingOfficeId": "awarding.officeId"
+      }
+    }
+  },
+  "notes": {
+    "differences_from_v1": [
+      "V2 uses $ref to definitions for all complex types",
+      "SystemExtensions.legacy_procurement is now AssistExtension type instead of generic object",
+      "CFDA (Catalog of Federal Domestic Assistance) data is structured",
+      "Recipient business classifications are typed",
+      "Office and agency relationships are clear through definitions"
+    ],
+    "advantages": [
+      "GraphQL can query Legacy Procurement-specific fields like CFDA number",
+      "Business type data is queryable (minority-owned, women-owned)",
+      "Funding agency hierarchy is typed and navigable",
+      "Type safety for all Legacy Procurement-specific properties",
+      "Clear separation of Legacy Procurement data from core contract data"
+    ]
+  }
+}

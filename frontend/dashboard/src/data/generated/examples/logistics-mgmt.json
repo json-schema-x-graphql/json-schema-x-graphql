@@ -1,0 +1,15 @@
+{
+  "piid": "systemMetadata.systemChain[0].recordId",
+  "originalAwardPiid": "commonElements.contractIdentification.originalAwardPiid",
+  "contractTitle": "commonElements.contractIdentification.contractTitle",
+  "contractType": "commonElements.contractIdentification.contractType",
+  "descriptionOfRequirement": "commonElements.contractIdentification.descriptionOfRequirement",
+  "contractingAgencyCode": "commonElements.organizationInfo.contractingAgency.code",
+  "vendorName": "commonElements.vendorInfo.vendorName",
+  "vendorUei": "commonElements.vendorInfo.vendorUei",
+  "totalContractValue": "commonElements.financialInfo.totalContractValue",
+  "effectiveDate": "commonElements.contractCharacteristics.effectiveDate",
+  "expirationDate": "commonElements.contractCharacteristics.expirationDate",
+  "status": "commonElements.statusInfo.status",
+  "logistics_mgmtLegacyNote": "systemExtensions.logistics_mgmt[0].logistics_mgmtSpecific.legacyNote"
+}

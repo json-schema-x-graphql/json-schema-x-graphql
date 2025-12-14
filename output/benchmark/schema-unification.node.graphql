@@ -1,0 +1,327 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar DateTime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"High-precision decimal number for currency and financial values"
+scalar Decimal
+
+"Arbitrary JSON value"
+scalar Json
+
+"Valid email address"
+scalar Email
+
+"Valid URI/URL"
+scalar Uri
+
+"Agency or department information"
+type AgencyInfo {
+  "Agency or Department Code"
+  code: String
+  "Agency or Department Name"
+  name: String
+}
+
+"Business classification codes and categories"
+type BusinessClassification {
+  "General category under which the product falls"
+  category_of_product: String
+  "Contracting Officer size determination"
+  co_size_determination: String
+  "Local area set-aside flag"
+  local_area_set_aside: Boolean
+  "NAICS classification code"
+  naics_code: String
+  "NAICS description"
+  naics_description: String
+  "Product Service Code"
+  psc_code: String
+  "Product Service Code Description"
+  psc_description: String
+  "Type of set-aside program"
+  set_aside_type: String
+  "Specific type of product being contracted"
+  type_of_product: String
+}
+
+"Contact information for contract personnel"
+type Contact {
+  "Contact email address"
+  email: Email
+  "Contact name"
+  name: String
+  "Contact phone number"
+  phone: String
+  role: String
+  "Contact title"
+  title: String
+}
+
+"Contract characteristics and flags"
+type ContractCharacteristics {
+  "Emergency acquisition indicator"
+  emergency_acquisition: String
+  "Government furnished property flag"
+  government_furnished_property: Boolean
+  "Includes Controlled Unclassified Information"
+  includes_cui: Boolean
+  "Recurring service flag"
+  recurring_service: Boolean
+  "Recurring utilities flag"
+  recurring_utilities: Boolean
+}
+
+"Contract identification information"
+type ContractIdentification {
+  "Title or description of the contract"
+  contract_title: String
+  "Type of contract instrument"
+  contract_type: String
+  "Detailed description of contract requirements"
+  description_of_requirement: String
+  "Original Award PIID (Preceding Reference Info)"
+  original_award_piid: String
+  "Procurement Instrument Identifier"
+  piid: String!
+  "Referenced PIID for related contracts"
+  referenced_piid: String
+}
+
+"Financial information and values"
+type FinancialInfo {
+  "Amount spent on specific products"
+  amount_spent_on_product: Decimal
+  "Base contract value plus all option periods"
+  base_and_all_options_value: Decimal
+  "Fiscal year when contract was awarded"
+  contract_fiscal_year: String
+  "IGE amount"
+  independent_government_estimate: Decimal
+  "Total contract value including all modifications"
+  total_contract_value: Decimal
+}
+
+"Organization information for contracts"
+type OrganizationInfo {
+  "Contracting agency information"
+  contracting_agency: String!
+  "Contracting department information"
+  contracting_department: AgencyInfo
+  "Funding agency information"
+  funding_agency: AgencyInfo
+  "Funding department information"
+  funding_department: AgencyInfo
+}
+
+"Place of performance location details"
+type PlaceOfPerformance {
+  "City"
+  city: String
+  "Congressional district"
+  congressional_district: String
+  "Country code"
+  country: String
+  "County"
+  county: String
+  "State code"
+  state: String
+  "Street address"
+  street_address: String
+  "ZIP code"
+  zip: String
+}
+
+"Contract status information"
+type StatusInfo {
+  "Date when contract was completed (ISO 8601: YYYY-MM-DD)"
+  contract_complete_date: Date
+  "Active contract flag"
+  is_active: Boolean
+  "Funded contract flag"
+  is_funded: Boolean
+  "Latest version flag"
+  is_latest: Boolean
+  "Date when last Contract Action Report was signed (ISO 8601: YYYY-MM-DD)"
+  last_car_date_signed: Date
+  "Last modification date (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)"
+  last_modified_date: Datetime
+  "Date contract was published (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)"
+  published_date: Datetime
+  status: String
+}
+
+"Vendor information"
+type VendorInfo {
+  "Name of the vendor providing goods/services"
+  vendor_name: String
+  "Vendor Unique Entity Identifier"
+  vendor_uei: String
+}
+
+"Fields common across all systems"
+type CommonElements {
+  business_classification: BusinessClassification
+  "Contract contacts"
+  contacts: [Contact]
+  contract_characteristics: ContractCharacteristics
+  contract_identification: ContractIdentification!
+  financial_info: FinancialInfo
+  organization_info: OrganizationInfo!
+  place_of_performance: PlaceOfPerformance
+  status_info: StatusInfo!
+  vendor_info: VendorInfo
+}
+
+"Role classification for contract contacts"
+enum ContactRole {
+  "Primary contact for the contract"
+  PRIMARY
+  "Technical point of contact"
+  TECHNICAL
+  "Administrative contact"
+  ADMINISTRATIVE
+  "Government contracting officer"
+  CONTRACTING_OFFICER
+}
+
+"Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure"
+type Contract {
+  common_elements: CommonElements!
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: String
+  "Procurement Instrument Identifier"
+  piid: String
+  "Location data"
+  place_of_performance: PlaceOfPerformance
+  "Related contracts via referencedPiid"
+  related_contracts: String
+  system_extensions: SystemExtensions
+  system_metadata: SystemMetadata!
+  "Vendor information structure"
+  vendor_info: VendorInfo
+}
+
+"Contract lifecycle status"
+enum ContractStatus {
+  "Contract in draft state"
+  DRAFT
+  "Contract published for bidding"
+  PUBLISHED
+  "Contract awarded to vendor"
+  AWARDED
+  "Contract completed"
+  COMPLETED
+  "Contract cancelled"
+  CANCELLED
+}
+
+"Data quality metrics for system chain entry"
+type DataQuality {
+  "Data completeness score (0-1)"
+  completeness_score: Float
+  "Last validation timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)"
+  last_validated: Datetime
+  "List of validation errors"
+  validation_errors: [String]
+}
+
+"Entry in the system chain showing data flow"
+type SystemChainEntry {
+  data_quality: DataQuality
+  "When this record was processed (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)"
+  processed_date: Datetime!
+  "Record ID in the source system"
+  record_id: String!
+  system_name: String!
+  "Rules applied during transformation"
+  transformation_rules: [String]
+}
+
+"External reference to contract_data.schema.json"
+type Contract_data {
+  "Placeholder for external reference"
+  _external_ref: String
+}
+
+"External reference to intake_process.schema.json"
+type Intake_process {
+  "Placeholder for external reference"
+  _external_ref: String
+}
+
+"External reference to legacy_procurement.schema.json"
+type Legacy_procurement {
+  "Placeholder for external reference"
+  _external_ref: String
+}
+
+"External reference to logistics_mgmt.schema.json"
+type Logistics_mgmt {
+  "Placeholder for external reference"
+  _external_ref: String
+}
+
+"External reference to public_spending.schema.json"
+type Public_spending {
+  "Placeholder for external reference"
+  _external_ref: String
+}
+
+"System-specific fields and extensions. Each system (Contract Data, Legacy Procurement, EASi, Public Spending, Logistics Mgmt, etc.) can add their own extensions dynamically without modifying this schema. System schemas should use GraphQL Federation @key directives to declare join fields."
+type Systemextensions {
+  "Contract Data-specific extensions"
+  contract_data: Contract_data
+  "EASi-specific extensions"
+  intake_process: Intake_process
+  "Legacy Procurement-specific extensions"
+  legacy_procurement: Legacy_procurement
+  "Logistics Mgmt-specific extensions"
+  logistics_mgmt: Logistics_mgmt
+  "Public Spending-specific extensions"
+  public_spending: Public_spending
+}
+
+"Metadata supporting multiple nested systems"
+type Systemmetadata {
+  "Global unique identifier across all systems"
+  global_record_id: String!
+  "Last modification timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)"
+  last_modified: Datetime
+  "Primary source system"
+  primary_system: String!
+  "Schema version"
+  schema_version: String
+  "Chain of systems data has flowed through"
+  system_chain: [SystemChainEntry]!
+}
+
+"Source system type"
+enum SystemType {
+  "Federal Procurement Data System - Next Generation"
+  Contract Data
+  "Award System for Streamlined IT Transactions"
+  Legacy Procurement
+  "Enterprise Acquisition System for Infrastructure"
+  Intake Process
+  "Contract Award Lifecycle Management"
+  Logistics Mgmt
+}
+
+type Query {
+  "Fetch a single contract by global ID"
+  contract(id: ID!): Contract
+  "Fetch a contract by PIID"
+  contract_by_piid(piid: String!): Contract
+  "Paginated list of contracts with filtering"
+  contracts(first: Int = 10, after: String, filter: ContractFilter, order_by: ContractOrderBy): ContractConnection!
+  "Full-text search for contracts"
+  search_contracts(query: String!, limit: Int = 20): [Contract!]!
+}
+
+type Mutation {
+  "Trigger data ingestion from external system"
+  trigger_data_ingestion(system: SystemType!, full_refresh: Boolean = false): IngestionResult!
+}

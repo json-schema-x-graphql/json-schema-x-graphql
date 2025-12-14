@@ -1,7 +1,7 @@
 //! JSON Schema to GraphQL SDL conversion
 
 use crate::error::{ConversionError, Result};
-use crate::types::ConversionOptions;
+use crate::types::{ConversionOptions, NamingConvention};
 use serde_json::Value as JsonValue;
 use std::collections::HashMap;
 
@@ -16,14 +16,28 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         if let Some(defs) = obj.get("$defs").or_else(|| obj.get("definitions")) {
             if let Some(defs_obj) = defs.as_object() {
                 for (def_key, def_schema) in defs_obj {
-                    // Determine type name: x-graphql-type-name > title > def_key
-                    let type_name = def_schema
+                    // Determine type name: x-graphql-type-name > x-graphql-type.name > title > def_key
+                    let raw_type_name = def_schema
                         .get("x-graphql-type-name")
                         .and_then(|v| v.as_str())
+                        .or_else(|| {
+                            def_schema.get("x-graphql-type").and_then(|v| {
+                                v.as_str()
+                                    .or_else(|| v.get("name").and_then(|n| n.as_str()))
+                            })
+                        })
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
                         .unwrap_or(def_key);
 
-                    let type_def = convert_type_definition(def_schema, type_name, &mut context)?;
+                    let type_name = sanitize_type_name(raw_type_name, options.naming_convention);
+
+                    if options.exclude_types.contains(&type_name)
+                        || is_excluded(&type_name, &options.exclude_patterns)
+                    {
+                        continue;
+                    }
+
+                    let type_def = convert_type_definition(def_schema, &type_name, &mut context)?;
                     output.push_str(&type_def);
                 }
             }
@@ -36,8 +50,14 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
             .or_else(|| obj.get("title").and_then(|v| v.as_str()));
 
         if let Some(name) = root_type_name {
-            let type_def = convert_type_definition(schema, name, &mut context)?;
-            output.push_str(&type_def);
+            let sanitized_name = sanitize_type_name(name, options.naming_convention);
+
+            if !options.exclude_types.contains(&sanitized_name)
+                && !is_excluded(&sanitized_name, &options.exclude_patterns)
+            {
+                let type_def = convert_type_definition(schema, &sanitized_name, &mut context)?;
+                output.push_str(&type_def);
+            }
         } else if obj.contains_key("properties")
             && !obj.contains_key("$defs")
             && !obj.contains_key("definitions")
@@ -83,6 +103,12 @@ impl<'a> ConversionContext<'a> {
             .and_then(|obj| {
                 obj.get("x-graphql-type-name")
                     .and_then(|v| v.as_str())
+                    .or_else(|| {
+                        obj.get("x-graphql-type").and_then(|v| {
+                            v.as_str()
+                                .or_else(|| v.get("name").and_then(|n| n.as_str()))
+                        })
+                    })
                     .or_else(|| obj.get("title").and_then(|v| v.as_str()))
                     .or_else(|| {
                         obj.get("x-graphql")
@@ -92,7 +118,7 @@ impl<'a> ConversionContext<'a> {
                     })
             })
             .map(|value| value.to_string())
-            .or_else(|| extract_type_name_from_ref(ref_path))?;
+            .or_else(|| extract_type_name_from_ref(ref_path, self.options.naming_convention))?;
 
         self.type_names
             .insert(ref_path.to_string(), type_name.clone());
@@ -158,7 +184,12 @@ fn convert_type_definition(
 
     let explicit_kind = x_graphql
         .and_then(|x| x.get("type").and_then(|v| v.as_str()))
-        .or_else(|| obj.get("x-graphql-type").and_then(|v| v.as_str()))
+        .or_else(|| {
+            obj.get("x-graphql-type").and_then(|v| {
+                v.as_str()
+                    .or_else(|| v.get("kind").and_then(|n| n.as_str()))
+            })
+        })
         .or_else(|| obj.get("x-graphql-type-kind").and_then(|v| v.as_str()));
 
     // Check for "enum", "union", "interface" keywords
@@ -353,7 +384,9 @@ fn convert_type_definition(
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
                         if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             members.push(name);
-                        } else if let Some(name) = extract_type_name_from_ref(ref_path) {
+                        } else if let Some(name) =
+                            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+                        {
                             members.push(name);
                         }
                     } else if let Some(title) = item.get("title").and_then(|v| v.as_str()) {
@@ -383,6 +416,7 @@ fn convert_type_definition(
             if let Some(impl_array) = obj
                 .get("x-graphql-implements")
                 .or_else(|| obj.get("x-graphql-type-implements"))
+                .or_else(|| obj.get("x-graphql-type").and_then(|v| v.get("implements")))
                 .and_then(|v| v.as_array())
             {
                 for v in impl_array {
@@ -398,7 +432,9 @@ fn convert_type_definition(
                         if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             // Assuming all refs in allOf are interfaces if this is an object type
                             implements.push(name);
-                        } else if let Some(name) = extract_type_name_from_ref(ref_path) {
+                        } else if let Some(name) =
+                            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+                        {
                             implements.push(name);
                         }
                     }
@@ -433,7 +469,9 @@ fn convert_type_definition(
                             required_fields.contains(&prop_name.as_str()),
                             context,
                         )?;
-                        output.push_str(&format!("  {}\n", field_def));
+                        if !field_def.is_empty() {
+                            output.push_str(&format!("  {}\n", field_def));
+                        }
                     }
                 }
             }
@@ -473,7 +511,11 @@ fn convert_field(
         .or_else(|| obj.get("x-graphql-field-name"))
         .and_then(|v| v.as_str())
         .map(|s| s.to_string())
-        .unwrap_or_else(|| snake_to_camel(field_name));
+        .unwrap_or_else(|| sanitize_field_name(field_name, context.options.naming_convention));
+
+    if is_excluded(&gql_field_name, &context.options.exclude_patterns) {
+        return Ok(String::new());
+    }
 
     output.push_str(&gql_field_name);
 
@@ -654,11 +696,16 @@ fn infer_graphql_type(
     };
 
     // 1. Explicit override
-    if let Some(gql_type) = x_graphql
-        .and_then(|x| x.get("type"))
-        .or_else(|| obj.get("x-graphql-type"))
-        .and_then(|v| v.as_str())
-    {
+    let explicit_type = x_graphql
+        .and_then(|x| x.get("type").and_then(|v| v.as_str()))
+        .or_else(|| {
+            obj.get("x-graphql-type").and_then(|v| {
+                v.as_str()
+                    .or_else(|| v.get("name").and_then(|n| n.as_str()))
+            })
+        });
+
+    if let Some(gql_type) = explicit_type {
         return Ok(finalize(gql_type.to_string()));
     }
 
@@ -666,7 +713,9 @@ fn infer_graphql_type(
     if let Some(ref_path) = obj.get("$ref").and_then(|v| v.as_str()) {
         if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
             return Ok(finalize(type_name));
-        } else if let Some(type_name) = extract_type_name_from_ref(ref_path) {
+        } else if let Some(type_name) =
+            extract_type_name_from_ref(ref_path, context.options.naming_convention)
+        {
             return Ok(finalize(type_name));
         }
     }
@@ -869,11 +918,44 @@ fn snake_to_camel(snake: &str) -> String {
     result
 }
 
+fn sanitize_type_name(name: &str, convention: NamingConvention) -> String {
+    match convention {
+        NamingConvention::Preserve => name.to_string(),
+        NamingConvention::GraphqlIdiomatic => snake_to_pascal(name),
+    }
+}
+
+fn sanitize_field_name(name: &str, convention: NamingConvention) -> String {
+    match convention {
+        NamingConvention::Preserve => name.to_string(),
+        NamingConvention::GraphqlIdiomatic => snake_to_camel(name),
+    }
+}
+
+fn is_excluded(name: &str, patterns: &[String]) -> bool {
+    for pattern in patterns {
+        if let Ok(re) = regex::Regex::new(pattern) {
+            if re.is_match(name) {
+                return true;
+            }
+        }
+    }
+    false
+}
+
+fn extract_type_name_from_ref(ref_path: &str, convention: NamingConvention) -> Option<String> {
+    let parts: Vec<&str> = ref_path.split('/').collect();
+    if let Some(last) = parts.last() {
+        return Some(sanitize_type_name(last, convention));
+    }
+    None
+}
+
 fn snake_to_pascal(snake: &str) -> String {
     let mut result = String::new();
     let mut capitalize_next = true;
     for c in snake.chars() {
-        if c == '_' {
+        if c == '_' || c == ' ' || c == '-' {
             capitalize_next = true;
         } else if capitalize_next {
             result.push(c.to_ascii_uppercase());
@@ -883,13 +965,6 @@ fn snake_to_pascal(snake: &str) -> String {
         }
     }
     result
-}
-
-fn extract_type_name_from_ref(ref_path: &str) -> Option<String> {
-    let path = ref_path.trim_start_matches('#').trim_start_matches('/');
-    let segments: Vec<&str> = path.split('/').collect();
-    let last_segment = segments.last()?;
-    Some(snake_to_pascal(last_segment))
 }
 
 #[cfg(test)]

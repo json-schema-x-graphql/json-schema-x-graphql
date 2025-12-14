@@ -1,0 +1,53 @@
+# gqlgen configuration
+# https://gqlgen.com/config/
+
+# Schema location (symlink to supergraph)
+schema:
+  - graph/schema.graphql
+
+# Generated code output
+exec:
+  filename: graph/generated.go
+  package: graph
+
+# Model generation
+model:
+  filename: graph/model/models_gen.go
+  package: model
+
+# Resolver generation
+resolver:
+  layout: follow-schema
+  dir: graph
+  package: graph
+  filename_template: "{name}.resolvers.go"
+  omit_template_comment: false
+
+# Custom scalars
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  DateTime:
+    model: time.Time
+  Date:
+    model: time.Time
+  Email:
+    model: string
+
+# Autobind models to prevent duplicate generation
+autobind:
+  - "github.com/gsa-tts/schema-unification-project/gqlgen-poc/graph/model"
+
+# Omit resolver generation for these types
+omit_complexity: false
+omit_getters: false
+omit_interface_checks: false

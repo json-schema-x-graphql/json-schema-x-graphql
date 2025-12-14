@@ -1,0 +1,15 @@
+{
+  "piid": "commonElements.contractIdentification.piid",
+  "originalAwardPiid": "commonElements.contractIdentification.originalAwardPiid",
+  "contractTitle": "commonElements.contractIdentification.contractTitle",
+  "contractType": "commonElements.contractIdentification.contractType",
+  "descriptionOfRequirement": "commonElements.contractIdentification.descriptionOfRequirement",
+  "contractingAgencyCode": "commonElements.organizationInfo.contractingAgency.code",
+  "vendorName": "commonElements.vendorInfo.vendorName",
+  "vendorUei": "commonElements.vendorInfo.vendorUei",
+  "totalContractValue": "commonElements.financialInfo.totalContractValue",
+  "clinUnitPrice": "systemExtensions.intake_process[0].intake_processSpecific.unitPrice",
+  "effectiveDate": "commonElements.contractCharacteristics.effectiveDate",
+  "expirationDate": "commonElements.contractCharacteristics.expirationDate",
+  "status": "commonElements.statusInfo.status"
+}

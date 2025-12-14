@@ -1,0 +1,1198 @@
+{
+  "0": {
+    "snake": "0",
+    "locations": [
+      "$defs/system_type/enum/0",
+      "$defs/contact_role/enum/0",
+      "$defs/contract_status/enum/0",
+      "$defs/system_chain_entry/required/0",
+      "$defs/system_metadata/required/0",
+      "$defs/contract_identification/required/0",
+      "$defs/organization_info/properties/contracting_agency/all_of/0",
+      "$defs/organization_info/properties/contracting_agency/all_of/1/required/0",
+      "$defs/organization_info/required/0",
+      "$defs/common_elements/required/0",
+      "$defs/system_extensions/additionalProperties/oneOf/0",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/required/0",
+      "$defs/contract/x-graphql-type/implements/0",
+      "$defs/contract/required/0"
+    ]
+  },
+  "1": {
+    "snake": "1",
+    "locations": [
+      "$defs/system_type/enum/1",
+      "$defs/contact_role/enum/1",
+      "$defs/contract_status/enum/1",
+      "$defs/system_chain_entry/required/1",
+      "$defs/system_metadata/required/1",
+      "$defs/organization_info/properties/contracting_agency/all_of/1",
+      "$defs/common_elements/required/1",
+      "$defs/system_extensions/additionalProperties/oneOf/1",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/required/1",
+      "$defs/contract/required/1"
+    ]
+  },
+  "2": {
+    "snake": "2",
+    "locations": [
+      "$defs/system_type/enum/2",
+      "$defs/contact_role/enum/2",
+      "$defs/contract_status/enum/2",
+      "$defs/system_chain_entry/required/2",
+      "$defs/system_metadata/required/2",
+      "$defs/common_elements/required/2"
+    ]
+  },
+  "3": {
+    "snake": "3",
+    "locations": [
+      "$defs/system_type/enum/3",
+      "$defs/contact_role/enum/3",
+      "$defs/contract_status/enum/3"
+    ]
+  },
+  "4": {
+    "snake": "4",
+    "locations": [
+      "$defs/contract_status/enum/4"
+    ]
+  },
+  "systemType": {
+    "snake": "system_type",
+    "locations": [
+      "$defs/system_type"
+    ]
+  },
+  "type": {
+    "snake": "type",
+    "locations": [
+      "$defs/system_type/type",
+      "$defs/contact_role/type",
+      "$defs/contract_status/type",
+      "$defs/data_quality/type",
+      "$defs/data_quality/properties/completeness_score/type",
+      "$defs/data_quality/properties/validation_errors/type",
+      "$defs/data_quality/properties/validation_errors/items/type",
+      "$defs/data_quality/properties/last_validated/type",
+      "$defs/system_chain_entry/type",
+      "$defs/system_chain_entry/properties/record_id/type",
+      "$defs/system_chain_entry/properties/processed_date/type",
+      "$defs/system_chain_entry/properties/transformation_rules/type",
+      "$defs/system_chain_entry/properties/transformation_rules/items/type",
+      "$defs/system_metadata/type",
+      "$defs/system_metadata/properties/system_chain/type",
+      "$defs/system_metadata/properties/schema_version/type",
+      "$defs/system_metadata/properties/last_modified/type",
+      "$defs/system_metadata/properties/global_record_id/type",
+      "$defs/contract_identification/type",
+      "$defs/contract_identification/properties/piid/type",
+      "$defs/contract_identification/properties/original_award_piid/type",
+      "$defs/contract_identification/properties/referenced_piid/type",
+      "$defs/contract_identification/properties/contract_title/type",
+      "$defs/contract_identification/properties/contract_type/type",
+      "$defs/contract_identification/properties/description_of_requirement/type",
+      "$defs/agency_info/type",
+      "$defs/agency_info/properties/code/type",
+      "$defs/agency_info/properties/name/type",
+      "$defs/organization_info/type",
+      "$defs/vendor_info/type",
+      "$defs/vendor_info/properties/vendor_name/type",
+      "$defs/vendor_info/properties/vendor_uei/type",
+      "$defs/place_of_performance/type",
+      "$defs/place_of_performance/properties/street_address/type",
+      "$defs/place_of_performance/properties/city/type",
+      "$defs/place_of_performance/properties/county/type",
+      "$defs/place_of_performance/properties/state/type",
+      "$defs/place_of_performance/properties/zip/type",
+      "$defs/place_of_performance/properties/country/type",
+      "$defs/place_of_performance/properties/congressional_district/type",
+      "$defs/financial_info/type",
+      "$defs/financial_info/properties/total_contract_value/type",
+      "$defs/financial_info/properties/base_and_all_options_value/type",
+      "$defs/financial_info/properties/independent_government_estimate/type",
+      "$defs/financial_info/properties/amount_spent_on_product/type",
+      "$defs/financial_info/properties/contract_fiscal_year/type",
+      "$defs/business_classification/type",
+      "$defs/business_classification/properties/naics_code/type",
+      "$defs/business_classification/properties/naics_description/type",
+      "$defs/business_classification/properties/psc_code/type",
+      "$defs/business_classification/properties/psc_description/type",
+      "$defs/business_classification/properties/category_of_product/type",
+      "$defs/business_classification/properties/type_of_product/type",
+      "$defs/business_classification/properties/set_aside_type/type",
+      "$defs/business_classification/properties/local_area_set_aside/type",
+      "$defs/business_classification/properties/co_size_determination/type",
+      "$defs/contract_characteristics/type",
+      "$defs/contract_characteristics/properties/emergency_acquisition/type",
+      "$defs/contract_characteristics/properties/government_furnished_property/type",
+      "$defs/contract_characteristics/properties/includes_cui/type",
+      "$defs/contract_characteristics/properties/recurring_service/type",
+      "$defs/contract_characteristics/properties/recurring_utilities/type",
+      "$defs/contact/type",
+      "$defs/contact/properties/name/type",
+      "$defs/contact/properties/title/type",
+      "$defs/contact/properties/email/type",
+      "$defs/contact/properties/phone/type",
+      "$defs/status_info/type",
+      "$defs/status_info/properties/is_active/type",
+      "$defs/status_info/properties/is_latest/type",
+      "$defs/status_info/properties/is_funded/type",
+      "$defs/status_info/properties/published_date/type",
+      "$defs/status_info/properties/last_modified_date/type",
+      "$defs/status_info/properties/contract_complete_date/type",
+      "$defs/status_info/properties/last_car_date_signed/type",
+      "$defs/common_elements/type",
+      "$defs/common_elements/properties/contacts/type",
+      "$defs/system_extensions/type",
+      "$defs/system_extensions/additionalProperties/oneOf/0/type",
+      "$defs/system_extensions/additionalProperties/oneOf/1/type",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/type",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/field_name/type",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/field_type/type",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/category/type",
+      "$defs/contract/type",
+      "$defs/contract/properties/id/type",
+      "$defs/contract/properties/id/x-graphql-field/type",
+      "$defs/contract/properties/related_contracts/x-graphql-field/type",
+      "$defs/contract/properties/related_contracts/x-graphql-field/args/first/type",
+      "$defs/contract/properties/piid/type",
+      "$defs/contract/properties/piid/x-graphql-field/type",
+      "$defs/contract/properties/vendor_info/x-graphql-field/type",
+      "$defs/contract/properties/place_of_performance/x-graphql-field/type"
+    ]
+  },
+  "description": {
+    "snake": "description",
+    "locations": [
+      "$defs/system_type/description",
+      "$defs/system_type/x-graphql-enum/description",
+      "$defs/system_type/x-graphql-enum/values/contract_data/description",
+      "$defs/system_type/x-graphql-enum/values/legacy_procurement/description",
+      "$defs/system_type/x-graphql-enum/values/intake_process/description",
+      "$defs/system_type/x-graphql-enum/values/logistics_mgmt/description",
+      "$defs/contact_role/description",
+      "$defs/contact_role/x-graphql-enum/description",
+      "$defs/contact_role/x-graphql-enum/values/primary/description",
+      "$defs/contact_role/x-graphql-enum/values/technical/description",
+      "$defs/contact_role/x-graphql-enum/values/administrative/description",
+      "$defs/contact_role/x-graphql-enum/values/contracting_officer/description",
+      "$defs/contract_status/description",
+      "$defs/contract_status/x-graphql-enum/description",
+      "$defs/contract_status/x-graphql-enum/values/draft/description",
+      "$defs/contract_status/x-graphql-enum/values/published/description",
+      "$defs/contract_status/x-graphql-enum/values/awarded/description",
+      "$defs/contract_status/x-graphql-enum/values/completed/description",
+      "$defs/contract_status/x-graphql-enum/values/cancelled/description",
+      "$defs/data_quality/description",
+      "$defs/data_quality/properties/completeness_score/description",
+      "$defs/data_quality/properties/validation_errors/description",
+      "$defs/data_quality/properties/last_validated/description",
+      "$defs/system_chain_entry/description",
+      "$defs/system_chain_entry/properties/record_id/description",
+      "$defs/system_chain_entry/properties/processed_date/description",
+      "$defs/system_chain_entry/properties/transformation_rules/description",
+      "$defs/system_metadata/description",
+      "$defs/system_metadata/x-graphql-type/description",
+      "$defs/system_metadata/properties/primary_system/description",
+      "$defs/system_metadata/properties/system_chain/description",
+      "$defs/system_metadata/properties/schema_version/description",
+      "$defs/system_metadata/properties/last_modified/description",
+      "$defs/system_metadata/properties/global_record_id/description",
+      "$defs/contract_identification/description",
+      "$defs/contract_identification/properties/piid/description",
+      "$defs/contract_identification/properties/original_award_piid/description",
+      "$defs/contract_identification/properties/referenced_piid/description",
+      "$defs/contract_identification/properties/contract_title/description",
+      "$defs/contract_identification/properties/contract_type/description",
+      "$defs/contract_identification/properties/description_of_requirement/description",
+      "$defs/agency_info/description",
+      "$defs/agency_info/properties/code/description",
+      "$defs/agency_info/properties/name/description",
+      "$defs/organization_info/description",
+      "$defs/organization_info/properties/contracting_agency/description",
+      "$defs/organization_info/properties/contracting_department/description",
+      "$defs/organization_info/properties/funding_agency/description",
+      "$defs/organization_info/properties/funding_department/description",
+      "$defs/vendor_info/description",
+      "$defs/vendor_info/properties/vendor_name/description",
+      "$defs/vendor_info/properties/vendor_uei/description",
+      "$defs/place_of_performance/description",
+      "$defs/place_of_performance/properties/street_address/description",
+      "$defs/place_of_performance/properties/city/description",
+      "$defs/place_of_performance/properties/county/description",
+      "$defs/place_of_performance/properties/state/description",
+      "$defs/place_of_performance/properties/zip/description",
+      "$defs/place_of_performance/properties/country/description",
+      "$defs/place_of_performance/properties/congressional_district/description",
+      "$defs/financial_info/description",
+      "$defs/financial_info/properties/total_contract_value/description",
+      "$defs/financial_info/properties/base_and_all_options_value/description",
+      "$defs/financial_info/properties/independent_government_estimate/description",
+      "$defs/financial_info/properties/amount_spent_on_product/description",
+      "$defs/financial_info/properties/contract_fiscal_year/description",
+      "$defs/business_classification/description",
+      "$defs/business_classification/properties/naics_code/description",
+      "$defs/business_classification/properties/naics_description/description",
+      "$defs/business_classification/properties/psc_code/description",
+      "$defs/business_classification/properties/psc_description/description",
+      "$defs/business_classification/properties/category_of_product/description",
+      "$defs/business_classification/properties/type_of_product/description",
+      "$defs/business_classification/properties/set_aside_type/description",
+      "$defs/business_classification/properties/local_area_set_aside/description",
+      "$defs/business_classification/properties/co_size_determination/description",
+      "$defs/contract_characteristics/description",
+      "$defs/contract_characteristics/properties/emergency_acquisition/description",
+      "$defs/contract_characteristics/properties/government_furnished_property/description",
+      "$defs/contract_characteristics/properties/includes_cui/description",
+      "$defs/contract_characteristics/properties/recurring_service/description",
+      "$defs/contract_characteristics/properties/recurring_utilities/description",
+      "$defs/contact/description",
+      "$defs/contact/properties/name/description",
+      "$defs/contact/properties/title/description",
+      "$defs/contact/properties/email/description",
+      "$defs/contact/properties/phone/description",
+      "$defs/status_info/description",
+      "$defs/status_info/properties/is_active/description",
+      "$defs/status_info/properties/is_latest/description",
+      "$defs/status_info/properties/is_funded/description",
+      "$defs/status_info/properties/published_date/description",
+      "$defs/status_info/properties/last_modified_date/description",
+      "$defs/status_info/properties/contract_complete_date/description",
+      "$defs/status_info/properties/last_car_date_signed/description",
+      "$defs/common_elements/description",
+      "$defs/common_elements/properties/contacts/description",
+      "$defs/system_extensions/description",
+      "$defs/system_extensions/x-graphql-type/description",
+      "$defs/system_extensions/properties/contract_data/description",
+      "$defs/system_extensions/properties/legacy_procurement/description",
+      "$defs/system_extensions/properties/intake_process/description",
+      "$defs/system_extensions/properties/logistics_mgmt/description",
+      "$defs/system_extensions/properties/public_spending/description",
+      "$defs/system_extensions/additionalProperties/description",
+      "$defs/system_extensions/additionalProperties/oneOf/0/description",
+      "$defs/system_extensions/additionalProperties/oneOf/1/description",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/value/description",
+      "$defs/contract/description",
+      "$defs/contract/x-graphql-type/description",
+      "$defs/contract/properties/id/description",
+      "$defs/contract/properties/id/x-graphql-field/description",
+      "$defs/contract/properties/related_contracts/description",
+      "$defs/contract/properties/related_contracts/x-graphql-field/description",
+      "$defs/contract/properties/related_contracts/x-graphql-field/args/first/description",
+      "$defs/contract/properties/piid/description",
+      "$defs/contract/properties/piid/x-graphql-field/description",
+      "$defs/contract/properties/vendor_info/description",
+      "$defs/contract/properties/vendor_info/x-graphql-field/description",
+      "$defs/contract/properties/place_of_performance/description",
+      "$defs/contract/properties/place_of_performance/x-graphql-field/description"
+    ]
+  },
+  "enum": {
+    "snake": "enum",
+    "locations": [
+      "$defs/system_type/enum",
+      "$defs/contact_role/enum",
+      "$defs/contract_status/enum"
+    ]
+  },
+  "x-graphql-enum": {
+    "snake": "x-graphql-enum",
+    "locations": [
+      "$defs/system_type/x-graphql-enum",
+      "$defs/contact_role/x-graphql-enum",
+      "$defs/contract_status/x-graphql-enum"
+    ]
+  },
+  "name": {
+    "snake": "name",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/name",
+      "$defs/system_type/x-graphql-enum/values/contract_data/name",
+      "$defs/system_type/x-graphql-enum/values/legacy_procurement/name",
+      "$defs/system_type/x-graphql-enum/values/intake_process/name",
+      "$defs/system_type/x-graphql-enum/values/logistics_mgmt/name",
+      "$defs/contact_role/x-graphql-enum/name",
+      "$defs/contact_role/x-graphql-enum/values/primary/name",
+      "$defs/contact_role/x-graphql-enum/values/technical/name",
+      "$defs/contact_role/x-graphql-enum/values/administrative/name",
+      "$defs/contact_role/x-graphql-enum/values/contracting_officer/name",
+      "$defs/contract_status/x-graphql-enum/name",
+      "$defs/contract_status/x-graphql-enum/values/draft/name",
+      "$defs/contract_status/x-graphql-enum/values/published/name",
+      "$defs/contract_status/x-graphql-enum/values/awarded/name",
+      "$defs/contract_status/x-graphql-enum/values/completed/name",
+      "$defs/contract_status/x-graphql-enum/values/cancelled/name",
+      "$defs/system_metadata/x-graphql-type/name",
+      "$defs/agency_info/properties/name",
+      "$defs/contact/properties/name",
+      "$defs/system_extensions/x-graphql-type/name",
+      "$defs/contract/x-graphql-type/name"
+    ]
+  },
+  "values": {
+    "snake": "values",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/values",
+      "$defs/contact_role/x-graphql-enum/values",
+      "$defs/contract_status/x-graphql-enum/values"
+    ]
+  },
+  "contract_data": {
+    "snake": "contract_data",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/values/contract_data",
+      "$defs/system_extensions/properties/contract_data"
+    ]
+  },
+  "legacy_procurement": {
+    "snake": "legacy_procurement",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/values/legacy_procurement",
+      "$defs/system_extensions/properties/legacy_procurement"
+    ]
+  },
+  "intake_process": {
+    "snake": "intake_process",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/values/intake_process",
+      "$defs/system_extensions/properties/intake_process"
+    ]
+  },
+  "logistics_mgmt": {
+    "snake": "logistics_mgmt",
+    "locations": [
+      "$defs/system_type/x-graphql-enum/values/logistics_mgmt",
+      "$defs/system_extensions/properties/logistics_mgmt"
+    ]
+  },
+  "contactRole": {
+    "snake": "contact_role",
+    "locations": [
+      "$defs/contact_role"
+    ]
+  },
+  "primary": {
+    "snake": "primary",
+    "locations": [
+      "$defs/contact_role/x-graphql-enum/values/primary"
+    ]
+  },
+  "technical": {
+    "snake": "technical",
+    "locations": [
+      "$defs/contact_role/x-graphql-enum/values/technical"
+    ]
+  },
+  "administrative": {
+    "snake": "administrative",
+    "locations": [
+      "$defs/contact_role/x-graphql-enum/values/administrative"
+    ]
+  },
+  "contractingOfficer": {
+    "snake": "contracting_officer",
+    "locations": [
+      "$defs/contact_role/x-graphql-enum/values/contracting_officer"
+    ]
+  },
+  "contractStatus": {
+    "snake": "contract_status",
+    "locations": [
+      "$defs/contract_status"
+    ]
+  },
+  "draft": {
+    "snake": "draft",
+    "locations": [
+      "$defs/contract_status/x-graphql-enum/values/draft"
+    ]
+  },
+  "published": {
+    "snake": "published",
+    "locations": [
+      "$defs/contract_status/x-graphql-enum/values/published"
+    ]
+  },
+  "awarded": {
+    "snake": "awarded",
+    "locations": [
+      "$defs/contract_status/x-graphql-enum/values/awarded"
+    ]
+  },
+  "completed": {
+    "snake": "completed",
+    "locations": [
+      "$defs/contract_status/x-graphql-enum/values/completed"
+    ]
+  },
+  "cancelled": {
+    "snake": "cancelled",
+    "locations": [
+      "$defs/contract_status/x-graphql-enum/values/cancelled"
+    ]
+  },
+  "dataQuality": {
+    "snake": "data_quality",
+    "locations": [
+      "$defs/data_quality",
+      "$defs/system_chain_entry/properties/data_quality"
+    ]
+  },
+  "completenessScore": {
+    "snake": "completeness_score",
+    "locations": [
+      "$defs/data_quality/properties/completeness_score"
+    ]
+  },
+  "validationErrors": {
+    "snake": "validation_errors",
+    "locations": [
+      "$defs/data_quality/properties/validation_errors"
+    ]
+  },
+  "lastValidated": {
+    "snake": "last_validated",
+    "locations": [
+      "$defs/data_quality/properties/last_validated"
+    ]
+  },
+  "properties": {
+    "snake": "properties",
+    "locations": [
+      "$defs/data_quality/properties",
+      "$defs/system_chain_entry/properties",
+      "$defs/system_metadata/properties",
+      "$defs/contract_identification/properties",
+      "$defs/agency_info/properties",
+      "$defs/organization_info/properties",
+      "$defs/vendor_info/properties",
+      "$defs/place_of_performance/properties",
+      "$defs/financial_info/properties",
+      "$defs/business_classification/properties",
+      "$defs/contract_characteristics/properties",
+      "$defs/contact/properties",
+      "$defs/status_info/properties",
+      "$defs/common_elements/properties",
+      "$defs/system_extensions/properties",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties",
+      "$defs/contract/properties"
+    ]
+  },
+  "minimum": {
+    "snake": "minimum",
+    "locations": [
+      "$defs/data_quality/properties/completeness_score/minimum"
+    ]
+  },
+  "maximum": {
+    "snake": "maximum",
+    "locations": [
+      "$defs/data_quality/properties/completeness_score/maximum"
+    ]
+  },
+  "items": {
+    "snake": "items",
+    "locations": [
+      "$defs/data_quality/properties/validation_errors/items",
+      "$defs/system_chain_entry/properties/transformation_rules/items",
+      "$defs/system_metadata/properties/system_chain/items",
+      "$defs/common_elements/properties/contacts/items",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items"
+    ]
+  },
+  "format": {
+    "snake": "format",
+    "locations": [
+      "$defs/data_quality/properties/last_validated/format",
+      "$defs/system_chain_entry/properties/processed_date/format",
+      "$defs/system_metadata/properties/last_modified/format",
+      "$defs/contact/properties/email/format",
+      "$defs/status_info/properties/published_date/format",
+      "$defs/status_info/properties/last_modified_date/format",
+      "$defs/status_info/properties/contract_complete_date/format",
+      "$defs/status_info/properties/last_car_date_signed/format"
+    ]
+  },
+  "pattern": {
+    "snake": "pattern",
+    "locations": [
+      "$defs/data_quality/properties/last_validated/pattern",
+      "$defs/system_chain_entry/properties/processed_date/pattern",
+      "$defs/system_metadata/properties/last_modified/pattern",
+      "$defs/status_info/properties/published_date/pattern",
+      "$defs/status_info/properties/last_modified_date/pattern",
+      "$defs/status_info/properties/contract_complete_date/pattern",
+      "$defs/status_info/properties/last_car_date_signed/pattern"
+    ]
+  },
+  "x-graphql-scalar": {
+    "snake": "x-graphql-scalar",
+    "locations": [
+      "$defs/data_quality/properties/last_validated/x-graphql-scalar",
+      "$defs/system_chain_entry/properties/processed_date/x-graphql-scalar",
+      "$defs/system_metadata/properties/last_modified/x-graphql-scalar",
+      "$defs/financial_info/properties/total_contract_value/x-graphql-scalar",
+      "$defs/financial_info/properties/base_and_all_options_value/x-graphql-scalar",
+      "$defs/financial_info/properties/independent_government_estimate/x-graphql-scalar",
+      "$defs/financial_info/properties/amount_spent_on_product/x-graphql-scalar",
+      "$defs/contact/properties/email/x-graphql-scalar",
+      "$defs/status_info/properties/published_date/x-graphql-scalar",
+      "$defs/status_info/properties/last_modified_date/x-graphql-scalar",
+      "$defs/status_info/properties/contract_complete_date/x-graphql-scalar",
+      "$defs/status_info/properties/last_car_date_signed/x-graphql-scalar"
+    ]
+  },
+  "systemChainEntry": {
+    "snake": "system_chain_entry",
+    "locations": [
+      "$defs/system_chain_entry"
+    ]
+  },
+  "systemName": {
+    "snake": "system_name",
+    "locations": [
+      "$defs/system_chain_entry/properties/system_name"
+    ]
+  },
+  "recordId": {
+    "snake": "record_id",
+    "locations": [
+      "$defs/system_chain_entry/properties/record_id"
+    ]
+  },
+  "processedDate": {
+    "snake": "processed_date",
+    "locations": [
+      "$defs/system_chain_entry/properties/processed_date"
+    ]
+  },
+  "transformationRules": {
+    "snake": "transformation_rules",
+    "locations": [
+      "$defs/system_chain_entry/properties/transformation_rules"
+    ]
+  },
+  "$ref": {
+    "snake": "$ref",
+    "locations": [
+      "$defs/system_chain_entry/properties/system_name/$ref",
+      "$defs/system_chain_entry/properties/data_quality/$ref",
+      "$defs/system_metadata/properties/primary_system/$ref",
+      "$defs/system_metadata/properties/system_chain/items/$ref",
+      "$defs/organization_info/properties/contracting_agency/all_of/0/$ref",
+      "$defs/organization_info/properties/contracting_department/$ref",
+      "$defs/organization_info/properties/funding_agency/$ref",
+      "$defs/organization_info/properties/funding_department/$ref",
+      "$defs/contact/properties/role/$ref",
+      "$defs/status_info/properties/status/$ref",
+      "$defs/common_elements/properties/contract_identification/$ref",
+      "$defs/common_elements/properties/organization_info/$ref",
+      "$defs/common_elements/properties/vendor_info/$ref",
+      "$defs/common_elements/properties/place_of_performance/$ref",
+      "$defs/common_elements/properties/financial_info/$ref",
+      "$defs/common_elements/properties/business_classification/$ref",
+      "$defs/common_elements/properties/contract_characteristics/$ref",
+      "$defs/common_elements/properties/contacts/items/$ref",
+      "$defs/common_elements/properties/status_info/$ref",
+      "$defs/system_extensions/properties/contract_data/$ref",
+      "$defs/system_extensions/properties/legacy_procurement/$ref",
+      "$defs/system_extensions/properties/intake_process/$ref",
+      "$defs/system_extensions/properties/logistics_mgmt/$ref",
+      "$defs/system_extensions/properties/public_spending/$ref",
+      "$defs/contract/properties/system_metadata/$ref",
+      "$defs/contract/properties/common_elements/$ref",
+      "$defs/contract/properties/system_extensions/$ref",
+      "$defs/contract/properties/vendor_info/$ref",
+      "$defs/contract/properties/place_of_performance/$ref"
+    ]
+  },
+  "required": {
+    "snake": "required",
+    "locations": [
+      "$defs/system_chain_entry/required",
+      "$defs/system_metadata/required",
+      "$defs/contract_identification/required",
+      "$defs/organization_info/properties/contracting_agency/all_of/1/required",
+      "$defs/organization_info/required",
+      "$defs/common_elements/required",
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/required",
+      "$defs/contract/required"
+    ]
+  },
+  "systemMetadata": {
+    "snake": "system_metadata",
+    "locations": [
+      "$defs/system_metadata",
+      "$defs/contract/properties/system_metadata",
+      "properties/system_metadata"
+    ]
+  },
+  "primarySystem": {
+    "snake": "primary_system",
+    "locations": [
+      "$defs/system_metadata/properties/primary_system"
+    ]
+  },
+  "systemChain": {
+    "snake": "system_chain",
+    "locations": [
+      "$defs/system_metadata/properties/system_chain"
+    ]
+  },
+  "schemaVersion": {
+    "snake": "schema_version",
+    "locations": [
+      "$defs/system_metadata/properties/schema_version"
+    ]
+  },
+  "lastModified": {
+    "snake": "last_modified",
+    "locations": [
+      "$defs/system_metadata/properties/last_modified"
+    ]
+  },
+  "globalRecordId": {
+    "snake": "global_record_id",
+    "locations": [
+      "$defs/system_metadata/properties/global_record_id"
+    ]
+  },
+  "x-graphql-type": {
+    "snake": "x-graphql-type",
+    "locations": [
+      "$defs/system_metadata/x-graphql-type",
+      "$defs/system_extensions/x-graphql-type",
+      "$defs/contract/x-graphql-type"
+    ]
+  },
+  "default": {
+    "snake": "default",
+    "locations": [
+      "$defs/system_metadata/properties/schema_version/default",
+      "$defs/contract/properties/related_contracts/x-graphql-field/args/first/default"
+    ]
+  },
+  "x-graphql-required": {
+    "snake": "x-graphql-required",
+    "locations": [
+      "$defs/system_metadata/properties/schema_version/x-graphql-required",
+      "$defs/system_metadata/properties/last_modified/x-graphql-required",
+      "$defs/system_metadata/properties/global_record_id/x-graphql-required"
+    ]
+  },
+  "contractIdentification": {
+    "snake": "contract_identification",
+    "locations": [
+      "$defs/contract_identification",
+      "$defs/common_elements/properties/contract_identification"
+    ]
+  },
+  "piid": {
+    "snake": "piid",
+    "locations": [
+      "$defs/contract_identification/properties/piid",
+      "$defs/contract/properties/piid",
+      "properties/piid"
+    ]
+  },
+  "originalAwardPiid": {
+    "snake": "original_award_piid",
+    "locations": [
+      "$defs/contract_identification/properties/original_award_piid"
+    ]
+  },
+  "referencedPiid": {
+    "snake": "referenced_piid",
+    "locations": [
+      "$defs/contract_identification/properties/referenced_piid"
+    ]
+  },
+  "contractTitle": {
+    "snake": "contract_title",
+    "locations": [
+      "$defs/contract_identification/properties/contract_title"
+    ]
+  },
+  "contractType": {
+    "snake": "contract_type",
+    "locations": [
+      "$defs/contract_identification/properties/contract_type"
+    ]
+  },
+  "descriptionOfRequirement": {
+    "snake": "description_of_requirement",
+    "locations": [
+      "$defs/contract_identification/properties/description_of_requirement"
+    ]
+  },
+  "maxLength": {
+    "snake": "max_length",
+    "locations": [
+      "$defs/contract_identification/properties/piid/max_length",
+      "$defs/contract_identification/properties/original_award_piid/max_length",
+      "$defs/contract_identification/properties/referenced_piid/max_length"
+    ]
+  },
+  "agencyInfo": {
+    "snake": "agency_info",
+    "locations": [
+      "$defs/agency_info"
+    ]
+  },
+  "code": {
+    "snake": "code",
+    "locations": [
+      "$defs/agency_info/properties/code"
+    ]
+  },
+  "organizationInfo": {
+    "snake": "organization_info",
+    "locations": [
+      "$defs/organization_info",
+      "$defs/common_elements/properties/organization_info"
+    ]
+  },
+  "contractingAgency": {
+    "snake": "contracting_agency",
+    "locations": [
+      "$defs/organization_info/properties/contracting_agency"
+    ]
+  },
+  "contractingDepartment": {
+    "snake": "contracting_department",
+    "locations": [
+      "$defs/organization_info/properties/contracting_department"
+    ]
+  },
+  "fundingAgency": {
+    "snake": "funding_agency",
+    "locations": [
+      "$defs/organization_info/properties/funding_agency"
+    ]
+  },
+  "fundingDepartment": {
+    "snake": "funding_department",
+    "locations": [
+      "$defs/organization_info/properties/funding_department"
+    ]
+  },
+  "allOf": {
+    "snake": "all_of",
+    "locations": [
+      "$defs/organization_info/properties/contracting_agency/all_of"
+    ]
+  },
+  "vendorInfo": {
+    "snake": "vendor_info",
+    "locations": [
+      "$defs/vendor_info",
+      "$defs/common_elements/properties/vendor_info",
+      "$defs/contract/properties/vendor_info",
+      "properties/vendor_info"
+    ]
+  },
+  "vendorName": {
+    "snake": "vendor_name",
+    "locations": [
+      "$defs/vendor_info/properties/vendor_name"
+    ]
+  },
+  "vendorUei": {
+    "snake": "vendor_uei",
+    "locations": [
+      "$defs/vendor_info/properties/vendor_uei"
+    ]
+  },
+  "placeOfPerformance": {
+    "snake": "place_of_performance",
+    "locations": [
+      "$defs/place_of_performance",
+      "$defs/common_elements/properties/place_of_performance",
+      "$defs/contract/properties/place_of_performance",
+      "properties/place_of_performance"
+    ]
+  },
+  "streetAddress": {
+    "snake": "street_address",
+    "locations": [
+      "$defs/place_of_performance/properties/street_address"
+    ]
+  },
+  "city": {
+    "snake": "city",
+    "locations": [
+      "$defs/place_of_performance/properties/city"
+    ]
+  },
+  "county": {
+    "snake": "county",
+    "locations": [
+      "$defs/place_of_performance/properties/county"
+    ]
+  },
+  "state": {
+    "snake": "state",
+    "locations": [
+      "$defs/place_of_performance/properties/state"
+    ]
+  },
+  "zip": {
+    "snake": "zip",
+    "locations": [
+      "$defs/place_of_performance/properties/zip"
+    ]
+  },
+  "country": {
+    "snake": "country",
+    "locations": [
+      "$defs/place_of_performance/properties/country"
+    ]
+  },
+  "congressionalDistrict": {
+    "snake": "congressional_district",
+    "locations": [
+      "$defs/place_of_performance/properties/congressional_district"
+    ]
+  },
+  "financialInfo": {
+    "snake": "financial_info",
+    "locations": [
+      "$defs/financial_info",
+      "$defs/common_elements/properties/financial_info"
+    ]
+  },
+  "totalContractValue": {
+    "snake": "total_contract_value",
+    "locations": [
+      "$defs/financial_info/properties/total_contract_value"
+    ]
+  },
+  "baseAndAllOptionsValue": {
+    "snake": "base_and_all_options_value",
+    "locations": [
+      "$defs/financial_info/properties/base_and_all_options_value"
+    ]
+  },
+  "independentGovernmentEstimate": {
+    "snake": "independent_government_estimate",
+    "locations": [
+      "$defs/financial_info/properties/independent_government_estimate"
+    ]
+  },
+  "amountSpentOnProduct": {
+    "snake": "amount_spent_on_product",
+    "locations": [
+      "$defs/financial_info/properties/amount_spent_on_product"
+    ]
+  },
+  "contractFiscalYear": {
+    "snake": "contract_fiscal_year",
+    "locations": [
+      "$defs/financial_info/properties/contract_fiscal_year"
+    ]
+  },
+  "businessClassification": {
+    "snake": "business_classification",
+    "locations": [
+      "$defs/business_classification",
+      "$defs/common_elements/properties/business_classification"
+    ]
+  },
+  "naicsCode": {
+    "snake": "naics_code",
+    "locations": [
+      "$defs/business_classification/properties/naics_code"
+    ]
+  },
+  "naicsDescription": {
+    "snake": "naics_description",
+    "locations": [
+      "$defs/business_classification/properties/naics_description"
+    ]
+  },
+  "pscCode": {
+    "snake": "psc_code",
+    "locations": [
+      "$defs/business_classification/properties/psc_code"
+    ]
+  },
+  "pscDescription": {
+    "snake": "psc_description",
+    "locations": [
+      "$defs/business_classification/properties/psc_description"
+    ]
+  },
+  "categoryOfProduct": {
+    "snake": "category_of_product",
+    "locations": [
+      "$defs/business_classification/properties/category_of_product"
+    ]
+  },
+  "typeOfProduct": {
+    "snake": "type_of_product",
+    "locations": [
+      "$defs/business_classification/properties/type_of_product"
+    ]
+  },
+  "setAsideType": {
+    "snake": "set_aside_type",
+    "locations": [
+      "$defs/business_classification/properties/set_aside_type"
+    ]
+  },
+  "localAreaSetAside": {
+    "snake": "local_area_set_aside",
+    "locations": [
+      "$defs/business_classification/properties/local_area_set_aside"
+    ]
+  },
+  "coSizeDetermination": {
+    "snake": "co_size_determination",
+    "locations": [
+      "$defs/business_classification/properties/co_size_determination"
+    ]
+  },
+  "contractCharacteristics": {
+    "snake": "contract_characteristics",
+    "locations": [
+      "$defs/contract_characteristics",
+      "$defs/common_elements/properties/contract_characteristics"
+    ]
+  },
+  "emergencyAcquisition": {
+    "snake": "emergency_acquisition",
+    "locations": [
+      "$defs/contract_characteristics/properties/emergency_acquisition"
+    ]
+  },
+  "governmentFurnishedProperty": {
+    "snake": "government_furnished_property",
+    "locations": [
+      "$defs/contract_characteristics/properties/government_furnished_property"
+    ]
+  },
+  "includesCui": {
+    "snake": "includes_cui",
+    "locations": [
+      "$defs/contract_characteristics/properties/includes_cui"
+    ]
+  },
+  "recurringService": {
+    "snake": "recurring_service",
+    "locations": [
+      "$defs/contract_characteristics/properties/recurring_service"
+    ]
+  },
+  "recurringUtilities": {
+    "snake": "recurring_utilities",
+    "locations": [
+      "$defs/contract_characteristics/properties/recurring_utilities"
+    ]
+  },
+  "contact": {
+    "snake": "contact",
+    "locations": [
+      "$defs/contact"
+    ]
+  },
+  "title": {
+    "snake": "title",
+    "locations": [
+      "$defs/contact/properties/title",
+      "$defs/contract/title"
+    ]
+  },
+  "email": {
+    "snake": "email",
+    "locations": [
+      "$defs/contact/properties/email"
+    ]
+  },
+  "phone": {
+    "snake": "phone",
+    "locations": [
+      "$defs/contact/properties/phone"
+    ]
+  },
+  "role": {
+    "snake": "role",
+    "locations": [
+      "$defs/contact/properties/role"
+    ]
+  },
+  "statusInfo": {
+    "snake": "status_info",
+    "locations": [
+      "$defs/status_info",
+      "$defs/common_elements/properties/status_info"
+    ]
+  },
+  "isActive": {
+    "snake": "is_active",
+    "locations": [
+      "$defs/status_info/properties/is_active"
+    ]
+  },
+  "isLatest": {
+    "snake": "is_latest",
+    "locations": [
+      "$defs/status_info/properties/is_latest"
+    ]
+  },
+  "isFunded": {
+    "snake": "is_funded",
+    "locations": [
+      "$defs/status_info/properties/is_funded"
+    ]
+  },
+  "status": {
+    "snake": "status",
+    "locations": [
+      "$defs/status_info/properties/status"
+    ]
+  },
+  "publishedDate": {
+    "snake": "published_date",
+    "locations": [
+      "$defs/status_info/properties/published_date"
+    ]
+  },
+  "lastModifiedDate": {
+    "snake": "last_modified_date",
+    "locations": [
+      "$defs/status_info/properties/last_modified_date"
+    ]
+  },
+  "contractCompleteDate": {
+    "snake": "contract_complete_date",
+    "locations": [
+      "$defs/status_info/properties/contract_complete_date"
+    ]
+  },
+  "lastCarDateSigned": {
+    "snake": "last_car_date_signed",
+    "locations": [
+      "$defs/status_info/properties/last_car_date_signed"
+    ]
+  },
+  "commonElements": {
+    "snake": "common_elements",
+    "locations": [
+      "$defs/common_elements",
+      "$defs/contract/properties/common_elements",
+      "properties/common_elements"
+    ]
+  },
+  "contacts": {
+    "snake": "contacts",
+    "locations": [
+      "$defs/common_elements/properties/contacts"
+    ]
+  },
+  "systemExtensions": {
+    "snake": "system_extensions",
+    "locations": [
+      "$defs/system_extensions",
+      "$defs/contract/properties/system_extensions",
+      "properties/system_extensions"
+    ]
+  },
+  "public_spending": {
+    "snake": "public_spending",
+    "locations": [
+      "$defs/system_extensions/properties/public_spending"
+    ]
+  },
+  "additionalProperties": {
+    "snake": "additionalProperties",
+    "locations": [
+      "$defs/system_extensions/additionalProperties"
+    ]
+  },
+  "oneOf": {
+    "snake": "oneOf",
+    "locations": [
+      "$defs/system_extensions/additionalProperties/oneOf"
+    ]
+  },
+  "fieldName": {
+    "snake": "field_name",
+    "locations": [
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/field_name"
+    ]
+  },
+  "fieldType": {
+    "snake": "field_type",
+    "locations": [
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/field_type"
+    ]
+  },
+  "value": {
+    "snake": "value",
+    "locations": [
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/value"
+    ]
+  },
+  "category": {
+    "snake": "category",
+    "locations": [
+      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/category"
+    ]
+  },
+  "contract": {
+    "snake": "contract",
+    "locations": [
+      "$defs/contract"
+    ]
+  },
+  "id": {
+    "snake": "id",
+    "locations": [
+      "$defs/contract/properties/id",
+      "properties/id"
+    ]
+  },
+  "relatedContracts": {
+    "snake": "related_contracts",
+    "locations": [
+      "$defs/contract/properties/related_contracts",
+      "properties/related_contracts"
+    ]
+  },
+  "implements": {
+    "snake": "implements",
+    "locations": [
+      "$defs/contract/x-graphql-type/implements"
+    ]
+  },
+  "x-graphql-field": {
+    "snake": "x-graphql-field",
+    "locations": [
+      "$defs/contract/properties/id/x-graphql-field",
+      "$defs/contract/properties/related_contracts/x-graphql-field",
+      "$defs/contract/properties/piid/x-graphql-field",
+      "$defs/contract/properties/vendor_info/x-graphql-field",
+      "$defs/contract/properties/place_of_performance/x-graphql-field"
+    ]
+  },
+  "resolver": {
+    "snake": "resolver",
+    "locations": [
+      "$defs/contract/properties/id/x-graphql-field/resolver",
+      "$defs/contract/properties/related_contracts/x-graphql-field/resolver"
+    ]
+  },
+  "args": {
+    "snake": "args",
+    "locations": [
+      "$defs/contract/properties/related_contracts/x-graphql-field/args"
+    ]
+  },
+  "first": {
+    "snake": "first",
+    "locations": [
+      "$defs/contract/properties/related_contracts/x-graphql-field/args/first"
+    ]
+  }
+}

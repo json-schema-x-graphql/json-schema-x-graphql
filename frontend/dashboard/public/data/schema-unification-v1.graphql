@@ -1,0 +1,296 @@
+"""SystemChainEntry information"""
+type SystemChainEntry {
+  systemName: SystemType!
+  recordId: String!
+  processedDate: DateTime!
+  transformationRules: [String]
+  dataQuality: String
+}
+
+"""DataQuality information"""
+type DataQuality {
+  completenessScore: Float
+  validationErrors: [String]
+  lastValidated: DateTime
+}
+
+"""Metadata supporting multiple nested systems"""
+type SystemMetadata {
+  primarySystem: SystemType!
+
+  """Chain of systems data has flowed through"""
+  systemChain: [SystemChainEntry]!
+  schemaVersion: String
+  lastModified: DateTime
+
+  """Global unique identifier across all systems"""
+  globalRecordId: String!
+}
+
+"""ContractIdentification information"""
+type ContractIdentification {
+  """Procurement Instrument Identifier"""
+  piid: String!
+
+  """Original Award PIID (Preceding Reference Info)"""
+  originalAwardPiid: String
+
+  """Referenced PIID for related contracts"""
+  referencedPiid: String
+
+  """Title or description of the contract"""
+  contractTitle: String
+
+  """Type of contract instrument"""
+  contractType: String
+
+  """Detailed description of contract requirements"""
+  descriptionOfRequirement: String
+}
+
+"""Agency or department information"""
+type AgencyInfo {
+  """Agency or Department Code"""
+  code: String
+
+  """Agency or Department Name"""
+  name: String
+}
+
+type OrganizationInfo {
+  contractingAgency: AgencyInfo!
+  contractingDepartment: AgencyInfo
+  fundingAgency: AgencyInfo
+  fundingDepartment: AgencyInfo
+}
+
+"""VendorInfo information"""
+type VendorInfo {
+  """Name of the vendor providing goods/services"""
+  vendorName: String
+
+  """Vendor Unique Entity Identifier"""
+  vendorUei: String
+}
+
+"""PlaceOfPerformance information"""
+type PlaceOfPerformance {
+  streetAddress: String
+  city: String
+  county: String
+  state: String
+  zip: String
+  country: String
+  congressionalDistrict: String
+}
+
+"""FinancialInfo information"""
+type FinancialInfo {
+  """Total contract value including all modifications"""
+  totalContractValue: Float
+
+  """Base contract value plus all option periods"""
+  baseAndAllOptionsValue: Float
+
+  """IGE amount"""
+  independentGovernmentEstimate: Float
+
+  """Amount spent on specific products"""
+  amountSpentOnProduct: Decimal
+
+  """Fiscal year when contract was awarded"""
+  contractFiscalYear: String
+}
+
+"""BusinessClassification information"""
+type BusinessClassification {
+  """NAICS classification code"""
+  naicsCode: String
+  naicsDescription: String
+
+  """Product Service Code"""
+  pscCode: String
+
+  """Product Service Code Description"""
+  pscDescription: String
+
+  """General category under which the product falls"""
+  categoryOfProduct: String
+
+  """Specific type of product being contracted"""
+  typeOfProduct: String
+
+  """Type of set-aside program"""
+  setAsideType: String
+  localAreaSetAside: Boolean
+
+  """Contracting Officer size determination"""
+  coSizeDetermination: String
+}
+
+"""ContractCharacteristics information"""
+type ContractCharacteristics {
+  emergencyAcquisition: String
+  governmentFurnishedProperty: Boolean
+
+  """Includes Controlled Unclassified Information"""
+  includesCui: Boolean
+  recurringService: Boolean
+  recurringUtilities: Boolean
+}
+
+"""Contact information"""
+type Contact {
+  name: String
+  title: String
+  email: Email
+  phone: String
+  role: ContactRole
+}
+
+"""StatusInfo information"""
+type StatusInfo {
+  isActive: Boolean
+  isLatest: Boolean
+  isFunded: Boolean
+  status: ContractStatus
+  publishedDate: DateTime
+  lastModifiedDate: DateTime
+
+  """Date when contract was completed"""
+  contractCompleteDate: Date
+
+  """Date when last Contract Action Report was signed"""
+  lastCarDateSigned: Date
+}
+
+"""Contract Data-specific fields and extensions"""
+type Contract DataExtension {
+  fieldName: String
+  fieldType: String
+  value: String
+  contract_dataSpecific: String
+}
+
+"""Legacy Procurement-specific fields and extensions"""
+type AssistExtension {
+  fieldName: String
+  fieldType: String
+  value: String
+  legacy_procurementSpecific: String
+}
+
+"""EASi-specific fields and extensions"""
+type EasiExtension {
+  fieldName: String
+  fieldType: String
+  value: String
+  intake_processSpecific: String
+}
+
+"""Government contract with metadata and system-specific extensions"""
+type Contract {
+  systemMetadata: SystemMetadata!
+  contractIdentification: ContractIdentification!
+  organizationInfo: OrganizationInfo!
+  vendorInfo: VendorInfo
+  placeOfPerformance: PlaceOfPerformance
+  financialInfo: FinancialInfo
+  businessClassification: BusinessClassification
+  contractCharacteristics: ContractCharacteristics
+  contacts: [Contact]
+  statusInfo: StatusInfo!
+  contract_dataExtensions: [Contract DataExtension]
+  legacy_procurementExtensions: [AssistExtension]
+  intake_processExtensions: [EasiExtension]
+}
+
+"""Source system types"""
+enum SystemType {
+  """Federal Procurement Data System - Next Generation"""
+  Contract Data
+
+  """Award System for Streamlined IT Transactions"""
+  Legacy Procurement
+
+  """Enterprise Acquisition System for Infrastructure"""
+  Intake Process
+
+  """Contract Award Lifecycle Management"""
+  Logistics Mgmt
+}
+
+"""Contact role types"""
+enum ContactRole {
+  """Primary contact"""
+  PRIMARY
+
+  """Technical contact"""
+  TECHNICAL
+
+  """Administrative contact"""
+  ADMINISTRATIVE
+
+  """Contracting officer"""
+  CONTRACTING_OFFICER
+}
+
+"""Contract status values"""
+enum ContractStatus {
+  """Draft contract"""
+  DRAFT
+
+  """Published contract"""
+  PUBLISHED
+
+  """Awarded contract"""
+  AWARDED
+
+  """Completed contract"""
+  COMPLETED
+
+  """Cancelled contract"""
+  CANCELLED
+}
+
+"""ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"""
+scalar DateTime
+
+"""ISO 8601 date string (YYYY-MM-DD)"""
+scalar Date
+
+"""High-precision decimal number for currency and financial values"""
+scalar Decimal
+
+"""Arbitrary JSON value"""
+scalar JSON
+
+"""Valid email address"""
+scalar Email
+
+"""Valid URI/URL"""
+scalar URI
+
+"""Union of system-specific extensions"""
+union SystemExtension = Contract DataExtension | AssistExtension | EasiExtension
+
+"""Root query type"""
+type Query {
+  """Fetch a single contract by global ID"""
+  contract: Contract
+
+  """Fetch a contract by PIID"""
+  contractByPiid: Contract
+
+  """List all contracts with optional filtering"""
+  contracts: String
+
+  """List contracts by source system"""
+  contractsBySystem: String
+}
+
+"""Root mutation type"""
+type Mutation {
+  """Trigger data ingestion from a source system"""
+  triggerDataIngestion: Boolean
+}

@@ -7,8 +7,7 @@
  * Rust implementation as closely as possible.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jsonSchemaToGraphQL = jsonSchemaToGraphQL;
-exports.graphqlToJsonSchema = graphqlToJsonSchema;
+exports.Converter = exports.graphqlToJsonSchema = exports.jsonSchemaToGraphQL = void 0;
 class ConversionError extends Error {
     constructor(message, code) {
         super(message);
@@ -36,11 +35,11 @@ function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
             ? Object.entries(definitions)
             : Object.entries(definitions).sort(([a], [b]) => a.localeCompare(b));
         for (const [defKey, defSchema] of entries) {
-            const typeName = getTypeName(defSchema, defKey);
+            const typeName = getTypeName(defSchema, context, defKey);
             convertTypeDefinition(defSchema, typeName, context);
         }
     }
-    const rootTypeName = getTypeName(schema, schema.title ?? "Root");
+    const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
     convertTypeDefinition(schema, rootTypeName, context);
     emitOperations(schema, context);
     const finalSDL = context.output
@@ -52,6 +51,7 @@ function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
     }
     return finalSDL;
 }
+exports.jsonSchemaToGraphQL = jsonSchemaToGraphQL;
 function graphqlToJsonSchema(graphqlSdl, options = {}) {
     const normalized = normalizeOptions(options);
     const schema = {
@@ -107,6 +107,7 @@ function graphqlToJsonSchema(graphqlSdl, options = {}) {
     }
     return JSON.stringify(schema, null, 2);
 }
+exports.graphqlToJsonSchema = graphqlToJsonSchema;
 // --- Core Conversion ------------------------------------------------------------
 function convertTypeDefinition(schema, typeName, context) {
     if (!typeName)
@@ -141,7 +142,24 @@ function renderEnum(typeName, schema, options) {
         lines.push(formatDescription(schema.description));
     }
     lines.push(`enum ${typeName}${formatDirectives(schema)} {`);
-    const values = schema["x-graphql-enum"]?.values ?? schema.enum ?? [];
+    let values = [];
+    const enumConfig = schema["x-graphql-enum"];
+    if (enumConfig?.values) {
+        if (Array.isArray(enumConfig.values)) {
+            values = enumConfig.values;
+        }
+        else if (typeof enumConfig.values === "object") {
+            values = Object.entries(enumConfig.values).map(([k, v]) => {
+                if (typeof v === "string") {
+                    return { name: v, value: k };
+                }
+                return { value: k, ...v };
+            });
+        }
+    }
+    else {
+        values = schema.enum ?? [];
+    }
     for (const raw of values) {
         if (typeof raw === "object" && raw !== null) {
             const valName = raw.name ?? raw.value;
@@ -223,12 +241,20 @@ function renderObject(typeName, schema, context) {
     lines.push("}\n");
     return lines.join("\n");
 }
+function toCamelCase(str) {
+    return str
+        .replace(/[-_]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
+        .replace(/^[A-Z]/, (c) => c.toLowerCase());
+}
 function convertField(propName, schema, isRequired, context) {
     const { options } = context;
     const description = options.includeDescriptions && schema.description
         ? `${formatDescription(schema.description)}\n  `
         : "";
-    const fieldName = schema["x-graphql-field-name"] ?? propName;
+    const fieldName = schema["x-graphql-field-name"] ||
+        (options.namingConvention === "PRESERVE"
+            ? propName
+            : toCamelCase(propName));
     const args = formatArgs(schema);
     const typeRef = inferGraphQLType(schema, isRequired, context);
     if (!typeRef)
@@ -249,12 +275,12 @@ function inferGraphQLType(schema, isRequired, context, depth = 0) {
         return finalizeType(explicitType, isRequired);
     }
     if (schema["x-graphql-scalar"]) {
-        return finalizeType(toPascalCase(schema["x-graphql-scalar"]), isRequired);
+        return finalizeType(sanitizeTypeName(schema["x-graphql-scalar"], options.namingConvention), isRequired);
     }
     if (schema.$ref) {
         const typeName = ensureReferencedType(schema.$ref, context);
         const fallback = pointerLastSegment(schema.$ref);
-        const resolvedName = typeName ?? toPascalCase(fallback);
+        const resolvedName = typeName ?? sanitizeTypeName(fallback, options.namingConvention);
         return finalizeType(resolvedName, isRequired);
     }
     const typeValue = Array.isArray(schema.type) ? schema.type[0] : schema.type;
@@ -273,9 +299,8 @@ function inferGraphQLType(schema, isRequired, context, depth = 0) {
             return finalizeType(`[${itemType}]`, isRequired);
         }
         case "object": {
-            const typeName = schema["x-graphql-type-name"] ??
-                schema.title ??
-                toPascalCase(propFallbackName(schema));
+            const fallback = propFallbackName(schema);
+            const typeName = getTypeName(schema, context, fallback);
             if (typeName) {
                 convertTypeDefinition(schema, typeName, context);
                 return finalizeType(typeName, isRequired);
@@ -296,7 +321,7 @@ function ensureReferencedType(refPath, context) {
         return primitive;
     }
     const fallback = pointerLastSegment(refPath);
-    const inferredName = getTypeName(target, fallback);
+    const inferredName = getTypeName(target, context, fallback);
     if (!inferredName) {
         return null;
     }
@@ -305,7 +330,27 @@ function ensureReferencedType(refPath, context) {
 }
 function resolveRef(refPath, context, visited = new Set()) {
     if (!refPath.startsWith("#")) {
-        throw new ConversionError(`External $ref not supported: ${refPath}`, "UNSUPPORTED_REF");
+        // Treat external refs as opaque objects for now to avoid crashing
+        const name = refPath
+            .split("/")
+            .pop()
+            ?.replace(".schema.json", "")
+            .replace(/[^a-zA-Z0-9]/g, "_") || "ExternalType";
+        const pascalName = name.charAt(0).toUpperCase() + name.slice(1);
+        return {
+            schema: {
+                type: "object",
+                description: `External reference to ${refPath}`,
+                "x-graphql-type-name": pascalName,
+                properties: {
+                    _external_ref: {
+                        type: "string",
+                        description: "Placeholder for external reference",
+                    },
+                },
+            },
+            pointer: "",
+        };
     }
     if (visited.has(refPath)) {
         throw new ConversionError(`Circular $ref detected: ${refPath}`, "CIRCULAR_REF");
@@ -381,26 +426,63 @@ function emitOperations(schema, context) {
 }
 // --- Helpers -------------------------------------------------------------------
 function normalizeOptions(options) {
-    const defaults = {
-        validate: false,
-        includeDescriptions: true,
-        preserveFieldOrder: true,
-        federationVersion: 2,
-        maxDepth: 25,
-        excludeTypes: [],
-        excludePatterns: [],
-    };
-    const merged = { ...defaults, ...options };
-    const excludeTypes = Array.from(new Set(merged.excludeTypes ?? []));
-    const excludePatterns = Array.from(new Set(merged.excludePatterns ?? []));
+    let federationVersion = 2;
+    if (options.federationVersion === 'V1') {
+        federationVersion = 1;
+    }
+    else if (options.federationVersion === 'NONE') {
+        federationVersion = 0;
+    }
+    const validate = options.validate ?? true;
+    const includeDescriptions = options.includeDescriptions ?? true;
+    const preserveFieldOrder = options.preserveFieldOrder ?? true;
+    const namingConvention = options.namingConvention ?? 'GRAPHQL_IDIOMATIC';
+    const inferIds = options.inferIds ?? false;
+    const maxDepth = options.maxDepth ?? 25;
+    const excludeTypes = Array.from(new Set(options.excludeTypes ?? []));
+    const excludePatterns = Array.from(new Set(options.excludePatterns ?? []));
     const excludeRegexes = excludePatterns.map((pattern) => new RegExp(pattern));
     return {
-        ...merged,
+        validate,
+        includeDescriptions,
+        preserveFieldOrder,
+        namingConvention,
+        inferIds,
+        maxDepth,
+        federationVersion,
         excludeTypes,
         excludePatterns,
         excludeRegexes,
     };
 }
+class Converter {
+    async convert(input) {
+        try {
+            const jsonSchema = typeof input.jsonSchema === 'string'
+                ? JSON.parse(input.jsonSchema)
+                : input.jsonSchema;
+            const sdl = jsonSchemaToGraphQL(jsonSchema, input.options || {});
+            return {
+                sdl,
+                diagnostics: [],
+                success: true
+            };
+        }
+        catch (error) {
+            return {
+                sdl: null,
+                diagnostics: [{
+                        severity: 'ERROR',
+                        message: error.message || String(error),
+                        path: null,
+                        code: 'CONVERSION_ERROR'
+                    }],
+                success: false
+            };
+        }
+    }
+}
+exports.Converter = Converter;
 function shouldIncludeType(typeName, options) {
     if (!typeName)
         return false;
@@ -408,29 +490,43 @@ function shouldIncludeType(typeName, options) {
         return false;
     return !options.excludeRegexes.some((regex) => regex.test(typeName));
 }
-function getTypeName(schema, fallback) {
+function getTypeName(schema, contextOrFallback, fallbackArg) {
+    let context;
+    let fallback;
+    if (contextOrFallback &&
+        typeof contextOrFallback.options === "object") {
+        context = contextOrFallback;
+        fallback = fallbackArg;
+    }
+    else {
+        fallback = contextOrFallback;
+    }
+    const namingConvention = context?.options.namingConvention ?? "GRAPHQL_IDIOMATIC";
     const explicitName = schema["x-graphql-type-name"];
     if (typeof explicitName === "string" && explicitName.trim()) {
         return explicitName.trim();
     }
     const typeOverride = schema["x-graphql-type"];
     if (typeof typeOverride === "string" && typeOverride.trim()) {
-        return sanitizeTypeName(typeOverride);
+        return sanitizeTypeName(typeOverride, namingConvention);
     }
     if (typeof typeOverride === "object" &&
         typeOverride !== null &&
         typeof typeOverride.name === "string" &&
         typeOverride.name.trim()) {
-        return sanitizeTypeName(typeOverride.name);
+        return sanitizeTypeName(typeOverride.name, namingConvention);
     }
     if (schema.title) {
-        return sanitizeTypeName(schema.title);
+        return sanitizeTypeName(schema.title, namingConvention);
     }
     if (fallback)
-        return sanitizeTypeName(fallback);
+        return sanitizeTypeName(fallback, namingConvention);
     return null;
 }
-function sanitizeTypeName(value) {
+function sanitizeTypeName(value, namingConvention = "GRAPHQL_IDIOMATIC") {
+    if (namingConvention === "PRESERVE") {
+        return value.replace(/[^a-zA-Z0-9_]/g, "_");
+    }
     return value
         .replace(/[^a-zA-Z0-9_]/g, " ")
         .split(" ")
@@ -539,8 +635,42 @@ function formatDescription(description) {
     return `"${description.replace(/"/g, '\\"')}"`;
 }
 function formatDirectives(schema) {
-    const directives = schema["x-graphql-directives"];
-    if (!Array.isArray(directives) || directives.length === 0) {
+    const directives = [];
+    if (Array.isArray(schema["x-graphql-directives"])) {
+        directives.push(...schema["x-graphql-directives"]);
+    }
+    if (schema["x-graphql-federation-shareable"]) {
+        directives.push({ name: "shareable" });
+    }
+    if (schema["x-graphql-federation-inaccessible"]) {
+        directives.push({ name: "inaccessible" });
+    }
+    if (schema["x-graphql-federation-authenticated"]) {
+        directives.push({ name: "authenticated" });
+    }
+    if (schema["x-graphql-federation-interface-object"]) {
+        directives.push({ name: "interfaceObject" });
+    }
+    if (schema["x-graphql-federation-requires-scopes"]) {
+        directives.push({
+            name: "requiresScopes",
+            arguments: { scopes: schema["x-graphql-federation-requires-scopes"] },
+        });
+    }
+    if (Array.isArray(schema["x-graphql-federation-keys"])) {
+        for (const key of schema["x-graphql-federation-keys"]) {
+            if (typeof key === "string") {
+                directives.push({ name: "key", arguments: { fields: key } });
+            }
+            else if (key && typeof key === "object" && key.fields) {
+                directives.push({
+                    name: "key",
+                    arguments: { fields: key.fields, resolvable: key.resolvable },
+                });
+            }
+        }
+    }
+    if (directives.length === 0) {
         return "";
     }
     const parts = directives.map((dir) => {
@@ -548,7 +678,16 @@ function formatDirectives(schema) {
             return "";
         const args = dir.arguments
             ? `(${Object.entries(dir.arguments)
-                .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+                .map(([key, value]) => {
+                if (key === "scopes" && Array.isArray(value)) {
+                    return `${key}: [${value
+                        .map((v) => `[${(Array.isArray(v) ? v : [v])
+                        .map((s) => `"${s}"`)
+                        .join(", ")}]`)
+                        .join(", ")}]`;
+                }
+                return `${key}: ${JSON.stringify(value)}`;
+            })
                 .join(", ")})`
             : "";
         return `@${dir.name}${args}`;
