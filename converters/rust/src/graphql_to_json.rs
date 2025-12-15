@@ -37,29 +37,67 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
 
     let context = ConversionContext::new(sdl, &type_registry);
 
-    let mut schema_defs = IndexMap::new();
-    for (name, type_def) in context.type_registry {
-        let schema = convert_type_to_schema(type_def, &context);
-        schema_defs.insert(name.clone(), schema);
-    }
-
-    let root_ref_name = if type_registry.contains_key("Query") {
-        "Query"
-    } else {
-        type_registry
-            .values()
-            .find(|def| def.kind == TypeKind::Object)
-            .map(|def| def.name.as_str())
-            .unwrap_or_else(|| type_registry.keys().next().map_or("", |s| s.as_str()))
+    // Determine root type: prefer the type with most fields (excluding Query/Mutation)
+    let root_ref_name = {
+        let mut best_type = None;
+        let mut max_fields = 0;
+        
+        for (name, type_def) in context.type_registry {
+            if type_def.kind == TypeKind::Object && name != "Query" && name != "Mutation" {
+                let field_count = type_def.fields.len();
+                if field_count > max_fields {
+                    max_fields = field_count;
+                    best_type = Some(name.clone());
+                }
+            }
+        }
+        
+        best_type.unwrap_or_else(|| {
+            // Fallback: use Query, or first Object type, or first type
+            if type_registry.contains_key("Query") {
+                "Query".to_string()
+            } else {
+                type_registry
+                    .values()
+                    .find(|def| def.kind == TypeKind::Object)
+                    .map(|def| def.name.clone())
+                    .unwrap_or_else(|| type_registry.keys().next().map(|s| s.clone()).unwrap_or_default())
+            }
+        })
     };
 
-    let full_schema = json!({
-        "$schema": "http://json-schema.org/draft-07/schema#",
-        "$ref": format!("#/definitions/{}", root_ref_name),
-        "definitions": schema_defs,
-    });
+    // Build schema with root type at top level
+    let root_type_def = context.type_registry.get(root_ref_name.as_str()).cloned();
+    
+    let mut root_schema = if let Some(type_def) = root_type_def {
+        convert_type_to_schema(&type_def, &context)
+    } else {
+        json!({
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object"
+        })
+    };
+    
+    // Ensure schema version is set
+    if !root_schema.get("$schema").is_some() {
+        root_schema["$schema"] = json!("http://json-schema.org/draft-07/schema#");
+    }
+    
+    // Build definitions for non-root types
+    let mut schema_defs = IndexMap::new();
+    for (name, type_def) in context.type_registry {
+        if name.as_str() != root_ref_name.as_str() {
+            let schema = convert_type_to_schema(&type_def, &context);
+            schema_defs.insert(name.clone(), schema);
+        }
+    }
+    
+    // Add definitions to root schema if there are any
+    if !schema_defs.is_empty() {
+        root_schema["definitions"] = json!(schema_defs);
+    }
 
-    serde_json::to_string_pretty(&full_schema).map_err(Into::into)
+    serde_json::to_string_pretty(&root_schema).map_err(Into::into)
 }
 
 // --- Intermediate Representation ---

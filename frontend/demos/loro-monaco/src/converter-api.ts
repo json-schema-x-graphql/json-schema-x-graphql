@@ -1,22 +1,15 @@
 /**
  * Advanced Converter API with Full Option Support
  *
- * This module provides a high-level API that maps the application's option
- * interface to the WASM converter. Currently wraps the basic WASM functions.
- *
- * TODO: Once Rust converter's standardized `convert` API is exported from WASM,
- * this module should be updated to support all options:
- * - idStrategy (NONE | COMMON_PATTERNS | ALL_STRINGS)
- * - outputFormat (SDL | SDL_WITH_FEDERATION_METADATA | AST_JSON)
- * - failOnWarning
- * - includeFederationDirectives
- * - namingConvention
+ * This module uses the Node converter (@json-schema-x-graphql/core)
+ * which provides full support for all conversion options.
  */
 
-import init, {
-  jsonSchemaToGraphQL as wasmJsonSchemaToGraphQL,
-  graphqlToJsonSchema as wasmGraphqlToJsonSchema,
-} from "./wasm/json_schema_graphql_converter.js";
+import {
+  jsonSchemaToGraphQL,
+  graphqlToJsonSchema,
+  ConverterOptions as NodeConverterOptions,
+} from "@json-schema-x-graphql/core";
 
 export interface ConverterOptions {
   validate?: boolean;
@@ -45,90 +38,43 @@ export interface ConversionResult {
   }>;
 }
 
-// Initialize the WASM module once
-let wasmInitialized = false;
-let wasmError: Error | null = null;
-const WASM_AVAILABLE = false; // WASM binary not available in demo
-
-const wasmReadyPromise = Promise.resolve();
+/**
+ * Map our ConverterOptions to the Node converter's options format
+ */
+function mapOptions(options: ConverterOptions): NodeConverterOptions {
+  return {
+    validate: options.validate ?? true,
+    includeDescriptions: options.includeDescriptions ?? true,
+    preserveFieldOrder: options.preserveFieldOrder ?? false,
+    federationVersion: (options.federationVersion ?? "AUTO") as any,
+    includeFederationDirectives: options.includeFederationDirectives ?? true,
+    namingConvention: (options.namingConvention ?? "PRESERVE") as any,
+    inferIds: options.idStrategy !== "NONE",
+    idStrategy: (options.idStrategy ?? "NONE") as any,
+    outputFormat: (options.outputFormat ?? "SDL") as any,
+    failOnWarning: options.failOnWarning ?? false,
+  };
+}
 
 /**
- * Convert JSON Schema to GraphQL using the WASM converter
- *
- * Note: Current WASM implementation has limited option support.
- * The following options are currently ignored (pending standardized WASM API):
- * - idStrategy, outputFormat, failOnWarning, includeFederationDirectives, namingConvention
- * All conversions currently output SDL format.
+ * Convert JSON Schema to GraphQL using the Node converter
  */
 export async function convertJsonSchemaToGraphQL(
   jsonSchema: string,
   options: ConverterOptions = {},
 ): Promise<ConversionResult> {
-  await wasmReadyPromise;
-
-  if (!WASM_AVAILABLE) {
-    return {
-      output: null,
-      success: false,
-      errorCount: 1,
-      warningCount: 0,
-      diagnostics: [
-        {
-          severity: "error",
-          message:
-            "JSON Schema to GraphQL converter is not available in this demo. WASM binary not included.",
-        },
-      ],
-    };
-  }
-
-  if (wasmError) {
-    return {
-      output: null,
-      success: false,
-      errorCount: 1,
-      warningCount: 0,
-      diagnostics: [
-        {
-          severity: "error",
-          message: `WASM converter initialization failed: ${wasmError.message}`,
-        },
-      ],
-    };
-  }
-
   try {
-    console.log("🔄 Converting JSON Schema to GraphQL");
-
-    // Call the basic WASM function
-    const sdlOutput = wasmJsonSchemaToGraphQL(jsonSchema);
-
-    if (typeof sdlOutput !== "string") {
-      throw new Error(
-        "Unexpected return type from WASM. Expected a GraphQL SDL string.",
-      );
-    }
-
-    // Format output if requested
-    const formattedOutput =
-      options.prettyPrint !== false ? sdlOutput : sdlOutput;
+    const sdlOutput = jsonSchemaToGraphQL(jsonSchema, mapOptions(options));
 
     return {
-      output: formattedOutput,
-      success: true,
+      output: sdlOutput || null,
+      success: !!sdlOutput,
       errorCount: 0,
       warningCount: 0,
       diagnostics: [],
     };
   } catch (error) {
-    console.error("❌ Conversion failed:", error);
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : typeof error === "object"
-          ? JSON.stringify(error)
-          : String(error);
-
+    console.error("❌ JSON Schema to GraphQL conversion failed:", error);
     return {
       output: null,
       success: false,
@@ -137,7 +83,7 @@ export async function convertJsonSchemaToGraphQL(
       diagnostics: [
         {
           severity: "error",
-          message: errorMessage,
+          message: error instanceof Error ? error.message : "Unknown conversion error",
           kind: "conversion-error",
         },
       ],
@@ -146,76 +92,24 @@ export async function convertJsonSchemaToGraphQL(
 }
 
 /**
- * Convert GraphQL SDL to JSON Schema using the WASM converter
+ * Convert GraphQL SDL to JSON Schema using the Node converter
  */
 export async function convertGraphQLToJsonSchema(
   graphqlSdl: string,
   options: ConverterOptions = {},
 ): Promise<ConversionResult> {
-  await wasmReadyPromise;
-
-  if (!WASM_AVAILABLE) {
-    return {
-      output: null,
-      success: false,
-      errorCount: 1,
-      warningCount: 0,
-      diagnostics: [
-        {
-          severity: "error",
-          message:
-            "GraphQL to JSON Schema converter is not available in this demo. WASM binary not included.",
-        },
-      ],
-    };
-  }
-
-  if (wasmError) {
-    return {
-      output: null,
-      success: false,
-      errorCount: 1,
-      warningCount: 0,
-      diagnostics: [
-        {
-          severity: "error",
-          message: `WASM converter initialization failed: ${wasmError.message}`,
-        },
-      ],
-    };
-  }
-
   try {
-    console.log("🔄 Converting GraphQL to JSON Schema");
-
-    // Call the basic WASM function
-    const schemaString = wasmGraphqlToJsonSchema(graphqlSdl);
-
-    if (typeof schemaString !== "string") {
-      throw new Error(
-        "Unexpected return type from WASM. Expected a JSON Schema string.",
-      );
-    }
-
-    // Format output if requested
-    const formattedOutput = options.prettyPrint !== false ? schemaString : schemaString;
+    const jsonOutput = graphqlToJsonSchema(graphqlSdl, mapOptions(options));
 
     return {
-      output: formattedOutput,
-      success: true,
+      output: jsonOutput || null,
+      success: !!jsonOutput,
       errorCount: 0,
       warningCount: 0,
       diagnostics: [],
     };
   } catch (error) {
-    console.error("❌ Conversion failed:", error);
-    const errorMessage =
-      error instanceof Error
-        ? error.message
-        : typeof error === "object"
-          ? JSON.stringify(error)
-          : String(error);
-
+    console.error("❌ GraphQL to JSON Schema conversion failed:", error);
     return {
       output: null,
       success: false,
@@ -224,7 +118,7 @@ export async function convertGraphQLToJsonSchema(
       diagnostics: [
         {
           severity: "error",
-          message: errorMessage,
+          message: error instanceof Error ? error.message : "Unknown conversion error",
           kind: "conversion-error",
         },
       ],

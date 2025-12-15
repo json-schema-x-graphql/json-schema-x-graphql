@@ -17,13 +17,6 @@ export default defineConfig({
     fs: {
       allow: [searchForWorkspaceRoot(process.cwd())],
     },
-    middleware: (req, res, next) => {
-      // Serve worker files with correct MIME type
-      if (req.url.includes(".worker.js")) {
-        res.setHeader("Content-Type", "application/javascript");
-      }
-      next();
-    },
   },
   build: {
     outDir: "dist",
@@ -31,8 +24,7 @@ export default defineConfig({
     target: "esnext",
   },
   optimizeDeps: {
-    exclude: ["loro-crdt", "graphql-editor"],
-    include: ["graphql-editor-worker"],
+    exclude: ["loro-crdt"],
     esbuildOptions: {
       target: "esnext",
     },

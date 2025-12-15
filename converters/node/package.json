@@ -1,6 +1,7 @@
 {
   "name": "@json-schema-x-graphql/core",
   "version": "0.1.0",
+  "type": "module",
   "description": "Node.js implementation of JSON Schema <-> GraphQL converter with full Apollo Federation support",
   "main": "dist/converter.js",
   "types": "dist/converter.d.ts",

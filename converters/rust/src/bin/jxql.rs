@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
 use clap::Parser;
 use json_schema_graphql_converter::{
-    ConversionOptions, Converter, IdInferenceStrategy, NamingConvention, OutputFormat,
+    ConversionDirection, ConversionOptions, Converter, IdInferenceStrategy, NamingConvention, OutputFormat,
 };
 use std::fs;
 use std::path::PathBuf;
@@ -124,19 +124,63 @@ async fn main() -> Result<()> {
 
     let converter = Converter::with_options(options);
 
-    // Convert
-    let graphql_sdl = converter
-        .json_schema_to_graphql(&json_content)
+    // Auto-detect input format
+    // Try GraphQL SDL first (simpler pattern matching)
+    let is_graphql = detect_graphql_format(&json_content);
+    
+    let direction = if is_graphql {
+        ConversionDirection::GraphQLToJsonSchema
+    } else {
+        ConversionDirection::JsonSchemaToGraphQL
+    };
+
+    // Convert using the appropriate direction
+    let result = converter
+        .convert(&json_content, direction)
         .context("Conversion failed")?;
 
     // Output
     if let Some(output_path) = args.output {
-        fs::write(&output_path, &graphql_sdl)
+        fs::write(&output_path, &result)
             .context(format!("Failed to write output to {:?}", output_path))?;
         eprintln!("Successfully converted and saved to {:?}", output_path);
     } else {
-        println!("{}", graphql_sdl);
+        println!("{}", result);
     }
 
     Ok(())
+}
+
+/// Detect if input is GraphQL SDL or JSON Schema
+/// GraphQL indicators: "type", "interface", "enum", "union", "scalar", "@"
+/// JSON Schema indicators: "{" at start and "properties", "$schema", etc.
+fn detect_graphql_format(content: &str) -> bool {
+    let trimmed = content.trim();
+    
+    // Check for GraphQL SDL patterns (case-insensitive)
+    let graphql_patterns = [
+        "type ",
+        "interface ",
+        "enum ",
+        "union ",
+        "scalar ",
+        "schema {",
+        "@",
+    ];
+    
+    for pattern in &graphql_patterns {
+        if trimmed.to_lowercase().contains(&pattern.to_lowercase()) {
+            return true;
+        }
+    }
+    
+    // Check for JSON Schema patterns
+    if trimmed.starts_with('{') && (trimmed.contains("\"properties\"") || 
+        trimmed.contains("\"type\"") || 
+        trimmed.contains("\"$schema\"")) {
+        return false;
+    }
+    
+    // Default: assume JSON Schema if it starts with { or [
+    !trimmed.starts_with('{') && !trimmed.starts_with('[')
 }

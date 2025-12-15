@@ -228,6 +228,244 @@ export function graphqlToJsonSchema(
   options: ConverterOptions = {},
 ): string {
   const normalized = normalizeOptions(options);
+  
+  try {
+    // Parse GraphQL SDL into AST
+    const doc = parse(graphqlSdl);
+    
+    // Build type registry from definitions
+    const typeRegistry = new Map<string, GraphQLTypeDefinition>();
+    const rootTypes = { query: null as string | null, mutation: null as string | null };
+    
+    for (const def of doc.definitions) {
+      if (def.kind === "ObjectTypeDefinition" || def.kind === "InterfaceTypeDefinition") {
+        const typeName = def.name?.value;
+        if (typeName && typeName !== "Query" && typeName !== "Mutation") {
+          typeRegistry.set(typeName, {
+            kind: def.kind,
+            name: typeName,
+            description: def.description?.value,
+            fields: def.fields || [],
+            interfaces: def.interfaces || [],
+          });
+        }
+        if (typeName === "Query") rootTypes.query = typeName;
+        if (typeName === "Mutation") rootTypes.mutation = typeName;
+      } else if (def.kind === "EnumTypeDefinition") {
+        const enumName = def.name?.value;
+        if (enumName) {
+          typeRegistry.set(enumName, {
+            kind: "EnumTypeDefinition",
+            name: enumName,
+            description: def.description?.value,
+            enumValues: def.values || [],
+          });
+        }
+      } else if (def.kind === "UnionTypeDefinition") {
+        const unionName = def.name?.value;
+        if (unionName) {
+          typeRegistry.set(unionName, {
+            kind: "UnionTypeDefinition",
+            name: unionName,
+            description: def.description?.value,
+            types: def.types || [],
+          });
+        }
+      } else if (def.kind === "ScalarTypeDefinition") {
+        const scalarName = def.name?.value;
+        if (scalarName && !["String", "Int", "Float", "Boolean", "ID"].includes(scalarName)) {
+          typeRegistry.set(scalarName, {
+            kind: "ScalarTypeDefinition",
+            name: scalarName,
+            description: def.description?.value,
+          });
+        }
+      }
+    }
+    
+    // Determine root type: prefer the type with most fields that's not Query/Mutation
+    let rootTypeName = "Root";
+    let maxFields = 0;
+    for (const [typeName, typeDef] of typeRegistry.entries()) {
+      const fieldCount = (typeDef.fields || []).length;
+      if (fieldCount > maxFields && (typeDef.kind === "ObjectTypeDefinition" || typeDef.kind === "InterfaceTypeDefinition")) {
+        maxFields = fieldCount;
+        rootTypeName = typeName;
+      }
+    }
+    
+    // Build schema with root type at top level and other types in $defs
+    const rootTypeDef = typeRegistry.get(rootTypeName);
+    const rootSchema = rootTypeDef
+      ? convertGraphQLTypeToSchema(rootTypeDef, typeRegistry, normalized)
+      : {};
+    
+    // Build definitions for referenced types
+    const definitions: Record<string, JsonSchema> = {};
+    for (const [typeName, typeDef] of typeRegistry.entries()) {
+      if (typeName !== rootTypeName) {
+        definitions[typeName] = convertGraphQLTypeToSchema(typeDef, typeRegistry, normalized);
+      }
+    }
+    
+    // Create root schema with root type properties at top level
+    const schema: JsonSchema = {
+      ...rootSchema,
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+    };
+    
+    // Only include $defs if there are referenced types
+    if (Object.keys(definitions).length > 0) {
+      schema.$defs = definitions;
+    }
+    
+    return JSON.stringify(schema, null, 2);
+  } catch (e) {
+    // Fallback to simple parsing if AST parsing fails
+    return fallbackGraphqlToJsonSchema(graphqlSdl, normalized);
+  }
+}
+
+interface GraphQLTypeDefinition {
+  kind: string;
+  name: string;
+  description?: string;
+  fields?: readonly any[];
+  enumValues?: readonly any[];
+  types?: readonly any[];
+  interfaces?: readonly any[];
+}
+
+function convertGraphQLTypeToSchema(
+  typeDef: GraphQLTypeDefinition,
+  typeRegistry: Map<string, GraphQLTypeDefinition>,
+  options: NormalizedConverterOptions,
+): JsonSchema {
+  const schema: JsonSchema = {
+    type: "object",
+  };
+  
+  if (typeDef.description && options.includeDescriptions) {
+    schema.description = typeDef.description;
+  }
+  
+  schema["x-graphql-type"] = typeDef.name;
+  
+  if (typeDef.kind === "EnumTypeDefinition") {
+    schema.type = "string";
+    schema.enum = typeDef.enumValues?.map((v: any) => v.name?.value) || [];
+    if (typeDef.description) {
+      schema.description = typeDef.description;
+    }
+    return schema;
+  }
+  
+  if (typeDef.kind === "UnionTypeDefinition") {
+    schema.oneOf = (typeDef.types || []).map((t: any) => ({
+      $ref: `#/$defs/${t.name?.value}`,
+    }));
+    return schema;
+  }
+  
+  if (typeDef.kind === "ScalarTypeDefinition") {
+    schema.type = "string";
+    schema["x-graphql-scalar"] = typeDef.name;
+    return schema;
+  }
+  
+  // Object type
+  schema.properties = {};
+  const required: string[] = [];
+  
+  for (const field of typeDef.fields || []) {
+    const fieldName = field.name?.value;
+    if (!fieldName) continue;
+    
+    const fieldSchema = convertGraphQLFieldToSchema(field, typeRegistry, options);
+    schema.properties[fieldName] = fieldSchema;
+    
+    // Check if field is non-null (required)
+    if (field.type?.kind === "NonNullType") {
+      required.push(fieldName);
+    }
+  }
+  
+  if (required.length > 0) {
+    schema.required = required;
+  }
+  
+  return schema;
+}
+
+function convertGraphQLFieldToSchema(
+  field: any,
+  typeRegistry: Map<string, GraphQLTypeDefinition>,
+  options: NormalizedConverterOptions,
+): JsonSchema {
+  const typeSchema = convertGraphQLTypeToJsonSchema(field.type, typeRegistry, options);
+  
+  // Merge description if present
+  if (field.description?.value && options.includeDescriptions) {
+    typeSchema.description = field.description.value;
+  }
+  
+  return typeSchema;
+}
+
+function convertGraphQLTypeToJsonSchema(
+  gqlType: any,
+  typeRegistry: Map<string, GraphQLTypeDefinition>,
+  options: NormalizedConverterOptions,
+): JsonSchema {
+  const schema: JsonSchema = {};
+  
+  // Unwrap NonNull
+  let currentType = gqlType;
+  if (currentType?.kind === "NonNullType") {
+    currentType = currentType.type;
+  }
+  
+  // Unwrap List
+  if (currentType?.kind === "ListType") {
+    return {
+      type: "array",
+      items: convertGraphQLTypeToJsonSchema(currentType.type, typeRegistry, options),
+    };
+  }
+  
+  // Named type
+  if (currentType?.kind === "NamedType") {
+    const typeName = currentType.name?.value;
+    
+    // Built-in scalar types
+    if (typeName === "String") {
+      return { type: "string" };
+    } else if (typeName === "Int") {
+      return { type: "integer" };
+    } else if (typeName === "Float") {
+      return { type: "number" };
+    } else if (typeName === "Boolean") {
+      return { type: "boolean" };
+    } else if (typeName === "ID") {
+      return { type: "string", ["x-graphql-type"]: "ID" };
+    }
+    
+    // Custom types
+    if (typeRegistry.has(typeName)) {
+      return { $ref: `#/$defs/${typeName}` };
+    }
+    
+    // Unknown custom type
+    return { type: "object", ["x-graphql-type"]: typeName };
+  }
+  
+  return { type: "string" };
+}
+
+function fallbackGraphqlToJsonSchema(
+  graphqlSdl: string,
+  options: NormalizedConverterOptions,
+): string {
   const schema: JsonSchema = {
     $schema: "https://json-schema.org/draft/2020-12/schema",
     type: "object",
@@ -276,7 +514,7 @@ export function graphqlToJsonSchema(
       const [field, typePart] = line
         .split(":")
         .map((segment) => segment.trim());
-      const fieldSchema = convertGqlTypeToJson(typePart, normalized.maxDepth);
+      const fieldSchema = convertGqlTypeToJson(typePart, options.maxDepth);
       if (description) {
         fieldSchema.description = description;
         description = null;

@@ -15,11 +15,11 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@json-schema-x-graphql/core": "workspace:*",
     "@monaco-editor/react": "^4.6.0",
     "clsx": "^2.1.1",
     "graphql": "^16.8.1",
     "graphql-editor": "^7.3.1",
-    "graphql-editor-worker": "^7.3.1",
     "loro-crdt": "^0.16.10",
     "monaco-editor": "^0.45.0",
     "react": "^18.3.1",

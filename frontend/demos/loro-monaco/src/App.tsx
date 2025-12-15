@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense, lazy } from "react";
 import { MonacoEditor } from "./MonacoEditor";
 import { ConverterSettingsPanel } from "./ConverterSettingsPanel";
 import { ErrorBanner, StatusBadge, KeyboardHint } from "./UIComponents";
@@ -10,6 +10,11 @@ import {
 } from "./converter-api";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+
+// Lazy load GraphQLEditor to avoid worker loading issues
+const GraphQLEditor = lazy(() =>
+  import("graphql-editor").then(mod => ({ default: mod.GraphQLEditor || mod.default }))
+);
 
 function cn(...inputs: any[]) {
   return twMerge(clsx(inputs));
@@ -53,6 +58,7 @@ const App = () => {
   // Resize state
   const [leftPaneWidth, setLeftPaneWidth] = useState(50);
   const [isResizing, setIsResizing] = useState(false);
+  const [useGraphQLEditor, setUseGraphQLEditor] = useState(false);
 
   const startResizing = useCallback(() => {
     setIsResizing(true);
@@ -282,6 +288,13 @@ const App = () => {
         <h1 className="text-xl font-bold">JSON Schema ⇋ GraphQL CRDT Demo</h1>
         <div className="flex gap-2 items-center">
           <button
+            onClick={() => setUseGraphQLEditor(!useGraphQLEditor)}
+            className={`px-3 py-2 rounded text-sm ${useGraphQLEditor ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-600 hover:bg-gray-700"}`}
+            title="Toggle GraphQL visual editor"
+          >
+            {useGraphQLEditor ? "📊 Visual" : "📝 Text"}
+          </button>
+          <button
             onClick={() => setIsDarkTheme(!isDarkTheme)}
             className={`px-3 py-2 rounded text-sm ${isDarkTheme ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"}`}
             title="Toggle theme (Ctrl+T)"
@@ -424,16 +437,29 @@ const App = () => {
             if (activeEditor !== "graphql") setActiveEditor("graphql");
           }}
         >
-          {/* GraphQL SDL Editor using Monaco */}
-          <MonacoEditor
-            value={graphqlSdl}
-            onChange={(val) => {
-              if (activeEditor !== "graphql") setActiveEditor("graphql");
-              setGraphqlSdl(val || "");
-            }}
-            language="graphql"
-            isDarkTheme={isDarkTheme}
-          />
+          {useGraphQLEditor ? (
+            // GraphQL Visual Editor
+            <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-500">Loading GraphQL Editor...</div>}>
+              <GraphQLEditor
+                schema={{ code: graphqlSdl }}
+                setSchema={(schema) => {
+                  if (activeEditor !== "graphql") setActiveEditor("graphql");
+                  setGraphqlSdl(schema.code || "");
+                }}
+              />
+            </Suspense>
+          ) : (
+            // Monaco Editor for GraphQL
+            <MonacoEditor
+              value={graphqlSdl}
+              onChange={(val) => {
+                if (activeEditor !== "graphql") setActiveEditor("graphql");
+                setGraphqlSdl(val || "");
+              }}
+              language="graphql"
+              isDarkTheme={isDarkTheme}
+            />
+          )}
         </div>
       </main>
       <footer className={`p-3 text-sm ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-t flex flex-col md:flex-row md:items-center md:justify-between gap-2`}>

@@ -3,15 +3,6 @@ import Editor from "@monaco-editor/react";
 import * as monaco from "monaco-editor";
 import { Loro, LoroText } from "loro-crdt";
 
-// Disable Monaco workers to avoid worker loading issues
-if (typeof window !== "undefined") {
-  (self as any).MonacoEnvironment = {
-    getWorkerUrl: () => {
-      return "data:text/javascript;base64,";
-    },
-  };
-}
-
 interface MonacoEditorProps {
   value: string;
   language: "json" | "graphql";

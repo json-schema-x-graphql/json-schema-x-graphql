@@ -111,8 +111,8 @@ impl Converter {
             validator::validate_graphql_sdl(graphql_sdl)?;
         }
 
-        let schema = graphql_to_json::convert(graphql_sdl, &self.options)?;
-        serde_json::to_string_pretty(&schema).map_err(Into::into)
+        // graphql_to_json::convert already returns a pretty-printed JSON string
+        graphql_to_json::convert(graphql_sdl, &self.options)
     }
 
     /// Get current options
