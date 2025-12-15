@@ -67,6 +67,60 @@ type User @key(fields: "id") {
 }
 ```
 
+### 3. CLI Usage (Standardized Options)
+
+Node CLI (built output):
+
+```bash
+node converters/node/dist/cli.js \
+  --input examples/user-service.schema.json \
+  --output output/user-service.graphql \
+  --descriptions \
+  --preserve-order \
+  --include-federation-directives \
+  --federation-version V2 \
+  --naming-convention GRAPHQL_IDIOMATIC \
+  --id-strategy COMMON_PATTERNS \
+  --output-format SDL
+```
+
+Rust CLI (release binary `jxql`):
+
+```bash
+converters/rust/target/release/jxql \
+  --input examples/user-service.schema.json \
+  --output output/user-service.graphql \
+  --descriptions \
+  --preserve-order \
+  --include-federation-directives \
+  --federation-version V2 \
+  --naming-convention GRAPHQL_IDIOMATIC \
+  --id-strategy COMMON_PATTERNS \
+  --output-format SDL
+```
+
+Notes:
+- `--output-format AST_JSON` emits the AST as JSON instead of SDL.
+- `--fail-on-warning` exits non-zero if any warnings are produced.
+- `--id-strategy` accepts `NONE`, `COMMON_PATTERNS`, or `ALL_STRINGS` (legacy `--infer-ids` maps to `COMMON_PATTERNS`).
+
+Example AST_JSON output (truncated):
+
+```json
+{
+  "kind": "Document",
+  "definitions": [
+    {
+      "kind": "ObjectTypeDefinition",
+      "name": { "kind": "Name", "value": "User" },
+      "fields": [
+        { "kind": "FieldDefinition", "name": { "kind": "Name", "value": "id" }, "type": { "kind": "NonNullType", "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "ID" } } } }
+      ]
+    }
+  ]
+}
+```
+
 ## Features
 
 ### Core Capabilities

@@ -35,7 +35,9 @@ pub mod validator;
 pub mod wasm;
 
 pub use error::{ConversionError, Result};
-pub use types::{ConversionDirection, ConversionOptions, NamingConvention};
+pub use types::{
+    ConversionDirection, ConversionOptions, IdInferenceStrategy, NamingConvention, OutputFormat,
+};
 
 use serde_json::Value as JsonValue;
 

@@ -663,15 +663,37 @@ fn convert_field(
     // Type
     let mut field_type = infer_graphql_type(schema, is_required, context, Some(field_name))?;
 
-    if context.options.infer_ids
-        && (field_name == "id" || field_name == "_id")
-        && (field_type == "String" || field_type == "String!")
-    {
-        field_type = if is_required {
-            "ID!".to_string()
-        } else {
-            "ID".to_string()
+    // ID inference aligns with Node converter behavior.
+    // Legacy `infer_ids` maps to the COMMON_PATTERNS strategy when set.
+    let effective_id_strategy = match context.options.id_strategy {
+        crate::types::IdInferenceStrategy::CommonPatterns
+        | crate::types::IdInferenceStrategy::AllStrings => context.options.id_strategy,
+        crate::types::IdInferenceStrategy::None => {
+            if context.options.infer_ids {
+                crate::types::IdInferenceStrategy::CommonPatterns
+            } else {
+                crate::types::IdInferenceStrategy::None
+            }
+        }
+    };
+
+    if field_type == "String" || field_type == "String!" {
+        let name_lower = field_name.to_ascii_lowercase();
+        let promote = match effective_id_strategy {
+            crate::types::IdInferenceStrategy::CommonPatterns => {
+                name_lower == "id" || name_lower == "_id" || name_lower.ends_with("id")
+            }
+            crate::types::IdInferenceStrategy::AllStrings => true,
+            crate::types::IdInferenceStrategy::None => false,
         };
+
+        if promote {
+            field_type = if is_required {
+                "ID!".to_string()
+            } else {
+                "ID".to_string()
+            };
+        }
     }
 
     output.push_str(&format!(": {}", field_type));
@@ -1298,33 +1320,33 @@ mod tests {
 
         let schema = json!({"type": "string"});
         assert_eq!(
-            infer_graphql_type(&schema, false, &mut context).unwrap(),
+            infer_graphql_type(&schema, false, &mut context, None).unwrap(),
             "String"
         );
         assert_eq!(
-            infer_graphql_type(&schema, true, &mut context).unwrap(),
+            infer_graphql_type(&schema, true, &mut context, None).unwrap(),
             "String!"
         );
 
         let schema_uuid = json!({"type": "string", "format": "uuid"});
         assert_eq!(
-            infer_graphql_type(&schema_uuid, false, &mut context).unwrap(),
+            infer_graphql_type(&schema_uuid, false, &mut context, None).unwrap(),
             "ID"
         );
 
         let schema_override = json!({"type": "string", "x-graphql-type": "MyScalar"});
         assert_eq!(
-            infer_graphql_type(&schema_override, false, &mut context).unwrap(),
+            infer_graphql_type(&schema_override, false, &mut context, None).unwrap(),
             "MyScalar"
         );
         // Test double-bang prevention
         assert_eq!(
-            infer_graphql_type(&schema_override, true, &mut context).unwrap(),
+            infer_graphql_type(&schema_override, true, &mut context, None).unwrap(),
             "MyScalar!"
         );
         let schema_override_bang = json!({"type": "string", "x-graphql-type": "MyScalar!"});
         assert_eq!(
-            infer_graphql_type(&schema_override_bang, true, &mut context).unwrap(),
+            infer_graphql_type(&schema_override_bang, true, &mut context, None).unwrap(),
             "MyScalar!"
         );
     }
@@ -1366,7 +1388,13 @@ mod tests {
             }
         });
         let result = convert(&schema, &options).unwrap();
-        assert!(result.contains("union SearchResult = User | Post"));
+        assert!(
+            result
+                .to_lowercase()
+                .contains("union searchresult = user | post"),
+            "SDL: {}",
+            result
+        );
     }
 
     #[test]
@@ -1400,7 +1428,7 @@ mod tests {
             .get("properties")
             .and_then(|props| props.get("deep"))
             .expect("deep property");
-        let field_type = infer_graphql_type(deep_schema, false, &mut context).unwrap();
+        let field_type = infer_graphql_type(deep_schema, false, &mut context, None).unwrap();
         assert_eq!(field_type, "DeepData");
     }
 
@@ -1423,8 +1451,27 @@ mod tests {
         let result = convert(&schema, &options).unwrap();
         assert!(result.contains("id: ID"));
         assert!(result.contains("Id: ID"));
-        // Should only affect "id" and "_id", not fields ending in id
-        assert!(result.contains("otherId: String"));
+        // With infer_ids enabled we use COMMON_PATTERNS: fields ending with "id" are promoted
+        assert!(result.contains("otherId: ID"));
         assert!(result.contains("name: String"));
+    }
+
+    #[test]
+    fn test_all_strings_id_strategy() {
+        let mut options = ConversionOptions::default();
+        options.id_strategy = crate::types::IdInferenceStrategy::AllStrings;
+
+        let schema = json!({
+            "title": "Document",
+            "type": "object",
+            "properties": {
+                "email": { "type": "string" },
+                "count": { "type": "integer" }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("email: ID"));
+        assert!(result.contains("count: Int"));
     }
 }

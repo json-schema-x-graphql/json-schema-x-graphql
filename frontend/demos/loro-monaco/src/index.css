@@ -17,6 +17,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Light theme */
+:root.dark {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
+/* Light mode - apply to body when not dark */
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+
+:root:not(.dark) {
+  color: #213547;
+  background-color: #ffffff;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -27,7 +46,6 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
-
 #root {
   width: 100vw;
   height: 100vh;

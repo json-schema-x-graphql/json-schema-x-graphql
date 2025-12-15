@@ -12,4 +12,3 @@ type Root {
   deep: DeepData
 }
 
-

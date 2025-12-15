@@ -45,6 +45,12 @@ src/
 npm install
 ```
 
+Create a local env file (optional, defaults shown):
+
+```bash
+cp .env.example .env
+```
+
 ## Running the Demo
 
 ### Development Server

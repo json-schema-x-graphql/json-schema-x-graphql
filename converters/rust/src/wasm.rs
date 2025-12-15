@@ -4,7 +4,10 @@ use crate::api_types::{
     ConversionResult, ConvertInput, Diagnostic, DiagnosticSeverity, FederationVersion,
     NamingConvention,
 };
-use crate::types::NamingConvention as InternalNamingConvention;
+use crate::types::{
+    IdInferenceStrategy as InternalIdInferenceStrategy, NamingConvention as InternalNamingConvention,
+    OutputFormat as InternalOutputFormat,
+};
 use crate::{ConversionDirection, ConversionOptions, Converter};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
@@ -91,20 +94,20 @@ impl WasmConversionOptions {
 
     /// Convert to internal options type
     fn to_internal(&self) -> ConversionOptions {
-        ConversionOptions {
-            validate: self.validate,
-            include_descriptions: self.include_descriptions,
-            preserve_field_order: self.preserve_field_order,
-            federation_version: self.federation_version,
-            infer_ids: self.infer_ids,
-            naming_convention: InternalNamingConvention::GraphqlIdiomatic,
-            exclude_types: vec![],
-            exclude_patterns: vec![],
-            description_block_threshold: 80,
-            emit_empty_types: false,
-            inline_object_threshold: 3,
-            ref_naming: crate::types::RefNaming::Basename,
-        }
+        let mut options = ConversionOptions::default();
+
+        options.validate = self.validate;
+        options.include_descriptions = self.include_descriptions;
+        options.preserve_field_order = self.preserve_field_order;
+        options.federation_version = self.federation_version;
+        options.include_federation_directives = true;
+        options.infer_ids = self.infer_ids;
+        options.id_strategy = InternalIdInferenceStrategy::None;
+        options.naming_convention = InternalNamingConvention::GraphqlIdiomatic;
+        options.output_format = InternalOutputFormat::Sdl;
+        options.fail_on_warning = false;
+
+        options
     }
 }
 
@@ -249,25 +252,40 @@ pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
 
     let options = input.options.unwrap_or_default();
 
-    let internal_options = ConversionOptions {
-        validate: options.validate,
-        include_descriptions: options.include_descriptions,
-        preserve_field_order: options.preserve_field_order,
-        federation_version: match options.federation_version {
-            FederationVersion::None => 0,
-            FederationVersion::V1 => 1,
-            FederationVersion::V2 => 2,
-            FederationVersion::Auto => 2,
-        },
-        infer_ids: options.infer_ids,
-        naming_convention: match options.naming_convention {
-            NamingConvention::Preserve => InternalNamingConvention::Preserve,
-            NamingConvention::GraphqlIdiomatic => InternalNamingConvention::GraphqlIdiomatic,
-        },
-        exclude_types: options.exclude_types,
-        exclude_patterns: options.exclude_patterns,
-        ..Default::default()
+    let mut internal_options = ConversionOptions::default();
+
+    internal_options.validate = options.validate;
+    internal_options.include_descriptions = options.include_descriptions;
+    internal_options.preserve_field_order = options.preserve_field_order;
+    internal_options.federation_version = match options.federation_version {
+        FederationVersion::None => 0,
+        FederationVersion::V1 => 1,
+        FederationVersion::V2 => 2,
+        FederationVersion::Auto => 2,
     };
+    internal_options.include_federation_directives = options.include_federation_directives;
+    internal_options.infer_ids = options.infer_ids;
+    internal_options.id_strategy = match options.id_strategy {
+        crate::api_types::IdInferenceStrategy::None => InternalIdInferenceStrategy::None,
+        crate::api_types::IdInferenceStrategy::CommonPatterns => {
+            InternalIdInferenceStrategy::CommonPatterns
+        },
+        crate::api_types::IdInferenceStrategy::AllStrings => InternalIdInferenceStrategy::AllStrings,
+    };
+    internal_options.naming_convention = match options.naming_convention {
+        NamingConvention::Preserve => InternalNamingConvention::Preserve,
+        NamingConvention::GraphqlIdiomatic => InternalNamingConvention::GraphqlIdiomatic,
+    };
+    internal_options.output_format = match options.output_format {
+        crate::api_types::OutputFormat::Sdl => InternalOutputFormat::Sdl,
+        crate::api_types::OutputFormat::SdlWithFederationMetadata => {
+            InternalOutputFormat::SdlWithFederationMetadata
+        },
+        crate::api_types::OutputFormat::AstJson => InternalOutputFormat::AstJson,
+    };
+    internal_options.fail_on_warning = options.fail_on_warning;
+    internal_options.exclude_types = options.exclude_types;
+    internal_options.exclude_patterns = options.exclude_patterns;
 
     let converter = Converter::with_options(internal_options);
 

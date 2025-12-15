@@ -1,11 +1,11 @@
 type Product @key @interfaceObject {
-  id: String!
+  id: ID!
   price: Float @external
   weight: Float @inaccessible
 }
 
 type User @key @shareable {
-  id: String!
+  id: ID!
   username: String @authenticated
   email: String @requires
   metadata: Usermetadata @provides
@@ -16,7 +16,7 @@ type Usermetadata {
 }
 
 type Review @key {
-  id: String!
+  id: ID!
   body: String @deprecated
   content: String
   tags: [String] @tag

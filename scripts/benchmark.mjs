@@ -12,6 +12,15 @@ const repoRoot = path.resolve(__dirname, "..");
 // Configuration
 const ITERATIONS = 5;
 const WARMUP = 2;
+const DEFAULT_OPTIONS = {
+  includeDescriptions: true,
+  preserveFieldOrder: true,
+  includeFederationDirectives: true,
+  federationVersion: "V2",
+  namingConvention: "GRAPHQL_IDIOMATIC",
+  idStrategy: "COMMON_PATTERNS",
+  outputFormat: process.env.BENCH_OUTPUT_FORMAT || "SDL",
+};
 
 const PATHS = {
   nodeConverter: path.join(repoRoot, "converters/node/dist/cli.js"),
@@ -75,16 +84,53 @@ for (const schema of schemas) {
   console.log(`Benchmarking ${schema.name}...`);
 
   // Node Benchmark
-  const nodeOut = path.join(PATHS.outputDir, `${schema.name}.node.graphql`);
-  const nodeStats = benchmark("Node", () =>
-    runCommand("node", [PATHS.nodeConverter, "--input", schema.path, "--output", nodeOut, "--descriptions"])
+  const nodeOut = path.join(
+    PATHS.outputDir,
+    `${schema.name}.node.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
   );
+  const nodeArgs = [
+    PATHS.nodeConverter,
+    "--input",
+    schema.path,
+    "--output",
+    nodeOut,
+    "--descriptions",
+    "--preserve-order",
+    "--include-federation-directives",
+    "--federation-version",
+    DEFAULT_OPTIONS.federationVersion,
+    "--naming-convention",
+    DEFAULT_OPTIONS.namingConvention,
+    "--id-strategy",
+    DEFAULT_OPTIONS.idStrategy,
+    "--output-format",
+    DEFAULT_OPTIONS.outputFormat,
+  ];
+  const nodeStats = benchmark("Node", () => runCommand("node", nodeArgs));
 
   // Rust Benchmark
-  const rustOut = path.join(PATHS.outputDir, `${schema.name}.rust.graphql`);
-  const rustStats = benchmark("Rust", () =>
-    runCommand(PATHS.rustConverter, ["--input", schema.path, "--output", rustOut, "--descriptions"])
+  const rustOut = path.join(
+    PATHS.outputDir,
+    `${schema.name}.rust.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
   );
+  const rustArgs = [
+    "--input",
+    schema.path,
+    "--output",
+    rustOut,
+    "--descriptions",
+    "--preserve-order",
+    "--include-federation-directives",
+    "--federation-version",
+    DEFAULT_OPTIONS.federationVersion,
+    "--naming-convention",
+    DEFAULT_OPTIONS.namingConvention,
+    "--id-strategy",
+    DEFAULT_OPTIONS.idStrategy,
+    "--output-format",
+    DEFAULT_OPTIONS.outputFormat,
+  ];
+  const rustStats = benchmark("Rust", () => runCommand(PATHS.rustConverter, rustArgs));
 
   results.push({
     schema: schema.name,

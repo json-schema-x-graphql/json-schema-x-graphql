@@ -10,4 +10,3 @@ type Externalreftarget {
   commonField: String
 }
 
-

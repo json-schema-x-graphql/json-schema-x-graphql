@@ -27,6 +27,7 @@ This directory contains comprehensive documentation for the JSON Schema x GraphQ
 - **PHASE_2_IMPLEMENTATION.md** - Phase 2 plans
 - **PHASE_3B_ARCHITECTURE.md** - Architecture details
 - **BUGFIX_GRAPHQL_EDITOR_NOT_POPULATING.md** - Bug fix documentation
+- **frontend/IMPLEMENTATION_PLAN.md** - Frontend completion plan (editor integration, UX, testing, release)
 
 ## 🚀 Quick Start
 

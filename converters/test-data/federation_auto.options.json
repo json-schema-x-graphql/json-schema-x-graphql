@@ -1,0 +1,9 @@
+{
+  "includeFederationDirectives": true,
+  "federationVersion": "AUTO",
+  "namingConvention": "GRAPHQL_IDIOMATIC",
+  "preserveFieldOrder": true,
+  "includeDescriptions": true,
+  "idStrategy": "COMMON_PATTERNS",
+  "outputFormat": "SDL"
+}

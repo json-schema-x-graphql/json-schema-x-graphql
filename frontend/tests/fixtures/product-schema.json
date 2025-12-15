@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "title": "Product",
+  "description": "E-commerce product",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0
+    },
+    "stock": {
+      "type": "integer"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["Electronics", "Clothing", "Books", "Home"]
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "comment": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": ["id", "sku", "title", "price"]
+}

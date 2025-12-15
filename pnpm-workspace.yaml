@@ -1,2 +1,4 @@
 packages:
   - "converters/node"
+  - "frontend/demos/yjs-monaco"
+  - "frontend/demos/loro-monaco"

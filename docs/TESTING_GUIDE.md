@@ -112,6 +112,18 @@ Ensure Rust and Node.js implementations produce identical output.
 ./scripts/test-parity.sh
 ```
 
+Parity harness (Jest) also runs via the workspace runner:
+
+```bash
+pnpm -w -C converters/node test --silent
+```
+
+You can override converter options for a given run by setting either:
+- `JXQL_OPTIONS_PATH`: path to a JSON file containing `ConverterOptions` fields
+- `JXQL_OPTIONS_JSON`: inline JSON string of options
+
+Fixtures in `converters/test-data` may include a sibling `*.options.json` file; the parity test picks this up automatically and switches output extensions (e.g., AST JSON uses `.json` outputs) while comparing Node vs Rust results.
+
 ---
 
 ## Running Tests

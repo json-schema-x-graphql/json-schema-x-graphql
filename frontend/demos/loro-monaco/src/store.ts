@@ -46,10 +46,26 @@ export interface EditorState {
 
   // Converter options
   options: {
+    // Input validation
     validate: boolean;
     includeDescriptions: boolean;
     preserveFieldOrder: boolean;
-    federationVersion: "1" | "2" | null;
+
+    // Federation
+    federationVersion: "NONE" | "V1" | "V2" | "AUTO";
+    includeFederationDirectives: boolean;
+
+    // Naming and ID strategy
+    namingConvention: "PRESERVE" | "GRAPHQL_IDIOMATIC";
+    idStrategy: "NONE" | "COMMON_PATTERNS" | "ALL_STRINGS";
+
+    // Output format
+    outputFormat: "SDL" | "SDL_WITH_FEDERATION_METADATA" | "AST_JSON";
+
+    // Error handling
+    failOnWarning: boolean;
+
+    // UI preferences
     prettyPrint: boolean;
   };
 
@@ -143,7 +159,12 @@ export const useEditorStore = create<EditorState>()(
         validate: true,
         includeDescriptions: true,
         preserveFieldOrder: true,
-        federationVersion: null,
+        federationVersion: "V2",
+        includeFederationDirectives: true,
+        namingConvention: "GRAPHQL_IDIOMATIC",
+        idStrategy: "COMMON_PATTERNS",
+        outputFormat: "SDL",
+        failOnWarning: false,
         prettyPrint: true,
       },
       lastConversion: null,

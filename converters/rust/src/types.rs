@@ -23,10 +23,18 @@ pub struct ConversionOptions {
     pub preserve_field_order: bool,
     /// Apollo Federation version (1 or 2)
     pub federation_version: u8,
+    /// Whether to include federation directives in output
+    pub include_federation_directives: bool,
     /// Whether to automatically infer ID scalar for fields named "id", "_id", etc.
     pub infer_ids: bool,
+    /// Strategy for ID inference (supersedes infer_ids when not None)
+    pub id_strategy: IdInferenceStrategy,
     /// Strategy for naming GraphQL types and fields
     pub naming_convention: NamingConvention,
+    /// Desired output format
+    pub output_format: OutputFormat,
+    /// Treat warnings as errors
+    pub fail_on_warning: bool,
     /// List of type names to exclude from generation
     pub exclude_types: Vec<String>,
     /// List of regex patterns to exclude fields or types
@@ -48,8 +56,12 @@ impl Default for ConversionOptions {
             include_descriptions: true,
             preserve_field_order: true,
             federation_version: 2,
+            include_federation_directives: true,
             infer_ids: false,
+            id_strategy: IdInferenceStrategy::None,
             naming_convention: NamingConvention::GraphqlIdiomatic,
+            output_format: OutputFormat::Sdl,
+            fail_on_warning: false,
             exclude_types: vec![],
             exclude_patterns: vec![],
             description_block_threshold: 80,
@@ -58,6 +70,22 @@ impl Default for ConversionOptions {
             ref_naming: RefNaming::Basename,
         }
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum IdInferenceStrategy {
+    None,
+    CommonPatterns,
+    AllStrings,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum OutputFormat {
+    Sdl,
+    SdlWithFederationMetadata,
+    AstJson,
 }
 
 /// Strategies for deriving names from $ref values

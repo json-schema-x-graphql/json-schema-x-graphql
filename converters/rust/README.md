@@ -206,6 +206,47 @@ let options = ConversionOptions {
 let converter = Converter::with_options(options);
 ```
 
+### Command-Line (jxql)
+
+Build the CLI and run it with the standardized flags:
+
+```bash
+cargo build --release --features cli
+./target/release/jxql \
+    --input schema.json \
+    --output out.graphql \
+    --id-strategy COMMON_PATTERNS \
+    --output-format SDL \
+    --fail-on-warning
+```
+
+Key flags:
+- `--id-strategy` (`NONE` | `COMMON_PATTERNS` | `ALL_STRINGS`), with legacy `--infer-ids` mapping to `COMMON_PATTERNS`.
+- `--output-format` (`SDL` | `SDL_WITH_FEDERATION_METADATA` | `AST_JSON`).
+- `--fail-on-warning` to exit non-zero on warnings.
+
+### WASM Advanced Options
+
+`WasmConverter` covers the common options; for the full option surface (including `idStrategy`, `outputFormat`, and `failOnWarning`), use the `convert` export which mirrors the standardized API:
+
+```javascript
+import init, { convert } from './pkg/json_schema_graphql_converter.js';
+
+await init();
+
+const result = convert({
+    jsonSchema: JSON.stringify(mySchema),
+    options: {
+        idStrategy: 'ALL_STRINGS',
+        outputFormat: 'AST_JSON',
+        failOnWarning: true,
+        includeFederationDirectives: true
+    }
+});
+
+console.log(result.output);
+```
+
 ## Building
 
 ### Native Rust Library

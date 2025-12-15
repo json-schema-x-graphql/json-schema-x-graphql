@@ -94,6 +94,61 @@ function getNodeModulePath() {
 
 const nodeModulePath = getNodeModulePath();
 const rustConverterRoot = resolveConverterRoot("rust", "rust");
+const rustBinaryPath = join(rustConverterRoot, "target", "release", "jxql");
+
+const STANDARD_OPTIONS = {
+  includeDescriptions: true,
+  preserveFieldOrder: true,
+  includeFederationDirectives: true,
+  federationVersion: "V2",
+  namingConvention: "GRAPHQL_IDIOMATIC",
+  idStrategy: "COMMON_PATTERNS",
+  outputFormat: "SDL",
+  failOnWarning: false,
+};
+
+function loadOptionOverrides() {
+  const { JXQL_OPTIONS_JSON, JXQL_OPTIONS_PATH } = process.env;
+  if (JXQL_OPTIONS_PATH) {
+    try {
+      const raw = readFileSync(JXQL_OPTIONS_PATH, "utf-8");
+      return JSON.parse(raw);
+    } catch (error) {
+      log(
+        `⚠️  Failed to read options file at ${JXQL_OPTIONS_PATH}: ${error.message}`,
+        "yellow",
+      );
+    }
+  }
+  if (JXQL_OPTIONS_JSON) {
+    try {
+      return JSON.parse(JXQL_OPTIONS_JSON);
+    } catch (error) {
+      log(`⚠️  Failed to parse JXQL_OPTIONS_JSON: ${error.message}`, "yellow");
+    }
+  }
+  return {};
+}
+
+const OPTION_OVERRIDES = loadOptionOverrides();
+const EFFECTIVE_OPTIONS = { ...STANDARD_OPTIONS, ...OPTION_OVERRIDES };
+
+function buildRustArgs(options, inputFile, outputFile) {
+  const args = [
+    "--input",
+    inputFile,
+    "--output",
+    outputFile,
+  ];
+  // The current Rust CLI supports a minimal flag set; advanced options are not yet exposed.
+  args.push("--descriptions");
+  args.push("--preserve-order");
+  // Legacy infer-ids fallback when idStrategy is set and not NONE.
+  if (options.idStrategy && options.idStrategy !== "NONE") {
+    args.push("--infer-ids");
+  }
+  return args;
+}
 
 async function testNodeConverter(inputFile, outputFile) {
   log("🟢 Testing Node Converter...", "green");
@@ -119,10 +174,9 @@ async function testNodeConverter(inputFile, outputFile) {
     // Convert
     const startTime = Date.now();
     const result = jsonSchemaToGraphQL(jsonSchemaContent, {
+      ...EFFECTIVE_OPTIONS,
+      // Preserve backward compatibility: allow validate flag to be omitted.
       validate: false,
-      includeDescriptions: true,
-      preserveFieldOrder: true,
-      federationVersion: 2,
     });
     const duration = Date.now() - startTime;
 
@@ -147,38 +201,12 @@ async function testRustConverter(inputFile, outputFile) {
   log("🦀 Testing Rust Converter...", "magenta");
 
   try {
-    // Build Rust converter if needed
     const rustDir = rustConverterRoot;
-
-    // Check if we can use the lib
-    const testScript = `
-use std::fs;
-use json_schema_graphql_converter::*;
-
-fn main() {
-    let json_content = fs::read_to_string("${inputFile}").expect("Failed to read file");
-
-    match json_to_graphql(&json_content, &ConversionOptions::default()) {
-        Ok(sdl) => {
-            fs::write("${outputFile}", sdl).expect("Failed to write output");
-            println!("SUCCESS");
-        }
-        Err(e) => {
-            eprintln!("ERROR: {:?}", e);
-            std::process::exit(1);
-        }
-    }
-}
-`;
-
-    const tempTestFile = join(rustDir, "temp_test.rs");
-    writeFileSync(tempTestFile, testScript, "utf-8");
-
     const startTime = Date.now();
 
-    try {
-      // Try to run using cargo script
-      const cmd = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}"`;
+    if (existsSync(rustBinaryPath)) {
+      const args = buildRustArgs(EFFECTIVE_OPTIONS, inputFile, outputFile);
+      const cmd = [rustBinaryPath, ...args].join(" ");
       execSync(cmd, { encoding: "utf-8", stdio: "inherit" });
 
       const duration = Date.now() - startTime;
@@ -189,38 +217,20 @@ fn main() {
       log(`   Size: ${result.length} bytes`, "reset");
 
       return { success: true, sdl: result, duration };
-    } catch (execError) {
-      // Try alternative method - use the library directly
-      const testProgram = `
-use json_schema_graphql_converter::{ConversionOptions, Converter};
-use std::fs;
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let input = fs::read_to_string("${inputFile}")?;
-    let converter = Converter::with_options(ConversionOptions::default());
-    let output = converter.json_schema_to_graphql(&input)?;
-    fs::write("${outputFile}", output)?;
-    Ok(())
-}
-`;
-
-      const exampleDir = join(rustDir, "examples");
-      mkdirSync(exampleDir, { recursive: true });
-      const exampleFile = join(exampleDir, "test_convert.rs");
-      writeFileSync(exampleFile, testProgram, "utf-8");
-
-      const cmd2 = `cd "${rustDir}" && cargo run -q --example test_convert 2>&1`;
-      execSync(cmd2, { encoding: "utf-8", stdio: "pipe" });
-
-      const duration = Date.now() - startTime;
-      const result = readFileSync(outputFile, "utf-8");
-
-      log(`✅ Success (${duration}ms)`, "green");
-      log(`   Output: ${outputFile}`, "reset");
-      log(`   Size: ${result.length} bytes`, "reset");
-
-      return { success: true, sdl: result, duration };
     }
+
+    // Fallback: use cargo example with defaults (may differ from STANDARD_OPTIONS)
+    const cmdFallback = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}"`;
+    execSync(cmdFallback, { encoding: "utf-8", stdio: "inherit" });
+
+    const duration = Date.now() - startTime;
+    const result = readFileSync(outputFile, "utf-8");
+
+    log(`✅ Success (${duration}ms)`, "green");
+    log(`   Output: ${outputFile}`, "reset");
+    log(`   Size: ${result.length} bytes`, "reset");
+
+    return { success: true, sdl: result, duration };
   } catch (error) {
     log(`❌ Error: ${error.message}`, "red");
     if (error.stdout) {
@@ -243,6 +253,26 @@ function compareOutputs(nodeResult, rustResult) {
 
   const nodeSdl = nodeResult.sdl;
   const rustSdl = rustResult.sdl;
+
+  if (EFFECTIVE_OPTIONS.outputFormat === "AST_JSON") {
+    try {
+      const nodeJson = JSON.parse(nodeSdl || "null");
+      const rustJson = JSON.parse(rustSdl || "null");
+      const nodeStr = JSON.stringify(nodeJson, null, 2);
+      const rustStr = JSON.stringify(rustJson, null, 2);
+      if (nodeStr === rustStr) {
+        log("✅ Perfect Match! Both converters produce identical AST JSON", "green");
+      } else {
+        log("⚠️  Differences detected between converters (AST JSON)", "yellow");
+        console.log("\n--- Node Output (JSON) ---\n" + nodeStr.slice(0, 500));
+        console.log("\n--- Rust Output (JSON) ---\n" + rustStr.slice(0, 500));
+      }
+      return;
+    } catch (error) {
+      log(`❌ Failed to parse AST JSON: ${error.message}`, "red");
+      return;
+    }
+  }
 
   // Normalize SDL for comparison
   const normalizeSDL = (sdl) => {
@@ -350,12 +380,13 @@ async function main() {
       readFileSync(inputFile, "utf-8");
 
       const basename = inputFile.split("/").pop().replace(".json", "");
+      const ext = EFFECTIVE_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql";
 
       logSection(`📁 Testing: ${basename}`);
       log(`Input: ${inputFile}`, "blue");
 
-      const nodeOutputFile = join(outputDir, `${basename}-node.graphql`);
-      const rustOutputFile = join(outputDir, `${basename}-rust.graphql`);
+      const nodeOutputFile = join(outputDir, `${basename}-node.${ext}`);
+      const rustOutputFile = join(outputDir, `${basename}-rust.${ext}`);
 
       const nodeResult = await testNodeConverter(inputFile, nodeOutputFile);
       console.log();

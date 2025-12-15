@@ -1,0 +1,10 @@
+{
+  "idStrategy": "ALL_STRINGS",
+  "includeDescriptions": true,
+  "preserveFieldOrder": true,
+  "includeFederationDirectives": true,
+  "federationVersion": "V2",
+  "namingConvention": "GRAPHQL_IDIOMATIC",
+  "outputFormat": "SDL",
+  "failOnWarning": false
+}

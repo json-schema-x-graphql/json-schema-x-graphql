@@ -1,0 +1,8 @@
+{
+  "outputFormat": "AST_JSON",
+  "includeDescriptions": true,
+  "preserveFieldOrder": true,
+  "includeFederationDirectives": false,
+  "namingConvention": "GRAPHQL_IDIOMATIC",
+  "idStrategy": "COMMON_PATTERNS"
+}

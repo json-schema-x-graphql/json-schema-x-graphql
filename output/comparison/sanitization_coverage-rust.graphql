@@ -42,4 +42,3 @@ type Sanitizationcoverage {
   numericTypeRef: _123numerictype
 }
 
-
