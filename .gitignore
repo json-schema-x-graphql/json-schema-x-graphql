@@ -61,3 +61,9 @@ Thumbs.db
 #Rust
 converters/rust/target/
 converters/rust/target/*
+
+frontend/subgraph-composer/dist/assets/
+frontend/demos/loro-monaco/playwright-report/
+frontend/dashboard/public/graphql-editor/assets/
+frontend/dashboard/out/_next/static
+frontend/dashboard/.next/cache
