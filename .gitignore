@@ -101,6 +101,15 @@ frontend/dashboard/.next/cache/webpack/
 frontend/**/node_modules/
 converters/**/node_modules/
 
+# Large binaries (Rust examples)
+converters/rust/target/debug/examples/
+converters/rust/target/release/examples/
+
+# Archives
+*.zip
+*.tar.gz
+frontend/**/*.zip
+
 # OS temp files
 *.tmp
 *.swp
