@@ -1,0 +1,146 @@
+"Root type for GraphQL introspection queries"
+type Introspectionquery {
+  "Access the current type schema of this server"
+  schema: Schema!
+  "Request the definition of the specified type"
+  type: Type
+}
+
+"""A GraphQL Schema is in essence a grouping of type definitions and the types that serve as the roots of each type of operation."""
+type Schema {
+  "The description of the schema"
+  description: String
+  "All types defined in this schema"
+  types: [Type]!
+  "The root type of all query operations"
+  queryType: Type!
+  "The root type of all mutation operations"
+  mutationType: Type
+  "The root type of all subscription operations"
+  subscriptionType: Type
+  "All directives defined in this schema"
+  directives: [Directive]!
+}
+
+"""The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the __TypeKind enum."""
+type Type {
+  "The kind of type this is"
+  kind: String!
+  "The name of the type"
+  name: String
+  "The description of the type"
+  description: String
+  "A list of the fields of this type"
+  fields: [Field]
+  "A list of interfaces that this object type implements"
+  interfaces: [Type]
+  "The possible types of a union or interface type"
+  possibleTypes: [Type]
+  "The enum values of an enum type"
+  enumValues: [Enumvalue]
+  "The input fields of an input type"
+  inputFields: [Inputvalue]
+  "The type wrapped by this type (if list or non-null)"
+  ofType: Type
+  "Whether this type is marked with the @oneOf directive"
+  isOneOf: Boolean
+}
+
+"""Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type."""
+type Field {
+  "The name of the field"
+  name: String!
+  "The description of the field"
+  description: String
+  "A list of arguments accepted by this field"
+  args: [Inputvalue]!
+  "The type of the value returned by this field"
+  type: Type!
+  "Whether this field is deprecated"
+  isDeprecated: Boolean
+  "The reason this field is deprecated, or null if not deprecated"
+  deprecationReason: String
+}
+
+"""A Directive can accept arguments to modify its behavior. An Input Value is a definition of a positional or named argument accepted by a Field, Directive, or other input value."""
+type Inputvalue {
+  "The name of the argument or input field"
+  name: String!
+  "The description of the argument or input field"
+  description: String
+  "The input type of the argument or field"
+  type: Type!
+  "The default value of the argument or field"
+  defaultValue: String
+  "Whether this input value is deprecated"
+  isDeprecated: Boolean
+  "The reason this input value is deprecated"
+  deprecationReason: String
+}
+
+"One possible value of a GraphQL Enum Type."
+type Enumvalue {
+  "The name of the enum value"
+  name: String!
+  "The description of the enum value"
+  description: String
+  "Whether this enum value is deprecated"
+  isDeprecated: Boolean
+  "The reason this enum value is deprecated"
+  deprecationReason: String
+}
+
+"The kinds of possible types of a GraphQL type system."
+enum Typekind {
+  SCALAR
+  OBJECT
+  INTERFACE
+  UNION
+  ENUM
+  INPUT_OBJECT
+  LIST
+  NON_NULL
+}
+
+"""A Directive is used to annotate various parts of a GraphQL document as an instruction for execution by a GraphQL server."""
+type Directive {
+  "The name of the directive"
+  name: String!
+  "The description of the directive"
+  description: String
+  "The locations where the directive may be applied"
+  locations: [String]!
+  "The arguments accepted by the directive"
+  args: [Inputvalue]!
+  "Whether this directive may be applied multiple times to the same definition"
+  isRepeatable: Boolean
+}
+
+"The locations where a directive may be applied."
+enum Directivelocation {
+  QUERY
+  MUTATION
+  SUBSCRIPTION
+  FIELD
+  FRAGMENT_DEFINITION
+  FRAGMENT_SPREAD
+  INLINE_FRAGMENT
+  VARIABLE_DEFINITION
+  SCHEMA
+  SCALAR
+  OBJECT
+  FIELD_DEFINITION
+  ARGUMENT_DEFINITION
+  INTERFACE
+  UNION
+  ENUM
+  ENUM_VALUE
+  INPUT_OBJECT
+  INPUT_FIELD_DEFINITION
+}
+
+"""GraphQL schema definition generated from the GraphQL specification Appendix D with all built-in and introspection types"""
+type GraphqlSpecificationTypeSystemSchema {
+  "Query for schema introspection"
+  introspectionQuery: Introspectionquery
+}

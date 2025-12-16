@@ -6,7 +6,7 @@ import { NextSeo } from "next-seo";
 import { LuCheck, LuCircleX } from "react-icons/lu";
 import ClientMonacoEditor from "../../components/ClientMonacoEditor";
 import { SEO } from "../../constants/seo";
-import schema_unificationSchema from "../../data/generated/schema_unification.from-graphql.json";
+import schema_unificationSchema from "../../data/generated/schema-unification.from-graphql.json";
 import { FileFormat, TypeLanguage } from "../../enums/file.enum";
 import { editorOptions } from "../../layout/ConverterLayout/options";
 import Layout from "../../layout/PageLayout";

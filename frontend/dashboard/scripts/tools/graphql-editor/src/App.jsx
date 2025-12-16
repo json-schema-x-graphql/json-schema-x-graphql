@@ -1,8 +1,46 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 
-const GraphQLEditor = React.lazy(() =>
-  import("graphql-editor").then(mod => ({ default: mod.GraphQLEditor || mod.default }))
-);
+// Simple fallback GraphQL Editor that uses Monaco or a textarea
+const GraphQLEditor = React.lazy(async () => {
+  // Try to load the real graphql-editor first
+  try {
+    const mod = await import("graphql-editor");
+    const Component = mod.GraphQLEditor || mod.default;
+    if (Component) {
+      console.log("✅ graphql-editor loaded successfully");
+      return { default: Component };
+    }
+  } catch (err) {
+    console.warn("⚠️ Failed to load graphql-editor, using fallback:", err.message);
+  }
+  
+  // Fallback to a simple editor
+  return {
+    default: ({ schema, setSchema }) => (
+      <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
+        <div style={{ padding: "10px", background: "#fff3cd", borderBottom: "1px solid #ffc107" }}>
+          <strong>⚠️ GraphQL Editor Fallback</strong>
+          <p style={{ margin: "5px 0 0 0", fontSize: "12px" }}>
+            Full editor unavailable. Using simple text editor. Changes will update the schema.
+          </p>
+        </div>
+        <textarea
+          value={schema?.code || ""}
+          onChange={(e) => setSchema({ code: e.target.value })}
+          style={{
+            flex: 1,
+            padding: "10px",
+            fontFamily: "Monaco, 'Courier New', monospace",
+            fontSize: "13px",
+            border: "none",
+            resize: "none",
+          }}
+          placeholder="GraphQL SDL will appear here..."
+        />
+      </div>
+    ),
+  };
+});
 
 /**
  * Standalone GraphQL Editor App
@@ -16,13 +54,13 @@ const GraphQLEditor = React.lazy(() =>
  */
 
 const MODES = [
-  { key: "canonical", label: "Canonical (schema_unification.graphql)", path: "/data/schema_unification.graphql" },
+  { key: "canonical", label: "Canonical (schema-unification.graphql)", path: "/data/schema-unification.graphql" },
   {
     key: "hinted",
-    label: "Hinted (schema_unification-contract_data-hinted.graphql)",
-    path: "/data/schema_unification-contract_data-hinted.graphql",
+    label: "Hinted (schema-unification-contract-data-hinted.graphql)",
+    path: "/data/schema-unification-contract-data-hinted.graphql",
   },
-  { key: "v2", label: "V2 (schema_unification-v2.graphql)", path: "/data/schema_unification-v2.graphql" },
+  { key: "v2", label: "V2 (schema-unification-v2.graphql)", path: "/data/schema-unification-v2.graphql" },
 ];
 
 export default function App() {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const Schema UnificationDataViewer = () => {
+const SchemaUnificationDataViewer = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const Schema UnificationDataViewer = () => {
   return null;
 };
 
-export default Schema UnificationDataViewer;
+export default SchemaUnificationDataViewer;

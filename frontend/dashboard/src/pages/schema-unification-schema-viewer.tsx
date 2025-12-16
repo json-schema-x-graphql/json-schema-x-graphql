@@ -10,7 +10,7 @@ import { NextSeo } from "next-seo";
 import { ViewerNavigation } from "../components/ViewerNavigation";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
-import schema_unificationSchema from "../data/generated/schema_unification.from-graphql.json";
+import schema_unificationSchema from "../data/generated/schema-unification.from-graphql.json";
 import { FileFormat } from "../enums/file.enum";
 import { BottomBar } from "../features/editor/BottomBar";
 import { FullscreenDropzone } from "../features/editor/FullscreenDropzone";
@@ -65,7 +65,7 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
   ssr: false,
 });
 
-const Schema UnificationSchemaViewer = () => {
+const SchemaUnificationSchemaViewer = () => {
   const { setColorScheme } = useMantineColorScheme();
   const setContents = useFile(state => state.setContents);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
@@ -130,4 +130,4 @@ const Schema UnificationSchemaViewer = () => {
   );
 };
 
-export default Schema UnificationSchemaViewer;
+export default SchemaUnificationSchemaViewer;

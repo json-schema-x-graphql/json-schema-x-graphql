@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
-import Schema from "../data/schema_unification.schema.json";
+import Schema from "../data/schema-unification.schema.json";
 import { FileFormat } from "../enums/file.enum";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import { isIframe } from "../lib/utils/helpers";
