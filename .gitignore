@@ -62,8 +62,47 @@ Thumbs.db
 converters/rust/target/
 converters/rust/target/*
 
+# Next.js build artifacts and cache
+.next/
+frontend/**/.next/
+frontend/dashboard/.next/
+frontend/dashboard/out/
+frontend/dashboard/public/graphql-editor/assets/
+frontend/dashboard/.turbo/
+
+# Build artifacts
+frontend/subgraph-composer/dist/
 frontend/subgraph-composer/dist/assets/
 frontend/demos/loro-monaco/playwright-report/
-frontend/dashboard/public/graphql-editor/assets/
-frontend/dashboard/out/_next/static
-frontend/dashboard/.next/cache
+
+# Vite
+frontend/**/dist/
+frontend/**/.vite/
+
+# Testing artifacts
+frontend/**/.coverage/
+frontend/**/*.lcov
+frontend/**/.nyc_output/
+
+# Turbo cache
+.turbo/
+frontend/**/.turbo/
+
+# Generic cache directories
+.cache/
+frontend/**/.cache/
+**/.cache/
+**/.turbo/
+
+# Webpack cache (Next.js)
+frontend/dashboard/.next/cache/webpack/
+
+# pnpm
+frontend/**/node_modules/
+converters/**/node_modules/
+
+# OS temp files
+*.tmp
+*.swp
+*.swo
+*~
