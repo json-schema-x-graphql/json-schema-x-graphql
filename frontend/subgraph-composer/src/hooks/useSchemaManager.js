@@ -64,6 +64,7 @@ export function useSchemaManager() {
           2
         ),
         lastModified: Date.now(),
+        enabled: true, // NEW: Track whether schema is included in composition
       };
       setSchemas((prev) => [...prev, newSchema]);
       return newSchema;
@@ -131,6 +132,14 @@ export function useSchemaManager() {
     }
   }, []);
 
+  const toggleSchema = useCallback((schemaId) => {
+    setSchemas((prev) =>
+      prev.map((s) =>
+        s.id === schemaId ? { ...s, enabled: !s.enabled } : s
+      )
+    );
+  }, []);
+
   return {
     schemas,
     activeSchemaId,
@@ -142,5 +151,6 @@ export function useSchemaManager() {
     reorderSchemas,
     duplicateSchema,
     clearAll,
+    toggleSchema,
   };
 }

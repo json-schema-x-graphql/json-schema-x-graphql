@@ -1,0 +1,18 @@
+{
+  "title": "ExternalRefTarget",
+  "type": "object",
+  "properties": {
+    "commonField": { "type": "string", "description": "A field in the external document root" }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "description": "An address defined in an external file",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "zip": { "type": "string" }
+      }
+    }
+  }
+}

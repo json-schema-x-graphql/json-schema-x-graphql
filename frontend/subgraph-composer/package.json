@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 5175",
+    "kill-dev": "lsof -ti:5175 | xargs kill -9 2>/dev/null || true",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

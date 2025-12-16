@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FederatedThing",
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "sku": { "type": "string" },
+    "name": { "type": "string", "description": "federated entity name" }
+  },
+  "required": ["id", "sku"],
+  "x-graphql-directives": [
+    { "name": "key", "arguments": { "fields": "id sku" } }
+  ]
+}

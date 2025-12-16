@@ -42,6 +42,7 @@ export function composeSupergraph(subgraphs, options = {}) {
 
     // 2. Extract and merge type definitions
     const typeRegistry = new Map();
+    const typeSourceMap = new Map(); // Track which schema each type comes from
     const conflicts = [];
 
     for (const [schemaId, doc] of parsedSubgraphs.entries()) {
@@ -53,18 +54,25 @@ export function composeSupergraph(subgraphs, options = {}) {
         if (['Query', 'Mutation', 'Subscription'].includes(typeName)) {
           if (!typeRegistry.has('_rootTypes')) {
             typeRegistry.set('_rootTypes', []);
+            typeSourceMap.set('_rootTypes', []);
           }
           typeRegistry.get('_rootTypes').push(def);
+          typeSourceMap.get('_rootTypes').push(schemaId);
           continue;
         }
 
         if (typeRegistry.has(typeName)) {
-          // Type conflict detected
-          conflicts.push({
+          // Type conflict detected - track detailed info
+          const existingSources = typeSourceMap.get(typeName) || [];
+          const conflictInfo = {
             type: typeName,
-            sources: [schemaId, ...getSourcesForType(typeRegistry, typeName)],
+            sources: [...existingSources, schemaId],
+            sourceCount: new Set([...existingSources, schemaId]).size,
             strategy: mergeStrategy,
-          });
+            fieldCount: def.fields?.length || 0,
+          };
+          
+          conflicts.push(conflictInfo);
 
           if (mergeStrategy === 'extend') {
             // Keep existing, skip duplicate
@@ -77,6 +85,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         }
 
         typeRegistry.set(typeName, def);
+        typeSourceMap.set(typeName, [schemaId]);
       }
     }
 
@@ -139,7 +148,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         totalTypes: typeCount,
         totalFields: fieldCount,
         mergedTypes: Array.from(typeRegistry.values()).filter(d => d && d.kind).length,
-        conflicts: conflicts.map(c => `${c.type} (${c.sources.join(', ')})`),
+        conflicts: conflicts, // Return full conflict objects, not just strings
       },
     };
   } catch (error) {

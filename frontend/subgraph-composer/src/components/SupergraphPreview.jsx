@@ -99,9 +99,20 @@ export default function SupergraphPreview({
             <div
               className="section-header"
               onClick={() => toggleSection('preview')}
+              role="button"
+              tabIndex="0"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggleSection('preview');
+                }
+              }}
             >
               <span className="section-title">
-                {expandedSections.preview ? '▼' : '▶'} SDL Preview
+                <span style={{ width: '20px' }}>
+                  {expandedSections.preview ? '▼' : '▶'}
+                </span>
+                SDL Preview
               </span>
             </div>
             {expandedSections.preview && (
@@ -126,9 +137,20 @@ export default function SupergraphPreview({
                 <div
                   className="section-header"
                   onClick={() => toggleSection('stats')}
+                  role="button"
+                  tabIndex="0"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleSection('stats');
+                    }
+                  }}
                 >
                   <span className="section-title">
-                    {expandedSections.stats ? '▼' : '▶'} Statistics
+                    <span style={{ width: '20px' }}>
+                      {expandedSections.stats ? '▼' : '▶'}
+                    </span>
+                    Statistics
                   </span>
                 </div>
                 {expandedSections.stats && (
@@ -146,12 +168,32 @@ export default function SupergraphPreview({
                       <span className="stat-value">{subgraphs.size}</span>
                     </div>
                     {stats.conflicts?.length > 0 && (
-                      <div className="stat-item warning">
-                        <span className="stat-label">Conflicts:</span>
-                        <span className="stat-value">
-                          {stats.conflicts.length}
-                        </span>
-                      </div>
+                      <>
+                        <div className="stat-item warning">
+                          <span className="stat-label">Conflicts:</span>
+                          <span className="stat-value">
+                            {stats.conflicts.length}
+                          </span>
+                        </div>
+                        <div className="conflicts-details">
+                          <div className="conflicts-title">Conflicting Types:</div>
+                          {stats.conflicts.map((conflict, idx) => (
+                            <div key={idx} className="conflict-item">
+                              <div className="conflict-type">
+                                <strong>{conflict.type}</strong>
+                              </div>
+                              <div className="conflict-sources">
+                                <small>Found in: {conflict.sources.join(', ')}</small>
+                              </div>
+                              {conflict.fieldCount > 0 && (
+                                <div className="conflict-fields">
+                                  <small>{conflict.fieldCount} field(s)</small>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </>
                     )}
                   </div>
                 )}
@@ -163,10 +205,20 @@ export default function SupergraphPreview({
                 <div
                   className="section-header error"
                   onClick={() => toggleSection('errors')}
+                  role="button"
+                  tabIndex="0"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleSection('errors');
+                    }
+                  }}
                 >
                   <span className="section-title">
-                    {expandedSections.errors ? '▼' : '▶'} Errors (
-                    {errors.length})
+                    <span style={{ width: '20px' }}>
+                      {expandedSections.errors ? '▼' : '▶'}
+                    </span>
+                    Errors ({errors.length})
                   </span>
                 </div>
                 {expandedSections.errors && (

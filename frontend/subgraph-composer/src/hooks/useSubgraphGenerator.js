@@ -7,14 +7,16 @@ export function useSubgraphGenerator() {
   const [errors, setErrors] = useState(new Map());
 
   const generateSubgraph = useCallback(
-    async (jsonSchema, schemaId) => {
+    async (jsonSchema, schemaId, options = {}) => {
       setIsLoading(true);
       try {
         const result = await convertSchema(jsonSchema, {
-          descriptions: true,
-          federation: true,
-          federationVersion: 'AUTO',
-          naming: 'GRAPHQL_IDIOMATIC',
+          validate: options.validate ?? true,
+          descriptions: options.descriptions ?? true,
+          federation: options.federation ?? true,
+          federationVersion: options.federationVersion ?? 'AUTO',
+          naming: options.naming ?? 'GRAPHQL_IDIOMATIC',
+          ...options, // Allow additional options
         });
 
         if (result.success) {
@@ -57,8 +59,15 @@ export function useSubgraphGenerator() {
     });
   }, []);
 
+  // Convert Map to array for easier consumption
+  const subgraphArray = Array.from(subgraphs.entries()).map(([id, sdl]) => ({
+    id,
+    sdl,
+  }));
+
   return {
-    subgraphs,
+    subgraphs: subgraphArray,
+    subgraphsMap: subgraphs,
     isLoading,
     errors,
     generateSubgraph,

@@ -12,6 +12,7 @@ export default function SchemaManager({
   isLoading,
   onClear,
   onAddWithTemplate,
+  onToggleSchema,
 }) {
   const [renamingId, setRenamingId] = React.useState(null);
   const [renamingValue, setRenamingValue] = React.useState('');
@@ -104,6 +105,18 @@ export default function SchemaManager({
               onClick={() => onSelect(schema.id)}
             >
               <div className="schema-item-content">
+                <div className="schema-toggle-wrapper">
+                  <input
+                    type="checkbox"
+                    checked={schema.enabled ?? true}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      onToggleSchema(schema.id);
+                    }}
+                    className="schema-toggle"
+                    title="Enable/disable schema for composition"
+                  />
+                </div>
                 {renamingId === schema.id ? (
                   <input
                     autoFocus
