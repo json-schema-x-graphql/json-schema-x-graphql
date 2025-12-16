@@ -9,6 +9,7 @@ import {
   validateJsonSchema,
   formatJsonSchema,
   getConverterInfo,
+  enhanceSchemaWithIdMetadata,
 } from '../lib/converter';
 
 describe('Converter Library', () => {
@@ -170,6 +171,98 @@ describe('Converter Library', () => {
 
     it('should throw error for invalid JSON', () => {
       expect(() => formatJsonSchema('{ invalid json }')).toThrow();
+    });
+  });
+
+  describe('enhanceSchemaWithIdMetadata', () => {
+    it('should add ID type metadata to uuid fields', () => {
+      const schema = {
+        type: 'object',
+        properties: {
+          user_id: { type: 'string', format: 'uuid' },
+          name: { type: 'string' },
+        },
+      };
+
+      const enhanced = enhanceSchemaWithIdMetadata(schema);
+
+      expect(enhanced.properties.user_id['x-graphql-type']).toBe('ID!');
+      expect(enhanced.properties.user_id['x-graphql-field-type-name']).toBe('ID');
+      expect(enhanced.properties.user_id['x-graphql-is-entity-key']).toBe(true);
+      expect(enhanced.properties.name['x-graphql-type']).toBeUndefined();
+    });
+
+    it('should mark fields ending with _id as ID type', () => {
+      const schema = {
+        type: 'object',
+        properties: {
+          entity_id: { type: 'string' },
+          post_id: { type: 'string' },
+          content: { type: 'string' },
+        },
+      };
+
+      const enhanced = enhanceSchemaWithIdMetadata(schema);
+
+      expect(enhanced.properties.entity_id['x-graphql-type']).toBe('ID!');
+      expect(enhanced.properties.post_id['x-graphql-type']).toBe('ID!');
+      expect(enhanced.properties.content['x-graphql-type']).toBeUndefined();
+    });
+
+    it('should preserve existing ID type annotations', () => {
+      const schema = {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'string',
+            'x-graphql-type': 'ID',
+          },
+        },
+      };
+
+      const enhanced = enhanceSchemaWithIdMetadata(schema);
+
+      expect(enhanced.properties.id['x-graphql-type']).toBe('ID');
+      expect(enhanced.properties.id['x-graphql-field-type-name']).toBe('ID');
+    });
+
+    it('should handle nested objects', () => {
+      const schema = {
+        type: 'object',
+        properties: {
+          user_id: { type: 'string', format: 'uuid' },
+          profile: {
+            type: 'object',
+            properties: {
+              profile_id: { type: 'string' },
+              bio: { type: 'string' },
+            },
+          },
+        },
+      };
+
+      const enhanced = enhanceSchemaWithIdMetadata(schema);
+
+      expect(enhanced.properties.user_id['x-graphql-is-entity-key']).toBe(true);
+      expect(enhanced.properties.profile.properties.profile_id['x-graphql-is-entity-key']).toBe(true);
+      expect(enhanced.properties.profile.properties.bio['x-graphql-is-entity-key']).toBeUndefined();
+    });
+
+    it('should not modify non-ID fields', () => {
+      const schema = {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          age: { type: 'integer' },
+          email: { type: 'string', format: 'email' },
+        },
+      };
+
+      const enhanced = enhanceSchemaWithIdMetadata(schema);
+
+      expect(enhanced.properties.name['x-graphql-type']).toBeUndefined();
+      expect(enhanced.properties.age['x-graphql-type']).toBeUndefined();
+      expect(enhanced.properties.email['x-graphql-type']).toBeUndefined();
     });
   });
 

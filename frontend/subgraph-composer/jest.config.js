@@ -8,7 +8,7 @@ export default {
   transform: {
     '^.+\\.(jsx?|mjs)$': 'babel-jest',
   },
-  transformIgnorePatterns: ['node_modules/(?!@json-schema-x-graphql/core)'],
+  transformIgnorePatterns: ['node_modules/(?!(@json-schema-x-graphql/core|@graphql-tools))'],
   globals: {
     'babel-jest': {
       useESM: true,

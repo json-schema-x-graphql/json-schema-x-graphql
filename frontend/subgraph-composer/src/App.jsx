@@ -113,7 +113,7 @@ export default function App() {
             return generateSubgraph(parsed, schema.id, converterOptions);
           } catch (error) {
             console.error(`Failed to parse schema ${schema.id}:`, error);
-            return { success: false, error: error.message };
+            return { success: false, error: error.message, sdl: null };
           }
         })
       );
@@ -121,15 +121,12 @@ export default function App() {
       // Check if at least one succeeded
       const successfulResults = results.filter(r => r.success);
       if (successfulResults.length > 0) {
-        // Build map from successful results
+        // Build map directly from results - Map<schemaId, sdlString>
         const enabledSubgraphsMap = new Map();
         enabledSchemas.forEach((schema, idx) => {
           const result = results[idx];
           if (result.success && result.sdl) {
-            enabledSubgraphsMap.set(schema.id, {
-              name: schema.name,
-              sdl: result.sdl,
-            });
+            enabledSubgraphsMap.set(schema.id, result.sdl);
           }
         });
         

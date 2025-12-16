@@ -1,0 +1,102 @@
+# 0008: Subgraph/Supergraph Metadata Naming Convention
+
+Date: 2025-12-16
+
+## Status
+
+Accepted
+
+## Context
+
+In Apollo Federation compositions with multiple subgraphs, there is a clear distinction between:
+- **The base entity subgraph** (owner): Defines the root type with @key directive
+- **Extending subgraphs**: Use @extends to add fields to the owner type
+
+To make this relationship explicit and enforceable at the schema metadata level, we needed a naming convention for the x-graphql-* extensions that differentiates between the owner and extending subgraphs.
+
+Previously, all subgraphs were using `x-graphql-supergraph-*` metadata, which made it impossible to distinguish roles and didn't enforce the constraint that only ONE subgraph should be the base entity.
+
+## Decision
+
+Establish a strict naming convention for federation metadata:
+
+### Supergraph Namespace (Owner Only)
+**Used by exactly ONE subgraph** - the base entity owner subgraph:
+- `x-graphql-supergraph-name`: Unique subgraph identifier
+- `x-graphql-supergraph-type`: Must be `"base-entity"`
+- `x-graphql-supergraph-entity`: Entity name for federation (e.g., "User")
+- `x-graphql-supergraph-query-root`: Must be `true` for owner subgraphs
+
+Example:
+```json
+{
+  "x-graphql-supergraph-name": "users-service",
+  "x-graphql-supergraph-type": "base-entity",
+  "x-graphql-supergraph-entity": "User",
+  "x-graphql-supergraph-query-root": true
+}
+```
+
+### Subgraph Namespace (Extending Only)
+**Used by ALL extending subgraphs** - those that use @extends:
+- `x-graphql-subgraph-name`: Unique subgraph identifier
+- `x-graphql-subgraph-type`: Must be `"entity-extending"` or `"utility"`
+- `x-graphql-subgraph-entity`: Entity name being extended (e.g., "User")
+- `x-graphql-subgraph-query-root`: Must be `false` (or omitted)
+
+Example:
+```json
+{
+  "x-graphql-subgraph-name": "user-status-service",
+  "x-graphql-subgraph-type": "entity-extending",
+  "x-graphql-subgraph-entity": "User",
+  "x-graphql-subgraph-query-root": false
+}
+```
+
+## Validation Rules
+
+The `validateSubgraphNaming()` function enforces:
+
+1. **Only ONE supergraph allowed** - Fails if multiple schemas use `x-graphql-supergraph-*`
+2. **Supergraph must be base-entity** - If a supergraph exists, its type must be `"base-entity"`
+3. **No mixed metadata** - A schema cannot use both `x-graphql-supergraph-*` and `x-graphql-subgraph-*`
+4. **Valid subgraph types** - Subgraph types must be `"entity-extending"` or `"utility"` (not `"base-entity"`)
+5. **Consistency checks** - Warns if extending subgraphs exist without a base entity supergraph
+
+## Consequences
+
+### Positive
+
+- **Explicit Role Definition**: Each subgraph's role in the federation is immediately clear from its metadata namespace
+- **Enforced Constraints**: Validation prevents invalid compositions (e.g., multiple base entities)
+- **Better Composition Rules**: Gateway tools can use metadata to determine routing and type ownership
+- **Self-Documenting**: Developers reading the schema understand the federation architecture without external documentation
+- **Clear Error Messages**: Linter and validator can provide specific guidance on which namespace to use
+
+### Negative
+
+- **Breaking Change**: Existing schemas using only `x-graphql-supergraph-*` will need migration
+- **Namespace Complexity**: Two similar namespaces could cause confusion initially
+- **Migration Effort**: All templates and existing schemas need updating
+
+### Mitigation
+
+- Provide clear migration guide for updating existing schemas
+- Include helpful error messages that suggest the correct namespace
+- Update all built-in templates (basic_scalars, enums, nested_objects) as examples
+- Document in project README and federation guide
+
+## Rationale
+
+This naming convention provides:
+1. **Clarity** - Immediately distinguishes owner from extending subgraphs
+2. **Validation** - Enables enforcing the "only 1 base entity" rule
+3. **Scalability** - Supports complex multi-subgraph compositions
+4. **Tooling** - Enables better IDE support and composition analysis
+5. **Federation Compliance** - Aligns with Apollo Federation best practices
+
+## References
+
+- Apollo Federation Documentation: https://www.apollographql.com/docs/apollo-server/federation/
+- Federation Type Sharing Pattern: https://www.apollographql.com/docs/apollo-server/federation/type-sharing/

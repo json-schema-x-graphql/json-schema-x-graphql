@@ -14,7 +14,64 @@ async function loadConverter() {
 }
 
 /**
- * Convert a JSON Schema to GraphQL SDL
+ * Enhance JSON Schema to explicitly mark ID fields with type metadata
+ * This ensures converters properly annotate ID fields for federation
+ * @param {Record<string, any>} jsonSchema - The JSON Schema to enhance
+ * @returns {Record<string, any>} Enhanced schema with ID type metadata
+ */
+export function enhanceSchemaWithIdMetadata(jsonSchema) {
+  if (!jsonSchema || typeof jsonSchema !== 'object') {
+    return jsonSchema;
+  }
+
+  const enhanced = JSON.parse(JSON.stringify(jsonSchema)); // Deep clone
+
+  // Helper to identify and mark ID fields
+  function processProperties(obj, path = '') {
+    if (!obj || typeof obj !== 'object') return;
+
+    if (obj.properties && typeof obj.properties === 'object') {
+      for (const [fieldName, fieldSchema] of Object.entries(obj.properties)) {
+        if (!fieldSchema || typeof fieldSchema !== 'object') continue;
+
+        const isIdField =
+          // UUID format
+          (fieldSchema.type === 'string' && fieldSchema.format === 'uuid') ||
+          // Explicit ID type
+          fieldSchema['x-graphql-type'] === 'ID' ||
+          fieldSchema['x-graphql-type'] === 'ID!' ||
+          // Common ID naming patterns
+          /^(id|_id|uid|user_id|entity_id|.*_id)$/.test(fieldName);
+
+        if (isIdField) {
+          // Add type metadata if not already present
+          if (!fieldSchema['x-graphql-type']) {
+            fieldSchema['x-graphql-type'] = 'ID!';
+          }
+          // Add field type name annotation
+          if (!fieldSchema['x-graphql-field-type-name']) {
+            fieldSchema['x-graphql-field-type-name'] = 'ID';
+          }
+          // Mark as an entity key candidate
+          if (!fieldSchema['x-graphql-is-entity-key']) {
+            fieldSchema['x-graphql-is-entity-key'] = true;
+          }
+        }
+
+        // Recursively process nested objects
+        if (fieldSchema.type === 'object' && fieldSchema.properties) {
+          processProperties(fieldSchema, `${path}.${fieldName}`);
+        }
+      }
+    }
+  }
+
+  processProperties(enhanced);
+  return enhanced;
+}
+
+/**
+ * Convert a JSON Schema to GraphQL SDL with ID type annotations
  * @param {Record<string, any>|string} jsonSchema - The JSON Schema (object or string)
  * @param {Object} options - Conversion options
  * @returns {{success: boolean, sdl?: string, error?: string, warnings?: string[]}}
@@ -32,10 +89,13 @@ export async function convertSchema(jsonSchema, options = {}) {
       throw new Error('Invalid JSON Schema: must be an object');
     }
 
+    // Enhance schema with ID type metadata
+    const enhancedSchema = enhanceSchemaWithIdMetadata(schema);
+
     const { jsonSchemaToGraphQL } = await loadConverter();
 
     // Convert with real library
-    const sdl = jsonSchemaToGraphQL(schema, {
+    const sdl = jsonSchemaToGraphQL(enhancedSchema, {
       validate: options.validate ?? true,
       includeDescriptions: options.descriptions ?? true,
       includeFederationDirectives: options.federation ?? true,

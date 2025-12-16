@@ -55,56 +55,75 @@ export const SCHEMA_TEMPLATES = {
   // ============================================================================
   
   basic_scalars: {
-    name: 'Basic Scalars & Primitives',
-    category: 'Basic Types',
-    description: 'Demonstrates all GraphQL scalar types: String, Int, Float, Boolean, ID with x-graphql extensions',
+    name: 'User Entity (Owner - Scalars)',
+    category: 'Federation',
+    description: 'Federation owner subgraph - defines base User entity with @key. Other subgraphs extend this type.',
     schema: {
       $schema: 'https://json-schema.org/draft/2020-12/schema',
-      title: 'Basic Scalars Example',
-      description: 'All GraphQL scalar types with validation rules',
+      title: 'User Entity - Owner Subgraph',
+      description: 'Base User entity definition with federation @key. This is the owner subgraph.',
+      'x-graphql-supergraph-name': 'users-service',
+      'x-graphql-supergraph-type': 'base-entity',
+      'x-graphql-supergraph-entity': 'User',
+      'x-graphql-supergraph-query-root': true,
       type: 'object',
+      'x-graphql-type-name': 'User',
+      'x-graphql-type-kind': 'type',
+      'x-graphql-directives': [
+        {
+          name: 'key',
+          arguments: { fields: '"user_id"' }
+        }
+      ],
       properties: {
-        id: {
+        user_id: {
           type: 'string',
-          description: 'Unique identifier',
+          description: 'Unique user identifier - federation key',
           'x-graphql-type': 'ID!',
           format: 'uuid'
         },
-        name: {
+        first_name: {
           type: 'string',
-          description: 'Name string with constraints',
+          description: 'First name with constraints',
           'x-graphql-type': 'String!',
           minLength: 1,
           maxLength: 100
         },
-        email: {
+        last_name: {
+          type: 'string',
+          description: 'Last name with constraints',
+          'x-graphql-type': 'String!',
+          minLength: 1,
+          maxLength: 100
+        },
+        email_address: {
           type: 'string',
           description: 'Email address',
           'x-graphql-type': 'String',
           format: 'email'
         },
-        age: {
+        age_in_years: {
           type: 'integer',
           description: 'Age as integer',
           'x-graphql-type': 'Int',
           minimum: 0,
           maximum: 150
         },
-        rating: {
+        account_rating: {
           type: 'number',
           description: 'Decimal rating',
           'x-graphql-type': 'Float',
           minimum: 0,
           maximum: 5
         },
-        is_active: {
+        is_verified: {
           type: 'boolean',
-          description: 'Boolean flag',
+          description: 'Account verification status',
           'x-graphql-type': 'Boolean!',
-          default: true
+          default: false
         }
       },
-      required: ['id', 'name', 'is_active']
+      required: ['user_id', 'first_name', 'last_name']
     }
   },
 
@@ -170,49 +189,86 @@ export const SCHEMA_TEMPLATES = {
   // ============================================================================
 
   enums: {
-    name: 'Enums & Constrained Values',
-    category: 'Enums',
-    description: 'GraphQL enum types with x-graphql-enums extension',
+    name: 'User Status (Extending - Enums)',
+    category: 'Federation',
+    description: 'Federation extending subgraph - adds enum fields to the User entity via @extends',
     schema: {
       $schema: 'https://json-schema.org/draft/2020-12/schema',
-      title: 'Enums Example',
-      description: 'Enumeration types for constrained values',
+      title: 'User Status - Extending Subgraph',
+      description: 'Extended User entity with enum-based status fields. Uses @extends to add to owner type.',
+      'x-graphql-subgraph-name': 'user-status-service',
+      'x-graphql-subgraph-type': 'entity-extending',
+      'x-graphql-subgraph-entity': 'User',
+      'x-graphql-subgraph-query-root': false,
       type: 'object',
+      'x-graphql-type-name': 'User',
+      'x-graphql-directives': [
+        {
+          name: 'extends'
+        },
+        {
+          name: 'key',
+          arguments: { fields: '"user_id"' }
+        }
+      ],
       'x-graphql-enums': {
-        UserRole: {
-          description: 'User role in system',
+        AccountRole: {
+          description: 'User account role in system',
           values: ['ADMIN', 'MODERATOR', 'USER', 'GUEST']
         },
-        OrderStatus: {
-          description: 'Order fulfillment status',
-          values: ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED']
+        AccountStatus: {
+          description: 'User account status',
+          values: ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'PENDING_VERIFICATION']
         },
-        Environment: {
-          description: 'Deployment environment',
-          values: ['DEVELOPMENT', 'STAGING', 'PRODUCTION']
+        VerificationLevel: {
+          description: 'Account verification level',
+          values: ['UNVERIFIED', 'EMAIL_VERIFIED', 'TWO_FACTOR_ENABLED', 'FULLY_VERIFIED']
         }
       },
       properties: {
-        role: {
+        user_id: {
+          type: 'string',
+          description: 'Reference to owner User - federation key',
+          'x-graphql-type': 'ID!',
+          'x-graphql-directives': [
+            {
+              name: 'external'
+            }
+          ],
+          format: 'uuid'
+        },
+        account_role: {
           type: 'string',
           enum: ['ADMIN', 'MODERATOR', 'USER', 'GUEST'],
-          'x-graphql-type': 'UserRole!',
-          description: 'User role'
+          'x-graphql-type': 'AccountRole!',
+          description: 'User account role'
         },
-        status: {
+        current_status: {
           type: 'string',
-          enum: ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'],
-          'x-graphql-type': 'OrderStatus',
-          description: 'Order status'
+          enum: ['ACTIVE', 'INACTIVE', 'SUSPENDED', 'PENDING_VERIFICATION'],
+          'x-graphql-type': 'AccountStatus!',
+          description: 'Current account status'
         },
-        environment: {
+        verification_level: {
           type: 'string',
-          enum: ['DEVELOPMENT', 'STAGING', 'PRODUCTION'],
-          'x-graphql-type': 'Environment!',
-          description: 'Deployment environment'
+          enum: ['UNVERIFIED', 'EMAIL_VERIFIED', 'TWO_FACTOR_ENABLED', 'FULLY_VERIFIED'],
+          'x-graphql-type': 'VerificationLevel!',
+          description: 'Current verification level'
+        },
+        is_email_verified: {
+          type: 'boolean',
+          'x-graphql-type': 'Boolean!',
+          description: 'Whether email has been verified',
+          default: false
+        },
+        is_two_factor_enabled: {
+          type: 'boolean',
+          'x-graphql-type': 'Boolean!',
+          description: 'Whether two-factor authentication is enabled',
+          default: false
         }
       },
-      required: ['role', 'environment']
+      required: ['user_id', 'account_role', 'current_status', 'verification_level']
     }
   },
 
@@ -269,57 +325,120 @@ export const SCHEMA_TEMPLATES = {
   // ============================================================================
 
   nested_objects: {
-    name: 'Nested Objects & Composition',
-    category: 'Object Types',
-    description: 'Nested object structures with x-graphql-type-name and inline definitions',
+    name: 'User Profile Details (Extending - Nested)',
+    category: 'Federation',
+    description: 'Federation extending subgraph - adds nested object fields to the User entity via @extends',
     schema: {
       $schema: 'https://json-schema.org/draft/2020-12/schema',
-      title: 'Nested Objects Example',
-      description: 'Complex object composition patterns',
+      title: 'User Details - Extending Subgraph',
+      description: 'Extended User entity with nested object structures. Uses @extends to add to owner type.',
+      'x-graphql-subgraph-name': 'user-details-service',
+      'x-graphql-subgraph-type': 'entity-extending',
+      'x-graphql-subgraph-entity': 'User',
+      'x-graphql-subgraph-query-root': false,
       type: 'object',
+      'x-graphql-type-name': 'User',
+      'x-graphql-directives': [
+        {
+          name: 'extends'
+        },
+        {
+          name: 'key',
+          arguments: { fields: '"user_id"' }
+        }
+      ],
       properties: {
-        profile: {
+        user_id: {
+          type: 'string',
+          description: 'Reference to owner User - federation key',
+          'x-graphql-type': 'ID!',
+          'x-graphql-directives': [
+            {
+              name: 'external'
+            }
+          ],
+          format: 'uuid'
+        },
+        contact_information: {
           type: 'object',
-          'x-graphql-type-name': 'Profile',
-          description: 'User profile information',
+          'x-graphql-type-name': 'ContactInformation',
+          description: 'User contact details',
           properties: {
-            bio: { type: 'string', maxLength: 500 },
-            avatar_url: { type: 'string', format: 'uri' },
-            social_links: {
-              type: 'object',
-              'x-graphql-type-name': 'SocialLinks',
-              properties: {
-                twitter: { type: 'string' },
-                github: { type: 'string' },
-                linkedin: { type: 'string' }
-              }
+            email_address: { 
+              type: 'string', 
+              format: 'email',
+              description: 'Primary email address'
+            },
+            phone_number: { 
+              type: 'string', 
+              pattern: '^\\+?[0-9]{10,15}$',
+              description: 'Primary phone number'
+            },
+            preferred_contact_method: { 
+              type: 'string', 
+              enum: ['email', 'phone', 'sms'],
+              description: 'Preferred method of contact'
             }
           }
         },
-        address: {
+        physical_address: {
           type: 'object',
-          'x-graphql-type-name': 'Address',
-          description: 'Physical address',
+          'x-graphql-type-name': 'PhysicalAddress',
+          description: 'Physical mailing address',
           properties: {
-            street: { type: 'string' },
-            city: { type: 'string' },
-            state: { type: 'string' },
-            postal_code: { type: 'string' },
-            country: { type: 'string' }
+            street_address: { 
+              type: 'string',
+              description: 'Street address line'
+            },
+            city_name: { 
+              type: 'string',
+              description: 'City or municipality'
+            },
+            state_province: { 
+              type: 'string',
+              description: 'State or province'
+            },
+            postal_code: { 
+              type: 'string',
+              description: 'Postal or zip code'
+            },
+            country_code: { 
+              type: 'string',
+              pattern: '^[A-Z]{2}$',
+              description: 'ISO 3166-1 alpha-2 country code'
+            }
           },
-          required: ['street', 'city', 'country']
+          required: ['street_address', 'city_name', 'country_code']
         },
-        contact: {
+        profile_metadata: {
           type: 'object',
-          'x-graphql-type-name': 'Contact',
-          description: 'Contact information',
+          'x-graphql-type-name': 'ProfileMetadata',
+          description: 'User profile metadata and timestamps',
           properties: {
-            email: { type: 'string', format: 'email' },
-            phone: { type: 'string', pattern: '^\\+?[0-9]{10,15}$' },
-            preferred_contact: { type: 'string', enum: ['email', 'phone', 'sms'] }
+            account_created_date: { 
+              type: 'string', 
+              format: 'date-time',
+              description: 'When the account was created'
+            },
+            last_login_timestamp: { 
+              type: 'string', 
+              format: 'date-time',
+              description: 'When user last logged in'
+            },
+            total_login_count: { 
+              type: 'integer', 
+              minimum: 0,
+              description: 'Total number of logins'
+            },
+            bio_text: {
+              type: 'string',
+              maxLength: 500,
+              description: 'User biography or profile text'
+            }
           }
         }
-      }
+      },
+      required: ['user_id', 'contact_information', 'physical_address']
     }
   },
 

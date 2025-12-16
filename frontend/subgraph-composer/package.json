@@ -23,6 +23,8 @@
     "@codemirror/lang-json": "^6.0.0",
     "@codemirror/state": "^6.4.0",
     "@codemirror/view": "^6.28.0",
+    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/utils": "^10.0.0",
     "@json-schema-x-graphql/core": "file:../../converters/node",
     "graphql": "^16.9.0",
     "graphql-editor": "^7.3.1",
