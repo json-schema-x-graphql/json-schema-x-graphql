@@ -16,7 +16,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "build:wasm": "cd ../../converters/rust && wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm",
+    "test:e2e": "playwright test tests --project=chromium",
+    "build:wasm": "sh ../../scripts/build-wasm.sh",
     "postinstall": "npm run build:wasm || echo 'WASM build skipped - will use Node converter only'"
   },
   "dependencies": {
