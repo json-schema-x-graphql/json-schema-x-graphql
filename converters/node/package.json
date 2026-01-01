@@ -1,45 +1,87 @@
 {
   "name": "@json-schema-x-graphql/core",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Node.js implementation of JSON Schema <-> GraphQL converter with full Apollo Federation support",
+  "description": "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support",
   "main": "dist/converter.js",
   "types": "dist/converter.d.ts",
   "files": [
     "dist"
   ],
+  "bin": {
+    "json-schema-x-graphql": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
+    "dev:api": "tsx src/api-server.ts",
+    "start:api": "node dist/api-server.js",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint src/**/*.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && npm run test",
+    "validate:schemas": "tsx ../../scripts/validation/validate-schemas.ts",
+    "validate:graphql": "tsx ../../scripts/validation/validate-graphql.ts",
+    "validate:all": "npm run validate:schemas && npm run validate:graphql",
+    "test:integration": "tsx ../../scripts/integration/test-conversions.ts",
+    "test:integration:ci": "tsx ../../scripts/integration/test-conversions.ts --fail-on-error --output=integration-report.json",
+    "benchmark": "tsx ../../scripts/benchmarks/run-benchmarks.ts",
+    "benchmark:quick": "tsx ../../scripts/benchmarks/run-benchmarks.ts --iterations=10",
+    "benchmark:full": "tsx ../../scripts/benchmarks/run-benchmarks.ts --iterations=1000 --output=benchmark-report.json",
+    "benchmark:compare": "tsx ../../scripts/benchmarks/run-benchmarks.ts --compare=baseline-benchmark.json --output=current-benchmark.json",
+    "ci:validate": "npm run validate:all -- --fail-on-error --output=validation-report.json",
+    "ci:test": "npm run test:integration:ci && npm test",
+    "ci:benchmark": "npm run benchmark:full",
+    "precommit": "npm run lint && npm run validate:all"
   },
   "keywords": [
     "graphql",
     "json-schema",
     "converter",
     "federation",
-    "apollo"
+    "apollo",
+    "x-graphql",
+    "schema-conversion",
+    "graphql-federation",
+    "apollo-federation",
+    "sdl",
+    "typescript",
+    "validation"
   ],
   "author": "JJediny and Contributors",
   "license": "MIT",
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/JJediny/json-schema-x-graphql.git",
     "directory": "converters/node"
   },
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
+    "@apollo/subgraph": "^2.8.5",
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/typescript": "^5.0.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "graphql-tag": "^2.12.6",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.3.3"
   },
-  "peerDependencies": {
+  "dependencies": {
     "graphql": "^16.8.1"
   }
 }

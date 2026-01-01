@@ -1,5 +1,5 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use json_schema_graphql_converter::{ConversionOptions, Converter};
+use json_schema_x_graphql::{ConversionOptions, Converter};
 
 const JSON_SCHEMA: &str = r#"{
     "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -92,7 +92,7 @@ fn bench_cached_conversion(c: &mut Criterion) {
             converter
                 .convert(
                     black_box(JSON_SCHEMA),
-                    json_schema_graphql_converter::ConversionDirection::JsonSchemaToGraphQL,
+                    json_schema_x_graphql::ConversionDirection::JsonSchemaToGraphQL,
                 )
                 .unwrap()
         })

@@ -1,9 +1,38 @@
 //! JSON Schema to GraphQL SDL conversion
 
+use crate::case_conversion::{camel_to_snake, snake_to_camel};
 use crate::error::{ConversionError, Result};
 use crate::types::{ConversionOptions, NamingConvention};
 use serde_json::Value as JsonValue;
 use std::collections::{HashMap, HashSet};
+
+fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
+    // Always exclude introspection types
+    if type_name.starts_with("__") {
+        return false;
+    }
+
+    // Check operational types
+    if !options.include_operational_types {
+        if options.exclude_types.contains(&type_name.to_string()) {
+            return false;
+        }
+    }
+
+    // Check suffixes
+    for suffix in &options.exclude_type_suffixes {
+        if type_name.ends_with(suffix) {
+            return false;
+        }
+    }
+
+    // Check regexes
+    if is_excluded(type_name, &options.exclude_patterns) {
+        return false;
+    }
+
+    true
+}
 
 /// Convert JSON Schema to GraphQL SDL
 pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String> {
@@ -17,7 +46,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                 // First pass: assign names and populate type_names
                 for (def_key, def_schema) in defs_obj {
                     // Determine type name: x-graphql-type-name > x-graphql-type.name > title > def_key
-                    let raw_type_name = def_schema
+                    let explicit_type_name = def_schema
                         .get("x-graphql-type-name")
                         .and_then(|v| v.as_str())
                         .or_else(|| {
@@ -25,11 +54,18 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                                 v.as_str()
                                     .or_else(|| v.get("name").and_then(|n| n.as_str()))
                             })
-                        })
+                        });
+
+                    let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
                         .unwrap_or(def_key);
 
-                    let type_name = sanitize_type_name(raw_type_name, options.naming_convention);
+                    // Only apply naming convention if x-graphql-type-name is NOT explicitly set
+                    let type_name = if explicit_type_name.is_some() {
+                        sanitize_type_name(raw_type_name, NamingConvention::Preserve)
+                    } else {
+                        sanitize_type_name(raw_type_name, options.naming_convention)
+                    };
 
                     // Ensure uniqueness of top-level definition type names
                     let mut unique_type_name = type_name.clone();
@@ -39,9 +75,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                         idx += 1;
                     }
 
-                    if options.exclude_types.contains(&unique_type_name)
-                        || is_excluded(&unique_type_name, &options.exclude_patterns)
-                    {
+                    if !should_include_type(&unique_type_name, options) {
                         continue;
                     }
 
@@ -50,9 +84,10 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                     context
                         .type_names
                         .insert(format!("#/$defs/{}", def_key), unique_type_name.clone());
-                    context
-                        .type_names
-                        .insert(format!("#/definitions/{}", def_key), unique_type_name.clone());
+                    context.type_names.insert(
+                        format!("#/definitions/{}", def_key),
+                        unique_type_name.clone(),
+                    );
                 }
 
                 // Second pass: convert definitions
@@ -60,7 +95,11 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                     let unique_type_name = context
                         .type_names
                         .get(&format!("#/$defs/{}", def_key))
-                        .or_else(|| context.type_names.get(&format!("#/definitions/{}", def_key)))
+                        .or_else(|| {
+                            context
+                                .type_names
+                                .get(&format!("#/definitions/{}", def_key))
+                        })
                         .cloned();
 
                     if let Some(name) = unique_type_name {
@@ -79,9 +118,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         if let Some(name) = root_type_name {
             let sanitized_name = sanitize_type_name(name, options.naming_convention);
 
-            if !options.exclude_types.contains(&sanitized_name)
-                && !is_excluded(&sanitized_name, &options.exclude_patterns)
-            {
+            if should_include_type(&sanitized_name, options) {
                 convert_type_definition(schema, &sanitized_name, &mut context)?;
             }
         } else if obj.contains_key("properties")
@@ -106,6 +143,7 @@ struct ConversionContext<'a> {
     root_schema: Option<&'a JsonValue>,
     external_schemas: HashMap<String, JsonValue>,
     generated_types: HashSet<String>,
+    building: HashSet<String>,
     output: Vec<String>,
 }
 
@@ -117,6 +155,7 @@ impl<'a> ConversionContext<'a> {
             root_schema: Some(root_schema),
             external_schemas: HashMap::new(),
             generated_types: HashSet::new(),
+            building: HashSet::new(),
             output: Vec::new(),
         }
     }
@@ -147,7 +186,13 @@ impl<'a> ConversionContext<'a> {
                     })
             })
             .map(|value| value.to_string())
-            .or_else(|| extract_type_name_from_ref(ref_path, self.options.naming_convention, self.options.ref_naming))?;
+            .or_else(|| {
+                extract_type_name_from_ref(
+                    ref_path,
+                    self.options.naming_convention,
+                    self.options.ref_naming,
+                )
+            })?;
 
         // Ensure uniqueness of the derived type name to avoid collisions.
         let mut candidate = type_name.clone();
@@ -162,69 +207,118 @@ impl<'a> ConversionContext<'a> {
         Some(candidate)
     }
 
-    fn resolve_ref_schema(&mut self, ref_path: &str) -> Option<&JsonValue> {
-        // First, try to resolve as a local pointer inside the root schema
-        let root = self.root_schema?;
-        if let Some(pointer) = Self::normalize_ref_path(ref_path) {
-            // If the ref is a pure fragment (e.g., "#/definitions/Foo"), resolve locally
-            if pointer.starts_with('/') && !pointer[1..].contains('.') {
-                if pointer == "" {
-                    return Some(root);
-                }
-                if let Some(v) = root.pointer(&pointer) {
-                    return Some(v);
+    fn resolve_ref(
+        root_schema: Option<&'a JsonValue>,
+        ref_path: &str,
+        visited: &mut HashSet<String>,
+    ) -> Result<Option<&'a JsonValue>> {
+        if !ref_path.starts_with('#') {
+            // External references are handled by resolve_ref_schema wrapper or caller
+            return Ok(None);
+        }
+
+        // Check for circular $ref
+        if visited.contains(ref_path) {
+            return Err(ConversionError::CircularReference(format!(
+                "Circular $ref detected: {}",
+                ref_path
+            )));
+        }
+        visited.insert(ref_path.to_string());
+
+        let root = match root_schema {
+            Some(r) => r,
+            None => return Ok(None),
+        };
+
+        // Parse the JSON pointer path (e.g., "#/$defs/system_metadata")
+        let path = ref_path.trim_start_matches('#').trim_start_matches('/');
+        if path.is_empty() {
+            return Ok(Some(root));
+        }
+
+        let parts: Vec<&str> = path.split('/').collect();
+        let mut current = root;
+
+        for part in parts {
+            if part.is_empty() {
+                continue;
+            }
+
+            // If current node has a $ref, resolve it first (recursive)
+            if let Some(nested_ref) = current.get("$ref").and_then(|v| v.as_str()) {
+                if let Some(resolved) = Self::resolve_ref(root_schema, nested_ref, visited)? {
+                    current = resolved;
                 }
             }
+
+            // Try to get the part with multiple strategies
+            current = Self::try_get_property(current, part)?;
         }
 
-        // Otherwise attempt to resolve as an external file reference.
-        // We treat external references as opaque objects with a placeholder property,
-        // matching the Node converter's behavior (ADR 0007).
-        
-        if !self.external_schemas.contains_key(ref_path) {
-            let type_name = extract_type_name_from_ref(ref_path, self.options.naming_convention, self.options.ref_naming)
-                .unwrap_or_else(|| "ExternalType".to_string());
-
-            let placeholder = serde_json::json!({
-                "type": "object",
-                "description": format!("External reference to {}", ref_path),
-                "x-graphql-type-name": type_name,
-                "properties": {
-                    "_external_ref": {
-                        "type": "string",
-                        "description": "Placeholder for external reference"
-                    }
-                }
-            });
-            self.external_schemas.insert(ref_path.to_string(), placeholder);
-        }
-
-        self.external_schemas.get(ref_path)
+        Ok(Some(current))
     }
 
-    fn normalize_ref_path(ref_path: &str) -> Option<String> {
-        let trimmed = ref_path.trim();
-        if trimmed.is_empty() {
-            return Some(String::new());
+    /// Try to get a property with case conversion fallbacks
+    fn try_get_property(node: &'a JsonValue, key: &str) -> Result<&'a JsonValue> {
+        // Direct match
+        if let Some(val) = node.get(key) {
+            return Ok(val);
         }
 
-        if trimmed.starts_with("http://") || trimmed.starts_with("https://") {
-            return None;
+        // Try snake_case conversion
+        let snake = camel_to_snake(key);
+        if let Some(val) = node.get(&snake) {
+            return Ok(val);
         }
 
-        if let Some(stripped) = trimmed.strip_prefix('#') {
-            if stripped.is_empty() {
-                Some(String::new())
-            } else if stripped.starts_with('/') {
-                Some(stripped.to_string())
-            } else {
-                Some(format!("/{}", stripped))
+        // Try camelCase conversion
+        let camel = snake_to_camel(key);
+        if let Some(val) = node.get(&camel) {
+            return Ok(val);
+        }
+
+        Err(ConversionError::InvalidReference(format!(
+            "Property '{}' not found (tried: {}, {}, {})",
+            key, key, snake, camel
+        )))
+    }
+
+    fn resolve_ref_schema(&mut self, ref_path: &str) -> Option<&JsonValue> {
+        // Try recursive resolution first
+        let mut visited = HashSet::new();
+        if let Ok(Some(resolved)) = Self::resolve_ref(self.root_schema, ref_path, &mut visited) {
+            return Some(resolved);
+        }
+
+        // Fallback to external schema handling (existing logic)
+        if !ref_path.starts_with('#') {
+            if !self.external_schemas.contains_key(ref_path) {
+                let type_name = extract_type_name_from_ref(
+                    ref_path,
+                    self.options.naming_convention,
+                    self.options.ref_naming,
+                )
+                .unwrap_or_else(|| "ExternalType".to_string());
+
+                let placeholder = serde_json::json!({
+                    "type": "object",
+                    "description": format!("External reference to {}", ref_path),
+                    "x-graphql-type-name": type_name,
+                    "properties": {
+                        "_external_ref": {
+                            "type": "string",
+                            "description": "Placeholder for external reference"
+                        }
+                    }
+                });
+                self.external_schemas
+                    .insert(ref_path.to_string(), placeholder);
             }
-        } else if trimmed.starts_with('/') {
-            Some(trimmed.to_string())
-        } else {
-            Some(format!("/{}", trimmed))
+            return self.external_schemas.get(ref_path);
         }
+
+        None
     }
 }
 
@@ -236,11 +330,27 @@ fn convert_type_definition(
     if context.generated_types.contains(type_name) {
         return Ok(());
     }
+
+    // Check for circular type resolution
+    if context.building.contains(type_name) {
+        return Err(ConversionError::CircularReference(format!(
+            "Circular type resolution detected for {}",
+            type_name
+        )));
+    }
+
+    context.building.insert(type_name.to_string());
     context.generated_types.insert(type_name.to_string());
 
     let obj = schema.as_object().ok_or_else(|| {
         ConversionError::InvalidJsonSchema("schema must be an object".to_string())
     })?;
+
+    // Skip types marked with x-graphql-skip
+    if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
+        context.building.remove(type_name);
+        return Ok(());
+    }
 
     let mut output = String::new();
 
@@ -265,6 +375,7 @@ fn convert_type_definition(
     // Check for "enum", "union", "interface" keywords
     let kind_hint = explicit_kind.map(|s| s.to_lowercase()).unwrap_or_default();
 
+    // Fix 1: Check for INTERFACE (uppercase) as well as interface (lowercase)
     let kind = if kind_hint == "enum" || obj.contains_key("enum") {
         "enum"
     } else if kind_hint == "union" || obj.contains_key("oneOf") {
@@ -293,7 +404,13 @@ fn convert_type_definition(
         .and_then(|v| v.as_array())
     {
         for key in keys {
-            if let Some(fields) = key.get("fields") {
+            // Handle both string values and object values
+            if let Some(fields) = key.as_str() {
+                // Direct string value: "id" or "email"
+                directives_json
+                    .push(serde_json::json!({ "name": "key", "arguments": { "fields": fields } }));
+            } else if let Some(fields) = key.get("fields") {
+                // Object with fields property: {"fields": "id"}
                 directives_json
                     .push(serde_json::json!({ "name": "key", "arguments": { "fields": fields } }));
             }
@@ -424,10 +541,10 @@ fn convert_type_definition(
             output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             // Description for enum
             if context.options.include_descriptions {
-                    if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
-                        output.push_str(&format_description(description, context.options));
-                    }
+                if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                    output.push_str(&format_description(description, context.options));
                 }
+            }
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
@@ -466,9 +583,11 @@ fn convert_type_definition(
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
                         if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             members.push(name);
-                        } else if let Some(name) =
-                            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
-                        {
+                        } else if let Some(name) = extract_type_name_from_ref(
+                            ref_path,
+                            context.options.naming_convention,
+                            context.options.ref_naming,
+                        ) {
                             members.push(name);
                         }
                     } else if let Some(title) = item.get("title").and_then(|v| v.as_str()) {
@@ -521,17 +640,15 @@ fn convert_type_definition(
                         if let Some(name) = context.resolve_ref_type_name(ref_path) {
                             // Assuming all refs in allOf are interfaces if this is an object type
                             implements.push(name);
-                        } else if let Some(name) =
-                            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
-                        {
+                        } else if let Some(name) = extract_type_name_from_ref(
+                            ref_path,
+                            context.options.naming_convention,
+                            context.options.ref_naming,
+                        ) {
                             implements.push(name);
                         }
                     }
                 }
-            }
-
-            if !implements.is_empty() {
-                output.push_str(&format!(" implements {}", implements.join(" & ")));
             }
 
             // Properties
@@ -612,6 +729,7 @@ fn convert_type_definition(
     }
 
     context.output.push(output);
+    context.building.remove(type_name);
     Ok(())
 }
 
@@ -625,10 +743,15 @@ fn convert_field(
         ConversionError::InvalidField(format!("field '{}' schema must be an object", field_name))
     })?;
 
+    // Fix 3: Skip field if x-graphql-skip is true
+    if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
+        return Ok(String::new());
+    }
+
     let mut output = String::new();
 
     // Description
-        if context.options.include_descriptions {
+    if context.options.include_descriptions {
         if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
             output.push_str(&format_description(description, context.options));
         }
@@ -660,8 +783,21 @@ fn convert_field(
         output.push_str(&format_field_arguments(args, context)?);
     }
 
+    // Fix 5: Check for explicit field nullability override
+    let field_non_null = obj
+        .get("x-graphql-field-non-null")
+        .and_then(|v| v.as_bool());
+    let field_nullable = obj.get("x-graphql-nullable").and_then(|v| v.as_bool());
+
+    let mut effective_required = is_required;
+    if let Some(non_null) = field_non_null {
+        effective_required = non_null;
+    } else if let Some(nullable) = field_nullable {
+        effective_required = !nullable;
+    }
+
     // Type
-    let mut field_type = infer_graphql_type(schema, is_required, context, Some(field_name))?;
+    let mut field_type = infer_graphql_type(schema, effective_required, context, Some(field_name))?;
 
     // ID inference aligns with Node converter behavior.
     // Legacy `infer_ids` maps to the COMMON_PATTERNS strategy when set.
@@ -688,7 +824,7 @@ fn convert_field(
         };
 
         if promote {
-            field_type = if is_required {
+            field_type = if effective_required {
                 "ID!".to_string()
             } else {
                 "ID".to_string()
@@ -829,7 +965,11 @@ fn infer_graphql_type(
 ) -> Result<String> {
     // Be lenient with tuple/boolean schemas: treat arrays/booleans as generic JSON
     if schema.is_boolean() {
-        return Ok(if is_required { "JSON!".to_string() } else { "JSON".to_string() });
+        return Ok(if is_required {
+            "JSON!".to_string()
+        } else {
+            "JSON".to_string()
+        });
     }
 
     // Tuple validation (`items` as array) – use the first entry to infer a representative type,
@@ -837,9 +977,17 @@ fn infer_graphql_type(
     if let Some(items) = schema.as_array() {
         if let Some(first) = items.first() {
             let t = infer_graphql_type(first, false, context, name_hint)?;
-            return Ok(if is_required && !t.ends_with('!') { format!("{}!", t) } else { t });
+            return Ok(if is_required && !t.ends_with('!') {
+                format!("{}!", t)
+            } else {
+                t
+            });
         }
-        return Ok(if is_required { "JSON!".to_string() } else { "JSON".to_string() });
+        return Ok(if is_required {
+            "JSON!".to_string()
+        } else {
+            "JSON".to_string()
+        });
     }
 
     let obj = schema
@@ -866,8 +1014,11 @@ fn infer_graphql_type(
     };
 
     // 1. Explicit override
-    let explicit_type = x_graphql
-        .and_then(|x| x.get("type").and_then(|v| v.as_str()))
+    // Fix 2: Check for field-level type override first (x-graphql-field-type)
+    let explicit_type = obj
+        .get("x-graphql-field-type")
+        .and_then(|v| v.as_str())
+        .or_else(|| x_graphql.and_then(|x| x.get("type").and_then(|v| v.as_str())))
         .or_else(|| {
             obj.get("x-graphql-type").and_then(|v| {
                 v.as_str()
@@ -885,15 +1036,19 @@ fn infer_graphql_type(
         if let Some(schema) = context.resolve_ref_schema(ref_path) {
             // Clone schema to avoid borrow checker issues
             let schema_clone = schema.clone();
-            
+
             // Check if it's a primitive
-            let is_primitive = schema_clone.get("type").and_then(|v| v.as_str()).map(|t| 
-                matches!(t, "string" | "integer" | "number" | "boolean")
-            ).unwrap_or(false);
-            
+            let is_primitive = schema_clone
+                .get("type")
+                .and_then(|v| v.as_str())
+                .map(|t| matches!(t, "string" | "integer" | "number" | "boolean"))
+                .unwrap_or(false);
+
             if is_primitive {
                 // If it's a primitive, infer its type directly
-                if let Ok(primitive_type) = infer_graphql_type(&schema_clone, false, context, name_hint) {
+                if let Ok(primitive_type) =
+                    infer_graphql_type(&schema_clone, false, context, name_hint)
+                {
                     return Ok(finalize(primitive_type));
                 }
             }
@@ -917,9 +1072,11 @@ fn infer_graphql_type(
                 }
             }
             return Ok(finalize(type_name));
-        } else if let Some(type_name) =
-            extract_type_name_from_ref(ref_path, context.options.naming_convention, context.options.ref_naming)
-        {
+        } else if let Some(type_name) = extract_type_name_from_ref(
+            ref_path,
+            context.options.naming_convention,
+            context.options.ref_naming,
+        ) {
             if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
                 if let Some(s) = context.resolve_ref_schema(ref_path) {
                     let schema_clone = s.clone();
@@ -931,13 +1088,11 @@ fn infer_graphql_type(
     }
 
     // 3. Format Hints
+    // Note: We don't automatically map formats to custom scalars to match Node.js behavior
+    // Users should use x-graphql-field-type to explicitly set custom scalar types
+    // Only uuid is mapped to ID as a special case for common GraphQL patterns
     if let Some(format) = obj.get("format").and_then(|v| v.as_str()) {
         let mapped = match format {
-            "date-time" => Some("DateTime"),
-            "date" => Some("Date"),
-            "time" => Some("Time"),
-            "email" => Some("Email"),
-            "uri" => Some("URL"),
             "uuid" => Some("ID"),
             _ => None,
         };
@@ -952,7 +1107,10 @@ fn infer_graphql_type(
     }
 
     // 4. Type Mapping
-    let mut schema_type: Option<String> = obj.get("type").and_then(|v| v.as_str()).map(|s| s.to_string());
+    let mut schema_type: Option<String> = obj
+        .get("type")
+        .and_then(|v| v.as_str())
+        .map(|s| s.to_string());
 
     if let Some(type_array) = obj.get("type").and_then(|v| v.as_array()) {
         if type_array.len() > 1 {
@@ -972,11 +1130,18 @@ fn infer_graphql_type(
         Some("null") => "JSON".to_string(),
         Some("array") => {
             if let Some(items) = obj.get("items") {
-                // Check for nullableItems override
+                // Fix 6: Check for x-graphql-field-list-item-non-null
+                let list_item_non_null = obj
+                    .get("x-graphql-field-list-item-non-null")
+                    .and_then(|v| v.as_bool());
+
+                // Check for nullableItems override (legacy support)
                 let items_nullable =
                     x_graphql.and_then(|x| x.get("nullableItems").and_then(|v| v.as_bool()));
 
-                let item_is_required = if let Some(nullable) = items_nullable {
+                let item_is_required = if let Some(non_null) = list_item_non_null {
+                    non_null
+                } else if let Some(nullable) = items_nullable {
                     !nullable
                 } else {
                     false
@@ -1147,17 +1312,12 @@ fn format_directives(directives: &JsonValue) -> Result<String> {
     Ok(output)
 }
 
-fn format_description(description: &str, options: &crate::types::ConversionOptions) -> String {
-    let block_threshold = options.description_block_threshold;
-    let should_block = description.contains('\n') || description.len() >= block_threshold;
-    if should_block {
-        return format!(
-            "\"\"\"{}\"\"\"\n",
-            description.replace("\"\"\"", "\\\"\"\"")
-        );
-    }
-    // Inline string - escape double quotes and ensure we end with a newline
-    format!("\"{}\"\n", description.replace('"', "\\\""))
+fn format_description(description: &str, _options: &crate::types::ConversionOptions) -> String {
+    // Always use block-style (triple-quoted) format to match Node.js output
+    format!(
+        "\"\"\"\n{}\n\"\"\"\n",
+        description.replace("\"\"\"", "\\\"\"\"")
+    )
 }
 
 fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {
@@ -1166,9 +1326,19 @@ fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {
         Preserve => {
             let mut v = value
                 .chars()
-                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .map(|c| {
+                    if c.is_ascii_alphanumeric() || c == '_' {
+                        c
+                    } else {
+                        '_'
+                    }
+                })
                 .collect::<String>();
-            if v.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false) {
+            if v.chars()
+                .next()
+                .map(|c| c.is_ascii_digit())
+                .unwrap_or(false)
+            {
                 v = format!("_{}", v);
             }
             v
@@ -1177,12 +1347,20 @@ fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {
             // Replace non-alnum/_ with space, split, pascal-case each segment
             let replaced = value
                 .chars()
-                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { ' ' })
+                .map(|c| {
+                    if c.is_ascii_alphanumeric() || c == '_' {
+                        c
+                    } else {
+                        ' '
+                    }
+                })
                 .collect::<String>();
             let mut parts: Vec<String> = Vec::new();
             for s in replaced.split_whitespace() {
                 for p in s.split(|c: char| !c.is_ascii_alphanumeric()) {
-                    if p.is_empty() { continue; }
+                    if p.is_empty() {
+                        continue;
+                    }
                     let mut cs = p.chars();
                     let first = cs.next().unwrap_or(' ');
                     let rest = cs.as_str().to_lowercase();
@@ -1192,9 +1370,20 @@ fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {
             let joined = parts.join("");
             let cleaned = joined
                 .chars()
-                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .map(|c| {
+                    if c.is_ascii_alphanumeric() || c == '_' {
+                        c
+                    } else {
+                        '_'
+                    }
+                })
                 .collect::<String>();
-            if cleaned.chars().next().map(|c| c.is_ascii_digit()).unwrap_or(false) {
+            if cleaned
+                .chars()
+                .next()
+                .map(|c| c.is_ascii_digit())
+                .unwrap_or(false)
+            {
                 format!("_{}", cleaned)
             } else {
                 cleaned
@@ -1233,9 +1422,20 @@ fn sanitize_field_name(name: &str, naming: NamingConvention) -> String {
         Preserve => {
             let cleaned = name
                 .chars()
-                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .map(|c| {
+                    if c.is_ascii_alphanumeric() || c == '_' {
+                        c
+                    } else {
+                        '_'
+                    }
+                })
                 .collect::<String>();
-            if cleaned.chars().next().map(|c| c.is_ascii_alphabetic() || c == '_').unwrap_or(false) {
+            if cleaned
+                .chars()
+                .next()
+                .map(|c| c.is_ascii_alphabetic() || c == '_')
+                .unwrap_or(false)
+            {
                 cleaned
             } else {
                 format!("_{}", cleaned)
@@ -1249,13 +1449,24 @@ fn sanitize_field_name(name: &str, naming: NamingConvention) -> String {
                 .collect::<String>();
 
             let base = to_camel_case(&pre_processed);
-            
+
             let cleaned = base
                 .chars()
-                .map(|c| if c.is_ascii_alphanumeric() || c == '_' { c } else { '_' })
+                .map(|c| {
+                    if c.is_ascii_alphanumeric() || c == '_' {
+                        c
+                    } else {
+                        '_'
+                    }
+                })
                 .collect::<String>();
-            
-            if cleaned.chars().next().map(|c| c.is_ascii_alphabetic() || c == '_').unwrap_or(false) {
+
+            if cleaned
+                .chars()
+                .next()
+                .map(|c| c.is_ascii_alphabetic() || c == '_')
+                .unwrap_or(false)
+            {
                 cleaned
             } else {
                 format!("_{}", cleaned)
@@ -1275,7 +1486,11 @@ fn is_excluded(name: &str, patterns: &[String]) -> bool {
     false
 }
 
-fn extract_type_name_from_ref(ref_path: &str, convention: NamingConvention, strategy: crate::types::RefNaming) -> Option<String> {
+fn extract_type_name_from_ref(
+    ref_path: &str,
+    convention: NamingConvention,
+    strategy: crate::types::RefNaming,
+) -> Option<String> {
     let parts: Vec<&str> = ref_path.split('/').filter(|s| !s.is_empty()).collect();
     if parts.is_empty() {
         return None;
@@ -1473,5 +1688,342 @@ mod tests {
         let result = convert(&schema, &options).unwrap();
         assert!(result.contains("email: ID"));
         assert!(result.contains("count: Int"));
+    }
+
+    #[test]
+    fn test_circular_reference_self_referencing() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "Node": {
+                    "type": "object",
+                    "x-graphql-type-name": "Node",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "value": { "type": "string" },
+                        "next": { "$ref": "#/$defs/Node" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type Node"));
+        assert!(result.contains("next: Node"));
+    }
+
+    #[test]
+    fn test_circular_reference_mutual() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "Person": {
+                    "type": "object",
+                    "x-graphql-type-name": "Person",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" },
+                        "company": { "$ref": "#/$defs/Company" }
+                    }
+                },
+                "Company": {
+                    "type": "object",
+                    "x-graphql-type-name": "Company",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" },
+                        "employees": {
+                            "type": "array",
+                            "items": { "$ref": "#/$defs/Person" }
+                        }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type Person"));
+        assert!(result.contains("type Company"));
+        assert!(result.contains("company: Company"));
+        assert!(result.contains("employees: [Person]"));
+    }
+
+    #[test]
+    fn test_circular_reference_tree_structure() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "Tree": {
+                    "type": "object",
+                    "x-graphql-type-name": "Tree",
+                    "properties": {
+                        "value": { "type": "string" },
+                        "children": {
+                            "type": "array",
+                            "items": { "$ref": "#/$defs/Tree" }
+                        }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type Tree"));
+        assert!(result.contains("children: [Tree]"));
+    }
+
+    #[test]
+    fn test_type_filtering_excludes_query_mutation() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "Query": {
+                    "type": "object",
+                    "x-graphql-type-name": "Query",
+                    "properties": {
+                        "hello": { "type": "string" }
+                    }
+                },
+                "Mutation": {
+                    "type": "object",
+                    "x-graphql-type-name": "Mutation",
+                    "properties": {
+                        "updateUser": { "type": "string" }
+                    }
+                },
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(!result.contains("type Query"));
+        assert!(!result.contains("type Mutation"));
+        assert!(result.contains("type User"));
+    }
+
+    #[test]
+    fn test_type_filtering_includes_operational_when_configured() {
+        let mut options = ConversionOptions::default();
+        options.include_operational_types = true;
+
+        let schema = json!({
+            "$defs": {
+                "Query": {
+                    "type": "object",
+                    "x-graphql-type-name": "Query",
+                    "properties": {
+                        "hello": { "type": "string" }
+                    }
+                },
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type Query"));
+        assert!(result.contains("type User"));
+    }
+
+    #[test]
+    fn test_type_filtering_excludes_filter_suffix() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                },
+                "UserFilter": {
+                    "type": "object",
+                    "x-graphql-type-name": "UserFilter",
+                    "properties": {
+                        "name": { "type": "string" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type User"));
+        assert!(!result.contains("type UserFilter"));
+    }
+
+    #[test]
+    fn test_type_filtering_excludes_connection_suffix() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                },
+                "UserConnection": {
+                    "type": "object",
+                    "x-graphql-type-name": "UserConnection",
+                    "properties": {
+                        "edges": { "type": "array" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type User"));
+        assert!(!result.contains("type UserConnection"));
+    }
+
+    #[test]
+    fn test_type_filtering_excludes_payload_suffix() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                },
+                "CreateUserPayload": {
+                    "type": "object",
+                    "x-graphql-type-name": "CreateUserPayload",
+                    "properties": {
+                        "user": { "$ref": "#/$defs/User" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type User"));
+        assert!(!result.contains("type CreateUserPayload"));
+    }
+
+    #[test]
+    fn test_case_conversion_utilities() {
+        assert_eq!(camel_to_snake("camelCase"), "camel_case");
+        assert_eq!(camel_to_snake("PascalCase"), "pascal_case");
+        assert_eq!(camel_to_snake("HTTPResponse"), "http_response");
+        assert_eq!(snake_to_camel("snake_case"), "snakeCase");
+        assert_eq!(snake_to_camel("http_response"), "httpResponse");
+    }
+
+    #[test]
+    fn test_defs_extraction_all_types() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                },
+                "Post": {
+                    "type": "object",
+                    "x-graphql-type-name": "Post",
+                    "properties": {
+                        "title": { "type": "string" }
+                    }
+                },
+                "Comment": {
+                    "type": "object",
+                    "x-graphql-type-name": "Comment",
+                    "properties": {
+                        "text": { "type": "string" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type User"));
+        assert!(result.contains("type Post"));
+        assert!(result.contains("type Comment"));
+    }
+
+    #[test]
+    fn test_defs_with_references() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "Author": {
+                    "type": "object",
+                    "x-graphql-type-name": "Author",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" }
+                    }
+                },
+                "Book": {
+                    "type": "object",
+                    "x-graphql-type-name": "Book",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "title": { "type": "string" },
+                        "author": { "$ref": "#/$defs/Author" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type Author"));
+        assert!(result.contains("type Book"));
+        assert!(result.contains("author: Author"));
+    }
+
+    #[test]
+    fn test_defs_respects_filtering() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "x-graphql-type-name": "User",
+                    "properties": {
+                        "id": { "type": "string" }
+                    }
+                },
+                "UserFilter": {
+                    "type": "object",
+                    "x-graphql-type-name": "UserFilter",
+                    "properties": {
+                        "name": { "type": "string" }
+                    }
+                },
+                "Query": {
+                    "type": "object",
+                    "x-graphql-type-name": "Query",
+                    "properties": {
+                        "user": { "$ref": "#/$defs/User" }
+                    }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("type User"));
+        assert!(!result.contains("type UserFilter"));
+        assert!(!result.contains("type Query"));
     }
 }

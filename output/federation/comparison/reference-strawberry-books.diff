@@ -1,0 +1,52 @@
+--- /home/john/json-schema-x-graphql/examples/federation/sdl/strawberry/books-service.graphql	2025-12-31 15:30:54.483560337 -0500
++++ /home/john/json-schema-x-graphql/output/federation/node/strawberry-books.graphql	2025-12-31 16:19:04.721727931 -0500
+@@ -1,37 +1,18 @@
+-# Books Service - Strawberry GraphQL Federation Example
+-# This service owns the Book entity
+-
+-extend schema
+-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable"])
+-
+-"""
+-Book entity with author and title information
+-"""
+-type Book @key(fields: "id") {
+-  """
+-  Unique book identifier
+-  """
+-  id: ID!
+-
+-  """
+-  Book title
+-  """
++"Book in the catalog"
++type Book @key(fields: "isbn") {
++  "International Standard Book Number (primary key)"
++  isbn: ID!
++  "Book title"
+   title: String!
+-
+-  """
+-  Book author name
+-  """
+-  author: String!
++  "Book author"
++  author: String
++  "Publication year"
++  year: Int
+ }
+ 
+ type Query {
+-  """
+-  Get all books
+-  """
++  "Get a book by ISBN"
++  book(isbn: ID!): Book
++  "Get all books"
+   books: [Book!]!
+-
+-  """
+-  Get a single book by ID
+-  """
+-  book(id: ID!): Book
+ }

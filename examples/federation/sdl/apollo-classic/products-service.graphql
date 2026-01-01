@@ -1,0 +1,42 @@
+# Products Service - Apollo Federation Classic Example
+# This service owns the Product entity
+
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external"])
+
+"""
+Product in the catalog
+"""
+type Product @key(fields: "upc") {
+  """
+  Universal Product Code (primary key)
+  """
+  upc: String!
+
+  """
+  Product name
+  """
+  name: String
+
+  """
+  Product price in cents
+  """
+  price: Int
+
+  """
+  Product weight in grams
+  """
+  weight: Int
+}
+
+type Query {
+  """
+  Get a product by UPC
+  """
+  product(upc: String!): Product
+
+  """
+  Get all products
+  """
+  products: [Product!]!
+}

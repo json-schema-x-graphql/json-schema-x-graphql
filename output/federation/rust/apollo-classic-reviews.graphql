@@ -1,0 +1,73 @@
+"""
+Extended User type with reviews
+"""
+type User @key(fields: "email") {
+  """
+  User's email address
+  """
+  email: ID!
+  """
+  Reviews written by this user
+  """
+  reviews: [Review!]!
+}
+
+"""
+Extended Product type with reviews
+"""
+type Product @key(fields: "upc") {
+  """
+  Universal Product Code
+  """
+  upc: ID!
+  """
+  Reviews for this product
+  """
+  reviews: [Review!]!
+}
+
+"""
+Product review by a user
+"""
+type Review @key(fields: "id") {
+  """
+  Review ID (primary key)
+  """
+  id: ID!
+  """
+  Foreign key to Product (UPC)
+  """
+  productUpc: ID!
+  """
+  Foreign key to User (email)
+  """
+  authorEmail: ID!
+  """
+  Review text content
+  """
+  body: String
+  """
+  Rating from 1-5
+  """
+  rating: Int
+  """
+  User who wrote the review
+  """
+  author: User!
+  """
+  Product being reviewed
+  """
+  product: Product!
+}
+
+type Query {
+  """
+  Get a review by ID
+  """
+  review(id: ID!): Review
+  """
+  Get all reviews
+  """
+  reviews: [Review!]!
+}
+

@@ -1,0 +1,51 @@
+"""
+Tests various nullability configurations
+"""
+type NullabilityTest {
+  """
+  Field explicitly marked as non-null
+  """
+  requiredField: String!
+  """
+  Field that is nullable by default
+  """
+  optionalField: String
+  """
+  Field explicitly marked as nullable even if required
+  """
+  nullableOverride: String
+  """
+  Non-null list of nullable items
+  """
+  nonNullList: [String]!
+  """
+  Nullable list of nullable items
+  """
+  nullableList: [String]
+  """
+  Nullable list of non-null items
+  """
+  listOfNonNullItems: [String!]
+  """
+  Non-null list of non-null items
+  """
+  nonNullListOfNonNullItems: [String!]!
+  """
+  Non-null nested list
+  """
+  nestedList: [[String]]!
+  """
+  Complex type that is explicitly nullable
+  """
+  complexNullable: ComplexType
+}
+
+"""
+A complex nested type
+"""
+type ComplexType {
+  fieldA: String
+  fieldB: Int!
+}
+
+

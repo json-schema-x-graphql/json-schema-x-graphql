@@ -1,14 +1,17 @@
 [package]
-name = "json-schema-graphql-converter"
-version = "0.1.0"
+name = "json-schema-x-graphql"
+version = "2.0.0"
 edition = "2021"
-authors = ["JSON Schema x GraphQL Contributors"]
-description = "Bidirectional, lossless converter between JSON Schema and GraphQL SDL with x-graphql-* extensions"
+authors = ["JJediny and Contributors"]
+description = "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support"
 license = "MIT"
-repository = "https://github.com/json-schema-x-graphql/rust-converter"
+homepage = "https://github.com/JJediny/json-schema-x-graphql"
+repository = "https://github.com/JJediny/json-schema-x-graphql"
+documentation = "https://docs.rs/json-schema-x-graphql"
 readme = "README.md"
-keywords = ["json-schema", "graphql", "converter", "wasm", "apollo-federation"]
-categories = ["parsing", "wasm", "web-programming"]
+keywords = ["json-schema", "graphql", "converter", "federation", "x-graphql"]
+categories = ["parsing", "wasm", "web-programming", "api-bindings", "development-tools"]
+rust-version = "1.70"
 
 [package.metadata.wasm-pack.profile.release]
 wasm-opt = false
@@ -35,6 +38,17 @@ serde-wasm-bindgen = { version = "0.6", optional = true }
 
 # Optional caching
 lru = { version = "0.12", optional = true }
+
+# JSON Schema validation
+jsonschema = "0.18"
+boon = "0.6"
+
+# GraphQL SDL and Federation validation
+apollo-parser = "0.8"
+apollo-encoder = "0.8"
+apollo-compiler = "1.0"
+graphql-composition = "0.1"
+graphql-schema-validation = "0.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4"

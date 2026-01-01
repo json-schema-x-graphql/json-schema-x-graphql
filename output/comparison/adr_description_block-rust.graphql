@@ -1,6 +1,0 @@
-"""This is a deliberately long description intended to exceed the default descriptionBlockThreshold of eighty characters.
-It has multiple lines and should be emitted as a GraphQL block string by canonical converters."""
-type Descriptionblock {
-  a: String
-}
-

@@ -34,7 +34,7 @@ type Fpdsrecord {
 "System-level metadata for record tracking, versioning, and lineage."
 type SystemMetadata @shareable {
   "Constant system identifier"
-  systemName: String!
+  systemName: SystemName!
   "Primary identifier of the record within Contract Data"
   sourceRecordId: String!
   "Version of the canonical Contract Data schema"
@@ -345,11 +345,4 @@ type Compliance {
 """Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
 type ContractDataCanonicalSchema {
   contractDataRecord: Fpdsrecord
-}
-
-type Query {
-  "Fetch a single Contract Data record by PIID and agency code"
-  contract_dataRecord(piid: String!, agency_code: String): FpdsRecord
-  "Return a list of Contract Data records (non-paginated)"
-  contract_dataRecords: [FpdsRecord!]!
 }

@@ -30,7 +30,7 @@ type AssistRecord {
 "Metadata describing the source system, identifiers, and lifecycle timestamps."
 type SystemMetadata @shareable {
   "Constant system identifier string"
-  systemName: String!
+  systemName: SystemName!
   "Primary identifier of the record within Legacy Procurement"
   sourceRecordId: String!
   "Version of the canonical Legacy Procurement schema used to produce this record"
@@ -111,11 +111,4 @@ type PeriodOfPerformance {
 type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
   legacyProcurementRecord: AssistRecord
-}
-
-type Query {
-  "Fetch a single Legacy Procurement record by IA PIID or unique ID"
-  legacy_procurement_record(ia_piid_or_unique_id: String!, source_record_id: ID): AssistRecord
-  "Return a list of Legacy Procurement records (non-paginated)"
-  legacy_procurement_records: [AssistRecord!]!
 }

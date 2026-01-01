@@ -1,0 +1,18 @@
+"Book in the catalog"
+type Book @key(fields: "isbn") {
+  "International Standard Book Number (primary key)"
+  isbn: ID!
+  "Book title"
+  title: String!
+  "Book author"
+  author: String
+  "Publication year"
+  year: Int
+}
+
+type Query {
+  "Get a book by ISBN"
+  book(isbn: ID!): Book
+  "Get all books"
+  books: [Book!]!
+}

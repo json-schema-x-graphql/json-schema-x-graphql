@@ -24,11 +24,13 @@
 //! ```
 
 pub mod api_types;
+pub mod case_conversion;
 pub mod error;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
 pub mod schema;
 pub mod types;
+pub mod validation;
 pub mod validator;
 
 #[cfg(feature = "wasm")]

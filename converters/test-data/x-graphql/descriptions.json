@@ -1,0 +1,143 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Descriptions Test Schema",
+  "description": "Tests x-graphql-description attribute for GraphQL-specific descriptions",
+  "type": "object",
+  "definitions": {
+    "DocumentedType": {
+      "type": "object",
+      "x-graphql-type-name": "DocumentedType",
+      "description": "This is the JSON Schema description",
+      "x-graphql-description": "This is the GraphQL-specific description that should be used instead",
+      "properties": {
+        "field_with_both_descriptions": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithBothDescriptions",
+          "description": "JSON Schema description for this field",
+          "x-graphql-description": "GraphQL-specific description that takes precedence"
+        },
+        "field_with_json_description_only": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithJsonDescriptionOnly",
+          "description": "This field only has a JSON Schema description"
+        },
+        "field_with_graphql_description_only": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithGraphqlDescriptionOnly",
+          "x-graphql-description": "This field only has a GraphQL description"
+        },
+        "field_with_no_description": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithNoDescription"
+        }
+      }
+    },
+    "MultilineDescriptions": {
+      "type": "object",
+      "x-graphql-type-name": "MultilineDescriptions",
+      "x-graphql-description": "This type has a multiline description.\n\nIt includes multiple paragraphs to test\nproper formatting in GraphQL SDL output.\n\nThird paragraph for good measure.",
+      "properties": {
+        "field_with_multiline": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithMultiline",
+          "x-graphql-description": "First line of description.\nSecond line of description.\nThird line of description."
+        },
+        "field_with_markdown": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithMarkdown",
+          "x-graphql-description": "This description contains **bold** and *italic* text.\n\nIt also has:\n- List item 1\n- List item 2\n- List item 3"
+        }
+      }
+    },
+    "DescriptionPriority": {
+      "type": "object",
+      "x-graphql-type-name": "DescriptionPriority",
+      "description": "Testing description priority - this is the base description",
+      "properties": {
+        "override_with_graphql": {
+          "type": "string",
+          "x-graphql-field-name": "overrideWithGraphql",
+          "description": "Base description that should be overridden",
+          "x-graphql-description": "Override description for GraphQL"
+        },
+        "fallback_to_json": {
+          "type": "string",
+          "x-graphql-field-name": "fallbackToJson",
+          "description": "This should be used as fallback"
+        },
+        "no_description_at_all": {
+          "type": "integer",
+          "x-graphql-field-name": "noDescriptionAtAll"
+        }
+      }
+    },
+    "SpecialCharactersInDescription": {
+      "type": "object",
+      "x-graphql-type-name": "SpecialCharactersInDescription",
+      "x-graphql-description": "Description with \"quotes\" and 'apostrophes' and special chars: <>&",
+      "properties": {
+        "field_with_quotes": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithQuotes",
+          "x-graphql-description": "This has \"double quotes\" and 'single quotes'"
+        },
+        "field_with_symbols": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithSymbols",
+          "x-graphql-description": "Symbols: @#$%^&*()_+-={}[]|\\:;<>?,./~`"
+        },
+        "field_with_unicode": {
+          "type": "string",
+          "x-graphql-field-name": "fieldWithUnicode",
+          "x-graphql-description": "Unicode characters: 你好 🚀 émojis and accénts"
+        }
+      }
+    },
+    "EmptyAndWhitespaceDescriptions": {
+      "type": "object",
+      "x-graphql-type-name": "EmptyAndWhitespaceDescriptions",
+      "description": "Testing edge cases with empty and whitespace descriptions",
+      "properties": {
+        "empty_graphql_description": {
+          "type": "string",
+          "x-graphql-field-name": "emptyGraphqlDescription",
+          "description": "Fallback description",
+          "x-graphql-description": ""
+        },
+        "whitespace_only": {
+          "type": "string",
+          "x-graphql-field-name": "whitespaceOnly",
+          "x-graphql-description": "   "
+        },
+        "null_like_description": {
+          "type": "string",
+          "x-graphql-field-name": "nullLikeDescription",
+          "description": "Should use this one"
+        }
+      }
+    },
+    "DeprecationInDescription": {
+      "type": "object",
+      "x-graphql-type-name": "DeprecationInDescription",
+      "description": "Type with deprecated fields",
+      "properties": {
+        "current_field": {
+          "type": "string",
+          "x-graphql-field-name": "currentField",
+          "x-graphql-description": "This is the current recommended field"
+        },
+        "deprecated_field": {
+          "type": "string",
+          "x-graphql-field-name": "deprecatedField",
+          "x-graphql-description": "@deprecated Use currentField instead. This field will be removed in v2.0"
+        },
+        "legacy_field": {
+          "type": "string",
+          "x-graphql-field-name": "legacyField",
+          "description": "Legacy field - should use GraphQL description",
+          "x-graphql-description": "@deprecated(reason: \"Use currentField instead\")"
+        }
+      }
+    }
+  }
+}

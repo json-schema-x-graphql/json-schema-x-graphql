@@ -1,71 +1,75 @@
 #!/usr/bin/env node
-import fs from 'fs';
-import path from 'path';
-import { parseArgs } from 'util';
-import { jsonSchemaToGraphQL } from './converter';
+import fs from "fs";
+import path from "path";
+import { parseArgs } from "util";
+import { jsonSchemaToGraphQL } from "./converter.js";
 import {
   FederationVersion,
   NamingConvention,
   IdInferenceStrategy,
   OutputFormat,
   ConverterOptions,
-} from './generated/types';
+} from "./generated/types.js";
 
 const { values, positionals } = parseArgs({
   options: {
     input: {
-      type: 'string',
-      short: 'i',
+      type: "string",
+      short: "i",
     },
     output: {
-      type: 'string',
-      short: 'o',
+      type: "string",
+      short: "o",
     },
     descriptions: {
-      type: 'boolean',
+      type: "boolean",
     },
-    'preserve-order': {
-      type: 'boolean',
+    "preserve-order": {
+      type: "boolean",
     },
-    'include-federation-directives': {
-      type: 'boolean',
+    "include-federation-directives": {
+      type: "boolean",
       default: true,
     },
-    'federation-version': {
-      type: 'string',
-    },
-    'naming-convention': {
-      type: 'string',
-    },
-    'infer-ids': {
-      type: 'boolean',
+    "include-schema-link": {
+      type: "boolean",
       default: false,
     },
-    'id-strategy': {
-      type: 'string',
+    "federation-version": {
+      type: "string",
     },
-    'output-format': {
-      type: 'string',
+    "naming-convention": {
+      type: "string",
     },
-    'fail-on-warning': {
-      type: 'boolean',
+    "infer-ids": {
+      type: "boolean",
       default: false,
     },
-    'exclude-type': {
-      type: 'string',
+    "id-strategy": {
+      type: "string",
+    },
+    "output-format": {
+      type: "string",
+    },
+    "fail-on-warning": {
+      type: "boolean",
+      default: false,
+    },
+    "exclude-type": {
+      type: "string",
       multiple: true,
     },
-    'exclude-pattern': {
-      type: 'string',
+    "exclude-pattern": {
+      type: "string",
       multiple: true,
     },
     help: {
-      type: 'boolean',
-      short: 'h',
+      type: "boolean",
+      short: "h",
     },
     version: {
-      type: 'boolean',
-      short: 'v',
+      type: "boolean",
+      short: "v",
     },
   },
   allowPositionals: true,
@@ -81,6 +85,7 @@ Options:
       --descriptions     Include descriptions in output
       --preserve-order   Preserve field order
       --include-federation-directives  Emit federation directives (default: true)
+      --include-schema-link  Prepend @link directive for Federation v2 (default: false)
       --federation-version <NONE|V1|V2|AUTO>  Target federation version (default: V2)
       --naming-convention <PRESERVE|GRAPHQL_IDIOMATIC>  Naming strategy
       --infer-ids        Infer ID scalars for common patterns (deprecated in favor of --id-strategy)
@@ -96,7 +101,9 @@ Options:
 }
 
 if (values.version) {
-  const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json'), 'utf-8'));
+  const packageJson = JSON.parse(
+    fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"),
+  );
   console.log(packageJson.version);
   process.exit(0);
 }
@@ -104,38 +111,61 @@ if (values.version) {
 const inputPath = values.input || positionals[0];
 
 if (!inputPath) {
-  console.error('Error: Input file is required. Use --input <file> or provide it as an argument.');
+  console.error(
+    "Error: Input file is required. Use --input <file> or provide it as an argument.",
+  );
   process.exit(1);
 }
 
 try {
-  const schemaContent = fs.readFileSync(inputPath, 'utf-8');
+  const schemaContent = fs.readFileSync(inputPath, "utf-8");
   const schema = JSON.parse(schemaContent);
-  const toEnum = <T extends string>(value: string | undefined, fallback: T): T => {
+  const toEnum = <T extends string>(
+    value: string | undefined,
+    fallback: T,
+  ): T => {
     return (value ? value.toUpperCase() : fallback) as T;
   };
 
   const converterOptions: ConverterOptions = {
     includeDescriptions: values.descriptions,
-    preserveFieldOrder: values['preserve-order'],
-    includeFederationDirectives: values['include-federation-directives'],
-    federationVersion: toEnum<FederationVersion>(values['federation-version'], 'V2'),
-    namingConvention: values['naming-convention']
-      ? toEnum<NamingConvention>(values['naming-convention'], 'GRAPHQL_IDIOMATIC')
+    preserveFieldOrder: values["preserve-order"],
+    includeFederationDirectives: values["include-federation-directives"],
+    federationVersion: toEnum<FederationVersion>(
+      values["federation-version"],
+      "V2",
+    ),
+    namingConvention: values["naming-convention"]
+      ? toEnum<NamingConvention>(
+          values["naming-convention"],
+          "GRAPHQL_IDIOMATIC",
+        )
       : undefined,
-    inferIds: values['infer-ids'],
-    idStrategy: values['id-strategy']
-      ? toEnum<IdInferenceStrategy>(values['id-strategy'], 'NONE')
+    inferIds: values["infer-ids"],
+    idStrategy: values["id-strategy"]
+      ? toEnum<IdInferenceStrategy>(values["id-strategy"], "NONE")
       : undefined,
-    outputFormat: values['output-format']
-      ? toEnum<OutputFormat>(values['output-format'], 'SDL')
+    outputFormat: values["output-format"]
+      ? toEnum<OutputFormat>(values["output-format"], "SDL")
       : undefined,
-    failOnWarning: values['fail-on-warning'],
-    excludeTypes: values['exclude-type'],
-    excludePatterns: values['exclude-pattern'],
+    failOnWarning: values["fail-on-warning"],
+    excludeTypes: values["exclude-type"],
+    excludePatterns: values["exclude-pattern"],
   };
 
-  const sdl = jsonSchemaToGraphQL(schema, converterOptions);
+  let sdl = jsonSchemaToGraphQL(schema, converterOptions);
+
+  // Add Federation schema link if requested
+  if (
+    values["include-schema-link"] &&
+    converterOptions.includeFederationDirectives
+  ) {
+    const schemaLink = `extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@extends"])
+
+`;
+    sdl = schemaLink + sdl;
+  }
 
   if (values.output) {
     fs.writeFileSync(values.output, sdl);
@@ -144,6 +174,6 @@ try {
     console.log(sdl);
   }
 } catch (error: any) {
-  console.error('Error converting schema:', error.message);
+  console.error("Error converting schema:", error.message);
   process.exit(1);
 }

@@ -5,7 +5,8 @@
  * and produces deterministic GraphQL SDL output that mirrors the behavior of the
  * Rust implementation as closely as possible.
  */
-import { parse } from 'graphql';
+import { parse } from "graphql";
+import { camelToSnake, snakeToCamel } from "./case-conversion.js";
 class ConversionError extends Error {
     constructor(message, code) {
         super(message);
@@ -13,13 +14,53 @@ class ConversionError extends Error {
         this.name = "ConversionError";
     }
 }
+function shouldExcludeType(typeName, options) {
+    if (!typeName)
+        return true;
+    // Always exclude introspection types
+    if (typeName.startsWith("__")) {
+        return true;
+    }
+    // Check if type is in explicit exclude list
+    // When includeOperationalTypes is false, operational types in the list are excluded
+    // When includeOperationalTypes is true, operational types are NOT excluded, but other custom types still are
+    if (options.excludeTypes?.includes(typeName)) {
+        // If includeOperationalTypes is true, don't exclude operational types even if they're in the list
+        if (options.includeOperationalTypes) {
+            const operationalTypes = ["Query", "Mutation", "Subscription"];
+            if (operationalTypes.includes(typeName)) {
+                // Skip exclusion for operational types when includeOperationalTypes is true
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return true;
+        }
+    }
+    // Check suffixes
+    if (options.excludeTypeSuffixes) {
+        for (const suffix of options.excludeTypeSuffixes) {
+            if (typeName.endsWith(suffix)) {
+                return true;
+            }
+        }
+    }
+    // Check regexes
+    if (options.excludeRegexes &&
+        options.excludeRegexes.some((regex) => regex.test(typeName))) {
+        return true;
+    }
+    return false;
+}
 // --- Public API ----------------------------------------------------------------
 export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
     const schema = typeof jsonSchemaInput === "string"
         ? JSON.parse(jsonSchemaInput)
         : jsonSchemaInput;
     const normalized = normalizeOptions(options);
-    const resolvedFederation = normalized.federationVersion === 'AUTO'
+    const resolvedFederation = normalized.federationVersion === "AUTO"
         ? detectFederationVersion(schema)
         : normalized.federationVersion;
     const resolvedOptions = {
@@ -31,6 +72,7 @@ export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
         options: resolvedOptions,
         generatedTypes: new Set(),
         generating: new Set(),
+        building: new Set(),
         output: [],
         typeNames: new Map(),
     };
@@ -58,13 +100,15 @@ export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
         for (const [defKey, defSchema] of entries) {
             const typeName = context.typeNames.get(`/$defs/${defKey}`) ||
                 context.typeNames.get(`/definitions/${defKey}`);
-            if (typeName) {
+            if (typeName && !shouldExcludeType(typeName, context.options)) {
                 convertTypeDefinition(defSchema, typeName, context);
             }
         }
     }
     const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
-    convertTypeDefinition(schema, rootTypeName, context);
+    if (rootTypeName && !shouldExcludeType(rootTypeName, context.options)) {
+        convertTypeDefinition(schema, rootTypeName, context);
+    }
     emitOperations(schema, context);
     const finalSDL = context.output
         .join("\n")
@@ -84,9 +128,13 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
         const doc = parse(graphqlSdl);
         // Build type registry from definitions
         const typeRegistry = new Map();
-        const rootTypes = { query: null, mutation: null };
+        const rootTypes = {
+            query: null,
+            mutation: null,
+        };
         for (const def of doc.definitions) {
-            if (def.kind === "ObjectTypeDefinition" || def.kind === "InterfaceTypeDefinition") {
+            if (def.kind === "ObjectTypeDefinition" ||
+                def.kind === "InterfaceTypeDefinition") {
                 const typeName = def.name?.value;
                 if (typeName && typeName !== "Query" && typeName !== "Mutation") {
                     typeRegistry.set(typeName, {
@@ -126,7 +174,8 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
             }
             else if (def.kind === "ScalarTypeDefinition") {
                 const scalarName = def.name?.value;
-                if (scalarName && !["String", "Int", "Float", "Boolean", "ID"].includes(scalarName)) {
+                if (scalarName &&
+                    !["String", "Int", "Float", "Boolean", "ID"].includes(scalarName)) {
                     typeRegistry.set(scalarName, {
                         kind: "ScalarTypeDefinition",
                         name: scalarName,
@@ -140,7 +189,9 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
         let maxFields = 0;
         for (const [typeName, typeDef] of typeRegistry.entries()) {
             const fieldCount = (typeDef.fields || []).length;
-            if (fieldCount > maxFields && (typeDef.kind === "ObjectTypeDefinition" || typeDef.kind === "InterfaceTypeDefinition")) {
+            if (fieldCount > maxFields &&
+                (typeDef.kind === "ObjectTypeDefinition" ||
+                    typeDef.kind === "InterfaceTypeDefinition")) {
                 maxFields = fieldCount;
                 rootTypeName = typeName;
             }
@@ -327,14 +378,18 @@ function fallbackGraphqlToJsonSchema(graphqlSdl, options) {
 function convertTypeDefinition(schema, typeName, context) {
     if (!typeName)
         return;
-    if (!shouldIncludeType(typeName, context.options))
+    if (shouldExcludeType(typeName, context.options))
         return;
     if (context.generatedTypes.has(typeName))
+        return;
+    // Skip types marked with x-graphql-skip
+    if (schema["x-graphql-skip"] === true)
         return;
     if (context.generating.has(typeName)) {
         throw new ConversionError(`Circular type resolution detected for ${typeName}`, "CIRCULAR_TYPE");
     }
     context.generating.add(typeName);
+    context.building.add(typeName);
     const { options } = context;
     if (schema["x-graphql-enum"] || schema.enum) {
         const r = renderEnum(typeName, schema, options);
@@ -355,6 +410,7 @@ function convertTypeDefinition(schema, typeName, context) {
         context.output.push(`scalar ${typeName}\n`);
     }
     context.generating.delete(typeName);
+    context.building.delete(typeName);
     context.generatedTypes.add(typeName);
 }
 function renderEnum(typeName, schema, options) {
@@ -456,15 +512,17 @@ function renderObject(typeName, schema, context) {
         lines.push(formatDescription(schema.description, options));
     }
     const implementsList = collectInterfaces(schema, context);
+    const typeKind = (schema["x-graphql-type-kind"] || "").toUpperCase();
+    const isInterface = typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
     const header = [
-        schema["x-graphql-type"] === "interface" ? "interface" : "type",
+        isInterface ? "interface" : "type",
         typeName,
         implementsList.length ? `implements ${implementsList.join(" & ")}` : "",
         formatDirectives(schema, context.options),
     ]
         .filter(Boolean)
         .join(" ");
-    lines.push(`${header.replace(/\s+/g, ' ').trim()} {`);
+    lines.push(`${header.replace(/\s+/g, " ").trim()} {`);
     lines.push(...fields);
     lines.push("}\n");
     return lines.join("\n");
@@ -485,10 +543,24 @@ function convertField(propName, schema, isRequired, context) {
             : toCamelCase(propName));
     const safeFieldName = sanitizeFieldName(fieldName, options.namingConvention);
     const args = formatArgs(schema);
-    let typeRef = inferGraphQLType(schema, isRequired, context, 0, propName);
+    // Skip field if x-graphql-skip is true
+    if (schema["x-graphql-skip"] === true) {
+        return null;
+    }
+    // Check for explicit field nullability override
+    const fieldNonNull = schema["x-graphql-field-non-null"];
+    const fieldNullable = schema["x-graphql-nullable"];
+    let effectiveRequired = isRequired;
+    if (typeof fieldNonNull === "boolean") {
+        effectiveRequired = fieldNonNull;
+    }
+    else if (typeof fieldNullable === "boolean") {
+        effectiveRequired = !fieldNullable;
+    }
+    let typeRef = inferGraphQLType(schema, effectiveRequired, context, 0, propName);
     const baseType = stripNonNull(typeRef);
     if (shouldPromoteToId(propName, baseType, schema, options)) {
-        typeRef = isRequired ? 'ID!' : 'ID';
+        typeRef = effectiveRequired ? "ID!" : "ID";
     }
     if (!typeRef)
         return null;
@@ -501,9 +573,11 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
     if (depth > options.maxDepth) {
         return isRequired ? "JSON!" : "JSON";
     }
-    const explicitType = typeof schema["x-graphql-type"] === "string"
-        ? schema["x-graphql-type"]
-        : schema["x-graphql-type"]?.name;
+    // Check for field-level type override first, then type-level
+    const explicitType = schema["x-graphql-field-type"] ||
+        (typeof schema["x-graphql-type"] === "string"
+            ? schema["x-graphql-type"]
+            : schema["x-graphql-type"]?.name);
     if (explicitType) {
         return finalizeType(explicitType, isRequired);
     }
@@ -537,14 +611,19 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
             return finalizeType("JSON", isRequired);
         case "array": {
             const items = schema.items ?? {};
-            const itemType = inferGraphQLType(items, false, context, depth + 1, nameHint);
+            // Check for explicit list item nullability
+            const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
+            const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+            const itemType = inferGraphQLType(items, itemRequired, context, depth + 1, nameHint);
             return finalizeType(`[${itemType}]`, isRequired);
         }
         case "object": {
             const fallback = nameHint ?? propFallbackName(schema);
-            const isAnonymous = !schema.title && !schema["x-graphql-type-name"] && !schema["x-graphql-type"];
+            const isAnonymous = !schema.title &&
+                !schema["x-graphql-type-name"] &&
+                !schema["x-graphql-type"];
             const propCount = Object.keys(schema.properties ?? {}).length;
-            const inlineThreshold = typeof schema["x-graphql-inline-object-threshold"] === 'number'
+            const inlineThreshold = typeof schema["x-graphql-inline-object-threshold"] === "number"
                 ? schema["x-graphql-inline-object-threshold"]
                 : options.inlineObjectThreshold;
             // Only inline anonymous objects without name hints when explicitly allowed by threshold.
@@ -600,13 +679,15 @@ function resolveRef(refPath, context, visited = new Set()) {
     if (!refPath.startsWith("#")) {
         // Treat external refs as opaque objects; derive a stable name according
         // to the configured `refNaming` strategy to avoid collisions.
-        const strategy = context.options.refNaming || 'basename';
+        const strategy = context.options.refNaming || "basename";
         const rawSegments = refPath.split("/").filter(Boolean);
         let rawName = rawSegments[rawSegments.length - 1] ?? "ExternalType";
-        if (strategy === 'file_and_path') {
-            rawName = rawSegments.slice(Math.max(0, rawSegments.length - 2)).join("_");
+        if (strategy === "file_and_path") {
+            rawName = rawSegments
+                .slice(Math.max(0, rawSegments.length - 2))
+                .join("_");
         }
-        else if (strategy === 'hash') {
+        else if (strategy === "hash") {
             // FNV-1a 32-bit hash, base36 encoded for compactness
             let h = 2166136261 >>> 0;
             for (let i = 0; i < refPath.length; i++) {
@@ -643,11 +724,26 @@ function resolveRef(refPath, context, visited = new Set()) {
     const parts = pointer.split("/").filter(Boolean).map(decodePointerSegment);
     let current = context.rootSchema;
     for (const part of parts) {
+        if (!part)
+            continue;
+        // If current node has $ref, resolve it first (recursive)
         if (current && typeof current === "object" && current.$ref) {
             const resolved = resolveRef(current.$ref, context, visited);
             current = resolved.schema;
         }
-        current = accessChild(current, part);
+        // Try to get property with fallbacks
+        let next = accessChild(current, part);
+        if (next === undefined && current && typeof current === "object") {
+            // Try snake_case
+            const snake = camelToSnake(part);
+            next = accessChild(current, snake);
+            // Try camelCase
+            if (next === undefined) {
+                const camel = snakeToCamel(part);
+                next = accessChild(current, camel);
+            }
+        }
+        current = next;
         if (current === undefined) {
             throw new ConversionError(`Failed to resolve $ref segment '${part}' in ${refPath}`, "INVALID_REF");
         }
@@ -671,7 +767,7 @@ function emitOperations(schema, context) {
     const ops = schema["x-graphql-operations"];
     if (!ops)
         return;
-    if (ops.queries && !shouldIncludeType("Query", context.options)) {
+    if (ops.queries && shouldExcludeType("Query", context.options)) {
         // Skip if filtered
     }
     else if (ops.queries) {
@@ -687,7 +783,7 @@ function emitOperations(schema, context) {
         lines.push("}\n");
         context.output.push(lines.join("\n"));
     }
-    if (ops.mutations && !shouldIncludeType("Mutation", context.options)) {
+    if (ops.mutations && shouldExcludeType("Mutation", context.options)) {
         return;
     }
     else if (ops.mutations) {
@@ -709,23 +805,40 @@ function normalizeOptions(options) {
     const validate = options.validate ?? true;
     const includeDescriptions = options.includeDescriptions ?? true;
     const preserveFieldOrder = options.preserveFieldOrder ?? true;
-    const namingConvention = options.namingConvention ?? 'GRAPHQL_IDIOMATIC';
+    const namingConvention = options.namingConvention ?? "GRAPHQL_IDIOMATIC";
     const inferIds = options.inferIds ?? false;
-    const requestedIdStrategy = options.idStrategy ?? 'NONE';
-    const idStrategy = requestedIdStrategy !== 'NONE' ? requestedIdStrategy : (inferIds ? 'COMMON_PATTERNS' : 'NONE');
-    const outputFormat = options.outputFormat ?? 'SDL';
+    const requestedIdStrategy = options.idStrategy ?? "NONE";
+    const idStrategy = requestedIdStrategy !== "NONE"
+        ? requestedIdStrategy
+        : inferIds
+            ? "COMMON_PATTERNS"
+            : "NONE";
+    const outputFormat = options.outputFormat ?? "SDL";
     const failOnWarning = options.failOnWarning ?? false;
     const includeFederationDirectives = options.includeFederationDirectives ?? true;
-    const federationVersion = options.federationVersion ?? 'V2';
+    const federationVersion = options.federationVersion ?? "V2";
     const maxDepth = options.maxDepth ?? 25;
-    const excludeTypes = Array.from(new Set(options.excludeTypes ?? []));
+    const excludeTypes = Array.from(new Set(options.excludeTypes ?? ["Query", "Mutation", "Subscription", "PageInfo"]));
     const excludePatterns = Array.from(new Set(options.excludePatterns ?? []));
     const excludeRegexes = excludePatterns.map((pattern) => new RegExp(pattern));
     const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
     const emitEmptyTypes = options.emitEmptyTypes ?? false;
     const inlineObjectThreshold = options.inlineObjectThreshold ?? 3;
-    const refNaming = options.refNaming ?? 'basename';
+    const refNaming = options.refNaming ?? "basename";
+    const excludeTypeSuffixes = options.excludeTypeSuffixes ?? [
+        "Filter",
+        "Sort",
+        "SortInput",
+        "FilterInput",
+        "Connection",
+        "Edge",
+        "Payload",
+        "Args",
+    ];
+    const includeOperationalTypes = options.includeOperationalTypes ?? false;
     return {
+        excludeTypeSuffixes,
+        includeOperationalTypes,
         validate,
         includeDescriptions,
         preserveFieldOrder,
@@ -750,7 +863,7 @@ function detectFederationVersion(schema) {
     const stack = [schema];
     while (stack.length) {
         const current = stack.pop();
-        if (!current || typeof current !== 'object')
+        if (!current || typeof current !== "object")
             continue;
         if (current["x-graphql-federation-keys"] ||
             current["x-graphql-federation-shareable"] ||
@@ -758,21 +871,24 @@ function detectFederationVersion(schema) {
             current["x-graphql-federation-authenticated"] ||
             current["x-graphql-federation-interface-object"] ||
             current["x-graphql-federation-requires-scopes"]) {
-            return 'V2';
+            return "V2";
         }
         const directives = current["x-graphql-directives"];
         if (Array.isArray(directives)) {
             for (const dir of directives) {
                 const name = dir?.name;
-                if (name === 'key' || name === 'shareable' || name === 'inaccessible' || name === 'extends') {
-                    return 'V2';
+                if (name === "key" ||
+                    name === "shareable" ||
+                    name === "inaccessible" ||
+                    name === "extends") {
+                    return "V2";
                 }
             }
         }
         if (current.properties) {
             stack.push(...Object.values(current.properties));
         }
-        if (current.items && typeof current.items === 'object') {
+        if (current.items && typeof current.items === "object") {
             stack.push(current.items);
         }
         if (Array.isArray(current.oneOf))
@@ -786,17 +902,17 @@ function detectFederationVersion(schema) {
         if (current.definitions)
             stack.push(...Object.values(current.definitions));
     }
-    return 'NONE';
+    return "NONE";
 }
 export class Converter {
     async convert(input) {
         try {
-            const jsonSchema = typeof input.jsonSchema === 'string'
+            const jsonSchema = typeof input.jsonSchema === "string"
                 ? JSON.parse(input.jsonSchema)
                 : input.jsonSchema;
             const rawOptions = (input.options ?? {});
             const normalized = normalizeOptions(rawOptions);
-            const resolvedFederation = normalized.federationVersion === 'AUTO'
+            const resolvedFederation = normalized.federationVersion === "AUTO"
                 ? detectFederationVersion(jsonSchema)
                 : normalized.federationVersion;
             const resolvedOptions = {
@@ -805,9 +921,9 @@ export class Converter {
             };
             const sdl = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
             let output = sdl;
-            if (resolvedOptions.outputFormat === 'AST_JSON') {
+            if (resolvedOptions.outputFormat === "AST_JSON") {
                 if (!sdl) {
-                    output = 'null';
+                    output = "null";
                 }
                 else {
                     const ast = parse(sdl, { noLocation: true });
@@ -815,9 +931,10 @@ export class Converter {
                 }
             }
             const diagnostics = [];
-            const warningCount = diagnostics.filter((d) => d.severity === 'WARNING').length;
-            const errorCount = diagnostics.filter((d) => d.severity === 'ERROR').length;
-            const success = errorCount === 0 && (!resolvedOptions.failOnWarning || warningCount === 0);
+            const warningCount = diagnostics.filter((d) => d.severity === "WARNING").length;
+            const errorCount = diagnostics.filter((d) => d.severity === "ERROR").length;
+            const success = errorCount === 0 &&
+                (!resolvedOptions.failOnWarning || warningCount === 0);
             return {
                 output,
                 diagnostics,
@@ -828,28 +945,21 @@ export class Converter {
         }
         catch (error) {
             const diagnostic = {
-                severity: 'ERROR',
-                kind: 'OTHER',
+                severity: "ERROR",
+                kind: "OTHER",
                 message: error.message || String(error),
                 path: null,
-                code: 'CONVERSION_ERROR'
+                code: "CONVERSION_ERROR",
             };
             return {
                 output: null,
                 diagnostics: [diagnostic],
                 success: false,
                 errorCount: 1,
-                warningCount: 0
+                warningCount: 0,
             };
         }
     }
-}
-function shouldIncludeType(typeName, options) {
-    if (!typeName)
-        return false;
-    if (options.excludeTypes.includes(typeName))
-        return false;
-    return !options.excludeRegexes.some((regex) => regex.test(typeName));
 }
 function getTypeName(schema, contextOrFallback, fallbackArg) {
     let context;
@@ -887,13 +997,14 @@ function getTypeName(schema, contextOrFallback, fallbackArg) {
 // Generate a unique type name for anonymous inlined objects when the
 // fallback is the generic `NestedObject` to avoid accidental name
 // collisions which can lead to circular resolution during conversion.
-function uniqueInlineTypeName(fallback, context, namingConvention = 'GRAPHQL_IDIOMATIC') {
+function uniqueInlineTypeName(fallback, context, namingConvention = "GRAPHQL_IDIOMATIC") {
     const base = sanitizeTypeName(fallback, namingConvention);
     if (!context)
         return base;
     let candidate = base;
     let i = 1;
-    while (context.generatedTypes.has(candidate) || context.generating.has(candidate)) {
+    while (context.generatedTypes.has(candidate) ||
+        context.generating.has(candidate)) {
         candidate = `${base}${i}`;
         i += 1;
     }
@@ -1012,20 +1123,22 @@ function finalizeType(typeName, required) {
     return typeName;
 }
 function stripNonNull(typeName) {
-    return typeName.endsWith('!') ? typeName.slice(0, -1) : typeName;
+    return typeName.endsWith("!") ? typeName.slice(0, -1) : typeName;
 }
 function shouldPromoteToId(propName, baseType, schema, options) {
     const strategy = options.idStrategy;
-    if (strategy === 'NONE')
+    if (strategy === "NONE")
         return false;
-    if (baseType !== 'String')
+    if (baseType !== "String")
         return false;
     const nameLower = propName.toLowerCase();
-    if (strategy === 'COMMON_PATTERNS') {
-        return nameLower === 'id' || nameLower === '_id' || nameLower.endsWith('id');
+    if (strategy === "COMMON_PATTERNS") {
+        return (nameLower === "id" || nameLower === "_id" || nameLower.endsWith("id"));
     }
     // ALL_STRINGS: any string-like field qualifies unless explicitly typed otherwise
-    return schema.type === undefined || schema.type === 'string' || (Array.isArray(schema.type) && schema.type.includes('string'));
+    return (schema.type === undefined ||
+        schema.type === "string" ||
+        (Array.isArray(schema.type) && schema.type.includes("string")));
 }
 function collectInterfaces(schema, context) {
     const implementsList = new Set();
@@ -1055,7 +1168,7 @@ function formatDescription(description, options) {
 function formatDirectives(schema, options) {
     const directives = [];
     const includeFederation = (options?.includeFederationDirectives ?? true) &&
-        options?.federationVersion !== 'NONE';
+        options?.federationVersion !== "NONE";
     if (Array.isArray(schema["x-graphql-directives"])) {
         for (const dir of schema["x-graphql-directives"]) {
             if (!dir?.name)
@@ -1097,6 +1210,28 @@ function formatDirectives(schema, options) {
                 }
             }
         }
+        // Field-level federation directives
+        if (schema["x-graphql-federation-requires"]) {
+            directives.push({
+                name: "requires",
+                arguments: { fields: schema["x-graphql-federation-requires"] },
+            });
+        }
+        if (schema["x-graphql-federation-provides"]) {
+            directives.push({
+                name: "provides",
+                arguments: { fields: schema["x-graphql-federation-provides"] },
+            });
+        }
+        if (schema["x-graphql-federation-external"]) {
+            directives.push({ name: "external" });
+        }
+        if (schema["x-graphql-federation-override-from"]) {
+            directives.push({
+                name: "override",
+                arguments: { from: schema["x-graphql-federation-override-from"] },
+            });
+        }
     }
     if (directives.length === 0) {
         return "";
@@ -1124,12 +1259,12 @@ function formatDirectives(schema, options) {
     return joined ? ` ${joined}` : "";
 }
 function isFederationDirective(name) {
-    return (name === 'key' ||
-        name === 'shareable' ||
-        name === 'inaccessible' ||
-        name === 'requiresScopes' ||
-        name === 'authenticated' ||
-        name === 'interfaceObject');
+    return (name === "key" ||
+        name === "shareable" ||
+        name === "inaccessible" ||
+        name === "requiresScopes" ||
+        name === "authenticated" ||
+        name === "interfaceObject");
 }
 function formatArgs(schema) {
     const args = schema["x-graphql-arguments"];

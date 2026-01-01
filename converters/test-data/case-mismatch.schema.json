@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "CaseMismatchTest",
+  "description": "Test schema where $ref paths use different casing than definitions",
+  "$defs": {
+    "userInfo": {
+      "type": "object",
+      "x-graphql-type-name": "UserInfo",
+      "description": "User information (defined in camelCase)",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "description": "User ID"
+        },
+        "full_name": {
+          "type": "string",
+          "description": "Full name"
+        },
+        "email_address": {
+          "type": "string",
+          "format": "email"
+        }
+      },
+      "required": ["user_id", "full_name"]
+    },
+    "AccountDetails": {
+      "type": "object",
+      "x-graphql-type-name": "AccountDetails",
+      "description": "Account details (defined in PascalCase)",
+      "properties": {
+        "accountId": {
+          "type": "string"
+        },
+        "accountType": {
+          "type": "string",
+          "enum": ["FREE", "PREMIUM", "ENTERPRISE"]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["accountId", "accountType"]
+    },
+    "user_profile": {
+      "type": "object",
+      "x-graphql-type-name": "UserProfile",
+      "description": "User profile (defined in snake_case)",
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "avatar_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  },
+  "properties": {
+    "user": {
+      "description": "Reference using snake_case when definition is camelCase",
+      "$ref": "#/$defs/user_info"
+    },
+    "account": {
+      "description": "Reference using snake_case when definition is PascalCase",
+      "$ref": "#/$defs/account_details"
+    },
+    "profile": {
+      "description": "Reference using camelCase when definition is snake_case",
+      "$ref": "#/$defs/userProfile"
+    },
+    "alternateUser": {
+      "description": "Reference using PascalCase when definition is camelCase",
+      "$ref": "#/$defs/UserInfo"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+# Reviews Service - Apollo Federation Classic Example
+# This service extends User and Product entities and owns the Review entity
+
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+
+"""
+Product review entity
+"""
+type Review @key(fields: "id") {
+  """
+  Review unique identifier
+  """
+  id: ID!
+
+  """
+  Review body text
+  """
+  body: String
+
+  """
+  Review author (provides username field)
+  """
+  author: User @provides(fields: "username")
+
+  """
+  Product being reviewed
+  """
+  product: Product
+}
+
+"""
+Extended User type with reviews
+"""
+type User @key(fields: "email") {
+  """
+  User's email address (from Users service)
+  """
+  email: ID! @external
+
+  """
+  Reviews written by this user
+  """
+  reviews: [Review]
+}
+
+"""
+Extended Product type with reviews
+"""
+type Product @key(fields: "upc") {
+  """
+  Universal Product Code (from Products service)
+  """
+  upc: String! @external
+
+  """
+  Reviews for this product
+  """
+  reviews: [Review]
+}
+
+type Query {
+  """
+  Get a review by ID
+  """
+  review(id: ID!): Review
+
+  """
+  Get all reviews
+  """
+  reviews: [Review!]!
+}

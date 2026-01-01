@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NoIdInference",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Should be String, not ID"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "Should be String, not ID"
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Should be String, not ID"
+    }
+  },
+  "required": ["id"]
+}

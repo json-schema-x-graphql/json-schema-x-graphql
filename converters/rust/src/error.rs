@@ -42,6 +42,10 @@ pub enum ConversionError {
     #[error("Invalid x-graphql-* extension: {0}")]
     InvalidExtension(String),
 
+    /// Invalid reference
+    #[error("Invalid reference: {0}")]
+    InvalidReference(String),
+
     /// Validation error
     #[error("Validation error: {0}")]
     ValidationError(String),

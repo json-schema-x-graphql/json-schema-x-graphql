@@ -41,7 +41,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
     let root_ref_name = {
         let mut best_type = None;
         let mut max_fields = 0;
-        
+
         for (name, type_def) in context.type_registry {
             if type_def.kind == TypeKind::Object && name != "Query" && name != "Mutation" {
                 let field_count = type_def.fields.len();
@@ -51,7 +51,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
                 }
             }
         }
-        
+
         best_type.unwrap_or_else(|| {
             // Fallback: use Query, or first Object type, or first type
             if type_registry.contains_key("Query") {
@@ -61,14 +61,20 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
                     .values()
                     .find(|def| def.kind == TypeKind::Object)
                     .map(|def| def.name.clone())
-                    .unwrap_or_else(|| type_registry.keys().next().map(|s| s.clone()).unwrap_or_default())
+                    .unwrap_or_else(|| {
+                        type_registry
+                            .keys()
+                            .next()
+                            .map(|s| s.clone())
+                            .unwrap_or_default()
+                    })
             }
         })
     };
 
     // Build schema with root type at top level
     let root_type_def = context.type_registry.get(root_ref_name.as_str()).cloned();
-    
+
     let mut root_schema = if let Some(type_def) = root_type_def {
         convert_type_to_schema(&type_def, &context)
     } else {
@@ -77,12 +83,12 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
             "type": "object"
         })
     };
-    
+
     // Ensure schema version is set
     if !root_schema.get("$schema").is_some() {
         root_schema["$schema"] = json!("http://json-schema.org/draft-07/schema#");
     }
-    
+
     // Build definitions for non-root types
     let mut schema_defs = IndexMap::new();
     for (name, type_def) in context.type_registry {
@@ -91,7 +97,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
             schema_defs.insert(name.clone(), schema);
         }
     }
-    
+
     // Add definitions to root schema if there are any
     if !schema_defs.is_empty() {
         root_schema["definitions"] = json!(schema_defs);
@@ -667,34 +673,29 @@ mod tests {
         let result = convert(sdl, &options).unwrap();
 
         let expected_str = serde_json::to_string_pretty(&json!({
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "$ref": "#/definitions/User",
-          "definitions": {
-            "User": {
-              "description": "A user of the system.",
-              "type": "object",
-              "x-graphql": {
-                "typeName": "User",
-                "kind": "object"
-              },
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id",
-                "email"
-              ]
+          "x-graphql": {
+            "typeName": "User",
+            "kind": "object"
+          },
+          "description": "A user of the system.",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
             }
-          }
+          },
+          "required": [
+            "id",
+            "email"
+          ],
+          "$schema": "http://json-schema.org/draft-07/schema#"
         }))
         .unwrap();
 

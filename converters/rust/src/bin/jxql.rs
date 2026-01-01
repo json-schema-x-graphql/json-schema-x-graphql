@@ -1,7 +1,8 @@
 use anyhow::{Context, Result};
 use clap::Parser;
-use json_schema_graphql_converter::{
-    ConversionDirection, ConversionOptions, Converter, IdInferenceStrategy, NamingConvention, OutputFormat,
+use json_schema_x_graphql::{
+    ConversionDirection, ConversionOptions, Converter, IdInferenceStrategy, NamingConvention,
+    OutputFormat,
 };
 use std::fs;
 use std::path::PathBuf;
@@ -61,7 +62,6 @@ struct Args {
     /// Regex patterns to exclude (comma separated)
     #[arg(long, value_delimiter = ',')]
     exclude_patterns: Vec<String>,
-
 }
 
 #[tokio::main]
@@ -127,7 +127,7 @@ async fn main() -> Result<()> {
     // Auto-detect input format
     // Try GraphQL SDL first (simpler pattern matching)
     let is_graphql = detect_graphql_format(&json_content);
-    
+
     let direction = if is_graphql {
         ConversionDirection::GraphQLToJsonSchema
     } else {
@@ -156,8 +156,22 @@ async fn main() -> Result<()> {
 /// JSON Schema indicators: "{" at start and "properties", "$schema", etc.
 fn detect_graphql_format(content: &str) -> bool {
     let trimmed = content.trim();
-    
-    // Check for GraphQL SDL patterns (case-insensitive)
+
+    // Check for JSON Schema patterns FIRST (more specific)
+    if trimmed.starts_with('{')
+        && (trimmed.contains("\"$schema\"")
+            || trimmed.contains("\"definitions\"")
+            || trimmed.contains("\"properties\""))
+    {
+        return false;
+    }
+
+    // Check for JSON arrays
+    if trimmed.starts_with('[') {
+        return false;
+    }
+
+    // Check for GraphQL SDL patterns
     let graphql_patterns = [
         "type ",
         "interface ",
@@ -165,22 +179,16 @@ fn detect_graphql_format(content: &str) -> bool {
         "union ",
         "scalar ",
         "schema {",
-        "@",
+        "extend type",
+        "directive @",
     ];
-    
+
     for pattern in &graphql_patterns {
-        if trimmed.to_lowercase().contains(&pattern.to_lowercase()) {
+        if trimmed.contains(pattern) {
             return true;
         }
     }
-    
-    // Check for JSON Schema patterns
-    if trimmed.starts_with('{') && (trimmed.contains("\"properties\"") || 
-        trimmed.contains("\"type\"") || 
-        trimmed.contains("\"$schema\"")) {
-        return false;
-    }
-    
-    // Default: assume JSON Schema if it starts with { or [
-    !trimmed.starts_with('{') && !trimmed.starts_with('[')
+
+    // Default: assume GraphQL SDL
+    true
 }

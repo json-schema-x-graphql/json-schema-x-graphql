@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Reviews Service Schema",
+  "description": "Review entity for Strawberry Federation example",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "federationVersion": "V2",
+    "includeDescriptions": true
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "description": "Extended Book type with reviews",
+      "x-graphql-type-name": "Book",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["isbn"],
+      "x-graphql-federation-extends": true,
+      "properties": {
+        "isbn": {
+          "type": "string",
+          "description": "International Standard Book Number",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "reviews": {
+          "type": "array",
+          "description": "Reviews for this book",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "x-graphql-field-type": "[Review!]",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["isbn"]
+    },
+    "Review": {
+      "type": "object",
+      "description": "Book review by a user",
+      "x-graphql-type-name": "Review",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Review ID (primary key)",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "book_isbn": {
+          "type": "string",
+          "description": "Foreign key to Book (ISBN)",
+          "x-graphql-field-name": "bookIsbn",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "rating": {
+          "type": "integer",
+          "description": "Rating from 1-5",
+          "x-graphql-field-type": "Int",
+          "x-graphql-field-non-null": true
+        },
+        "content": {
+          "type": "string",
+          "description": "Review text content",
+          "x-graphql-field-type": "String",
+          "x-graphql-nullable": true
+        },
+        "book": {
+          "type": "object",
+          "description": "Book being reviewed",
+          "x-graphql-field-type": "Book",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "book_isbn", "rating", "book"]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "review": {
+          "type": "object",
+          "description": "Get a review by ID",
+          "x-graphql-field-type": "Review",
+          "x-graphql-arguments": {
+            "id": {
+              "x-graphql-type": "ID!",
+              "description": "Review ID"
+            }
+          }
+        },
+        "reviews": {
+          "type": "array",
+          "description": "Get all reviews",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "x-graphql-field-type": "[Review!]",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+interface Node {
+  id: ID!
+}
+
+interface Timestamped {
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  GUEST
+}
+
+type User implements Node & Timestamped @shareable @key(fields: "id") @key(fields: "email") {
+  id: ID!
+  email: Email!
+  username: String!
+  role: UserRole!
+  profileImage: URL
+  createdAt: DateTime!
+  updatedAt: DateTime
+  tags: [String!]
+  metadata: JSON
+}
+
+type Product implements Node {
+  id: ID!
+  name: String!
+  price: Float!
+  seller: User! @provides(fields: "email username")
+  inventoryCount: Int @external
+}
+
+type Order {
+  id: ID!
+  customer: User! @requires(fields: "email username")
+  totalAmount: Float!
+}
+
+union SearchResult = User | Product
+
+enum EntityType {
+  USER
+  PRODUCT
+  ORDER
+}
+
+type OverriddenType {
+  id: ID!
+  legacyField: String @override(from: "legacy-service")
+}

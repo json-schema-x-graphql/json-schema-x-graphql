@@ -1,0 +1,67 @@
+--- /home/john/json-schema-x-graphql/output/federation/node/strawberry-reviews.graphql	2025-12-31 16:19:04.859729384 -0500
++++ /home/john/json-schema-x-graphql/output/federation/rust/strawberry-reviews.graphql	2025-12-31 16:19:04.871729510 -0500
+@@ -1,28 +1,51 @@
+-"Extended Book type with reviews"
++"""
++Extended Book type with reviews
++"""
+ type Book @key(fields: "isbn") {
+-  "International Standard Book Number"
++  """
++  International Standard Book Number
++  """
+   isbn: ID!
+-  "Reviews for this book"
++  """
++  Reviews for this book
++  """
+   reviews: [Review!]!
+ }
+ 
+-"Book review by a user"
++"""
++Book review by a user
++"""
+ type Review @key(fields: "id") {
+-  "Review ID (primary key)"
++  """
++  Review ID (primary key)
++  """
+   id: ID!
+-  "Foreign key to Book (ISBN)"
++  """
++  Foreign key to Book (ISBN)
++  """
+   bookIsbn: ID!
+-  "Rating from 1-5"
++  """
++  Rating from 1-5
++  """
+   rating: Int!
+-  "Review text content"
++  """
++  Review text content
++  """
+   content: String
+-  "Book being reviewed"
++  """
++  Book being reviewed
++  """
+   book: Book!
+ }
+ 
+ type Query {
+-  "Get a review by ID"
++  """
++  Get a review by ID
++  """
+   review(id: ID!): Review
+-  "Get all reviews"
++  """
++  Get all reviews
++  """
+   reviews: [Review!]!
+-}
+\ No newline at end of file
++}
++

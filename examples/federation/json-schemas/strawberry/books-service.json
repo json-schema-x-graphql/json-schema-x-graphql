@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Books Service Schema",
+  "description": "Book entity for Strawberry Federation example",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "federationVersion": "V2",
+    "includeDescriptions": true
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "description": "Book in the catalog",
+      "x-graphql-type-name": "Book",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": [
+        "isbn"
+      ],
+      "properties": {
+        "isbn": {
+          "type": "string",
+          "description": "International Standard Book Number (primary key)",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "title": {
+          "type": "string",
+          "description": "Book title",
+          "x-graphql-field-type": "String",
+          "x-graphql-field-non-null": true
+        },
+        "author": {
+          "type": "string",
+          "description": "Book author",
+          "x-graphql-field-type": "String",
+          "x-graphql-nullable": true
+        },
+        "year": {
+          "type": "integer",
+          "description": "Publication year",
+          "x-graphql-field-type": "Int",
+          "x-graphql-nullable": true
+        }
+      },
+      "required": [
+        "isbn",
+        "title"
+      ]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "book": {
+          "type": "object",
+          "description": "Get a book by ISBN",
+          "x-graphql-field-type": "Book",
+          "x-graphql-arguments": {
+            "isbn": {
+              "x-graphql-type": "ID!",
+              "description": "Book ISBN"
+            }
+          }
+        },
+        "books": {
+          "type": "array",
+          "description": "Get all books",
+          "items": {
+            "$ref": "#/definitions/Book"
+          },
+          "x-graphql-field-type": "[Book!]",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+"""
+A type that should appear in the GraphQL schema
+"""
+type VisibleType {
+  """
+  This field should be visible
+  """
+  publicField: String!
+  """
+  Another visible field
+  """
+  anotherPublicField: Int
+  """
+  A nested type that should be visible
+  """
+  visibleNested: NestedType
+}
+
+"""
+A nested type with some skipped fields
+"""
+type NestedType {
+  visibleField: String
+  anotherVisible: Boolean
+}
+
+"""
+User type with both public and private fields
+"""
+type UserWithPrivateData {
+  id: ID!
+  username: String!
+  email: String
+  createdAt: DateTime
+}
+
+"""
+Tests skipping within arrays
+"""
+type SkipListItems {
+  visibleItems: [String]
+}
+
+

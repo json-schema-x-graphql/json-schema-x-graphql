@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Products Service Schema",
+  "description": "Product entity for Apollo Federation classic example",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "federationVersion": "V2",
+    "includeDescriptions": true
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "description": "Product in the catalog",
+      "x-graphql-type-name": "Product",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["upc"],
+      "properties": {
+        "upc": {
+          "type": "string",
+          "description": "Universal Product Code (primary key)",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "description": "Product name",
+          "x-graphql-field-non-null": true
+        },
+        "price": {
+          "type": "number",
+          "description": "Product price",
+          "x-graphql-field-type": "Float",
+          "x-graphql-nullable": true
+        },
+        "weight": {
+          "type": "integer",
+          "description": "Product weight in grams",
+          "x-graphql-field-type": "Int",
+          "x-graphql-nullable": true
+        }
+      },
+      "required": ["upc", "name"]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "product": {
+          "type": "object",
+          "description": "Get a product by UPC",
+          "x-graphql-field-type": "Product",
+          "x-graphql-arguments": {
+            "upc": {
+              "x-graphql-type": "ID!",
+              "description": "Product UPC"
+            }
+          }
+        },
+        "products": {
+          "type": "array",
+          "description": "Get all products",
+          "items": {
+            "$ref": "#/definitions/Product"
+          },
+          "x-graphql-field-type": "[Product!]",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

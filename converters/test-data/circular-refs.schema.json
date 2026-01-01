@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "CircularRefs",
+  "description": "Test schema with circular references",
+  "$defs": {
+    "Node": {
+      "type": "object",
+      "x-graphql-type-name": "Node",
+      "description": "A node with a self-referencing next pointer",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "next": {
+          "$ref": "#/$defs/Node"
+        }
+      },
+      "required": ["id"]
+    },
+    "Person": {
+      "type": "object",
+      "x-graphql-type-name": "Person",
+      "description": "A person with a company reference",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "company": {
+          "$ref": "#/$defs/Company"
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "Company": {
+      "type": "object",
+      "x-graphql-type-name": "Company",
+      "description": "A company with employees (mutual reference with Person)",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "employees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Person"
+          }
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "Tree": {
+      "type": "object",
+      "x-graphql-type-name": "Tree",
+      "description": "A tree node with children",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Tree"
+          }
+        }
+      }
+    }
+  }
+}

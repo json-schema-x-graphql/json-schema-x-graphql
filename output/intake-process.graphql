@@ -32,7 +32,7 @@ type EasiRecord {
 "Metadata describing origin system, identifiers, and lifecycle timestamps."
 type SystemMetadata @shareable {
   "Constant system identifier string."
-  systemName: String!
+  systemName: SystemName!
   "Primary identifier of the record within Intake Process."
   sourceRecordId: String!
   "Version of the canonical Intake Process schema."
@@ -87,11 +87,4 @@ type PeriodOfPerformance {
 type IntakeProcessCanonicalSchema {
   "Root Intake Process entity."
   intakeProcessRecord: EasiRecord
-}
-
-type Query {
-  """Fetch a single Intake Process record by composite key (business_owner + system_owner) or source_record_id."""
-  intake_process_record(business_owner: String, system_owner: String, source_record_id: ID): EasiRecord
-  "Return a list of Intake Process records (non-paginated snapshot)."
-  intake_process_records: [EasiRecord!]!
 }

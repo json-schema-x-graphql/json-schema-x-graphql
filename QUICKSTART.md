@@ -1,161 +1,352 @@
-# Quick Start Guide - Subgraph Composer
+# Quick Start Guide - JSON Schema ↔ GraphQL Authoring UI
 
-## What's New
+This guide will help you get the schema authoring UI up and running quickly.
 
-✨ **The app now loads with 3 template schemas pre-configured!**
+## Prerequisites
 
-## How to Use
+- **Node.js** >= 18.0.0
+- **pnpm** package manager
+- **Git** (to clone the repository)
+- **Optional**: Rust + wasm-pack (for WASM converter)
 
-### 1. Open the App
-```
-http://localhost:5175/
-```
+## Installation
 
-### 2. You'll See
-- **Left sidebar**: 3 pre-loaded template schemas
-  - Basic Scalars & Primitives
-  - Enums & Constrained Values  
-  - Nested Objects & Composition
+### 1. Clone and Install Dependencies
 
-### 3. Generate Supergraph
-1. **Click the blue "Generate" button** at the top
-2. All 3 schemas convert in parallel
-3. SDL Preview shows merged output
-4. Statistics show combined types and fields
+```bash
+# Clone the repository (if not already done)
+git clone <your-repo-url>
+cd json-schema-x-graphql
 
-### 4. Make Changes
-- **Edit any schema** in the JSON editor (middle pane)
-- **Click Generate again**
-- Supergraph updates automatically with your changes
+# Install frontend dependencies
+cd frontend/schema-authoring
+pnpm install
 
-## What's Being Composed
-
-Each schema becomes a subgraph:
-```
-Schema 1 (Basic Scalars)
-    ↓
-Subgraph 1 SDL
-    ↓ 
-         ↓ (Compose)
-         → Supergraph SDL
-         ↑
-Subgraph 2 SDL
-    ↑
-Schema 2 (Enums)
-
-Schema 3 (Nested Objects)
-    ↓
-Subgraph 3 SDL
+# Install converter dependencies
+cd ../../converters/node
+pnpm install
 ```
 
-## Key Features
+### 2. Run Complete Test Suite
 
-| Feature | What It Does |
-|---------|-------------|
-| **Generate** | Converts all 3 schemas to GraphQL SDL |
-| **Validate** | Checks schema validity |
-| **Format** | Prettifies JSON |
-| **Settings** | Configure converter options |
-| **Clear All** | Removes all schemas |
+```bash
+# From project root
+./test-complete-setup.sh
+```
 
-## Tips
+This comprehensive test script will:
+- ✅ Validate your environment
+- ✅ Check project structure
+- ✅ Verify TypeScript compilation
+- ✅ Test the API server
+- ✅ Test conversions (JSON → GraphQL and GraphQL → JSON)
+- ✅ Validate configuration
+- ✅ Build the frontend
+- 📊 Generate a detailed report
 
-- **Change Multiple Schemas**: Edit them independently, then click Generate once
-- **See Combined Output**: The supergraph shows merged types from all schemas
-- **Statistics**: Shows total types and fields from all 3 schemas
-- **Auto-Save**: Settings are saved to browser localStorage
+**Expected Output:** You should see mostly green checkmarks (✅) with a summary at the end.
 
-## Keyboard Shortcuts
+## Running the Application
 
-- **Ctrl+Shift+F** (or Cmd+Shift+F on Mac): Format JSON
-- **Tab**: Indent code in editor
-- **Ctrl+/** : Comment/uncomment
+### Option 1: Full Dev Environment (Recommended)
+
+This starts both the API server and the frontend with hot-reload:
+
+```bash
+cd frontend/schema-authoring
+pnpm run dev:full
+```
+
+Then open your browser to: **http://localhost:3003**
+
+### Option 2: Run Components Separately
+
+**Terminal 1 - API Server:**
+```bash
+cd converters/node
+pnpm run dev:api
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend/schema-authoring
+pnpm run dev
+```
+
+Then open your browser to: **http://localhost:3003**
+
+## Automated Browser Testing
+
+The project includes Playwright-based automated testing for debugging UI issues:
+
+### 1. Install Playwright (One-Time Setup)
+
+```bash
+cd frontend/schema-authoring
+pnpm run debug:install
+```
+
+### 2. Run Browser Debug
+
+Make sure the dev servers are running, then:
+
+```bash
+cd frontend/schema-authoring
+pnpm run debug:browser
+```
+
+This will:
+- 🌐 Launch a headless browser
+- 📝 Capture all console logs
+- 🌐 Record all network requests
+- 📸 Take screenshots
+- 💾 Save a detailed report
+
+### 3. Review Results
+
+Check the output in `frontend/schema-authoring/debug-output/`:
+- `debug-summary.txt` - Human-readable summary
+- `debug-report.json` - Detailed JSON report
+- `screenshot-*.png` - Screenshots
+
+## Testing Conversions
+
+### Using the UI
+
+1. Start the application (see above)
+2. Enter a JSON Schema in the left editor:
+   ```json
+   {
+     "type": "object",
+     "properties": {
+       "id": { "type": "string" },
+       "name": { "type": "string" },
+       "age": { "type": "integer" }
+     },
+     "required": ["id"]
+   }
+   ```
+3. Click "Convert" or press Ctrl+Enter
+4. See the GraphQL SDL output in the right editor
+
+### Using the API Directly
+
+Test the conversion API with curl:
+
+```bash
+# JSON Schema to GraphQL
+curl -X POST http://localhost:3004/api/convert \
+  -H "Content-Type: application/json" \
+  -d '{
+    "direction": "json-to-graphql",
+    "input": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"}
+      }
+    }
+  }'
+
+# GraphQL to JSON Schema
+curl -X POST http://localhost:3004/api/convert \
+  -H "Content-Type: application/json" \
+  -d '{
+    "direction": "graphql-to-json",
+    "input": "type Query { hello: String }"
+  }'
+```
+
+## Building for Production
+
+### Frontend Only
+
+```bash
+cd frontend/schema-authoring
+pnpm run build
+```
+
+Output will be in `frontend/schema-authoring/dist/`
+
+### With WASM (Optional)
+
+If you have Rust and wasm-pack installed:
+
+```bash
+cd frontend/schema-authoring
+pnpm run build:wasm
+pnpm run build
+```
 
 ## Troubleshooting
 
-### Generate button not working
-- Make sure schemas have valid JSON
-- Check that "Validate" is enabled in settings
-- Look at browser console (F12) for error messages
+### Issue: API Returns 404
 
-### Supergraph not updating
-- Click Generate button again
-- Check if any schema has invalid JSON
-- Verify compose is enabled in settings
+**Problem:** Frontend can't reach the API server
 
-### Want to clear everything
-- Click "Clear All" button
-- App will reload with 3 fresh templates
+**Solution:**
+1. Ensure API server is running: `cd converters/node && pnpm run dev:api`
+2. Check that port 3004 is available: `lsof -i :3004`
+3. Verify Vite proxy configuration in `vite.config.ts`
 
-## Settings Available
+### Issue: Monaco Editors Not Loading
 
-**Converter Tab:**
-- ✓ Validate schemas
-- ✓ Include descriptions  
-- ✓ Federation directives
-- ✓ Naming convention
+**Problem:** Editor areas are blank or show loading indefinitely
 
-**UI & Display:**
-- Font size adjustment
-- Show/hide statistics
+**Solution:**
+1. Clear browser cache
+2. Check browser console for errors (F12)
+3. Run `pnpm run debug:browser` to capture detailed logs
 
-**Features:**
-- Auto-compose
-- Show suggestions
+### Issue: Conversion Fails
 
-## What Each Template Does
+**Problem:** Conversion returns errors or doesn't complete
 
-### Basic Scalars & Primitives
-Demonstrates GraphQL scalar types with validation:
-```graphql
-type BasicScalarsExample {
-  id: ID!
-  name: String!
-  age: Int!
-  rating: Float!
-  is_active: Boolean!
-}
+**Solution:**
+1. Check API server logs (visible in terminal where `dev:api` is running)
+2. Test API directly with curl (see "Testing Conversions" above)
+3. Validate your input schema/SDL syntax
+4. Run `./test-complete-setup.sh` to check system health
+
+### Issue: Dependencies Won't Install
+
+**Problem:** `pnpm install` fails
+
+**Solution:**
+1. Ensure Node.js >= 18.0.0: `node --version`
+2. Update pnpm: `npm install -g pnpm@latest`
+3. Clear cache: `pnpm store prune`
+4. Try again: `pnpm install --force`
+
+### Issue: Port Already in Use
+
+**Problem:** "Port 3003 or 3004 already in use"
+
+**Solution:**
+```bash
+# Find process using the port
+lsof -i :3003
+lsof -i :3004
+
+# Kill the process (replace PID with actual process ID)
+kill -9 <PID>
+
+# Or kill all node processes (use with caution)
+pkill -9 node
 ```
 
-### Enums & Constrained Values  
-Shows enumeration types:
-```graphql
-enum UserRole {
-  ADMIN
-  MODERATOR
-  USER
-}
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Browser (Port 3003)                  │
+│                                                           │
+│  ┌──────────────┐         ┌──────────────┐              │
+│  │ JSON Schema  │◄───────►│   GraphQL    │              │
+│  │   Editor     │         │    Editor    │              │
+│  │  (Monaco)    │         │   (Monaco)   │              │
+│  └──────────────┘         └──────────────┘              │
+│         │                         │                      │
+│         └────────┬────────────────┘                      │
+│                  ▼                                       │
+│         ┌─────────────────┐                             │
+│         │  Converter      │                             │
+│         │  Manager        │                             │
+│         └────────┬────────┘                             │
+│                  │                                       │
+│         ┌────────┴────────┐                             │
+│         ▼                 ▼                             │
+│  ┌─────────────┐   ┌─────────────┐                     │
+│  │    WASM     │   │    Node     │                     │
+│  │  Converter  │   │  Converter  │                     │
+│  │  (Optional) │   │  (Fallback) │                     │
+│  └─────────────┘   └──────┬──────┘                     │
+└─────────────────────────────┼──────────────────────────┘
+                              │
+                   Vite Proxy │ /api/*
+                              ▼
+                   ┌──────────────────┐
+                   │  API Server      │
+                   │  (Port 3004)     │
+                   │                  │
+                   │  - Health Check  │
+                   │  - Convert API   │
+                   └──────────────────┘
 ```
 
-### Nested Objects & Composition
-Shows complex nested structures:
-```graphql
-type NestedObjectsExample {
-  name: String!
-  address: Address!
-  tags: [Tag!]!
-}
-```
+## Key Files
 
-## FAQ
+- **Frontend App**: `frontend/schema-authoring/src/App.tsx`
+- **API Server**: `converters/node/src/api-server.ts`
+- **Node Converter**: `converters/node/src/converter.ts`
+- **Vite Config**: `frontend/schema-authoring/vite.config.ts`
+- **Debug Script**: `frontend/schema-authoring/debug-browser.ts`
+- **Test Script**: `test-complete-setup.sh`
 
-**Q: Can I add more schemas?**
-A: Yes! Click "Add" to create new schemas. The app supports up to 10 total.
+## Development Workflow
 
-**Q: Can I remove a template?**
-A: Yes! Click the X next to any schema name to delete it.
+### Daily Development
 
-**Q: Will changes be saved?**
-A: Schemas are saved in browser sessionStorage. Settings are saved to localStorage.
+1. Start dev environment:
+   ```bash
+   cd frontend/schema-authoring
+   pnpm run dev:full
+   ```
 
-**Q: Can I export the supergraph?**
-A: Yes! Copy the SDL from the preview pane and paste it anywhere.
+2. Make changes to code
+3. Browser auto-reloads with changes
+4. Test in browser at http://localhost:3003
 
-**Q: How do I reset to templates?**
-A: Click "Clear All" to remove all schemas. Reload the page and 3 templates reload.
+### Before Committing
 
----
+1. Run type-check:
+   ```bash
+   cd frontend/schema-authoring
+   pnpm run typecheck
+   ```
 
-**Version:** 1.0 (with Multi-Schema Generation)  
-**Last Updated:** December 16, 2025  
-**Status:** ✅ Production Ready
+2. Run full test suite:
+   ```bash
+   cd ../..
+   ./test-complete-setup.sh
+   ```
+
+3. Run browser tests if UI changes:
+   ```bash
+   cd frontend/schema-authoring
+   pnpm run debug:browser
+   ```
+
+## Next Steps
+
+- 📖 Read `frontend/schema-authoring/DEBUG_GUIDE.md` for detailed debugging info
+- 📖 Read `frontend/schema-authoring/RUNNING.md` for deployment options
+- 🔧 Explore `converters/node/README.md` for converter API details
+- 🧪 Add your own test cases in `converters/node/src/__tests__/`
+
+## Getting Help
+
+If you encounter issues:
+
+1. ✅ Run `./test-complete-setup.sh` and review the output
+2. ✅ Run `pnpm run debug:browser` to capture browser state
+3. ✅ Check API logs in the terminal where `dev:api` is running
+4. ✅ Review `debug-output/debug-summary.txt` for automated diagnostics
+5. ✅ Check the GitHub issues or create a new one with:
+   - Output from `test-complete-setup.sh`
+   - Contents of `debug-summary.txt`
+   - Screenshots if relevant
+
+## Success Indicators
+
+You'll know everything is working when:
+
+- ✅ `./test-complete-setup.sh` shows mostly green checkmarks
+- ✅ Browser loads at http://localhost:3003 without console errors
+- ✅ Both Monaco editors render properly
+- ✅ Converting JSON Schema produces valid GraphQL SDL
+- ✅ Converting GraphQL SDL produces valid JSON Schema
+- ✅ No red errors in browser console (F12)
+- ✅ API server logs show successful conversions
+
+**Happy schema authoring! 🚀**

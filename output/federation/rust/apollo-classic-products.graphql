@@ -1,0 +1,33 @@
+"""
+Product in the catalog
+"""
+type Product @key(fields: "upc") {
+  """
+  Universal Product Code (primary key)
+  """
+  upc: ID!
+  """
+  Product name
+  """
+  name: String!
+  """
+  Product price
+  """
+  price: Float
+  """
+  Product weight in grams
+  """
+  weight: Int
+}
+
+type Query {
+  """
+  Get a product by UPC
+  """
+  product(upc: ID!): Product
+  """
+  Get all products
+  """
+  products: [Product!]!
+}
+

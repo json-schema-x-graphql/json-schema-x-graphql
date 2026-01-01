@@ -1,0 +1,69 @@
+{
+  "name": "@json-schema-x-graphql/schema-authoring",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JSON Schema authoring UI with live GraphQL SDL conversion, validation, and AI-accessible APIs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:api": "cd ../../converters/node && pnpm run dev:api",
+    "dev:full": "concurrently \"pnpm run dev:api\" \"pnpm run dev\" --names \"API,VITE\" --prefix-colors \"blue,green\"",
+    "debug:browser": "tsx debug-browser.ts",
+    "debug:install": "pnpm add -D playwright @playwright/test && pnpm exec playwright install chromium",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "build:wasm": "cd ../../converters/rust && wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm",
+    "postinstall": "npm run build:wasm || echo 'WASM build skipped - will use Node converter only'"
+  },
+  "dependencies": {
+    "@graphql-tools/utils": "^10.10.1",
+    "@monaco-editor/react": "^4.7.0",
+    "ajv": "^8.17.1",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
+    "clsx": "^2.1.1",
+    "graphql": "^16.11.0",
+    "immer": "^10.1.1",
+    "lucide-react": "^0.468.0",
+    "monaco-editor": "^0.52.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.6.0",
+    "tailwind-merge": "^2.5.5",
+    "zustand": "^4.5.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@tailwindcss/forms": "^0.5.9",
+    "@types/node": "^25.0.3",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.7",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "^2.1.8",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "playwright": "^1.48.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2",
+    "vite": "^6.0.7",
+    "vite-plugin-top-level-await": "^1.4.4",
+    "vite-plugin-wasm": "^3.3.0",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@json-schema-x-graphql/core": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

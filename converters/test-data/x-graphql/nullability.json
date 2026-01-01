@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Nullability Test Schema",
+  "description": "Tests x-graphql-nullable, x-graphql-field-non-null, and x-graphql-field-list-item-non-null",
+  "type": "object",
+  "definitions": {
+    "NullabilityTest": {
+      "type": "object",
+      "x-graphql-type-name": "NullabilityTest",
+      "description": "Tests various nullability configurations",
+      "properties": {
+        "required_field": {
+          "type": "string",
+          "x-graphql-field-name": "requiredField",
+          "x-graphql-field-non-null": true,
+          "description": "Field explicitly marked as non-null"
+        },
+        "optional_field": {
+          "type": "string",
+          "x-graphql-field-name": "optionalField",
+          "description": "Field that is nullable by default"
+        },
+        "nullable_override": {
+          "type": "string",
+          "x-graphql-field-name": "nullableOverride",
+          "x-graphql-nullable": true,
+          "description": "Field explicitly marked as nullable even if required"
+        },
+        "non_null_list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "nonNullList",
+          "x-graphql-field-non-null": true,
+          "description": "Non-null list of nullable items"
+        },
+        "nullable_list": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "nullableList",
+          "description": "Nullable list of nullable items"
+        },
+        "list_of_non_null_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "listOfNonNullItems",
+          "x-graphql-field-list-item-non-null": true,
+          "description": "Nullable list of non-null items"
+        },
+        "non_null_list_of_non_null_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "nonNullListOfNonNullItems",
+          "x-graphql-field-non-null": true,
+          "x-graphql-field-list-item-non-null": true,
+          "description": "Non-null list of non-null items"
+        },
+        "nested_list": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "x-graphql-field-name": "nestedList",
+          "x-graphql-field-non-null": true,
+          "description": "Non-null nested list"
+        },
+        "complex_nullable": {
+          "type": "object",
+          "x-graphql-field-name": "complexNullable",
+          "x-graphql-field-type": "ComplexType",
+          "x-graphql-nullable": true,
+          "description": "Complex type that is explicitly nullable"
+        }
+      },
+      "required": ["required_field", "non_null_list", "non_null_list_of_non_null_items", "nested_list"]
+    },
+    "ComplexType": {
+      "type": "object",
+      "x-graphql-type-name": "ComplexType",
+      "description": "A complex nested type",
+      "properties": {
+        "field_a": {
+          "type": "string",
+          "x-graphql-field-name": "fieldA"
+        },
+        "field_b": {
+          "type": "integer",
+          "x-graphql-field-name": "fieldB",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["field_b"]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+--- /home/john/json-schema-x-graphql/output/federation/node/strawberry-books.graphql	2025-12-31 16:19:04.721727931 -0500
++++ /home/john/json-schema-x-graphql/output/federation/rust/strawberry-books.graphql	2025-12-31 16:19:04.733728057 -0500
+@@ -1,18 +1,33 @@
+-"Book in the catalog"
++"""
++Book in the catalog
++"""
+ type Book @key(fields: "isbn") {
+-  "International Standard Book Number (primary key)"
++  """
++  International Standard Book Number (primary key)
++  """
+   isbn: ID!
+-  "Book title"
++  """
++  Book title
++  """
+   title: String!
+-  "Book author"
++  """
++  Book author
++  """
+   author: String
+-  "Publication year"
++  """
++  Publication year
++  """
+   year: Int
+ }
+ 
+ type Query {
+-  "Get a book by ISBN"
++  """
++  Get a book by ISBN
++  """
+   book(isbn: ID!): Book
+-  "Get all books"
++  """
++  Get all books
++  """
+   books: [Book!]!
+-}
+\ No newline at end of file
++}
++

@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Basic Types Test Schema",
+  "description": "Tests x-graphql-type-name, x-graphql-field-name, and basic type mapping",
+  "type": "object",
+  "definitions": {
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "A user in the system",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "description": "Unique identifier for the user"
+        },
+        "email_address": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "description": "User's email address"
+        },
+        "full_name": {
+          "type": "string",
+          "x-graphql-field-name": "fullName",
+          "description": "User's full name"
+        },
+        "age": {
+          "type": "integer",
+          "x-graphql-field-name": "age",
+          "description": "User's age in years"
+        },
+        "is_active": {
+          "type": "boolean",
+          "x-graphql-field-name": "isActive",
+          "description": "Whether the user account is active"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "description": "Timestamp when the user was created"
+        }
+      },
+      "required": ["user_id", "email_address"]
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "description": "A product in the catalog",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID"
+        },
+        "product_name": {
+          "type": "string",
+          "x-graphql-field-name": "name"
+        },
+        "price": {
+          "type": "number",
+          "x-graphql-field-name": "price",
+          "x-graphql-field-type": "Float"
+        },
+        "stock_count": {
+          "type": "integer",
+          "x-graphql-field-name": "stockCount"
+        }
+      },
+      "required": ["product_id", "product_name", "price"]
+    }
+  }
+}

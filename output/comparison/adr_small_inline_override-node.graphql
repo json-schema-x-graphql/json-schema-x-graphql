@@ -1,8 +1,0 @@
-type Data {
-  a: String
-  b: Float
-}
-
-type Smallinlineoverride {
-  data: Data
-}

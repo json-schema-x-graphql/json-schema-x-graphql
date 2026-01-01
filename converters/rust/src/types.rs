@@ -39,6 +39,10 @@ pub struct ConversionOptions {
     pub exclude_types: Vec<String>,
     /// List of regex patterns to exclude fields or types
     pub exclude_patterns: Vec<String>,
+    /// List of type suffixes to exclude (e.g. "Filter", "Connection")
+    pub exclude_type_suffixes: Vec<String>,
+    /// Whether to include operational types (Query, Mutation, Subscription) even if excluded by default
+    pub include_operational_types: bool,
     /// Threshold in characters for descriptions to become block strings
     pub description_block_threshold: usize,
     /// Whether to emit empty object types (no fields)
@@ -62,8 +66,24 @@ impl Default for ConversionOptions {
             naming_convention: NamingConvention::GraphqlIdiomatic,
             output_format: OutputFormat::Sdl,
             fail_on_warning: false,
-            exclude_types: vec![],
+            exclude_types: vec![
+                "Query".to_string(),
+                "Mutation".to_string(),
+                "Subscription".to_string(),
+                "PageInfo".to_string(),
+            ],
             exclude_patterns: vec![],
+            exclude_type_suffixes: vec![
+                "Filter".to_string(),
+                "Sort".to_string(),
+                "SortInput".to_string(),
+                "FilterInput".to_string(),
+                "Connection".to_string(),
+                "Edge".to_string(),
+                "Payload".to_string(),
+                "Args".to_string(),
+            ],
+            include_operational_types: false,
             description_block_threshold: 80,
             emit_empty_types: false,
             inline_object_threshold: 3,
