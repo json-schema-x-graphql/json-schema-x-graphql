@@ -1,0 +1,191 @@
+SKIP REPORT SUMMARY
+============================================================
+Generated at : 2026-01-01T03:16:46.931Z
+Scanned path : .
+
+GLOBAL COUNTS
+---------------
+Files scanned : 1110
+Skip entries  : 22
+Warnings      : 9
+
+BY SCOPE
+--------
+  field      : 13
+  type       : 9
+
+FILES WITH SKIPPED ENTRIES (top by number of entries)
+--------------------------------------------------
+   1. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json — 12 entryies
+   2. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json — 8 entryies
+   3. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive-features.json — 2 entryies
+
+SAMPLED SKIP ENTRIES
+---------------------
+  1. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive-features.json
+     Pointer: /definitions/InternalType
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal type excluded from GraphQL schema","properties":{"internal_id":{"type":"string"},"secret_data":{"type":"string"}}}
+
+  2. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive-features.json
+     Pointer: /definitions/User/properties/password_hash
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Internal password hash - excluded from GraphQL"}
+
+  3. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/Address/properties/geo_coordinates
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal geocoding data"}
+
+  4. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/Comment/properties/flagged
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"boolean","x-graphql-skip":true,"description":"Moderation flag - internal only"}
+
+  5. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/Comment/properties/spam_score
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"number","x-graphql-skip":true,"description":"Spam detection score - internal only"}
+
+  6. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/InternalType
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-type-name":"InternalType","x-graphql-skip":true,"description":"This entire type should be skipped from GraphQL schema generation","properties":{"internal_field_1":{"type...
+
+  7. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/Post/properties/_analytics
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal analytics data"}
+
+  8. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/Post/properties/draft
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"boolean","x-graphql-skip":true,"description":"Draft status - internal only"}
+
+  9. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/User/properties/_internal_score
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"number","x-graphql-skip":true,"description":"Internal scoring metric"}
+
+ 10. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/User/properties/metadata
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal metadata object"}
+
+ 11. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/User/properties/password_hash
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password hash - should never appear in GraphQL"}
+
+ 12. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/User/properties/password_salt
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password salt - should never appear in GraphQL"}
+
+ 13. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/UserProfile/properties/_internal_flags
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true}
+
+ 14. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json
+     Pointer: /definitions/UserProfile/properties/ssn
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Social Security Number - private data"}
+
+ 15. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/InternalType
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-type-name":"InternalType","x-graphql-skip":true,"description":"This entire type should be skipped","properties":{"some_field":{"type":"string","x-graphql-field-name":"so...
+
+ 16. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/NestedType/properties/hidden_field
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-field-name":"hiddenField","x-graphql-skip":true}
+
+ 17. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/SkipListItems/properties/hidden_items
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"array","items":{"type":"string"},"x-graphql-field-name":"hiddenItems","x-graphql-skip":true}
+
+ 18. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/UserWithPrivateData/properties/_db_version
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"integer","x-graphql-skip":true,"description":"Database versioning field"}
+
+ 19. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/UserWithPrivateData/properties/internal_notes
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Internal notes for admin use only"}
+
+ 20. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/UserWithPrivateData/properties/password_hash
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password hash should never be exposed via GraphQL"}
+
+ 21. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/VisibleType/properties/_metadata
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal metadata that should not be exposed"}
+
+ 22. File   : /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json
+     Pointer: /definitions/VisibleType/properties/internal_field
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-field-name":"internalField","x-graphql-skip":true,"description":"This field should be skipped and not appear in GraphQL"}
+
+
+WARNINGS (files that failed to parse or other issues)
+------------------------------------------------------
+ - /home/john/json-schema-x-graphql/docs/x-graphql/attribute-registry.json: Failed to parse JSON: SyntaxError: Expected property name or '}' in JSON at position 4622 (line 84 column 60)
+ - /home/john/json-schema-x-graphql/frontend/dashboard/scripts/mappings/logistics-mgmt-to-schema-unification.mapping.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 1023 (line 16 column 3)
+ - /home/john/json-schema-x-graphql/frontend/dashboard/tsconfig.json: Failed to parse JSON: SyntaxError: Unexpected token ']', ..."env.d.ts",],
+  "excl"... is not valid JSON
+ - /home/john/json-schema-x-graphql/frontend/demos/loro-monaco/tsconfig.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 187 (line 9 column 5)
+ - /home/john/json-schema-x-graphql/frontend/schema-authoring/tsconfig.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 187 (line 9 column 5)
+ - /home/john/json-schema-x-graphql/frontend/schema-authoring/tsconfig.node.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 220 (line 10 column 3)
+ - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-node.json: Failed to parse JSON: SyntaxError: Unexpected end of JSON input
+ - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-rust.json: Failed to parse JSON: SyntaxError: Unexpected end of JSON input
+ - /home/john/json-schema-x-graphql/scripts/legacy-reference/mappings/logistics-mgmt-to-schema-unification.mapping.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 1023 (line 16 column 3)

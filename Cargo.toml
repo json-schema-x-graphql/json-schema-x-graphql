@@ -1,60 +1,18 @@
-[package]
-name = "json-schema-x-graphql"
-version = "0.1.0"
-edition = "2021"
-authors = ["JJediny and Contributors"]
-description = "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support"
-license = "MIT"
-repository = "https://github.com/JJediny/json-schema-x-graphql"
-keywords = ["graphql", "json-schema", "federation", "wasm", "converter"]
-categories = ["web-programming", "wasm", "parser-implementations"]
-readme = "README.md"
+# Workspace manifest for json-schema-x-graphql
+# This root Cargo.toml is intentionally a virtual manifest that defines the workspace members.
+# Individual crates live in subdirectories (for example: converters/rust).
+#
+# To build or run a specific crate, `cd` into the crate directory or use:
+#   cargo build -p <package-name> --manifest-path converters/rust/Cargo.toml
+#
+# Add additional workspace members here as new Rust crates are added.
 
-[lib]
-crate-type = ["cdylib", "rlib"]
+[workspace]
+resolver = "2"
+members = [
+  "converters/rust",
+]
 
-[dependencies]
-apollo-parser = "0.8"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-
-# WASM-specific dependencies
-wasm-bindgen = { version = "0.2", optional = true }
-console_error_panic_hook = { version = "0.1", optional = true }
-
-# LRU cache for performance optimization
-lru = "0.12"
-
-[dev-dependencies]
-criterion = "0.5"
-
-[features]
-default = []
-wasm = ["wasm-bindgen", "console_error_panic_hook"]
-
-# Optimize for size in release builds (critical for WASM)
-[profile.release]
-opt-level = "z"     # Optimize for size
-lto = true          # Link-time optimization
-codegen-units = 1   # Better optimization
-panic = "abort"     # Smaller binary
-strip = true        # Strip debug symbols
-
-# Development profile for faster iteration
-[profile.dev]
-opt-level = 0
-
-# Test profile
-[profile.test]
-opt-level = 0
-
-# Benchmark profile
-[profile.bench]
-opt-level = 3
-lto = true
-
-[package.metadata.wasm-pack.profile.release]
-wasm-opt = false
-
-[package.metadata.wasm-pack.profile.dev]
-wasm-opt = false
+# Optional: workspace-wide metadata or configuration can be placed under workspace.metadata
+[workspace.metadata]
+description = "Workspace for JSON Schema ↔ GraphQL project. Contains the Rust converter and related crates."

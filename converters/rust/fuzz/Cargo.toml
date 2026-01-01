@@ -1,5 +1,5 @@
 [package]
-name = "json-schema-graphql-converter-fuzz"
+name = "json-schema-x-graphql-fuzz"
 version = "0.0.0"
 publish = false
 edition = "2021"
@@ -9,9 +9,7 @@ cargo-fuzz = true
 
 [dependencies]
 libfuzzer-sys = "0.4"
-
-[dependencies.json-schema-graphql-converter]
-path = ".."
+json-schema-x-graphql = { path = ".." }
 
 [[bin]]
 name = "fuzz_target_1"

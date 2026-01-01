@@ -5,7 +5,7 @@
  * It provides a split-pane editor interface with live conversion and validation.
  */
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useAppStore } from "./store/app-store";
 import { converterManager } from "./converters/converter-manager";
 import {
@@ -50,6 +50,55 @@ export function App() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
+
+  // Split-pane state (resizable editors) - persisted to store and keyboard-accessible
+  // Read initial persisted position from the app store and keep a setter to persist changes.
+  const storeDividerPosition = useAppStore((s) => s.settings?.dividerPosition ?? 50);
+  const storeSetDividerPosition = useAppStore((s) => s.setDividerPosition);
+  const [dividerPosition, setDividerPosition] = useState<number>(storeDividerPosition);
+  const isDraggingRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Ensure local state follows persisted store when it changes (e.g., restored from storage)
+  useEffect(() => {
+    if (typeof storeDividerPosition === "number" && storeDividerPosition !== dividerPosition) {
+      setDividerPosition(storeDividerPosition);
+    }
+  }, [storeDividerPosition]);
+
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      if (!isDraggingRef.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const pct = Math.min(90, Math.max(10, (x / rect.width) * 100));
+      setDividerPosition(pct);
+    };
+
+    const onMouseUp = () => {
+      if (isDraggingRef.current) {
+        isDraggingRef.current = false;
+        document.body.style.cursor = "";
+        document.body.style.userSelect = "";
+        // Persist the last position to the store (rounded)
+        try {
+          storeSetDividerPosition(Math.round(dividerPosition));
+        } catch (err) {
+          // best-effort persistence; swallow errors so UI is not blocked
+          // console.debug('Persist divider failed', err);
+        }
+      }
+    };
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+    // Recreate handlers when dividerPosition or the store setter changes
+  }, [dividerPosition, storeSetDividerPosition]);
 
   // Load default template on first mount if editors are empty
   useEffect(() => {
@@ -290,9 +339,12 @@ export function App() {
 
       {/* Main Content Area - Split Editor Layout */}
       <main className="flex-1 flex overflow-hidden">
-        <div className="flex-1 flex">
-          {/* Left Panel: JSON Schema Editor */}
-          <div className="flex-1 flex flex-col border-r border-gray-200 dark:border-gray-700">
+        <div ref={containerRef} className="flex-1 flex relative" style={{ minHeight: 0 }}>
+          {/* Left Panel: JSON Schema Editor (resizable) */}
+          <div
+            className="flex flex-col border-r border-gray-200 dark:border-gray-700 transition-all"
+            style={{ width: `${dividerPosition}%`, minWidth: "10%" }}
+          >
             <div className="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
               <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 {mode === "json-to-graphql"
@@ -317,8 +369,68 @@ export function App() {
             />
           </div>
 
-          {/* Right Panel: GraphQL SDL Editor */}
-          <div className="flex-1 flex flex-col">
+          {/* Resize Divider */}
+          <div
+            role="separator"
+            aria-orientation="vertical"
+            aria-label="Resize editor panes"
+            tabIndex={0}
+            aria-valuemin={10}
+            aria-valuemax={90}
+            aria-valuenow={Math.round(dividerPosition)}
+            className="w-2 cursor-col-resize bg-transparent hover:bg-gray-200 dark:hover:bg-gray-700 z-20 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            onMouseDown={(e) => {
+              isDraggingRef.current = true;
+              document.body.style.cursor = "col-resize";
+              document.body.style.userSelect = "none";
+              e.preventDefault();
+            }}
+            onKeyDown={(e) => {
+              // Keyboard controls for accessibility:
+              // ArrowLeft / ArrowDown -> move left by small step
+              // ArrowRight / ArrowUp -> move right by small step
+              // Shift + arrow -> larger step
+              // Home -> min, End -> max
+              const step = e.shiftKey ? 5 : 2;
+              if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+                e.preventDefault();
+                const next = Math.max(10, Math.min(90, dividerPosition - step));
+                setDividerPosition(next);
+                try {
+                  storeSetDividerPosition(Math.round(next));
+                } catch (err) {}
+              } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+                e.preventDefault();
+                const next = Math.max(10, Math.min(90, dividerPosition + step));
+                setDividerPosition(next);
+                try {
+                  storeSetDividerPosition(Math.round(next));
+                } catch (err) {}
+              } else if (e.key === "Home") {
+                e.preventDefault();
+                setDividerPosition(10);
+                try {
+                  storeSetDividerPosition(10);
+                } catch (err) {}
+              } else if (e.key === "End") {
+                e.preventDefault();
+                setDividerPosition(90);
+                try {
+                  storeSetDividerPosition(90);
+                } catch (err) {}
+              }
+            }}
+            style={{ height: "100%" }}
+            data-testid="split-resizer"
+          >
+            <div className="h-full w-1 mx-auto bg-gray-200 dark:bg-gray-700 rounded" />
+          </div>
+
+          {/* Right Panel: GraphQL SDL Editor (resizable) */}
+          <div
+            className="flex-1 flex flex-col transition-all"
+            style={{ width: `calc(${100 - dividerPosition}% - 2px)` }}
+          >
             <div className="px-4 py-2 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
               <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 {mode === "graphql-to-json"

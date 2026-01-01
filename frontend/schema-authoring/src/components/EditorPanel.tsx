@@ -65,7 +65,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
 
       // Configure editor options
       editor.updateOptions({
-        minimap: { enabled: true },
+        minimap: { enabled: false },
         lineNumbers: "on",
         roundedSelection: true,
         scrollBeyondLastLine: false,
@@ -78,7 +78,8 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
         quickSuggestions: true,
         suggestOnTriggerCharacters: true,
         acceptSuggestionOnEnter: "on",
-        wordWrap: "on",
+        // Disable automatic wrapping by default for a better code-editing experience
+        wordWrap: "off",
       });
 
       // Register completion provider for JSON Schema extensions
@@ -260,9 +261,10 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
           }}
           options={{
             readOnly,
-            minimap: { enabled: true },
-            fontSize: 14,
-            lineHeight: 21,
+            minimap: { enabled: false },
+            // Slightly larger default font for readability
+            fontSize: 16,
+            lineHeight: 22,
             fontFamily: "'Fira Code', 'Cascadia Code', 'Consolas', monospace",
             fontLigatures: true,
             scrollBeyondLastLine: false,
@@ -270,6 +272,8 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             formatOnPaste: true,
             formatOnType: true,
             tabSize: 2,
+            // Disable wrapping by default in editors to preserve formatting and improve UX
+            wordWrap: "off",
             renderWhitespace: "selection",
           }}
           loading={

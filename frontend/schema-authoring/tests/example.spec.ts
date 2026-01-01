@@ -1,18 +1,69 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+// Basic smoke tests for Schema Authoring UI
+test.describe('Schema Authoring - smoke', () => {
+  test('app mounts and exposes AI API', async ({ page }) => {
+    await page.goto('http://localhost:3003', { waitUntil: 'networkidle' });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+    // Wait for root element to mount
+    await page.waitForSelector('#root');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+    const hasAPI = await page.evaluate(() => !!(window as any).__schemaAuthoringAPI__);
+    expect(hasAPI).toBe(true);
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    const apiSnapshot = await page.evaluate(async () => {
+      const api = (window as any).__schemaAuthoringAPI__.getAPI();
+      const snapshot = api.getStateSnapshot();
+      return {
+        hasJson: !!snapshot.jsonSchema,
+        hasGraphQL: typeof snapshot.graphqlSchema === 'string',
+        settings: snapshot.settings,
+      };
+    });
+
+    expect(apiSnapshot).toHaveProperty('settings');
+  });
+
+  test('monaco editors present and visible', async ({ page }) => {
+    await page.goto('http://localhost:3003', { waitUntil: 'networkidle' });
+
+    // Ensure Monaco root elements exist
+    await page.waitForSelector('.monaco-editor');
+    const editorsCount = await page.locator('.monaco-editor').count();
+    expect(editorsCount).toBeGreaterThan(0);
+
+    // Check our split-resizer is present
+    await expect(page.locator('[data-testid="split-resizer"]')).toBeVisible();
+  });
+
+  test('can trigger conversion via API (requires node converter health)', async ({ page, request }) => {
+    await page.goto('http://localhost:3003', { waitUntil: 'networkidle' });
+
+    // Pre-check: ensure Node converter health endpoint returns 200 before attempting conversion
+    let healthy = false;
+    try {
+      const res = await request.get('http://localhost:3004/api/convert/health', { timeout: 5000 });
+      healthy = res.status() === 200;
+    } catch (err) {
+      healthy = false;
+    }
+
+    if (!healthy) {
+      console.warn('Node converter health endpoint not available (http://localhost:3004/api/convert/health). Skipping conversion step.');
+      // Exit the test early to avoid false failures when converter is not running.
+      return;
+    }
+
+    // If healthy, attempt conversion via in-app API
+    const convertResult = await page.evaluate(async () => {
+      const api = (window as any).__schemaAuthoringAPI__.getAPI();
+      await api.setJsonSchema(JSON.stringify({ type: 'object', properties: { id: { type: 'string' } } }, null, 2));
+      const result = await api.convert();
+      return result;
+    });
+
+    // Expect conversion result to be defined when converter is available
+    expect(convertResult).toBeDefined();
+  });
 });

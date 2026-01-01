@@ -8,6 +8,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import setupMonacoWorkers from './monaco-worker-setup';
+
+// Configure Monaco web workers before any editor instances mount
+// This ensures Monaco can locate and spin up its language workers in Vite/ESM environments.
+setupMonacoWorkers();
 
 // Initialize React root
 const root = document.getElementById('root');

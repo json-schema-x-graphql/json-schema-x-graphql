@@ -31,7 +31,10 @@
     "converters:rust:test": "cd converters/rust && cargo test",
     "converters:test": "npm run converters:node:test && npm run converters:rust:test",
     "converters:compare": "node scripts/test-both-converters.js",
-    "test:parity": "jest converters/node/src/parity.test.ts"
+    "test:parity": "jest converters/node/src/parity.test.ts",
+    "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
+    "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
+    "skip-report:all": "npm run skip-report:run && npm run skip-report:summary"
   },
   "keywords": [
     "graphql",

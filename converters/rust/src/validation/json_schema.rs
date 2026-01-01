@@ -4,7 +4,6 @@
 //! validators to catch edge cases and ensure schema correctness before conversion.
 
 use serde_json::Value;
-use std::collections::HashMap;
 use std::path::Path;
 use thiserror::Error;
 
@@ -58,12 +57,12 @@ impl ValidationResult {
 
 /// Comprehensive validator using both jsonschema and boon validators
 pub struct ComprehensiveValidator {
-    strict: bool,
+    _strict: bool,
 }
 
 impl ComprehensiveValidator {
     pub fn new(strict: bool) -> Self {
-        Self { strict }
+        Self { _strict: strict }
     }
 
     /// Validate a JSON Schema using both jsonschema and boon validators
@@ -103,7 +102,7 @@ impl ComprehensiveValidator {
 
     fn validate_with_jsonschema(&self, schema: &Value, errors: &mut Vec<ValidationIssue>) -> bool {
         // Get the meta-schema from $schema field or use draft-07 as default
-        let meta_schema_uri = schema
+        let _meta_schema_uri = schema
             .get("$schema")
             .and_then(|v| v.as_str())
             .unwrap_or("http://json-schema.org/draft-07/schema#");

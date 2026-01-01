@@ -36,11 +36,22 @@ wasm-bindgen = { version = "0.2", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }
 serde-wasm-bindgen = { version = "0.6", optional = true }
 
+# Ensure getrandom compiles for wasm32-unknown-unknown using the wasm_js backend.
+# This enables Web Crypto (via wasm-bindgen) as the entropy source when building for web.
+getrandom = { version = "0.3", features = ["wasm_js"] }
+
 # Optional caching
 lru = { version = "0.12", optional = true }
 
 # JSON Schema validation
-jsonschema = "0.18"
+# jsonschema and boon pull in blocking reqwest which is not available on wasm targets.
+# Ensure on wasm targets jsonschema is included without default features to avoid
+# pulling in `reqwest::blocking`. For non-wasm builds enable the reqwest feature.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+jsonschema = { version = "0.18", default-features = false }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+jsonschema = { version = "0.18", features = ["reqwest"] }
 boon = "0.6"
 
 # GraphQL SDL and Federation validation

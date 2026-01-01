@@ -1,46 +1,140 @@
-/**
- * Type declarations for WASM module
- *
- * This file provides TypeScript types for both the stub and the real WASM module.
- */
+/* tslint:disable */
+/* eslint-disable */
+
+export class WasmConversionOptions {
+  free(): void;
+  [Symbol.dispose](): void;
+  constructor();
+  validate: boolean;
+  infer_ids: boolean;
+  federation_version: number;
+  include_descriptions: boolean;
+  preserve_field_order: boolean;
+}
+
+export class WasmConverter {
+  free(): void;
+  [Symbol.dispose](): void;
+  /**
+   * Create a new converter with custom options
+   */
+  static withOptions(options: WasmConversionOptions): WasmConverter;
+  /**
+   * Convert GraphQL SDL to JSON Schema
+   */
+  graphqlToJsonSchema(graphql_sdl: string): string;
+  /**
+   * Convert JSON Schema to GraphQL SDL
+   */
+  jsonSchemaToGraphQL(json_schema: string): string;
+  /**
+   * Create a new converter with default options
+   */
+  constructor();
+  /**
+   * Convert between formats (bidirectional)
+   */
+  convert(input: string, direction: string): string;
+}
 
 /**
- * WASM module initialization function
+ * Standardized API conversion function
  */
-export default function init(input?: RequestInfo | URL | Response | BufferSource): Promise<void>;
+export function convert(input: any): any;
 
 /**
- * Convert JSON Schema to GraphQL SDL
+ * Get library version
  */
-export function convert_json_to_sdl(input: string, options: string): string;
+export function getVersion(): string;
 
 /**
- * Convert GraphQL SDL to JSON Schema
+ * Standalone function to convert GraphQL SDL to JSON Schema
  */
-export function convert_sdl_to_json(input: string, options: string): string;
+export function graphqlToJsonSchema(graphql_sdl: string): string;
 
 /**
- * Get converter version
+ * Initialize panic hook for better error messages in browser
  */
-export function get_version(): string;
+export function init(): void;
 
 /**
- * Validate JSON Schema
+ * Standalone function to convert JSON Schema to GraphQL SDL
  */
-export function validate_json_schema(schema: string): string;
+export function jsonSchemaToGraphQL(json_schema: string): string;
+
+/**
+ * Validate a GraphQL name
+ */
+export function validateGraphQLName(name: string): boolean;
 
 /**
  * Validate GraphQL SDL
  */
-export function validate_graphql_sdl(sdl: string): string;
+export function validateGraphQLSdl(graphql_sdl: string): boolean;
 
 /**
- * WASM module interface
+ * Validate JSON Schema
  */
-export interface WasmModule {
-  convert_json_to_sdl(jsonSchema: string, options: string): string;
-  convert_sdl_to_json(sdl: string, options: string): string;
-  get_version(): string;
-  validate_json_schema(jsonSchema: string): string;
-  validate_graphql_sdl(sdl: string): string;
+export function validateJsonSchema(json_schema: string): boolean;
+
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+
+export interface InitOutput {
+  readonly memory: WebAssembly.Memory;
+  readonly __wbg_wasmconversionoptions_free: (a: number, b: number) => void;
+  readonly __wbg_wasmconverter_free: (a: number, b: number) => void;
+  readonly convert: (a: any) => [number, number, number];
+  readonly getVersion: () => [number, number];
+  readonly graphqlToJsonSchema: (a: number, b: number) => [number, number, number, number];
+  readonly jsonSchemaToGraphQL: (a: number, b: number) => [number, number, number, number];
+  readonly validateGraphQLName: (a: number, b: number) => [number, number, number];
+  readonly validateGraphQLSdl: (a: number, b: number) => [number, number, number];
+  readonly validateJsonSchema: (a: number, b: number) => [number, number, number];
+  readonly wasmconversionoptions_federation_version: (a: number) => number;
+  readonly wasmconversionoptions_include_descriptions: (a: number) => number;
+  readonly wasmconversionoptions_infer_ids: (a: number) => number;
+  readonly wasmconversionoptions_new: () => number;
+  readonly wasmconversionoptions_preserve_field_order: (a: number) => number;
+  readonly wasmconversionoptions_set_federation_version: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_include_descriptions: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_infer_ids: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_preserve_field_order: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_validate: (a: number, b: number) => void;
+  readonly wasmconversionoptions_validate: (a: number) => number;
+  readonly wasmconverter_convert: (a: number, b: number, c: number, d: number, e: number) => [number, number, number, number];
+  readonly wasmconverter_graphqlToJsonSchema: (a: number, b: number, c: number) => [number, number, number, number];
+  readonly wasmconverter_jsonSchemaToGraphQL: (a: number, b: number, c: number) => [number, number, number, number];
+  readonly wasmconverter_new: () => number;
+  readonly wasmconverter_withOptions: (a: number) => number;
+  readonly init: () => void;
+  readonly __wbindgen_malloc: (a: number, b: number) => number;
+  readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbindgen_exn_store: (a: number) => void;
+  readonly __externref_table_alloc: () => number;
+  readonly __wbindgen_externrefs: WebAssembly.Table;
+  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
+  readonly __externref_table_dealloc: (a: number) => void;
+  readonly __wbindgen_start: () => void;
 }
+
+export type SyncInitInput = BufferSource | WebAssembly.Module;
+
+/**
+* Instantiates the given `module`, which can either be bytes or
+* a precompiled `WebAssembly.Module`.
+*
+* @param {{ module: SyncInitInput }} module - Passing `SyncInitInput` directly is deprecated.
+*
+* @returns {InitOutput}
+*/
+export function initSync(module: { module: SyncInitInput } | SyncInitInput): InitOutput;
+
+/**
+* If `module_or_path` is {RequestInfo} or {URL}, makes a request and
+* for everything else, calls `WebAssembly.instantiate` directly.
+*
+* @param {{ module_or_path: InitInput | Promise<InitInput> }} module_or_path - Passing `InitInput` directly is deprecated.
+*
+* @returns {Promise<InitOutput>}
+*/
+export default function __wbg_init (module_or_path?: { module_or_path: InitInput | Promise<InitInput> } | InitInput | Promise<InitInput>): Promise<InitOutput>;

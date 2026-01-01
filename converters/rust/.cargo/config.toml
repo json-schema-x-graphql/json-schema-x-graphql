@@ -1,0 +1,24 @@
+# Cargo configuration for the converters/rust crate.
+# This file enables the `wasm_js` backend for the `getrandom` crate when
+# compiling to the `wasm32-unknown-unknown` target. That backend uses
+# the Web Crypto API via wasm-bindgen and is required so `getrandom`
+# does not emit a compile-time error for the wasm target.
+#
+# Place this file at:
+#   json-schema-x-graphql/converters/rust/.cargo/config.toml
+#
+# Notes:
+# - Ensure the wasm target is installed on developer machines/CI:
+#     rustup target add wasm32-unknown-unknown
+# - `wasm-bindgen` must be available as a dependency (the crate's `wasm`
+#   feature in Cargo.toml pulls it in). Building with this config will
+#   cause wasm-bindgen to be used when appropriate.
+# - If you'd rather not commit this file, you can set the same flag via
+#   the RUSTFLAGS environment variable for one-off builds:
+#     RUSTFLAGS='--cfg getrandom_backend="wasm_js"' wasm-pack build ...
+#
+# - If your CI builds include other targets, this config only applies to
+#   the `wasm32-unknown-unknown` target and will not affect native builds.
+
+[target.wasm32-unknown-unknown]
+rustflags = ["--cfg", "getrandom_backend=\"wasm_js\""]

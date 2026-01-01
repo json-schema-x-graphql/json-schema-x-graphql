@@ -44,6 +44,9 @@ const DEFAULT_SETTINGS: AppSettings = {
   formatOnSave: true,
   validateOnType: false,
   debounceMs: 500,
+
+  // UI state persisted: divider position between editors (percentage, 10-90)
+  dividerPosition: 50,
 };
 
 /**
@@ -107,6 +110,8 @@ interface AppActions {
   updateSettings: (settings: Partial<AppSettings>) => void;
   setTheme: (theme: EditorTheme) => void;
   setConverterEngine: (engine: ConverterEngine) => void;
+  // Persist the UI divider position (percentage)
+  setDividerPosition: (pct: number) => void;
   resetSettings: () => void;
 
   // History actions
@@ -662,6 +667,17 @@ export const useAppStore = create<AppStore>()(
           });
         },
 
+        // Persist divider position action (clamped between 10 and 90)
+        setDividerPosition: (pct: number) => {
+          set((state) => {
+            const clamped = Math.max(10, Math.min(90, Math.round(pct)));
+            state.settings = {
+              ...state.settings,
+              dividerPosition: clamped,
+            };
+          });
+        },
+
         // ============================================================================
         // AI-Accessible API
         // ============================================================================
@@ -708,6 +724,16 @@ export const useAppStore = create<AppStore>()(
 
           updateSettings: (settings: Partial<AppSettings>) => {
             get().updateSettings(settings);
+          },
+
+          // Direct helpers for the divider position to simplify UI persistence
+          getDividerPosition: () => {
+            return get().settings?.dividerPosition ?? 50;
+          },
+
+          setDividerPosition: (pct: number) => {
+            // Delegate to store action so persistence & clamping are handled consistently
+            get().setDividerPosition(pct);
           },
 
           exportSchemas: async (format: "json" | "yaml" | "typescript") => {
