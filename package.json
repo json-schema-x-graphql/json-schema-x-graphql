@@ -14,7 +14,7 @@
   "workspaces": [
     "converters/node"
   ],
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.29.3",
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm --release",
