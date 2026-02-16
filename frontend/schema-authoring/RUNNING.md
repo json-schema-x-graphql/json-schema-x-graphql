@@ -17,6 +17,7 @@ pnpm run dev:full
 ```
 
 This will start:
+
 - **API Server** on `http://localhost:3004` (Node.js converter backend)
 - **Vite Dev Server** on `http://localhost:3003` (React frontend)
 
@@ -53,12 +54,14 @@ This starts the Vite dev server on `http://localhost:3003`.
 The app supports two conversion engines:
 
 ### 1. Node.js Converter (Default)
+
 - Runs as a separate API server on port 3004
 - Fast and reliable
 - Automatically used when API server is running
 - **Status**: ✅ Working when API server is running
 
 ### 2. WASM Converter (Optional)
+
 - Runs directly in the browser (no server needed)
 - Faster performance for large schemas
 - Requires Rust toolchain to build
@@ -79,7 +82,8 @@ pnpm run build:wasm
 
 **Cause**: The API server is not running.
 
-**Solution**: 
+**Solution**:
+
 - Use `pnpm run dev:full` instead of `pnpm run dev`
 - OR manually start the API server: `cd converters/node && pnpm run dev:api`
 
@@ -92,11 +96,13 @@ pnpm run build:wasm
 ### Issue: Monaco editors not showing / loading spinner stuck
 
 **Possible causes**:
+
 1. Check browser console for errors
 2. Clear browser cache and reload
 3. Check that Monaco worker files are being served correctly
 
 **Debug steps**:
+
 ```bash
 # Check console for errors:
 # - Open DevTools (F12)

@@ -7,11 +7,13 @@ The `x-graphql-supergraph-name` extension enables JSON Schemas to explicitly dec
 ## Problem Statement
 
 Currently, in Apollo Federation:
+
 - **Base/Owner subgraphs** define the primary entity type with `@key`
 - **Extending subgraphs** use `@extends` to add fields
 - Federation validators must infer ownership from directives alone
 
 This can be ambiguous when:
+
 - Multiple schemas might have `@key` directives
 - Composition order matters for query routing
 - API gateways need to know which subgraph to route entity queries to
@@ -36,13 +38,13 @@ Add metadata to explicitly declare a schema's role in the supergraph.
 
 ### Properties
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `x-graphql-supergraph-name` | string | Yes | Unique identifier for this subgraph (e.g., "users-service", "posts-service") |
-| `x-graphql-supergraph-type` | enum | Yes | Role in supergraph: `base-entity` \| `entity-extending` \| `utility` |
-| `x-graphql-supergraph-entity` | string | Yes | The entity type name (e.g., "User", "Post"). All schemas for same entity must match this. |
-| `x-graphql-supergraph-query-root` | boolean | Optional | If true, this subgraph can handle root Query type fields for this entity |
-| `x-graphql-supergraph-version` | string | Optional | Schema version for this subgraph (e.g., "1.0.0") |
+| Property                          | Type    | Required | Description                                                                               |
+| --------------------------------- | ------- | -------- | ----------------------------------------------------------------------------------------- |
+| `x-graphql-supergraph-name`       | string  | Yes      | Unique identifier for this subgraph (e.g., "users-service", "posts-service")              |
+| `x-graphql-supergraph-type`       | enum    | Yes      | Role in supergraph: `base-entity` \| `entity-extending` \| `utility`                      |
+| `x-graphql-supergraph-entity`     | string  | Yes      | The entity type name (e.g., "User", "Post"). All schemas for same entity must match this. |
+| `x-graphql-supergraph-query-root` | boolean | Optional | If true, this subgraph can handle root Query type fields for this entity                  |
+| `x-graphql-supergraph-version`    | string  | Optional | Schema version for this subgraph (e.g., "1.0.0")                                          |
 
 ## Usage Examples
 
@@ -120,6 +122,7 @@ Add metadata to explicitly declare a schema's role in the supergraph.
 ## Validation Rules
 
 ### For Base Entity Subgraphs
+
 1. ✅ Must have `x-graphql-supergraph-type: "base-entity"`
 2. ✅ Must have `@key` directive without `@extends`
 3. ✅ Must define Query type with entity resolver (when `x-graphql-supergraph-query-root: true`)
@@ -127,6 +130,7 @@ Add metadata to explicitly declare a schema's role in the supergraph.
 5. ✅ Entity type name must match `x-graphql-supergraph-entity`
 
 ### For Extending Entity Subgraphs
+
 1. ✅ Must have `x-graphql-supergraph-type: "entity-extending"`
 2. ✅ Must have `@extends` directive
 3. ✅ Must reference existing entity via `x-graphql-supergraph-entity`
@@ -134,6 +138,7 @@ Add metadata to explicitly declare a schema's role in the supergraph.
 5. ✅ Must have `@key` repeating owner's key fields
 
 ### For Utility Subgraphs
+
 1. ✅ `x-graphql-supergraph-entity` should be null or omitted
 2. ✅ Can include shared types, enums, scalars, directives
 3. ✅ No `@extends` or `@key` required
@@ -155,21 +160,25 @@ When composing a supergraph:
 ## Implementation Plan
 
 ### Phase 1: Schema Extensions
-- Add x-graphql-supergraph-* properties to JSON Schema spec
+
+- Add x-graphql-supergraph-\* properties to JSON Schema spec
 - Update templates.js to include metadata for 3 federation examples
 - Document new extensions in schema docs
 
 ### Phase 2: Validation
+
 - Extend federation-validator.js to check supergraph metadata
 - Validate base entity requirements
 - Validate extending entity dependencies
 
 ### Phase 3: Composition
+
 - Update composer.js to use supergraph metadata
 - Route queries to correct base entity subgraph
 - Generate composition report with entity ownership
 
 ### Phase 4: UI Integration
+
 - Show supergraph entity metadata in SubgraphComposer
 - Display entity ownership diagram
 - Highlight composition routes
@@ -185,7 +194,7 @@ When composing a supergraph:
 
 ## Backward Compatibility
 
-- The x-graphql-supergraph-* properties are optional
+- The x-graphql-supergraph-\* properties are optional
 - Schemas without them fall back to @key/@extends inference
 - Existing federation patterns continue to work
 - New properties are ignored by non-compatible tools

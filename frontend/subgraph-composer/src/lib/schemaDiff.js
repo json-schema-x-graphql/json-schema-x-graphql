@@ -19,10 +19,7 @@ export class SchemaDiff {
     const propsA = this.schemaA.properties || {};
     const propsB = this.schemaB.properties || {};
 
-    const allKeys = new Set([
-      ...Object.keys(propsA),
-      ...Object.keys(propsB),
-    ]);
+    const allKeys = new Set([...Object.keys(propsA), ...Object.keys(propsB)]);
 
     for (const key of allKeys) {
       const propA = propsA[key];
@@ -31,7 +28,7 @@ export class SchemaDiff {
       if (!propA) {
         // Field added in B
         this.differences.push({
-          type: 'added',
+          type: "added",
           field: key,
           from: null,
           to: propB,
@@ -39,7 +36,7 @@ export class SchemaDiff {
       } else if (!propB) {
         // Field removed in B
         this.differences.push({
-          type: 'removed',
+          type: "removed",
           field: key,
           from: propA,
           to: null,
@@ -47,7 +44,7 @@ export class SchemaDiff {
       } else if (this.hasChanged(propA, propB)) {
         // Field modified
         this.differences.push({
-          type: 'modified',
+          type: "modified",
           field: key,
           from: propA,
           to: propB,
@@ -85,7 +82,7 @@ export class SchemaDiff {
 
     if (propA.type !== propB.type) {
       changes.push({
-        aspect: 'type',
+        aspect: "type",
         from: propA.type,
         to: propB.type,
       });
@@ -93,15 +90,15 @@ export class SchemaDiff {
 
     if (propA.format !== propB.format) {
       changes.push({
-        aspect: 'format',
-        from: propA.format || 'none',
-        to: propB.format || 'none',
+        aspect: "format",
+        from: propA.format || "none",
+        to: propB.format || "none",
       });
     }
 
     if (JSON.stringify(propA.enum) !== JSON.stringify(propB.enum)) {
       changes.push({
-        aspect: 'enum values',
+        aspect: "enum values",
         from: propA.enum || [],
         to: propB.enum || [],
       });
@@ -109,9 +106,9 @@ export class SchemaDiff {
 
     if (propA.description !== propB.description) {
       changes.push({
-        aspect: 'description',
-        from: propA.description || '(no description)',
-        to: propB.description || '(no description)',
+        aspect: "description",
+        from: propA.description || "(no description)",
+        to: propB.description || "(no description)",
       });
     }
 
@@ -122,10 +119,10 @@ export class SchemaDiff {
    * Get summary statistics
    */
   getSummary() {
-    const added = this.differences.filter((d) => d.type === 'added').length;
-    const removed = this.differences.filter((d) => d.type === 'removed').length;
+    const added = this.differences.filter((d) => d.type === "added").length;
+    const removed = this.differences.filter((d) => d.type === "removed").length;
     const modified = this.differences.filter(
-      (d) => d.type === 'modified'
+      (d) => d.type === "modified",
     ).length;
 
     return {
@@ -160,15 +157,15 @@ export class SchemaDiff {
    */
   getChangeDescription(diff) {
     switch (diff.type) {
-      case 'added':
+      case "added":
         return `Added field "${diff.field}" (${diff.to.type})`;
-      case 'removed':
+      case "removed":
         return `Removed field "${diff.field}"`;
-      case 'modified': {
+      case "modified": {
         const changeStrs = diff.changes.map(
-          (c) => `${c.aspect}: ${c.from} → ${c.to}`
+          (c) => `${c.aspect}: ${c.from} → ${c.to}`,
         );
-        return `Modified "${diff.field}": ${changeStrs.join(', ')}`;
+        return `Modified "${diff.field}": ${changeStrs.join(", ")}`;
       }
       default:
         return `Unknown change`;
@@ -190,7 +187,7 @@ export class SchemaDiff {
     const propsB = this.schemaB.properties || {};
 
     return Object.keys(propsA).filter(
-      (key) => key in propsB && !this.hasChanged(propsA[key], propsB[key])
+      (key) => key in propsB && !this.hasChanged(propsA[key], propsB[key]),
     );
   }
 
@@ -198,31 +195,31 @@ export class SchemaDiff {
    * Get only additions
    */
   getAdditions() {
-    return this.differences.filter((d) => d.type === 'added');
+    return this.differences.filter((d) => d.type === "added");
   }
 
   /**
    * Get only removals
    */
   getRemovals() {
-    return this.differences.filter((d) => d.type === 'removed');
+    return this.differences.filter((d) => d.type === "removed");
   }
 
   /**
    * Get only modifications
    */
   getModifications() {
-    return this.differences.filter((d) => d.type === 'modified');
+    return this.differences.filter((d) => d.type === "modified");
   }
 
   /**
    * Export diff as text report
    */
-  toTextReport(schemaAName = 'Schema A', schemaBName = 'Schema B') {
+  toTextReport(schemaAName = "Schema A", schemaBName = "Schema B") {
     const summary = this.getSummary();
     const lines = [
       `Schema Comparison Report`,
-      `${'='.repeat(50)}`,
+      `${"=".repeat(50)}`,
       ``,
       `Comparing: ${schemaAName} → ${schemaBName}`,
       ``,
@@ -235,28 +232,28 @@ export class SchemaDiff {
     ];
 
     if (this.differences.length === 0) {
-      lines.push('No differences found.');
+      lines.push("No differences found.");
     } else {
       lines.push(`Changes (${this.differences.length} total):`);
-      lines.push('');
+      lines.push("");
 
       for (const diff of this.differences) {
         lines.push(
-          `  [${diff.type.toUpperCase()}] ${this.getChangeDescription(diff)}`
+          `  [${diff.type.toUpperCase()}] ${this.getChangeDescription(diff)}`,
         );
 
         if (diff.changes) {
           for (const change of diff.changes) {
             lines.push(
-              `    - ${change.aspect}: "${change.from}" → "${change.to}"`
+              `    - ${change.aspect}: "${change.from}" → "${change.to}"`,
             );
           }
         }
-        lines.push('');
+        lines.push("");
       }
     }
 
-    return lines.join('\n');
+    return lines.join("\n");
   }
 }
 
@@ -266,7 +263,7 @@ export class SchemaDiff {
 export function compareMultipleSchemas(schemas) {
   if (schemas.length < 2) {
     return {
-      error: 'Need at least 2 schemas to compare',
+      error: "Need at least 2 schemas to compare",
     };
   }
 
@@ -285,12 +282,12 @@ export function compareMultipleSchemas(schemas) {
 
   // Find common fields across all
   const allFields = schemas.map(
-    (s) => new Set(Object.keys(s.parsed.properties || {}))
+    (s) => new Set(Object.keys(s.parsed.properties || {})),
   );
 
   const commonFields = allFields
-    .reduce((common, current) =>
-      new Set([...common].filter((f) => current.has(f)))
+    .reduce(
+      (common, current) => new Set([...common].filter((f) => current.has(f))),
     )
     .then((x) => [...x]);
 

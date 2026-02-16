@@ -34,17 +34,20 @@ examples/federation/
 ### 1. Apollo Classic: Users, Reviews, Products
 
 The canonical three-service Apollo Federation example demonstrating:
+
 - Entity keys with `@key(fields: "...")`
 - Entity extensions with `extend type`
 - External fields with `@external`
 - Field dependencies with `@provides` and `@requires`
 
 **Services:**
+
 - **Users Service**: Owns the `User` entity (keyed by `email`)
 - **Products Service**: Owns the `Product` entity (keyed by `upc`)
 - **Reviews Service**: Owns the `Review` entity and extends `User` and `Product`
 
 **Key Patterns:**
+
 - `User @key(fields: "email")` - Email as primary key
 - `Product @key(fields: "upc")` - UPC as primary key
 - `Review @key(fields: "id")` - Standard ID key
@@ -54,14 +57,17 @@ The canonical three-service Apollo Federation example demonstrating:
 ### 2. Strawberry GraphQL: Books & Reviews
 
 A simpler two-service example from Strawberry GraphQL demonstrating:
+
 - Basic entity extension
 - Simple relationships between services
 
 **Services:**
+
 - **Books Service**: Owns the `Book` entity (keyed by `id`)
 - **Reviews Service**: Owns the `Review` entity and extends `Book`
 
 **Key Patterns:**
+
 - `Book @key(fields: "id")` - Standard ID key
 - `extend type Book` - Extends Book to add reviews
 - `reviews: [Review!]!` - Non-nullable list of reviews
@@ -70,15 +76,15 @@ A simpler two-service example from Strawberry GraphQL demonstrating:
 
 ### Federation Directives to JSON Schema Extensions
 
-| Federation Directive | JSON Schema Extension | Scope |
-|---------------------|----------------------|-------|
-| `@key(fields: "id")` | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }` | Type |
-| `@external` | `"x-graphql-federation": { "external": true }` | Field |
-| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "firstName lastName" }` | Field |
-| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "username email" }` | Field |
-| `@shareable` | `"x-graphql-federation": { "shareable": true }` | Type/Field |
-| `@override(from: "...")` | `"x-graphql-federation": { "override": { "from": "service" } }` | Field |
-| `extend type` | `"x-graphql-federation": { "extends": true }` | Type |
+| Federation Directive       | JSON Schema Extension                                           | Scope      |
+| -------------------------- | --------------------------------------------------------------- | ---------- |
+| `@key(fields: "id")`       | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }`      | Type       |
+| `@external`                | `"x-graphql-federation": { "external": true }`                  | Field      |
+| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "firstName lastName" }`  | Field      |
+| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "username email" }`      | Field      |
+| `@shareable`               | `"x-graphql-federation": { "shareable": true }`                 | Type/Field |
+| `@override(from: "...")`   | `"x-graphql-federation": { "override": { "from": "service" } }` | Field      |
+| `extend type`              | `"x-graphql-federation": { "extends": true }`                   | Type       |
 
 ### Complete Type Example
 
@@ -88,9 +94,7 @@ A simpler two-service example from Strawberry GraphQL demonstrating:
     "type": "object",
     "x-graphql-type-name": "User",
     "x-graphql-federation": {
-      "keys": [
-        { "fields": "email" }
-      ]
+      "keys": [{ "fields": "email" }]
     },
     "properties": {
       "email": {
@@ -223,9 +227,7 @@ subgraphs:
 ```json
 {
   "x-graphql-federation": {
-    "keys": [
-      { "fields": "id" }
-    ]
+    "keys": [{ "fields": "id" }]
   }
 }
 ```
@@ -237,9 +239,7 @@ Generates: `type User @key(fields: "id")`
 ```json
 {
   "x-graphql-federation": {
-    "keys": [
-      { "fields": "organizationId userId" }
-    ]
+    "keys": [{ "fields": "organizationId userId" }]
   }
 }
 ```
@@ -251,10 +251,7 @@ Generates: `type User @key(fields: "organizationId userId")`
 ```json
 {
   "x-graphql-federation": {
-    "keys": [
-      { "fields": "id" },
-      { "fields": "email" }
-    ]
+    "keys": [{ "fields": "id" }, { "fields": "email" }]
   }
 }
 ```
@@ -266,9 +263,7 @@ Generates: `type User @key(fields: "id") @key(fields: "email")`
 ```json
 {
   "x-graphql-federation": {
-    "keys": [
-      { "fields": "id", "resolvable": false }
-    ]
+    "keys": [{ "fields": "id", "resolvable": false }]
   }
 }
 ```
@@ -297,6 +292,7 @@ Generates: `type User @key(fields: "id", resolvable: false)`
 ```
 
 Generates:
+
 ```graphql
 type User @key(fields: "id") {
   id: ID! @external
@@ -376,6 +372,7 @@ Generates: `fullName: String @requires(fields: "firstName lastName")`
 ### Issue: "@external field must be part of @key"
 
 **Solution**: External fields must either be:
+
 - Part of a `@key` directive
 - Required by a field with `@requires`
 
@@ -398,6 +395,7 @@ Generates: `fullName: String @requires(fields: "firstName lastName")`
 ## Additional Examples
 
 For more complex real-world examples, see:
+
 - `examples/real-world-schemas/` - Production-grade schemas
 - `converters/test-data/x-graphql/` - Test fixtures with all X-GraphQL features
 - `docs/FEDERATION_PATTERNS.md` - Advanced patterns and recipes

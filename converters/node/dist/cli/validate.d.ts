@@ -8,7 +8,7 @@
 interface ValidationIssue {
     path: string;
     message: string;
-    severity: 'error' | 'warning';
+    severity: "error" | "warning";
     validator: string;
     line?: number;
     column?: number;

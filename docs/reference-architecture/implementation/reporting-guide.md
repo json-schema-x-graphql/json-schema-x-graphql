@@ -71,18 +71,18 @@ For every field you add to the GraphQL schema (e.g., `lineItems`, `periodOfPerfo
 
 1. After updating `schema_unification.schema.json`, run:
 
-  ```bash
-  python python/validate_schemas.py src/data/schema_unification.schema.json
-  pnpm run validate:graphql
-  pnpm run validate:sync
-  pnpm run validate:sync:strict
-  ```
+```bash
+python python/validate_schemas.py src/data/schema_unification.schema.json
+pnpm run validate:graphql
+pnpm run validate:sync
+pnpm run validate:sync:strict
+```
 
 1. Regenerate interop artifacts:
 
-  ```bash
-  pnpm run generate:schema:interop
-  ```
+```bash
+pnpm run generate:schema:interop
+```
 
 1. Commit changes and ensure all CI checks pass.
 

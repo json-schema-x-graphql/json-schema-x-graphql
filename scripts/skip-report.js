@@ -21,8 +21,8 @@
  * - The script does not execute any dynamic parts of schemas; it only parses JSON.
  */
 
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 function usageAndExit(code = 1) {
   const msg = `
@@ -40,7 +40,7 @@ Options:
 
 // Basic arg parsing
 const argv = process.argv.slice(2);
-if (argv.length === 0 || argv.includes('--help') || argv.includes('-h')) {
+if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
   usageAndExit(0);
 }
 
@@ -50,20 +50,20 @@ let ext = null;
 
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
-  if ((a === '--input' || a === '-i') && argv[i + 1]) {
+  if ((a === "--input" || a === "-i") && argv[i + 1]) {
     inputPath = argv[++i];
-  } else if ((a === '--output' || a === '-o') && argv[i + 1]) {
+  } else if ((a === "--output" || a === "-o") && argv[i + 1]) {
     outputPath = argv[++i];
-  } else if (a === '--ext' && argv[i + 1]) {
-    ext = argv[++i].replace(/^\./, '').toLowerCase();
+  } else if (a === "--ext" && argv[i + 1]) {
+    ext = argv[++i].replace(/^\./, "").toLowerCase();
   } else {
-    console.error('Unknown argument or missing value:', a);
+    console.error("Unknown argument or missing value:", a);
     usageAndExit(1);
   }
 }
 
 if (!inputPath) {
-  console.error('Missing required --input argument');
+  console.error("Missing required --input argument");
   usageAndExit(1);
 }
 
@@ -75,7 +75,7 @@ function listFilesRecursive(dir) {
     if (entry.isDirectory()) {
       // skip node_modules, .git by default
       const base = entry.name.toLowerCase();
-      if (base === 'node_modules' || base === '.git') continue;
+      if (base === "node_modules" || base === ".git") continue;
       results.push(...listFilesRecursive(full));
     } else if (entry.isFile()) {
       results.push(full);
@@ -86,16 +86,18 @@ function listFilesRecursive(dir) {
 
 function isLikelyJsonSchemaFile(file) {
   if (ext) {
-    return file.toLowerCase().endsWith('.' + ext);
+    return file.toLowerCase().endsWith("." + ext);
   }
   const fn = path.basename(file).toLowerCase();
   // common JSON / JSONC / YAML schema file name patterns
-  return fn.endsWith('.json') ||
-         fn.endsWith('.jsonc') ||
-         fn.endsWith('.schema.json') ||
-         fn.endsWith('.jsonschema') ||
-         fn.endsWith('.yaml') ||
-         fn.endsWith('.yml');
+  return (
+    fn.endsWith(".json") ||
+    fn.endsWith(".jsonc") ||
+    fn.endsWith(".schema.json") ||
+    fn.endsWith(".jsonschema") ||
+    fn.endsWith(".yaml") ||
+    fn.endsWith(".yml")
+  );
 }
 
 function parseJsonc(content) {
@@ -104,11 +106,11 @@ function parseJsonc(content) {
   try {
     let s = String(content);
     // remove single-line comments
-    s = s.replace(/\/\/[^\n\r]*/g, '');
+    s = s.replace(/\/\/[^\n\r]*/g, "");
     // remove block comments
-    s = s.replace(/\/\*[\s\S]*?\*\//g, '');
+    s = s.replace(/\/\*[\s\S]*?\*\//g, "");
     // remove trailing commas before } or ]
-    s = s.replace(/,\s*(?=[}\]])/g, '');
+    s = s.replace(/,\s*(?=[}\]])/g, "");
     return JSON.parse(s);
   } catch (err) {
     // propagate original error
@@ -119,21 +121,25 @@ function parseJsonc(content) {
 function parseWithFallback(content) {
   // Try strict JSON, then JSONC, then YAML (if 'yaml' package is available).
   try {
-    return { data: JSON.parse(content), parser: 'json', error: null };
+    return { data: JSON.parse(content), parser: "json", error: null };
   } catch (jsonErr) {
     // Try JSONC
     try {
       const data = parseJsonc(content);
-      return { data, parser: 'jsonc', error: null };
+      return { data, parser: "jsonc", error: null };
     } catch (jsoncErr) {
       // Try YAML if the optional dependency is available.
       try {
-        const yaml = require('yaml');
+        const yaml = require("yaml");
         try {
           const data = yaml.parse(content);
-          return { data, parser: 'yaml', error: null };
+          return { data, parser: "yaml", error: null };
         } catch (yamlErr) {
-          return { data: null, parser: null, error: `yaml parse error: ${String(yamlErr)}` };
+          return {
+            data: null,
+            parser: null,
+            error: `yaml parse error: ${String(yamlErr)}`,
+          };
         }
       } catch (requireErr) {
         // 'yaml' package not installed — return combined errors and guidance.
@@ -152,25 +158,28 @@ function parseWithFallback(content) {
 
 function escapePointerPart(part) {
   // Per RFC 6901: '~' -> '~0', '/' -> '~1'
-  return String(part).replace(/~/g, '~0').replace(/\//g, '~1');
+  return String(part).replace(/~/g, "~0").replace(/\//g, "~1");
 }
 
 function joinPointer(parts) {
-  if (!parts || parts.length === 0) return '';
-  return '/' + parts.map(escapePointerPart).join('/');
+  if (!parts || parts.length === 0) return "";
+  return "/" + parts.map(escapePointerPart).join("/");
 }
 
 function detectScope(node, pointerParts) {
   // Heuristic: If node contains 'properties' or its type is 'object' treat as a type.
-  if (node && typeof node === 'object') {
-    if (Object.prototype.hasOwnProperty.call(node, 'properties') && typeof node.properties === 'object') {
-      return 'type';
+  if (node && typeof node === "object") {
+    if (
+      Object.prototype.hasOwnProperty.call(node, "properties") &&
+      typeof node.properties === "object"
+    ) {
+      return "type";
     }
-    if (node.type === 'object' || node.type === 'array') return 'type';
+    if (node.type === "object" || node.type === "array") return "type";
   }
   // If the pointer is under /properties it is a field
-  if (pointerParts.includes('properties')) return 'field';
-  return 'unknown';
+  if (pointerParts.includes("properties")) return "field";
+  return "unknown";
 }
 
 function snippetForNode(node, maxLen = 400) {
@@ -178,7 +187,7 @@ function snippetForNode(node, maxLen = 400) {
     const s = JSON.stringify(node);
     if (s.length <= maxLen) return JSON.parse(s);
     // Return truncated stringified snippet to avoid JSON parse errors
-    return s.slice(0, maxLen) + '...';
+    return s.slice(0, maxLen) + "...";
   } catch (err) {
     return null;
   }
@@ -194,12 +203,19 @@ const report = {
 };
 
 function traverse(node, file, pointerParts = []) {
-  if (node && typeof node === 'object') {
-    if (Object.prototype.hasOwnProperty.call(node, 'x-graphql-skip')) {
-      const raw = node['x-graphql-skip'];
+  if (node && typeof node === "object") {
+    if (Object.prototype.hasOwnProperty.call(node, "x-graphql-skip")) {
+      const raw = node["x-graphql-skip"];
       const pointer = joinPointer(pointerParts);
       const scope = detectScope(node, pointerParts);
-      const reason = typeof raw === 'string' ? raw : (typeof raw === 'boolean' ? (raw ? 'skipped' : null) : String(raw));
+      const reason =
+        typeof raw === "string"
+          ? raw
+          : typeof raw === "boolean"
+            ? raw
+              ? "skipped"
+              : null
+            : String(raw);
       const entry = {
         file,
         pointer,
@@ -219,7 +235,7 @@ function traverse(node, file, pointerParts = []) {
         for (let i = 0; i < child.length; i++) {
           traverse(child[i], file, pointerParts.concat([key, i]));
         }
-      } else if (child && typeof child === 'object') {
+      } else if (child && typeof child === "object") {
         traverse(child, file, pointerParts.concat([key]));
       }
     }
@@ -227,22 +243,31 @@ function traverse(node, file, pointerParts = []) {
 }
 
 function processFile(file) {
-  const rfile = { file, parsed: false, parseError: null, entryCount: 0, parser: null };
+  const rfile = {
+    file,
+    parsed: false,
+    parseError: null,
+    entryCount: 0,
+    parser: null,
+  };
   try {
-    const content = fs.readFileSync(file, 'utf8');
+    const content = fs.readFileSync(file, "utf8");
     const { data, parser, error } = parseWithFallback(content);
     if (error) {
       rfile.parseError = error;
-      report.warnings.push({ file, message: 'Failed to parse file: ' + error });
+      report.warnings.push({ file, message: "Failed to parse file: " + error });
     } else {
       rfile.parsed = true;
       rfile.parser = parser || null;
       traverse(data, file, []);
-      rfile.entryCount = report.entries.filter(e => e.file === file).length;
+      rfile.entryCount = report.entries.filter((e) => e.file === file).length;
     }
   } catch (err) {
     rfile.parseError = String(err);
-    report.warnings.push({ file, message: 'Failed to read file: ' + String(err) });
+    report.warnings.push({
+      file,
+      message: "Failed to read file: " + String(err),
+    });
   }
   report.files.push(rfile);
 }
@@ -250,7 +275,7 @@ function processFile(file) {
 function run() {
   const target = path.resolve(process.cwd(), inputPath);
   if (!fs.existsSync(target)) {
-    console.error('Input path does not exist:', inputPath);
+    console.error("Input path does not exist:", inputPath);
     process.exit(2);
   }
 
@@ -261,13 +286,15 @@ function run() {
   } else if (s.isDirectory()) {
     files = listFilesRecursive(target);
   } else {
-    console.error('Input path is neither file nor directory:', inputPath);
+    console.error("Input path is neither file nor directory:", inputPath);
     process.exit(2);
   }
 
   files = files.filter(isLikelyJsonSchemaFile);
   if (files.length === 0) {
-    report.warnings.push({ message: 'No JSON-like files found under target (filtered by extension)' });
+    report.warnings.push({
+      message: "No JSON-like files found under target (filtered by extension)",
+    });
   }
 
   for (const f of files) {
@@ -283,10 +310,10 @@ function run() {
   const out = JSON.stringify(report, null, 2);
   if (outputPath) {
     try {
-      fs.writeFileSync(outputPath, out, 'utf8');
-      console.log('Skip report written to', outputPath);
+      fs.writeFileSync(outputPath, out, "utf8");
+      console.log("Skip report written to", outputPath);
     } catch (err) {
-      console.error('Failed to write output file:', err);
+      console.error("Failed to write output file:", err);
       console.log(out);
     }
   } else {
@@ -299,6 +326,6 @@ try {
   run();
   process.exit(0);
 } catch (err) {
-  console.error('Unexpected error:', err);
+  console.error("Unexpected error:", err);
   process.exit(3);
 }

@@ -1,6 +1,6 @@
 /**
  * Federation Directive Generator
- * 
+ *
  * Automatically detects field dependencies across schemas
  * Generates Apollo Federation v2 @requires and @provides directives
  * Suggests reference fields and composite keys
@@ -19,25 +19,25 @@ export function generateDirectiveSuggestions(subgraphs, supergraphSdl) {
 
   // For each field with dependencies, generate @requires or @provides
   for (const [fieldId, deps] of Object.entries(fieldDependencies)) {
-    const [typeName, fieldName] = fieldId.split('.');
+    const [typeName, fieldName] = fieldId.split(".");
     const schemaName = typeToSchema[typeName];
 
     if (!schemaName) continue;
 
     // Check if field depends on external types
-    const externalDeps = deps.filter(dep => typeToSchema[dep] !== schemaName);
-    
+    const externalDeps = deps.filter((dep) => typeToSchema[dep] !== schemaName);
+
     if (externalDeps.length > 0) {
       suggestions.push({
-        type: 'requires',
+        type: "requires",
         typeName,
         fieldName,
         dependencies: externalDeps,
         directive: generateRequiresDirective(fieldName, externalDeps),
         reason: `Field "${fieldName}" references types from other subgraphs`,
-        severity: 'info',
+        severity: "info",
         schemaName,
-        applicable: true
+        applicable: true,
       });
     }
   }
@@ -48,13 +48,13 @@ export function generateDirectiveSuggestions(subgraphs, supergraphSdl) {
     if (schemas.length > 1) {
       // Type exists in multiple schemas - suggest @key/@provides
       suggestions.push({
-        type: 'composite_key',
+        type: "composite_key",
         typeName,
         schemas: schemas,
-        directive: `# Type exists in ${schemas.join(', ')}. Consider @key for consistency.`,
+        directive: `# Type exists in ${schemas.join(", ")}. Consider @key for consistency.`,
         reason: `"${typeName}" is defined in multiple subgraphs`,
-        severity: 'warning',
-        applicable: true
+        severity: "warning",
+        applicable: true,
       });
     }
   }
@@ -63,14 +63,14 @@ export function generateDirectiveSuggestions(subgraphs, supergraphSdl) {
   const entityExtensions = detectEntityExtensions(subgraphs, typeToSchema);
   for (const ext of entityExtensions) {
     suggestions.push({
-      type: 'extension',
+      type: "extension",
       typeName: ext.typeName,
       baseSchema: ext.baseSchema,
       extendingSchemas: ext.extendingSchemas,
       directive: generateProvidesDirective(ext.typeName, ext.fields),
       reason: `"${ext.typeName}" is extended with fields in other subgraphs`,
-      severity: 'info',
-      applicable: true
+      severity: "info",
+      applicable: true,
     });
   }
 
@@ -85,25 +85,27 @@ export function generateDirectiveSuggestions(subgraphs, supergraphSdl) {
  */
 function analyzeDependencies(sdl) {
   const dependencies = {};
-  
+
   // Parse SDL to find field-type relationships
   const typeMatches = sdl.matchAll(/type\s+(\w+)\s*(?:@\w+[^{]*)?\{([^}]*)\}/g);
-  
+
   for (const match of typeMatches) {
     const typeName = match[1];
     const fieldsBlock = match[2];
-    
+
     // Extract field definitions
-    const fieldMatches = fieldsBlock.matchAll(/(\w+)\s*(?:\([^)]*\))?:\s*([!\[\w$]+)*/g);
-    
+    const fieldMatches = fieldsBlock.matchAll(
+      /(\w+)\s*(?:\([^)]*\))?:\s*([!\[\w$]+)*/g,
+    );
+
     for (const fieldMatch of fieldMatches) {
       const fieldName = fieldMatch[1];
       const fieldType = fieldMatch[2];
-      
+
       if (fieldType && isComplexType(fieldType)) {
         const baseType = extractBaseType(fieldType);
         const fieldId = `${typeName}.${fieldName}`;
-        
+
         if (!dependencies[fieldId]) {
           dependencies[fieldId] = [];
         }
@@ -122,7 +124,7 @@ function analyzeDependencies(sdl) {
  */
 function buildTypeToSchemaMap(subgraphs) {
   const map = {};
-  
+
   for (const subgraph of subgraphs) {
     const typeMatches = subgraph.sdl.matchAll(/type\s+(\w+)/g);
     for (const match of typeMatches) {
@@ -154,7 +156,7 @@ function buildTypeToSchemaMap(subgraphs) {
  */
 function detectSharedTypes(subgraphs, typeToSchema) {
   const shared = {};
-  
+
   for (const [typeName, schema] of Object.entries(typeToSchema)) {
     if (Array.isArray(schema)) {
       shared[typeName] = schema;
@@ -176,17 +178,19 @@ function detectEntityExtensions(subgraphs, typeToSchema) {
 
   // Find which schemas extend which types
   for (const subgraph of subgraphs) {
-    const extendMatches = subgraph.sdl.matchAll(/extend\s+type\s+(\w+)\s*(?:@\w+[^{]*)?\{([^}]*)\}/g);
-    
+    const extendMatches = subgraph.sdl.matchAll(
+      /extend\s+type\s+(\w+)\s*(?:@\w+[^{]*)?\{([^}]*)\}/g,
+    );
+
     for (const match of extendMatches) {
       const typeName = match[1];
       const fieldsBlock = match[2];
-      
+
       if (!typeExtensions[typeName]) {
         typeExtensions[typeName] = {
           baseSchema: null,
           extendingSchemas: [],
-          fields: []
+          fields: [],
         };
       }
 
@@ -211,7 +215,7 @@ function detectEntityExtensions(subgraphs, typeToSchema) {
         typeName,
         baseSchema,
         extendingSchemas: ext.extendingSchemas,
-        fields: ext.fields
+        fields: ext.fields,
       });
     }
   }
@@ -228,9 +232,11 @@ function detectEntityExtensions(subgraphs, typeToSchema) {
 function generateRequiresDirective(fieldName, externalTypes) {
   // @requires needs the reference fields that identify the external type
   // This is a suggestion - actual key fields would need to be determined
-  const requiredFields = externalTypes.map(type => {
-    return `${type.toLowerCase()}Id`; // Suggest based on type name
-  }).join(', ');
+  const requiredFields = externalTypes
+    .map((type) => {
+      return `${type.toLowerCase()}Id`; // Suggest based on type name
+    })
+    .join(", ");
 
   return `@requires(fields: "${requiredFields}")`;
 }
@@ -242,7 +248,7 @@ function generateRequiresDirective(fieldName, externalTypes) {
  * @returns {string} GraphQL directive
  */
 function generateProvidesDirective(typeName, fields) {
-  const fieldList = fields.join(', ');
+  const fieldList = fields.join(", ");
   return `@provides(fields: "${fieldList}")`;
 }
 
@@ -253,7 +259,7 @@ function generateProvidesDirective(typeName, fields) {
  */
 function isComplexType(typeStr) {
   const baseType = extractBaseType(typeStr);
-  const scalars = ['String', 'Int', 'Float', 'Boolean', 'ID'];
+  const scalars = ["String", "Int", "Float", "Boolean", "ID"];
   return !scalars.includes(baseType);
 }
 
@@ -264,7 +270,7 @@ function isComplexType(typeStr) {
  * @returns {string} Base type name
  */
 function extractBaseType(typeStr) {
-  return typeStr.replace(/[!\[\]]/g, '');
+  return typeStr.replace(/[!\[\]]/g, "");
 }
 
 /**
@@ -277,42 +283,41 @@ export function applySuggestionsToSdl(sdl, suggestions) {
   let modifiedSdl = sdl;
 
   // Group suggestions by type and field
-  const requiresSuggestions = suggestions.filter(s => s.type === 'requires');
-  
+  const requiresSuggestions = suggestions.filter((s) => s.type === "requires");
+
   for (const suggestion of requiresSuggestions) {
     const { typeName, fieldName, directive } = suggestion;
-    
+
     // Find the type and its fields, then add directive to specific field
     // This is more precise than generic field matching
-    const lines = modifiedSdl.split('\n');
+    const lines = modifiedSdl.split("\n");
     let inType = false;
     let typeStartIdx = -1;
-    
+
     for (let i = 0; i < lines.length; i++) {
       // Check if this line starts the target type
-      if (lines[i].includes(`type ${typeName}`) && lines[i].includes('{')) {
+      if (lines[i].includes(`type ${typeName}`) && lines[i].includes("{")) {
         inType = true;
         typeStartIdx = i;
       }
-      
+
       // Check if we've exited the type
-      if (inType && lines[i].includes('}') && i > typeStartIdx) {
+      if (inType && lines[i].includes("}") && i > typeStartIdx) {
         inType = false;
       }
-      
+
       // If we're in the right type, look for the field
       if (inType && lines[i].includes(fieldName)) {
-        const fieldPattern = new RegExp(`(${fieldName}\\s*(?:\\([^)]*\\))?:\\s*[!\\[\\w$]+)`);
-        if (fieldPattern.test(lines[i]) && !lines[i].includes('@requires')) {
-          lines[i] = lines[i].replace(
-            fieldPattern,
-            `$1 ${directive}`
-          );
+        const fieldPattern = new RegExp(
+          `(${fieldName}\\s*(?:\\([^)]*\\))?:\\s*[!\\[\\w$]+)`,
+        );
+        if (fieldPattern.test(lines[i]) && !lines[i].includes("@requires")) {
+          lines[i] = lines[i].replace(fieldPattern, `$1 ${directive}`);
         }
       }
     }
-    
-    modifiedSdl = lines.join('\n');
+
+    modifiedSdl = lines.join("\n");
   }
 
   return modifiedSdl;
@@ -325,10 +330,11 @@ export function applySuggestionsToSdl(sdl, suggestions) {
  * @returns {Array<Object>} Filtered suggestions
  */
 export function filterSuggestions(suggestions, filters = {}) {
-  return suggestions.filter(s => {
+  return suggestions.filter((s) => {
     if (filters.severity && s.severity !== filters.severity) return false;
     if (filters.type && s.type !== filters.type) return false;
-    if (filters.applicable !== undefined && s.applicable !== filters.applicable) return false;
+    if (filters.applicable !== undefined && s.applicable !== filters.applicable)
+      return false;
     return true;
   });
 }
@@ -340,9 +346,10 @@ export function filterSuggestions(suggestions, filters = {}) {
  */
 export function rankSuggestions(suggestions) {
   const severityOrder = { error: 0, warning: 1, info: 2 };
-  
+
   return [...suggestions].sort((a, b) => {
-    const severityDiff = (severityOrder[a.severity] ?? 3) - (severityOrder[b.severity] ?? 3);
+    const severityDiff =
+      (severityOrder[a.severity] ?? 3) - (severityOrder[b.severity] ?? 3);
     if (severityDiff !== 0) return severityDiff;
 
     // Secondary sort: by type importance
@@ -357,7 +364,7 @@ export function rankSuggestions(suggestions) {
  * @returns {string} Formatted report
  */
 export function generateSuggestionReport(suggestions) {
-  let report = '# Federation Directive Suggestions\n\n';
+  let report = "# Federation Directive Suggestions\n\n";
 
   const byType = {};
   for (const suggestion of suggestions) {
@@ -368,13 +375,13 @@ export function generateSuggestionReport(suggestions) {
   }
 
   for (const [type, sugs] of Object.entries(byType)) {
-    report += `## ${type.replace('_', ' ').toUpperCase()} (${sugs.length})\n\n`;
-    
+    report += `## ${type.replace("_", " ").toUpperCase()} (${sugs.length})\n\n`;
+
     for (const sug of sugs) {
-      report += `### ${sug.typeName || 'Unknown'}`;
+      report += `### ${sug.typeName || "Unknown"}`;
       if (sug.fieldName) report += `.${sug.fieldName}`;
       report += `\n`;
-      
+
       report += `- **Reason**: ${sug.reason}\n`;
       report += `- **Directive**: \`${sug.directive}\`\n`;
       report += `- **Severity**: ${sug.severity}\n\n`;
@@ -399,21 +406,25 @@ export function validateSuggestion(suggestion, sdl) {
   }
 
   // Check if field exists (for requires suggestions)
-  if (suggestion.type === 'requires' && suggestion.fieldName) {
-    const fieldRegex = new RegExp(`${suggestion.fieldName}\\s*(?:\\([^)]*\\))?:\\s*`);
+  if (suggestion.type === "requires" && suggestion.fieldName) {
+    const fieldRegex = new RegExp(
+      `${suggestion.fieldName}\\s*(?:\\([^)]*\\))?:\\s*`,
+    );
     if (!sdl.includes(`${suggestion.typeName}`)) {
-      errors.push(`Field ${suggestion.fieldName} not found in type ${suggestion.typeName}`);
+      errors.push(
+        `Field ${suggestion.fieldName} not found in type ${suggestion.typeName}`,
+      );
     }
   }
 
   // Check for syntax errors in directive
-  if (!suggestion.directive || suggestion.directive.trim() === '') {
-    errors.push('Directive is empty');
+  if (!suggestion.directive || suggestion.directive.trim() === "") {
+    errors.push("Directive is empty");
   }
 
   return {
     valid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -424,7 +435,9 @@ export function validateSuggestion(suggestion, sdl) {
  * @returns {string} Modified SDL
  */
 export function mergeSuggestionsIntoSdl(baseSdl, suggestions) {
-  const validated = suggestions.filter(s => validateSuggestion(s, baseSdl).valid);
+  const validated = suggestions.filter(
+    (s) => validateSuggestion(s, baseSdl).valid,
+  );
   return applySuggestionsToSdl(baseSdl, validated);
 }
 
@@ -435,25 +448,27 @@ export function mergeSuggestionsIntoSdl(baseSdl, suggestions) {
  */
 export function analyzeDirectiveRequirements(suggestions) {
   const analysis = {
-    hasRequires: suggestions.some(s => s.type === 'requires'),
-    hasExtensions: suggestions.some(s => s.type === 'extension'),
-    typeCount: new Set(suggestions.map(s => s.typeName)).size,
-    fieldCount: suggestions.filter(s => s.fieldName).length,
+    hasRequires: suggestions.some((s) => s.type === "requires"),
+    hasExtensions: suggestions.some((s) => s.type === "extension"),
+    typeCount: new Set(suggestions.map((s) => s.typeName)).size,
+    fieldCount: suggestions.filter((s) => s.fieldName).length,
     externalReferences: new Set(),
-    complexityScore: 0
+    complexityScore: 0,
   };
 
   // Calculate external references
   for (const s of suggestions) {
     if (s.dependencies) {
-      s.dependencies.forEach(dep => analysis.externalReferences.add(dep));
+      s.dependencies.forEach((dep) => analysis.externalReferences.add(dep));
     }
   }
 
   // Calculate complexity score (0-100)
   analysis.complexityScore = Math.min(
     100,
-    (analysis.typeCount * 10) + (analysis.fieldCount * 5) + (analysis.externalReferences.size * 8)
+    analysis.typeCount * 10 +
+      analysis.fieldCount * 5 +
+      analysis.externalReferences.size * 8,
   );
 
   return analysis;

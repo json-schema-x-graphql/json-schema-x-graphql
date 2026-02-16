@@ -96,6 +96,7 @@ type Query {
 ### 3. Semantic Objects Platform Example
 
 **Source**: Referenced as Docker Compose setup with gateway connecting to:
+
 - semantic-objects service
 - extend-example service
 
@@ -113,33 +114,34 @@ type Planet @key(fields: "id") {
 
 ### Core Federation Directive Mappings
 
-| Federation Directive | X-GraphQL Extension | Example |
-|---------------------|---------------------|---------|
-| `@key(fields: "id")` | `"x-graphql-federation-keys": ["id"]` | Single key |
-| `@key(fields: "id email")` | `"x-graphql-federation-keys": ["id", "email"]` | Composite key |
-| `@external` | `"x-graphql-federation-external": true` | Field level |
-| `@requires(fields: "...")` | `"x-graphql-federation-requires": "firstName lastName"` | Field level |
-| `@provides(fields: "...")` | `"x-graphql-federation-provides": "username email"` | Field level |
-| `@extends` | `"x-graphql-federation-extends": true` | Type level |
-| `@shareable` | `"x-graphql-federation-shareable": true` | Type or field level |
-| `@override(from: "...")` | `"x-graphql-federation-override-from": "service-name"` | Field level |
+| Federation Directive       | X-GraphQL Extension                                     | Example             |
+| -------------------------- | ------------------------------------------------------- | ------------------- |
+| `@key(fields: "id")`       | `"x-graphql-federation-keys": ["id"]`                   | Single key          |
+| `@key(fields: "id email")` | `"x-graphql-federation-keys": ["id", "email"]`          | Composite key       |
+| `@external`                | `"x-graphql-federation-external": true`                 | Field level         |
+| `@requires(fields: "...")` | `"x-graphql-federation-requires": "firstName lastName"` | Field level         |
+| `@provides(fields: "...")` | `"x-graphql-federation-provides": "username email"`     | Field level         |
+| `@extends`                 | `"x-graphql-federation-extends": true`                  | Type level          |
+| `@shareable`               | `"x-graphql-federation-shareable": true`                | Type or field level |
+| `@override(from: "...")`   | `"x-graphql-federation-override-from": "service-name"`  | Field level         |
 
 ### New Federation 2.x Directive Mappings
 
-| Federation 2 Directive | X-GraphQL Extension | Notes |
-|------------------------|---------------------|-------|
-| `@interfaceObject` | `"x-graphql-federation-interface-object": true` | Type level |
-| `@authenticated` | `"x-graphql-federation-authenticated": true` | Type or field level |
-| `@requiresScopes` | `"x-graphql-federation-requires-scopes": [...]` | Authorization |
-| `@inaccessible` | `"x-graphql-federation-inaccessible": true` | Hide from public schema |
-| `@tag(name: "...")` | `"x-graphql-federation-tags": [{"name": "..."}]` | Metadata |
-| `@composeDirective` | `"x-graphql-federation-compose-directive": "..."` | Custom directives |
+| Federation 2 Directive | X-GraphQL Extension                               | Notes                   |
+| ---------------------- | ------------------------------------------------- | ----------------------- |
+| `@interfaceObject`     | `"x-graphql-federation-interface-object": true`   | Type level              |
+| `@authenticated`       | `"x-graphql-federation-authenticated": true`      | Type or field level     |
+| `@requiresScopes`      | `"x-graphql-federation-requires-scopes": [...]`   | Authorization           |
+| `@inaccessible`        | `"x-graphql-federation-inaccessible": true`       | Hide from public schema |
+| `@tag(name: "...")`    | `"x-graphql-federation-tags": [{"name": "..."}]`  | Metadata                |
+| `@composeDirective`    | `"x-graphql-federation-compose-directive": "..."` | Custom directives       |
 
 ## Implementation Plan
 
 ### Phase 1: Find and Document Original SDL Files
 
 **Tasks:**
+
 1. ✓ Document the classic Apollo Federation example (Users, Reviews, Products)
 2. ✓ Document the Strawberry GraphQL example (Books, Reviews)
 3. ✓ Document the Semantic Objects example (Planet entity)
@@ -147,6 +149,7 @@ type Planet @key(fields: "id") {
 5. Document the exact versions and sources
 
 **Output:**
+
 ```
 examples/federation/sdl/
 ├── apollo-classic/
@@ -210,6 +213,7 @@ For each SDL file, create a JSON schema that will generate it.
 ```
 
 **Output:**
+
 ```
 examples/federation/json-schemas/
 ├── apollo-classic/
@@ -226,6 +230,7 @@ examples/federation/json-schemas/
 ### Phase 3: Test Round-Trip Conversions
 
 **Validation Steps:**
+
 1. Convert each JSON schema → SDL using Node.js converter
 2. Convert each JSON schema → SDL using Rust converter
 3. Compare generated SDL with original reference SDL
@@ -233,23 +238,24 @@ examples/federation/json-schemas/
 5. Ensure federation directives are correctly placed
 
 **Test Script:**
+
 ```bash
 #!/bin/bash
 # test-federation-examples.sh
 
 for example in examples/federation/json-schemas/**/*.json; do
   basename=$(basename "$example" .json)
-  
+
   # Node converter
   node converters/node/dist/cli.js \
     --input "$example" \
     --output "examples/federation/output/node/$basename.graphql"
-  
+
   # Rust converter
   ./converters/rust/target/release/jxql \
     --input "$example" \
     --output "examples/federation/output/rust/$basename.graphql"
-  
+
   # Compare with reference
   diff "examples/federation/sdl/$basename.graphql" \
        "examples/federation/output/node/$basename.graphql"
@@ -336,6 +342,7 @@ Create JSON schemas for advanced patterns:
 Create comprehensive documentation:
 
 **Files to Create:**
+
 1. `docs/FEDERATION_GUIDE.md` - Complete guide to federation with X-GraphQL
 2. `examples/federation/README.md` - Overview and quick start
 3. `examples/federation/PATTERNS.md` - Common patterns and recipes
@@ -347,9 +354,13 @@ Create comprehensive documentation:
 # Federation with X-GraphQL Converters
 
 ## Quick Start
+
 ## Directive Mapping Reference
+
 ## Common Patterns
+
 ## Troubleshooting
+
 ## Best Practices
 ```
 
@@ -417,7 +428,7 @@ json-schema-x-graphql/
 ## Additional Examples to Consider
 
 1. **Netflix DGS Framework** - Java/Kotlin federation examples
-2. **Hot Chocolate** - .NET federation examples  
+2. **Hot Chocolate** - .NET federation examples
 3. **Ariadne** - Python federation examples
 4. **Apollo Server Examples** - Official Apollo repository examples
 5. **Real-world Production Schemas** - Airbnb, GitHub, Shopify patterns

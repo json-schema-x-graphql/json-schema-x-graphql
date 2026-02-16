@@ -19,11 +19,13 @@ Last Updated: December 2024
 ### High Priority
 
 - [ ] Create test fixtures directory structure
+
   ```bash
   mkdir -p __tests__/{scripts,helpers,lib,fixtures/{schemas,sdl}}
   ```
 
 - [ ] Create docs archive structure
+
   ```bash
   mkdir -p docs/archived/{implementation-logs,v1-v2-migration,deprecated}
   ```
@@ -41,6 +43,7 @@ Last Updated: December 2024
 - [ ] Start test file for `generate-graphql-from-json-schema.mjs`
 
 ### Daily Standup Questions
+
 - Is the blocker resolved?
 - Are test directories set up?
 - Is archive structure ready?
@@ -103,17 +106,18 @@ Last Updated: December 2024
   - Troubleshooting
 
 - [ ] **Write:** `docs/schema-v1-vs-v2-guide.md`
-  - Consolidate: V1-VS-V2-*.md files
+  - Consolidate: V1-VS-V2-\*.md files
   - Quick reference table
   - Detailed comparison
   - V2 diagram
   - Migration guide
 
 ### Week 2 Success Criteria
+
 ✅ All 4 core generators have tests  
 ✅ All tests passing  
 ✅ 3 consolidated guides written  
-✅ No blockers for Week 3  
+✅ No blockers for Week 3
 
 ---
 
@@ -161,6 +165,7 @@ Last Updated: December 2024
   - Integration patterns
 
 - [ ] **Rename existing guides to lowercase:**
+
   ```bash
   git mv docs/PYTHON-VALIDATION-QUICK-START.md docs/python-validation-guide.md
   git mv docs/SCHEMA-LINTING-GUIDE.md docs/schema-linting-guide.md
@@ -171,10 +176,11 @@ Last Updated: December 2024
 - [ ] Update all cross-references to renamed files
 
 ### Week 3 Success Criteria
+
 ✅ All 3 validators have tests  
 ✅ All tests passing  
 ✅ 3 more guides written  
-✅ All guides use consistent naming  
+✅ All guides use consistent naming
 
 ---
 
@@ -205,6 +211,7 @@ Last Updated: December 2024
 ### Docs: Archive Old Files
 
 - [ ] **Move implementation logs to archive:**
+
   ```bash
   git mv docs/BENCHMARK-SETUP-COMPLETE.md docs/archived/implementation-logs/
   git mv docs/GRAPHQL-CONVERTER-BUG-FIXES.md docs/archived/implementation-logs/
@@ -215,6 +222,7 @@ Last Updated: December 2024
   ```
 
 - [ ] **Move V1/V2 migration files:**
+
   ```bash
   git mv docs/V1-TO-V2-CONVERTER-RESULTS.md docs/archived/v1-v2-migration/
   git mv docs/V2-GRAPHQL-ENHANCEMENT-SUMMARY.md docs/archived/v1-v2-migration/
@@ -222,6 +230,7 @@ Last Updated: December 2024
   ```
 
 - [ ] **Move deprecated files:**
+
   ```bash
   git mv docs/schema-todo.md docs/archived/deprecated/
   git mv docs/GRAPHQL-SCHEMA-ANALYSIS-AND-STRATEGY.md docs/archived/deprecated/
@@ -241,10 +250,11 @@ Last Updated: December 2024
 - [ ] **Update copilot instructions**
 
 ### Week 4 Success Criteria
+
 ✅ Shared GraphQL hints library created  
 ✅ 3 generators using shared lib  
 ✅ 17 files moved to archive  
-✅ All cross-references updated  
+✅ All cross-references updated
 
 ---
 
@@ -296,17 +306,19 @@ Last Updated: December 2024
   - [ ] Update tracking documents
 
 ### Week 5 Success Criteria
+
 ✅ 80%+ test coverage for generators  
 ✅ 90%+ test coverage for validators  
 ✅ Complete API documentation  
 ✅ All docs reviewed and polished  
-✅ Team approval received  
+✅ Team approval received
 
 ---
 
 ## 🎯 Final Success Criteria
 
 ### Scripts Audit ✅
+
 - [ ] All generators export programmatic functions
 - [ ] All validators export programmatic functions
 - [ ] 80%+ test coverage for generators
@@ -316,6 +328,7 @@ Last Updated: December 2024
 - [ ] No remaining blockers
 
 ### Documentation Consolidation ✅
+
 - [ ] Document count: 38 → ~15 (60% reduction)
 - [ ] All implementation logs archived
 - [ ] All redundancy eliminated
@@ -332,21 +345,23 @@ Last Updated: December 2024
 **Week 2:** ☐ 4 Generators ☐ 3 Guides  
 **Week 3:** ☐ 3 Validators ☐ 3 More Guides  
 **Week 4:** ☐ Shared Lib ☐ Archive Complete  
-**Week 5:** ☐ Testing ☐ Polish ☐ Approved  
+**Week 5:** ☐ Testing ☐ Polish ☐ Approved
 
-**Overall Progress:** __% complete
+**Overall Progress:** \_\_% complete
 
 ---
 
 ## 🆘 Blockers / Issues
 
 **Active Blockers:**
+
 1. [BLOCKER] `generate-graphql-json-schema.mjs` function signature mismatch
-   - Owner: ___________
-   - Status: ___________
+   - Owner: ****\_\_\_****
+   - Status: ****\_\_\_****
    - ETA: Week 1
 
 **Resolved:**
+
 - (None yet)
 
 ---

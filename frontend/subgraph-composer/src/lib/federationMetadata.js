@@ -8,10 +8,10 @@
  * @param {string} sdl - GraphQL Schema Definition Language
  */
 export function extractFederationMetadata(sdl) {
-  if (!sdl || typeof sdl !== 'string') {
+  if (!sdl || typeof sdl !== "string") {
     return {
       success: false,
-      error: 'Invalid GraphQL SDL',
+      error: "Invalid GraphQL SDL",
       metadata: null,
     };
   }
@@ -53,13 +53,13 @@ export function extractFederationMetadata(sdl) {
  * @private
  */
 function detectFederationVersion(sdl) {
-  if (sdl.includes('@key(fields:')) {
-    return 'v2';
+  if (sdl.includes("@key(fields:")) {
+    return "v2";
   }
-  if (sdl.includes('@extends') || sdl.includes('@external')) {
-    return 'v1';
+  if (sdl.includes("@extends") || sdl.includes("@external")) {
+    return "v1";
   }
-  return 'none';
+  return "none";
 }
 
 /**
@@ -68,8 +68,7 @@ function detectFederationVersion(sdl) {
  */
 function extractFederatedTypes(sdl) {
   const types = [];
-  const typeRegex =
-    /type\s+(\w+)\s*(?:@key|@extends|\s*\{)/gm;
+  const typeRegex = /type\s+(\w+)\s*(?:@key|@extends|\s*\{)/gm;
   let match;
 
   while ((match = typeRegex.exec(sdl)) !== null) {
@@ -80,7 +79,7 @@ function extractFederatedTypes(sdl) {
     types.push({
       name: typeName,
       isFederated: /@key|@extends|@external|@requires|@provides/g.test(
-        typeSection
+        typeSection,
       ),
       hasKey: /@key/g.test(typeSection),
       isExtended: /@extends/g.test(typeSection),
@@ -104,10 +103,10 @@ function extractTypeSection(sdl, startIndex) {
   let end = startIndex;
 
   for (let i = startIndex; i < sdl.length; i++) {
-    if (sdl[i] === '{') {
+    if (sdl[i] === "{") {
       inBraces = true;
       braceCount++;
-    } else if (sdl[i] === '}') {
+    } else if (sdl[i] === "}") {
       braceCount--;
       if (braceCount === 0 && inBraces) {
         end = i + 1;
@@ -133,10 +132,10 @@ function extractTypeFields(typeSection) {
     const fieldType = match[2].trim();
     const directive = match[3] || null;
 
-    if (!fieldName.includes('directive') && !fieldName.includes('extend')) {
+    if (!fieldName.includes("directive") && !fieldName.includes("extend")) {
       fields.push({
         name: fieldName,
-        type: fieldType.split('\n')[0],
+        type: fieldType.split("\n")[0],
         hasDirective: !!directive,
         directive,
       });
@@ -152,7 +151,8 @@ function extractTypeFields(typeSection) {
  */
 function extractDirectives(sdl) {
   const directives = [];
-  const directiveRegex = /(@key|@external|@requires|@provides|@extends)\s*\(([^)]+)\)/g;
+  const directiveRegex =
+    /(@key|@external|@requires|@provides|@extends)\s*\(([^)]+)\)/g;
   let match;
 
   while ((match = directiveRegex.exec(sdl)) !== null) {
@@ -176,12 +176,12 @@ function extractReferences(sdl) {
   let match;
 
   while ((match = refRegex.exec(sdl)) !== null) {
-    const typeRef = match[1].replace(/[\[\]]/g, '');
+    const typeRef = match[1].replace(/[\[\]]/g, "");
     if (!references.some((r) => r.type === typeRef)) {
       references.push({
         type: typeRef,
         isRequired: !!match[2],
-        isList: match[1].includes('['),
+        isList: match[1].includes("["),
       });
     }
   }
@@ -195,7 +195,8 @@ function extractReferences(sdl) {
  */
 function extractEntityTypes(sdl) {
   const entities = [];
-  const entityRegex = /@key\s*\(\s*fields:\s*"([^"]+)"\s*\)\s*\n\s*type\s+(\w+)/g;
+  const entityRegex =
+    /@key\s*\(\s*fields:\s*"([^"]+)"\s*\)\s*\n\s*type\s+(\w+)/g;
   let match;
 
   while ((match = entityRegex.exec(sdl)) !== null) {
@@ -251,7 +252,7 @@ export function analyzeFederationRequirements(subgraphs) {
     for (const entity of metadata.entityTypes) {
       if (entityNames.has(entity.name)) {
         analysis.issues.push(
-          `Entity "${entity.name}" defined in multiple subgraphs`
+          `Entity "${entity.name}" defined in multiple subgraphs`,
         );
         analysis.canCompose = false;
       } else {
@@ -270,7 +271,7 @@ export function analyzeFederationRequirements(subgraphs) {
       const entityName = Object.keys(analysis.entityMap).find((key) =>
         metadata.types
           .find((t) => t.name === key)
-          ?.fields?.some((f) => f.name === extField.field)
+          ?.fields?.some((f) => f.name === extField.field),
       );
 
       if (
@@ -278,22 +279,22 @@ export function analyzeFederationRequirements(subgraphs) {
         !metadata.types.some((t) => t.isExtended && t.name === entityName)
       ) {
         analysis.warnings.push(
-          `External field "${extField.field}" may require @extends`
+          `External field "${extField.field}" may require @extends`,
         );
       }
     }
   }
 
   // Recommendations
-  if (allMetadata.some((m) => m.version === 'v1')) {
+  if (allMetadata.some((m) => m.version === "v1")) {
     analysis.recommendations.push(
-      'Consider upgrading from Federation v1 to v2 for improved features'
+      "Consider upgrading from Federation v1 to v2 for improved features",
     );
   }
 
   if (allMetadata.some((m) => m.entityTypes.length === 0)) {
     analysis.recommendations.push(
-      'Some subgraphs have no entities. Consider adding @key directives'
+      "Some subgraphs have no entities. Consider adding @key directives",
     );
   }
 

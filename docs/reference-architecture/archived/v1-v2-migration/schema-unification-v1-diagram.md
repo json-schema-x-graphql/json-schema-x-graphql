@@ -27,7 +27,7 @@ erDiagram
         decimal completenessScore "Data quality score from 0-1"
         datetime lastValidated "Timestamp of last data validation"
     }
-    
+
     COMMON_ELEMENTS {
         string recordId PK "FK to NORMALIZED_SCHEMA - Record identifier"
         string contractTitle "Title or description of the contract"
@@ -40,7 +40,7 @@ erDiagram
         boolean isLatest "Whether this is the latest version"
         boolean isFunded "Whether the contract is currently funded"
     }
-    
+
     CONTRACT_IDENTIFICATION {
         string piid PK "Procurement Instrument Identifier"
         string originalAwardPiid "Original Award PIID for reference tracking"
@@ -50,7 +50,7 @@ erDiagram
         string descriptionOfRequirement "Detailed description of contract requirements"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     ORGANIZATION_INFO {
         string orgId PK "Organization record identifier"
         string contractingAgencyCode "Code for agency handling contract"
@@ -63,14 +63,14 @@ erDiagram
         string fundingDepartmentName "Name of funding department"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     VENDOR_INFO {
         string vendorId PK "Vendor record identifier"
         string vendorName "Legal name of vendor organization"
         string vendorUei "Unique Entity Identifier in Entity Management"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     PLACE_OF_PERFORMANCE {
         string perfId PK "Performance location identifier"
         string streetAddress "Street address where work performed"
@@ -82,7 +82,7 @@ erDiagram
         string congressionalDistrict "Congressional district for location"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     FINANCIAL_INFO {
         string finId PK "Financial record identifier"
         decimal totalContractValue "Total contract value including modifications"
@@ -93,7 +93,7 @@ erDiagram
         string reportSubmittedFiscalYear "Fiscal year when report submitted"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     BUSINESS_CLASSIFICATION {
         string bizId PK "Business classification identifier"
         string naicsCode "NAICS classification code"
@@ -107,7 +107,7 @@ erDiagram
         string coSizeDetermination "Contracting Officer size determination"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     CONTRACT_CHARACTERISTICS {
         string charId PK "Contract characteristics identifier"
         string emergencyAcquisition "Emergency acquisition classification"
@@ -117,7 +117,7 @@ erDiagram
         boolean recurringUtilities "Whether involves recurring utilities"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     Contract Data_SPECIFIC {
         string contract_dataId PK "Contract Data-specific data identifier"
         string programNumber "Federal program number"
@@ -126,7 +126,7 @@ erDiagram
         string website "Program website URL"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     Legacy Procurement_SPECIFIC {
         string legacy_procurementId PK "Legacy Procurement-specific data identifier"
         string iaPiidOrUniqueId "IA PIID or unique identifier"
@@ -136,7 +136,7 @@ erDiagram
         string whoCanUseIdc "Who can use the IDC"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     Intake Process_SPECIFIC {
         string intake_processId PK "EASi-specific data identifier"
         string businessOwner "EASi Business Owner"
@@ -148,14 +148,14 @@ erDiagram
         string notSeparatelyPriced "Maps to Qualifier at CLIN level"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     Logistics Mgmt_SPECIFIC {
         string logistics_mgmtId PK "Logistics Mgmt-specific data identifier"
         string logistics_mgmtField1 "Logistics Mgmt-specific field 1"
         string logistics_mgmtField2 "Logistics Mgmt-specific field 2"
         string recordId FK "to COMMON_ELEMENTS - Record link"
     }
-    
+
     NORMALIZED_SCHEMA ||--|| COMMON_ELEMENTS : contains
     COMMON_ELEMENTS ||--|| CONTRACT_IDENTIFICATION : includes
     COMMON_ELEMENTS ||--|| ORGANIZATION_INFO : includes
@@ -211,4 +211,4 @@ erDiagram
 
 ---
 
-*This is the V1 (Stable) schema diagram. For the enhanced V2 schema with system chain tracking, see [V2 Entity Relationship Diagram](schema_unification-v2-diagram).*
+_This is the V1 (Stable) schema diagram. For the enhanced V2 schema with system chain tracking, see [V2 Entity Relationship Diagram](schema_unification-v2-diagram)._

@@ -1,12 +1,15 @@
 # Conflict Detection & Reporting - Implementation Summary
 
 ## Overview
+
 Enhanced the Subgraph Composer to provide detailed visibility into type conflicts when composing multiple GraphQL schemas into a supergraph.
 
 ## What Was Done
 
 ### 1. **Enhanced Conflict Detection** (`src/lib/composer.js`)
+
 Previously conflicts were reported as simple strings. Now the system captures:
+
 - **Type name**: Which type is conflicting
 - **Sources**: Which schemas define the conflicting type
 - **Source count**: How many schemas have the same type
@@ -14,6 +17,7 @@ Previously conflicts were reported as simple strings. Now the system captures:
 - **Strategy**: How conflicts are being resolved (extend, union, etc.)
 
 **Code Changes:**
+
 ```javascript
 // Track detailed conflict information
 const conflictInfo = {
@@ -27,18 +31,23 @@ conflicts.push(conflictInfo);
 ```
 
 ### 2. **Improved SupergraphPreview UI** (`src/components/SupergraphPreview.jsx`)
+
 Added expandable conflict details section showing:
+
 - List of all conflicting types
 - Which schemas define each conflicting type
 - Field count for each conflicting type
 
 **Visual Improvements:**
+
 - Yellow warning highlight for conflict section
 - Clear type names and schema sources
 - Organized with proper spacing and typography
 
 ### 3. **Enhanced SubgraphEditor Statistics** (`src/components/SubgraphEditor.jsx`)
+
 Updated the statistics panel to:
+
 - Show conflict count with warning icon (⚠️)
 - Display detailed breakdown of each conflict
 - List conflicting type names and their sources
@@ -46,7 +55,9 @@ Updated the statistics panel to:
 - Scrollable stats section for long lists
 
 ### 4. **Added CSS Styling** (`src/components/SchemaEditor.css`)
+
 New styles for conflict display:
+
 - `.conflicts-details` - Container for all conflicts
 - `.conflicts-title` - Section header with warning color
 - `.conflict-item` - Individual conflict display
@@ -57,12 +68,14 @@ New styles for conflict display:
 ## How It Works
 
 ### Before
+
 ```
 Conflicts: 5
 [No details shown]
 ```
 
 ### After
+
 ```
 ⚠️ Conflicts: 5
 
@@ -96,6 +109,7 @@ Conflicting Types:
 ## Why Conflicts Occur
 
 When multiple schemas define the same type name, conflicts arise:
+
 1. **Profile** - Defined in both basic_scalars and nested_objects
 2. **Contact** - Defined in custom_scalars and nested_objects
 3. **Address** - Defined in basic_scalars and nested_objects
@@ -105,11 +119,13 @@ When multiple schemas define the same type name, conflicts arise:
 ## Resolution Strategies
 
 The current implementation uses **"extend"** strategy:
+
 - Keeps the first definition encountered
 - Skips duplicate definitions
 - This prevents conflicts but may lose information
 
 Future enhancements could include:
+
 - **"merge"** - Combine fields from all definitions
 - **"union"** - Create union types
 - **"rename"** - Auto-rename conflicting types
@@ -123,12 +139,12 @@ Future enhancements could include:
 
 ## Files Modified
 
-| File | Changes |
-|------|---------|
-| `src/lib/composer.js` | Enhanced conflict detection with detailed info |
-| `src/components/SupergraphPreview.jsx` | Added expandable conflict details section |
-| `src/components/SubgraphEditor.jsx` | Enhanced stats display with conflict breakdown |
-| `src/components/SchemaEditor.css` | Added comprehensive conflict styling |
+| File                                   | Changes                                        |
+| -------------------------------------- | ---------------------------------------------- |
+| `src/lib/composer.js`                  | Enhanced conflict detection with detailed info |
+| `src/components/SupergraphPreview.jsx` | Added expandable conflict details section      |
+| `src/components/SubgraphEditor.jsx`    | Enhanced stats display with conflict breakdown |
+| `src/components/SchemaEditor.css`      | Added comprehensive conflict styling           |
 
 ## Next Steps (Optional)
 

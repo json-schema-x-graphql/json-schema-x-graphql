@@ -14,7 +14,10 @@ type PageInfo {
   context.generatedTypes.add("PageInfo");
 }
 
-export function ensureConnectionType(typeName: string, context: ConversionContext): void {
+export function ensureConnectionType(
+  typeName: string,
+  context: ConversionContext,
+): void {
   const edgeName = `${typeName}Edge`;
   const connectionName = `${typeName}Connection`;
 

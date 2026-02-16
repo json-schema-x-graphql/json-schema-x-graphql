@@ -6,41 +6,48 @@
  * Environment: PORT (default 3000), SYSTEM (fpds, usaspending, assist, easi, calm)
  */
 
-import { createYoga } from 'graphql-yoga';
-import { createServer } from 'http';
-import { readFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { addMocksToSchema } from '@graphql-tools/mock';
-import { faker } from '@faker-js/faker';
-import { customResolvers, fieldPatterns } from './mockforge.config.js';
+import { createYoga } from "graphql-yoga";
+import { createServer } from "http";
+import { readFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { addMocksToSchema } from "@graphql-tools/mock";
+import { faker } from "@faker-js/faker";
+import { customResolvers, fieldPatterns } from "./mockforge.config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Configuration
 const PORT = process.env.PORT || 3000;
-const SYSTEM = process.env.SYSTEM || 'fpds';
-const SUBGRAPH_PATH = resolve(__dirname, `../../../generated-schemas/${SYSTEM}.subgraph.graphql`);
+const SYSTEM = process.env.SYSTEM || "fpds";
+const SUBGRAPH_PATH = resolve(
+  __dirname,
+  `../../../generated-schemas/${SYSTEM}.subgraph.graphql`,
+);
 
 // Seed faker for deterministic data per system
-faker.seed({
-  fpds: 12345,
-  usaspending: 23456,
-  assist: 34567,
-  easi: 45678,
-  calm: 56789
-}[SYSTEM] || 12345);
+faker.seed(
+  {
+    fpds: 12345,
+    usaspending: 23456,
+    assist: 34567,
+    easi: 45678,
+    calm: 56789,
+  }[SYSTEM] || 12345,
+);
 
-console.log(`✅ Initialized ${SYSTEM} mock server (lightweight Yoga + faker.js)`);
+console.log(
+  `✅ Initialized ${SYSTEM} mock server (lightweight Yoga + faker.js)`,
+);
 
 /**
  * Load subgraph schema for specific system
  */
 function loadSystemSchema(system) {
   try {
-    let subgraph = readFileSync(SUBGRAPH_PATH, 'utf-8');
+    let subgraph = readFileSync(SUBGRAPH_PATH, "utf-8");
 
     // Add Federation directive definitions so the schema validates
     const federationDirectives = `
@@ -113,7 +120,7 @@ const schema = addMocksToSchema({
     String: () => faker.lorem.words(3),
     Boolean: () => faker.datatype.boolean(),
     DateTime: () => faker.date.past().toISOString(),
-    Date: () => faker.date.past().toISOString().split('T')[0],
+    Date: () => faker.date.past().toISOString().split("T")[0],
     Email: () => faker.internet.email(),
     URI: () => faker.internet.url(),
   },
@@ -138,10 +145,10 @@ const yoga = createYoga({
 query {
   __typename
 }
-    `.trim()
+    `.trim(),
   },
   cors: {
-    origin: '*',
+    origin: "*",
     credentials: true,
   },
   logging: {

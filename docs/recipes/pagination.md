@@ -28,7 +28,7 @@ Or use `x-graphql-connection: "TypeName"` on any object to trigger generation of
       "properties": {
         "users": {
           "type": "object",
-          "x-graphql-type": "UserConnection", 
+          "x-graphql-type": "UserConnection",
           "x-graphql-args": {
             "first": { "type": "integer" },
             "after": { "type": "string" }

@@ -48,21 +48,22 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 
 ### 1. Naming Convention Changes
 
-| v1.x Attribute | v2.0 Attribute | Status |
-|----------------|----------------|--------|
-| `x-graphql-scalars` | `x-graphql-scalar` | ⚠️ Renamed |
-| `x-graphql-shareable` | `x-graphql-federation-shareable` | ⚠️ Moved to federation namespace |
-| `x-graphql-keys` | `x-graphql-federation-keys` | ⚠️ Moved to federation namespace |
-| `x-graphql-requires` | `x-graphql-federation-requires` | ⚠️ Moved to federation namespace |
-| `x-graphql-provides` | `x-graphql-federation-provides` | ⚠️ Moved to federation namespace |
-| `x-graphql-external` | `x-graphql-federation-external` | ⚠️ Moved to federation namespace |
-| `x-graphql-override-from` | `x-graphql-federation-override-from` | ⚠️ Moved to federation namespace |
-| `x-graphql-type` (string) | `x-graphql-type-name` | ⚠️ Renamed for clarity |
-| `x-graphql-type` (object) | `x-graphql-type-name` + `x-graphql-type-kind` | ⚠️ Split into two attributes |
+| v1.x Attribute            | v2.0 Attribute                                | Status                           |
+| ------------------------- | --------------------------------------------- | -------------------------------- |
+| `x-graphql-scalars`       | `x-graphql-scalar`                            | ⚠️ Renamed                       |
+| `x-graphql-shareable`     | `x-graphql-federation-shareable`              | ⚠️ Moved to federation namespace |
+| `x-graphql-keys`          | `x-graphql-federation-keys`                   | ⚠️ Moved to federation namespace |
+| `x-graphql-requires`      | `x-graphql-federation-requires`               | ⚠️ Moved to federation namespace |
+| `x-graphql-provides`      | `x-graphql-federation-provides`               | ⚠️ Moved to federation namespace |
+| `x-graphql-external`      | `x-graphql-federation-external`               | ⚠️ Moved to federation namespace |
+| `x-graphql-override-from` | `x-graphql-federation-override-from`          | ⚠️ Moved to federation namespace |
+| `x-graphql-type` (string) | `x-graphql-type-name`                         | ⚠️ Renamed for clarity           |
+| `x-graphql-type` (object) | `x-graphql-type-name` + `x-graphql-type-kind` | ⚠️ Split into two attributes     |
 
 ### 2. Federation Namespace Consolidation
 
 **Before (v1.x)**:
+
 ```json
 {
   "type": "object",
@@ -79,6 +80,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "type": "object",
@@ -97,6 +99,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ### 3. Description Handling
 
 **Before (v1.x)** - Description always used from JSON Schema:
+
 ```json
 {
   "type": "object",
@@ -105,6 +108,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ```
 
 **After (v2.0)** - Separate GraphQL-specific descriptions:
+
 ```json
 {
   "type": "object",
@@ -118,6 +122,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ### 4. Type Attribute Split
 
 **Before (v1.x)**:
+
 ```json
 {
   "x-graphql-type": {
@@ -128,6 +133,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "x-graphql-type-name": "User",
@@ -138,6 +144,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ### 5. Scalar Naming
 
 **Before (v1.x)**:
+
 ```json
 {
   "definitions": {
@@ -152,6 +159,7 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "definitions": {
@@ -174,11 +182,13 @@ X-GraphQL v2.0 introduces a standardized namespace structure and naming conventi
 ### Path A: Automated Migration (Recommended)
 
 Best for:
+
 - Large schema repositories
 - Consistent v1.x usage
 - Teams with CI/CD pipelines
 
 **Steps**:
+
 1. Install migration tool
 2. Run migration script
 3. Review and commit changes
@@ -189,11 +199,13 @@ Best for:
 ### Path B: Manual Migration
 
 Best for:
+
 - Small number of schemas (<10)
 - Custom/non-standard attributes
 - Learning v2.0 conventions
 
 **Steps**:
+
 1. Read breaking changes
 2. Update schemas manually
 3. Use validation tool
@@ -204,11 +216,13 @@ Best for:
 ### Path C: Hybrid Migration
 
 Best for:
+
 - Mix of standard and custom schemas
 - Complex federation setups
 - Gradual rollout
 
 **Steps**:
+
 1. Run automated migration for bulk schemas
 2. Manually fix edge cases
 3. Validate all schemas
@@ -223,6 +237,7 @@ Best for:
 ### Installation
 
 **Node.js**:
+
 ```bash
 npm install -g json-schema-x-graphql@2.0.0
 # or
@@ -230,6 +245,7 @@ npx json-schema-x-graphql@2.0.0 migrate
 ```
 
 **Standalone Script**:
+
 ```bash
 curl -O https://raw.githubusercontent.com/JJediny/json-schema-x-graphql/main/scripts/migrate-to-v2.sh
 chmod +x migrate-to-v2.sh
@@ -238,16 +254,19 @@ chmod +x migrate-to-v2.sh
 ### Basic Usage
 
 **Migrate Single File**:
+
 ```bash
 json-schema-x-graphql migrate --input schema.json --output schema.v2.json
 ```
 
 **Migrate Directory**:
+
 ```bash
 json-schema-x-graphql migrate --input ./schemas --output ./schemas-v2 --recursive
 ```
 
 **In-Place Migration** (⚠️ overwrites files):
+
 ```bash
 json-schema-x-graphql migrate --input ./schemas --in-place --backup
 ```
@@ -281,6 +300,7 @@ json-schema-x-graphql migrate \
 ```
 
 **Output**:
+
 ```
 Analyzing schemas...
 Found 42 schemas to migrate
@@ -368,6 +388,7 @@ find ./schemas -name "*.json" -type f -exec sed -i '' \
 #### Step 2: Split `x-graphql-type` Objects
 
 **Find instances**:
+
 ```bash
 grep -r "x-graphql-type.*{" ./schemas
 ```
@@ -375,6 +396,7 @@ grep -r "x-graphql-type.*{" ./schemas
 **Manual conversion**:
 
 Before:
+
 ```json
 {
   "x-graphql-type": {
@@ -385,6 +407,7 @@ Before:
 ```
 
 After:
+
 ```json
 {
   "x-graphql-type-name": "User",
@@ -395,11 +418,13 @@ After:
 #### Step 3: Rename `x-graphql-type` Strings
 
 **Find instances**:
+
 ```bash
 grep -r '"x-graphql-type":.*"[^{]' ./schemas
 ```
 
 **Replace**:
+
 ```bash
 # This is safe for string values only
 sed -i 's/"x-graphql-type": "\([^"]*\)"/"x-graphql-type-name": "\1"/g' schema.json
@@ -408,6 +433,7 @@ sed -i 's/"x-graphql-type": "\([^"]*\)"/"x-graphql-type-name": "\1"/g' schema.js
 #### Step 4: Update Scalar Definitions
 
 **Before**:
+
 ```json
 {
   "x-graphql-scalars": {
@@ -417,6 +443,7 @@ sed -i 's/"x-graphql-type": "\([^"]*\)"/"x-graphql-type-name": "\1"/g' schema.js
 ```
 
 **After**:
+
 ```json
 {
   "definitions": {
@@ -475,18 +502,21 @@ If you want different descriptions for GraphQL vs JSON Schema:
 ### Validate Migrated Schemas
 
 **Node.js Validator**:
+
 ```bash
 npm install -g json-schema-x-graphql@2.0.0
 json-schema-x-graphql validate ./schemas/**/*.json
 ```
 
 **Rust Validator**:
+
 ```bash
 cargo install json-schema-x-graphql
 json-schema-x-graphql validate ./schemas
 ```
 
 **Validation Output**:
+
 ```
 Validating 42 schemas...
 
@@ -509,6 +539,7 @@ Summary:
 ### Test Conversions
 
 **Convert and Compare**:
+
 ```bash
 # Generate GraphQL SDL from migrated schemas
 json-schema-x-graphql convert \
@@ -521,6 +552,7 @@ graphql-schema-linter ./sdl-output/**/*.graphql
 ```
 
 **Run Integration Tests**:
+
 ```bash
 # Node.js
 npm test
@@ -541,6 +573,7 @@ cargo test
 **Error**: `SyntaxError: Unexpected token in JSON`
 
 **Solution**: Ensure all input files are valid JSON:
+
 ```bash
 # Validate JSON before migration
 find ./schemas -name "*.json" -exec jsonlint {} \;
@@ -552,9 +585,11 @@ find ./schemas -name "*.json" -exec jsonlint {} \;
 
 **Warning**: `Unknown attribute 'x-graphql-custom-field'`
 
-**Solution**: 
+**Solution**:
+
 1. Check if it's a typo of a standard attribute
 2. If custom, add to validator allow-list:
+
 ```json
 {
   "validatorConfig": {
@@ -571,9 +606,10 @@ find ./schemas -name "*.json" -exec jsonlint {} \;
 **Error**: `Unknown directive @key`
 
 **Solution**: Ensure you're using Apollo Federation schema:
+
 ```javascript
 // Node.js
-import { buildSubgraphSchema } from '@apollo/subgraph';
+import { buildSubgraphSchema } from "@apollo/subgraph";
 
 const typeDefs = convertedSDL;
 const schema = buildSubgraphSchema({ typeDefs });
@@ -587,9 +623,11 @@ const schema = buildSubgraphSchema({ typeDefs });
 
 **Error**: `Type 'User' defined multiple times`
 
-**Solution**: 
+**Solution**:
+
 1. Use unique type names across schemas
 2. Or use federation to extend types:
+
 ```json
 {
   "x-graphql-type-name": "User",
@@ -605,6 +643,7 @@ const schema = buildSubgraphSchema({ typeDefs });
 **Problem**: Descriptions from JSON Schema not showing in GraphQL
 
 **Solution**: Check description handling:
+
 - v2.0 prefers `x-graphql-description` over `description`
 - If `x-graphql-description` is empty, `description` is used
 - Ensure descriptions are non-empty strings
@@ -616,6 +655,7 @@ const schema = buildSubgraphSchema({ typeDefs });
 **Error**: `Maximum call stack size exceeded`
 
 **Solution**: Ensure `$ref` cycles are handled:
+
 ```json
 {
   "definitions": {
@@ -638,6 +678,7 @@ This is valid and should work in v2.0. If it fails, file a bug report.
 ### Example 1: Simple Schema
 
 **Before (v1.x)**:
+
 ```json
 {
   "type": "object",
@@ -651,6 +692,7 @@ This is valid and should work in v2.0. If it fails, file a bug report.
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "type": "object",
@@ -668,6 +710,7 @@ This is valid and should work in v2.0. If it fails, file a bug report.
 ### Example 2: Complex Federation Schema
 
 **Before (v1.x)**:
+
 ```json
 {
   "type": "object",
@@ -697,6 +740,7 @@ This is valid and should work in v2.0. If it fails, file a bug report.
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "type": "object",

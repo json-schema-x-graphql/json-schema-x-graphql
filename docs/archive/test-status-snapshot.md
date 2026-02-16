@@ -35,12 +35,14 @@ During test execution, we discovered that **Phase 2 converter implementations ha
 **Location**: `converters/rust/`
 
 **Problems**:
+
 - `Cargo.toml` references non-existent benchmark file
   - Fixed: Commented out `[[bench]]` section
 - Source files exist but implementations are incomplete/skeleton code
 - Cannot compile until core converter logic is implemented
 
 **Files Needing Implementation**:
+
 ```
 converters/rust/src/
 ├── lib.rs              # Main converter struct (skeleton)
@@ -53,11 +55,13 @@ converters/rust/src/
 ```
 
 **Error Encountered**:
+
 ```
 rustc: command not found (PATH issue - rustup installed but cargo not in PATH)
 ```
 
 **Workaround**:
+
 ```bash
 # Use rustup run stable
 rustup run stable cargo test
@@ -68,29 +72,32 @@ rustup run stable cargo test
 **Location**: `converters/node/`
 
 **Problems**:
+
 - ✅ Dependencies installed successfully with pnpm
 - 🔴 TypeScript compilation errors (20+ errors)
 
 **Compilation Errors**:
+
 ```typescript
 // Type export issues
-src/index.ts(20,3): error TS1205: Re-exporting a type when 'isolatedModules' 
+src/index.ts(20,3): error TS1205: Re-exporting a type when 'isolatedModules'
   is enabled requires using 'export type'.
 
 // Async/await issues
-src/index.ts(59,25): error TS1308: 'await' expressions are only allowed 
+src/index.ts(59,25): error TS1308: 'await' expressions are only allowed
   within async functions
 
 // Unused variable warnings
-src/graphql-to-json.ts(5,31): error TS6133: 'DefinitionNode' is declared 
+src/graphql-to-json.ts(5,31): error TS6133: 'DefinitionNode' is declared
   but its value is never read.
 
 // Strict mode issues
-src/graphql-to-json.ts(322,11): error TS1210: Code contained in a class is 
+src/graphql-to-json.ts(322,11): error TS1210: Code contained in a class is
   evaluated in JavaScript's strict mode which does not allow this use of 'arguments'.
 ```
 
 **Files Needing Fixes**:
+
 ```
 converters/node/src/
 ├── index.ts            # Export syntax issues (type vs value exports)
@@ -106,25 +113,27 @@ converters/node/src/
 ### Node.js TypeScript Errors (20 total)
 
 1. **Type Export Errors (13 errors)**: `isolatedModules` requires `export type` for type-only exports
+
    ```typescript
    // WRONG:
-   export { ConversionOptions } from './types.js';
-   
+   export { ConversionOptions } from "./types.js";
+
    // RIGHT:
-   export type { ConversionOptions } from './types.js';
+   export type { ConversionOptions } from "./types.js";
    ```
 
 2. **Async/Await Error (1 error)**: Non-async function using `await`
+
    ```typescript
    // WRONG:
    export function createConverter() {
-     const { Converter } = await import('./converter.js');
+     const { Converter } = await import("./converter.js");
      return new Converter();
    }
-   
+
    // RIGHT:
    export async function createConverter() {
-     const { Converter } = await import('./converter.js');
+     const { Converter } = await import("./converter.js");
      return new Converter();
    }
    ```
@@ -133,6 +142,7 @@ converters/node/src/
    - Remove unused imports or use them
 
 4. **Strict Mode Error (1 error)**: Using `arguments` in strict mode class
+
    ```typescript
    // WRONG:
    class Foo {
@@ -140,7 +150,7 @@ converters/node/src/
        console.log(arguments); // Not allowed in strict mode
      }
    }
-   
+
    // RIGHT:
    class Foo {
      method(...args: any[]) {
@@ -162,13 +172,16 @@ converters/node/src/
 **Estimated Time**: 2-4 hours
 
 **Steps**:
+
 1. Fix type exports in `src/index.ts`
+
    ```bash
    # Change all type exports to use 'export type' syntax
    sed -i '' 's/export {$/export type {/g' src/index.ts
    ```
 
 2. Fix async function in `src/index.ts`
+
    ```typescript
    export async function createConverter(...) { ... }
    ```
@@ -176,11 +189,13 @@ converters/node/src/
 3. Remove unused imports and variables
 
 4. Fix `arguments` usage in `src/graphql-to-json.ts`
+
    ```typescript
    method(...args: any[]) { console.log(args); }
    ```
 
 5. Run build again:
+
    ```bash
    cd converters/node
    pnpm run build
@@ -196,6 +211,7 @@ converters/node/src/
 **Estimated Time**: 1-2 days
 
 **Steps**:
+
 1. Implement core conversion logic in:
    - `json_to_graphql.rs`
    - `graphql_to_json.rs`
@@ -204,6 +220,7 @@ converters/node/src/
 2. Complete type definitions in `types.rs`
 
 3. Fix PATH issue for cargo:
+
    ```bash
    # Add to ~/.zshrc or ~/.bashrc
    export PATH="$HOME/.cargo/bin:$PATH"
@@ -219,18 +236,21 @@ converters/node/src/
 ### Priority 3: Alternate Approach (If Converters Take Too Long)
 
 **Option A**: Focus on Node.js converter only
+
 - Fix Node.js TypeScript errors (2-4 hours)
 - Run Node.js tests
 - Skip Rust tests for now
 - Note in documentation that Rust implementation is pending
 
 **Option B**: Create minimal working implementations
+
 - Implement basic JSON → SDL conversion (no Federation)
 - Implement basic SDL → JSON conversion (no Federation)
 - Get tests passing with basic functionality
 - Iterate to add Federation support
 
 **Option C**: Proceed to Phase 3B with mock converters
+
 - Create mock converter functions that return sample data
 - Build the web UI with mocked conversion
 - Circle back to implement real converters later
@@ -240,6 +260,7 @@ converters/node/src/
 ## Test Execution Commands (Once Fixed)
 
 ### Node.js Tests
+
 ```bash
 cd converters/node
 
@@ -263,6 +284,7 @@ pnpm run format
 ```
 
 ### Rust Tests
+
 ```bash
 cd converters/rust
 
@@ -284,6 +306,7 @@ cargo tarpaulin --out Html --output-dir coverage
 ```
 
 ### Full Test Suite
+
 ```bash
 # From project root
 ./scripts/run-tests.sh
@@ -364,11 +387,13 @@ cargo tarpaulin --out Html --output-dir coverage
 ## Success Criteria (Updated)
 
 ### Phase 3A - Test Infrastructure ✅ COMPLETE
+
 - [x] Test suites written (1,315 lines)
 - [x] Automation scripts written (533 lines)
 - [x] Documentation complete (3,790+ lines)
 
 ### Phase 3A - Test Execution 🔴 BLOCKED
+
 - [ ] Node.js converter compiles ⏳ TypeScript errors
 - [ ] Rust converter compiles ⏳ Incomplete implementation
 - [ ] Tests run successfully ⏳ Waiting on compilation
@@ -376,6 +401,7 @@ cargo tarpaulin --out Html --output-dir coverage
 - [ ] Parity validated ⏳ Waiting on both converters
 
 ### Phase 3B - Web UI 📋 READY TO START
+
 - Can proceed with mock converters
 - Real converters can be integrated later
 - UI/UX work is independent of converter implementation
@@ -385,21 +411,27 @@ cargo tarpaulin --out Html --output-dir coverage
 ## Recommendations
 
 ### Option 1: Fix and Test (Recommended)
+
 **Timeline**: 1-2 days
+
 - Fix Node.js TypeScript errors (4 hours)
 - Fix Rust implementation (1 day)
 - Run tests and achieve coverage
 - Then proceed to Phase 3B with confidence
 
 ### Option 2: Web UI First
+
 **Timeline**: Start immediately
+
 - Create Phase 3B web UI with mock converters
 - Show visual design and UX
 - Circle back to fix converters in parallel
 - Integrate real converters when ready
 
 ### Option 3: Minimal Viable Converter
+
 **Timeline**: 1 day
+
 - Implement basic Object type conversion only
 - Skip Federation directives initially
 - Get something working end-to-end
@@ -412,6 +444,7 @@ cargo tarpaulin --out Html --output-dir coverage
 **Phase 3A test infrastructure is 100% complete**, but the underlying Phase 2 converter implementations have compilation issues that prevent tests from running.
 
 **Recommended Path Forward**:
+
 1. Spend 2-4 hours fixing Node.js TypeScript errors (straightforward)
 2. Get Node.js tests running (proof of concept)
 3. Decide whether to:

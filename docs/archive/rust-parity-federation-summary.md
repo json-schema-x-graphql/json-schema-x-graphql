@@ -301,41 +301,51 @@ Comprehensive GitHub Actions workflow with **6 jobs**:
 #### Benchmark Groups
 
 1. **JSON Schema Validation Benchmarks**
+
    ```rust
    bench_json_schema_validation()
    ```
+
    - Small schema (2 fields)
    - Medium schema (8 fields)
    - Large schema from test-data
    - Real-world schemas
 
 2. **GraphQL SDL Validation Benchmarks**
+
    ```rust
    bench_graphql_validation()
    ```
+
    - Simple SDL (basic types)
    - Complex SDL (interfaces, unions)
    - Federation SDL (directives)
 
 3. **Conversion Benchmarks**
+
    ```rust
    bench_json_to_graphql_conversion()
    bench_graphql_to_json_conversion()
    ```
+
    - Small, medium, large schemas
    - Throughput measurement (bytes/sec)
 
 4. **Round-Trip Benchmarks**
+
    ```rust
    bench_round_trip_conversion()
    ```
+
    - JSON → GraphQL → JSON
    - Fidelity verification
 
 5. **Memory Allocation Benchmarks**
+
    ```rust
    bench_memory_allocation()
    ```
+
    - 10, 50, 100, 200 field schemas
    - Scaling behavior analysis
 
@@ -343,6 +353,7 @@ Comprehensive GitHub Actions workflow with **6 jobs**:
    ```rust
    bench_real_world_schemas()
    ```
+
    - Test-data directory schemas
    - Production-like workloads
 
@@ -401,11 +412,11 @@ npm run benchmark
 
 ### 6.3 Performance Targets
 
-| Operation | Target | Rust Actual | Node.js Actual |
-|-----------|--------|-------------|----------------|
+| Operation  | Target           | Rust Actual     | Node.js Actual  |
+| ---------- | ---------------- | --------------- | --------------- |
 | Validation | > 10,000 ops/sec | ~50,000 ops/sec | ~15,000 ops/sec |
-| Conversion | > 1,000 ops/sec | ~10,000 ops/sec | ~3,000 ops/sec |
-| Round-trip | > 500 ops/sec | ~5,000 ops/sec | ~1,500 ops/sec |
+| Conversion | > 1,000 ops/sec  | ~10,000 ops/sec | ~3,000 ops/sec  |
+| Round-trip | > 500 ops/sec    | ~5,000 ops/sec  | ~1,500 ops/sec  |
 
 **Performance Characteristics:**
 
@@ -470,13 +481,13 @@ Comprehensive getting-started guide with:
 
 ### Validation Tests
 
-| Category | Rust | Node.js | Status |
-|----------|------|---------|--------|
-| JSON Schema Validation | 20+ tests | 15+ tests | ✅ Complete |
-| GraphQL SDL Validation | 15+ tests | 10+ tests | ✅ Complete |
-| X-GraphQL Extensions | 10+ tests | 8+ tests | ✅ Complete |
-| Integration Tests | 5+ tests | 5+ tests | ✅ Complete |
-| Performance Tests | 8+ benchmarks | 6+ benchmarks | ✅ Complete |
+| Category               | Rust          | Node.js       | Status      |
+| ---------------------- | ------------- | ------------- | ----------- |
+| JSON Schema Validation | 20+ tests     | 15+ tests     | ✅ Complete |
+| GraphQL SDL Validation | 15+ tests     | 10+ tests     | ✅ Complete |
+| X-GraphQL Extensions   | 10+ tests     | 8+ tests      | ✅ Complete |
+| Integration Tests      | 5+ tests      | 5+ tests      | ✅ Complete |
+| Performance Tests      | 8+ benchmarks | 6+ benchmarks | ✅ Complete |
 
 **Total Test Cases:** 70+  
 **Coverage:** JSON Schema validation, GraphQL validation, conversion, round-trip  
@@ -484,14 +495,14 @@ Comprehensive getting-started guide with:
 
 ### Benchmark Coverage
 
-| Scenario | Rust | Node.js | CI/CD |
-|----------|------|---------|-------|
-| Validation | ✅ | ✅ | ✅ |
-| Conversion | ✅ | ✅ | ✅ |
-| Round-trip | ✅ | ✅ | ✅ |
-| Scaling | ✅ | ✅ | ✅ |
-| Real-world | ✅ | ✅ | ✅ |
-| Memory | ✅ | ✅ | ⚠️ Manual |
+| Scenario   | Rust | Node.js | CI/CD     |
+| ---------- | ---- | ------- | --------- |
+| Validation | ✅   | ✅      | ✅        |
+| Conversion | ✅   | ✅      | ✅        |
+| Round-trip | ✅   | ✅      | ✅        |
+| Scaling    | ✅   | ✅      | ✅        |
+| Real-world | ✅   | ✅      | ✅        |
+| Memory     | ✅   | ✅      | ⚠️ Manual |
 
 ---
 

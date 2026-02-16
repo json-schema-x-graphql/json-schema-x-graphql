@@ -94,6 +94,7 @@ Documentation (Generated)
 **Status**: ✅ Done
 
 **Activities**:
+
 - [x] Evaluate typeconv and core-types
 - [x] Document current schema structure
 - [x] Create restructuring script
@@ -102,6 +103,7 @@ Documentation (Generated)
 - [x] Create backup of original schema
 
 **Artifacts**:
+
 - `src/data/schema_unification.schema.v2.json` (restructured)
 - `src/data/schema_unification.schema.v1-backup.json` (backup)
 - `scripts/restructure-schema.mjs`
@@ -121,6 +123,7 @@ Documentation (Generated)
 **File**: `src/data/schema_unification.schema.json`
 
 **Before**:
+
 ```json
 {
   "definitions": {
@@ -128,7 +131,12 @@ Documentation (Generated)
       "properties": {
         "role": {
           "type": "string",
-          "enum": ["primary", "technical", "administrative", "contracting_officer"]
+          "enum": [
+            "primary",
+            "technical",
+            "administrative",
+            "contracting_officer"
+          ]
         }
       }
     }
@@ -137,6 +145,7 @@ Documentation (Generated)
 ```
 
 **After**:
+
 ```json
 {
   "definitions": {
@@ -149,9 +158,18 @@ Documentation (Generated)
         "description": "Role classification for contract contacts",
         "values": {
           "primary": { "name": "PRIMARY", "description": "Primary contact" },
-          "technical": { "name": "TECHNICAL", "description": "Technical point of contact" },
-          "administrative": { "name": "ADMINISTRATIVE", "description": "Administrative contact" },
-          "contracting_officer": { "name": "CONTRACTING_OFFICER", "description": "Contracting officer" }
+          "technical": {
+            "name": "TECHNICAL",
+            "description": "Technical point of contact"
+          },
+          "administrative": {
+            "name": "ADMINISTRATIVE",
+            "description": "Administrative contact"
+          },
+          "contracting_officer": {
+            "name": "CONTRACTING_OFFICER",
+            "description": "Contracting officer"
+          }
         }
       }
     },
@@ -165,6 +183,7 @@ Documentation (Generated)
 ```
 
 **Enums to Add**:
+
 1. `ContactRole` (4 values)
 2. `SystemType` (4 values: Contract Data, Legacy Procurement, Intake Process, Logistics Mgmt)
 3. `ContractStatus` (5 values: draft, published, awarded, completed, cancelled)
@@ -172,6 +191,7 @@ Documentation (Generated)
 #### 1.2 Union Type Extensions
 
 **Add to SystemExtensions**:
+
 ```json
 {
   "definitions": {
@@ -195,6 +215,7 @@ Documentation (Generated)
 #### 1.3 Required Field Overrides
 
 **Add to fields that are optional in JSON but required in GraphQL**:
+
 ```json
 {
   "definitions": {
@@ -219,6 +240,7 @@ Documentation (Generated)
 #### 1.4 GraphQL Operations
 
 **Add at root level**:
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -264,6 +286,7 @@ Documentation (Generated)
 #### 1.5 Custom Scalars
 
 **Add at root level**:
+
 ```json
 {
   "x-graphql-scalars": {
@@ -288,6 +311,7 @@ Documentation (Generated)
 ```
 
 **Deliverables**:
+
 - [ ] Enhanced JSON Schema with all extensions
 - [ ] Documentation of extension patterns
 - [ ] Validation that schema still passes JSON Schema validators
@@ -309,43 +333,53 @@ Documentation (Generated)
  * Generate GraphQL SDL from JSON Schema with x-graphql-* extensions
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { convert } from 'typeconv';
-import { processGraphQLExtensions } from './lib/graphql-extensions.mjs';
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+import { convert } from "typeconv";
+import { processGraphQLExtensions } from "./lib/graphql-extensions.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '..');
+const repoRoot = path.resolve(__dirname, "..");
 
-const schemaPath = path.join(repoRoot, 'src', 'data', 'schema_unification.schema.json');
-const outputPath = path.join(repoRoot, 'src', 'data', 'schema_unification.graphql');
-const tempPath = path.join(repoRoot, 'generated-schemas', 'temp.graphql');
+const schemaPath = path.join(
+  repoRoot,
+  "src",
+  "data",
+  "schema_unification.schema.json",
+);
+const outputPath = path.join(
+  repoRoot,
+  "src",
+  "data",
+  "schema_unification.graphql",
+);
+const tempPath = path.join(repoRoot, "generated-schemas", "temp.graphql");
 
 async function generateGraphQL() {
-  console.log('📖 Reading JSON Schema...');
-  const schemaContent = await fs.readFile(schemaPath, 'utf8');
+  console.log("📖 Reading JSON Schema...");
+  const schemaContent = await fs.readFile(schemaPath, "utf8");
   const schema = JSON.parse(schemaContent);
-  
-  console.log('🔄 Converting with typeconv...');
+
+  console.log("🔄 Converting with typeconv...");
   const result = await convert({
     fromFilename: schemaPath,
-    fromType: 'jsc',
-    toType: 'gql'
+    fromType: "jsc",
+    toType: "gql",
   });
-  
-  console.log('✨ Post-processing with extensions...');
+
+  console.log("✨ Post-processing with extensions...");
   const enhancedGraphQL = processGraphQLExtensions(result.data, schema);
-  
-  console.log('💾 Writing GraphQL SDL...');
-  await fs.writeFile(outputPath, enhancedGraphQL, 'utf8');
-  
+
+  console.log("💾 Writing GraphQL SDL...");
+  await fs.writeFile(outputPath, enhancedGraphQL, "utf8");
+
   console.log(`✅ Generated: ${path.relative(repoRoot, outputPath)}`);
 }
 
-generateGraphQL().catch(err => {
-  console.error('❌ Error:', err.message);
+generateGraphQL().catch((err) => {
+  console.error("❌ Error:", err.message);
   console.error(err.stack);
   process.exit(1);
 });
@@ -362,118 +396,129 @@ generateGraphQL().catch(err => {
 
 export function processGraphQLExtensions(baseGraphQL, jsonSchema) {
   let graphql = baseGraphQL;
-  
+
   // 1. Process enums
   graphql = processEnums(graphql, jsonSchema);
-  
+
   // 2. Process union types
   graphql = processUnions(graphql, jsonSchema);
-  
+
   // 3. Process required field overrides
   graphql = processRequiredFields(graphql, jsonSchema);
-  
+
   // 4. Add custom scalars
   graphql = addCustomScalars(graphql, jsonSchema);
-  
+
   // 5. Add operations (Query, Mutation)
   graphql = addOperations(graphql, jsonSchema);
-  
+
   // 6. Add pagination types
   graphql = addPaginationTypes(graphql, jsonSchema);
-  
+
   return graphql;
 }
 
 function processEnums(graphql, schema) {
   const enums = [];
-  
+
   for (const [name, def] of Object.entries(schema.definitions || {})) {
-    if (def['x-graphql-enum']) {
-      const enumDef = def['x-graphql-enum'];
+    if (def["x-graphql-enum"]) {
+      const enumDef = def["x-graphql-enum"];
       const enumSDL = generateEnumSDL(enumDef, def);
       enums.push(enumSDL);
-      
+
       // Replace String type with enum name
-      const pattern = new RegExp(`${name}:\\s*String`, 'g');
+      const pattern = new RegExp(`${name}:\\s*String`, "g");
       graphql = graphql.replace(pattern, `${name}: ${enumDef.name}`);
     }
   }
-  
-  return enums.join('\n\n') + '\n\n' + graphql;
+
+  return enums.join("\n\n") + "\n\n" + graphql;
 }
 
 function generateEnumSDL(enumConfig, definition) {
   const { name, description, values } = enumConfig;
-  const enumValues = Object.entries(values || {}).map(([key, config]) => {
-    const valueDesc = config.description ? `  "${config.description}"\n` : '';
-    return `${valueDesc}  ${config.name}`;
-  }).join('\n');
-  
-  const desc = description ? `"${description}"\n` : '';
+  const enumValues = Object.entries(values || {})
+    .map(([key, config]) => {
+      const valueDesc = config.description ? `  "${config.description}"\n` : "";
+      return `${valueDesc}  ${config.name}`;
+    })
+    .join("\n");
+
+  const desc = description ? `"${description}"\n` : "";
   return `${desc}enum ${name} {\n${enumValues}\n}`;
 }
 
 function processUnions(graphql, schema) {
   const unions = [];
-  
+
   for (const [name, def] of Object.entries(schema.definitions || {})) {
-    if (def['x-graphql-union']) {
-      const unionConfig = def['x-graphql-union'];
+    if (def["x-graphql-union"]) {
+      const unionConfig = def["x-graphql-union"];
       const unionSDL = generateUnionSDL(unionConfig);
       unions.push(unionSDL);
     }
   }
-  
-  return unions.join('\n\n') + '\n\n' + graphql;
+
+  return unions.join("\n\n") + "\n\n" + graphql;
 }
 
 function generateUnionSDL(unionConfig) {
   const { name, description, types } = unionConfig;
-  const desc = description ? `"${description}"\n` : '';
-  return `${desc}union ${name} = ${types.join(' | ')}`;
+  const desc = description ? `"${description}"\n` : "";
+  return `${desc}union ${name} = ${types.join(" | ")}`;
 }
 
 function addCustomScalars(graphql, schema) {
-  const scalars = schema['x-graphql-scalars'] || {};
-  const scalarSDL = Object.entries(scalars).map(([name, config]) => {
-    const desc = config.description ? `"${config.description}"\n` : '';
-    return `${desc}scalar ${name}`;
-  }).join('\n\n');
-  
-  return scalarSDL ? scalarSDL + '\n\n' + graphql : graphql;
+  const scalars = schema["x-graphql-scalars"] || {};
+  const scalarSDL = Object.entries(scalars)
+    .map(([name, config]) => {
+      const desc = config.description ? `"${config.description}"\n` : "";
+      return `${desc}scalar ${name}`;
+    })
+    .join("\n\n");
+
+  return scalarSDL ? scalarSDL + "\n\n" + graphql : graphql;
 }
 
 function addOperations(graphql, schema) {
-  const operations = schema['x-graphql-operations'] || {};
+  const operations = schema["x-graphql-operations"] || {};
   let sdl = graphql;
-  
+
   if (operations.queries) {
-    const queryType = generateOperationType('Query', operations.queries);
-    sdl += '\n\n' + queryType;
+    const queryType = generateOperationType("Query", operations.queries);
+    sdl += "\n\n" + queryType;
   }
-  
+
   if (operations.mutations) {
-    const mutationType = generateOperationType('Mutation', operations.mutations);
-    sdl += '\n\n' + mutationType;
+    const mutationType = generateOperationType(
+      "Mutation",
+      operations.mutations,
+    );
+    sdl += "\n\n" + mutationType;
   }
-  
+
   return sdl;
 }
 
 function generateOperationType(typeName, operations) {
-  const fields = Object.entries(operations).map(([name, config]) => {
-    const desc = config.description ? `  "${config.description}"\n` : '';
-    const args = config.args ? generateArgs(config.args) : '';
-    return `${desc}  ${name}${args}: ${config.type}`;
-  }).join('\n');
-  
+  const fields = Object.entries(operations)
+    .map(([name, config]) => {
+      const desc = config.description ? `  "${config.description}"\n` : "";
+      const args = config.args ? generateArgs(config.args) : "";
+      return `${desc}  ${name}${args}: ${config.type}`;
+    })
+    .join("\n");
+
   return `type ${typeName} {\n${fields}\n}`;
 }
 
 function generateArgs(args) {
-  const argsList = Object.entries(args).map(([name, config]) => {
-    return `${name}: ${config.type}`;
-  }).join(', ');
+  const argsList = Object.entries(args)
+    .map(([name, config]) => {
+      return `${name}: ${config.type}`;
+    })
+    .join(", ");
   return `(${argsList})`;
 }
 
@@ -496,8 +541,8 @@ type ContractConnection {
   pageInfo: PageInfo!
   totalCount: Int
 }`;
-  
-  return graphql + '\n\n' + paginationSDL;
+
+  return graphql + "\n\n" + paginationSDL;
 }
 
 function processRequiredFields(graphql, schema) {
@@ -505,10 +550,10 @@ function processRequiredFields(graphql, schema) {
   // This is a simplified version - full implementation would be more robust
   for (const [name, def] of Object.entries(schema.definitions || {})) {
     for (const [propName, propDef] of Object.entries(def.properties || {})) {
-      if (propDef['x-graphql-required']) {
+      if (propDef["x-graphql-required"]) {
         // Add ! to make field required in GraphQL
-        const pattern = new RegExp(`(${propName}:\\s*\\w+)(?!!)`, 'g');
-        graphql = graphql.replace(pattern, '$1!');
+        const pattern = new RegExp(`(${propName}:\\s*\\w+)(?!!)`, "g");
+        graphql = graphql.replace(pattern, "$1!");
       }
     }
   }
@@ -517,6 +562,7 @@ function processRequiredFields(graphql, schema) {
 ```
 
 **Deliverables**:
+
 - [ ] Main generation script
 - [ ] Extensions processor library
 - [ ] Unit tests for extensions processor
@@ -540,13 +586,13 @@ function processRequiredFields(graphql, schema) {
     "generate:types": "typeconv -f jsc -t ts -o src/types/schema.ts src/data/schema_unification.schema.json",
     "generate:docs": "node scripts/generate-schema-docs.mjs",
     "generate:all": "pnpm run generate:graphql && pnpm run generate:types && pnpm run generate:docs",
-    
+
     "// Validation": "",
     "validate:schema": "ajv validate -s src/data/schema_unification.schema.json -d 'src/data/schema_unification.json'",
     "validate:graphql": "node scripts/validate-graphql-syntax.mjs",
     "validate:parity": "node scripts/validate-schema-graphql-parity.mjs",
     "validate:all": "pnpm run validate:schema && pnpm run validate:graphql && pnpm run validate:parity",
-    
+
     "// Legacy (to be removed after migration)": "",
     "generate:schema:interop": "node scripts/generate-schema-interop.js",
     "validate:sync": "node scripts/validate-schema-sync.mjs"
@@ -555,6 +601,7 @@ function processRequiredFields(graphql, schema) {
 ```
 
 **Deliverables**:
+
 - [ ] Updated package.json
 - [ ] Deprecation notices for old scripts
 - [ ] Migration guide for contributors
@@ -570,48 +617,50 @@ function processRequiredFields(graphql, schema) {
 **File**: `tests/schema-generation.test.js`
 
 ```javascript
-import { processGraphQLExtensions } from '../scripts/lib/graphql-extensions.mjs';
+import { processGraphQLExtensions } from "../scripts/lib/graphql-extensions.mjs";
 
-describe('GraphQL Extensions Processor', () => {
-  test('should generate enum from x-graphql-enum', () => {
+describe("GraphQL Extensions Processor", () => {
+  test("should generate enum from x-graphql-enum", () => {
     const schema = {
       definitions: {
         ContactRole: {
-          type: 'string',
-          enum: ['primary', 'technical'],
-          'x-graphql-enum': {
-            name: 'ContactRole',
+          type: "string",
+          enum: ["primary", "technical"],
+          "x-graphql-enum": {
+            name: "ContactRole",
             values: {
-              primary: { name: 'PRIMARY' },
-              technical: { name: 'TECHNICAL' }
-            }
-          }
-        }
-      }
+              primary: { name: "PRIMARY" },
+              technical: { name: "TECHNICAL" },
+            },
+          },
+        },
+      },
     };
-    
-    const result = processGraphQLExtensions('', schema);
-    expect(result).toContain('enum ContactRole');
-    expect(result).toContain('PRIMARY');
-    expect(result).toContain('TECHNICAL');
+
+    const result = processGraphQLExtensions("", schema);
+    expect(result).toContain("enum ContactRole");
+    expect(result).toContain("PRIMARY");
+    expect(result).toContain("TECHNICAL");
   });
-  
-  test('should generate union from x-graphql-union', () => {
+
+  test("should generate union from x-graphql-union", () => {
     const schema = {
       definitions: {
         SystemExtension: {
-          'x-graphql-union': {
-            name: 'SystemExtension',
-            types: ['Contract DataExtension', 'AssistExtension']
-          }
-        }
-      }
+          "x-graphql-union": {
+            name: "SystemExtension",
+            types: ["Contract DataExtension", "AssistExtension"],
+          },
+        },
+      },
     };
-    
-    const result = processGraphQLExtensions('', schema);
-    expect(result).toContain('union SystemExtension = Contract DataExtension | AssistExtension');
+
+    const result = processGraphQLExtensions("", schema);
+    expect(result).toContain(
+      "union SystemExtension = Contract DataExtension | AssistExtension",
+    );
   });
-  
+
   // Add more tests...
 });
 ```
@@ -621,27 +670,30 @@ describe('GraphQL Extensions Processor', () => {
 **File**: `tests/schema-roundtrip.test.js`
 
 ```javascript
-describe('Schema Roundtrip', () => {
-  test('JSON Schema → GraphQL → TypeScript types should be consistent', async () => {
+describe("Schema Roundtrip", () => {
+  test("JSON Schema → GraphQL → TypeScript types should be consistent", async () => {
     // Generate GraphQL from JSON Schema
     await generateGraphQL();
-    
+
     // Parse generated GraphQL
-    const graphql = await fs.readFile('src/data/schema_unification.graphql', 'utf8');
+    const graphql = await fs.readFile(
+      "src/data/schema_unification.graphql",
+      "utf8",
+    );
     const schema = buildSchema(graphql);
-    
+
     // Validate all expected types exist
-    expect(schema.getType('Contract')).toBeDefined();
-    expect(schema.getType('SystemMetadata')).toBeDefined();
-    expect(schema.getType('ContactRole')).toBeDefined();
-    
+    expect(schema.getType("Contract")).toBeDefined();
+    expect(schema.getType("SystemMetadata")).toBeDefined();
+    expect(schema.getType("ContactRole")).toBeDefined();
+
     // Validate Query type
     const queryType = schema.getQueryType();
     expect(queryType.getFields().contract).toBeDefined();
     expect(queryType.getFields().contracts).toBeDefined();
   });
-  
-  test('Generated GraphQL should match curated version structure', () => {
+
+  test("Generated GraphQL should match curated version structure", () => {
     // Compare field counts, type names, etc.
   });
 });
@@ -672,6 +724,7 @@ Create comprehensive validation:
    - Operations are correctly generated
 
 **Deliverables**:
+
 - [ ] Complete test suite (>80% coverage)
 - [ ] CI integration for tests
 - [ ] Validation reports
@@ -685,6 +738,7 @@ Create comprehensive validation:
 #### 5.1 Update Existing Docs
 
 **Files to Update**:
+
 - [x] `docs/adr/0002-schema-tooling-automation.md` - Updated with new decision
 - [ ] `docs/schema-pipeline.md` - Update with new workflow
 - [ ] `README.md` - Update schema management section
@@ -693,11 +747,13 @@ Create comprehensive validation:
 #### 5.2 Create New Docs
 
 **New Documents**:
-- [ ] `docs/graphql-extensions-guide.md` - Complete guide to x-graphql-* extensions
+
+- [ ] `docs/graphql-extensions-guide.md` - Complete guide to x-graphql-\* extensions
 - [ ] `docs/schema-contribution-guide.md` - How to contribute schema changes
 - [ ] `docs/troubleshooting-schema.md` - Common issues and solutions
 
 **Deliverables**:
+
 - [ ] All documentation updated
 - [ ] Examples for common patterns
 - [ ] Troubleshooting guide
@@ -711,30 +767,34 @@ Create comprehensive validation:
 #### 6.1 Cutover Steps
 
 1. **Final Validation**
+
    ```bash
    pnpm run validate:all
    pnpm test
    ```
 
 2. **Replace Original Schema**
+
    ```bash
    # Archive old schema
    mv src/data/schema_unification.schema.json src/data/schema_unification.schema.v1-original.json
-   
+
    # Promote v2 to canonical
    mv src/data/schema_unification.schema.v2.json src/data/schema_unification.schema.json
    ```
 
 3. **Archive Old GraphQL SDL**
+
    ```bash
    # Keep as reference
    mv src/data/schema_unification.graphql src/data/schema_unification.graphql.manual-curated
-   
+
    # Generate new from JSON Schema
    pnpm run generate:graphql
    ```
 
 4. **Remove Custom Scripts**
+
    ```bash
    mkdir scripts/archived
    mv scripts/generate-graphql-json-schema.mjs scripts/archived/
@@ -751,6 +811,7 @@ Create comprehensive validation:
 #### 6.2 Announcement
 
 **Communication Plan**:
+
 - [ ] Post announcement in team Slack/chat
 - [ ] Send email to stakeholders
 - [ ] Update project wiki/confluence
@@ -759,12 +820,14 @@ Create comprehensive validation:
 #### 6.3 Monitoring
 
 **Track for 2 weeks**:
+
 - [ ] Schema generation errors
 - [ ] GraphQL API issues
 - [ ] Data validation failures
 - [ ] Contributor feedback
 
 **Deliverables**:
+
 - [ ] Cutover completed successfully
 - [ ] Old scripts archived
 - [ ] Team informed
@@ -790,8 +853,14 @@ Create comprehensive validation:
       "values": {
         "primary": { "name": "PRIMARY", "description": "Primary contact" },
         "technical": { "name": "TECHNICAL", "description": "Technical POC" },
-        "administrative": { "name": "ADMINISTRATIVE", "description": "Administrative contact" },
-        "contracting_officer": { "name": "CONTRACTING_OFFICER", "description": "Contracting officer" }
+        "administrative": {
+          "name": "ADMINISTRATIVE",
+          "description": "Administrative contact"
+        },
+        "contracting_officer": {
+          "name": "CONTRACTING_OFFICER",
+          "description": "Contracting officer"
+        }
       }
     }
   }
@@ -967,14 +1036,14 @@ jobs:
       - uses: pnpm/action-setup@v2
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'pnpm'
-      
+          node-version: "18"
+          cache: "pnpm"
+
       - run: pnpm install
       - run: pnpm test
       - run: pnpm run validate:all
       - run: pnpm run generate:all
-      
+
       - name: Check for changes
         run: |
           if [[ -n $(git status --porcelain) ]]; then
@@ -991,6 +1060,7 @@ jobs:
 ### Rollback Triggers
 
 Initiate rollback if:
+
 - **Critical**: Generated GraphQL breaks API consumers
 - **High**: Data validation failures increase >10%
 - **High**: Schema generation fails consistently
@@ -1002,26 +1072,29 @@ Initiate rollback if:
 #### Quick Rollback (< 30 minutes)
 
 1. **Restore Original Files**
+
    ```bash
    # Restore GraphQL SDL as canonical
    git checkout origin/main -- src/data/schema_unification.graphql
-   
+
    # Restore original JSON Schema
    cp src/data/schema_unification.schema.v1-original.json src/data/schema_unification.schema.json
-   
+
    # Restore old scripts
    git checkout origin/main -- scripts/
-   
+
    # Restore package.json
    git checkout origin/main -- package.json
    ```
 
 2. **Reinstall Dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Validate**
+
    ```bash
    pnpm run validate:all
    pnpm test
@@ -1038,6 +1111,7 @@ Initiate rollback if:
 If quick rollback doesn't resolve issues:
 
 1. **Revert Branch**
+
    ```bash
    git revert <migration-commit-range>
    git push
@@ -1112,14 +1186,14 @@ git branch -D test-rollback
 
 ### Metrics to Track
 
-| Metric | Before | Target | Actual |
-|--------|--------|--------|--------|
-| **Lines of Custom Code** | 1,558 | <250 | TBD |
-| **Schema Generation Time** | N/A | <5s | TBD |
-| **Test Coverage** | 65% | >80% | TBD |
-| **Build Time** | 2m 30s | <2m | TBD |
-| **Contributor Onboarding** | 4 hours | <2 hours | TBD |
-| **Maintenance Hours/Year** | 40+ | <10 | TBD |
+| Metric                     | Before  | Target   | Actual |
+| -------------------------- | ------- | -------- | ------ |
+| **Lines of Custom Code**   | 1,558   | <250     | TBD    |
+| **Schema Generation Time** | N/A     | <5s      | TBD    |
+| **Test Coverage**          | 65%     | >80%     | TBD    |
+| **Build Time**             | 2m 30s  | <2m      | TBD    |
+| **Contributor Onboarding** | 4 hours | <2 hours | TBD    |
+| **Maintenance Hours/Year** | 40+     | <10      | TBD    |
 
 ---
 
@@ -1127,27 +1201,27 @@ git branch -D test-rollback
 
 ### High Risks
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| **Breaking API Changes** | Medium | Critical | Extensive testing, gradual rollout |
-| **Data Validation Failures** | Medium | High | Validate all instances before cutover |
-| **Tool Compatibility Issues** | Low | Medium | Test with multiple typeconv versions |
-| **Team Adoption Issues** | Medium | Medium | Training, documentation, support |
+| Risk                          | Probability | Impact   | Mitigation                            |
+| ----------------------------- | ----------- | -------- | ------------------------------------- |
+| **Breaking API Changes**      | Medium      | Critical | Extensive testing, gradual rollout    |
+| **Data Validation Failures**  | Medium      | High     | Validate all instances before cutover |
+| **Tool Compatibility Issues** | Low         | Medium   | Test with multiple typeconv versions  |
+| **Team Adoption Issues**      | Medium      | Medium   | Training, documentation, support      |
 
 ### Medium Risks
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| **Performance Degradation** | Low | Medium | Benchmark before/after |
-| **Extension Pattern Limitations** | Medium | Medium | Build flexibility into processors |
-| **Documentation Gaps** | High | Low | Thorough documentation phase |
+| Risk                              | Probability | Impact | Mitigation                        |
+| --------------------------------- | ----------- | ------ | --------------------------------- |
+| **Performance Degradation**       | Low         | Medium | Benchmark before/after            |
+| **Extension Pattern Limitations** | Medium      | Medium | Build flexibility into processors |
+| **Documentation Gaps**            | High        | Low    | Thorough documentation phase      |
 
 ### Low Risks
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| **Contributor Confusion** | Low | Low | Clear guides, examples |
-| **Tooling Bugs** | Low | Low | Report upstream, workarounds |
+| Risk                      | Probability | Impact | Mitigation                   |
+| ------------------------- | ----------- | ------ | ---------------------------- |
+| **Contributor Confusion** | Low         | Low    | Clear guides, examples       |
+| **Tooling Bugs**          | Low         | Low    | Report upstream, workarounds |
 
 ---
 

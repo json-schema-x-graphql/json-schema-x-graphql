@@ -3,7 +3,7 @@
 **Status:** Accepted  
 **Date:** 2024-12-01  
 **Authors:** Development Team  
-**Supersedes:** None  
+**Supersedes:** None
 
 ## Context
 
@@ -12,6 +12,7 @@ The Schema Unification Forest project operates as a modern Node.js application w
 ### Current State
 
 The project's `package.json` declares:
+
 ```json
 {
   "type": "module",
@@ -22,6 +23,7 @@ The project's `package.json` declares:
 ```
 
 This configures the entire project as ESM by default, affecting:
+
 - **36+ script files** in `scripts/` directory using `.mjs` extension
 - **Frontend code** in Next.js (src/) using ESM imports/exports
 - **Test files** in `__tests__/` and `tests/` using `.test.mjs` extension
@@ -30,6 +32,7 @@ This configures the entire project as ESM by default, affecting:
 ### Module System Landscape
 
 **ESM Advantages:**
+
 - Native browser compatibility
 - Static import analysis (tree-shaking, better bundling)
 - Modern JavaScript standard
@@ -37,12 +40,14 @@ This configures the entire project as ESM by default, affecting:
 - Explicit imports (no implicit `require.resolve`)
 
 **CJS Challenges:**
+
 - Dynamic `require()` causes bundling issues
 - No top-level await
 - Legacy module system
 - Harder to tree-shake
 
 **Mixed System Challenges:**
+
 - Import resolution complexity
 - `require` vs `import` syntax switching
 - File extension confusion (.js vs .mjs vs .cjs)
@@ -103,6 +108,7 @@ This configures the entire project as ESM by default, affecting:
 ### Script Examples
 
 **Canonical ESM Script Pattern:**
+
 ```javascript
 #!/usr/bin/env node
 
@@ -110,9 +116,9 @@ This configures the entire project as ESM by default, affecting:
  * Script description
  */
 
-import fs from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -121,14 +127,15 @@ const __dirname = path.dirname(__filename);
 ```
 
 **Jest Test Pattern:**
+
 ```javascript
 // File: __tests__/lib/validators.test.mjs
 
-import { describe, test, expect } from '@jest/globals';
-import { validateSchema } from '../../scripts/lib/validators.mjs';
+import { describe, test, expect } from "@jest/globals";
+import { validateSchema } from "../../scripts/lib/validators.mjs";
 
-describe('validateSchema', () => {
-  test('validates correct schema', () => {
+describe("validateSchema", () => {
+  test("validates correct schema", () => {
     // Test logic
   });
 });
@@ -168,6 +175,7 @@ describe('validateSchema', () => {
 **Approach:** Keep package.json without `"type": "module"`, use `.cjs` by default
 
 **Why Rejected:**
+
 - Legacy approach, moving away from ecosystem direction
 - Next.js 14 strongly prefers ESM
 - GraphQL tooling ecosystem migrating to ESM
@@ -179,6 +187,7 @@ describe('validateSchema', () => {
 **Approach:** Support both module systems equally, let developers choose per-file
 
 **Why Rejected:**
+
 - Increases complexity with mixed import patterns
 - Jest configuration becomes more fragile
 - Import resolution errors increase
@@ -190,6 +199,7 @@ describe('validateSchema', () => {
 **Approach:** Convert all scripts to TypeScript, use ts-node for execution
 
 **Why Rejected:**
+
 - Compilation step adds friction to script execution
 - Type checking already done via `tsc --noEmit` for src/ code
 - Scripts are simple transformation logic, not complex enough to need TS
@@ -216,7 +226,7 @@ describe('validateSchema', () => {
 ## Related Documentation
 
 - [scripts/README.md](../../scripts/README.md) - Script organization and conventions
-- [__tests__/README.md](../../__tests__/README.md) - Testing guide with ESM patterns
+- [**tests**/README.md](../../__tests__/README.md) - Testing guide with ESM patterns
 - [Testing Quick Reference](../testing-quick-reference.md) - Jest ESM configuration
 - [ADR 0002: Automated Schema Parity Toolchain](./0002-schema-tooling-automation.md) - Scripts that use ESM
 - [Jest ESM Documentation](https://jestjs.io/docs/ecmascript-modules)

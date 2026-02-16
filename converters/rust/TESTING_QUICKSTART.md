@@ -1,4 +1,5 @@
 # Rust Testing Quick Start Guide
+
 ## JSON Schema x GraphQL Converter
 
 This guide provides quick commands to run tests and security audits on the Rust converter.
@@ -66,6 +67,7 @@ From the project root:
 ```
 
 This runs:
+
 - `cargo check` - Compilation validation
 - `cargo audit` - Dependency vulnerability scan
 - `cargo geiger` - Unsafe code detection
@@ -134,6 +136,7 @@ cat converters/rust/security-reports/security-summary-*.txt
 ### Issue: `rustc: command not found`
 
 **Solution:**
+
 ```bash
 source ~/.cargo/env
 ```
@@ -141,6 +144,7 @@ source ~/.cargo/env
 ### Issue: Security tools not found
 
 **Solution:**
+
 ```bash
 cargo install cargo-audit cargo-geiger cargo-deny
 ```
@@ -148,6 +152,7 @@ cargo install cargo-audit cargo-geiger cargo-deny
 ### Issue: Tests fail to compile
 
 **Solution:**
+
 1. Check that you're in the correct directory: `converters/rust`
 2. Ensure dependencies are up to date: `cargo update`
 3. Clean and rebuild: `cargo clean && cargo build`
@@ -178,6 +183,7 @@ cargo geiger --all-features
 ### Continuous Integration
 
 The project includes automated workflows in `.github/workflows/` that run:
+
 - Tests on every push
 - Security audits on schedule
 - Clippy linting
@@ -267,18 +273,18 @@ cargo bench
 
 ## Quick Reference
 
-| Command | Purpose |
-|---------|---------|
-| `cargo build` | Compile the project |
-| `cargo test` | Run all tests |
-| `cargo check` | Quick validation |
-| `cargo clippy` | Lint code |
-| `cargo fmt` | Format code |
-| `cargo audit` | Security scan |
-| `cargo geiger` | Unsafe code check |
+| Command            | Purpose                |
+| ------------------ | ---------------------- |
+| `cargo build`      | Compile the project    |
+| `cargo test`       | Run all tests          |
+| `cargo check`      | Quick validation       |
+| `cargo clippy`     | Lint code              |
+| `cargo fmt`        | Format code            |
+| `cargo audit`      | Security scan          |
+| `cargo geiger`     | Unsafe code check      |
 | `cargo doc --open` | Generate and view docs |
-| `cargo clean` | Remove build artifacts |
-| `cargo update` | Update dependencies |
+| `cargo clean`      | Remove build artifacts |
+| `cargo update`     | Update dependencies    |
 
 ---
 

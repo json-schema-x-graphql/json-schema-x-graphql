@@ -47,6 +47,7 @@ The Schema Unification Forest project requires a GraphQL gateway to serve our ca
 ## Candidates Evaluated
 
 ### 1. GraphQL Mesh
+
 - **Score**: 154/180 (85.6%)
 - **Language**: Node.js/TypeScript
 - **Approach**: Declarative REST to GraphQL gateway with OpenAPI handler
@@ -54,6 +55,7 @@ The Schema Unification Forest project requires a GraphQL gateway to serve our ca
 - **Weaknesses**: Complex configuration, higher memory usage (~300-400MB)
 
 ### 2. Apollo Server
+
 - **Score**: 148/180 (82.2%)
 - **Language**: Node.js/TypeScript
 - **Approach**: Schema-first with RESTDataSource pattern
@@ -61,6 +63,7 @@ The Schema Unification Forest project requires a GraphQL gateway to serve our ca
 - **Weaknesses**: Higher memory usage, manual DataSource implementation
 
 ### 3. gqlgen
+
 - **Score**: 137/180 (76.1%)
 - **Language**: Go
 - **Approach**: Code-first with code generation
@@ -68,11 +71,13 @@ The Schema Unification Forest project requires a GraphQL gateway to serve our ca
 - **Weaknesses**: Code generation step slows iteration, manual resolvers for 20 endpoints
 
 ### 4. PostGraphile
+
 - **Score**: 124/190 (65.3%)
 - **Approach**: Postgres-first, auto-generate GraphQL from DB
 - **Weakness**: Not REST-first, limited federation support
 
 ### 5. Grafserv
+
 - **Score**: 116/190 (61.1%)
 - **Approach**: Express + @graphql-tools/schema
 - **Weakness**: Manual implementation, no built-in REST patterns
@@ -104,6 +109,7 @@ Despite Go being acceptable and excellent performance characteristics:
 ## Implementation
 
 ### Phase 1: Setup (Week 1-2)
+
 - Deploy GraphQL Mesh POC to cloud.gov
 - Configure 4 Databricks REST endpoints
 - Enable mock data for development
@@ -112,18 +118,21 @@ Despite Go being acceptable and excellent performance characteristics:
 **Files**: `/dev/pocs/graphql-mesh/`
 
 ### Phase 2: Development (Month 1-3)
+
 - Scale to 10 REST endpoints
 - Iterate on schema daily/weekly
 - Support frontend development with mocks
 - Monitor performance and memory usage
 
 ### Phase 3: Scale REST APIs (Month 3-6)
+
 - Add remaining endpoints (10 → 20)
 - Implement 24-hour caching strategy
 - Add authentication (Keycloak/API Umbrella proxy)
 - Production readiness validation
 
 ### Phase 4: Production Optimization (Month 6+, Optional)
+
 - Evaluate if gqlgen migration needed
 - Decision criteria: performance bottleneck, schema stability, Go expertise acquired
 - If needed: 2-3 week migration effort
@@ -154,24 +163,28 @@ Despite Go being acceptable and excellent performance characteristics:
 ## Success Metrics
 
 ### Week 1-2 (Setup)
+
 - Schema change visible in <2 minutes ✅
 - 4 REST endpoints integrated ✅
 - Cloud.gov deployment successful ✅
 - Mock data working ✅
 
 ### Month 1-3 (Development)
+
 - 10 REST endpoints integrated
 - Daily schema iteration without friction
 - Memory usage <512MB (well under 4GB limit)
 - Zero downtime for schema updates
 
 ### Month 3-6 (Scale)
+
 - 20 REST endpoints integrated
 - 24-hour caching operational
 - Authentication via Keycloak working
-- >500 req/sec throughput
+- > 500 req/sec throughput
 
 ### Month 6+ (Production)
+
 - Handling production traffic
 - 99.9% uptime
 - <100ms p95 latency
@@ -180,21 +193,25 @@ Despite Go being acceptable and excellent performance characteristics:
 ## Related Documentation
 
 ### Decision Documents
+
 - [Complete Requirements Analysis](../graphql-gateway-requirements.md) - Business/technical requirements, evaluation criteria
 - [Critical Questions & Stakeholder Answers](../CRITICAL-QUESTIONS.md) - 12 decision-driving questions and responses
 - [Final Gateway Decision](../GATEWAY-DECISION.md) - Detailed rationale, implementation plan, risk mitigation
 
 ### Technical Implementation
+
 - [GraphQL Mesh POC](../../dev/pocs/graphql-mesh/README.md) - Complete POC with Docker, cloud.gov, CNB configs
 - [gqlgen POC](../../dev/pocs/gqlgen/README.md) - Alternative high-performance POC (future migration option)
 - [Existing POCs](../../dev/pocs/) - PostGraphile, Grafserv, Prisma, Mockforge evaluations
 
 ### Schema Pipeline
+
 - [Supergraph SDL](../../generated-schemas/schema_unification.supergraph.graphql) - 4 subgraphs merged
 - [Schema Generation Pipeline](../schema-pipeline.md) - JSON Schema → GraphQL SDL → Supergraph
 - [Federation Guide](../x-graphql-hints-guide.md) - Federation directives and patterns
 
 ### Deployment
+
 - Cloud.gov manifest: `/dev/pocs/graphql-mesh/manifest.yml`
 - Docker Compose: `/dev/pocs/graphql-mesh/docker-compose.yml`
 - Cloud Native Buildpack: `/dev/pocs/graphql-mesh/project.toml`
@@ -210,6 +227,7 @@ Despite Go being acceptable and excellent performance characteristics:
 This decision prioritizes **development velocity** over **raw performance**, aligning with stakeholder priority to iterate rapidly on schema design. The clear migration path to gqlgen provides future optimization without blocking current development progress.
 
 The two-phase approach (Mesh → potential gqlgen) allows us to:
+
 1. Move fast now (declarative config, hot reload)
 2. Optimize later (compiled Go, minimal memory) if needed
 3. Share schema source (no lock-in)

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './SettingsPanel.css';
+import React, { useState } from "react";
+import "./SettingsPanel.css";
 
 export default function SettingsPanel({
   settings,
@@ -8,16 +8,16 @@ export default function SettingsPanel({
   onSaveSettings,
   onResetDefaults,
   isDirty,
-  onClose
+  onClose,
 }) {
-  const [activeTab, setActiveTab] = useState('converter');
+  const [activeTab, setActiveTab] = useState("converter");
 
   const handleSave = () => {
     onSaveSettings(settings);
   };
 
   const handleReset = () => {
-    if (window.confirm('Reset all settings to defaults?')) {
+    if (window.confirm("Reset all settings to defaults?")) {
       onResetDefaults();
     }
   };
@@ -33,20 +33,20 @@ export default function SettingsPanel({
 
       <div className="settings-tabs">
         <button
-          className={`tab-btn ${activeTab === 'converter' ? 'active' : ''}`}
-          onClick={() => setActiveTab('converter')}
+          className={`tab-btn ${activeTab === "converter" ? "active" : ""}`}
+          onClick={() => setActiveTab("converter")}
         >
           Converter
         </button>
         <button
-          className={`tab-btn ${activeTab === 'ui' ? 'active' : ''}`}
-          onClick={() => setActiveTab('ui')}
+          className={`tab-btn ${activeTab === "ui" ? "active" : ""}`}
+          onClick={() => setActiveTab("ui")}
         >
           UI & Display
         </button>
         <button
-          className={`tab-btn ${activeTab === 'features' ? 'active' : ''}`}
-          onClick={() => setActiveTab('features')}
+          className={`tab-btn ${activeTab === "features" ? "active" : ""}`}
+          onClick={() => setActiveTab("features")}
         >
           Features
         </button>
@@ -54,16 +54,18 @@ export default function SettingsPanel({
 
       <div className="settings-content">
         {/* CONVERTER SETTINGS */}
-        {activeTab === 'converter' && (
+        {activeTab === "converter" && (
           <div className="settings-section">
             <h3>Converter Configuration</h3>
-            
+
             <div className="setting-group">
               <label className="setting-label">
                 <input
                   type="checkbox"
                   checked={settings.validate}
-                  onChange={(e) => onUpdateSetting('validate', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("validate", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Validate Schemas</span>
@@ -78,7 +80,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.descriptions}
-                  onChange={(e) => onUpdateSetting('descriptions', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("descriptions", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Include Descriptions</span>
@@ -93,7 +97,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.federation}
-                  onChange={(e) => onUpdateSetting('federation', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("federation", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Apollo Federation Support</span>
@@ -107,7 +113,9 @@ export default function SettingsPanel({
               <label className="setting-label">Federation Version</label>
               <select
                 value={settings.federationVersion}
-                onChange={(e) => onUpdateSetting('federationVersion', e.target.value)}
+                onChange={(e) =>
+                  onUpdateSetting("federationVersion", e.target.value)
+                }
                 className="setting-select"
                 disabled={!settings.federation}
               >
@@ -124,11 +132,15 @@ export default function SettingsPanel({
               <label className="setting-label">Naming Convention</label>
               <select
                 value={settings.naming}
-                onChange={(e) => onUpdateSetting('naming', e.target.value)}
+                onChange={(e) => onUpdateSetting("naming", e.target.value)}
                 className="setting-select"
               >
-                <option value="GRAPHQL_IDIOMATIC">GraphQL Idiomatic (camelCase)</option>
-                <option value="KEEP_ORIGINAL">Keep Original (snake_case)</option>
+                <option value="GRAPHQL_IDIOMATIC">
+                  GraphQL Idiomatic (camelCase)
+                </option>
+                <option value="KEEP_ORIGINAL">
+                  Keep Original (snake_case)
+                </option>
                 <option value="PASCAL_CASE">PascalCase</option>
               </select>
               <p className="setting-description">
@@ -139,7 +151,7 @@ export default function SettingsPanel({
         )}
 
         {/* UI & DISPLAY SETTINGS */}
-        {activeTab === 'ui' && (
+        {activeTab === "ui" && (
           <div className="settings-section">
             <h3>User Interface</h3>
 
@@ -151,14 +163,14 @@ export default function SettingsPanel({
                   min="10"
                   max="20"
                   value={settings.fontSize}
-                  onChange={(e) => onUpdateSetting('fontSize', parseInt(e.target.value))}
+                  onChange={(e) =>
+                    onUpdateSetting("fontSize", parseInt(e.target.value))
+                  }
                   className="setting-slider"
                 />
                 <span className="setting-value">{settings.fontSize}px</span>
               </div>
-              <p className="setting-description">
-                Editor and UI font size
-              </p>
+              <p className="setting-description">Editor and UI font size</p>
             </div>
 
             <div className="setting-group">
@@ -166,7 +178,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.darkMode}
-                  onChange={(e) => onUpdateSetting('darkMode', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("darkMode", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Dark Mode</span>
@@ -181,7 +195,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.showStats}
-                  onChange={(e) => onUpdateSetting('showStats', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("showStats", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Show Composition Statistics</span>
@@ -194,7 +210,7 @@ export default function SettingsPanel({
         )}
 
         {/* FEATURE FLAGS */}
-        {activeTab === 'features' && (
+        {activeTab === "features" && (
           <div className="settings-section">
             <h3>Feature Configuration</h3>
 
@@ -203,7 +219,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.autoCompose}
-                  onChange={(e) => onUpdateSetting('autoCompose', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("autoCompose", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Auto-Compose on Generate</span>
@@ -218,7 +236,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.autoFormat}
-                  onChange={(e) => onUpdateSetting('autoFormat', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("autoFormat", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Auto-Format SDL</span>
@@ -233,7 +253,9 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.showAdvancedOptions}
-                  onChange={(e) => onUpdateSetting('showAdvancedOptions', e.target.checked)}
+                  onChange={(e) =>
+                    onUpdateSetting("showAdvancedOptions", e.target.checked)
+                  }
                   className="setting-checkbox"
                 />
                 <span>Show Advanced Options</span>
@@ -256,10 +278,7 @@ export default function SettingsPanel({
             ↻ Reset Defaults
           </button>
           <div style={{ flex: 1 }} />
-          <button
-            onClick={onClose}
-            className="btn btn-secondary"
-          >
+          <button onClick={onClose} className="btn btn-secondary">
             Cancel
           </button>
           <button
@@ -267,12 +286,10 @@ export default function SettingsPanel({
             className="btn btn-primary"
             disabled={!isDirty}
           >
-            {isDirty ? '💾 Save Changes' : '✓ Saved'}
+            {isDirty ? "💾 Save Changes" : "✓ Saved"}
           </button>
         </div>
-        {isDirty && (
-          <p className="settings-notice">You have unsaved changes</p>
-        )}
+        {isDirty && <p className="settings-notice">You have unsaved changes</p>}
       </div>
     </div>
   );

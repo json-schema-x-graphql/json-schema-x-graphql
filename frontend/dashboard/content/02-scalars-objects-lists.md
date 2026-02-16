@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - The five built-in GraphQL scalar types and when to use each
 - How scalars differ from object types
 - The List type and array handling
@@ -13,6 +14,7 @@
 Scalars are the building blocks of all data types. Understanding them well helps you design schemas that are both flexible and type-safe. The way you define lists and scalars affects query validation, performance, and user experience.
 
 **Prerequisites:**
+
 - Completed: [Introducing Types](/learning/01-introducing-types)
 - Understand object types vs scalar types
 - Familiar with GraphQL basic syntax
@@ -24,6 +26,7 @@ Scalars are the building blocks of all data types. Understanding them well helps
 ### The Five Built-in Scalars
 
 #### String
+
 Represents text, from a single character to entire documents.
 
 ```graphql
@@ -35,11 +38,13 @@ content: String   # "Lorem ipsum dolor sit amet..."
 **In JSON Schema**: `"type": "string"`
 
 **Additional constraints**:
+
 - `minLength`: Minimum characters
 - `maxLength`: Maximum characters
 - `pattern`: Regular expression matching
 
 #### Int
+
 32-bit integers (whole numbers without decimals).
 
 ```graphql
@@ -53,12 +58,14 @@ temperature: Int  # -15
 **In JSON Schema**: `"type": "integer"`
 
 **Common use cases**:
+
 - Counts and quantities
 - Years and timestamps (though timestamp strings are better)
 - Prices in cents (never decimal for currency)
 - Scores and ratings
 
 #### Float
+
 Decimal numbers with arbitrary precision.
 
 ```graphql
@@ -70,6 +77,7 @@ temperature: Float    # 98.6
 **In JSON Schema**: `"type": "number"`
 
 **Common use cases**:
+
 - Weights and measurements
 - Percentages
 - Coordinates (latitude, longitude)
@@ -87,6 +95,7 @@ priceInCents: Int  # 1999 (precise)
 ```
 
 #### Boolean
+
 True/false values with no middle ground.
 
 ```graphql
@@ -98,12 +107,14 @@ isDeleted: Boolean      # true or false
 **In JSON Schema**: `"type": "boolean"`
 
 **Common use cases**:
+
 - Flags and toggles
 - Yes/no properties
 - Feature flags
 - Access control
 
 #### ID
+
 A unique identifier, internally a string, but semantically represents uniqueness.
 
 ```graphql
@@ -115,11 +126,13 @@ entityId: ID     # "entity:12345"
 **In JSON Schema**: `"type": "string"` (optionally with `format: "uuid"`)
 
 **Why a separate type?**
+
 - Signals intent: "this identifies something unique"
 - Improves developer experience: ID fields treated specially in tools
 - Helps with code generation: Some tools generate special handling for IDs
 
 **Common formats**:
+
 - UUIDs: `"550e8400-e29b-41d4-a716-446655440000"`
 - Numeric IDs: `"12345"`
 - Compound IDs: `"user_123"`, `"org_456"`
@@ -135,12 +148,12 @@ Most object types are primarily containers of scalar values:
 
 ```graphql
 type User {
-  id: ID                    # Scalar: unique identifier
-  name: String              # Scalar: text
-  email: String             # Scalar: text
-  age: Int                  # Scalar: whole number
-  registeredAt: String      # Scalar: ISO date string
-  isEmailVerified: Boolean  # Scalar: flag
+  id: ID # Scalar: unique identifier
+  name: String # Scalar: text
+  email: String # Scalar: text
+  age: Int # Scalar: whole number
+  registeredAt: String # Scalar: ISO date string
+  isEmailVerified: Boolean # Scalar: flag
 }
 ```
 
@@ -152,13 +165,13 @@ Object types can contain other object types:
 type User {
   id: ID
   name: String
-  profile: UserProfile  # Object type (not scalar)
+  profile: UserProfile # Object type (not scalar)
 }
 
 type UserProfile {
-  bio: String           # Scalar
-  avatar: String        # Scalar (URL)
-  location: String      # Scalar
+  bio: String # Scalar
+  avatar: String # Scalar (URL)
+  location: String # Scalar
 }
 ```
 
@@ -185,6 +198,7 @@ friends: [User]        # List of User objects
 - Each item in the list **can be null**: `["apple", null, "banana"]`
 
 **In JSON Schema**:
+
 ```json
 {
   "type": "array",
@@ -198,7 +212,7 @@ friends: [User]        # List of User objects
 type Store {
   id: ID
   name: String
-  products: [Product]  # List of Product objects
+  products: [Product] # List of Product objects
 }
 
 type Product {
@@ -209,6 +223,7 @@ type Product {
 ```
 
 **In JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -227,13 +242,13 @@ type Product {
 
 ### Type Mapping Reference
 
-| GraphQL | JSON Schema | Example | Use Case |
-|---------|-------------|---------|----------|
-| `String` | `"type": "string"` | "Hello" | Text, URLs, emails |
-| `Int` | `"type": "integer"` | 42 | Counts, prices (cents) |
-| `Float` | `"type": "number"` | 3.14 | Measurements, decimals |
-| `Boolean` | `"type": "boolean"` | true | Flags, toggles |
-| `ID` | `"type": "string"` | "user123" | Unique identifiers |
+| GraphQL   | JSON Schema         | Example   | Use Case               |
+| --------- | ------------------- | --------- | ---------------------- |
+| `String`  | `"type": "string"`  | "Hello"   | Text, URLs, emails     |
+| `Int`     | `"type": "integer"` | 42        | Counts, prices (cents) |
+| `Float`   | `"type": "number"`  | 3.14      | Measurements, decimals |
+| `Boolean` | `"type": "boolean"` | true      | Flags, toggles         |
+| `ID`      | `"type": "string"`  | "user123" | Unique identifiers     |
 
 ### Scalar Constraints in JSON Schema
 
@@ -243,25 +258,25 @@ type Product {
   "properties": {
     "email": {
       "type": "string",
-      "format": "email"  // Email format validation
+      "format": "email" // Email format validation
     },
     "age": {
       "type": "integer",
-      "minimum": 0,      // Must be >= 0
-      "maximum": 150     // Must be <= 150
+      "minimum": 0, // Must be >= 0
+      "maximum": 150 // Must be <= 150
     },
     "name": {
       "type": "string",
-      "minLength": 1,    // At least 1 character
-      "maxLength": 100   // At most 100 characters
+      "minLength": 1, // At least 1 character
+      "maxLength": 100 // At most 100 characters
     },
     "phone": {
       "type": "string",
-      "pattern": "^\\d{10}$"  // Must be 10 digits
+      "pattern": "^\\d{10}$" // Must be 10 digits
     },
     "website": {
       "type": "string",
-      "format": "uri"    // Must be a valid URI
+      "format": "uri" // Must be a valid URI
     }
   }
 }
@@ -273,9 +288,9 @@ type Product {
 {
   "type": "array",
   "items": { "type": "string" },
-  "minItems": 1,          // At least 1 item
-  "maxItems": 10,         // At most 10 items
-  "uniqueItems": true     // No duplicates
+  "minItems": 1, // At least 1 item
+  "maxItems": 10, // At most 10 items
+  "uniqueItems": true // No duplicates
 }
 ```
 
@@ -288,6 +303,7 @@ type Product {
 Return lists with metadata for pagination:
 
 **GraphQL:**
+
 ```graphql
 type UserConnection {
   users: [User]
@@ -301,6 +317,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "type": "object",
@@ -328,18 +345,20 @@ Some fields accept structured data as strings:
 type User {
   id: ID
   name: String
-  metadata: String  # JSON string
-  tags: [String]    # Array of tags
-  settings: String  # JSON configuration
+  metadata: String # JSON string
+  tags: [String] # Array of tags
+  settings: String # JSON configuration
 }
 ```
 
 **When to use**:
+
 - Metadata that changes structure
 - Complex nested data
 - User-generated configuration
 
 **Better approach** (see next module):
+
 - Use `JSON` custom scalar
 - Or parse the string on the client
 
@@ -350,7 +369,7 @@ Compare these two approaches:
 ```graphql
 # ❌ Less safe - any string allowed
 type Order {
-  status: String  # "pending", "shipped", "delivered"?
+  status: String # "pending", "shipped", "delivered"?
 }
 
 # ✅ Better - restricted values
@@ -373,18 +392,19 @@ type Order {
 ### Example 1: E-Commerce Product
 
 **GraphQL:**
+
 ```graphql
 type Product {
   id: ID!
   name: String!
   description: String
-  price: Int!              # In cents
-  rating: Float            # 0-5 stars
+  price: Int! # In cents
+  rating: Float # 0-5 stars
   inStock: Boolean!
   quantity: Int!
-  tags: [String]           # ["electronics", "gadgets"]
-  images: [String]         # URLs
-  reviews: [Review]        # Other object types
+  tags: [String] # ["electronics", "gadgets"]
+  images: [String] # URLs
+  reviews: [Review] # Other object types
 }
 
 type Query {
@@ -393,6 +413,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -429,6 +450,7 @@ type Query {
 ### Example 2: User Profile
 
 **GraphQL:**
+
 ```graphql
 type User {
   id: ID!
@@ -438,9 +460,9 @@ type User {
   lastName: String
   age: Int
   isActive: Boolean!
-  joinedAt: String!       # ISO date
+  joinedAt: String! # ISO date
   bio: String
-  socialLinks: [String]   # URLs
+  socialLinks: [String] # URLs
   favoriteColors: [String]
   settings: UserSettings
 }
@@ -458,6 +480,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "type": "object",
@@ -513,20 +536,20 @@ type Query {
 ```graphql
 # ✅ Good
 type User {
-  id: ID              # Unique identifier
-  email: String       # Text
-  age: Int            # Whole number
-  rating: Float       # Decimal
+  id: ID # Unique identifier
+  email: String # Text
+  age: Int # Whole number
+  rating: Float # Decimal
   isVerified: Boolean # Yes/no
 }
 
 # ❌ Avoid
 type User {
-  id: String           # Too generic
-  email: String        # Actually could be Int? (no validation)
-  age: String          # Should be Int
-  rating: String       # Should be Float
-  isVerified: String   # Should be Boolean ("true"/"false")
+  id: String # Too generic
+  email: String # Actually could be Int? (no validation)
+  age: String # Should be Int
+  rating: String # Should be Float
+  isVerified: String # Should be Boolean ("true"/"false")
 }
 ```
 
@@ -535,14 +558,14 @@ type User {
 ```graphql
 # ✅ Good
 type Post {
-  tags: [String]      # Zero or more tags
+  tags: [String] # Zero or more tags
   comments: [Comment] # Zero or more comments
 }
 
 # ❌ Avoid
 type Post {
-  tagString: String   # "tag1,tag2,tag3" - hard to parse
-  commentCount: Int   # "There are 3 comments, but I can't access them"
+  tagString: String # "tag1,tag2,tag3" - hard to parse
+  commentCount: Int # "There are 3 comments, but I can't access them"
 }
 ```
 
@@ -551,12 +574,12 @@ type Post {
 ```graphql
 # ✅ Good
 type Order {
-  totalInCents: Int   # 9999 = $99.99
+  totalInCents: Int # 9999 = $99.99
 }
 
 # ❌ Wrong
 type Order {
-  total: Float        # 99.99 (precision loss!)
+  total: Float # 99.99 (precision loss!)
 }
 ```
 
@@ -565,7 +588,7 @@ type Order {
 ```graphql
 # ✅ Good
 type User {
-  createdAt: String    # "2025-12-15T10:30:00Z"
+  createdAt: String # "2025-12-15T10:30:00Z"
 }
 
 # Note: Some schemas use custom Date scalar
@@ -579,8 +602,8 @@ type User {
 ```graphql
 # ✅ Good
 type User {
-  avatar: String       # "https://example.com/avatar.jpg"
-  website: String      # "https://example.com"
+  avatar: String # "https://example.com/avatar.jpg"
+  website: String # "https://example.com"
 }
 ```
 
@@ -589,6 +612,7 @@ type User {
 ## Practice Exercises
 
 ### Exercise 1: Identify Scalar Types
+
 For each field, what scalar type should it be?
 
 1. A person's height in centimeters
@@ -705,7 +729,7 @@ type Movie {
 ✅ **Use the right type**: Prevents data errors and improves type safety  
 ✅ **Never use Float for money**: Always use Int with smallest unit  
 ✅ **Lists with `[]`**: For zero or more items  
-✅ **Mix scalars and objects**: Build complex types from simple pieces  
+✅ **Mix scalars and objects**: Build complex types from simple pieces
 
 ---
 

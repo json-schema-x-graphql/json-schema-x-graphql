@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 #### Rust Converter Parity (2024-01-XX)
+
 - **Type-level skip support** - Types marked with `x-graphql-skip: true` are now excluded from SDL output
 - **Field-level type override** - `x-graphql-field-type` attribute now properly overrides inferred types
 - **Field-level skip support** - Fields marked with `x-graphql-skip: true` are now excluded from SDL output
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Full feature parity** - Rust converter now matches Node.js converter behavior across all x-graphql attributes
 
 #### Documentation
+
 - Added comprehensive [Rust Parity Implementation](./docs/RUST-PARITY-IMPLEMENTATION.md) document
 - Detailed 6 critical fixes with code examples and verification steps
 - Documented testing requirements and validation checklist
@@ -32,6 +34,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 ### Breaking Changes
 
 #### Namespace Consolidation
+
 - **Federation attributes** now use `x-graphql-federation-*` prefix:
   - `x-graphql-keys` → `x-graphql-federation-keys`
   - `x-graphql-shareable` → `x-graphql-federation-shareable`
@@ -41,17 +44,20 @@ This release introduces standardized x-graphql namespace conventions, comprehens
   - `x-graphql-override-from` → `x-graphql-federation-override-from`
 
 #### Type Attribute Split
+
 - `x-graphql-type` (object form) split into:
   - `x-graphql-type-name` - Type name
   - `x-graphql-type-kind` - Type kind (OBJECT, INTERFACE, UNION, INPUT_OBJECT)
 - `x-graphql-type` (string form) renamed to `x-graphql-type-name`
 
 #### Scalar Definition Changes
+
 - `x-graphql-scalars` (bulk definition) → individual `x-graphql-scalar` per type
 
 ### Added
 
 #### Phase 5: Validation Infrastructure
+
 - **Dual JSON Schema Validation** - `jsonschema` + `boon` validators for comprehensive schema validation
 - **Multi-Layer GraphQL Validation** - Apollo parser, compiler, spec, and federation validators
 - **Validation CLI Tools**:
@@ -66,6 +72,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
   - Naming convention warnings
 
 #### Converter Bug Fixes
+
 - **Interface Generation** - Fixed `x-graphql-type-kind: "INTERFACE"` now correctly generates `interface` instead of `type`
 - **Field-Level Type Overrides** - Added support for `x-graphql-field-type` to override inferred field types
 - **Field Skipping** - Implemented `x-graphql-skip: true` at field level to exclude fields from GraphQL schema
@@ -75,6 +82,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - **Federation Field Directives** - Added support for `@requires`, `@provides`, `@external`, and `@override` at field level
 
 #### Test Coverage Expansion
+
 - **Expected SDL Outputs** - Added 6 new expected GraphQL SDL files for comprehensive validation:
   - `descriptions.graphql` - Description handling tests
   - `interfaces.graphql` - Interface generation and implementation
@@ -87,6 +95,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - **CI/CD Integration** - GitHub Actions workflow for automated validation
 
 #### Phase 6: Performance Benchmarking
+
 - **Rust Benchmark Suite** - Criterion-based benchmarks for validation and conversion
 - **Node.js Benchmark Suite** - Benchmark.js-based performance tests
 - **Performance Targets Achieved**:
@@ -102,6 +111,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - **CI/CD Benchmark Integration** - Automated benchmark runs with regression detection
 
 #### Documentation
+
 - **Quick Start Guide** (`docs/x-graphql/QUICK_START.md`) - Get started in 5 minutes
 - **Attribute Reference** (`docs/x-graphql/ATTRIBUTE_REFERENCE.md`) - Complete catalog of all 36+ x-graphql attributes
 - **Common Patterns** (`docs/x-graphql/COMMON_PATTERNS.md`) - Real-world usage examples and best practices
@@ -110,6 +120,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - Comprehensive inline documentation and examples
 
 #### Test Coverage
+
 - **Shared test-data** approach - Node.js and Rust use same test schemas
 - `comprehensive-features.json` - Schema demonstrating all x-graphql features
 - Node.js: `x-graphql-shared.test.ts` - 30+ integration tests using shared data
@@ -119,18 +130,21 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - All tests load schemas from disk (no inline schemas)
 
 #### Performance Improvements
+
 - **Rust Performance**: 3-5x faster than Node.js implementation
 - **Linear Scaling**: Confirmed linear performance with schema size
 - **Optimized Validation**: < 0.1ms per schema for small/medium schemas
 - **Efficient Conversion**: < 1ms per schema for most conversions
 
 ### Future (v2.1.0+)
+
 - VS Code extension for real-time validation and IntelliSense
 - Interactive migration CLI tool
 - Memory profiling tools
 - Additional federation composition validators
 
 #### Validation Infrastructure (Phase 5)
+
 - **JSON Schema Validator** - AJV-based validator for schema files
 - **GraphQL SDL Validator** - Parse, validate, and lint generated SDL
 - **Integration Test Harness** - Automated conversion testing with diffs
@@ -138,6 +152,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - Master runner scripts: `run-all-validation.sh`, `run-integration-tests.sh`, `run-benchmarks.sh`
 
 #### CI/CD Integration
+
 - GitHub Actions workflow: `.github/workflows/validation-and-testing.yml`
 - Automated schema validation on PRs
 - SDL validation and linting
@@ -146,22 +161,26 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - Artifact uploads for test reports
 
 #### P0 Features (Core)
+
 - `x-graphql-skip` - Exclude fields/types from GraphQL
 - `x-graphql-nullable` - Override nullability independent of JSON Schema required
 - `x-graphql-description` - GraphQL-specific descriptions (override JSON Schema description)
 - Full support in both Node.js and Rust converters
 
 #### Field-Level Enhancements
+
 - `x-graphql-field-list-item-non-null` - Non-null list items `[Type!]`
 - `x-graphql-field-directives` - Custom field directives
 - `x-graphql-field-arguments` - Field argument definitions
 
 #### Type-Level Enhancements
+
 - `x-graphql-type-directives` - Custom type directives
 - `x-graphql-union-types` - Union member type lists
 - Better interface implementation support
 
 #### Federation v2 Support
+
 - All federation directives properly namespaced
 - Composite key support (e.g., `"organizationId userId"`)
 - Multiple entity keys support (array of keys)
@@ -169,6 +188,7 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - `@shareable` for value objects
 
 #### Developer Experience
+
 - CLI tool: `json-schema-x-graphql` command
 - Migration script for automated v1.x → v2.0 conversion
 - Validation CLI with strict mode
@@ -178,23 +198,27 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 ### Changed
 
 #### Package Metadata
+
 - **Version**: 0.1.0 → 2.0.0
 - **Node package**: Updated keywords, engines, publishConfig
 - **Rust crate**: Updated keywords, categories, rust-version
 - Both packages ready for npm/crates.io publication
 
 #### Documentation Structure
+
 - Moved to `docs/x-graphql/` namespace
 - Separated concerns: Quick Start, Reference, Patterns, Migration
 - Added troubleshooting sections
 - Improved examples with real-world scenarios
 
 #### Test Organization
+
 - Consolidated test data in `converters/test-data/x-graphql/`
 - Expected outputs in `converters/test-data/x-graphql/expected/`
 - Both converters use identical test files (DRY principle)
 
 ### Fixed
+
 - Description handling now properly prefers `x-graphql-description` over `description`
 - Federation directive formatting matches Apollo Federation v2 spec
 - List item nullability correctly generates `[Type!]` vs `[Type]`
@@ -202,18 +226,21 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - Case conversion edge cases for field names
 
 ### Performance
+
 - Node.js converter: ~0.2ms average per schema (small-medium schemas)
 - Rust converter: Sub-millisecond conversion for most schemas
 - Validation overhead dominates conversion time (expected)
 - Throughput: 2.8K - 37K conversions/sec depending on schema size
 
 ### Validation Results (Initial Run)
+
 - **JSON Schemas**: 37 discovered, 34 valid (92% pass rate)
 - **GraphQL SDL**: 3 files discovered, 2 valid
 - **Integration Tests**: 11 cases, 10 passed (91% pass rate)
 - Known issues documented for remaining failures
 
 ### Migration Support
+
 - Automated migration script with dry-run mode
 - Detailed migration report (JSON format)
 - Backup creation before in-place migration
@@ -221,24 +248,29 @@ This release introduces standardized x-graphql namespace conventions, comprehens
 - Manual migration checklist
 
 ### Developer Notes
+
 - All new features have tests in both Node.js and Rust
 - Documentation uses consistent examples across guides
 - CI/CD pipeline validates all changes
 - Benchmarks establish performance baselines
 
 ### Upgrade Path
+
 See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade instructions.
 
 ### Deprecations
+
 - `x-graphql-type` (object form) - Use `x-graphql-type-name` + `x-graphql-type-kind`
 - `x-graphql-type` (string form) - Use `x-graphql-type-name`
 - `x-graphql-scalars` - Use individual `x-graphql-scalar` definitions
 - Non-namespaced federation attributes - Use `x-graphql-federation-*` prefix
 
 ### Removed
+
 - None (backward compatibility maintained where possible)
 
 ### Added
+
 - Case-insensitive `$ref` resolution with automatic snake_case/camelCase conversion fallbacks
 - Circular reference support for self-referencing and mutually referencing types
 - Comprehensive type filtering system with `excludeTypes`, `excludeTypeSuffixes`, and `excludePatterns`
@@ -250,17 +282,20 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
 - Comprehensive test suite (24 new tests for Node.js, 13 new tests for Rust)
 
 ### Changed
+
 - Default `excludeTypes` now includes `["Query", "Mutation", "Subscription", "PageInfo"]`
 - Default `excludeTypeSuffixes` now includes common patterns like Filter, Connection, Edge, Payload, Args
 - `$ref` resolution now tries multiple case variations when exact match fails
 
 ### Fixed
+
 - Node.js: Fixed `shouldExcludeType` logic to properly handle custom exclusions when `includeOperationalTypes` is true
 - Node.js: Added null check for root type name before filtering
 - Rust: Added missing circular reference protection in `convert_type_definition`
 - Node.js: Corrected function reference from non-existent `shouldIncludeType` to `shouldExcludeType`
 
 ### Planned
+
 - Core Rust WASM converter implementation
 - React editor frontend
 - API documentation
@@ -269,6 +304,7 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
 ## [0.1.0] - 2024-01-20
 
 ### Added
+
 - Initial project structure and repository setup
 - Comprehensive README.md with project overview and quick start
 - CONTEXT.md with detailed architecture and roadmap
@@ -282,6 +318,7 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
 - MIT License
 
 ### Features
+
 - Meta-schema with strict validation patterns for:
   - GraphQL naming conventions (PascalCase types, camelCase fields)
   - Apollo Federation v2.9 directives
@@ -298,6 +335,7 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
   - All GraphQL type kinds (Object, Enum, Input, Scalar)
 
 ### Documentation
+
 - Complete architectural documentation
 - Three-namespace design (snake_case, camelCase, hyphen-case)
 - 15 core extension fields specification
@@ -307,6 +345,7 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
 - RFC process for major changes
 
 ### Standards Compliance
+
 - JSON Schema 2020-12 specification
 - GraphQL October 2021 specification
 - Apollo Federation v2.9 support
@@ -317,6 +356,7 @@ See [Migration Guide](docs/x-graphql/MIGRATION_GUIDE.md) for detailed upgrade in
 ### Version Numbering
 
 This project follows [Semantic Versioning](https://semver.org/):
+
 - **MAJOR** version: Incompatible API changes or breaking changes
 - **MINOR** version: New functionality in a backward compatible manner
 - **PATCH** version: Backward compatible bug fixes

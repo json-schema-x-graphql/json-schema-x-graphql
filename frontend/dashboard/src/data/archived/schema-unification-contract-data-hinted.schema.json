@@ -242,7 +242,10 @@
       "x-graphql-type": "union",
       "x-graphql-union-types": ["IDVContract", "Order"],
       "x-graphql-description": "Result type for contract searches (can be IDV or Order)",
-      "oneOf": [{ "$ref": "#/definitions/IDVContract" }, { "$ref": "#/definitions/Order" }]
+      "oneOf": [
+        { "$ref": "#/definitions/IDVContract" },
+        { "$ref": "#/definitions/Order" }
+      ]
     },
     "ContractMetadata": {
       "type": "object",

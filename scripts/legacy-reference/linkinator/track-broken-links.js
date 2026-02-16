@@ -71,29 +71,36 @@ function patchSeoOpenGraph() {
     return { patched: false };
   }
 
-  const cloudUrlRegex = /https?:\/\/ttse-schema-unification-project\.app\.cloud\.gov\/assets\/diagram\.svg/;
+  const cloudUrlRegex =
+    /https?:\/\/ttse-schema-unification-project\.app\.cloud\.gov\/assets\/diagram\.svg/;
   const localPath = "/assets/diagram.svg";
 
   if (!cloudUrlRegex.test(current)) {
-    console.log("[skip] SEO file does not reference cloud.gov diagram.svg (or already patched).");
+    console.log(
+      "[skip] SEO file does not reference cloud.gov diagram.svg (or already patched).",
+    );
     return { patched: false };
   }
 
   // Backup original
   const backupPath = path.join(BACKUP_DIR, "seo.ts.bak");
   safeWrite(backupPath, current);
-  console.log(`Backed up original SEO file to ${path.relative(ROOT, backupPath)}`);
+  console.log(
+    `Backed up original SEO file to ${path.relative(ROOT, backupPath)}`,
+  );
 
   const patched = current.replace(cloudUrlRegex, localPath);
   safeWrite(seoPath, patched);
-  console.log(`Patched SEO OpenGraph image URL -> ${localPath} in ${path.relative(ROOT, seoPath)}`);
+  console.log(
+    `Patched SEO OpenGraph image URL -> ${localPath} in ${path.relative(ROOT, seoPath)}`,
+  );
 
   // Warn if the asset file is missing
   const assetCandidate = path.join(ROOT, "public", "assets", "diagram.svg");
   if (!fs.existsSync(assetCandidate)) {
     console.warn(
       `Note: ${path.relative(ROOT, assetCandidate)} does not exist. ` +
-        `If the diagram asset isn't present, add it to public/assets/diagram.svg or point SEO to an existing image.`
+        `If the diagram asset isn't present, add it to public/assets/diagram.svg or point SEO to an existing image.`,
     );
   }
 
@@ -116,7 +123,9 @@ function ensureNextConfigRewrites() {
     content.includes("source: '/graphql-editor'") ||
     content.includes("/graphql-editor/index.html")
   ) {
-    console.log("[skip] next.config.js already contains graphql-editor rewrites/redirects.");
+    console.log(
+      "[skip] next.config.js already contains graphql-editor rewrites/redirects.",
+    );
     return { patched: false };
   }
 
@@ -134,21 +143,22 @@ function ensureNextConfigRewrites() {
   const idx = content.indexOf(marker);
   if (idx === -1) {
     console.warn(
-      "Could not locate `const config = {` in next.config.js — manual edit recommended."
+      "Could not locate `const config = {` in next.config.js — manual edit recommended.",
     );
     return { patched: false };
   }
 
   // Insert injection right after the opening of the config object
   const insertPos = idx + marker.length;
-  const patched = content.slice(0, insertPos) + "\n" + injection + content.slice(insertPos);
+  const patched =
+    content.slice(0, insertPos) + "\n" + injection + content.slice(insertPos);
 
   // Backup and write
   const backupPath = path.join(BACKUP_DIR, "next.config.js.bak");
   safeWrite(backupPath, content);
   safeWrite(nextConfigPath, patched);
   console.log(
-    `Inserted rewrites into next.config.js and backed up original to ${path.relative(ROOT, backupPath)}`
+    `Inserted rewrites into next.config.js and backed up original to ${path.relative(ROOT, backupPath)}`,
   );
 
   return { patched: true, backup: backupPath };
@@ -165,7 +175,10 @@ function runLinkinator(url) {
   const cmd = `pnpm dlx linkinator ${url} --internal --allow-local --concurrency ${concurrency} --format json`;
 
   try {
-    const out = execSync(cmd, { stdio: ["inherit", "pipe", "pipe"], maxBuffer: 1024 * 1024 * 20 });
+    const out = execSync(cmd, {
+      stdio: ["inherit", "pipe", "pipe"],
+      maxBuffer: 1024 * 1024 * 20,
+    });
     fs.writeFileSync(outFile, out);
     console.log(`Linkinator JSON saved to ${path.relative(ROOT, outFile)}`);
     return JSON.parse(out.toString());
@@ -174,7 +187,9 @@ function runLinkinator(url) {
     if (err.stdout) {
       try {
         fs.writeFileSync(outFile, err.stdout);
-        console.log(`Partial linkinator output saved to ${path.relative(ROOT, outFile)}`);
+        console.log(
+          `Partial linkinator output saved to ${path.relative(ROOT, outFile)}`,
+        );
         return JSON.parse(err.stdout.toString());
       } catch (e) {
         console.error("Failed to parse linkinator output:", e.message);
@@ -192,7 +207,7 @@ function runLinkinator(url) {
 
 function extractBroken(results) {
   if (!results || !results.results) return [];
-  return results.results.filter(r => {
+  return results.results.filter((r) => {
     // Linkinator result items include status as number/string or 'OK' etc.
     // Consider 200 OK successful; everything else we capture.
     const s = r.status;
@@ -248,7 +263,10 @@ function mapToSources(brokenList) {
 
     // Fallback: scan git-tracked files (fast enough for medium repos)
     try {
-      const gitList = spawnSync("git", ["ls-files"], { cwd: repoRoot, encoding: "utf8" });
+      const gitList = spawnSync("git", ["ls-files"], {
+        cwd: repoRoot,
+        encoding: "utf8",
+      });
       if (gitList.status === 0 && gitList.stdout) {
         const files = gitList.stdout.trim().split(/\r?\n/).filter(Boolean);
         const matches = [];
@@ -285,7 +303,9 @@ function writeOutputs(broken, mapping) {
   const mappingFile = path.join(OUT_DIR, "broken-links-sources.json");
   safeWrite(brokenFile, JSON.stringify(broken, null, 2));
   safeWrite(mappingFile, JSON.stringify(mapping, null, 2));
-  console.log(`Wrote ${broken.length} broken link entries to ${path.relative(ROOT, brokenFile)}`);
+  console.log(
+    `Wrote ${broken.length} broken link entries to ${path.relative(ROOT, brokenFile)}`,
+  );
   console.log(`Wrote mapping to ${path.relative(ROOT, mappingFile)}`);
 }
 
@@ -307,7 +327,10 @@ function writeOutputs(broken, mapping) {
       console.log("Injected rewrites into next.config.js.");
     }
   } catch (e) {
-    console.error("Error while attempting safe fixes:", e && e.message ? e.message : e);
+    console.error(
+      "Error while attempting safe fixes:",
+      e && e.message ? e.message : e,
+    );
   }
 
   // Run linkinator

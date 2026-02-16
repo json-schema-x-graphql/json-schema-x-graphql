@@ -1,72 +1,44 @@
-"""Global unique identifier interface"""
 interface Node {
-  """Globally unique identifier"""
   id: ID!
 }
 
-"""Entity with creation and modification timestamps"""
 interface Timestamped {
   createdAt: DateTime!
   updatedAt: DateTime
 }
 
-"""User authorization role"""
 enum UserRole {
   ADMIN
   USER
   GUEST
 }
 
-"""User account entity with full metadata"""
-type User implements Node & Timestamped @key(fields: "id") @key(fields: "email") @shareable {
-  """User unique identifier"""
+type User implements Node & Timestamped @shareable @key(fields: "id") @key(fields: "email") {
   id: ID!
-
-  """User email address"""
   email: Email!
-
-  """User display name"""
   username: String!
-
-  """User authorization level"""
   role: UserRole!
-
-  """Optional profile image URL"""
   profileImage: URL
-
   createdAt: DateTime!
   updatedAt: DateTime
-
-  """User tags for categorization"""
   tags: [String!]
-
-  """Arbitrary metadata object"""
   metadata: JSON
 }
 
-"""Product entity for e-commerce"""
-type Product implements Node @key(fields: "id") {
+type Product implements Node {
   id: ID!
   name: String!
-
-  """Product price in USD"""
   price: Float!
-
-  """The user who is selling this product"""
   seller: User! @provides(fields: "email username")
-
-  """Stock count from inventory service"""
   inventoryCount: Int @external
 }
 
-"""Customer order with extended user information"""
-type Order @key(fields: "id") {
+type Order {
   id: ID!
   customer: User! @requires(fields: "email username")
   totalAmount: Float!
 }
 
-"""Union type for search results"""
 union SearchResult = User | Product
 
 enum EntityType {
@@ -75,17 +47,7 @@ enum EntityType {
   ORDER
 }
 
-"""Standard delete operation result"""
-type DeletePayload {
-  success: Boolean!
-  deletedId: ID
-  message: String
-}
-
-"""Type demonstrating field override from another service"""
-type OverriddenType @key(fields: "id") {
+type OverriddenType {
   id: ID!
-
-  """Field migrated from legacy service"""
   legacyField: String @override(from: "legacy-service")
 }

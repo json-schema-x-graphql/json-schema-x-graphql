@@ -5,15 +5,15 @@
  * with automatic fallback, engine selection, and performance tracking.
  */
 
-import { WasmConverter } from './wasm-converter';
-import { NodeConverter } from './node-converter';
+import { WasmConverter } from "./wasm-converter";
+import { NodeConverter } from "./node-converter";
 import type {
   ConversionResult,
   ConverterEngine,
   JsonToGraphQLOptions,
   GraphQLToJsonOptions,
   ConversionDirection,
-} from '../types';
+} from "../types";
 
 /**
  * Converter manager configuration
@@ -64,15 +64,15 @@ interface EngineStatus {
  * Default configuration
  */
 const DEFAULT_CONFIG: Required<ConverterManagerConfig> = {
-  preferredEngine: 'auto',
+  preferredEngine: "auto",
   enableFallback: true,
   enablePerformanceTracking: true,
   wasmConfig: {
-    wasmPath: '/wasm/json_schema_x_graphql_bg.wasm',
+    wasmPath: "/wasm/json_schema_x_graphql_bg.wasm",
     autoInit: true,
   },
   nodeConfig: {
-    endpoint: '/api/convert',
+    endpoint: "/api/convert",
     timeout: 30000,
   },
 };
@@ -112,22 +112,18 @@ export class ConverterManager {
   async convertJsonToGraphQL(
     jsonSchema: string,
     options: JsonToGraphQLOptions = {},
-    preferredEngine?: ConverterEngine
+    preferredEngine?: ConverterEngine,
   ): Promise<ConversionResult> {
     const engine = preferredEngine || this.config.preferredEngine;
-    const direction: ConversionDirection = 'json-to-graphql';
+    const direction: ConversionDirection = "json-to-graphql";
 
-    return this.executeConversion(
-      direction,
-      engine,
-      async (selectedEngine) => {
-        if (selectedEngine === 'rust-wasm') {
-          return this.wasmConverter.convertJsonToGraphQL(jsonSchema, options);
-        } else {
-          return this.nodeConverter.convertJsonToGraphQL(jsonSchema, options);
-        }
+    return this.executeConversion(direction, engine, async (selectedEngine) => {
+      if (selectedEngine === "rust-wasm") {
+        return this.wasmConverter.convertJsonToGraphQL(jsonSchema, options);
+      } else {
+        return this.nodeConverter.convertJsonToGraphQL(jsonSchema, options);
       }
-    );
+    });
   }
 
   /**
@@ -136,22 +132,18 @@ export class ConverterManager {
   async convertGraphQLToJson(
     graphqlSchema: string,
     options: GraphQLToJsonOptions = {},
-    preferredEngine?: ConverterEngine
+    preferredEngine?: ConverterEngine,
   ): Promise<ConversionResult> {
     const engine = preferredEngine || this.config.preferredEngine;
-    const direction: ConversionDirection = 'graphql-to-json';
+    const direction: ConversionDirection = "graphql-to-json";
 
-    return this.executeConversion(
-      direction,
-      engine,
-      async (selectedEngine) => {
-        if (selectedEngine === 'rust-wasm') {
-          return this.wasmConverter.convertGraphQLToJson(graphqlSchema, options);
-        } else {
-          return this.nodeConverter.convertGraphQLToJson(graphqlSchema, options);
-        }
+    return this.executeConversion(direction, engine, async (selectedEngine) => {
+      if (selectedEngine === "rust-wasm") {
+        return this.wasmConverter.convertGraphQLToJson(graphqlSchema, options);
+      } else {
+        return this.nodeConverter.convertGraphQLToJson(graphqlSchema, options);
       }
-    );
+    });
   }
 
   /**
@@ -160,13 +152,13 @@ export class ConverterManager {
   private async executeConversion(
     direction: ConversionDirection,
     preferredEngine: ConverterEngine,
-    conversionFn: (engine: 'rust-wasm' | 'node') => Promise<ConversionResult>
+    conversionFn: (engine: "rust-wasm" | "node") => Promise<ConversionResult>,
   ): Promise<ConversionResult> {
     const startTime = performance.now();
-    let selectedEngine: 'rust-wasm' | 'node';
+    let selectedEngine: "rust-wasm" | "node";
 
     // Determine which engine to use
-    if (preferredEngine === 'auto') {
+    if (preferredEngine === "auto") {
       selectedEngine = await this.selectBestEngine();
     } else {
       selectedEngine = preferredEngine;
@@ -194,9 +186,10 @@ export class ConverterManager {
 
       // If failed and fallback is enabled, try fallback engine
       if (this.config.enableFallback) {
-        const fallbackEngine = selectedEngine === 'rust-wasm' ? 'node' : 'rust-wasm';
+        const fallbackEngine =
+          selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
         console.warn(
-          `Primary engine (${selectedEngine}) failed, falling back to ${fallbackEngine}`
+          `Primary engine (${selectedEngine}) failed, falling back to ${fallbackEngine}`,
         );
 
         const fallbackResult = await conversionFn(fallbackEngine);
@@ -219,10 +212,11 @@ export class ConverterManager {
     } catch (error) {
       // If fallback is enabled, try fallback engine
       if (this.config.enableFallback) {
-        const fallbackEngine = selectedEngine === 'rust-wasm' ? 'node' : 'rust-wasm';
+        const fallbackEngine =
+          selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
         console.warn(
           `Primary engine (${selectedEngine}) threw error, falling back to ${fallbackEngine}:`,
-          error
+          error,
         );
 
         try {
@@ -246,9 +240,11 @@ export class ConverterManager {
             success: false,
             error: {
               message: `Both converters failed. Primary: ${
-                error instanceof Error ? error.message : 'Unknown error'
+                error instanceof Error ? error.message : "Unknown error"
               }. Fallback: ${
-                fallbackError instanceof Error ? fallbackError.message : 'Unknown error'
+                fallbackError instanceof Error
+                  ? fallbackError.message
+                  : "Unknown error"
               }`,
             },
             engine: fallbackEngine,
@@ -265,21 +261,21 @@ export class ConverterManager {
   /**
    * Select best engine based on availability and performance
    */
-  private async selectBestEngine(): Promise<'rust-wasm' | 'node'> {
+  private async selectBestEngine(): Promise<"rust-wasm" | "node"> {
     const status = await this.getEngineStatus();
 
     // Prefer WASM if available (faster, no network)
     if (status.wasm.available) {
-      return 'rust-wasm';
+      return "rust-wasm";
     }
 
     // Fallback to Node if WASM is not available
     if (status.node.available) {
-      return 'node';
+      return "node";
     }
 
     // If neither is available, try WASM (it might initialize on first use)
-    return 'rust-wasm';
+    return "rust-wasm";
   }
 
   /**
@@ -297,11 +293,15 @@ export class ConverterManager {
     const wasmAvailable = this.wasmConverter.isAvailable();
     const wasmLoading = this.wasmConverter.isLoading();
     const wasmError = this.wasmConverter.getError();
-    const wasmVersion = wasmAvailable ? await this.wasmConverter.getVersion() : null;
+    const wasmVersion = wasmAvailable
+      ? await this.wasmConverter.getVersion()
+      : null;
 
     // Check Node status
     const nodeAvailable = await this.nodeConverter.isAvailable();
-    const nodeVersion = nodeAvailable ? await this.nodeConverter.getVersion() : null;
+    const nodeVersion = nodeAvailable
+      ? await this.nodeConverter.getVersion()
+      : null;
 
     const status: EngineStatus = {
       wasm: {
@@ -313,7 +313,7 @@ export class ConverterManager {
       node: {
         available: nodeAvailable,
         version: nodeVersion,
-        error: !nodeAvailable ? 'Node converter endpoint not accessible' : null,
+        error: !nodeAvailable ? "Node converter endpoint not accessible" : null,
       },
     };
 
@@ -361,24 +361,32 @@ export class ConverterManager {
   /**
    * Get average conversion time by engine
    */
-  getAverageConversionTime(engine?: ConverterEngine): Record<ConverterEngine, number> {
+  getAverageConversionTime(
+    engine?: ConverterEngine,
+  ): Record<ConverterEngine, number> {
     const metrics = engine
-      ? this.performanceMetrics.filter(m => m.engine === engine)
+      ? this.performanceMetrics.filter((m) => m.engine === engine)
       : this.performanceMetrics;
 
-    const byEngine = metrics.reduce((acc, m) => {
-      if (!acc[m.engine]) {
-        acc[m.engine] = { total: 0, count: 0 };
-      }
-      acc[m.engine].total += m.duration;
-      acc[m.engine].count += 1;
-      return acc;
-    }, {} as Record<string, { total: number; count: number }>);
+    const byEngine = metrics.reduce(
+      (acc, m) => {
+        if (!acc[m.engine]) {
+          acc[m.engine] = { total: 0, count: 0 };
+        }
+        acc[m.engine].total += m.duration;
+        acc[m.engine].count += 1;
+        return acc;
+      },
+      {} as Record<string, { total: number; count: number }>,
+    );
 
-    return Object.entries(byEngine).reduce((acc, [eng, stats]) => {
-      acc[eng as ConverterEngine] = stats.total / stats.count;
-      return acc;
-    }, {} as Record<ConverterEngine, number>);
+    return Object.entries(byEngine).reduce(
+      (acc, [eng, stats]) => {
+        acc[eng as ConverterEngine] = stats.total / stats.count;
+        return acc;
+      },
+      {} as Record<ConverterEngine, number>,
+    );
   }
 
   /**
@@ -386,22 +394,29 @@ export class ConverterManager {
    */
   getSuccessRate(engine?: ConverterEngine): Record<ConverterEngine, number> {
     const metrics = engine
-      ? this.performanceMetrics.filter(m => m.engine === engine)
+      ? this.performanceMetrics.filter((m) => m.engine === engine)
       : this.performanceMetrics;
 
-    const byEngine = metrics.reduce((acc, m) => {
-      if (!acc[m.engine]) {
-        acc[m.engine] = { success: 0, total: 0 };
-      }
-      if (m.success) acc[m.engine].success += 1;
-      acc[m.engine].total += 1;
-      return acc;
-    }, {} as Record<string, { success: number; total: number }>);
+    const byEngine = metrics.reduce(
+      (acc, m) => {
+        if (!acc[m.engine]) {
+          acc[m.engine] = { success: 0, total: 0 };
+        }
+        if (m.success) acc[m.engine].success += 1;
+        acc[m.engine].total += 1;
+        return acc;
+      },
+      {} as Record<string, { success: number; total: number }>,
+    );
 
-    return Object.entries(byEngine).reduce((acc, [eng, stats]) => {
-      acc[eng as ConverterEngine] = stats.total > 0 ? stats.success / stats.total : 0;
-      return acc;
-    }, {} as Record<ConverterEngine, number>);
+    return Object.entries(byEngine).reduce(
+      (acc, [eng, stats]) => {
+        acc[eng as ConverterEngine] =
+          stats.total > 0 ? stats.success / stats.total : 0;
+        return acc;
+      },
+      {} as Record<ConverterEngine, number>,
+    );
   }
 
   /**

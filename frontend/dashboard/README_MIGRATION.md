@@ -55,6 +55,6 @@ The primary goal of migrating this dashboard is to integrate it with the `json-s
 
 ## Known Issues / TODOs
 
--   **Dependencies:** The `package.json` currently references `pnpm` and specific versions that might conflict with the root repo if merged into a single workspace.
--   **Scripts:** Many scripts in `package.json` reference paths like `dev/` or `docs/` which have been moved to different locations in this repo (`examples/` and `docs/reference-architecture/`). These scripts will need to be updated or removed.
--   **Environment:** Check `.env` requirements (if any) from the original repo.
+- **Dependencies:** The `package.json` currently references `pnpm` and specific versions that might conflict with the root repo if merged into a single workspace.
+- **Scripts:** Many scripts in `package.json` reference paths like `dev/` or `docs/` which have been moved to different locations in this repo (`examples/` and `docs/reference-architecture/`). These scripts will need to be updated or removed.
+- **Environment:** Check `.env` requirements (if any) from the original repo.

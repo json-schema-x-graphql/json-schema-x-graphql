@@ -11,6 +11,7 @@
 GraphQL Mesh POC for Schema Unification Forest gateway evaluation.
 
 **Key Features:**
+
 - ✅ Declarative REST to GraphQL mapping (`.meshrc.yaml`)
 - ✅ Built-in OpenAPI/JSON Schema support
 - ✅ Mock data generation
@@ -67,18 +68,19 @@ cf logs schema_unification-mesh --recent
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port | `4000` |
-| `NODE_ENV` | Environment | `development` |
-| `ENABLE_MOCKS` | Enable mock data | `true` |
-| `DATABRICKS_BASE_URL` | REST API base URL | `http://mock-api:3000` |
-| `DATABRICKS_TOKEN` | API authentication token | (none) |
-| `SCHEMA_PATH` | Path to supergraph SDL | `../../generated-schemas/schema_unification.supergraph.graphql` |
+| Variable              | Description              | Default                                                         |
+| --------------------- | ------------------------ | --------------------------------------------------------------- |
+| `PORT`                | Server port              | `4000`                                                          |
+| `NODE_ENV`            | Environment              | `development`                                                   |
+| `ENABLE_MOCKS`        | Enable mock data         | `true`                                                          |
+| `DATABRICKS_BASE_URL` | REST API base URL        | `http://mock-api:3000`                                          |
+| `DATABRICKS_TOKEN`    | API authentication token | (none)                                                          |
+| `SCHEMA_PATH`         | Path to supergraph SDL   | `../../generated-schemas/schema_unification.supergraph.graphql` |
 
 ### Mesh Configuration (`.meshrc.yaml`)
 
 See `.meshrc.yaml` for complete configuration including:
+
 - OpenAPI source handlers
 - Field name transforms (snake_case → camelCase)
 - Response validation (JSON Schema)
@@ -194,7 +196,8 @@ query {
 }
 ```
 
-**Expected:** 
+**Expected:**
+
 - Calls `GET /solicitations/TEST123` on mock REST API
 - Validates response against JSON Schema
 - Transforms snake_case → camelCase
@@ -217,12 +220,16 @@ query {
 
 ```graphql
 query {
-  _entities(representations: [
-    { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
-  ]) {
+  _entities(
+    representations: [
+      { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
+    ]
+  ) {
     ... on AssistRecord {
       iaPiidOrUniqueId
-      systemMetadata { systemName }
+      systemMetadata {
+        systemName
+      }
     }
   }
 }
@@ -247,6 +254,7 @@ autocannon -c 10 -d 30 \
 ```
 
 **Targets:**
+
 - p95 latency: <100ms
 - Throughput: >500 req/sec
 - Memory: <512MB
@@ -265,19 +273,19 @@ node --expose-gc --max-old-space-size=512 node_modules/.bin/mesh dev
 
 ## Scoring Matrix
 
-| Criterion | Weight | Score (0-5) | Notes |
-|-----------|--------|-------------|-------|
-| Federation Support | 5 | 5 | Full gateway support |
-| REST Integration | 5 | 5 | Best-in-class OpenAPI |
-| Mock Data | 3 | 5 | Excellent mock support |
-| Development Speed | 4 | 4 | Hot reload, good DX |
-| Performance | 4 | 3 | Adequate but not fastest |
-| Cloud.gov Fit | 5 | 3 | Works but may need tuning |
-| Operational | 4 | 2 | Complex configuration |
-| Validation | 3 | 4 | Native JSON Schema |
-| Community | 3 | 3 | Active but smaller |
-| Learning Curve | 2 | 3 | Moderate complexity |
-| **TOTAL** | **38** | **TBD** | Weighted score pending |
+| Criterion          | Weight | Score (0-5) | Notes                     |
+| ------------------ | ------ | ----------- | ------------------------- |
+| Federation Support | 5      | 5           | Full gateway support      |
+| REST Integration   | 5      | 5           | Best-in-class OpenAPI     |
+| Mock Data          | 3      | 5           | Excellent mock support    |
+| Development Speed  | 4      | 4           | Hot reload, good DX       |
+| Performance        | 4      | 3           | Adequate but not fastest  |
+| Cloud.gov Fit      | 5      | 3           | Works but may need tuning |
+| Operational        | 4      | 2           | Complex configuration     |
+| Validation         | 3      | 4           | Native JSON Schema        |
+| Community          | 3      | 3           | Active but smaller        |
+| Learning Curve     | 2      | 3           | Moderate complexity       |
+| **TOTAL**          | **38** | **TBD**     | Weighted score pending    |
 
 ---
 

@@ -94,7 +94,12 @@ function getNodeModulePath() {
 
 const nodeModulePath = getNodeModulePath();
 const rustConverterRoot = resolveConverterRoot("rust", "rust");
-const rustBinaryPath = join(rustConverterRoot, "target", "release", "jxql");
+let rustBinaryPath = join(rustConverterRoot, "target", "release", "jxql");
+const workspaceBinaryPath = join(projectRoot, "target", "release", "jxql");
+
+if (existsSync(workspaceBinaryPath)) {
+  rustBinaryPath = workspaceBinaryPath;
+}
 
 const STANDARD_OPTIONS = {
   includeDescriptions: true,
@@ -134,12 +139,7 @@ const OPTION_OVERRIDES = loadOptionOverrides();
 const EFFECTIVE_OPTIONS = { ...STANDARD_OPTIONS, ...OPTION_OVERRIDES };
 
 function buildRustArgs(options, inputFile, outputFile) {
-  const args = [
-    "--input",
-    inputFile,
-    "--output",
-    outputFile,
-  ];
+  const args = ["--input", inputFile, "--output", outputFile];
   // The current Rust CLI supports a minimal flag set; advanced options are not yet exposed.
   args.push("--descriptions");
   args.push("--preserve-order");
@@ -261,7 +261,10 @@ function compareOutputs(nodeResult, rustResult) {
       const nodeStr = JSON.stringify(nodeJson, null, 2);
       const rustStr = JSON.stringify(rustJson, null, 2);
       if (nodeStr === rustStr) {
-        log("✅ Perfect Match! Both converters produce identical AST JSON", "green");
+        log(
+          "✅ Perfect Match! Both converters produce identical AST JSON",
+          "green",
+        );
       } else {
         log("⚠️  Differences detected between converters (AST JSON)", "yellow");
         console.log("\n--- Node Output (JSON) ---\n" + nodeStr.slice(0, 500));
@@ -380,7 +383,8 @@ async function main() {
       readFileSync(inputFile, "utf-8");
 
       const basename = inputFile.split("/").pop().replace(".json", "");
-      const ext = EFFECTIVE_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql";
+      const ext =
+        EFFECTIVE_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql";
 
       logSection(`📁 Testing: ${basename}`);
       log(`Input: ${inputFile}`, "blue");

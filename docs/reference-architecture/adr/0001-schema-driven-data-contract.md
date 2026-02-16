@@ -14,7 +14,7 @@ Initially, we considered GraphQL SDL as the canonical source following the [Grap
 - **Python ecosystem integration**: Our ETL tooling uses Python, which has robust JSON Schema validation libraries.
 - **Rich constraint expressions**: JSON Schema supports regex patterns, numeric ranges, string formats, and other constraints that GraphQL SDL cannot express.
 - **Database compatibility**: snake_case naming in JSON Schema aligns with Delta Lake table schemas without transformation.
-- **Bidirectional generation**: We can generate GraphQL SDL from JSON Schema using x-graphql-* extension metadata.
+- **Bidirectional generation**: We can generate GraphQL SDL from JSON Schema using x-graphql-\* extension metadata.
 
 Downstream integrations require multiple perspectives:
 
@@ -29,7 +29,7 @@ We therefore needed an approach where JSON Schema sources all derivative artifac
 
 Adopt **JSON Schema** (`src/data/*.schema.json`) as the source of truth for the Schema Unification Forest contract schema. All schema-aware tooling—including GraphQL SDL generation, Databricks table planning, and validation—must trace back to these JSON Schemas. The decision bundles the following practices:
 
-- **Maintain JSON Schemas** in `src/data/` with x-graphql-* extension metadata for SDL generation.
+- **Maintain JSON Schemas** in `src/data/` with x-graphql-\* extension metadata for SDL generation.
 - **Generate GraphQL SDL** using repository tooling (`scripts/generate-graphql-from-json.mjs`), ensuring precise type parity for API layer.
 - **Align Delta Lake table definitions** with JSON Schema field taxonomy; ingestion pipelines treat JSON Schema as the authoritative contract that data must satisfy before landing in the lake.
 - **Generate field mappings** to translate between snake_case (database) and camelCase (API) automatically.
@@ -50,7 +50,7 @@ Adopt **JSON Schema** (`src/data/*.schema.json`) as the source of truth for the 
 
 ### Negative / Considerations
 
-- **Contributors must understand x-graphql-* metadata**: Schema maintainers need to know extension conventions for SDL generation.
+- **Contributors must understand x-graphql-\* metadata**: Schema maintainers need to know extension conventions for SDL generation.
 - **Generated artifacts must not be edited**: GraphQL SDL files in `generated-schemas/` are auto-generated and changes will be overwritten.
 - **Tooling dependency**: The pipeline depends on generator scripts; broken tooling can block schema updates and requires ongoing maintenance.
 - **Learning curve for GraphQL features**: While SDL is generated, schema designers must understand how JSON Schema maps to GraphQL types (enums, unions, interfaces).

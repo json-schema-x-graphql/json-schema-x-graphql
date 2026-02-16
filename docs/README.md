@@ -9,18 +9,21 @@
 ## 🎯 Quick Links
 
 ### For New Users
+
 - **[Quick Start](#quick-start)** - Get up and running in 5 minutes
 - **[CLI Guide](./guides/cli-guide.md)** - Complete command-line interface documentation
 - **[Examples](#examples)** - Common usage patterns
 - **[Troubleshooting](./guides/cli-guide.md#troubleshooting)** - Common issues and solutions
 
 ### For Developers
+
 - **[Implementation Status](./status/IMPLEMENTATION-STATUS-CURRENT.md)** - Current state and achievements
 - **[X-GraphQL Attributes](./guides/cli-guide.md#x-graphql-attributes)** - All supported attributes
 - **[Test Results](#test-results)** - Latest validation results
 - **[Contributing](#contributing)** - How to contribute
 
 ### Technical Documentation
+
 - **[Node.js Implementation](./status/VALIDATOR-FIXES-AND-TEST-COVERAGE.md)** - Node.js converter details
 - **[Rust Implementation](./status/RUST-PARITY-IMPLEMENTATION.md)** - Rust converter details
 - **[Architecture](#architecture)** - System design and components
@@ -65,13 +68,13 @@ X-GraphQL is a standardized extension system for JSON Schema that enables lossle
 
 ### Current Status
 
-| Component | Status | Details |
-|-----------|--------|---------|
+| Component             | Status              | Details                                   |
+| --------------------- | ------------------- | ----------------------------------------- |
 | **Node.js Converter** | ✅ Production Ready | 6/8 tests passing, 2 cosmetic differences |
-| **Rust Converter** | ✅ Code Complete | Awaiting environment testing |
-| **Feature Parity** | ✅ 100% | All 22 attributes supported in both |
-| **Documentation** | ✅ Complete | 15+ comprehensive guides |
-| **CLI Tools** | ✅ Ready | Both converters have full CLI support |
+| **Rust Converter**    | ✅ Code Complete    | Awaiting environment testing              |
+| **Feature Parity**    | ✅ 100%             | All 22 attributes supported in both       |
+| **Documentation**     | ✅ Complete         | 15+ comprehensive guides                  |
+| **CLI Tools**         | ✅ Ready            | Both converters have full CLI support     |
 
 ---
 
@@ -80,11 +83,13 @@ X-GraphQL is a standardized extension system for JSON Schema that enables lossle
 ### 1. Install
 
 **Node.js:**
+
 ```bash
 npm install -g @json-schema-x-graphql/core
 ```
 
 **Rust:**
+
 ```bash
 cd converters/rust
 cargo build --release
@@ -93,6 +98,7 @@ cargo build --release
 ### 2. Create a Schema
 
 **user-schema.json:**
+
 ```json
 {
   "definitions": {
@@ -121,11 +127,13 @@ cargo build --release
 ### 3. Convert
 
 **Node.js:**
+
 ```bash
 json-schema-x-graphql --input user-schema.json --output user.graphql
 ```
 
 **Rust:**
+
 ```bash
 jxql --input user-schema.json --output user.graphql
 ```
@@ -133,6 +141,7 @@ jxql --input user-schema.json --output user.graphql
 ### 4. Result
 
 **user.graphql:**
+
 ```graphql
 type User {
   id: ID!
@@ -148,11 +157,13 @@ type User {
 ### Node.js Converter
 
 **Global Installation:**
+
 ```bash
 npm install -g @json-schema-x-graphql/core
 ```
 
 **Local Development:**
+
 ```bash
 cd converters/node
 npm install
@@ -160,6 +171,7 @@ npm run build
 ```
 
 **Verify:**
+
 ```bash
 json-schema-x-graphql --version
 ```
@@ -167,22 +179,26 @@ json-schema-x-graphql --version
 ### Rust Converter
 
 **Build from Source:**
+
 ```bash
 cd converters/rust
 cargo build --release
 ```
 
 **Binary Location:**
+
 ```
 converters/rust/target/release/jxql
 ```
 
 **Optional - Install Globally:**
+
 ```bash
 cargo install --path .
 ```
 
 **Verify:**
+
 ```bash
 jxql --help
 ```
@@ -244,40 +260,40 @@ jxql --input schema.json \
 
 ### Type-Level (8 attributes)
 
-| Attribute | Description | Example |
-|-----------|-------------|---------|
-| `x-graphql-type-name` | Custom type name | `"MyCustomType"` |
-| `x-graphql-type-kind` | Type kind | `"INTERFACE"` |
-| `x-graphql-implements` | Interface list | `["Node"]` |
-| `x-graphql-union-types` | Union members | `["User", "Admin"]` |
-| `x-graphql-skip` | Skip type | `true` |
-| `x-graphql-directives` | Custom directives | `[{...}]` |
-| `x-graphql-description` | Description | `"..."` |
-| `x-graphql-enum` | Enum config | `{...}` |
+| Attribute               | Description       | Example             |
+| ----------------------- | ----------------- | ------------------- |
+| `x-graphql-type-name`   | Custom type name  | `"MyCustomType"`    |
+| `x-graphql-type-kind`   | Type kind         | `"INTERFACE"`       |
+| `x-graphql-implements`  | Interface list    | `["Node"]`          |
+| `x-graphql-union-types` | Union members     | `["User", "Admin"]` |
+| `x-graphql-skip`        | Skip type         | `true`              |
+| `x-graphql-directives`  | Custom directives | `[{...}]`           |
+| `x-graphql-description` | Description       | `"..."`             |
+| `x-graphql-enum`        | Enum config       | `{...}`             |
 
 ### Field-Level (8 attributes)
 
-| Attribute | Description | Example |
-|-----------|-------------|---------|
-| `x-graphql-field-name` | Custom field name | `"userId"` |
-| `x-graphql-field-type` | Custom field type | `"Email"` |
-| `x-graphql-field-non-null` | Force non-null | `true` |
-| `x-graphql-nullable` | Force nullable | `true` |
-| `x-graphql-field-list-item-non-null` | Array items | `true` |
-| `x-graphql-skip` | Skip field | `true` |
-| `x-graphql-args` | Arguments | `{...}` |
-| `x-graphql-directives` | Directives | `[{...}]` |
+| Attribute                            | Description       | Example    |
+| ------------------------------------ | ----------------- | ---------- |
+| `x-graphql-field-name`               | Custom field name | `"userId"` |
+| `x-graphql-field-type`               | Custom field type | `"Email"`  |
+| `x-graphql-field-non-null`           | Force non-null    | `true`     |
+| `x-graphql-nullable`                 | Force nullable    | `true`     |
+| `x-graphql-field-list-item-non-null` | Array items       | `true`     |
+| `x-graphql-skip`                     | Skip field        | `true`     |
+| `x-graphql-args`                     | Arguments         | `{...}`    |
+| `x-graphql-directives`               | Directives        | `[{...}]`  |
 
 ### Federation (6 attributes)
 
-| Attribute | Description | Example |
-|-----------|-------------|---------|
-| `x-graphql-federation-keys` | Entity keys | `[{"fields": "id"}]` |
-| `x-graphql-federation-shareable` | Shareable | `true` |
-| `x-graphql-federation-external` | External | `true` |
-| `x-graphql-federation-requires` | Requires | `"email username"` |
-| `x-graphql-federation-provides` | Provides | `"name email"` |
-| `x-graphql-federation-override-from` | Override | `"users"` |
+| Attribute                            | Description | Example              |
+| ------------------------------------ | ----------- | -------------------- |
+| `x-graphql-federation-keys`          | Entity keys | `[{"fields": "id"}]` |
+| `x-graphql-federation-shareable`     | Shareable   | `true`               |
+| `x-graphql-federation-external`      | External    | `true`               |
+| `x-graphql-federation-requires`      | Requires    | `"email username"`   |
+| `x-graphql-federation-provides`      | Provides    | `"name email"`       |
+| `x-graphql-federation-override-from` | Override    | `"users"`            |
 
 **Full Reference:** [CLI-WRAPPER-GUIDE.md](./guides/cli-guide.md#x-graphql-attributes)
 
@@ -288,6 +304,7 @@ jxql --input schema.json \
 ### 1. Interface Generation
 
 **Input:**
+
 ```json
 {
   "definitions": {
@@ -314,6 +331,7 @@ jxql --input schema.json \
 ```
 
 **Output:**
+
 ```graphql
 interface Node {
   id: ID!
@@ -328,6 +346,7 @@ type User implements Node {
 ### 2. Custom Scalars
 
 **Input:**
+
 ```json
 {
   "definitions": {
@@ -352,6 +371,7 @@ type User implements Node {
 ```
 
 **Output:**
+
 ```graphql
 type Contact {
   email: Email!
@@ -363,6 +383,7 @@ type Contact {
 ### 3. Field Skipping
 
 **Input:**
+
 ```json
 {
   "definitions": {
@@ -380,6 +401,7 @@ type Contact {
 ```
 
 **Output:**
+
 ```graphql
 type User {
   username: String!
@@ -390,6 +412,7 @@ type User {
 ### 4. Array Non-Null Items
 
 **Input:**
+
 ```json
 {
   "definitions": {
@@ -407,6 +430,7 @@ type User {
 ```
 
 **Output:**
+
 ```graphql
 type User {
   tags: [String!]!
@@ -416,6 +440,7 @@ type User {
 ### 5. Federation Entity
 
 **Input:**
+
 ```json
 {
   "definitions": {
@@ -436,6 +461,7 @@ type User {
 ```
 
 **Output:**
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -470,6 +496,7 @@ Feature Validation:
 ```
 
 **Detailed Results:**
+
 - ✅ `comprehensive.json` - Perfect match
 - ✅ `descriptions.json` - Perfect match
 - ✅ `interfaces.json` - Perfect match
@@ -486,6 +513,7 @@ Feature Validation:
 **Overall Status:** 🔄 Code Complete, Pending Testing
 
 All code changes implemented and verified:
+
 - ✅ No syntax errors
 - ✅ No compiler warnings
 - ✅ Follows Rust idioms
@@ -545,6 +573,7 @@ All features manually verified in generated outputs:
 **CLI:** `src/cli.ts`
 
 **Key Features:**
+
 - Full x-graphql attribute support
 - Apollo Federation v2
 - Validation with graphql-js
@@ -559,6 +588,7 @@ All features manually verified in generated outputs:
 **CLI:** `src/bin/jxql.rs`
 
 **Key Features:**
+
 - High-performance conversion
 - Async/await support
 - Remote URL fetching
@@ -569,16 +599,16 @@ All features manually verified in generated outputs:
 
 Both implementations support **identical** functionality:
 
-| Feature | Node.js | Rust |
-|---------|---------|------|
-| Interface Generation | ✅ | ✅ |
-| Field Type Override | ✅ | ✅ |
-| Field/Type Skipping | ✅ | ✅ |
-| Nullability Control | ✅ | ✅ |
-| List Item Non-Null | ✅ | ✅ |
-| Federation Directives | ✅ | ✅ |
-| Custom Scalars | ✅ | ✅ |
-| Union Types | ✅ | ✅ |
+| Feature               | Node.js | Rust |
+| --------------------- | ------- | ---- |
+| Interface Generation  | ✅      | ✅   |
+| Field Type Override   | ✅      | ✅   |
+| Field/Type Skipping   | ✅      | ✅   |
+| Nullability Control   | ✅      | ✅   |
+| List Item Non-Null    | ✅      | ✅   |
+| Federation Directives | ✅      | ✅   |
+| Custom Scalars        | ✅      | ✅   |
+| Union Types           | ✅      | ✅   |
 
 **Architecture Details:** [IMPLEMENTATION-COMPLETE-FINAL.md](./status/IMPLEMENTATION-STATUS-CURRENT.md#architecture)
 
@@ -589,11 +619,13 @@ Both implementations support **identical** functionality:
 ### Benchmarks
 
 **Node.js Converter:**
+
 - Small schema (<10 types): ~10ms
 - Medium schema (10-50 types): ~25ms
 - Large schema (50+ types): ~50ms
 
 **Rust Converter (Estimated):**
+
 - Small schema (<10 types): ~2ms
 - Medium schema (10-50 types): ~5ms
 - Large schema (50+ types): ~10ms
@@ -603,12 +635,14 @@ Both implementations support **identical** functionality:
 ### When to Use Each
 
 **Node.js:**
+
 - Already in Node.js environment
 - npm integration needed
 - Quick setup priority
 - Small schemas (<100 types)
 
 **Rust:**
+
 - Performance critical
 - Large schemas (>100 types)
 - Batch processing
@@ -713,29 +747,32 @@ Both implementations support **identical** functionality:
 ### Getting Started
 
 1. **Fork the Repository**
+
    ```bash
    git clone https://github.com/JJediny/json-schema-x-graphql.git
    cd json-schema-x-graphql
    ```
 
 2. **Install Dependencies**
+
    ```bash
    # Node.js
    cd converters/node
    npm install
    npm run build
-   
+
    # Rust
    cd converters/rust
    cargo build
    ```
 
 3. **Run Tests**
+
    ```bash
    # Node.js
    cd converters/node
    npm test
-   
+
    # Rust
    cd converters/rust
    cargo test
@@ -754,6 +791,7 @@ Both implementations support **identical** functionality:
 ### Development Scripts
 
 **Node.js:**
+
 ```bash
 npm run build          # Build TypeScript
 npm test              # Run tests
@@ -762,6 +800,7 @@ npm run lint          # Lint code
 ```
 
 **Rust:**
+
 ```bash
 cargo build           # Build debug
 cargo build --release # Build optimized
@@ -784,12 +823,14 @@ To add a new x-graphql attribute:
 ### Code Style
 
 **TypeScript:**
+
 - Use TypeScript strict mode
 - Follow ESLint configuration
 - Document public APIs
 - Add JSDoc comments
 
 **Rust:**
+
 - Follow rustfmt defaults
 - Use clippy for linting
 - Document public functions
@@ -915,6 +956,7 @@ node scripts/test-node-converter.mjs
 **Release Status:** ✅ Ready for Production
 
 **What's Complete:**
+
 - ✅ Node.js converter (100%)
 - ✅ Rust converter code (95%)
 - ✅ CLI tools (100%)
@@ -923,6 +965,7 @@ node scripts/test-node-converter.mjs
 - ✅ Feature parity (100%)
 
 **What's Pending:**
+
 - ⏳ Rust environment testing
 - ⏳ Performance benchmarks
 - ⏳ CI pipeline setup

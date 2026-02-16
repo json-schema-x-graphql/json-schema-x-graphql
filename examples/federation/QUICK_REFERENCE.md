@@ -2,21 +2,22 @@
 
 ## Quick Directive Mapping
 
-| GraphQL Federation | JSON Schema X-GraphQL Extension |
-|-------------------|--------------------------------|
-| `@key(fields: "id")` | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }` |
-| `@external` | `"x-graphql-federation": { "external": true }` |
-| `@provides(fields: "username")` | `"x-graphql-federation": { "provides": "username" }` |
-| `@requires(fields: "email")` | `"x-graphql-federation": { "requires": "email" }` |
-| `extend type User` | `"x-graphql-federation": { "extends": true }` |
-| `@shareable` | `"x-graphql-federation": { "shareable": true }` |
-| `@override(from: "old")` | `"x-graphql-federation": { "override": { "from": "old" } }` |
+| GraphQL Federation              | JSON Schema X-GraphQL Extension                             |
+| ------------------------------- | ----------------------------------------------------------- |
+| `@key(fields: "id")`            | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }`  |
+| `@external`                     | `"x-graphql-federation": { "external": true }`              |
+| `@provides(fields: "username")` | `"x-graphql-federation": { "provides": "username" }`        |
+| `@requires(fields: "email")`    | `"x-graphql-federation": { "requires": "email" }`           |
+| `extend type User`              | `"x-graphql-federation": { "extends": true }`               |
+| `@shareable`                    | `"x-graphql-federation": { "shareable": true }`             |
+| `@override(from: "old")`        | `"x-graphql-federation": { "override": { "from": "old" } }` |
 
 ## Common Patterns
 
 ### 1. Simple Entity with Key
 
 **GraphQL SDL:**
+
 ```graphql
 type User @key(fields: "id") {
   id: ID!
@@ -25,6 +26,7 @@ type User @key(fields: "id") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "User": {
@@ -52,6 +54,7 @@ type User @key(fields: "id") {
 ### 2. Entity Extension with External Field
 
 **GraphQL SDL:**
+
 ```graphql
 type User @key(fields: "id") {
   id: ID! @external
@@ -60,6 +63,7 @@ type User @key(fields: "id") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "UserExtension": {
@@ -91,6 +95,7 @@ type User @key(fields: "id") {
 ### 3. Field with @provides
 
 **GraphQL SDL:**
+
 ```graphql
 type Review {
   author: User @provides(fields: "username")
@@ -98,6 +103,7 @@ type Review {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "Review": {
@@ -117,6 +123,7 @@ type Review {
 ### 4. Field with @requires
 
 **GraphQL SDL:**
+
 ```graphql
 type User {
   firstName: String
@@ -126,6 +133,7 @@ type User {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "User": {
@@ -153,6 +161,7 @@ type User {
 ### 5. Composite Key
 
 **GraphQL SDL:**
+
 ```graphql
 type Product @key(fields: "sku storeId") {
   sku: String!
@@ -162,6 +171,7 @@ type Product @key(fields: "sku storeId") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "Product": {
@@ -194,6 +204,7 @@ type Product @key(fields: "sku storeId") {
 ### 6. Multiple Keys
 
 **GraphQL SDL:**
+
 ```graphql
 type User @key(fields: "id") @key(fields: "email") {
   id: ID!
@@ -203,16 +214,14 @@ type User @key(fields: "id") @key(fields: "email") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "User": {
     "type": "object",
     "x-graphql-type-name": "User",
     "x-graphql-federation": {
-      "keys": [
-        { "fields": "id" },
-        { "fields": "email" }
-      ]
+      "keys": [{ "fields": "id" }, { "fields": "email" }]
     },
     "properties": {
       "id": {
@@ -236,6 +245,7 @@ type User @key(fields: "id") @key(fields: "email") {
 ### 7. Shareable Field
 
 **GraphQL SDL:**
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -244,6 +254,7 @@ type Product @key(fields: "id") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "Product": {
@@ -273,6 +284,7 @@ type Product @key(fields: "id") {
 ### 8. Override Field
 
 **GraphQL SDL:**
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -281,6 +293,7 @@ type Product @key(fields: "id") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "Product": {
@@ -313,6 +326,7 @@ type Product @key(fields: "id") {
 ## Testing Your Schema
 
 ### Convert to SDL
+
 ```bash
 # Node.js
 node converters/node/dist/cli.js --input your-schema.json
@@ -322,6 +336,7 @@ node converters/node/dist/cli.js --input your-schema.json
 ```
 
 ### Validate with Rover
+
 ```bash
 # Check single subgraph
 rover subgraph check --schema output.graphql --name your-service
@@ -339,6 +354,7 @@ rover supergraph compose --config supergraph.yaml
 ## Common Mistakes
 
 ❌ **Forgetting to mark extended type:**
+
 ```json
 {
   "User": {
@@ -351,6 +367,7 @@ rover supergraph compose --config supergraph.yaml
 ```
 
 ❌ **Forgetting @external on key field:**
+
 ```json
 {
   "id": {
@@ -360,17 +377,19 @@ rover supergraph compose --config supergraph.yaml
 ```
 
 ❌ **Wrong key field in extension:**
+
 ```json
 {
   "UserExtension": {
     "x-graphql-federation": {
-      "keys": [{ "fields": "email" }]  // Should match original key
+      "keys": [{ "fields": "email" }] // Should match original key
     }
   }
 }
 ```
 
 ✅ **Correct patterns:**
+
 - Always use `"extends": true` when extending types
 - Mark key fields as `"external": true` in extensions
 - Match the exact key fields from the original entity

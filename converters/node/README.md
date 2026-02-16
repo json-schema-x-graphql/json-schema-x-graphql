@@ -6,16 +6,16 @@ This package contains the TypeScript/Node implementation of the JSON Schema ↔ 
 
 ## At a Glance
 
-| Item            | Value                                |
-|-----------------|--------------------------------------|
-| Package name    | `@json-schema-x-graphql/core`        |
-| Language        | TypeScript / Node.js                 |
-| Minimum Node    | `>= 16.0.0`                          |
-| Entry point     | `dist/converter.js`                  |
-| Type defs       | `dist/converter.d.ts`                |
-| Source root     | `src/`                               |
-| Tests           | Jest (co-located under `src/`)       |
-| Peer dependency | `graphql@^16.8.1`                    |
+| Item            | Value                          |
+| --------------- | ------------------------------ |
+| Package name    | `@json-schema-x-graphql/core`  |
+| Language        | TypeScript / Node.js           |
+| Minimum Node    | `>= 16.0.0`                    |
+| Entry point     | `dist/converter.js`            |
+| Type defs       | `dist/converter.d.ts`          |
+| Source root     | `src/`                         |
+| Tests           | Jest (co-located under `src/`) |
+| Peer dependency | `graphql@^16.8.1`              |
 
 ---
 
@@ -41,7 +41,10 @@ During the build, `tsc` consumes `tsconfig.json`, which is scoped to `src/` and 
 ### Programmatic API
 
 ```ts
-import { jsonSchemaToGraphQL, graphqlToJsonSchema } from "@json-schema-x-graphql/core";
+import {
+  jsonSchemaToGraphQL,
+  graphqlToJsonSchema,
+} from "@json-schema-x-graphql/core";
 
 const sdl = jsonSchemaToGraphQL(schemaStringOrObject, {
   includeDescriptions: true,

@@ -10,6 +10,7 @@
 ## 🎯 Overview
 
 Comprehensive enhancement of the Subgraph Composer application with:
+
 1. **Curated JSON Schema Templates** - 15+ real-world examples showcasing converter capabilities
 2. **Settings Management System** - Full application configuration with localStorage persistence
 3. **Converter Options Integration** - Settings directly control converter behavior
@@ -23,23 +24,24 @@ Comprehensive enhancement of the Subgraph Composer application with:
 **File:** `src/lib/templates.js` (850+ lines)
 
 #### New Template Utilities
+
 - `getTemplateNames()` - Get templates with categories for UI
 - `getTemplate(key)` - Get template by identifier
 - `getTemplatesByCategory()` - Group templates by category
 
 #### Template Categories & Count
 
-| Category | Count | Examples |
-|----------|-------|----------|
-| **Basic Types** | 2 | Scalars, Custom Scalars |
-| **Enums** | 1 | Constrained Values |
-| **Collections** | 1 | Arrays, Lists |
-| **Object Types** | 1 | Nested Objects, Composition |
-| **Advanced** | 1 | References, Composition |
-| **Apollo Federation** | 3 | Basic, Extended, Shareable |
-| **Real-World** | 2 | E-Commerce, Blog Post |
-| **Advanced Patterns** | 2 | Nullable Fields, Pagination |
-| **TOTAL** | **15** | |
+| Category              | Count  | Examples                    |
+| --------------------- | ------ | --------------------------- |
+| **Basic Types**       | 2      | Scalars, Custom Scalars     |
+| **Enums**             | 1      | Constrained Values          |
+| **Collections**       | 1      | Arrays, Lists               |
+| **Object Types**      | 1      | Nested Objects, Composition |
+| **Advanced**          | 1      | References, Composition     |
+| **Apollo Federation** | 3      | Basic, Extended, Shareable  |
+| **Real-World**        | 2      | E-Commerce, Blog Post       |
+| **Advanced Patterns** | 2      | Nullable Fields, Pagination |
+| **TOTAL**             | **15** |                             |
 
 #### Template Features
 
@@ -53,7 +55,7 @@ Comprehensive enhancement of the Subgraph Composer application with:
 ✅ **E-Commerce** - Full product catalog with reviews & inventory  
 ✅ **Blog Posts** - Nested comments, tags, authors  
 ✅ **Pagination** - Query arguments, pagination metadata  
-✅ **Nullable Fields** - Optional vs required field semantics  
+✅ **Nullable Fields** - Optional vs required field semantics
 
 ---
 
@@ -81,6 +83,7 @@ export function useSettings() {
 Modern settings UI with three tabs:
 
 **Tab 1: Converter Configuration**
+
 - ✓ Validate Schemas
 - ✓ Include Descriptions
 - ✓ Apollo Federation Support
@@ -88,11 +91,13 @@ Modern settings UI with three tabs:
 - ✓ Naming Convention (idiomatic/original/PascalCase)
 
 **Tab 2: UI & Display**
+
 - ✓ Font Size (10-20px slider)
 - ✓ Dark Mode (toggle)
 - ✓ Composition Statistics Display (toggle)
 
 **Tab 3: Features**
+
 - ✓ Auto-Compose on Generate
 - ✓ Auto-Format SDL
 - ✓ Show Advanced Options
@@ -112,6 +117,7 @@ Modern settings UI with three tabs:
 #### Updated Files
 
 **App.jsx Changes:**
+
 - Import `useSettings` hook
 - Add `showSettings` state
 - Add settings button (⚙️) to header
@@ -120,11 +126,13 @@ Modern settings UI with three tabs:
 - Respect `autoCompose` setting
 
 **useSubgraphGenerator.js Changes:**
+
 - Accept third parameter: `options`
 - Merge options with defaults
 - Support all converter settings
 
 **App.css Changes:**
+
 - Header action buttons
 - Modal overlay styling
 - Modal animations (fadeIn, slideUp)
@@ -135,6 +143,7 @@ Modern settings UI with three tabs:
 ## 🎨 UI/UX Features
 
 ### Settings Modal
+
 - **Position:** Center of screen with overlay
 - **Animation:** Smooth slide-up from bottom with fade-in
 - **Responsive:** Converts to bottom sheet on mobile (< 768px)
@@ -146,6 +155,7 @@ Modern settings UI with three tabs:
   - Unsaved changes notice
 
 ### Templates Panel (Existing)
+
 - Organized by category
 - Clear descriptions
 - Grid layout
@@ -172,6 +182,7 @@ convertSchema(schema, options)
 ```
 
 **Configurable Options:**
+
 - `validate` - Enable schema validation
 - `descriptions` - Include field descriptions
 - `federation` - Enable federation directives
@@ -190,13 +201,13 @@ convertSchema(schema, options)
   federation: true,
   federationVersion: 'AUTO',
   naming: 'GRAPHQL_IDIOMATIC',
-  
+
   // UI
   autoCompose: true,
   showStats: true,
   darkMode: false,
   fontSize: 14,
-  
+
   // Features
   showAdvancedOptions: false,
   autoFormat: true
@@ -220,11 +231,13 @@ All existing tests pass. No breaking changes introduced.
 ## 📁 Files Created/Modified
 
 ### New Files (4)
+
 1. `src/hooks/useSettings.js` - Settings state management
 2. `src/components/SettingsPanel.jsx` - Settings UI component
 3. `src/components/SettingsPanel.css` - Settings styling
 
 ### Modified Files (4)
+
 1. `src/lib/templates.js` - Enhanced with 15 curated templates
 2. `src/App.jsx` - Integrated settings, added modal
 3. `src/App.css` - Added modal and header styling
@@ -235,6 +248,7 @@ All existing tests pass. No breaking changes introduced.
 ## ✨ Key Features
 
 ### Templates
+
 - ✅ Comprehensive coverage of GraphQL patterns
 - ✅ Real-world business examples
 - ✅ Federation patterns for subgraph composition
@@ -243,6 +257,7 @@ All existing tests pass. No breaking changes introduced.
 - ✅ Include x-graphql extensions
 
 ### Settings
+
 - ✅ Persistent storage (localStorage)
 - ✅ Granular control over converter behavior
 - ✅ Intuitive tabbed UI
@@ -252,6 +267,7 @@ All existing tests pass. No breaking changes introduced.
 - ✅ Responsive design
 
 ### Integration
+
 - ✅ Settings affect converter output immediately
 - ✅ No breaking changes to existing API
 - ✅ Backward compatible
@@ -263,8 +279,9 @@ All existing tests pass. No breaking changes introduced.
 ## 🚀 Usage Examples
 
 ### Using Templates
+
 ```javascript
-import { getTemplateNames, getTemplate } from './lib/templates';
+import { getTemplateNames, getTemplate } from "./lib/templates";
 
 // Get available templates
 const templates = getTemplateNames();
@@ -275,24 +292,26 @@ const templates = getTemplateNames();
 // ]
 
 // Load specific template
-const template = getTemplate('ecommerce');
+const template = getTemplate("ecommerce");
 // { name: 'E-Commerce Product Catalog', content: '{ ... }', category: 'Real-World' }
 ```
 
 ### Using Settings
+
 ```javascript
-import { useSettings } from './hooks/useSettings';
+import { useSettings } from "./hooks/useSettings";
 
 function MyComponent() {
-  const { settings, updateSetting, saveSettings, getConverterOptions } = useSettings();
-  
+  const { settings, updateSetting, saveSettings, getConverterOptions } =
+    useSettings();
+
   // Update a setting
-  updateSetting('validate', false);
-  
+  updateSetting("validate", false);
+
   // Get converter options to pass to converter
   const options = getConverterOptions();
   // { validate: false, descriptions: true, federation: true, ... }
-  
+
   // Save changes
   saveSettings({ ...settings, descriptions: false });
 }
@@ -303,6 +322,7 @@ function MyComponent() {
 ## 🔮 Future Enhancements
 
 ### Planned Features
+
 1. **Dark Mode Implementation** - Complete theme system
 2. **Advanced Converter Options** - Additional settings as converter evolves
 3. **Template Sharing** - Export/import custom templates
@@ -311,6 +331,7 @@ function MyComponent() {
 6. **Template Search** - Full-text search across template descriptions
 
 ### Potential Integrations
+
 - User-defined custom templates
 - Template marketplace/registry
 - Settings sync across devices

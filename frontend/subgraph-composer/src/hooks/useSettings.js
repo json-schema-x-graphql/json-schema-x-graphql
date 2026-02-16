@@ -1,23 +1,23 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-const STORAGE_KEY = 'subgraph-composer-settings';
+const STORAGE_KEY = "subgraph-composer-settings";
 const DEFAULT_SETTINGS = {
   // Converter options
   validate: true,
   descriptions: true,
   federation: true,
-  federationVersion: 'AUTO',
-  naming: 'GRAPHQL_IDIOMATIC',
-  
+  federationVersion: "AUTO",
+  naming: "GRAPHQL_IDIOMATIC",
+
   // UI preferences
   autoCompose: true,
   showStats: true,
   darkMode: false,
   fontSize: 14,
-  
+
   // Feature flags
   showAdvancedOptions: false,
-  autoFormat: true
+  autoFormat: true,
 };
 
 /**
@@ -35,11 +35,11 @@ export function useSettings() {
       if (stored) {
         setSettings({
           ...DEFAULT_SETTINGS,
-          ...JSON.parse(stored)
+          ...JSON.parse(stored),
         });
       }
     } catch (error) {
-      console.error('Failed to load settings:', error);
+      console.error("Failed to load settings:", error);
     }
   }, []);
 
@@ -50,13 +50,13 @@ export function useSettings() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
     } catch (error) {
-      console.error('Failed to save settings:', error);
+      console.error("Failed to save settings:", error);
     }
   }, []);
 
   // Update a single setting
   const updateSetting = useCallback((key, value) => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const updated = { ...prev, [key]: value };
       setIsDirty(true);
       return updated;
@@ -65,7 +65,7 @@ export function useSettings() {
 
   // Update multiple settings at once
   const updateSettings = useCallback((updates) => {
-    setSettings(prev => {
+    setSettings((prev) => {
       const updated = { ...prev, ...updates };
       setIsDirty(true);
       return updated;
@@ -84,7 +84,7 @@ export function useSettings() {
       descriptions: settings.descriptions,
       federation: settings.federation,
       federationVersion: settings.federationVersion,
-      naming: settings.naming
+      naming: settings.naming,
     };
   }, [settings]);
 
@@ -95,6 +95,6 @@ export function useSettings() {
     updateSettings,
     saveSettings,
     resetToDefaults,
-    getConverterOptions
+    getConverterOptions,
   };
 }

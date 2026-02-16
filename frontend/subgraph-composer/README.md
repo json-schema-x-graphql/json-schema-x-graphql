@@ -7,6 +7,7 @@ A lightweight, browser-based utility for composing multiple JSON Schemas (with `
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - npm or pnpm
 
@@ -36,6 +37,7 @@ npm run preview
 ## 📋 Features
 
 ### ✅ Schema Management
+
 - Add up to 10 JSON Schemas
 - Edit with syntax-highlighted JSON editor
 - Rename and remove schemas
@@ -43,24 +45,28 @@ npm run preview
 - Duplicate schemas for quick variations
 
 ### ✅ Schema Editing
+
 - CodeMirror v6 JSON editor (lazy-loaded)
 - Format and validate JSON
 - Dirty state indicator (unsaved changes)
 - Real-time error display
 
 ### ✅ Subgraph Generation
+
 - Convert JSON Schema → GraphQL SDL
 - Support for x-graphql directives
 - Validation and error messages
 - Per-schema conversion
 
 ### ✅ Supergraph Composition
+
 - Merge multiple subgraphs into unified schema
 - Automatic type conflict detection
 - Statistics (total types, fields, conflicts)
 - Extensible merge strategies
 
 ### ✅ Results Visualization
+
 - Syntax-highlighted SDL preview
 - Copy to clipboard
 - Download as `.graphql` file
@@ -150,9 +156,13 @@ Generates:
 User
 """
 type User {
-  """Unique user identifier"""
+  """
+  Unique user identifier
+  """
   id: String!
-  """User's full name"""
+  """
+  User's full name
+  """
   name: String!
   email: String
 }
@@ -162,7 +172,7 @@ type User {
 
 ### Converter Options
 
-*Available in settings panel (coming soon)*
+_Available in settings panel (coming soon)_
 
 - Include descriptions in GraphQL
 - Federation version (AUTO, V1, V2)
@@ -172,7 +182,7 @@ type User {
 
 ### Composition Strategies
 
-*Configurable in preview panel*
+_Configurable in preview panel_
 
 - **Extend:** Keep first definition, extend subsequent
 - **Union:** Combine types as union (advanced)
@@ -204,13 +214,13 @@ frontend/subgraph-composer/
 
 ## 🎯 Performance
 
-| Metric | Value |
-|--------|-------|
-| Initial load | ~80 KB |
-| With CodeMirror | ~95 KB |
-| 10 schema composition | ~2 seconds |
-| Memory usage | ~50 MB |
-| Browser support | Latest 3 versions |
+| Metric                | Value             |
+| --------------------- | ----------------- |
+| Initial load          | ~80 KB            |
+| With CodeMirror       | ~95 KB            |
+| 10 schema composition | ~2 seconds        |
+| Memory usage          | ~50 MB            |
+| Browser support       | Latest 3 versions |
 
 ## 📚 Documentation
 
@@ -277,6 +287,7 @@ docker run -p 5175:5175 subgraph-composer
 ### JSON Editor not appearing?
 
 Ensure CodeMirror dependencies are installed:
+
 ```bash
 npm install @codemirror/lang-json @codemirror/view @codemirror/state
 ```
@@ -302,6 +313,7 @@ Check JSON Schema is valid using the ✓ Validate button.
 ### Bug Reports
 
 Include:
+
 - Browser version
 - Steps to reproduce
 - Expected vs actual behavior
@@ -321,6 +333,7 @@ MIT - See repository LICENSE file
 ## 📞 Support
 
 For issues, questions, or suggestions:
+
 1. Check documentation above
 2. Review [IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)
 3. Check GitHub issues

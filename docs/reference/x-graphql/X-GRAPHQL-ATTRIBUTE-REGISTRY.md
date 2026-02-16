@@ -23,24 +23,24 @@
 
 ### All X-GraphQL Attributes (50+)
 
-| Category | Attributes | Count |
-|----------|-----------|-------|
-| **Federation** | federation, federation-keys, federation-shareable, federation-authenticated, federation-inaccessible, federation-interface-object | 6 |
-| **Type Definition** | type, type-name, type-kind, type-directives, implements, union, union-types | 7 |
-| **Field Definition** | field, field-type, field-name, field-directives, field-non-null, required, nullable, skip | 8 |
-| **Scalars** | scalar, scalar-type, scalar-references, shared-scalars | 4 |
-| **Directives** | directives, directives-catalog, arg-directives | 3 |
-| **Operations** | operations, pagination, args | 3 |
-| **Enums** | enum, enums | 2 |
-| **Schema** | schema-reference, system | 2 |
-| **Data Source Mapping** | source-reference, source-mapping-type, mapping-notes | 3 |
-| **Performance** | performance, phase3-performance, complexity, query-cost | 4 |
-| **Security & Auth** | authorization, security, sensitive-data | 3 |
-| **Caching & Observability** | caching, observability, rate-limiting | 3 |
-| **Cost Model** | cost-model | 1 |
-| **Error Handling** | error-codes | 1 |
-| **Query Templates** | query-templates | 1 |
-| **Other** | description | 1 |
+| Category                    | Attributes                                                                                                                        | Count |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **Federation**              | federation, federation-keys, federation-shareable, federation-authenticated, federation-inaccessible, federation-interface-object | 6     |
+| **Type Definition**         | type, type-name, type-kind, type-directives, implements, union, union-types                                                       | 7     |
+| **Field Definition**        | field, field-type, field-name, field-directives, field-non-null, required, nullable, skip                                         | 8     |
+| **Scalars**                 | scalar, scalar-type, scalar-references, shared-scalars                                                                            | 4     |
+| **Directives**              | directives, directives-catalog, arg-directives                                                                                    | 3     |
+| **Operations**              | operations, pagination, args                                                                                                      | 3     |
+| **Enums**                   | enum, enums                                                                                                                       | 2     |
+| **Schema**                  | schema-reference, system                                                                                                          | 2     |
+| **Data Source Mapping**     | source-reference, source-mapping-type, mapping-notes                                                                              | 3     |
+| **Performance**             | performance, phase3-performance, complexity, query-cost                                                                           | 4     |
+| **Security & Auth**         | authorization, security, sensitive-data                                                                                           | 3     |
+| **Caching & Observability** | caching, observability, rate-limiting                                                                                             | 3     |
+| **Cost Model**              | cost-model                                                                                                                        | 1     |
+| **Error Handling**          | error-codes                                                                                                                       | 1     |
+| **Query Templates**         | query-templates                                                                                                                   | 1     |
+| **Other**                   | description                                                                                                                       | 1     |
 
 **Total Unique Attributes**: 52
 
@@ -53,6 +53,7 @@
 **Purpose**: Mark types and fields for Apollo Federation composition
 
 #### `x-graphql-federation-shareable`
+
 - **Type**: Boolean
 - **Scope**: Type or Field
 - **Usage**: Marks a type/field as shareable across multiple subgraphs
@@ -70,6 +71,7 @@
   - easi.schema.json (vendor fields marked as shareable)
 
 #### `x-graphql-federation-keys`
+
 - **Type**: Array of strings
 - **Scope**: Type
 - **Usage**: Defines the federation key fields for entity resolution
@@ -82,6 +84,7 @@
 - **Locations**: Used in multiple types to define composite keys
 
 #### `x-graphql-federation`
+
 - **Type**: Boolean
 - **Scope**: Type or Scalar
 - **Usage**: Marks type/scalar as participating in federation
@@ -93,6 +96,7 @@
   ```
 
 #### `x-graphql-federation-authenticated`, `x-graphql-federation-inaccessible`, `x-graphql-federation-interface-object`
+
 - **Type**: Boolean
 - **Scope**: Type/Field
 - **Usage**: Advanced federation directives for access control and interface handling
@@ -105,6 +109,7 @@
 **Purpose**: Define and describe GraphQL types in JSON Schema
 
 #### `x-graphql-type-name`
+
 - **Type**: String
 - **Scope**: Object type
 - **Usage**: Maps JSON Schema object to specific GraphQL type name (e.g., "FpdsVendor" instead of generic "Vendor")
@@ -122,6 +127,7 @@
 - **Locations**: 64 uses across all schemas
 
 #### `x-graphql-type-kind`
+
 - **Type**: Enum ("OBJECT", "INTERFACE", "UNION", "SCALAR", "ENUM")
 - **Scope**: Type
 - **Usage**: Explicitly declares GraphQL type kind (usually inferred, but explicit here)
@@ -133,6 +139,7 @@
   ```
 
 #### `x-graphql-implements`
+
 - **Type**: Array of strings
 - **Scope**: Type
 - **Usage**: Declares that this type implements GraphQL interfaces
@@ -144,11 +151,13 @@
   ```
 
 #### `x-graphql-union`
+
 - **Type**: Boolean
 - **Scope**: Type
 - **Usage**: Marks type as union type in GraphQL
 
 #### `x-graphql-union-types`
+
 - **Type**: Array of strings
 - **Scope**: Union type
 - **Usage**: Lists member types of the union
@@ -160,6 +169,7 @@
   ```
 
 #### `x-graphql-type-directives`
+
 - **Type**: Array of directive strings
 - **Scope**: Type
 - **Usage**: GraphQL directives to apply to the type definition
@@ -177,6 +187,7 @@
 **Purpose**: Define and describe GraphQL field properties
 
 #### `x-graphql-field-type`
+
 - **Type**: String (GraphQL type reference)
 - **Scope**: Field property
 - **Usage**: Specifies the GraphQL field type (e.g., "DateTime", "String", "Int")
@@ -194,6 +205,7 @@
   ```
 
 #### `x-graphql-field-name`
+
 - **Type**: String
 - **Scope**: Field property in source schemas (usaspending, etc.)
 - **Usage**: Maps source field name to GraphQL field name (e.g., "awardingSubTierAgencyCode")
@@ -213,6 +225,7 @@
   - Cannot be consolidated without breaking functionality
 
 #### `x-graphql-field-non-null`
+
 - **Type**: Boolean
 - **Scope**: Field property
 - **Usage**: Makes field non-nullable (required) in GraphQL
@@ -227,12 +240,14 @@
   ```
 
 #### `x-graphql-required`
+
 - **Type**: Boolean or Array
 - **Scope**: Field/Type
 - **Usage**: Alternative specification of required fields
 - **Alternate Name For**: `x-graphql-field-non-null`
 
 #### `x-graphql-nullable`
+
 - **Type**: Boolean
 - **Scope**: Field property
 - **Usage**: Explicitly marks field as nullable
@@ -246,6 +261,7 @@
   ```
 
 #### `x-graphql-field`
+
 - **Type**: Object (complex definition structure)
 - **Scope**: Field property in managed schemas (petrified.schema.json)
 - **Usage**: Container for complete field-level metadata and schema definition
@@ -270,6 +286,7 @@
   - Used in different schema contexts (managed vs. user-defined)
 
 #### `x-graphql-field-directives`
+
 - **Type**: Array of directive strings
 - **Scope**: Field property
 - **Usage**: GraphQL directives to apply to field
@@ -283,6 +300,7 @@
   ```
 
 #### `x-graphql-skip`
+
 - **Type**: Boolean
 - **Scope**: Field property
 - **Usage**: Skip this field in SDL generation
@@ -294,6 +312,7 @@
 **Purpose**: Define and reference GraphQL scalar types
 
 #### `x-graphql-scalar-type`
+
 - **Type**: String
 - **Scope**: Scalar definition
 - **Usage**: Specifies the GraphQL scalar type
@@ -309,6 +328,7 @@
   ```
 
 #### `x-graphql-scalar-references`
+
 - **Type**: Object with `shared` and `local` arrays
 - **Scope**: Schema root
 - **Usage**: Declares which shared scalars from petrified-supergraph are available
@@ -325,11 +345,13 @@
   ```
 
 #### `x-graphql-scalar`
+
 - **Type**: Object
 - **Scope**: Scalar definition
 - **Usage**: Container for scalar metadata
 
 #### `x-graphql-shared-scalars`
+
 - **Type**: Object (scalar definitions)
 - **Scope**: Schema root (petrified-supergraph.schema.json only)
 - **Usage**: Defines all shared scalars available to all subgraphs
@@ -351,6 +373,7 @@
 **Purpose**: Declare and configure GraphQL directives
 
 #### `x-graphql-directives`
+
 - **Type**: Array of directive definitions
 - **Scope**: Schema root or type/field
 - **Usage**: Declares GraphQL directives available in schema
@@ -368,6 +391,7 @@
   ```
 
 #### `x-graphql-directives-catalog`
+
 - **Type**: Object (directive reference map)
 - **Scope**: Schema root
 - **Usage**: Maps directive names to their usage descriptions
@@ -383,6 +407,7 @@
 - **Location**: fpds.schema.json, other domain schemas
 
 #### `x-graphql-arg-directives`
+
 - **Type**: Array of directive strings
 - **Scope**: Argument definition
 - **Usage**: GraphQL directives for query/mutation arguments
@@ -401,6 +426,7 @@
 ### 6. Operations & Query Attributes (3)
 
 #### `x-graphql-operations`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Declares Query, Mutation, Subscription operations available
@@ -415,6 +441,7 @@
   ```
 
 #### `x-graphql-pagination`
+
 - **Type**: Object
 - **Scope**: Field/Type
 - **Usage**: Pagination configuration (cursor-based, offset-based, etc.)
@@ -430,6 +457,7 @@
   ```
 
 #### `x-graphql-args`
+
 - **Type**: Object
 - **Scope**: Operation/Field
 - **Usage**: Defines query/mutation arguments
@@ -439,11 +467,13 @@
 ### 7. Enum Attributes (2)
 
 #### `x-graphql-enum`
+
 - **Type**: Object
 - **Scope**: Enum value
 - **Usage**: Metadata for individual enum value
 
 #### `x-graphql-enums`
+
 - **Type**: Object (enum definitions)
 - **Scope**: Schema root
 - **Usage**: Declares enums available in schema
@@ -464,6 +494,7 @@
 ### 8. Schema & System Attributes (2)
 
 #### `x-graphql-schema-reference`
+
 - **Type**: String (filename)
 - **Scope**: Schema root
 - **Usage**: References the petrified-supergraph schema for cross-schema lookups
@@ -475,6 +506,7 @@
   ```
 
 #### `x-graphql-system`
+
 - **Type**: String (system name)
 - **Scope**: Schema root or type
 - **Usage**: Identifies which system this schema belongs to
@@ -492,6 +524,7 @@
 **Purpose**: Document data transformations and field mappings (consolidation from Phase 6)
 
 #### `x-graphql-source-reference` ⭐ (New in Phase 6)
+
 - **Type**: String (reference path)
 - **Scope**: Field property
 - **Usage**: Specifies the source field/path in the original data system
@@ -513,6 +546,7 @@
 - **Format**: `[System].[Path.To.Field]` (e.g., "FPDS:Vendor.name", "EASI:ES_VENDOR.VENDOR_NAME")
 
 #### `x-graphql-source-mapping-type` ⭐ (New in Phase 6)
+
 - **Type**: Enum ("direct", "derived", "native", "legacy", "computed")
 - **Scope**: Field property
 - **Usage**: Indicates how this field maps to the source system
@@ -539,6 +573,7 @@
 - **Replaced**: `x-fpds-mapping-type` (Phase 5)
 
 #### `x-graphql-mapping-notes` ⭐ (New in Phase 6)
+
 - **Type**: String
 - **Scope**: Field property
 - **Usage**: Human-readable documentation of how field is mapped/transformed
@@ -564,22 +599,26 @@
 ### 10. Performance Attributes (4)
 
 #### `x-graphql-performance`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Global performance configuration
 
 #### `x-graphql-phase3-performance`
+
 - **Type**: Object
 - **Scope**: Schema root or type
 - **Usage**: Performance settings from Phase 3
 
 #### `x-graphql-complexity`
+
 - **Type**: Integer
 - **Scope**: Field or Type
 - **Usage**: Complexity score for query cost analysis
 - **Reserved For**: Future use
 
 #### `x-graphql-query-cost` ⭐ (Phase 6)
+
 - **Type**: Integer
 - **Scope**: Type or Field
 - **Usage**: Estimated execution cost for query planning
@@ -596,16 +635,19 @@
 ### 11. Security & Authorization Attributes (3)
 
 #### `x-graphql-authorization`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Authorization configuration and policies
 
 #### `x-graphql-security`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Security policies and settings
 
 #### `x-graphql-sensitive-data` ⭐ (Phase 6)
+
 - **Type**: Boolean
 - **Scope**: Field
 - **Usage**: Marks field containing PII or sensitive information
@@ -625,16 +667,19 @@
 ### 12. Caching & Observability Attributes (3)
 
 #### `x-graphql-caching`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Caching policies and configuration
 
 #### `x-graphql-observability`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Tracing, logging, metrics configuration
 
 #### `x-graphql-rate-limiting`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Rate limiting rules and thresholds
@@ -644,6 +689,7 @@
 ### 13. Cost Model Attributes (1)
 
 #### `x-graphql-cost-model`
+
 - **Type**: Object
 - **Scope**: Schema root
 - **Usage**: Query cost calculation model configuration
@@ -653,6 +699,7 @@
 ### 14. Error Handling Attributes (1)
 
 #### `x-graphql-error-codes`
+
 - **Type**: Object (error code definitions)
 - **Scope**: Schema root
 - **Usage**: Standard error codes used in schema
@@ -662,6 +709,7 @@
 ### 15. Query Templates Attributes (1)
 
 #### `x-graphql-query-templates`
+
 - **Type**: Object (template definitions)
 - **Scope**: Schema root
 - **Usage**: Predefined GraphQL queries available to clients
@@ -671,6 +719,7 @@
 ### 16. Other Attributes (1)
 
 #### `x-graphql-description`
+
 - **Type**: String
 - **Scope**: Any
 - **Usage**: Alternative description field for better documentation
@@ -687,6 +736,7 @@
 **Output**: usaspending.schema.json with added attributes
 
 **Attributes Generated**:
+
 - ✅ `x-graphql-source-reference`: Maps to field source path
 - ✅ `x-graphql-source-mapping-type`: Sets mapping type (direct/derived/native)
 - ✅ `x-graphql-mapping-notes`: Adds field documentation
@@ -694,18 +744,20 @@
 - ✅ `x-graphql-shareable-tier`: Sets federation tier
 
 **Usage Pattern**:
+
 ```javascript
-fieldDef['x-graphql-source-reference'] = fieldMapping.source;
-fieldDef['x-graphql-source-mapping-type'] = 'direct';
-fieldDef['x-graphql-mapping-notes'] = fieldMapping.notes;
+fieldDef["x-graphql-source-reference"] = fieldMapping.source;
+fieldDef["x-graphql-source-mapping-type"] = "direct";
+fieldDef["x-graphql-mapping-notes"] = fieldMapping.notes;
 ```
 
 #### 2. generate-subgraph-sdl.mjs
 
-**Input**: JSON Schema files with x-graphql-* attributes  
+**Input**: JSON Schema files with x-graphql-\* attributes  
 **Output**: GraphQL SDL (supergraph)
 
 **Attributes Read**:
+
 - ✅ `x-graphql-type-name`: Determines type name in SDL
 - ✅ `x-graphql-field-type`: Determines field type in SDL
 - ✅ `x-graphql-field-name`: Determines camelCase field name
@@ -716,6 +768,7 @@ fieldDef['x-graphql-mapping-notes'] = fieldMapping.notes;
 - ✅ `x-graphql-scalar-type`: Determines scalar reference
 
 **Transformation Example**:
+
 ```javascript
 // From JSON Schema
 {
@@ -738,6 +791,7 @@ type Vendor {
 **Output**: GraphQL SDL with @shareable directives
 
 **Attributes Read**:
+
 - ✅ `x-graphql-federation-shareable`: Adds @shareable
 - ✅ `x-graphql-mapping-notes`: Adds field comments
 
@@ -747,6 +801,7 @@ type Vendor {
 **Purpose**: Validate schema structure
 
 **Attributes Validated**:
+
 - ✅ `x-graphql-type-name`: Must match type pattern
 - ✅ `x-graphql-field-type`: Must be valid GraphQL type
 - ✅ `x-graphql-federation-keys`: Must reference existing fields
@@ -842,7 +897,7 @@ type Vendor {
 
 ## Linting & Validation
 
-### Linting Rules for x-graphql-* Attributes
+### Linting Rules for x-graphql-\* Attributes
 
 See [eslint-rules-x-graphql.mjs](#) for implementation.
 
@@ -853,6 +908,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 **Scope**: JSON Schema files under `src/data/`
 
 **Validation**:
+
 ```javascript
 // ✅ PASS
 "x-graphql-type-name": "FpdsVendor"
@@ -869,6 +925,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 **Rule**: Attribute values must match expected type and format
 
 **Validation Examples**:
+
 ```javascript
 // ❌ Invalid type
 "x-graphql-federation-shareable": "true"  // Should be boolean
@@ -885,6 +942,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 **Rule**: Certain attributes must be present on type definitions
 
 **Required When**:
+
 - Defining new type → must have `x-graphql-type-name`
 - Defining federation shared type → must have `x-graphql-federation-shareable`
 - Mapping to source system → must have `x-graphql-source-reference` and `x-graphql-source-mapping-type`
@@ -894,6 +952,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 **Rule**: Field names and type names must follow naming patterns
 
 **Patterns**:
+
 - Type names: PascalCase (e.g., `FpdsVendor`, `SharedAddress`)
 - Field names in schema: snake_case (e.g., `vendor_name`, `created_at`)
 - x-graphql-field-name: camelCase (e.g., `vendorName`, `createdAt`)
@@ -903,6 +962,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 **Rule**: Old attribute names (pre-Phase 6) must not be used
 
 **Deprecated Attributes** (will fail linting):
+
 - ❌ `x-fpds-source` → use `x-graphql-source-reference`
 - ❌ `x-fpds-mapping-type` → use `x-graphql-source-mapping-type`
 - ❌ `x-mapping-notes` → use `x-graphql-mapping-notes`
@@ -1017,7 +1077,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 {
   "created_at": {
     "type": "string",
-    "x-graphql-field-type": "Int"  // Wrong type!
+    "x-graphql-field-type": "Int" // Wrong type!
   }
 }
 ```
@@ -1051,11 +1111,13 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 ✅ **DO**: Use attributes that converters expect
 
 **generate-fpds-mapping.mjs expects**:
+
 - ✅ `x-graphql-source-reference` for data source
 - ✅ `x-graphql-source-mapping-type` for transformation type
 - ✅ `x-graphql-shareable` for federation participation
 
 **generate-subgraph-sdl.mjs expects**:
+
 - ✅ `x-graphql-type-name` for GraphQL type name
 - ✅ `x-graphql-field-type` for GraphQL field type
 - ✅ `x-graphql-federation-shareable` for @shareable directive
@@ -1065,6 +1127,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 ✅ **DO**: Follow the pattern when adding new attributes
 
 When adding a new attribute:
+
 1. Use `x-graphql-` prefix
 2. Add to this registry
 3. Document converter expectations
@@ -1105,7 +1168,7 @@ Use this checklist when adding new attributes or modifying schemas:
 
 ### Before Modifying Converters
 
-- [ ] Know which x-graphql-* attributes you're reading/writing
+- [ ] Know which x-graphql-\* attributes you're reading/writing
 - [ ] Update this registry if adding new attributes
 - [ ] Add validation for new attribute values
 - [ ] Test converter with example data
@@ -1127,19 +1190,20 @@ Use this checklist when adding new attributes or modifying schemas:
 
 ### Planned Tools
 
-- Generic x-graphql-* attribute parser utility
+- Generic x-graphql-\* attribute parser utility
 - Automated attribute registry generator
-- x-graphql-* attribute linter
+- x-graphql-\* attribute linter
 - Attribute migration tools
 
 ---
 
 **Version History**:
+
 - v2.0 (Dec 18, 2025): Post Phase-6 consolidation, comprehensive registry
 - v1.0 (Dec 18, 2025): Initial registry (Phase 5)
 
 **Related Documentation**:
+
 - [PHASE-6-COMPLETION-REPORT.md](./PHASE-6-COMPLETION-REPORT.md)
 - [PHASE-5-COMPLETION-REPORT.md](./PHASE-5-COMPLETION-REPORT.md)
 - [FIELD-MAPPING-REGISTRY.md](./mappings/FIELD-MAPPING-REGISTRY.md)
-

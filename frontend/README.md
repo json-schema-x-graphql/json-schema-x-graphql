@@ -5,6 +5,7 @@ This directory contains two concurrent editing demos for the JSON Schema to Grap
 ## Overview
 
 Both demos provide:
+
 - ✨ Real-time collaborative editing
 - 🔄 Bidirectional JSON Schema ↔ GraphQL SDL conversion
 - 🎨 Monaco Editor integration
@@ -16,12 +17,14 @@ Both demos provide:
 ## Demos
 
 ### 1. Yjs + Monaco Editor
+
 **Location:** `demos/yjs-monaco/`  
 **Port:** 3001
 
 A mature, battle-tested CRDT solution with extensive ecosystem support.
 
 **Key Features:**
+
 - WebSocket-based real-time synchronization
 - Awareness protocol for cursor tracking
 - Extensive Monaco Editor bindings
@@ -31,6 +34,7 @@ A mature, battle-tested CRDT solution with extensive ecosystem support.
 - Managed hosting options available
 
 **Best For:**
+
 - Production applications needing stability
 - Projects requiring extensive integrations
 - Teams wanting managed solutions
@@ -39,12 +43,14 @@ A mature, battle-tested CRDT solution with extensive ecosystem support.
 [📖 Full Documentation](./demos/yjs-monaco/README.md)
 
 ### 2. Loro + Monaco Editor
+
 **Location:** `demos/loro-monaco/`  
 **Port:** 3002
 
 A next-generation CRDT built with Rust/WASM, featuring built-in time travel.
 
 **Key Features:**
+
 - Local-first architecture (no server required)
 - Built-in time travel and version history
 - High-performance Rust/WASM implementation
@@ -54,6 +60,7 @@ A next-generation CRDT built with Rust/WASM, featuring built-in time travel.
 - Rich data structures (Tree, Movable Lists)
 
 **Best For:**
+
 - Local-first applications
 - Applications requiring version control
 - Performance-critical use cases
@@ -79,6 +86,7 @@ npm install
 ### Run Demos
 
 **Yjs Demo:**
+
 ```bash
 cd demos/yjs-monaco
 
@@ -90,6 +98,7 @@ npm run dev
 ```
 
 **Loro Demo:**
+
 ```bash
 cd demos/loro-monaco
 npm run dev
@@ -103,21 +112,21 @@ npm run dev
 
 ## Comparison Matrix
 
-| Feature | Yjs | Loro |
-|---------|-----|------|
-| **Maturity** | Very mature (2015+) | Newer (2023+) |
-| **Architecture** | Server-based sync | Local-first/P2P |
-| **Performance** | Excellent | Excellent |
-| **Bundle Size** | ~60KB (gzipped) | ~150KB (WASM) |
-| **Time Travel** | Via snapshots | Built-in |
-| **Setup Complexity** | Medium (needs server) | Low (optional server) |
-| Monaco Binding | Official package | Custom implementation |
-| Visual Editor | ✅ graphql-editor | ✅ graphql-editor |
-| Cursor Awareness | Built-in | Custom implementation |
-| Community | Large | Growing |
-| Production Ready | Yes | Yes (but newer) |
-| Offline Support | Limited | Excellent |
-| Network Required | Yes (for collaboration) | No (P2P optional) |
+| Feature              | Yjs                     | Loro                  |
+| -------------------- | ----------------------- | --------------------- |
+| **Maturity**         | Very mature (2015+)     | Newer (2023+)         |
+| **Architecture**     | Server-based sync       | Local-first/P2P       |
+| **Performance**      | Excellent               | Excellent             |
+| **Bundle Size**      | ~60KB (gzipped)         | ~150KB (WASM)         |
+| **Time Travel**      | Via snapshots           | Built-in              |
+| **Setup Complexity** | Medium (needs server)   | Low (optional server) |
+| Monaco Binding       | Official package        | Custom implementation |
+| Visual Editor        | ✅ graphql-editor       | ✅ graphql-editor     |
+| Cursor Awareness     | Built-in                | Custom implementation |
+| Community            | Large                   | Growing               |
+| Production Ready     | Yes                     | Yes (but newer)       |
+| Offline Support      | Limited                 | Excellent             |
+| Network Required     | Yes (for collaboration) | No (P2P optional)     |
 
 ## Decision Guide
 
@@ -230,7 +239,7 @@ Both demos are designed to integrate with the JSON Schema ↔ GraphQL Rust conve
 ### Via WASM
 
 ```typescript
-import init, { convert_json_to_sdl } from '../../../pkg';
+import init, { convert_json_to_sdl } from "../../../pkg";
 
 await init();
 const result = convert_json_to_sdl(jsonSchema, options);
@@ -239,7 +248,7 @@ const result = convert_json_to_sdl(jsonSchema, options);
 ### Via Node.js
 
 ```typescript
-import { convertJsonToSdl } from '../../../converters/node';
+import { convertJsonToSdl } from "../../../converters/node";
 
 const result = await convertJsonToSdl(jsonSchema, options);
 ```
@@ -367,11 +376,13 @@ CMD ["npm", "run", "preview"]
 ### Yjs Issues
 
 **WebSocket connection fails:**
+
 - Check if `npx y-websocket` is running
 - Verify `VITE_WS_URL` environment variable
 - Check firewall/network settings
 
 **Changes not syncing:**
+
 - Confirm all users are in the same room
 - Check browser console for errors
 - Verify WebSocket connection status
@@ -379,11 +390,13 @@ CMD ["npm", "run", "preview"]
 ### Loro Issues
 
 **WASM fails to load:**
+
 - Check Vite WASM plugin configuration
 - Verify CORS headers are set
 - Check browser compatibility
 
 **Performance issues:**
+
 - Enable document compaction
 - Limit history depth
 - Use selective subscriptions
@@ -401,20 +414,24 @@ Contributions are welcome! Please:
 ## Resources
 
 ### Yjs
+
 - [Yjs Documentation](https://docs.yjs.dev/)
 - [y-monaco GitHub](https://github.com/yjs/y-monaco)
 - [Yjs Community](https://discuss.yjs.dev/)
 
 ### Loro
+
 - [Loro Documentation](https://loro.dev/docs)
 - [Loro GitHub](https://github.com/loro-dev/loro)
 - [Loro Discord](https://discord.gg/loro-dev)
 
 ### Monaco Editor
+
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/)
 - [Monaco React](https://github.com/suren-atoyan/monaco-react)
 
 ### CRDTs
+
 - [CRDT Tech](https://crdt.tech/)
 - [Local-First Software](https://www.inkandswitch.com/local-first/)
 

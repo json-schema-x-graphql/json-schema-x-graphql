@@ -56,8 +56,11 @@ X-GraphQL extensions are vendor-specific JSON Schema properties (prefixed with `
 ```
 
 **Result**:
+
 ```graphql
-"""User account entity"""
+"""
+User account entity
+"""
 type User implements Node & Timestamped {
   id: String
 }
@@ -77,6 +80,7 @@ type User implements Node & Timestamped {
 ```
 
 **Result**:
+
 ```graphql
 id: ID!
 ```
@@ -96,6 +100,7 @@ id: ID!
 ```
 
 **Result**:
+
 ```graphql
 type Product @key(fields: "id") @shareable {
   id: String
@@ -107,6 +112,7 @@ type Product @key(fields: "id") @shareable {
 ## Attribute Categories
 
 ### 1. Type Definition (7 attributes)
+
 - `x-graphql-type-name` - GraphQL type name (PascalCase) ✅
 - `x-graphql-type-kind` - Type kind (OBJECT, INTERFACE, UNION, etc.) ✅
 - `x-graphql-implements` - Interfaces implemented ✅
@@ -116,6 +122,7 @@ type Product @key(fields: "id") @shareable {
 - `x-graphql-skip` - Exclude type from SDL ✅
 
 ### 2. Field Definition (8 attributes)
+
 - `x-graphql-field-name` - Field name (camelCase) ✅
 - `x-graphql-field-type` - Field type override ✅
 - `x-graphql-field-non-null` - Field is non-nullable ✅
@@ -126,6 +133,7 @@ type Product @key(fields: "id") @shareable {
 - `x-graphql-skip` - Exclude field from SDL ✅
 
 ### 3. Federation (6+ attributes)
+
 - `x-graphql-federation-keys` - Entity keys ✅
 - `x-graphql-federation-shareable` - Shareable marker ✅
 - `x-graphql-federation-requires` - Required fields ✅
@@ -134,6 +142,7 @@ type Product @key(fields: "id") @shareable {
 - `x-graphql-federation-override-from` - Field migration ✅
 
 ### 4. Advanced Features
+
 - Custom scalars ✅
 - Enums with value configs ✅
 - Custom directives ✅
@@ -147,6 +156,7 @@ type Product @key(fields: "id") @shareable {
 ## Current Status
 
 ### Documentation
+
 - ✅ Implementation plan created
 - ✅ Migration checklist established
 - ✅ Source documentation analyzed (52+ attributes cataloged)
@@ -157,21 +167,22 @@ type Product @key(fields: "id") @shareable {
 
 ### Converter Support
 
-| Feature | Node.js | Rust | Priority | Status |
-|---------|---------|------|----------|--------|
-| Type name mapping | ✅ 100% | ✅ 100% | P0 | Complete |
-| Field name mapping | ✅ 100% | ✅ 100% | P0 | Complete |
-| Non-null fields | ✅ 100% | ✅ 100% | P0 | Complete |
-| Skip field/type | ✅ 100% | ✅ 100% | P0 | Complete |
-| Nullable override | ✅ 100% | ✅ 100% | P0 | Complete |
-| GraphQL description | ✅ 100% | ✅ 100% | P0 | Complete |
-| Interface implementation | ✅ 100% | ✅ 100% | P1 | Complete |
-| Union types | ✅ 100% | ✅ 100% | P1 | Complete |
-| Federation | ✅ 100% | ✅ 100% | P1 | Complete |
+| Feature                  | Node.js | Rust    | Priority | Status   |
+| ------------------------ | ------- | ------- | -------- | -------- |
+| Type name mapping        | ✅ 100% | ✅ 100% | P0       | Complete |
+| Field name mapping       | ✅ 100% | ✅ 100% | P0       | Complete |
+| Non-null fields          | ✅ 100% | ✅ 100% | P0       | Complete |
+| Skip field/type          | ✅ 100% | ✅ 100% | P0       | Complete |
+| Nullable override        | ✅ 100% | ✅ 100% | P0       | Complete |
+| GraphQL description      | ✅ 100% | ✅ 100% | P0       | Complete |
+| Interface implementation | ✅ 100% | ✅ 100% | P1       | Complete |
+| Union types              | ✅ 100% | ✅ 100% | P1       | Complete |
+| Federation               | ✅ 100% | ✅ 100% | P1       | Complete |
 
 **Overall Progress**: ✅ 100% Node.js, ✅ 100% Rust
 
 ### Test Coverage
+
 - Current: ~95% Node.js, ~90% Rust
 - Target: ≥95% both converters
 - Status: ✅ Comprehensive shared test-data in place
@@ -184,6 +195,7 @@ type Product @key(fields: "id") @shareable {
 ## Implementation Status
 
 ### Completed Phases
+
 - ✅ **Phase 1-2**: Core converter implementation
 - ✅ **Phase 3**: Test Coverage Enhancement (Shared test-data)
 - ✅ **Phase 4**: Documentation Enhancement (3,200+ lines)
@@ -192,6 +204,7 @@ type Product @key(fields: "id") @shareable {
 - ✅ **Phase 7**: Deployment & Documentation (Package ready)
 
 ### Remaining Work
+
 - 🔄 **Phase 8**: Final polish and publication
 - 🔄 Quick Start Guide creation
 - 🔄 npm/crates.io publication
@@ -203,6 +216,7 @@ type Product @key(fields: "id") @shareable {
 ## Success Metrics
 
 ### Documentation ✅
+
 - ✅ All 36+ attributes documented (ATTRIBUTE_REFERENCE.md)
 - 🔄 Quick start ≤10 minutes (in progress)
 - ✅ 30+ working examples (COMMON_PATTERNS.md)
@@ -210,12 +224,14 @@ type Product @key(fields: "id") @shareable {
 - ✅ Migration guide (MIGRATION_GUIDE.md)
 
 ### Converters ✅
+
 - ✅ 100% attribute support
 - ✅ 95% test coverage (Node.js), 90% (Rust)
 - ✅ High round-trip fidelity
 - ✅ Performance targets met (~0.2ms/schema)
 
 ### Quality ✅
+
 - ✅ Zero critical errors
 - ✅ Migration path documented
 - 🔄 Adoption tracking (post-release)
@@ -228,12 +244,14 @@ type Product @key(fields: "id") @shareable {
 We welcome contributions to x-graphql documentation and implementation!
 
 ### How to Help
+
 1. Review [Implementation Plan](../plans/X-GRAPHQL-NAMESPACE-IMPLEMENTATION-PLAN.md)
 2. Check [Migration Checklist](../plans/X-GRAPHQL-MIGRATION-CHECKLIST.md) for open tasks
 3. Pick a task and open an issue
 4. Submit a pull request
 
 ### Areas Needing Help
+
 - Documentation writing
 - Test schema creation
 - Converter implementation
@@ -247,6 +265,7 @@ We welcome contributions to x-graphql documentation and implementation!
 ### Basic Type Mapping
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -271,6 +290,7 @@ We welcome contributions to x-graphql documentation and implementation!
 ```
 
 **Generated GraphQL**:
+
 ```graphql
 type User {
   id: ID!
@@ -281,6 +301,7 @@ type User {
 ### Interface Implementation
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -304,6 +325,7 @@ type User {
 ```
 
 **Generated GraphQL**:
+
 ```graphql
 interface Node {
   id: String
@@ -322,17 +344,20 @@ More examples coming in the [Quick Start Guide](QUICK_START.md) and [Common Patt
 ## Resources
 
 ### Source Material
+
 - [TTSE-petrified-forest x-graphql docs](~/TTSE-petrified-forest/docs/) - Original documentation source
 - [X-GraphQL Quick Reference (TTSE)](~/TTSE-petrified-forest/docs/schema/x-graphql-quick-reference.md)
 - [X-GraphQL Attribute Registry (TTSE)](~/TTSE-petrified-forest/docs/X-GRAPHQL-ATTRIBUTE-REGISTRY.md)
 - [X-GraphQL Naming Conventions (TTSE)](~/TTSE-petrified-forest/docs/x-graphql-naming-conventions.md)
 
 ### Related Documentation
+
 - [Project Context](../../CONTEXT.md) - Overall project architecture
 - [Comprehensive Guide](../COMPREHENSIVE_GUIDE.md) - Detailed converter guide
 - [Testing Guide](../TESTING_GUIDE.md) - Testing strategies
 
 ### Tools
+
 - [Node.js Converter](../../converters/node/) - TypeScript implementation
 - [Rust Converter](../../converters/rust/) - High-performance implementation
 - [Meta-Schema](../../schema/x-graphql-extensions.schema.json) - Validation schema
@@ -344,12 +369,14 @@ More examples coming in the [Quick Start Guide](QUICK_START.md) and [Common Patt
 ### When should I use x-graphql extensions?
 
 Use extensions when:
+
 - Auto-generated names don't match your GraphQL schema conventions
 - You need GraphQL-specific features (interfaces, unions, federation)
 - You want to exclude certain fields from GraphQL
 - You need explicit control over nullability
 
 Don't use extensions when:
+
 - Auto-generation produces the desired output
 - Simple type inference is sufficient
 - You're just getting started (add them later as needed)
@@ -386,4 +413,4 @@ See the [Migration Guide](MIGRATION_GUIDE.md) (coming soon) for attribute name c
 
 ---
 
-*Last Updated: January 2025*
+_Last Updated: January 2025_

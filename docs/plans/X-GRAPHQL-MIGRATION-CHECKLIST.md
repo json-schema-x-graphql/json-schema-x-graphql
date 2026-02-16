@@ -48,16 +48,16 @@ This checklist tracks the migration and consolidation of x-graphql namespace doc
 
 ### 1.4 Content Migration Tasks ⏳
 
-| Task | Source | Destination | Priority | Status | Owner |
-|------|--------|-------------|----------|--------|-------|
-| Quick reference guide | TTSE quick-reference.md | QUICK_START.md | P0 | ⏳ Pending | - |
-| Attribute registry | TTSE ATTRIBUTE_REGISTRY.md | ATTRIBUTE_REFERENCE.md | P0 | ⏳ Pending | - |
-| Naming conventions | TTSE naming-conventions.md | NAMING_CONVENTIONS.md | P0 | ⏳ Pending | - |
-| Hints guide adaptation | TTSE hints-guide.md | COMMON_PATTERNS.md | P1 | ⏳ Pending | - |
-| Validation rules | TTSE validation-rules.md | VALIDATION_GUIDE.md | P1 | ⏳ Pending | - |
-| Troubleshooting | TTSE common-violations.md | TROUBLESHOOTING.md | P1 | ⏳ Pending | - |
-| Hub page creation | N/A | README.md | P0 | ⏳ Pending | - |
-| Migration guide | N/A | MIGRATION_GUIDE.md | P2 | ⏳ Pending | - |
+| Task                   | Source                     | Destination            | Priority | Status     | Owner |
+| ---------------------- | -------------------------- | ---------------------- | -------- | ---------- | ----- |
+| Quick reference guide  | TTSE quick-reference.md    | QUICK_START.md         | P0       | ⏳ Pending | -     |
+| Attribute registry     | TTSE ATTRIBUTE_REGISTRY.md | ATTRIBUTE_REFERENCE.md | P0       | ⏳ Pending | -     |
+| Naming conventions     | TTSE naming-conventions.md | NAMING_CONVENTIONS.md  | P0       | ⏳ Pending | -     |
+| Hints guide adaptation | TTSE hints-guide.md        | COMMON_PATTERNS.md     | P1       | ⏳ Pending | -     |
+| Validation rules       | TTSE validation-rules.md   | VALIDATION_GUIDE.md    | P1       | ⏳ Pending | -     |
+| Troubleshooting        | TTSE common-violations.md  | TROUBLESHOOTING.md     | P1       | ⏳ Pending | -     |
+| Hub page creation      | N/A                        | README.md              | P0       | ⏳ Pending | -     |
+| Migration guide        | N/A                        | MIGRATION_GUIDE.md     | P2       | ⏳ Pending | -     |
 
 **Estimated Effort**: 20 hours  
 **Progress**: 0% (0/8 tasks complete)
@@ -499,33 +499,33 @@ This checklist tracks the migration and consolidation of x-graphql namespace doc
 
 ### By Phase
 
-| Phase | Tasks Complete | Total Tasks | Progress | Status |
-|-------|----------------|-------------|----------|--------|
-| Phase 1 | 4 | 12 | 33% | 🔄 In Progress |
-| Phase 2 | 10 | 30 | 33% | 🔄 In Progress |
-| Phase 3 | 0 | 15 | 0% | ⏳ Planned |
-| Phase 4 | 0 | 31 | 0% | ⏳ Planned |
-| Phase 5 | 0 | 17 | 0% | ⏳ Planned |
-| Phase 6 | 0 | 12 | 0% | ⏳ Planned |
-| Phase 7 | 0 | 11 | 0% | ⏳ Planned |
-| Phase 8 | 0 | 8 | 0% | ⏳ Planned |
+| Phase   | Tasks Complete | Total Tasks | Progress | Status         |
+| ------- | -------------- | ----------- | -------- | -------------- |
+| Phase 1 | 4              | 12          | 33%      | 🔄 In Progress |
+| Phase 2 | 10             | 30          | 33%      | 🔄 In Progress |
+| Phase 3 | 0              | 15          | 0%       | ⏳ Planned     |
+| Phase 4 | 0              | 31          | 0%       | ⏳ Planned     |
+| Phase 5 | 0              | 17          | 0%       | ⏳ Planned     |
+| Phase 6 | 0              | 12          | 0%       | ⏳ Planned     |
+| Phase 7 | 0              | 11          | 0%       | ⏳ Planned     |
+| Phase 8 | 0              | 8           | 0%       | ⏳ Planned     |
 
 **Overall Progress**: 10% (14/136 tasks complete)
 
 ### By Priority
 
-| Priority | Tasks Complete | Total Tasks | Progress |
-|----------|----------------|-------------|----------|
-| P0 (Critical) | 8 | 35 | 23% |
-| P1 (Important) | 6 | 48 | 13% |
-| P2 (Nice-to-have) | 0 | 53 | 0% |
+| Priority          | Tasks Complete | Total Tasks | Progress |
+| ----------------- | -------------- | ----------- | -------- |
+| P0 (Critical)     | 8              | 35          | 23%      |
+| P1 (Important)    | 6              | 48          | 13%      |
+| P2 (Nice-to-have) | 0              | 53          | 0%       |
 
 ### By Converter
 
-| Converter | Feature Support | Test Coverage | Status |
-|-----------|-----------------|---------------|--------|
-| Node.js | 65% | 70% | 🔄 In Progress |
-| Rust | 60% | 65% | 🔄 In Progress |
+| Converter | Feature Support | Test Coverage | Status         |
+| --------- | --------------- | ------------- | -------------- |
+| Node.js   | 65%             | 70%           | 🔄 In Progress |
+| Rust      | 60%             | 65%           | 🔄 In Progress |
 
 **Target**: 100% feature support, 95% test coverage
 
@@ -533,12 +533,12 @@ This checklist tracks the migration and consolidation of x-graphql namespace doc
 
 ## Timeline
 
-| Week | Phase | Key Deliverables | Owner |
-|------|-------|-----------------|-------|
-| Week 1 | Phase 1, 2A | Documentation audit, P0 converter features | Core Team |
-| Week 2 | Phase 2B, 3A, 4A | P1 features, test schemas, quick start | Core Team |
-| Week 3 | Phase 3B, 4B, 5 | Tests, advanced docs, validation | Core + QA |
-| Week 4 | Phase 6, 7, 8 | Integration, deployment, monitoring | DevOps |
+| Week   | Phase            | Key Deliverables                           | Owner     |
+| ------ | ---------------- | ------------------------------------------ | --------- |
+| Week 1 | Phase 1, 2A      | Documentation audit, P0 converter features | Core Team |
+| Week 2 | Phase 2B, 3A, 4A | P1 features, test schemas, quick start     | Core Team |
+| Week 3 | Phase 3B, 4B, 5  | Tests, advanced docs, validation           | Core + QA |
+| Week 4 | Phase 6, 7, 8    | Integration, deployment, monitoring        | DevOps    |
 
 **Start Date**: December 30, 2024  
 **Target End Date**: January 27, 2025  
@@ -554,12 +554,12 @@ None at this time.
 
 ### Identified Risks
 
-| Risk | Probability | Impact | Mitigation | Owner |
-|------|-------------|--------|------------|-------|
-| Breaking changes in converters | Medium | High | Comprehensive testing, migration guide | Core Team |
-| Documentation incomplete | Low | Medium | Prioritize P0/P1 docs | Doc Team |
-| Performance regression | Low | Medium | Benchmark tests | Core Team |
-| Federation compatibility | Medium | High | Test with Apollo | Core Team |
+| Risk                           | Probability | Impact | Mitigation                             | Owner     |
+| ------------------------------ | ----------- | ------ | -------------------------------------- | --------- |
+| Breaking changes in converters | Medium      | High   | Comprehensive testing, migration guide | Core Team |
+| Documentation incomplete       | Low         | Medium | Prioritize P0/P1 docs                  | Doc Team  |
+| Performance regression         | Low         | Medium | Benchmark tests                        | Core Team |
+| Federation compatibility       | Medium      | High   | Test with Apollo                       | Core Team |
 
 ---
 

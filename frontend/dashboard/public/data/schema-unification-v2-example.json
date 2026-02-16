@@ -63,10 +63,10 @@
     "congressionalDistrict": "DC-00"
   },
   "financialInfo": {
-    "totalContractValue": 50000000.00,
-    "baseAndAllOptionsValue": 75000000.00,
-    "independentGovernmentEstimate": 45000000.00,
-    "amountSpentOnProduct": 12500000.50
+    "totalContractValue": 50000000.0,
+    "baseAndAllOptionsValue": 75000000.0,
+    "independentGovernmentEstimate": 45000000.0,
+    "amountSpentOnProduct": 12500000.5
   },
   "businessClassification": {
     "naicsCode": "541512",
@@ -131,7 +131,7 @@
       },
       "usage": {
         "reportingPeriod": "Q1-FY2024",
-        "fundsObligated": 12500000.50,
+        "fundsObligated": 12500000.5,
         "fundsExpended": 8750000.35
       }
     },

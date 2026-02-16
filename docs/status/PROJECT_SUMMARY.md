@@ -35,6 +35,7 @@ json-schema-x-graphql/
 ## Key Documents
 
 ### 1. README.md
+
 - **Purpose**: Project introduction and quick start guide
 - **Audience**: New users, potential contributors, evaluators
 - **Contents**:
@@ -47,6 +48,7 @@ json-schema-x-graphql/
   - Installation and usage instructions
 
 ### 2. CONTEXT.md
+
 - **Purpose**: Comprehensive project context and planning document
 - **Audience**: Contributors, maintainers, architects
 - **Contents**:
@@ -62,6 +64,7 @@ json-schema-x-graphql/
   - Open questions and future work
 
 ### 3. CONTRIBUTING.md
+
 - **Purpose**: Contribution guidelines and development workflow
 - **Audience**: Contributors (new and experienced)
 - **Contents**:
@@ -79,6 +82,7 @@ json-schema-x-graphql/
 ### 4. Schema Files
 
 #### x-graphql-extensions.schema.json (Meta-Schema)
+
 - **Purpose**: Defines all valid `x-graphql-*` extensions
 - **Validation**: JSON Schema 2020-12 with strict patterns
 - **Contents**:
@@ -91,6 +95,7 @@ json-schema-x-graphql/
   - Enum value configurations
 
 #### user-service.schema.json (Example)
+
 - **Purpose**: Comprehensive working example
 - **Demonstrates**:
   - All GraphQL type kinds (Object, Enum, Input, Scalar)
@@ -105,18 +110,21 @@ json-schema-x-graphql/
 ### 5. Configuration Files
 
 #### Cargo.toml
+
 - Rust/WASM project configuration
 - Dependencies: apollo-parser, serde, wasm-bindgen
 - Profile optimizations for WASM size (<150KB target)
 - Feature flags for WASM vs. native builds
 
 #### package.json
+
 - npm package configuration
 - Build scripts for WASM and TypeScript
 - Dev dependencies for testing and linting
 - Peer dependency on GraphQL
 
 #### .gitignore
+
 - Excludes build artifacts, dependencies, IDE files
 - Keeps repository clean and focused
 
@@ -125,23 +133,26 @@ json-schema-x-graphql/
 ### Three-Namespace Design
 
 1. **`snake_case`** - JSON Schema properties (database domain)
-2. **`camelCase`** - GraphQL SDL fields (API domain)  
+2. **`camelCase`** - GraphQL SDL fields (API domain)
 3. **`hyphen-case`** - Extension metadata keys (tooling domain)
 
 ### Minimal Extension Set (15 Core Fields)
 
 **Always Required**:
+
 - `x-graphql-type-name` - Type name (PascalCase)
 - `x-graphql-type-kind` - OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
 - `x-graphql-field-name` - Field name (camelCase)
 - `x-graphql-field-type` - GraphQL type reference
 
 **Required When Applicable**:
+
 - `x-graphql-field-non-null` - Non-nullable field (!)
 - `x-graphql-field-list-item-non-null` - Non-nullable list items ([Item!])
 - `x-graphql-argument-default-value` - Argument defaults
 
 **Federation Required**:
+
 - `x-graphql-federation-keys` - Entity keys
 - `x-graphql-federation-requires` - Required field sets
 - `x-graphql-federation-provides` - Provided field sets
@@ -150,6 +161,7 @@ json-schema-x-graphql/
 - `x-graphql-federation-override-from` - Migration source
 
 **Optional Arrays**:
+
 - `x-graphql-type-directives` - Type-level directives
 - `x-graphql-field-directives` - Field-level directives
 - `x-graphql-field-arguments` - Field arguments
@@ -165,6 +177,7 @@ json-schema-x-graphql/
 ## Development Roadmap
 
 ### Phase 1: Foundation ✅ COMPLETE
+
 - [x] Define meta-schema with strict validation
 - [x] Create comprehensive example schemas
 - [x] Document architectural decisions
@@ -172,6 +185,7 @@ json-schema-x-graphql/
 - [x] Create build infrastructure
 
 ### Phase 2: Core Converter ✅ COMPLETE
+
 - [x] Implement SDL → JSON Schema converter (Rust & Node.js)
 - [x] Implement JSON Schema → SDL converter (Rust & Node.js)
 - [x] Add LRU caching layer
@@ -180,6 +194,7 @@ json-schema-x-graphql/
 - [x] Optimize WASM binary size
 
 ### Phase 3: Frontend Editor ✅ COMPLETE
+
 - [x] Build React split-pane editor
 - [x] Integrate Visual Graph Editor (`graphql-editor`)
 - [x] Add syntax highlighting (Monaco)
@@ -188,6 +203,7 @@ json-schema-x-graphql/
 - [x] Create responsive UI
 
 ### Phase 4: Validation & Testing (In Progress)
+
 - [ ] Add comprehensive test suite
 - [ ] Test federation directive handling
 - [ ] Validate against Apollo Router
@@ -195,6 +211,7 @@ json-schema-x-graphql/
 - [ ] Cross-browser WASM testing
 
 ### Phase 5: Documentation & Release (Pending)
+
 - [ ] Write specification document
 - [ ] Create API documentation
 - [ ] Write integration guides
@@ -205,6 +222,7 @@ json-schema-x-graphql/
 ## Key Features
 
 ### Core Capabilities
+
 - 🔄 **Bidirectional Conversion**: Lossless SDL ↔ JSON Schema
 - 🎯 **Type System Complete**: All GraphQL types supported
 - 🚀 **Apollo Federation v2.9**: Full directive support
@@ -215,11 +233,13 @@ json-schema-x-graphql/
 - ⚡ **Performance**: Sub-5ms conversion via WASM
 
 ### Visual Editor
+
 - **Three-Panel Layout**: JSON Schema, GraphQL SDL, and Visual Graph.
 - **Visual Graph**: Interactive node-link diagram of the schema structure.
 - **Real-Time Sync**: Instant updates between text and visual representations.
 
 ### Apollo Federation Support
+
 - Entity directives: `@key`, `@shareable`, `@inaccessible`, `@interfaceObject`
 - Field directives: `@external`, `@requires`, `@provides`, `@override`
 - Authorization (v2.5+): `@authenticated`, `@requiresScopes`, `@policy`
@@ -234,12 +254,14 @@ json-schema-x-graphql/
 ## Success Metrics
 
 ### Technical
+
 - Round-trip fidelity: 100%
 - Conversion performance: <5ms
 - WASM binary size: <150KB gzipped
 - Test coverage: >95%
 
 ### Adoption
+
 - GitHub stars: Target 500+ in first year
 - NPM downloads: Target 1000+/month after 6 months
 - Documentation: 100% API coverage

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error("Error caught by boundary:", error, errorInfo);
   }
 
   render() {
@@ -19,23 +19,23 @@ export default class ErrorBoundary extends React.Component {
       return (
         <div
           style={{
-            padding: '2rem',
-            textAlign: 'center',
-            color: '#dc2626',
+            padding: "2rem",
+            textAlign: "center",
+            color: "#dc2626",
           }}
         >
           <h2>Something went wrong</h2>
-          <p>{this.state.error?.message || 'An unexpected error occurred'}</p>
+          <p>{this.state.error?.message || "An unexpected error occurred"}</p>
           <button
             onClick={() => window.location.reload()}
             style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: '#6366f1',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.5rem',
-              cursor: 'pointer',
-              marginTop: '1rem',
+              padding: "0.5rem 1rem",
+              backgroundColor: "#6366f1",
+              color: "white",
+              border: "none",
+              borderRadius: "0.5rem",
+              cursor: "pointer",
+              marginTop: "1rem",
             }}
           >
             Reload Page

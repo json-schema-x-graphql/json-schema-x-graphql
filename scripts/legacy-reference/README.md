@@ -27,12 +27,12 @@ Below are the scripts available via `pnpm run` and what they do.
 
 - start
   - Command: `next start`
+
   # Scripts overview
 
   This document lists the npm/pnpm scripts exposed by the project and the important JS/MJS helper scripts under `scripts/`. It also contains a prioritized TODO checklist for reviewing, testing, and improving the scripts and their usage.
 
   ## Quick summary
-
   - Primary purpose: schema tooling (JSON Schema ↔ GraphQL interop), validation, plus standard Next.js app scripts (dev/build/test/lint).
   - Important combined commands:
     - `pnpm run validate:all` — runs the full validation pipeline (schema validation, GraphQL sync checks, sync strict check).
@@ -41,7 +41,6 @@ Below are the scripts available via `pnpm run` and what they do.
   ## NPM / PNPM scripts (from `package.json`)
 
   Below are the scripts available via `pnpm run` and what they do.
-
   - dev
     - Command: `next dev`
     - Purpose: Run the Next.js dev server for local UI development.
@@ -136,9 +135,7 @@ Below are the scripts available via `pnpm run` and what they do.
 
   ## Key scripts in `scripts/` (helpers and generators)
 
-
   Files in `scripts/` include (non-exhaustive; run `ls scripts/` to confirm):
-
   - generate-graphql-json-schema.mjs — GraphQL SDL → JSON Schema (v1)
   - generate-graphql-json-schema-v2.mjs — GraphQL SDL → JSON Schema (v2 target SDL)
   - generate-graphql-json-schema-helpers.mjs — shared helpers used by the generators
@@ -165,7 +162,6 @@ Below are the scripts available via `pnpm run` and what they do.
   (If you need a complete file list with brief one-line descriptions for each file, I can generate that automatically by scanning the `scripts/` directory and reading the top comments of each file.)
 
   ## Common pitfalls / notes
-
   - ESM vs CJS: some scripts use `.mjs` (ES modules) and some use `.js` with CommonJS. The orchestration wrapper (`generate-schema-interop.js`) uses Node to execute scripts by path which generally works, but mixing ESM/CJS can cause module resolution surprises if helper modules are not present or import paths are wrong.
 
   - Quoting in `NODE_OPTIONS` and cross-platform shells: the `NODE_OPTIONS='--max-old-space-size=4096'` pattern works on POSIX shells (macOS/Linux) but can fail on Windows. Consider using cross-env or a Node wrapper to set memory in a cross-platform way.
@@ -177,7 +173,6 @@ Below are the scripts available via `pnpm run` and what they do.
   ## Prioritized TODO checklist — review & improvements
 
   Top priority (blocking CI / correctness):
-
   1. Verify `validate:all` passes locally and in CI
      - Action: run `pnpm run validate:all` and fix failures; ensure `schema_unification.v2.from-graphql.json` is produced and matches expectations.
      - Reason: CI depends on these checks.
@@ -191,20 +186,17 @@ Below are the scripts available via `pnpm run` and what they do.
      - Reason: orchestrator failure causes CI to fail with minimal context.
 
   High priority (developer UX & maintainability):
-
   4. Document each `scripts/` helper file with top-of-file comments and list them in this README (automate if possible).
   5. Add `--help` output to long-running scripts or create a `scripts/cli.js` central entry so commands can be discovered programmatically.
   6. Standardize on `pnpm` in script bodies (replace `npm` calls in `analyze` / `federalist`).
   7. Make scripts idempotent and safe for CI runs (no side-effectful global git commits unless explicitly intended).
 
   Medium priority (cleanup & tests):
-
   8. Add unit/integration tests for critical scripts (generators and validators) — harness can use Node + temporary dirs.
   9. Add a script `scripts/check-generated` that validates the presence and rough validity of `generated-schemas/*.json` (AJV quick-check).
   10. Normalize ESM/CJS usage or document why some scripts are `.mjs` and others are `.js`.
 
   Low priority (polish):
-
   11. Consider adding `make` targets or GitHub Actions workflow snippets for running these scripts locally in a consistent environment.
   12. Add a troubleshooting section with common errors (example: GraphQL parse errors due to leftover diff markers; missing helper imports).
   13. Provide a small CONTRIBUTING note for how to regenerate and commit `generated-schemas/` artifacts when making schema changes.
@@ -222,7 +214,7 @@ Below are the scripts available via `pnpm run` and what they do.
 
   If you need me to automatically generate a per-file summary for every file under `scripts/` (top comment + one-line purpose), I can scan and produce that as an annex to this README.
 
-  ---
+  ***
 
   Created: scripts/README.md
 

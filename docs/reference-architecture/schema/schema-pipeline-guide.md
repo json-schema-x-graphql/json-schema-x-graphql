@@ -31,13 +31,13 @@ The Schema Unification Forest project maintains a **bidirectional schema interop
 
 ### File Locations
 
-| Type | Path | Purpose |
-|------|------|---------|
-| **Canonical JSON Schema** | `src/data/schema_unification.schema.json` | Source of truth (snake_case) |
-| **Canonical GraphQL SDL** | `src/data/schema_unification.graphql` | Human-readable schema definition |
-| **Generated artifacts** | `generated-schemas/` | CI/CD outputs |
-| **Website schemas** | `src/data/generated/` | For Next.js import |
-| **Field mapping** | `generated-schemas/field-name-mapping.json` | camelCase ↔ snake_case |
+| Type                      | Path                                        | Purpose                          |
+| ------------------------- | ------------------------------------------- | -------------------------------- |
+| **Canonical JSON Schema** | `src/data/schema_unification.schema.json`   | Source of truth (snake_case)     |
+| **Canonical GraphQL SDL** | `src/data/schema_unification.graphql`       | Human-readable schema definition |
+| **Generated artifacts**   | `generated-schemas/`                        | CI/CD outputs                    |
+| **Website schemas**       | `src/data/generated/`                       | For Next.js import               |
+| **Field mapping**         | `generated-schemas/field-name-mapping.json` | camelCase ↔ snake_case           |
 
 ---
 
@@ -81,6 +81,7 @@ The Schema Unification Forest project maintains a **bidirectional schema interop
 ### Components
 
 #### Generators
+
 - **`generate-graphql-from-json-schema.mjs`** — JSON Schema → GraphQL SDL
 - **`generate-graphql-json-schema.mjs`** — GraphQL SDL → JSON Schema
 - **`generate-graphql-json-schema-v2.mjs`** — V2 SDL with x-graphql hints
@@ -88,11 +89,13 @@ The Schema Unification Forest project maintains a **bidirectional schema interop
 - **`generate-field-mapping.mjs`** — Creates camelCase ↔ snake_case mapping
 
 #### Validators
+
 - **`validate-schema.mjs`** — Ajv-based JSON Schema validation
 - **`validate-graphql-vs-jsonschema.mjs`** — GraphQL ↔ JSON parity checker
 - **`validate-schema-sync.mjs`** — Field synchronization validator
 
 #### Helpers
+
 - **`helpers/case-conversion.mjs`** — Case conversion utilities
 - **`helpers/format-json.mjs`** — JSON formatting
 - **`json-to-graphql.config.mjs`** — Type mapping configuration
@@ -118,12 +121,13 @@ JSON Schema was chosen as the canonical format because:
 ```json
 {
   "properties": {
-    "contract_id": { "type": "string" },           // ✅ snake_case
-    "organization_info": {                          // ✅ snake_case
+    "contract_id": { "type": "string" }, // ✅ snake_case
+    "organization_info": {
+      // ✅ snake_case
       "type": "object",
       "properties": {
-        "primary_name": { "type": "string" },      // ✅ snake_case
-        "duns_number": { "type": "string" }        // ✅ snake_case
+        "primary_name": { "type": "string" }, // ✅ snake_case
+        "duns_number": { "type": "string" } // ✅ snake_case
       }
     }
   }
@@ -140,7 +144,7 @@ JSON Schema was chosen as the canonical format because:
     "name": { "type": "string" },
     "optional_field": { "type": "string" }
   },
-  "required": ["id", "name"]  // ✅ Explicit required array
+  "required": ["id", "name"] // ✅ Explicit required array
 }
 ```
 
@@ -156,7 +160,7 @@ JSON Schema was chosen as the canonical format because:
 }
 ```
 
-### GraphQL Extensions (x-graphql-*)
+### GraphQL Extensions (x-graphql-\*)
 
 To enable rich GraphQL generation from JSON Schema, use `x-graphql-*` extensions:
 
@@ -204,7 +208,7 @@ To enable rich GraphQL generation from JSON Schema, use `x-graphql-*` extensions
   "schema_version": {
     "type": "string",
     "default": "2.0.0",
-    "x-graphql-required": true  // Forces non-null in GraphQL
+    "x-graphql-required": true // Forces non-null in GraphQL
   }
 }
 ```
@@ -222,6 +226,7 @@ pnpm run generate:schema:interop
 ```
 
 This executes all generators in sequence:
+
 1. Field name mapping
 2. GraphQL SDL → JSON Schema
 3. JSON Schema → GraphQL SDL
@@ -236,14 +241,17 @@ node scripts/generate-graphql-from-json-schema.mjs
 ```
 
 **Inputs:**
+
 - `src/data/schema_unification.schema.json` (canonical)
 - Field mapping (optional)
 
 **Outputs:**
+
 - `generated-schemas/schema_unification.from-json.graphql`
 - `src/data/generated/schema_unification.from-json.graphql`
 
 **Features:**
+
 - Snake_case → camelCase conversion
 - Type inference from JSON Schema
 - Enum generation
@@ -256,14 +264,17 @@ node scripts/generate-graphql-json-schema.mjs
 ```
 
 **Inputs:**
+
 - `src/data/schema_unification.graphql` (SDL)
 - `src/data/schema_unification.schema.json` (for definitions)
 
 **Outputs:**
+
 - `generated-schemas/schema_unification.from-graphql.json`
 - `src/data/generated/schema_unification.from-graphql.json`
 
 **Features:**
+
 - Preserves existing definitions
 - CamelCase → snake_case conversion
 - GraphQL type → JSON Schema type mapping
@@ -276,13 +287,16 @@ node scripts/generate-graphql-json-schema-v2.mjs
 ```
 
 **Inputs:**
+
 - `src/data/schema_unification.target.graphql` (V2 SDL with hints)
 
 **Outputs:**
+
 - `generated-schemas/schema_unification.v2.from-graphql.json`
 
 **Features:**
-- Processes x-graphql-* extensions
+
+- Processes x-graphql-\* extensions
 - Enhanced interface/union handling
 - Custom directive support
 
@@ -293,6 +307,7 @@ node scripts/generate-field-mapping.mjs
 ```
 
 **Output:**
+
 - `generated-schemas/field-name-mapping.json`
 
 Maps GraphQL camelCase fields to JSON Schema snake_case:
@@ -315,30 +330,30 @@ Maps GraphQL camelCase fields to JSON Schema snake_case:
 All generators export functions for programmatic use:
 
 ```javascript
-import { generateFromJSONSchema } from './scripts/generate-graphql-from-json-schema.mjs';
-import { generateFromSDL } from './scripts/generate-graphql-json-schema.mjs';
-import { generateV2 } from './scripts/generate-graphql-json-schema-v2.mjs';
-import { runInteropGeneration } from './scripts/generate-schema-interop.mjs';
+import { generateFromJSONSchema } from "./scripts/generate-graphql-from-json-schema.mjs";
+import { generateFromSDL } from "./scripts/generate-graphql-json-schema.mjs";
+import { generateV2 } from "./scripts/generate-graphql-json-schema-v2.mjs";
+import { runInteropGeneration } from "./scripts/generate-schema-interop.mjs";
 
 // Generate SDL from JSON Schema
 const sdlPath = await generateFromJSONSchema({
-  schemaFile: 'src/data/schema_unification.schema.json',
-  outPath: 'generated-schemas/output.graphql'
+  schemaFile: "src/data/schema_unification.schema.json",
+  outPath: "generated-schemas/output.graphql",
 });
 
 // Generate JSON from SDL
 const jsonPath = await generateFromSDL(
-  'src/data/schema_unification.graphql',
-  'src/data/schema_unification.schema.json',
-  'generated-schemas/output.json',
-  'camel',  // input case
-  'snake'   // output case
+  "src/data/schema_unification.graphql",
+  "src/data/schema_unification.schema.json",
+  "generated-schemas/output.json",
+  "camel", // input case
+  "snake", // output case
 );
 
 // Run full pipeline
 const outputs = await runInteropGeneration({
-  outputDir: 'generated-schemas',
-  verbose: true
+  outputDir: "generated-schemas",
+  verbose: true,
 });
 ```
 
@@ -351,33 +366,33 @@ Define how JSON Schema types map to GraphQL:
 ```javascript
 export const typeConfigs = [
   {
-    name: 'Contract',
-    description: 'Core contract record',
-    pointer: '/definitions/Contract',
-    outputType: 'type'
+    name: "Contract",
+    description: "Core contract record",
+    pointer: "/definitions/Contract",
+    outputType: "type",
   },
   {
-    name: 'OrganizationInfo',
-    description: 'Organization details',
-    pointer: '/definitions/Contract/properties/organization_info',
-    outputType: 'type'
-  }
+    name: "OrganizationInfo",
+    description: "Organization details",
+    pointer: "/definitions/Contract/properties/organization_info",
+    outputType: "type",
+  },
 ];
 
 export const enumConfigs = [
   {
-    name: 'ContactRole',
-    pointer: '/definitions/ContactRole',
-    values: ['primary', 'technical', 'administrative']
-  }
+    name: "ContactRole",
+    pointer: "/definitions/ContactRole",
+    values: ["primary", "technical", "administrative"],
+  },
 ];
 
 export const unionConfigs = [
   {
-    name: 'SystemExtension',
-    description: 'Union of system extensions',
-    members: ['Contract DataExtension', 'AssistExtension', 'EasiExtension']
-  }
+    name: "SystemExtension",
+    description: "Union of system extensions",
+    members: ["Contract DataExtension", "AssistExtension", "EasiExtension"],
+  },
 ];
 ```
 
@@ -396,6 +411,7 @@ pnpm run validate:all
 ```
 
 Runs:
+
 - JSON Schema validation (Ajv)
 - GraphQL SDL validation
 - Parity checking (GraphQL ↔ JSON)
@@ -410,12 +426,14 @@ pnpm run validate:schema
 ```
 
 Validates JSON Schema files using Ajv:
+
 - Structural correctness
 - Valid $ref pointers
 - Type consistency
 - Required field presence
 
 **Checks:**
+
 - ✅ Valid JSON Schema draft-07 or 2020-12
 - ✅ All `$ref` pointers resolve
 - ✅ No circular dependencies
@@ -428,12 +446,14 @@ pnpm run validate:graphql
 ```
 
 Validates GraphQL SDL syntax and semantics:
+
 - Valid GraphQL syntax
 - Type definitions complete
 - Field types resolve
 - Interface implementations correct
 
 **Checks:**
+
 - ✅ Valid GraphQL SDL syntax
 - ✅ All types defined
 - ✅ Field types exist
@@ -446,6 +466,7 @@ pnpm run validate:parity
 ```
 
 Compares GraphQL SDL with JSON Schema:
+
 - Field presence in both formats
 - Type compatibility
 - Required vs non-null alignment
@@ -471,6 +492,7 @@ pnpm run validate:sync:strict
 ```
 
 Validates field synchronization:
+
 - All fields match (ignoring case in normal mode)
 - Type equivalence
 - Nested object parity
@@ -489,6 +511,7 @@ pytest --cov=python --cov-report=term-missing
 ```
 
 Python validators provide:
+
 - Additional JSON Schema validation
 - Custom validation rules
 - Integration tests
@@ -503,26 +526,31 @@ Python validators provide:
 #### Standard Workflow
 
 1. **Edit canonical schema**
+
    ```bash
    vim src/data/schema_unification.schema.json
    ```
 
 2. **Validate changes**
+
    ```bash
    pnpm run validate:schema
    ```
 
 3. **Regenerate artifacts**
+
    ```bash
    pnpm run generate:schema:interop
    ```
 
 4. **Check parity**
+
    ```bash
    pnpm run validate:sync
    ```
 
 5. **Run tests**
+
    ```bash
    pnpm test
    pytest
@@ -546,6 +574,7 @@ Regenerate schemas when:
 - ✅ After merging branches with schema changes
 
 Do NOT regenerate for:
+
 - ❌ Documentation-only changes
 - ❌ Code changes that don't affect schemas
 - ❌ Test updates
@@ -557,6 +586,7 @@ Do NOT regenerate for:
 When SDL and JSON Schema diverge:
 
 1. **Identify the mismatch**
+
    ```bash
    pnpm run validate:sync --strict
    ```
@@ -579,30 +609,32 @@ When SDL and JSON Schema diverge:
 Common issue: Field is `required` in JSON Schema but nullable in SDL (or vice versa).
 
 **Solution 1: Make consistent**
+
 ```json
 // JSON Schema
 {
   "properties": {
     "schema_version": { "type": "string" }
   },
-  "required": ["schema_version"]  // Add to required
+  "required": ["schema_version"] // Add to required
 }
 ```
 
 ```graphql
 # GraphQL SDL
 type SystemMetadata {
-  schemaVersion: String!  # Make non-null
+  schemaVersion: String! # Make non-null
 }
 ```
 
 **Solution 2: Use x-graphql override**
+
 ```json
 {
   "properties": {
     "schema_version": {
       "type": "string",
-      "x-graphql-required": true  // Override in GraphQL only
+      "x-graphql-required": true // Override in GraphQL only
     }
   }
 }
@@ -613,12 +645,14 @@ type SystemMetadata {
 #### What to Commit
 
 Always commit:
+
 - ✅ `src/data/schema_unification.schema.json`
 - ✅ `src/data/schema_unification.graphql`
 - ✅ `generated-schemas/*` (all generated files)
 - ✅ `src/data/generated/*` (website schemas)
 
 Never commit:
+
 - ❌ `node_modules/`
 - ❌ `.next/`
 - ❌ `__tests__/test-output/`
@@ -675,6 +709,7 @@ The schema pipeline runs automatically in CI:
 ```
 
 If CI fails:
+
 1. Pull latest changes
 2. Regenerate locally
 3. Commit generated files
@@ -689,12 +724,14 @@ If CI fails:
 #### Issue: Validation Fails After Schema Change
 
 **Symptoms:**
+
 ```
 ✗ JSON Schema validation failed
 ✗ Contract.new_field: type "InvalidType" does not exist
 ```
 
 **Solution:**
+
 1. Check field type is valid
 2. Ensure referenced types are defined
 3. Verify `$ref` pointers are correct
@@ -710,6 +747,7 @@ grep -r "InvalidType" src/data/schema_unification.schema.json
 #### Issue: Parity Check Fails
 
 **Symptoms:**
+
 ```
 ✗ Field mismatch: Contract.fieldName
   - Present in JSON Schema: field_name
@@ -717,15 +755,18 @@ grep -r "InvalidType" src/data/schema_unification.schema.json
 ```
 
 **Solution:**
+
 1. Ensure field mapping is up-to-date
+
    ```bash
    node scripts/generate-field-mapping.mjs
    ```
 
 2. Check case conversion is working
+
    ```javascript
    // In case-conversion.mjs
-   camelToSnake('fieldName') // Should return 'field_name'
+   camelToSnake("fieldName"); // Should return 'field_name'
    ```
 
 3. Regenerate with correct mapping
@@ -736,22 +777,26 @@ grep -r "InvalidType" src/data/schema_unification.schema.json
 #### Issue: Generated SDL Missing Fields
 
 **Symptoms:**
+
 - Fields in JSON Schema not appearing in generated SDL
 
 **Solution:**
+
 1. Check type mapping configuration
+
    ```javascript
    // json-to-graphql.config.mjs
    export const typeConfigs = [
      {
-       name: 'MyType',
-       pointer: '/definitions/my_type',  // Check this path
-       outputType: 'type'
-     }
+       name: "MyType",
+       pointer: "/definitions/my_type", // Check this path
+       outputType: "type",
+     },
    ];
    ```
 
 2. Verify JSON pointer resolves
+
    ```bash
    # Test pointer manually
    node -e "
@@ -768,18 +813,21 @@ grep -r "InvalidType" src/data/schema_unification.schema.json
 #### Issue: Circular Reference Error
 
 **Symptoms:**
+
 ```
 Error: Maximum call stack size exceeded
 Circular reference detected: Contract -> Organization -> Contract
 ```
 
 **Solution:**
+
 1. Use `$ref` pointers instead of inline definitions
+
    ```json
    {
      "properties": {
        "organization": {
-         "$ref": "#/definitions/Organization"  // ✅ Reference
+         "$ref": "#/definitions/Organization" // ✅ Reference
        }
      }
    }
@@ -792,18 +840,22 @@ Circular reference detected: Contract -> Organization -> Contract
 #### Issue: Python Validation Fails
 
 **Symptoms:**
+
 ```
 ValidationError: 'field_name' is a required property
 ```
 
 **Solution:**
+
 1. Check Python environment
+
    ```bash
    source .venv/bin/activate
    python --version  # Should be >= 3.9
    ```
 
 2. Reinstall dependencies
+
    ```bash
    uv pip install -e ".[dev]"
    ```
@@ -874,19 +926,19 @@ For complex nested types:
 // json-to-graphql.config.mjs
 export const typeConfigs = [
   {
-    name: 'FinancialInfo',
-    description: 'Financial details',
-    pointer: '/definitions/Contract/properties/financial_info',
-    outputType: 'type',
+    name: "FinancialInfo",
+    description: "Financial details",
+    pointer: "/definitions/Contract/properties/financial_info",
+    outputType: "type",
     fields: {
       // Custom field mappings
       obligatedAmount: {
-        pointer: 'obligated_amount',
-        type: 'Decimal',
-        required: true
-      }
-    }
-  }
+        pointer: "obligated_amount",
+        type: "Decimal",
+        required: true,
+      },
+    },
+  },
 ];
 ```
 
@@ -897,7 +949,7 @@ Generate different schemas based on environment:
 ```javascript
 const env = process.env.NODE_ENV;
 
-if (env === 'production') {
+if (env === "production") {
   // Exclude dev-only fields
   schema = filterDevFields(schema);
 }
@@ -908,13 +960,15 @@ if (env === 'production') {
 For large schemas:
 
 1. **Use streaming for file I/O**
+
    ```javascript
-   const stream = fs.createReadStream('large-schema.json');
+   const stream = fs.createReadStream("large-schema.json");
    const parser = JSONStream.parse();
    stream.pipe(parser);
    ```
 
 2. **Cache generated artifacts**
+
    ```javascript
    if (fs.existsSync(cacheFile)) {
      return JSON.parse(fs.readFileSync(cacheFile));
@@ -926,7 +980,7 @@ For large schemas:
    await Promise.all([
      generateFromJSON(),
      generateFromSDL(),
-     generateFieldMapping()
+     generateFieldMapping(),
    ]);
    ```
 

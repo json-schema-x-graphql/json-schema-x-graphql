@@ -17,10 +17,10 @@ npm start
 ```
 
 Notes:
+
 - This is a lightweight spike using `express` + `@graphql-tools/schema` rather than the Grafast/Grafserv runtime; it's intended to show the runtime shape and a simple delegation approach. If you'd like, I can replace this with a `@grafast/grafserv`-based server next.
 
-Updated: wrap-schema server
----------------------------
+## Updated: wrap-schema server
 
 This directory now includes `server.wrap.js`, a variant that uses `@graphql-tools/wrap` to introspect the remote PostGraphile schema and an HTTP executor for delegation. The original `server.js` (AST-based delegator) remains as a reference.
 
@@ -47,6 +47,7 @@ curl -s -X POST http://localhost:4001/graphql \
 ```
 
 Notes and next steps:
+
 - If the PostGraphile endpoint is not available at startup, the wrap server will still run but will skip introspection; delegation will still use the HTTP executor for requests.
 - I have not installed dependencies in CI or the grafserv directory inside this workspace (to avoid colliding with the running Next dev server). If you want, I can stop the dev server and finish `npm install` + smoke tests.
 - Future improvement: replace manual AST aliasing with `delegateToSchema` and `RenameObjectFields` transforms from `@graphql-tools/*` once dependencies are installed and validated.

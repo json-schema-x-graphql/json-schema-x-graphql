@@ -9,12 +9,14 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
 ## Files Generated
 
 ### V1 Files (Existing)
+
 - `src/data/schema_unification.schema.json` - V1 nested schema
 - `public/data/schema_unification2contract_data.json` - V1 Contract Data mapping
-- `public/data/schema_unification2legacy_procurement.json` - V1 Legacy Procurement mapping  
+- `public/data/schema_unification2legacy_procurement.json` - V1 Legacy Procurement mapping
 - `public/data/schema-unification2intake_process.json` - V1 EASi mapping
 
 ### V2 Files (New)
+
 - `src/data/schema_unification.schema.v2-generated.json` - V2 definitions-based schema
 - `public/data/schema_unification-v2-example.json` - V2 example contract instance
 - `public/data/schema_unification2contract_data-v2.json` - V2 Contract Data mapping
@@ -47,7 +49,7 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
             "type": "object",
             "properties": {
               "systemName": { "type": "string" },
-              "recordId": { "type": "string" },
+              "recordId": { "type": "string" }
               // ... inline nested definition
             }
           }
@@ -59,6 +61,7 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
 ```
 
 **Characteristics:**
+
 - ✅ Easy to read top-to-bottom
 - ✅ No need to jump between sections
 - ✅ Self-contained
@@ -110,6 +113,7 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
 ```
 
 **Characteristics:**
+
 - ✅ Reusable type definitions
 - ✅ Compatible with GraphQL generators
 - ✅ Compatible with TypeScript generators
@@ -124,12 +128,12 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
 
 ### 1. Type Definitions
 
-| Aspect | V1 Nested | V2 Definitions |
-|--------|-----------|----------------|
-| **Reusability** | None - everything inline | 21 reusable definitions |
-| **Type References** | No $ref usage | Extensive $ref usage |
-| **Enums** | Inline strings | Named enum definitions |
-| **Complex Types** | Nested objects | Separate definitions |
+| Aspect              | V1 Nested                | V2 Definitions          |
+| ------------------- | ------------------------ | ----------------------- |
+| **Reusability**     | None - everything inline | 21 reusable definitions |
+| **Type References** | No $ref usage            | Extensive $ref usage    |
+| **Enums**           | Inline strings           | Named enum definitions  |
+| **Complex Types**   | Nested objects           | Separate definitions    |
 
 ### 2. System Extensions (CRITICAL DIFFERENCE)
 
@@ -161,6 +165,7 @@ This document provides a detailed side-by-side comparison of V1 (nested) and V2 
 ```
 
 **Result in GraphQL:**
+
 ```graphql
 type Contract DataExtension {
   """Raw Contract Data-specific data (stored as JSON)"""
@@ -169,6 +174,7 @@ type Contract DataExtension {
 ```
 
 **Impact:**
+
 - ❌ Cannot query specific Contract Data fields
 - ❌ No type safety
 - ❌ Must parse JSON client-side
@@ -198,8 +204,12 @@ type Contract DataExtension {
             "isFinancialAssistance": { "type": "boolean" }
           }
         },
-        "eligibility": { /* ... */ },
-        "usage": { /* ... */ }
+        "eligibility": {
+          /* ... */
+        },
+        "usage": {
+          /* ... */
+        }
       }
     }
   }
@@ -207,6 +217,7 @@ type Contract DataExtension {
 ```
 
 **Result in GraphQL:**
+
 ```graphql
 type Contract DataExtension {
   contract_data: Contract DataSpecificData  # ✅ Typed structure
@@ -220,6 +231,7 @@ type Contract DataSpecificData {
 ```
 
 **Impact:**
+
 - ✅ Fully queryable Contract Data fields
 - ✅ Type safety
 - ✅ Server-side filtering
@@ -305,14 +317,15 @@ type Contract DataSpecificData {
       },
       "usage": {
         "reportingPeriod": "Q1-FY2024",
-        "fundsObligated": 12500000.50
+        "fundsObligated": 12500000.5
       }
     }
   }
 }
 ```
 
-**Benefits:** 
+**Benefits:**
+
 - Schema validation on system extensions
 - Clear structure for Contract Data-specific data
 - Type safety throughout
@@ -328,12 +341,13 @@ type Contract DataSpecificData {
 ```json
 {
   "systemExtensions": {
-    "contract_data": "data.rawFpdsData"  // ❌ Maps to entire object
+    "contract_data": "data.rawFpdsData" // ❌ Maps to entire object
   }
 }
 ```
 
 **Issues:**
+
 - Generic object mapping
 - No field-level mapping
 - Everything goes into one blob
@@ -362,6 +376,7 @@ type Contract DataSpecificData {
 ```
 
 **Benefits:**
+
 - Field-level mapping clarity
 - Reference to definition
 - Clear transformation rules
@@ -374,7 +389,7 @@ type Contract DataSpecificData {
 ```json
 {
   "systemExtensions": {
-    "legacy_procurement": "award.rawData"  // ❌ Generic object
+    "legacy_procurement": "award.rawData" // ❌ Generic object
   }
 }
 ```
@@ -400,6 +415,7 @@ type Contract DataSpecificData {
 ```
 
 **Benefits:**
+
 - CFDA data is queryable
 - Business classifications are typed
 - Clear structure for grants/awards
@@ -411,7 +427,7 @@ type Contract DataSpecificData {
 ```json
 {
   "systemExtensions": {
-    "intake_process": "intake.rawData"  // ❌ IT governance data as blob
+    "intake_process": "intake.rawData" // ❌ IT governance data as blob
   }
 }
 ```
@@ -439,6 +455,7 @@ type Contract DataSpecificData {
 ```
 
 **Benefits:**
+
 - IT governance data is queryable
 - GRB/GRT information is typed
 - Business case tracking is explicit
@@ -459,16 +476,16 @@ type Contract {
 }
 
 type SystemExtensions {
-  contract_data: JSON  # ❌ Opaque
-  legacy_procurement: JSON  # ❌ Opaque
-  intake_process: JSON  # ❌ Opaque
+  contract_data: JSON # ❌ Opaque
+  legacy_procurement: JSON # ❌ Opaque
+  intake_process: JSON # ❌ Opaque
 }
 
 # Cannot query:
 query {
   contracts {
     systemExtensions {
-      contract_data  # Returns entire JSON blob
+      contract_data # Returns entire JSON blob
       # ❌ Cannot do: contract_data { legacy_procurementanceType { code } }
     }
   }
@@ -531,31 +548,40 @@ query {
 **Requirement:** Filter contracts by Contract Data legacy_procurementance type
 
 **V1 Limitation:**
+
 ```graphql
 # ❌ CANNOT DO THIS
 query {
-  contracts(filter: {
-    contract_data: { legacy_procurementanceType: { isFinancialAssistance: true } }
-  }) {
+  contracts(
+    filter: {
+      contract_data: {
+        legacy_procurementanceType: { isFinancialAssistance: true }
+      }
+    }
+  ) {
     piid
   }
 }
 ```
+
 **Workaround:** Fetch all contracts, parse JSON client-side, filter in memory.
 
 **V2 Solution:**
+
 ```graphql
 # ✅ CAN DO THIS
 query {
-  contracts(filter: {
-    systemExtensions: {
-      contract_data: {
+  contracts(
+    filter: {
+      systemExtensions: {
         contract_data: {
-          legacy_procurementanceType: { isFinancialAssistance: true }
+          contract_data: {
+            legacy_procurementanceType: { isFinancialAssistance: true }
+          }
         }
       }
     }
-  }) {
+  ) {
     piid
     systemExtensions {
       contract_data {
@@ -576,6 +602,7 @@ query {
 **Requirement:** Generate report of all Legacy Procurement awards by CFDA number
 
 **V1 Limitation:**
+
 ```graphql
 # ❌ Cannot query CFDA number
 query {
@@ -589,6 +616,7 @@ query {
 ```
 
 **V2 Solution:**
+
 ```graphql
 # ✅ Can query CFDA explicitly
 query {
@@ -615,6 +643,7 @@ query {
 **Requirement:** Track IT projects by GRB review status and LCID
 
 **V1 Limitation:**
+
 ```graphql
 # ❌ Cannot query governance fields
 query {
@@ -628,6 +657,7 @@ query {
 ```
 
 **V2 Solution:**
+
 ```graphql
 # ✅ Can query governance fields explicitly
 query {
@@ -659,6 +689,7 @@ query {
 ### Adding New Field to Core Contract (e.g., "contractValue")
 
 #### V1 Approach
+
 ```json
 {
   "properties": {
@@ -674,9 +705,11 @@ query {
   }
 }
 ```
+
 **Steps:** 1 (add inline)
 
 #### V2 Approach
+
 ```json
 {
   "definitions": {
@@ -692,12 +725,14 @@ query {
   }
 }
 ```
+
 **Steps:** 1 (add to definition)
 **Benefit:** Automatically available everywhere FinancialInfo is referenced
 
 ### Adding New Contract Data-Specific Field
 
 #### V1 Approach
+
 ```json
 {
   "properties": {
@@ -705,17 +740,19 @@ query {
       "properties": {
         "contract_data": {
           "type": "object",
-          "additionalProperties": true  // Anything goes
+          "additionalProperties": true // Anything goes
         }
       }
     }
   }
 }
 ```
+
 **Steps:** 1 (just add to data - no schema change needed)
 **Problem:** No validation, no type safety, no GraphQL discovery
 
 #### V2 Approach
+
 ```json
 {
   "definitions": {
@@ -730,6 +767,7 @@ query {
   }
 }
 ```
+
 **Steps:** 1 (add to Contract DataSpecificData definition)
 **Benefit:** Type safety, validation, automatic GraphQL update, queryable
 
@@ -737,15 +775,16 @@ query {
 
 ## File Size Comparison
 
-| File | V1 Size | V2 Size | Difference |
-|------|---------|---------|------------|
-| **Schema** | ~25 KB | ~35 KB | +40% (more definitions) |
-| **Contract Data Mapping** | ~5 KB | ~8 KB | +60% (detailed mappings) |
-| **Legacy Procurement Mapping** | ~4 KB | ~7 KB | +75% (detailed mappings) |
-| **EASi Mapping** | ~3 KB | ~9 KB | +200% (IT governance details) |
-| **Example Data** | ~10 KB | ~12 KB | +20% (structured extensions) |
+| File                           | V1 Size | V2 Size | Difference                    |
+| ------------------------------ | ------- | ------- | ----------------------------- |
+| **Schema**                     | ~25 KB  | ~35 KB  | +40% (more definitions)       |
+| **Contract Data Mapping**      | ~5 KB   | ~8 KB   | +60% (detailed mappings)      |
+| **Legacy Procurement Mapping** | ~4 KB   | ~7 KB   | +75% (detailed mappings)      |
+| **EASi Mapping**               | ~3 KB   | ~9 KB   | +200% (IT governance details) |
+| **Example Data**               | ~10 KB  | ~12 KB  | +20% (structured extensions)  |
 
 **Analysis:**
+
 - V2 files are larger due to explicit structure
 - Trade-off: Size vs Functionality
 - V2 enables much more powerful queries
@@ -758,11 +797,13 @@ query {
 ### V1 Developer Experience
 
 **Pros:**
+
 - ✅ Easy to read schema top-to-bottom
 - ✅ Quick to understand overall structure
 - ✅ Simple to validate data instances
 
 **Cons:**
+
 - ❌ No autocomplete for system extensions
 - ❌ Must parse JSON manually for Contract Data/Legacy Procurement/EASi data
 - ❌ No type safety in GraphQL queries
@@ -772,6 +813,7 @@ query {
 ### V2 Developer Experience
 
 **Pros:**
+
 - ✅ Full autocomplete in GraphQL clients (GraphiQL, Playground)
 - ✅ Type safety throughout
 - ✅ Clear type definitions
@@ -780,6 +822,7 @@ query {
 - ✅ Self-documenting through GraphQL introspection
 
 **Cons:**
+
 - ⚠️ Must navigate between definitions
 - ⚠️ More complex schema structure
 - ⚠️ Learning curve for $ref usage
@@ -793,12 +836,14 @@ query {
 **Strategy:** Maintain V1 as human-readable source, generate V2 for tooling
 
 **Workflow:**
+
 1. Edit V1 schema (simple, nested)
 2. Run converter → generates V2 base
 3. Manually refine V2 system extensions (Contract Data/Legacy Procurement/EASi)
 4. Generate GraphQL from V2
 
 **Benefits:**
+
 - V1 remains simple for humans
 - V2 provides power for tools
 - Best of both worlds
@@ -808,6 +853,7 @@ query {
 **Strategy:** Use V2 as single source of truth
 
 **Considerations:**
+
 - More complex to maintain
 - Better for code generation
 - May require team training
@@ -817,6 +863,7 @@ query {
 **Strategy:** Add x-graphql hints to V1, generate rich V2
 
 **Example:**
+
 ```json
 {
   "systemExtensions": {
@@ -830,6 +877,7 @@ query {
 ```
 
 **Benefits:**
+
 - V1 stays mostly simple
 - Auto-generates rich V2
 - Non-invasive hints
@@ -839,18 +887,21 @@ query {
 ## Summary
 
 ### V1 Strengths
+
 - ✅ Human-readable
 - ✅ Easy to understand
 - ✅ Simple validation
 - ✅ Quick to edit
 
 ### V1 Weaknesses
+
 - ❌ System extensions opaque
 - ❌ Limited GraphQL queries
 - ❌ No type reuse
 - ❌ Incompatible with most tools
 
 ### V2 Strengths
+
 - ✅ Queryable system extensions
 - ✅ Type safety
 - ✅ Code generation ready
@@ -858,6 +909,7 @@ query {
 - ✅ Production-ready for APIs
 
 ### V2 Weaknesses
+
 - ⚠️ More complex structure
 - ⚠️ Requires navigation
 - ⚠️ Larger file size
@@ -865,16 +917,19 @@ query {
 ### Recommendation
 
 **For API/Dashboard Development:** Use **V2**
+
 - Essential for queryable system-specific data
 - Required for type-safe filtering
 - Enables powerful GraphQL queries
 
 **For Documentation/Training:** Use **V1**
+
 - Easier to understand
 - Better for explaining structure
 - Simpler for stakeholders
 
 **For Maintenance:** Use **Hybrid Approach**
+
 - Keep V1 as human source
 - Auto-generate V2 for tooling
 - Best of both worlds
@@ -884,6 +939,7 @@ query {
 ## Visual Comparison
 
 ### V1 Structure (Flat, Nested)
+
 ```
 schema_unification.schema.json
 ├── properties
@@ -896,6 +952,7 @@ schema_unification.schema.json
 ```
 
 ### V2 Structure (Modular, Referenced)
+
 ```
 schema_unification.schema.v2-generated.json
 ├── properties

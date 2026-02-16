@@ -112,3 +112,8 @@ type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
   legacyProcurementRecord: AssistRecord
 }
+
+# Implied Scalars
+scalar DateTime
+scalar Email
+scalar Date

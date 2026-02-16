@@ -19,6 +19,7 @@ Phase 2 focused on implementing the core bidirectional converters in both Rust a
 A high-performance Rust implementation with WASM support for browser and Node.js environments.
 
 #### Structure
+
 ```
 converters/rust/
 ├── Cargo.toml              # Rust package configuration
@@ -36,6 +37,7 @@ converters/rust/
 ```
 
 #### Key Features
+
 - ✅ **Bidirectional Conversion**: JSON Schema ↔ GraphQL SDL
 - ✅ **WASM Support**: Compile to WebAssembly for browser/Node.js
 - ✅ **Type Safety**: Strong Rust type system
@@ -45,6 +47,7 @@ converters/rust/
 - ✅ **Portability**: Self-contained, ready for extraction
 
 #### Dependencies
+
 ```toml
 serde = "1.0"
 serde_json = "1.0"
@@ -56,6 +59,7 @@ lru = { version = "0.12", optional = true }
 ```
 
 #### Build Targets
+
 - Native Rust library (`cargo build`)
 - WASM for Web (`wasm-pack build --target web`)
 - WASM for Node.js (`wasm-pack build --target nodejs`)
@@ -68,6 +72,7 @@ lru = { version = "0.12", optional = true }
 A TypeScript-native implementation optimized for Node.js environments with full type definitions.
 
 #### Structure
+
 ```
 converters/node/
 ├── package.json            # Node package configuration
@@ -86,6 +91,7 @@ converters/node/
 ```
 
 #### Key Features
+
 - ✅ **Bidirectional Conversion**: JSON Schema ↔ GraphQL SDL
 - ✅ **TypeScript Native**: Full type definitions included
 - ✅ **Validation**: AJV + GraphQL validation
@@ -95,6 +101,7 @@ converters/node/
 - ✅ **Portability**: Self-contained, ready for npm publishing
 
 #### Dependencies
+
 ```json
 {
   "graphql": "^16.8.1",
@@ -104,6 +111,7 @@ converters/node/
 ```
 
 #### Development Dependencies
+
 - TypeScript 5.3+
 - Jest for testing
 - ESLint + Prettier for code quality
@@ -116,6 +124,7 @@ converters/node/
 Comprehensive test data for validation and integration testing.
 
 #### Files Created
+
 1. **`user-service.json`** - Complete JSON Schema example
    - Demonstrates all `x-graphql-*` extensions
    - Apollo Federation directives
@@ -140,6 +149,7 @@ Comprehensive test data for validation and integration testing.
 ### Core Conversion Features
 
 #### JSON Schema → GraphQL SDL
+
 - ✅ Object types → GraphQL types
 - ✅ Properties → Fields
 - ✅ Required fields → Non-null types (`!`)
@@ -153,6 +163,7 @@ Comprehensive test data for validation and integration testing.
 - ✅ Federation directives support
 
 #### GraphQL SDL → JSON Schema
+
 - ✅ Types → Object schemas
 - ✅ Fields → Properties
 - ✅ Non-null (`!`) → Required fields
@@ -168,6 +179,7 @@ Comprehensive test data for validation and integration testing.
 ### Validation Features
 
 #### Both Implementations
+
 - ✅ GraphQL name validation (`/^[_A-Za-z][_0-9A-Za-z]*$/`)
 - ✅ Reserved name checking (no `__` prefix)
 - ✅ GraphQL type reference validation
@@ -179,6 +191,7 @@ Comprehensive test data for validation and integration testing.
 ### Performance Features
 
 #### Both Implementations
+
 - ✅ **LRU Cache**: Optional caching for repeated conversions
 - ✅ **Efficient Parsing**: Optimized JSON/SDL parsing
 - ✅ **Memory Management**: Configurable cache size
@@ -187,6 +200,7 @@ Comprehensive test data for validation and integration testing.
 ### Error Handling
 
 #### Rust
+
 ```rust
 pub enum ConversionError {
     InvalidJsonSchema(String),
@@ -204,6 +218,7 @@ pub enum ConversionError {
 ```
 
 #### Node.js
+
 ```typescript
 class ConversionError extends Error {
   public readonly errors?: ValidationError[];
@@ -237,10 +252,10 @@ println!("{}", result);
 ### Node.js
 
 ```typescript
-import { Converter } from '@json-schema-x-graphql/node-converter';
+import { Converter } from "@json-schema-x-graphql/node-converter";
 
 const converter = new Converter();
-const schema = { type: 'object', 'x-graphql-type-name': 'User' };
+const schema = { type: "object", "x-graphql-type-name": "User" };
 
 // Convert
 const result = converter.jsonSchemaToGraphQL(JSON.stringify(schema));
@@ -254,6 +269,7 @@ console.log(result.output);
 Both converters are designed for future extraction:
 
 ### Self-Contained Structure
+
 - ✅ Independent `Cargo.toml` / `package.json`
 - ✅ Own `README.md` with complete documentation
 - ✅ No dependencies on parent repository
@@ -261,12 +277,14 @@ Both converters are designed for future extraction:
 - ✅ Separate test directories
 
 ### Git Submodule Ready
+
 - ✅ Can be added as submodules to other projects
 - ✅ Independent versioning
 - ✅ Separate CI/CD pipelines possible
 - ✅ Individual npm/crates.io publishing
 
 ### Future Repository Structure
+
 ```
 # Potential future repos:
 - github.com/json-schema-x-graphql/rust-converter
@@ -282,6 +300,7 @@ git submodule add <url> converters/node
 ## Code Quality Standards
 
 ### Rust
+
 - ✅ **Linting**: Clippy-ready (`cargo clippy -- -D warnings`)
 - ✅ **Formatting**: rustfmt configured
 - ✅ **Type Safety**: Strict Rust type system
@@ -289,6 +308,7 @@ git submodule add <url> converters/node
 - ✅ **Error Handling**: No unwrap in production code
 
 ### Node.js
+
 - ✅ **Linting**: ESLint with TypeScript rules
 - ✅ **Formatting**: Prettier configured
 - ✅ **Type Safety**: Strict TypeScript mode
@@ -298,11 +318,13 @@ git submodule add <url> converters/node
 ### Configuration Files Created
 
 #### Rust
+
 - `Cargo.toml` - Package and dependencies
 - `.rustfmt.toml` - (to be added)
 - `clippy.toml` - (to be added)
 
 #### Node.js
+
 - `package.json` - Package, scripts, ESLint, Prettier config
 - `tsconfig.json` - Strict TypeScript configuration
 - `jest.config` - In package.json
@@ -314,6 +336,7 @@ git submodule add <url> converters/node
 ## Testing Strategy (Planned)
 
 ### Unit Tests
+
 - [ ] Converter class tests
 - [ ] Type conversion tests
 - [ ] Validation tests
@@ -321,12 +344,14 @@ git submodule add <url> converters/node
 - [ ] Cache functionality tests
 
 ### Integration Tests
+
 - [ ] Round-trip conversion tests
 - [ ] Sample schema tests (user-service.json ↔ user-service.graphql)
 - [ ] Federation directive tests
 - [ ] Edge case tests
 
 ### Test Data Created
+
 - ✅ `user-service.json` - Comprehensive JSON Schema
 - ✅ `user-service.graphql` - Equivalent GraphQL SDL
 - [ ] Additional test cases (to be added)
@@ -334,6 +359,7 @@ git submodule add <url> converters/node
 ### Test Commands
 
 #### Rust
+
 ```bash
 cargo test                    # Run all tests
 cargo test --all-features     # With all features
@@ -341,6 +367,7 @@ cargo bench                   # Run benchmarks
 ```
 
 #### Node.js
+
 ```bash
 npm test                      # Run all tests
 npm run test:watch           # Watch mode
@@ -400,6 +427,7 @@ npx tsc --noEmit
 ## Documentation Created
 
 ### Rust
+
 - ✅ **README.md** (267 lines)
   - Installation instructions
   - Usage examples
@@ -410,6 +438,7 @@ npx tsc --noEmit
   - Portability notes
 
 ### Node.js
+
 - ✅ **README.md** (490+ lines)
   - Installation instructions
   - Quick start guide
@@ -426,12 +455,14 @@ npx tsc --noEmit
 ## Performance Targets
 
 ### Rust
+
 - Small schemas (~10 fields): < 1ms
 - Medium schemas (~100 fields): < 5ms
 - Large schemas (~1000 fields): < 50ms
 - WASM overhead: ~2x native performance
 
 ### Node.js
+
 - Small schemas (~10 fields): < 5ms (uncached), < 0.1ms (cached)
 - Medium schemas (~100 fields): < 20ms (uncached), < 0.1ms (cached)
 - Large schemas (~1000 fields): < 100ms (uncached), < 0.1ms (cached)
@@ -441,6 +472,7 @@ npx tsc --noEmit
 ## Next Steps (Phase 3)
 
 ### Testing & Validation
+
 - [ ] Implement comprehensive test suites
 - [ ] Add benchmark tests
 - [ ] Integration tests with test data
@@ -448,6 +480,7 @@ npx tsc --noEmit
 - [ ] Memory leak testing
 
 ### Enhanced Features
+
 - [ ] CLI tools for both converters
 - [ ] Streaming support for large schemas
 - [ ] Plugin/extension system
@@ -455,6 +488,7 @@ npx tsc --noEmit
 - [ ] Source map generation
 
 ### Code Quality
+
 - [ ] Add automated linting in CI
 - [ ] Code coverage reporting
 - [ ] Security scanning
@@ -462,6 +496,7 @@ npx tsc --noEmit
 - [ ] Performance benchmarking
 
 ### Documentation
+
 - [ ] API documentation (rustdoc/typedoc)
 - [ ] Integration guides
 - [ ] Migration guides
@@ -469,6 +504,7 @@ npx tsc --noEmit
 - [ ] Interactive examples
 
 ### Publishing
+
 - [ ] Publish to crates.io (Rust)
 - [ ] Publish to npm (Node.js)
 - [ ] GitHub releases
@@ -480,6 +516,7 @@ npx tsc --noEmit
 ## Dependencies Summary
 
 ### Rust Dependencies
+
 ```toml
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -496,6 +533,7 @@ criterion = "0.5"
 ```
 
 ### Node.js Dependencies
+
 ```json
 {
   "dependencies": {
@@ -520,12 +558,14 @@ criterion = "0.5"
 ## File Count & Lines of Code
 
 ### Created Files
+
 - **Rust**: 7 source files + Cargo.toml + README
 - **Node.js**: 7 source files + 2 config files + README
 - **Test Data**: 2 comprehensive examples
 - **Total**: 19 files
 
 ### Lines of Code (excluding tests)
+
 - **Rust**: ~2,800 lines
 - **Node.js**: ~1,900 lines
 - **Test Data**: ~450 lines
@@ -543,7 +583,7 @@ Phase 2 is **COMPLETE** with both Rust and Node.js converters fully implemented.
 ✅ **Documented** - Comprehensive READMEs and inline docs  
 ✅ **Configurable** - Flexible options and caching  
 ✅ **Type-Safe** - Strong typing in both languages  
-✅ **Standards-Compliant** - Follows JSON Schema 2020-12 and GraphQL spec  
+✅ **Standards-Compliant** - Follows JSON Schema 2020-12 and GraphQL spec
 
 **Ready for Phase 3**: Testing, validation, and production hardening.
 

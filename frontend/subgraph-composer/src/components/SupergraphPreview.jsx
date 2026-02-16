@@ -1,7 +1,6 @@
-
-import React from 'react';
-import SplitPane from 'react-split-pane';
-import './SchemaEditor.css';
+import React from "react";
+import SplitPane from "react-split-pane";
+import "./SchemaEditor.css";
 
 export default function SupergraphPreview({
   sdl,
@@ -26,20 +25,20 @@ export default function SupergraphPreview({
   const copyToClipboard = async () => {
     if (sdl) {
       await navigator.clipboard.writeText(sdl);
-      alert('Supergraph SDL copied to clipboard');
+      alert("Supergraph SDL copied to clipboard");
     }
   };
 
   const downloadSDL = () => {
     if (!sdl) return;
 
-    const element = document.createElement('a');
+    const element = document.createElement("a");
     element.setAttribute(
-      'href',
-      `data:text/plain;charset=utf-8,${encodeURIComponent(sdl)}`
+      "href",
+      `data:text/plain;charset=utf-8,${encodeURIComponent(sdl)}`,
     );
-    element.setAttribute('download', 'supergraph.graphql');
-    element.style.display = 'none';
+    element.setAttribute("download", "supergraph.graphql");
+    element.style.display = "none";
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -48,7 +47,7 @@ export default function SupergraphPreview({
   const openInEditor = () => {
     // In a real app, this would open the graphql-editor app with the SDL
     const url = `/graphql-editor?schema=${encodeURIComponent(sdl)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -90,27 +89,37 @@ export default function SupergraphPreview({
           minSize={80}
           defaultSize={180}
           allowResize
-          paneStyle={{ minHeight: 0, display: 'flex', flexDirection: 'column' }}
-          style={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column' }}
-          resizerStyle={{ background: '#eee', height: '6px', cursor: 'row-resize', zIndex: 2 }}
+          paneStyle={{ minHeight: 0, display: "flex", flexDirection: "column" }}
+          style={{
+            height: "100%",
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
+          resizerStyle={{
+            background: "#eee",
+            height: "6px",
+            cursor: "row-resize",
+            zIndex: 2,
+          }}
         >
           {/* SDL Preview Section */}
           <div className="preview-section">
             <div
               className="section-header"
-              onClick={() => toggleSection('preview')}
+              onClick={() => toggleSection("preview")}
               role="button"
               tabIndex="0"
               onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  toggleSection('preview');
+                  toggleSection("preview");
                 }
               }}
             >
               <span className="section-title">
-                <span style={{ width: '20px' }}>
-                  {expandedSections.preview ? '▼' : '▶'}
+                <span style={{ width: "20px" }}>
+                  {expandedSections.preview ? "▼" : "▶"}
                 </span>
                 SDL Preview
               </span>
@@ -127,28 +136,42 @@ export default function SupergraphPreview({
             minSize={60}
             defaultSize={120}
             allowResize
-            paneStyle={{ minHeight: 0, display: 'flex', flexDirection: 'column' }}
-            style={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column' }}
-            resizerStyle={{ background: '#eee', height: '6px', cursor: 'row-resize', zIndex: 2 }}
+            paneStyle={{
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+            }}
+            style={{
+              height: "100%",
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+            }}
+            resizerStyle={{
+              background: "#eee",
+              height: "6px",
+              cursor: "row-resize",
+              zIndex: 2,
+            }}
           >
             {/* Stats Section */}
             {stats ? (
               <div className="preview-section">
                 <div
                   className="section-header"
-                  onClick={() => toggleSection('stats')}
+                  onClick={() => toggleSection("stats")}
                   role="button"
                   tabIndex="0"
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
+                    if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      toggleSection('stats');
+                      toggleSection("stats");
                     }
                   }}
                 >
                   <span className="section-title">
-                    <span style={{ width: '20px' }}>
-                      {expandedSections.stats ? '▼' : '▶'}
+                    <span style={{ width: "20px" }}>
+                      {expandedSections.stats ? "▼" : "▶"}
                     </span>
                     Statistics
                   </span>
@@ -176,14 +199,18 @@ export default function SupergraphPreview({
                           </span>
                         </div>
                         <div className="conflicts-details">
-                          <div className="conflicts-title">Conflicting Types:</div>
+                          <div className="conflicts-title">
+                            Conflicting Types:
+                          </div>
                           {stats.conflicts.map((conflict, idx) => (
                             <div key={idx} className="conflict-item">
                               <div className="conflict-type">
                                 <strong>{conflict.type}</strong>
                               </div>
                               <div className="conflict-sources">
-                                <small>Found in: {conflict.sources.join(', ')}</small>
+                                <small>
+                                  Found in: {conflict.sources.join(", ")}
+                                </small>
                               </div>
                               {conflict.fieldCount > 0 && (
                                 <div className="conflict-fields">
@@ -198,25 +225,27 @@ export default function SupergraphPreview({
                   </div>
                 )}
               </div>
-            ) : <div />}
+            ) : (
+              <div />
+            )}
             {/* Errors Section */}
             {errors && errors.length > 0 ? (
               <div className="preview-section">
                 <div
                   className="section-header error"
-                  onClick={() => toggleSection('errors')}
+                  onClick={() => toggleSection("errors")}
                   role="button"
                   tabIndex="0"
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
+                    if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      toggleSection('errors');
+                      toggleSection("errors");
                     }
                   }}
                 >
                   <span className="section-title">
-                    <span style={{ width: '20px' }}>
-                      {expandedSections.errors ? '▼' : '▶'}
+                    <span style={{ width: "20px" }}>
+                      {expandedSections.errors ? "▼" : "▶"}
                     </span>
                     Errors ({errors.length})
                   </span>
@@ -232,7 +261,9 @@ export default function SupergraphPreview({
                   </div>
                 )}
               </div>
-            ) : <div />}
+            ) : (
+              <div />
+            )}
           </SplitPane>
         </SplitPane>
       ) : (
@@ -240,8 +271,8 @@ export default function SupergraphPreview({
           <p>No supergraph generated yet</p>
           <p className="hint">
             {subgraphs.size === 0
-              ? 'Add and generate schemas to see results'
-              : 'Check for errors in schema generation'}
+              ? "Add and generate schemas to see results"
+              : "Check for errors in schema generation"}
           </p>
         </div>
       )}

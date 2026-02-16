@@ -5,8 +5,8 @@ import {
   FederationVersion,
   NamingConvention,
   IdInferenceStrategy,
-  OutputFormat
-} from './generated/types.js';
+  OutputFormat,
+} from "./generated/types.js";
 
 export interface IJsonSchemaConverter {
   convert(input: ConvertInput): Promise<ConversionResult>;
@@ -93,7 +93,9 @@ export interface GraphQLEnumValue {
 }
 
 export interface GraphQLEnumConfig {
-  values?: Array<string | number | GraphQLEnumValue> | Record<string, string | GraphQLEnumValue>;
+  values?:
+    | Array<string | number | GraphQLEnumValue>
+    | Record<string, string | GraphQLEnumValue>;
 }
 
 export interface GraphQLOperationField {
@@ -124,4 +126,3 @@ export interface ConversionContext {
 }
 
 export type JsonSchemaInput = string | JsonSchema;
-

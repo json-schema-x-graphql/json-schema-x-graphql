@@ -15,7 +15,7 @@
  *   --quiet              Only show errors (suppress warnings)
  *   --verbose            Show detailed validation information
  */
-import { ValidationResult } from './x-graphql-validator';
+import { ValidationResult } from "./x-graphql-validator";
 interface CliOptions {
     failOnWarning: boolean;
     json: boolean;

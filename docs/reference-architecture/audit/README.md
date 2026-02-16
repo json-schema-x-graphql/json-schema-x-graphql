@@ -17,6 +17,7 @@ As the project evolved, the `/docs` directory accumulated **38 markdown files** 
 ## Documents in This Directory
 
 ### [`docs-consolidation-plan.md`](docs-consolidation-plan.md)
+
 **Comprehensive plan to reduce docs from 38 to ~15 core files**
 
 - Current state analysis (38 files categorized)
@@ -28,6 +29,7 @@ As the project evolved, the `/docs` directory accumulated **38 markdown files** 
 - 5-week implementation timeline
 
 **Key Goals:**
+
 - 60% reduction in document count
 - Eliminate redundant content
 - Archive implementation logs separately
@@ -39,16 +41,19 @@ As the project evolved, the `/docs` directory accumulated **38 markdown files** 
 ## Related Documentation
 
 ### Master Implementation Plan
+
 - **Location:** [`/IMPLEMENTATION-PLAN.md`](../../IMPLEMENTATION-PLAN.md)
 - **Scope:** Tracks both scripts audit and docs consolidation
 - **Use for:** Overall project status and milestones
 
 ### Scripts Audit
+
 - **Location:** [`/scripts/audit/scripts-audit.md`](../../scripts/audit/scripts-audit.md)
 - **Scope:** Scripts refactoring to programmatic modules
 - **Related:** Both initiatives run in parallel
 
 ### Quick Reference
+
 - **Location:** [`/QUICK-IMPLEMENTATION-GUIDE.md`](../../QUICK-IMPLEMENTATION-GUIDE.md)
 - **Use for:** Fast lookup of tasks, commands, and checklists
 
@@ -57,12 +62,14 @@ As the project evolved, the `/docs` directory accumulated **38 markdown files** 
 ## Quick Summary
 
 ### Problem
+
 - 38 markdown files with overlap and confusion
 - Implementation logs mixed with user guides
 - Unclear which documents are authoritative
 - High maintenance burden (multiple files need updating for single change)
 
 ### Solution
+
 - **Consolidate** similar content into comprehensive guides
 - **Archive** implementation logs and outdated content
 - **Rename** files to consistent lowercase-with-dashes format
@@ -138,16 +145,19 @@ Archive (17 files moved to docs/archived/)
 ## How to Use This Audit
 
 ### For Contributors
+
 1. **Before adding new docs:** Check if content belongs in existing guide
 2. **Before updating docs:** Verify you're editing the active version (not archived)
 3. **Reference the plan:** Understand which files are being consolidated
 
 ### For Reviewers
+
 1. **Use the consolidation plan** to understand the reasoning behind changes
 2. **Check the file mapping** to see where content moved
 3. **Verify cross-references** still work after moves
 
 ### For Project Managers
+
 1. **Track progress** using the implementation plan
 2. **Monitor milestones** weekly
 3. **Identify blockers** early
@@ -157,12 +167,14 @@ Archive (17 files moved to docs/archived/)
 ## Success Metrics
 
 ### Quantitative
+
 - ✅ Document count: 38 → ~15 (60% reduction)
 - ✅ Implementation logs archived: 6 files
 - ✅ Redundant content consolidated: 4 → 1 (V1/V2 comparison)
 - ✅ Naming consistency: All lowercase-with-dashes
 
 ### Qualitative
+
 - [ ] New developers can start in <5 minutes (using quick-start)
 - [ ] Each topic has one authoritative source
 - [ ] Historical context preserved (nothing lost)
@@ -188,18 +200,22 @@ All archived files receive an ARCHIVED notice pointing to the current guide.
 ## Maintenance Going Forward
 
 ### After Consolidation
+
 - **Review quarterly** for accuracy
 - **Update with major changes** to keep current
 - **Avoid creating new redundancy** (add to existing guides)
 
 ### Adding New Documentation
+
 **Before creating a new doc, ask:**
+
 1. Does this belong in an existing guide?
 2. Is this a user guide or implementation log?
 3. Will this need regular updates?
 4. Does this overlap with existing docs?
 
 **Guidelines:**
+
 - Implementation logs → Git history or PR descriptions
 - User guides → Consolidate into existing or create new only if justified
 - Always use lowercase-with-dashes naming

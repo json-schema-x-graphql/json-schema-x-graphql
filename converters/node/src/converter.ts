@@ -31,10 +31,14 @@ import {
   GraphQLOperationArg,
   GraphQLScalarConfig,
   ConversionContext,
-  JsonSchemaInput
+  JsonSchemaInput,
 } from "./interfaces.js";
 import { camelToSnake, snakeToCamel } from "./case-conversion.js";
-import { extractDirectives, GeneralizedDirective, printDirectives } from "./normalization/directives.js";
+import {
+  extractDirectives,
+  GeneralizedDirective,
+  printDirectives,
+} from "./normalization/directives.js";
 import { ensureConnectionType } from "./features/relay.js";
 
 // ExtendedConverterOptions and others moved to interfaces.ts
@@ -62,6 +66,11 @@ function shouldExcludeType(
   options: NormalizedConverterOptions,
 ): boolean {
   if (!typeName) return true;
+
+  // Debug filtering
+  if (typeName === "Mutation" || typeName === "Query" || typeName === "PageInfo") {
+    console.log(`Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`);
+  }
 
   // Always exclude introspection types
   if (typeName.startsWith("__")) {
@@ -166,6 +175,11 @@ export function jsonSchemaToGraphQL(
       const typeName =
         context.typeNames.get(`/$defs/${defKey}`) ||
         context.typeNames.get(`/definitions/${defKey}`);
+      // Debug logging
+      if (typeName === "Mutation") {
+          console.log(`Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`);
+      }
+
       if (typeName && !shouldExcludeType(typeName, context.options)) {
         convertTypeDefinition(defSchema, typeName, context);
       }
@@ -345,7 +359,9 @@ function convertGraphQLTypeToSchema(
   schema["x-graphql-type"] = typeDef.name;
 
   if (typeDef.directives && typeDef.directives.length > 0) {
-    schema["x-graphql-directives"] = typeDef.directives.map((d: any) => print(d));
+    schema["x-graphql-directives"] = typeDef.directives.map((d: any) =>
+      print(d),
+    );
   }
 
   if (typeDef.kind === "EnumTypeDefinition") {
@@ -415,7 +431,9 @@ function convertGraphQLFieldToSchema(
   }
 
   if (field.directives && field.directives.length > 0) {
-    typeSchema["x-graphql-directives"] = field.directives.map((d: any) => print(d));
+    typeSchema["x-graphql-directives"] = field.directives.map((d: any) =>
+      print(d),
+    );
   }
 
   return typeSchema;
@@ -569,9 +587,10 @@ function convertTypeDefinition(
 
   // Handle Relay Connection generation
   if (schema["x-graphql-connection"]) {
-    const connectionBase = typeof schema["x-graphql-connection"] === "string" 
-      ? schema["x-graphql-connection"] 
-      : typeName;
+    const connectionBase =
+      typeof schema["x-graphql-connection"] === "string"
+        ? schema["x-graphql-connection"]
+        : typeName;
     ensureConnectionType(connectionBase, context);
   }
 
@@ -1514,10 +1533,7 @@ function derivePrimitiveGraphQLType(
     case "boolean":
       return "Boolean";
     case "array": {
-      const itemType = derivePrimitiveGraphQLType(
-        schema.items ?? {},
-        context,
-      );
+      const itemType = derivePrimitiveGraphQLType(schema.items ?? {}, context);
       return itemType ? `[${itemType}]` : null;
     }
     default:
@@ -1525,10 +1541,7 @@ function derivePrimitiveGraphQLType(
   }
 }
 
-function mapStringFormat(
-  format?: string,
-  context?: ConversionContext,
-): string {
+function mapStringFormat(format?: string, context?: ConversionContext): string {
   switch (format) {
     case "date-time":
       if (context) context.usedScalars.add("DateTime");

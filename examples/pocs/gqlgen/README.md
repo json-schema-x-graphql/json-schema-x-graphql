@@ -11,6 +11,7 @@
 gqlgen (Go-based GraphQL server) POC for Schema Unification Forest gateway evaluation.
 
 **Key Features:**
+
 - ✅ High performance (compiled Go binary)
 - ✅ Small memory footprint (<128MB)
 - ✅ Type-safe code generation
@@ -77,15 +78,15 @@ cf logs schema_unification-gqlgen --recent
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Server port | `8080` |
-| `GO_ENV` | Environment | `development` |
-| `ENABLE_MOCKS` | Enable mock data | `true` |
-| `DATABRICKS_BASE_URL` | REST API base URL | `http://mock-api:3000` |
-| `DATABRICKS_TOKEN` | API authentication token | (none) |
-| `SCHEMA_PATH` | Path to supergraph SDL | `../../generated-schemas/schema_unification.supergraph.graphql` |
-| `GRAPHQL_PLAYGROUND` | Enable playground UI | `true` |
+| Variable              | Description              | Default                                                         |
+| --------------------- | ------------------------ | --------------------------------------------------------------- |
+| `PORT`                | Server port              | `8080`                                                          |
+| `GO_ENV`              | Environment              | `development`                                                   |
+| `ENABLE_MOCKS`        | Enable mock data         | `true`                                                          |
+| `DATABRICKS_BASE_URL` | REST API base URL        | `http://mock-api:3000`                                          |
+| `DATABRICKS_TOKEN`    | API authentication token | (none)                                                          |
+| `SCHEMA_PATH`         | Path to supergraph SDL   | `../../generated-schemas/schema_unification.supergraph.graphql` |
+| `GRAPHQL_PLAYGROUND`  | Enable playground UI     | `true`                                                          |
 
 ---
 
@@ -130,6 +131,7 @@ go run github.com/99designs/gqlgen generate
 ```
 
 **After schema changes:**
+
 1. Update `graph/schema.graphql`
 2. Run `go generate ./...`
 3. Implement any new resolvers in `graph/resolver.go`
@@ -143,7 +145,7 @@ go run github.com/99designs/gqlgen generate
 1. **Performance (5/5)**
    - Compiled binary (no runtime overhead)
    - <5ms p95 latency for simple queries
-   - >5000 req/sec on 2 CPU cores
+   - > 5000 req/sec on 2 CPU cores
    - ~50MB memory under load
 
 2. **Cloud.gov Fit (5/5)**
@@ -223,12 +225,12 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
     if err != nil {
         return nil, err
     }
-    
+
     // Validate against JSON Schema
     if err := r.validator.Validate(data, "solicitation.schema.json"); err != nil {
         return nil, fmt.Errorf("validation failed: %w", err)
     }
-    
+
     return transformToSolicitation(data), nil
 }
 ```
@@ -237,12 +239,16 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
 
 ```graphql
 query {
-  _entities(representations: [
-    { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
-  ]) {
+  _entities(
+    representations: [
+      { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
+    ]
+  ) {
     ... on AssistRecord {
       iaPiidOrUniqueId
-      systemMetadata { systemName }
+      systemMetadata {
+        systemName
+      }
     }
   }
 }
@@ -267,6 +273,7 @@ hey -n 10000 -c 200 \
 ```
 
 **Expected:**
+
 - p95 latency: <50ms
 - Throughput: >3000 req/sec
 - Memory: <256MB
@@ -288,19 +295,19 @@ go tool pprof heap.prof
 
 ## Scoring Matrix
 
-| Criterion | Weight | Score (0-5) | Notes |
-|-----------|--------|-------------|-------|
-| Federation Support | 5 | 4 | Good via federation-go |
-| REST Integration | 5 | 4 | Manual but explicit |
-| Mock Data | 3 | 3 | Custom implementation |
-| Development Speed | 4 | 3 | Code gen + manual resolvers |
-| Performance | 4 | 5 | Best in class |
-| Cloud.gov Fit | 5 | 5 | Perfect fit (small binary) |
-| Operational | 4 | 4 | Very simple |
-| Validation | 3 | 3 | gojsonschema works well |
-| Community | 3 | 4 | Active, well-maintained |
-| Learning Curve | 2 | 2 | Go learning required |
-| **TOTAL** | **38** | **TBD** | Weighted score pending |
+| Criterion          | Weight | Score (0-5) | Notes                       |
+| ------------------ | ------ | ----------- | --------------------------- |
+| Federation Support | 5      | 4           | Good via federation-go      |
+| REST Integration   | 5      | 4           | Manual but explicit         |
+| Mock Data          | 3      | 3           | Custom implementation       |
+| Development Speed  | 4      | 3           | Code gen + manual resolvers |
+| Performance        | 4      | 5           | Best in class               |
+| Cloud.gov Fit      | 5      | 5           | Perfect fit (small binary)  |
+| Operational        | 4      | 4           | Very simple                 |
+| Validation         | 3      | 3           | gojsonschema works well     |
+| Community          | 3      | 4           | Active, well-maintained     |
+| Learning Curve     | 2      | 2           | Go learning required        |
+| **TOTAL**          | **38** | **TBD**     | Weighted score pending      |
 
 ---
 

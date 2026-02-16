@@ -3,6 +3,7 @@
 ## Overview
 
 Complete federated mock service stack with:
+
 - **Custom resolvers** with faker.js for realistic data
 - **Seed data** from CSV files for each system
 - **GraphQL Mesh** for federation gateway
@@ -106,13 +107,13 @@ query UnifiedSearch {
     piid
     vendorName
   }
-  
+
   # Query Public Spending
   public_spending_procurements(limit: 5) {
     piid
     awardee_or_recipient_legal
   }
-  
+
   # Cross-system search
   searchContracts(piid: "GS23F0001X") {
     piid
@@ -145,9 +146,9 @@ Edit `mockforge.config.js`:
 export const fieldPatterns = {
   // Add custom patterns
   myField: () => faker.custom.data(),
-  
+
   // Override existing
-  piid: () => 'CUSTOM-' + faker.string.alphanumeric(10),
+  piid: () => "CUSTOM-" + faker.string.alphanumeric(10),
 };
 ```
 
@@ -222,11 +223,11 @@ sqlite3 dev/pocs/mockforge/data/mock-data.db ".tables"
   run: |
     cd dev/pocs/mockforge
     docker compose up -d
-    
+
 - name: Wait for services
   run: |
     timeout 60 bash -c 'until curl -f http://localhost:5000/graphql; do sleep 2; done'
-    
+
 - name: Run integration tests
   run: pnpm test:integration
 ```

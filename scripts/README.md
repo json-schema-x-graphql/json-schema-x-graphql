@@ -65,6 +65,7 @@ pnpm install
 Discovers and validates all JSON Schema files in `converters/test-data/`:
 
 **Features:**
+
 - ✅ Validates against JSON Schema meta-schemas (Draft 7, 2019-09, 2020-12)
 - 🔧 Detects and validates x-graphql extensions
 - ⚠️ Quality checks (missing descriptions, unused definitions)
@@ -112,6 +113,7 @@ x-graphql schemas: 7 🔧
 Discovers and validates all GraphQL SDL files in `converters/test-data/`:
 
 **Features:**
+
 - ✅ Syntax validation (parsing)
 - ✅ Semantic validation (schema building, GraphQL spec compliance)
 - 🌐 Federation validation (Apollo subgraph schemas)
@@ -159,6 +161,7 @@ Total fields:        128
 End-to-end tests that convert JSON Schemas to GraphQL SDL and compare against expected outputs:
 
 **Features:**
+
 - 🔄 Discovers JSON Schema files with optional expected SDL
 - 📋 Compares generated SDL against expected outputs
 - 📝 Shows diffs when outputs don't match
@@ -238,6 +241,7 @@ converters/test-data/
 Performance benchmarking suite for conversion and validation operations:
 
 **Features:**
+
 - ⏱️ High-precision timing (using `process.hrtime.bigint()`)
 - 📈 Statistical analysis (min, max, mean, median, stddev, p95, p99)
 - 🧠 Memory usage tracking (heap delta)
@@ -419,6 +423,7 @@ pnpm precommit                 # Lint + validate
 The project includes a comprehensive CI workflow at `.github/workflows/validation-and-testing.yml`:
 
 **Jobs:**
+
 1. ✅ **validate-schemas** - Validate all JSON Schemas
 2. ✅ **validate-graphql** - Validate all GraphQL SDL files
 3. 🧪 **integration-tests** - Run conversion integration tests
@@ -428,6 +433,7 @@ The project includes a comprehensive CI workflow at `.github/workflows/validatio
 7. 📋 **summary** - Generate test summary report
 
 **Artifacts:**
+
 - `schema-validation-report.json` (30 days)
 - `graphql-validation-report.json` (30 days)
 - `integration-test-report.json` (30 days)
@@ -435,6 +441,7 @@ The project includes a comprehensive CI workflow at `.github/workflows/validatio
 - `baseline-benchmark.json` (365 days, main branch only)
 
 **Triggers:**
+
 - Push to `main` or `develop`
 - Pull requests to `main` or `develop`
 - Manual workflow dispatch

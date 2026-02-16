@@ -2,7 +2,6 @@
 
 This guide provides advanced configuration options and tips for the Schema Unification Forest presentation.
 
-
 ## Installation
 
 ```bash
@@ -108,7 +107,7 @@ To use a different theme:
 # Metadata
 theme: default
 title: Schema Unification Forest
-titleTemplate: '%s - Slidev'
+titleTemplate: "%s - Slidev"
 info: Project description
 keywords: schema, graphql, json, federal
 
@@ -117,26 +116,26 @@ author: GSA-TTS
 date: 2025-12-11
 
 # Appearance
-layout: cover              # Layout type for this slide
-class: text-center         # CSS classes
-transition: slide          # Animation type
+layout: cover # Layout type for this slide
+class: text-center # CSS classes
+transition: slide # Animation type
 
 # Features
 drawings:
-  enabled: true           # Allow drawing on slides
-  presenterOnly: false    # Show drawings to everyone
-  syncAll: true           # Sync drawings across devices
+  enabled: true # Allow drawing on slides
+  presenterOnly: false # Show drawings to everyone
+  syncAll: true # Sync drawings across devices
 
 # Export settings
 exportFilename: schema-unification-project-slides
 
 # Navigation
-autoPlayVideos: false     # Auto-play embedded videos
-canvasWidth: 960          # Canvas width in pixels
-ratio: 16/9              # Slide ratio
+autoPlayVideos: false # Auto-play embedded videos
+canvasWidth: 960 # Canvas width in pixels
+ratio: 16/9 # Slide ratio
 
 # Recording
-record: dev              # dev, build, or false
+record: dev # dev, build, or false
 ---
 ```
 
@@ -144,11 +143,11 @@ record: dev              # dev, build, or false
 
 ### Code Highlighting
 
-```
+````
 ` ``` ` python
 print("Hello, Schema Unification Forest!")
 ` ``` `
-```
+````
 
 Supported languages: python, javascript, typescript, json, yaml, bash, graphql, sql, and many more.
 
@@ -207,6 +206,7 @@ The presentation supports TailwindCSS classes:
 ```
 
 Common useful classes:
+
 - `text-center` - Center text
 - `flex gap-4` - Flex layout with gap
 - `grid grid-cols-2` - 2-column grid
@@ -259,29 +259,28 @@ slidev export slides.md --format pdf
 
 ```html
 <!-- In your docs HTML -->
-<iframe src="/presentations/slides.html" 
-  width="100%" height="600"></iframe>
+<iframe src="/presentations/slides.html" width="100%" height="600"></iframe>
 ```
 
 ## Keyboard Shortcuts Reference
 
-| Key | Action |
-|-----|--------|
-| `Space` / `Right Arrow` | Next slide |
-| `Left Arrow` / `Backspace` | Previous slide |
-| `Up Arrow` / `Down Arrow` | Navigate |
-| `Home` | First slide |
-| `End` | Last slide |
-| `Number + Enter` | Jump to slide |
-| `O` | Overview (grid view) |
-| `P` | Presenter mode |
-| `D` | Toggle dark mode |
-| `G` | Toggle grid |
-| `S` | Toggle slide numbers |
-| `M` | Toggle microphone (audio recording) |
-| `R` | Reset view |
-| `ESC` | Exit fullscreen |
-| `?` | Show help |
+| Key                        | Action                              |
+| -------------------------- | ----------------------------------- |
+| `Space` / `Right Arrow`    | Next slide                          |
+| `Left Arrow` / `Backspace` | Previous slide                      |
+| `Up Arrow` / `Down Arrow`  | Navigate                            |
+| `Home`                     | First slide                         |
+| `End`                      | Last slide                          |
+| `Number + Enter`           | Jump to slide                       |
+| `O`                        | Overview (grid view)                |
+| `P`                        | Presenter mode                      |
+| `D`                        | Toggle dark mode                    |
+| `G`                        | Toggle grid                         |
+| `S`                        | Toggle slide numbers                |
+| `M`                        | Toggle microphone (audio recording) |
+| `R`                        | Reset view                          |
+| `ESC`                      | Exit fullscreen                     |
+| `?`                        | Show help                           |
 
 ## Recording & Streaming
 
@@ -304,15 +303,18 @@ slidev slides.md --resolution 1920x1080
 ## Troubleshooting
 
 ### Slides not updating
+
 - Make sure you're in watch mode: `slidev slides.md --watch`
 - Check browser cache: reload with Ctrl+Shift+R
 
 ### Export fails
+
 - Try updating Slidev: `npm install -g @slidev/cli@latest`
 - Check file permissions
 - Ensure all dependencies are installed
 
 ### Performance issues
+
 - Reduce animations
 - Disable auto-play features
 - Close browser tabs

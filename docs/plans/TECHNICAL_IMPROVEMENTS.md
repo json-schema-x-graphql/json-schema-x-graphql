@@ -19,15 +19,17 @@
 ## 🔥 Start Here: Circular Reference Protection (Node)
 
 ### Step 1: Update Context
+
 ```typescript
 interface ConversionContext {
   schema: JsonSchema;
   processedTypes: Set<string>;
-  building: Set<string>;  // ← ADD THIS
+  building: Set<string>; // ← ADD THIS
 }
 ```
 
 ### Step 2: Protect Type Conversion
+
 ```typescript
 private convertTypeDefinition(
   schema: JsonSchema,
@@ -41,7 +43,7 @@ private convertTypeDefinition(
       'CIRCULAR_REF'
     );
   }
-  
+
   context.building.add(typeName);
   try {
     // ... existing logic ...
@@ -53,12 +55,13 @@ private convertTypeDefinition(
 ```
 
 ### Step 3: Test
+
 ```typescript
-it('should detect circular reference', () => {
+it("should detect circular reference", () => {
   const schema = {
-    type: 'object',
-    'x-graphql-type-name': 'Node',
-    properties: { next: { $ref: '#' } }
+    type: "object",
+    "x-graphql-type-name": "Node",
+    properties: { next: { $ref: "#" } },
   };
   expect(() => convert(schema)).toThrow(/Circular/);
 });
@@ -73,16 +76,17 @@ it('should detect circular reference', () => {
 ## 🚀 Next: Enhanced $ref Resolution
 
 ### Rust Implementation
+
 ```rust
 // Add recursive resolution
-fn resolve_ref(&self, ref_path: &str, visited: &mut HashSet<String>) 
-  -> Result<Option<&JsonValue>> 
+fn resolve_ref(&self, ref_path: &str, visited: &mut HashSet<String>)
+  -> Result<Option<&JsonValue>>
 {
   if visited.contains(ref_path) {
     return Err(ConversionError::CircularReference(/*...*/));
   }
   visited.insert(ref_path.to_string());
-  
+
   // Walk path, following nested $refs
   for part in parts {
     if let Some(nested_ref) = current.get("$ref") {
@@ -92,8 +96,8 @@ fn resolve_ref(&self, ref_path: &str, visited: &mut HashSet<String>)
   }
 }
 
-fn try_get_property(&self, node: &JsonValue, key: &str) 
-  -> Result<&JsonValue> 
+fn try_get_property(&self, node: &JsonValue, key: &str)
+  -> Result<&JsonValue>
 {
   node.get(key)
     .or_else(|| node.get(&camel_to_snake(key)))
@@ -103,6 +107,7 @@ fn try_get_property(&self, node: &JsonValue, key: &str)
 ```
 
 ### Node Implementation
+
 ```typescript
 private resolveRef(
   schema: JsonSchema,
@@ -113,7 +118,7 @@ private resolveRef(
     throw new ConversionError('Circular $ref', /*...*/);
   }
   visited.add(refPath);
-  
+
   let current: any = schema;
   for (const part of parts) {
     if (current.$ref) {
@@ -125,14 +130,15 @@ private resolveRef(
 }
 
 private tryGetProperty(obj: any, key: string): any {
-  return obj[key] 
-    ?? obj[camelToSnake(key)] 
+  return obj[key]
+    ?? obj[camelToSnake(key)]
     ?? obj[snakeToCamel(key)]
     ?? null;
 }
 ```
 
-**Files:** 
+**Files:**
+
 - `converters/rust/src/json_to_graphql.rs`
 - `converters/node/src/json-to-graphql.ts`
 
@@ -146,7 +152,7 @@ private tryGetProperty(obj: any, key: string): any {
 ```typescript
 public convert(schema: JsonSchema): string {
   let output = '';
-  
+
   // Process $defs first
   const defs = schema.$defs || schema.definitions;
   if (defs) {
@@ -157,13 +163,13 @@ public convert(schema: JsonSchema): string {
       }
     }
   }
-  
+
   // Then process root if it has a name
   const rootName = schema['x-graphql-type-name'];
   if (rootName) {
     output += this.convertTypeDefinition(schema, rootName, context);
   }
-  
+
   return output;
 }
 ```
@@ -177,6 +183,7 @@ public convert(schema: JsonSchema): string {
 ## 🎯 Type Filtering
 
 ### Add to Options
+
 ```typescript
 export interface ConversionOptions {
   excludeTypes?: string[];
@@ -185,32 +192,39 @@ export interface ConversionOptions {
 }
 
 export const DEFAULT_OPTIONS = {
-  excludeTypes: ['Query', 'Mutation', 'Subscription', 'PageInfo'],
+  excludeTypes: ["Query", "Mutation", "Subscription", "PageInfo"],
   excludeTypeSuffixes: [
-    'Filter', 'Sort', 'Connection', 'Edge', 'Payload', 'Args'
+    "Filter",
+    "Sort",
+    "Connection",
+    "Edge",
+    "Payload",
+    "Args",
   ],
   includeOperationalTypes: false,
 };
 ```
 
 ### Filter Logic
+
 ```typescript
 private shouldExcludeType(typeName: string): boolean {
   if (typeName.startsWith('__')) return true;
-  
+
   if (!this.options.includeOperationalTypes) {
     if (this.options.excludeTypes?.includes(typeName)) return true;
   }
-  
+
   for (const suffix of this.options.excludeTypeSuffixes || []) {
     if (typeName.endsWith(suffix)) return true;
   }
-  
+
   return false;
 }
 ```
 
 **Files:**
+
 - `converters/rust/src/types.rs`
 - `converters/node/src/types.ts`
 - Both conversion files
@@ -239,12 +253,14 @@ npm test -- --grep "Circular"
 ## 📂 Key Files
 
 ### Node Converter
+
 - `src/json-to-graphql.ts` - Main conversion logic
 - `src/types.ts` - Type definitions and options
 - `src/case-conversion.ts` - NEW: Case utilities
 - `tests/improvements.test.ts` - NEW: Test suite
 
 ### Rust Converter
+
 - `src/json_to_graphql.rs` - Main conversion logic
 - `src/types.rs` - Type definitions and options
 - `src/case_conversion.rs` - NEW: Case utilities
@@ -255,11 +271,12 @@ npm test -- --grep "Circular"
 ## 🎨 Case Conversion Utilities
 
 ### JavaScript/TypeScript
+
 ```typescript
 export function camelToSnake(str: string): string {
   return str
-    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
-    .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
     .toLowerCase();
 }
 
@@ -269,6 +286,7 @@ export function snakeToCamel(str: string): string {
 ```
 
 ### Rust
+
 ```rust
 pub fn camel_to_snake(s: &str) -> String {
     let re1 = Regex::new(r"([a-z0-9])([A-Z])").unwrap();
@@ -302,14 +320,14 @@ pub fn camel_to_snake(s: &str) -> String {
 
 ## 🎯 Success Metrics
 
-| Metric | Target |
-|--------|--------|
-| test.json conversion | ✅ Pass |
-| Nested $refs | ✅ Resolve |
-| Circular refs | ✅ Detect & Error |
-| $defs extraction | ✅ All types |
-| Performance | < 1s for test.json |
-| Test coverage | > 90% |
+| Metric               | Target             |
+| -------------------- | ------------------ |
+| test.json conversion | ✅ Pass            |
+| Nested $refs         | ✅ Resolve         |
+| Circular refs        | ✅ Detect & Error  |
+| $defs extraction     | ✅ All types       |
+| Performance          | < 1s for test.json |
+| Test coverage        | > 90%              |
 
 ---
 
@@ -324,6 +342,7 @@ pub fn camel_to_snake(s: &str) -> String {
 ---
 
 **Quick Start Command:**
+
 ```bash
 # Node: Start with circular ref protection
 cd converters/node

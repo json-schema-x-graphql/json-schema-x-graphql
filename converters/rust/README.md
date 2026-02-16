@@ -24,29 +24,30 @@ The converter favors **implicit first inferred schema**, handling inference auto
 
 ### Automatic Type Mapping
 
-| JSON Schema | GraphQL |
-|---|---|
-| `string` | `String` |
-| `integer` | `Int` |
-| `number` | `Float` |
-| `boolean` | `Boolean` |
-| `array` | `[ItemType]` |
-| `object` | Custom type or JSON scalar |
+| JSON Schema | GraphQL                    |
+| ----------- | -------------------------- |
+| `string`    | `String`                   |
+| `integer`   | `Int`                      |
+| `number`    | `Float`                    |
+| `boolean`   | `Boolean`                  |
+| `array`     | `[ItemType]`               |
+| `object`    | Custom type or JSON scalar |
 
 ### Format-Based Inference
 
 | JSON Format | GraphQL Type |
-|---|---|
-| `uuid` | `ID` |
-| `date-time` | `DateTime` |
-| `date` | `Date` |
-| `time` | `Time` |
-| `email` | `Email` |
-| `uri` | `URL` |
+| ----------- | ------------ |
+| `uuid`      | `ID`         |
+| `date-time` | `DateTime`   |
+| `date`      | `Date`       |
+| `time`      | `Time`       |
+| `email`     | `Email`      |
+| `uri`       | `URL`        |
 
 ### Extension Usage
 
 #### 1. Type Definition
+
 Use `x-graphql-type-name` or `title` to name your types. `x-graphql-type-kind` is optional and inferred.
 
 ```json
@@ -58,6 +59,7 @@ Use `x-graphql-type-name` or `title` to name your types. `x-graphql-type-kind` i
 ```
 
 #### 2. Field Type Override
+
 Use `x-graphql-type` to override inferred types.
 
 ```json
@@ -68,10 +70,12 @@ Use `x-graphql-type` to override inferred types.
 ```
 
 #### 3. Unions and Interfaces
+
 - **Unions**: Use `oneOf` to infer union types.
 - **Interfaces**: Use `allOf` to infer interface implementation.
 
 #### 4. Arguments
+
 Use `x-graphql-args` for field arguments.
 
 ```json
@@ -116,7 +120,7 @@ use json_schema_graphql_converter::{Converter, ConversionDirection};
 
 fn main() {
     let converter = Converter::new();
-    
+
     // JSON Schema to GraphQL
     let json_schema = r#"{
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -132,10 +136,10 @@ fn main() {
             }
         }
     }"#;
-    
+
     let graphql = converter.json_schema_to_graphql(json_schema).unwrap();
     println!("{}", graphql);
-    
+
     // GraphQL to JSON Schema
     let sdl = r#"
         type User {
@@ -143,7 +147,7 @@ fn main() {
             name: String
         }
     "#;
-    
+
     let json = converter.graphql_to_json_schema(sdl).unwrap();
     println!("{}", json);
 }
@@ -152,40 +156,40 @@ fn main() {
 ### JavaScript/TypeScript (WASM)
 
 ```javascript
-import init, { WasmConverter } from './pkg/json_schema_graphql_converter.js';
+import init, { WasmConverter } from "./pkg/json_schema_graphql_converter.js";
 
 async function main() {
-    // Initialize WASM module
-    await init();
-    
-    const converter = new WasmConverter();
-    
-    // JSON Schema to GraphQL
-    const jsonSchema = JSON.stringify({
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "object",
-        "x-graphql-type-name": "User",
-        "properties": {
-            "id": {
-                "type": "string",
-                "x-graphql-type": "ID!"
-            }
-        }
-    });
-    
-    const graphql = converter.jsonSchemaToGraphQL(jsonSchema);
-    console.log(graphql);
-    
-    // GraphQL to JSON Schema
-    const sdl = `
+  // Initialize WASM module
+  await init();
+
+  const converter = new WasmConverter();
+
+  // JSON Schema to GraphQL
+  const jsonSchema = JSON.stringify({
+    $schema: "https://json-schema.org/draft/2020-12/schema",
+    type: "object",
+    "x-graphql-type-name": "User",
+    properties: {
+      id: {
+        type: "string",
+        "x-graphql-type": "ID!",
+      },
+    },
+  });
+
+  const graphql = converter.jsonSchemaToGraphQL(jsonSchema);
+  console.log(graphql);
+
+  // GraphQL to JSON Schema
+  const sdl = `
         type User {
             id: ID!
             name: String
         }
     `;
-    
-    const json = converter.graphqlToJsonSchema(sdl);
-    console.log(json);
+
+  const json = converter.graphqlToJsonSchema(sdl);
+  console.log(json);
 }
 
 main();
@@ -221,6 +225,7 @@ cargo build --release --features cli
 ```
 
 Key flags:
+
 - `--id-strategy` (`NONE` | `COMMON_PATTERNS` | `ALL_STRINGS`), with legacy `--infer-ids` mapping to `COMMON_PATTERNS`.
 - `--output-format` (`SDL` | `SDL_WITH_FEDERATION_METADATA` | `AST_JSON`).
 - `--fail-on-warning` to exit non-zero on warnings.
@@ -230,18 +235,18 @@ Key flags:
 `WasmConverter` covers the common options; for the full option surface (including `idStrategy`, `outputFormat`, and `failOnWarning`), use the `convert` export which mirrors the standardized API:
 
 ```javascript
-import init, { convert } from './pkg/json_schema_graphql_converter.js';
+import init, { convert } from "./pkg/json_schema_graphql_converter.js";
 
 await init();
 
 const result = convert({
-    jsonSchema: JSON.stringify(mySchema),
-    options: {
-        idStrategy: 'ALL_STRINGS',
-        outputFormat: 'AST_JSON',
-        failOnWarning: true,
-        includeFederationDirectives: true
-    }
+  jsonSchema: JSON.stringify(mySchema),
+  options: {
+    idStrategy: "ALL_STRINGS",
+    outputFormat: "AST_JSON",
+    failOnWarning: true,
+    includeFederationDirectives: true,
+  },
 });
 
 console.log(result.output);
@@ -337,6 +342,7 @@ cargo fuzz run json_to_graphql -- -jobs=4
 ```
 
 Available fuzz targets:
+
 - `json_to_graphql` - Tests JSON Schema parsing and conversion to GraphQL
 - `graphql_to_json` - Tests GraphQL SDL parsing and conversion to JSON Schema
 - `round_trip` - Tests bidirectional conversion for data integrity

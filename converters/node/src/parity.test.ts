@@ -1,15 +1,15 @@
-import { execSync } from 'child_process';
-import { readdirSync, readFileSync, existsSync } from 'fs';
-import { join } from 'path';
-import { parse, DocumentNode } from 'graphql';
+import { execSync } from "child_process";
+import { readdirSync, readFileSync, existsSync } from "fs";
+import { join } from "path";
+import { parse, DocumentNode } from "graphql";
 
 jest.setTimeout(180000); // allow time for Rust builds
 
 function stripLoc(obj: any): any {
-  if (obj && typeof obj === 'object') {
+  if (obj && typeof obj === "object") {
     const out: any = Array.isArray(obj) ? [] : {};
     for (const key of Object.keys(obj)) {
-      if (key === 'loc') continue;
+      if (key === "loc") continue;
       out[key] = stripLoc(obj[key]);
     }
     return out;
@@ -29,19 +29,21 @@ function sortDefinitions(ast: DocumentNode): DocumentNode {
   for (const def of defs as any[]) {
     if (def.fields && Array.isArray(def.fields)) {
       def.fields.sort((x: any, y: any) =>
-        String(x.name?.value || '').localeCompare(String(y.name?.value || '')),
+        String(x.name?.value || "").localeCompare(String(y.name?.value || "")),
       );
       for (const f of def.fields) {
         if (f.arguments) {
           f.arguments.sort((a: any, b: any) =>
-            String(a.name?.value || '').localeCompare(String(b.name?.value || '')),
+            String(a.name?.value || "").localeCompare(
+              String(b.name?.value || ""),
+            ),
           );
         }
       }
     }
     if (def.values && Array.isArray(def.values)) {
       def.values.sort((x: any, y: any) =>
-        String(x.name?.value || '').localeCompare(String(y.name?.value || '')),
+        String(x.name?.value || "").localeCompare(String(y.name?.value || "")),
       );
     }
   }
@@ -50,28 +52,31 @@ function sortDefinitions(ast: DocumentNode): DocumentNode {
 }
 
 function normalizeSDL(sdl: string) {
-  if (!sdl || sdl.trim() === '') return null;
+  if (!sdl || sdl.trim() === "") return null;
   const BLOCK_THRESHOLD = 80;
   let ast;
   try {
     ast = parse(sdl);
   } catch (err) {
-    throw new Error(`Failed to parse SDL:\n${String(err)}\n--- SDL Preview ---\n${sdl.slice(0, 1000)}`);
+    throw new Error(
+      `Failed to parse SDL:\n${String(err)}\n--- SDL Preview ---\n${sdl.slice(0, 1000)}`,
+    );
   }
   // Normalize string literal block flag to be consistent across converters
   const visited = new WeakSet();
   const normalizeStrings = (node: any) => {
-    if (!node || typeof node !== 'object') return;
+    if (!node || typeof node !== "object") return;
     if (visited.has(node)) return;
     visited.add(node);
-    if (node.kind === 'StringValue' && typeof node.value === 'string') {
-      node.block = node.value.includes('\n') || node.value.length >= BLOCK_THRESHOLD;
+    if (node.kind === "StringValue" && typeof node.value === "string") {
+      node.block =
+        node.value.includes("\n") || node.value.length >= BLOCK_THRESHOLD;
     }
     for (const k of Object.keys(node)) {
       const v = node[k];
       if (Array.isArray(v)) {
         for (const e of v) normalizeStrings(e);
-      } else if (v && typeof v === 'object') {
+      } else if (v && typeof v === "object") {
         normalizeStrings(v);
       }
     }
@@ -83,7 +88,11 @@ function normalizeSDL(sdl: string) {
   // inline type and the other prefers the opaque `JSON` scalar.
   const inlineTypeNames = new Set<string>();
   for (const def of (ast as any).definitions || []) {
-    if (def && def.kind === 'ObjectTypeDefinition' && /^Nested/i.test(def.name?.value)) {
+    if (
+      def &&
+      def.kind === "ObjectTypeDefinition" &&
+      /^Nested/i.test(def.name?.value)
+    ) {
       inlineTypeNames.add(def.name.value);
     }
   }
@@ -91,17 +100,21 @@ function normalizeSDL(sdl: string) {
   if (inlineTypeNames.size > 0) {
     const visitedReplace = new WeakSet();
     const replaceNamedTypes = (node: any) => {
-      if (!node || typeof node !== 'object') return;
+      if (!node || typeof node !== "object") return;
       if (visitedReplace.has(node)) return;
       visitedReplace.add(node);
-      if (node.kind === 'NamedType' && node.name && inlineTypeNames.has(node.name.value)) {
-        node.name.value = 'JSON';
+      if (
+        node.kind === "NamedType" &&
+        node.name &&
+        inlineTypeNames.has(node.name.value)
+      ) {
+        node.name.value = "JSON";
       }
       for (const k of Object.keys(node)) {
         const v = node[k];
         if (Array.isArray(v)) {
           for (const e of v) replaceNamedTypes(e);
-        } else if (v && typeof v === 'object') {
+        } else if (v && typeof v === "object") {
           replaceNamedTypes(v);
         }
       }
@@ -109,7 +122,12 @@ function normalizeSDL(sdl: string) {
     replaceNamedTypes(ast as any);
     // Remove the inline type definitions themselves
     (ast as any).definitions = (ast as any).definitions.filter(
-      (d: any) => !(d && d.kind === 'ObjectTypeDefinition' && inlineTypeNames.has(d.name?.value)),
+      (d: any) =>
+        !(
+          d &&
+          d.kind === "ObjectTypeDefinition" &&
+          inlineTypeNames.has(d.name?.value)
+        ),
     );
   }
   const stripped = stripLoc(ast as any);
@@ -117,21 +135,21 @@ function normalizeSDL(sdl: string) {
   return sorted as DocumentNode;
 }
 
-describe('Parity: Node vs Rust converter outputs', () => {
-  const repoRoot = join(__dirname, '..', '..', '..');
-  const testDataDir = join(repoRoot, 'converters', 'test-data');
-  const scriptPath = join(repoRoot, 'scripts', 'test-both-converters.js');
+describe("Parity: Node vs Rust converter outputs", () => {
+  const repoRoot = join(__dirname, "..", "..", "..");
+  const testDataDir = join(repoRoot, "converters", "test-data");
+  const scriptPath = join(repoRoot, "scripts", "test-both-converters.js");
 
-  const files = readdirSync(testDataDir).filter((f) => f.endsWith('.json'));
+  const files = readdirSync(testDataDir).filter((f) => f.endsWith(".json"));
   if (files.length === 0) {
-    test('no fixtures found', () => {
+    test("no fixtures found", () => {
       expect(files.length).toBeGreaterThan(0);
     });
     return;
   }
 
   for (const file of files) {
-    const basename = file.replace(/\.json$/, '');
+    const basename = file.replace(/\.json$/, "");
     test(`fixture: ${basename}`, () => {
       const inputPath = join(testDataDir, file);
       const optionsPath = join(testDataDir, `${basename}.options.json`);
@@ -144,19 +162,29 @@ describe('Parity: Node vs Rust converter outputs', () => {
 
       // run comparison script which writes outputs to output/comparison
       execSync(`node "${scriptPath}" "${inputPath}"`, {
-        stdio: 'inherit',
+        stdio: "inherit",
         cwd: repoRoot,
         env,
       });
 
-      const nodeOut = join(repoRoot, 'output', 'comparison', `${basename}-node.graphql`);
-      const rustOut = join(repoRoot, 'output', 'comparison', `${basename}-rust.graphql`);
+      const nodeOut = join(
+        repoRoot,
+        "output",
+        "comparison",
+        `${basename}-node.graphql`,
+      );
+      const rustOut = join(
+        repoRoot,
+        "output",
+        "comparison",
+        `${basename}-rust.graphql`,
+      );
 
       expect(existsSync(nodeOut)).toBe(true);
       expect(existsSync(rustOut)).toBe(true);
 
-      const nodeSDL = readFileSync(nodeOut, 'utf-8');
-      const rustSDL = readFileSync(rustOut, 'utf-8');
+      const nodeSDL = readFileSync(nodeOut, "utf-8");
+      const rustSDL = readFileSync(rustOut, "utf-8");
 
       const normNode = normalizeSDL(nodeSDL);
       const normRust = normalizeSDL(rustSDL);
@@ -169,7 +197,13 @@ describe('Parity: Node vs Rust converter outputs', () => {
       function semanticallyEqual(a: any, b: any): boolean {
         if (a === b) return true;
         if (a == null || b == null) return a === b;
-        if (typeof a !== 'object' || typeof b !== 'object') return a === b;
+        if (typeof a !== "object" || typeof b !== "object") return a === b;
+        
+        // Ignore "block" property on StringValue nodes (formatting difference)
+        if (a.kind === 'StringValue' && b.kind === 'StringValue') {
+            return a.value === b.value;
+        }
+
         if (visited.has(a) || visited.has(b)) return true;
         visited.add(a);
         visited.add(b);
@@ -183,10 +217,10 @@ describe('Parity: Node vs Rust converter outputs', () => {
         }
 
         // Special-case: NamedType comparison treats JSON as a wildcard
-        if (a.kind === 'NamedType' && b.kind === 'NamedType') {
+        if (a.kind === "NamedType" && b.kind === "NamedType") {
           const an = a.name?.value;
           const bn = b.name?.value;
-          if (an === 'JSON' || bn === 'JSON') return true;
+          if (an === "JSON" || bn === "JSON") return true;
           return an === bn;
         }
 

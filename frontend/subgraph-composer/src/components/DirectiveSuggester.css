@@ -237,7 +237,7 @@
 
 .field-name {
   color: #666;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
 }
 
 .expand-btn {
@@ -289,7 +289,7 @@
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.85rem;
   color: #d32f2f;
   overflow-x: auto;
@@ -315,7 +315,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 0.85rem;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   color: #333;
 }
 
@@ -366,7 +366,7 @@
 .preview-code {
   margin: 0;
   padding: 1rem;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-size: 0.85rem;
   line-height: 1.4;
   color: #333;
@@ -384,7 +384,9 @@
   border-radius: 4px;
   font-weight: 600;
   z-index: 1000;
-  animation: slideDown 0.3s ease, slideUp 0.3s ease 1.2s;
+  animation:
+    slideDown 0.3s ease,
+    slideUp 0.3s ease 1.2s;
   pointer-events: none;
 }
 

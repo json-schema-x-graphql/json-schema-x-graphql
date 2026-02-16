@@ -323,6 +323,7 @@ npm run dev
 ### Next Steps 📋
 
 1. **Complete Phase 3A**:
+
    ```bash
    ./scripts/run-tests.sh
    ./scripts/test-parity.sh
@@ -414,14 +415,14 @@ We welcome contributions to Phase 3! Here's how to help:
 
 ## Performance Targets
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| Rust conversion time | < 5ms | 🚧 TBD |
-| Node.js conversion time | < 10ms | 🚧 TBD |
-| WASM conversion time | < 5ms | 📋 Not started |
-| Test coverage (Rust) | 80%+ | 🚧 TBD |
-| Test coverage (Node.js) | 80%+ | 🚧 TBD |
-| Parity tests | 100% pass | 📋 Not started |
+| Metric                  | Target    | Status         |
+| ----------------------- | --------- | -------------- |
+| Rust conversion time    | < 5ms     | 🚧 TBD         |
+| Node.js conversion time | < 10ms    | 🚧 TBD         |
+| WASM conversion time    | < 5ms     | 📋 Not started |
+| Test coverage (Rust)    | 80%+      | 🚧 TBD         |
+| Test coverage (Node.js) | 80%+      | 🚧 TBD         |
+| Parity tests            | 100% pass | 📋 Not started |
 
 ---
 

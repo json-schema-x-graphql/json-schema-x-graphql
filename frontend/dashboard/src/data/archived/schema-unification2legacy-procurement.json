@@ -16,7 +16,10 @@
         ],
         "dataQuality": {
           "completenessScore": 0.68,
-          "validationErrors": ["Missing vendor UEI", "Incomplete place of performance"],
+          "validationErrors": [
+            "Missing vendor UEI",
+            "Incomplete place of performance"
+          ],
           "lastValidated": "2024-01-10T08:15:00Z"
         }
       },

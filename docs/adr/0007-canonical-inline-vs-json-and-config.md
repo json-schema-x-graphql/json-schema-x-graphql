@@ -1,4 +1,5 @@
 # 0007: Canonical rules for object inlining, naming, and converter options
+
 Date: 2025-12-14
 
 ## Status
@@ -26,7 +27,7 @@ We adopt the following canonical rules (defaults) and surface them as `Converter
    - Inline descriptions must end with a single newline when rendered (to ensure separation from type definition lines).
 
 2. Empty object types
-   - Rule: Do not emit an explicit GraphQL object definition for an object that has no fields *and* does not declare useful constraints (e.g. `enum`, `additionalProperties` with known structure). Omit emitting a type to avoid creating invalid or useless SDL.
+   - Rule: Do not emit an explicit GraphQL object definition for an object that has no fields _and_ does not declare useful constraints (e.g. `enum`, `additionalProperties` with known structure). Omit emitting a type to avoid creating invalid or useless SDL.
    - Default: `emitEmptyTypes = false`.
 
 3. Anonymous inline objects
@@ -76,7 +77,7 @@ Suggested per-schema overrides:
 
 ## Examples
 
-1) Long description -> block string
+1. Long description -> block string
 
 Input schema excerpt:
 
@@ -94,7 +95,7 @@ It contains additional lines.
 """
 type Foo { ... }
 
-2) Small anonymous object -> `JSON`
+2. Small anonymous object -> `JSON`
 
 Input:
 
@@ -106,7 +107,7 @@ Output (canonical):
 
 type Foo { data: JSON }
 
-3) Larger or referenced object -> named type
+3. Larger or referenced object -> named type
 
 Input (referenced or > threshold):
 

@@ -7,6 +7,7 @@ This directory contains historical documentation that has been superseded by con
 ## Purpose
 
 These documents are preserved for:
+
 - **Historical context** — Understanding how the project evolved
 - **Decision tracking** — Seeing why certain approaches were taken
 - **Troubleshooting reference** — Diagnosing similar issues in the future
@@ -19,9 +20,11 @@ These documents are preserved for:
 ## Archive Organization
 
 ### [`implementation-logs/`](implementation-logs/)
+
 Feature implementation logs and completion reports from various development phases.
 
 **Examples:**
+
 - Benchmark setup
 - GraphQL converter bug fixes
 - Voyager page implementations
@@ -30,9 +33,11 @@ Feature implementation logs and completion reports from various development phas
 **Use when:** You need to understand how a specific feature was implemented or what issues were encountered.
 
 ### [`v1-v2-migration/`](v1-v2-migration/)
+
 Documentation related to the migration from V1 to V2 schema architecture.
 
 **Examples:**
+
 - Conversion results
 - Enhancement summaries
 - Migration guides (historical)
@@ -41,9 +46,11 @@ Documentation related to the migration from V1 to V2 schema architecture.
 **Use when:** You need to understand the V1/V2 transition history or troubleshoot migration-related issues.
 
 ### [`deprecated/`](deprecated/)
+
 Documentation that has been superseded by newer, consolidated guides.
 
 **Examples:**
+
 - Old TODO lists
 - Preliminary analysis documents
 - Superseded user guides
@@ -58,11 +65,13 @@ Documentation that has been superseded by newer, consolidated guides.
 For up-to-date documentation, see:
 
 ### Core Documentation
+
 - **[Main Docs README](../README.md)** — Complete documentation index
 - **[Quick Start Guide](../quick-start.md)** — Get started in 5 minutes
 - **[Schema Pipeline Guide](../schema-pipeline-guide.md)** — Schema generation and validation
 
 ### Reference Guides
+
 - **[x-graphql Hints Guide](../x-graphql-hints-guide.md)** — Comprehensive GraphQL hints reference
 - **[Schema V1 vs V2 Guide](../schema-v1-vs-v2-guide.md)** — Current comparison and migration guide
 - **[System Mappings Guide](../system-mappings-guide.md)** — Contract Data, Legacy Procurement, EASi mappings
@@ -74,6 +83,7 @@ For up-to-date documentation, see:
 ### What Gets Archived?
 
 Documents are archived when they:
+
 - Are **implementation logs** or completion reports (historical record, not user guide)
 - Have been **superseded** by consolidated guides
 - Are specific to **outdated versions** or approaches
@@ -82,6 +92,7 @@ Documents are archived when they:
 ### What Stays Active?
 
 Documents remain active when they:
+
 - Provide **current reference** material
 - Are **user guides** with up-to-date information
 - Document **architectural decisions** (ADRs)
@@ -90,6 +101,7 @@ Documents remain active when they:
 ### Archive Process
 
 When a document is archived:
+
 1. ✅ File is moved to appropriate archive subdirectory
 2. ✅ ARCHIVED notice is added to top of file
 3. ✅ Cross-references are updated to point to current guides
@@ -100,6 +112,7 @@ When a document is archived:
 ## Archive Index
 
 ### Implementation Logs (6 files)
+
 - `BENCHMARK-SETUP-COMPLETE.md` — Benchmark infrastructure setup completion
 - `GRAPHQL-CONVERTER-BUG-FIXES.md` — GraphQL converter debugging and fixes
 - `GRAPHQL-VOYAGER-PAGES.md` — Voyager visualization page implementation
@@ -108,12 +121,14 @@ When a document is archived:
 - `VOYAGER-V2-HINTED-IMPLEMENTATION.md` — V2 schema Voyager implementation
 
 ### V1/V2 Migration (4 files)
+
 - `V1-TO-V2-CONVERTER-RESULTS.md` — V1 to V2 conversion results and analysis
 - `V2-GRAPHQL-ENHANCEMENT-SUMMARY.md` — V2 GraphQL enhancements summary
 - `migration-to-json-schema-canonical.md` — Migration to canonical JSON Schema
 - `schema_unification-v1-diagram.md` — V1 schema architecture diagram
 
 ### Deprecated (4 files)
+
 - `schema-todo.md` — Outdated TODO list
 - `GRAPHQL-SCHEMA-ANALYSIS-AND-STRATEGY.md` — Preliminary GraphQL analysis
 - `graphql-extensions-guide.md` — Superseded by x-graphql-hints-guide.md
@@ -126,7 +141,9 @@ When a document is archived:
 ## Accessing Archived Content
 
 ### Via Git History
+
 All archived documents remain accessible in Git history:
+
 ```bash
 # View file history
 git log -- docs/archived/implementation-logs/BENCHMARK-SETUP-COMPLETE.md
@@ -136,7 +153,9 @@ git show <commit-hash>:docs/BENCHMARK-SETUP-COMPLETE.md
 ```
 
 ### Via Archive Directory
+
 Simply browse to the appropriate subdirectory:
+
 ```bash
 cd docs/archived/implementation-logs
 ls -la
@@ -160,11 +179,11 @@ Add to the top of archived files:
 
 ```markdown
 > **⚠️ ARCHIVED DOCUMENTATION**
-> 
+>
 > This document has been archived and is preserved for historical reference only.
-> 
+>
 > **See instead:** [Current Guide Name](../current-guide.md)
-> 
+>
 > **Archived:** December 2024  
 > **Reason:** [Brief reason for archiving]
 ```

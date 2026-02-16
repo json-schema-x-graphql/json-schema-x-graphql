@@ -2,7 +2,7 @@
 
 **Date:** 2024  
 **Status:** ✅ Fixed and Enhanced  
-**Components:** Loro Monaco Demo, Yjs Monaco Demo  
+**Components:** Loro Monaco Demo, Yjs Monaco Demo
 
 ---
 
@@ -13,17 +13,20 @@
 **Problem:** After clicking "Convert to GraphQL →", the visual editor remained blank.
 
 **Root Cause:** Race condition between two competing CRDT subscriptions:
+
 - Store-level subscription (in `store.ts`)
 - Component-level subscription (in `GraphQLVisualEditor.tsx`)
 
 Both were listening to the same CRDT changes, causing update conflicts.
 
 **Solution:** Removed redundant component-level CRDT subscription. Now uses single data flow:
+
 ```
 CRDT Update → Store Subscription → State Update → Props → Component Render
 ```
 
 **Files Changed:**
+
 - `frontend/demos/loro-monaco/src/GraphQLVisualEditor.tsx`
 - `frontend/demos/yjs-monaco/src/GraphQLVisualEditor.tsx`
 
@@ -34,17 +37,20 @@ CRDT Update → Store Subscription → State Update → Props → Component Rend
 **Problem:** Initial schemas were too simple (`type Query { hello: String }`), didn't showcase x-graphql extensions.
 
 **Solution:** Created comprehensive default schemas featuring:
+
 - Federation support with `@key` directives
 - Enum definitions in `$defs`
 - Multiple x-graphql extensions (`x-graphql-field-name`, `x-graphql-field-type`, `x-graphql-field-non-null`)
 - Proper type relationships
 
 **Files Changed:**
+
 - `frontend/demos/loro-monaco/src/store.ts` - New default User type with federation
 - `frontend/demos/yjs-monaco/src/store.ts` - Same comprehensive example
 - `frontend/demos/example-schema.json` - Full example with all features
 
 **New Default Schema Structure:**
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -52,7 +58,7 @@ CRDT Update → Store Subscription → State Update → Props → Component Rend
   "type": "object",
   "x-graphql-type-name": "User",
   "x-graphql-type-kind": "OBJECT",
-  "x-graphql-federation-keys": [{"fields": "id"}],
+  "x-graphql-federation-keys": [{ "fields": "id" }],
   "properties": {
     "id": {
       "type": "string",
@@ -72,11 +78,12 @@ CRDT Update → Store Subscription → State Update → Props → Component Rend
 **Solution:** Added comprehensive error handling:
 
 **New Error Class:**
+
 ```typescript
 class ConversionError extends Error {
   public details: string[];
   public location?: string;
-  
+
   toUserMessage(): string {
     // Returns formatted error with location and detailed tips
   }
@@ -84,6 +91,7 @@ class ConversionError extends Error {
 ```
 
 **Enhanced Error Messages:**
+
 - Input validation (empty, malformed JSON/GraphQL)
 - Schema structure validation
 - Field-level error context ("Failed to convert property 'username': ...")
@@ -91,6 +99,7 @@ class ConversionError extends Error {
 - Stack traces in development mode
 
 **Files Changed:**
+
 - `frontend/demos/loro-monaco/src/converter-integration.ts`
 - `frontend/demos/yjs-monaco/src/converter-integration.ts`
 - `frontend/demos/loro-monaco/src/App.tsx` - Better error display
@@ -99,17 +108,19 @@ class ConversionError extends Error {
 
 ### 4. **Incomplete x-graphql Extension Support**
 
-**Problem:** Converter didn't handle many x-graphql-* extensions from the meta-schema.
+**Problem:** Converter didn't handle many x-graphql-\* extensions from the meta-schema.
 
 **Solution:** Enhanced converter to support:
 
 ✅ **Type-Level Features:**
+
 - `x-graphql-type-name` - Custom type names
 - `x-graphql-type-kind` - Type kinds (OBJECT, ENUM, INTERFACE, etc.)
 - `x-graphql-type-directives` - Type directives
 - `x-graphql-federation-keys` - Federation entity keys
 
 ✅ **Field-Level Features:**
+
 - `x-graphql-field-name` - Custom field names
 - `x-graphql-field-type` - Override GraphQL types
 - `x-graphql-field-non-null` - Non-null fields
@@ -118,10 +129,12 @@ class ConversionError extends Error {
 - `x-graphql-field-arguments` - Field arguments with defaults
 
 ✅ **Enum Features:**
+
 - Enums from `$defs` with `x-graphql-type-name`
 - `x-graphql-enum-value-configs` - Per-value descriptions and directives
 
 **New Helper Functions:**
+
 ```typescript
 formatDirectives(directives: any[]): string
 convertEnum(enumSchema: any): string
@@ -134,6 +147,7 @@ convertEnum(enumSchema: any): string
 **Problem:** Generated SDL sometimes caused "Cannot parse the schema!" errors.
 
 **Solution:**
+
 - Fixed description formatting (proper escaping, correct newline placement)
 - Fixed enum value generation (use actual values, not always UPPERCASE)
 - Added proper directive formatting with arguments
@@ -141,15 +155,16 @@ convertEnum(enumSchema: any): string
 - Better validation of generated SDL
 
 **Example Output Now:**
+
 ```graphql
 "A user in the system with federation support"
 type User @key(fields: "id") {
   "Unique identifier for the user"
   id: ID!
-  
+
   "User's unique username"
   username: String!
-  
+
   "User's role in the system"
   role: UserRole!
 }
@@ -169,16 +184,20 @@ enum UserRole {
 ### Single Source of Truth Pattern
 
 **Before (Broken):**
+
 ```
 CRDT → Component Subscription → Local State
 CRDT → Store Subscription → Store State → Props → Component
 ```
+
 Result: Race conditions, blocked updates
 
 **After (Fixed):**
+
 ```
 CRDT → Store Subscription → Store State → Props → Component
 ```
+
 Result: Predictable, unidirectional data flow
 
 ### Data Flow Diagram
@@ -233,6 +252,7 @@ Result: Predictable, unidirectional data flow
 ## Files Modified
 
 ### Core Fixes
+
 1. **`frontend/demos/loro-monaco/src/GraphQLVisualEditor.tsx`**
    - Removed redundant Loro subscription
    - Simplified to single value prop flow
@@ -257,7 +277,7 @@ Result: Predictable, unidirectional data flow
 5. **`frontend/demos/loro-monaco/src/store.ts`**
    - New default User schema with federation
    - Includes enum in $defs
-   - Shows proper x-graphql-* usage
+   - Shows proper x-graphql-\* usage
 
 6. **`frontend/demos/yjs-monaco/src/store.ts`**
    - Same comprehensive default schema
@@ -268,6 +288,7 @@ Result: Predictable, unidirectional data flow
    - Better error context for debugging
 
 ### Documentation
+
 8. **`docs/BUGFIX_GRAPHQL_EDITOR_NOT_POPULATING.md`**
    - Complete technical analysis
    - Root cause explanation
@@ -288,6 +309,7 @@ Result: Predictable, unidirectional data flow
 ## Testing Checklist
 
 ### Conversion Tests
+
 - [x] Simple JSON Schema → GraphQL
 - [x] Complex schema with nested objects
 - [x] Schemas with enums in $defs
@@ -298,6 +320,7 @@ Result: Predictable, unidirectional data flow
 - [x] GraphQL → JSON Schema (round-trip)
 
 ### Error Handling Tests
+
 - [x] Empty input
 - [x] Invalid JSON
 - [x] Invalid GraphQL SDL
@@ -306,6 +329,7 @@ Result: Predictable, unidirectional data flow
 - [x] Unsupported features
 
 ### Visual Editor Tests
+
 - [x] Editor populates after conversion ✅
 - [x] Can edit types and fields
 - [x] Can add new types
@@ -320,11 +344,13 @@ Result: Predictable, unidirectional data flow
 Based on `schema/x-graphql-extensions.schema.json`:
 
 ### Schema-Level
+
 - ✅ `x-graphql-schema-config` - Root config
 - ✅ `x-graphql-link-imports` - Federation imports
 - ✅ `x-graphql-custom-directives` - Custom directive definitions
 
 ### Type-Level
+
 - ✅ `x-graphql-type-name` - Type name override
 - ✅ `x-graphql-type-kind` - OBJECT, ENUM, etc.
 - ✅ `x-graphql-type-directives` - Type directives
@@ -333,6 +359,7 @@ Based on `schema/x-graphql-extensions.schema.json`:
 - ✅ `x-graphql-enum-value-configs` - Enum config
 
 ### Field-Level
+
 - ✅ `x-graphql-field-name` - Field name override
 - ✅ `x-graphql-field-type` - Type override
 - ✅ `x-graphql-field-non-null` - Non-null marker
@@ -341,6 +368,7 @@ Based on `schema/x-graphql-extensions.schema.json`:
 - ✅ `x-graphql-field-arguments` - Field args with defaults
 
 ### Federation-Level
+
 - ✅ `x-graphql-federation-keys` - Entity keys
 - ✅ `x-graphql-federation-shareable` - Shareable fields
 - ✅ `x-graphql-federation-external` - External fields
@@ -348,6 +376,7 @@ Based on `schema/x-graphql-extensions.schema.json`:
 - ⚠️ `x-graphql-federation-provides` - Partially supported
 
 ### Resolver/Cache (Partial)
+
 - ⚠️ Cache control hints (documented but not emitted)
 - ⚠️ Rate limiting hints (stored but not converted)
 
@@ -356,15 +385,14 @@ Based on `schema/x-graphql-extensions.schema.json`:
 ## Usage Example
 
 ### Input (JSON Schema with Extensions)
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Product",
   "type": "object",
   "x-graphql-type-name": "Product",
-  "x-graphql-federation-keys": [
-    {"fields": "id"}
-  ],
+  "x-graphql-federation-keys": [{ "fields": "id" }],
   "properties": {
     "id": {
       "type": "string",
@@ -386,6 +414,7 @@ Based on `schema/x-graphql-extensions.schema.json`:
 ```
 
 ### Output (GraphQL SDL)
+
 ```graphql
 "Product"
 type Product @key(fields: "id") {
@@ -400,17 +429,20 @@ type Product @key(fields: "id") {
 ## Next Steps
 
 ### Immediate
+
 1. ✅ Bug fix deployed - editor now populates
 2. ✅ Comprehensive examples in place
 3. ✅ Better error messages
 
 ### Short-term (Recommended)
+
 1. **Integrate Rust WASM converter** - Replace TypeScript converter with full-featured Rust version
 2. **Add schema validation** - Use JSON Schema validator against x-graphql-extensions.schema.json
 3. **Improve UI error display** - Replace alerts with inline error panels
 4. **Add conversion metrics** - Show types/fields converted, warnings
 
 ### Long-term
+
 1. **Support all federation features** - @requires, @provides, @override with full context
 2. **Interface & Union support** - Currently limited
 3. **Input types** - Convert to GraphQL input types
@@ -422,22 +454,27 @@ type Product @key(fields: "id") {
 ## Key Learnings
 
 ### 1. **Single Subscription Pattern**
+
 When integrating CRDTs with React:
+
 - ✅ Subscribe at store level only
 - ✅ Pass data via props
 - ❌ Don't create component-level subscriptions to same data
 
 ### 2. **Error Context is Critical**
+
 - Generic "conversion failed" is useless
 - Show location, field name, specific issue
 - Provide actionable tips
 
 ### 3. **Examples Drive Understanding**
+
 - Simple examples hide complexity
 - Users need to see real features
 - Default schemas should showcase capabilities
 
 ### 4. **Validation at Every Layer**
+
 - Input validation (syntax)
 - Structure validation (schema shape)
 - Business validation (GraphQL rules)

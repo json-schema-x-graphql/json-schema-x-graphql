@@ -7,6 +7,7 @@ This guide explains how to set up and use the automated browser debugging tool t
 ## What This Does
 
 The debug tool uses Playwright to:
+
 - ✅ Launch a real browser and navigate to your app
 - ✅ Capture **all** console messages (errors, warnings, logs)
 - ✅ Capture **all** network requests and responses
@@ -34,11 +35,13 @@ This installs Playwright and downloads Chromium (~170MB).
 The debug tool needs the app to be running:
 
 **Terminal 1** - Start servers:
+
 ```bash
 pnpm run dev:full
 ```
 
 **Terminal 2** - Run debug tool:
+
 ```bash
 pnpm run debug:browser
 ```
@@ -69,12 +72,14 @@ Real-time stream of everything happening in the browser:
 ### 2. Screenshots
 
 Saved to `debug-output/`:
+
 - `screenshot-initial.png` - App right after load
 - `screenshot-after-conversion.png` - After test conversion
 
 ### 3. JSON Report
 
 `debug-output/debug-report.json` - Complete structured data:
+
 ```json
 {
   "timestamp": "2025-01-03T...",
@@ -93,6 +98,7 @@ Saved to `debug-output/`:
 ### 4. Human-Readable Summary
 
 `debug-output/debug-summary.txt` - Easy to read overview:
+
 ```
 Browser Debug Report
 ============================================================
@@ -146,6 +152,7 @@ cat debug-output/debug-summary.txt
 ```
 
 Look for:
+
 - Red ❌ errors in console
 - 404s or 500s in network requests
 - High error counts
@@ -182,14 +189,16 @@ open debug-output/screenshot-after-conversion.png
 To **see** the browser while it runs (useful for understanding visual issues):
 
 Edit `debug-browser.ts`:
+
 ```typescript
 browser = await chromium.launch({
   headless: false, // ← Change this from true to false
-  slowMo: 1000,    // ← Optional: slow down actions by 1s
+  slowMo: 1000, // ← Optional: slow down actions by 1s
 });
 ```
 
 Then run:
+
 ```bash
 pnpm run debug:browser
 ```
@@ -201,6 +210,7 @@ You'll see Chrome open and watch it navigate, click, etc.
 ## What Gets Captured
 
 ### Console Messages
+
 - All `console.log()`, `console.error()`, `console.warn()`
 - React error boundaries
 - Monaco editor messages
@@ -208,6 +218,7 @@ You'll see Chrome open and watch it navigate, click, etc.
 - Network errors
 
 ### Network Activity
+
 - Request URL, method, headers
 - POST body data
 - Response status, headers
@@ -216,17 +227,20 @@ You'll see Chrome open and watch it navigate, click, etc.
 - Failed requests (4xx, 5xx)
 
 ### Page Errors
+
 - JavaScript exceptions
 - Unhandled promise rejections
 - React errors
 - Parser errors
 
 ### Screenshots
+
 - Initial page load
 - After conversion test
 - Full page (scrollable)
 
 ### App State
+
 - Checks if Monaco loaded
 - Checks if React loaded
 - Checks if Schema Authoring API exists
@@ -266,15 +280,19 @@ Recommendations:
 ### Common Issues & Fixes
 
 **Issue**: `POST /api/convert 404`
+
 - **Fix**: API server not running → `pnpm run dev:full`
 
 **Issue**: `WASM converter initialization failed`
+
 - **Fix**: Normal if WASM not built → ignore or run `pnpm run build:wasm`
 
 **Issue**: `monaco-editor worker failed`
+
 - **Fix**: Monaco worker config issue → check `vite.config.ts` and `index.html`
 
 **Issue**: High load time (>5s)
+
 - **Fix**: Check bundle size, optimize imports, check network
 
 ---
@@ -294,7 +312,7 @@ await page.waitForTimeout(5000); // 5 seconds
 // Test clicking a button
 await page.click('[data-testid="convert-button"]');
 await page.waitForTimeout(1000);
-await page.screenshot({ path: 'debug-output/after-click.png' });
+await page.screenshot({ path: "debug-output/after-click.png" });
 ```
 
 ### Check Specific Elements
@@ -302,14 +320,14 @@ await page.screenshot({ path: 'debug-output/after-click.png' });
 ```typescript
 // Check if editors are visible
 const editorsVisible = await page.evaluate(() => {
-  const editors = document.querySelectorAll('.monaco-editor');
-  return Array.from(editors).map(el => ({
+  const editors = document.querySelectorAll(".monaco-editor");
+  return Array.from(editors).map((el) => ({
     visible: el.offsetParent !== null,
     width: el.clientWidth,
     height: el.clientHeight,
   }));
 });
-console.log('Editors:', editorsVisible);
+console.log("Editors:", editorsVisible);
 ```
 
 ---
@@ -339,7 +357,7 @@ Add to GitHub Actions:
     pnpm run dev:full &
     sleep 5
     pnpm run debug:browser
-    
+
 - name: Upload Debug Artifacts
   uses: actions/upload-artifact@v3
   with:
@@ -354,6 +372,7 @@ Add to GitHub Actions:
 ### "playwright: command not found"
 
 Run setup:
+
 ```bash
 pnpm run debug:install
 ```
@@ -361,6 +380,7 @@ pnpm run debug:install
 ### "Error: browserType.launch: Executable doesn't exist"
 
 Install browsers:
+
 ```bash
 pnpm exec playwright install chromium
 ```
@@ -368,6 +388,7 @@ pnpm exec playwright install chromium
 ### "Navigation timeout"
 
 App not running. Start it first:
+
 ```bash
 pnpm run dev:full
 ```
@@ -375,6 +396,7 @@ pnpm run dev:full
 ### "Connection refused"
 
 Wrong port. Check if app is on 3003:
+
 ```bash
 curl http://localhost:3003
 ```
@@ -400,7 +422,7 @@ debug-output/
 ✅ **Reproducible**: Run the same test every time  
 ✅ **Historical**: Save reports to compare over time  
 ✅ **CI-Ready**: Can run in automated pipelines  
-✅ **Shareable**: Send reports to others for debugging  
+✅ **Shareable**: Send reports to others for debugging
 
 ---
 

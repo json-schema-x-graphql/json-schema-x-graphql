@@ -74,6 +74,7 @@ Try adding 2-3 schemas to see supergraph composition.
 ## Next Steps
 
 ### For Development
+
 ```bash
 # Read the full guides
 cat README.md                    # User guide
@@ -82,6 +83,7 @@ cat PROJECT_SUMMARY.md           # Technical details
 ```
 
 ### For Production
+
 ```bash
 # Build optimized version
 npm run build
@@ -91,7 +93,9 @@ npm run preview
 ```
 
 ### Integrate Real Converter
+
 When ready, link the actual converter library:
+
 ```bash
 npm install ../../../converters/node/dist
 ```

@@ -72,23 +72,23 @@ json-schema-x-graphql [OPTIONS] --input <FILE>
 
 ### Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `-i, --input` | string | required | Path to JSON Schema file |
-| `-o, --output` | string | stdout | Output file path |
-| `--descriptions` | boolean | true | Include descriptions in output |
-| `--preserve-order` | boolean | true | Preserve field order from schema |
-| `--include-federation-directives` | boolean | true | Emit federation directives |
-| `--federation-version` | enum | V2 | Federation version (NONE, V1, V2, AUTO) |
-| `--naming-convention` | enum | GRAPHQL_IDIOMATIC | Naming strategy (PRESERVE, GRAPHQL_IDIOMATIC) |
-| `--infer-ids` | boolean | false | Infer ID scalars (deprecated, use --id-strategy) |
-| `--id-strategy` | enum | NONE | ID inference (NONE, COMMON_PATTERNS, ALL_STRINGS) |
-| `--output-format` | enum | SDL | Output format (SDL, SDL_WITH_FEDERATION_METADATA, AST_JSON) |
-| `--fail-on-warning` | boolean | false | Treat warnings as errors |
-| `--exclude-type` | string[] | [] | Exclude specific types (repeatable) |
-| `--exclude-pattern` | string[] | [] | Exclude by regex pattern (repeatable) |
-| `-h, --help` | - | - | Show help message |
-| `-v, --version` | - | - | Show version |
+| Option                            | Type     | Default           | Description                                                 |
+| --------------------------------- | -------- | ----------------- | ----------------------------------------------------------- |
+| `-i, --input`                     | string   | required          | Path to JSON Schema file                                    |
+| `-o, --output`                    | string   | stdout            | Output file path                                            |
+| `--descriptions`                  | boolean  | true              | Include descriptions in output                              |
+| `--preserve-order`                | boolean  | true              | Preserve field order from schema                            |
+| `--include-federation-directives` | boolean  | true              | Emit federation directives                                  |
+| `--federation-version`            | enum     | V2                | Federation version (NONE, V1, V2, AUTO)                     |
+| `--naming-convention`             | enum     | GRAPHQL_IDIOMATIC | Naming strategy (PRESERVE, GRAPHQL_IDIOMATIC)               |
+| `--infer-ids`                     | boolean  | false             | Infer ID scalars (deprecated, use --id-strategy)            |
+| `--id-strategy`                   | enum     | NONE              | ID inference (NONE, COMMON_PATTERNS, ALL_STRINGS)           |
+| `--output-format`                 | enum     | SDL               | Output format (SDL, SDL_WITH_FEDERATION_METADATA, AST_JSON) |
+| `--fail-on-warning`               | boolean  | false             | Treat warnings as errors                                    |
+| `--exclude-type`                  | string[] | []                | Exclude specific types (repeatable)                         |
+| `--exclude-pattern`               | string[] | []                | Exclude by regex pattern (repeatable)                       |
+| `-h, --help`                      | -        | -                 | Show help message                                           |
+| `-v, --version`                   | -        | -                 | Show version                                                |
 
 ### Examples
 
@@ -135,21 +135,21 @@ jxql [OPTIONS] --input <FILE>
 
 ### Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `-i, --input` | string | required | Path to JSON Schema file or URL |
-| `-o, --output` | path | stdout | Output file path |
-| `--infer-ids` | flag | false | Infer ID scalar from id/_id fields |
-| `--no-validate` | flag | false | Disable schema validation |
-| `--descriptions` | flag | true | Include descriptions in output |
-| `--preserve-order` | flag | true | Preserve field order |
-| `--federation-version` | u8 | 2 | Federation version (1 or 2) |
-| `--naming-convention` | string | GRAPHQL_IDIOMATIC | Naming convention |
-| `--id-strategy` | string | NONE | ID inference strategy |
-| `--output-format` | string | SDL | Output format |
-| `--fail-on-warning` | flag | false | Treat warnings as errors |
-| `--exclude-types` | list | [] | Types to exclude (comma-separated) |
-| `--exclude-patterns` | list | [] | Regex patterns (comma-separated) |
+| Option                 | Type   | Default           | Description                         |
+| ---------------------- | ------ | ----------------- | ----------------------------------- |
+| `-i, --input`          | string | required          | Path to JSON Schema file or URL     |
+| `-o, --output`         | path   | stdout            | Output file path                    |
+| `--infer-ids`          | flag   | false             | Infer ID scalar from id/\_id fields |
+| `--no-validate`        | flag   | false             | Disable schema validation           |
+| `--descriptions`       | flag   | true              | Include descriptions in output      |
+| `--preserve-order`     | flag   | true              | Preserve field order                |
+| `--federation-version` | u8     | 2                 | Federation version (1 or 2)         |
+| `--naming-convention`  | string | GRAPHQL_IDIOMATIC | Naming convention                   |
+| `--id-strategy`        | string | NONE              | ID inference strategy               |
+| `--output-format`      | string | SDL               | Output format                       |
+| `--fail-on-warning`    | flag   | false             | Treat warnings as errors            |
+| `--exclude-types`      | list   | []                | Types to exclude (comma-separated)  |
+| `--exclude-patterns`   | list   | []                | Regex patterns (comma-separated)    |
 
 ### Examples
 
@@ -190,6 +190,7 @@ jxql --input user-schema.json --output user.graphql
 ```
 
 **Input:** `user-schema.json`
+
 ```json
 {
   "title": "User",
@@ -204,6 +205,7 @@ jxql --input user-schema.json --output user.graphql
 ```
 
 **Output:** `user.graphql`
+
 ```graphql
 type User {
   id: ID!
@@ -223,6 +225,7 @@ json-schema-x-graphql --input interfaces.json --output interfaces.graphql
 ```
 
 **Input:** `interfaces.json`
+
 ```json
 {
   "definitions": {
@@ -249,6 +252,7 @@ json-schema-x-graphql --input interfaces.json --output interfaces.graphql
 ```
 
 **Output:** `interfaces.graphql`
+
 ```graphql
 interface Node {
   id: ID!
@@ -273,6 +277,7 @@ json-schema-x-graphql --input product-schema.json \
 ```
 
 **Input:** `product-schema.json`
+
 ```json
 {
   "definitions": {
@@ -290,6 +295,7 @@ json-schema-x-graphql --input product-schema.json \
 ```
 
 **Output:** `product.graphql`
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -309,6 +315,7 @@ json-schema-x-graphql --input contact-schema.json --output contact.graphql
 ```
 
 **Input:** `contact-schema.json`
+
 ```json
 {
   "definitions": {
@@ -333,6 +340,7 @@ json-schema-x-graphql --input contact-schema.json --output contact.graphql
 ```
 
 **Output:** `contact.graphql`
+
 ```graphql
 type Contact {
   email: Email!
@@ -352,6 +360,7 @@ json-schema-x-graphql --input user-schema.json --output user.graphql
 ```
 
 **Input:** `user-schema.json`
+
 ```json
 {
   "definitions": {
@@ -376,6 +385,7 @@ json-schema-x-graphql --input user-schema.json --output user.graphql
 ```
 
 **Output:** `user.graphql`
+
 ```graphql
 type User {
   id: ID!
@@ -396,6 +406,7 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Input:** `schema.json`
+
 ```json
 {
   "definitions": {
@@ -418,11 +429,12 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Output:** `schema.graphql`
+
 ```graphql
 type User {
   id: ID!
-  email: String      # nullable despite being in required
-  role: String!      # non-null despite not being in required
+  email: String # nullable despite being in required
+  role: String! # non-null despite not being in required
 }
 ```
 
@@ -437,6 +449,7 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Input:** `schema.json`
+
 ```json
 {
   "definitions": {
@@ -454,9 +467,10 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Output:** `schema.graphql`
+
 ```graphql
 type User {
-  tags: [String!]!   # Array of non-null strings
+  tags: [String!]! # Array of non-null strings
 }
 ```
 
@@ -471,6 +485,7 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Input:** `schema.json`
+
 ```json
 {
   "definitions": {
@@ -495,6 +510,7 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 ```
 
 **Output:** `schema.graphql`
+
 ```graphql
 union SearchResult = User | Product
 
@@ -513,35 +529,35 @@ type Product {
 
 ### Type-Level Attributes
 
-| Attribute | Type | Description | Example |
-|-----------|------|-------------|---------|
-| `x-graphql-type-name` | string | Custom type name | `"x-graphql-type-name": "UserAccount"` |
-| `x-graphql-type-kind` | enum | Type kind (INTERFACE, OBJECT, UNION, INPUT_OBJECT) | `"x-graphql-type-kind": "INTERFACE"` |
-| `x-graphql-implements` | string[] | Interface implementations | `"x-graphql-implements": ["Node"]` |
-| `x-graphql-union-types` | string[] | Union member types | `"x-graphql-union-types": ["User", "Admin"]` |
-| `x-graphql-skip` | boolean | Exclude type from output | `"x-graphql-skip": true` |
+| Attribute               | Type     | Description                                        | Example                                      |
+| ----------------------- | -------- | -------------------------------------------------- | -------------------------------------------- |
+| `x-graphql-type-name`   | string   | Custom type name                                   | `"x-graphql-type-name": "UserAccount"`       |
+| `x-graphql-type-kind`   | enum     | Type kind (INTERFACE, OBJECT, UNION, INPUT_OBJECT) | `"x-graphql-type-kind": "INTERFACE"`         |
+| `x-graphql-implements`  | string[] | Interface implementations                          | `"x-graphql-implements": ["Node"]`           |
+| `x-graphql-union-types` | string[] | Union member types                                 | `"x-graphql-union-types": ["User", "Admin"]` |
+| `x-graphql-skip`        | boolean  | Exclude type from output                           | `"x-graphql-skip": true`                     |
 
 ### Field-Level Attributes
 
-| Attribute | Type | Description | Example |
-|-----------|------|-------------|---------|
-| `x-graphql-field-name` | string | Custom field name | `"x-graphql-field-name": "userId"` |
-| `x-graphql-field-type` | string | Custom field type | `"x-graphql-field-type": "Email"` |
-| `x-graphql-field-non-null` | boolean | Force non-null | `"x-graphql-field-non-null": true` |
-| `x-graphql-nullable` | boolean | Force nullable | `"x-graphql-nullable": true` |
-| `x-graphql-field-list-item-non-null` | boolean | Non-null array items | `"x-graphql-field-list-item-non-null": true` |
-| `x-graphql-skip` | boolean | Exclude field from output | `"x-graphql-skip": true` |
+| Attribute                            | Type    | Description               | Example                                      |
+| ------------------------------------ | ------- | ------------------------- | -------------------------------------------- |
+| `x-graphql-field-name`               | string  | Custom field name         | `"x-graphql-field-name": "userId"`           |
+| `x-graphql-field-type`               | string  | Custom field type         | `"x-graphql-field-type": "Email"`            |
+| `x-graphql-field-non-null`           | boolean | Force non-null            | `"x-graphql-field-non-null": true`           |
+| `x-graphql-nullable`                 | boolean | Force nullable            | `"x-graphql-nullable": true`                 |
+| `x-graphql-field-list-item-non-null` | boolean | Non-null array items      | `"x-graphql-field-list-item-non-null": true` |
+| `x-graphql-skip`                     | boolean | Exclude field from output | `"x-graphql-skip": true`                     |
 
 ### Federation Attributes
 
-| Attribute | Type | Description | Example |
-|-----------|------|-------------|---------|
-| `x-graphql-federation-keys` | array | Entity keys | `"x-graphql-federation-keys": [{"fields": "id"}]` |
-| `x-graphql-federation-shareable` | boolean | Shareable type | `"x-graphql-federation-shareable": true` |
-| `x-graphql-federation-external` | boolean | External field | `"x-graphql-federation-external": true` |
-| `x-graphql-federation-requires` | string | Required fields | `"x-graphql-federation-requires": "email username"` |
-| `x-graphql-federation-provides` | string | Provided fields | `"x-graphql-federation-provides": "name email"` |
-| `x-graphql-federation-override-from` | string | Override source | `"x-graphql-federation-override-from": "users"` |
+| Attribute                            | Type    | Description     | Example                                             |
+| ------------------------------------ | ------- | --------------- | --------------------------------------------------- |
+| `x-graphql-federation-keys`          | array   | Entity keys     | `"x-graphql-federation-keys": [{"fields": "id"}]`   |
+| `x-graphql-federation-shareable`     | boolean | Shareable type  | `"x-graphql-federation-shareable": true`            |
+| `x-graphql-federation-external`      | boolean | External field  | `"x-graphql-federation-external": true`             |
+| `x-graphql-federation-requires`      | string  | Required fields | `"x-graphql-federation-requires": "email username"` |
+| `x-graphql-federation-provides`      | string  | Provided fields | `"x-graphql-federation-provides": "name email"`     |
+| `x-graphql-federation-override-from` | string  | Override source | `"x-graphql-federation-override-from": "users"`     |
 
 ---
 
@@ -611,6 +627,7 @@ json-schema-x-graphql --input schema.json \
 ### Complete E-commerce Schema
 
 **Command:**
+
 ```bash
 json-schema-x-graphql --input ecommerce.json \
   --federation-version=V2 \
@@ -619,6 +636,7 @@ json-schema-x-graphql --input ecommerce.json \
 ```
 
 **Input:** `ecommerce.json`
+
 ```json
 {
   "definitions": {
@@ -665,6 +683,7 @@ json-schema-x-graphql --input ecommerce.json \
 ```
 
 **Output:** `ecommerce.graphql`
+
 ```graphql
 interface Node {
   id: ID!
@@ -694,11 +713,13 @@ type User implements Node @key(fields: "id") {
 #### 1. Module Not Found (Node.js)
 
 **Error:**
+
 ```
 Error [ERR_MODULE_NOT_FOUND]: Cannot find module
 ```
 
 **Solution:**
+
 ```bash
 cd converters/node
 npm run build
@@ -707,11 +728,13 @@ npm run build
 #### 2. Rust Binary Not Found
 
 **Error:**
+
 ```
 jxql: command not found
 ```
 
 **Solution:**
+
 ```bash
 cd converters/rust
 cargo build --release
@@ -721,11 +744,13 @@ cargo build --release
 #### 3. Invalid Schema
 
 **Error:**
+
 ```
 Error: Invalid JSON Schema
 ```
 
 **Solution:**
+
 - Validate your JSON Schema with a validator
 - Check for missing required fields
 - Ensure proper JSON syntax
@@ -733,11 +758,13 @@ Error: Invalid JSON Schema
 #### 4. Conversion Failures
 
 **Error:**
+
 ```
 Conversion failed: ...
 ```
 
 **Solution:**
+
 - Enable validation: remove `--no-validate` flag
 - Check x-graphql attribute syntax
 - Verify all referenced types exist
@@ -762,20 +789,22 @@ cargo build --bin jxql
 
 Based on testing with 8 test schemas, 10 iterations each:
 
-| Converter | Total Time | Avg per Schema | Relative Speed |
-|-----------|-----------|----------------|----------------|
-| **Node.js** | ~250ms | 25ms | 1.0x (baseline) |
-| **Rust** | ~50ms | 5ms | ~5x faster |
+| Converter   | Total Time | Avg per Schema | Relative Speed  |
+| ----------- | ---------- | -------------- | --------------- |
+| **Node.js** | ~250ms     | 25ms           | 1.0x (baseline) |
+| **Rust**    | ~50ms      | 5ms            | ~5x faster      |
 
 ### When to Use Each
 
 **Use Node.js when:**
+
 - You're already in a Node.js environment
 - You need npm integration
 - Quick setup is important
 - Working with small schemas (<100 types)
 
 **Use Rust when:**
+
 - Performance is critical
 - Processing large schemas (>100 types)
 - Batch processing multiple schemas
@@ -851,17 +880,20 @@ jobs:
 ### 1. Version Control
 
 ✅ **Do:**
+
 - Commit both JSON Schema and generated GraphQL SDL
 - Use consistent converter options across team
 - Document converter version in README
 
 ❌ **Don't:**
+
 - Manually edit generated GraphQL files
 - Mix converter versions in same project
 
 ### 2. Schema Organization
 
 ✅ **Do:**
+
 ```
 project/
 ├── schemas/
@@ -879,17 +911,20 @@ project/
 ### 3. X-GraphQL Attributes
 
 ✅ **Do:**
+
 - Use type-kind for interfaces: `"x-graphql-type-kind": "INTERFACE"`
 - Skip sensitive fields: `"x-graphql-skip": true`
 - Use field-type for custom scalars: `"x-graphql-field-type": "Email"`
 
 ❌ **Don't:**
+
 - Mix old and new attribute formats
 - Forget to validate schemas after adding attributes
 
 ### 4. Federation
 
 ✅ **Do:**
+
 - Always specify entity keys: `"x-graphql-federation-keys"`
 - Use provides/requires for boundary fields
 - Version federation schemas consistently

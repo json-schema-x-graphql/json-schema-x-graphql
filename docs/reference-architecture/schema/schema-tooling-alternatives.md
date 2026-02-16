@@ -12,25 +12,27 @@ The current `/scripts` directory contains **~1,400+ lines** of custom code for b
 
 ### Custom Scripts Inventory
 
-| Script | Lines | Purpose | Complexity |
-|--------|-------|---------|------------|
-| `generate-graphql-from-json-schema.mjs` | 250 | JSON Schema → GraphQL SDL | High - custom pointer resolution, enum transforms |
-| `generate-graphql-json-schema.mjs` | 307 | GraphQL SDL → JSON Schema | High - type mapping, exclusion logic |
-| `json-to-graphql.config.mjs` | 597 | Configuration for mappings | Very High - manual field mappings |
-| `validate-graphql-vs-jsonschema.mjs` | 131 | Validation | Medium |
-| `validate-schema-sync.mjs` | 223 | Bi-directional sync check | Medium |
-| `generate-schema-interop.js` | 50 | Orchestration | Low |
-| **Total** | **~1,558** | | |
+| Script                                  | Lines      | Purpose                    | Complexity                                        |
+| --------------------------------------- | ---------- | -------------------------- | ------------------------------------------------- |
+| `generate-graphql-from-json-schema.mjs` | 250        | JSON Schema → GraphQL SDL  | High - custom pointer resolution, enum transforms |
+| `generate-graphql-json-schema.mjs`      | 307        | GraphQL SDL → JSON Schema  | High - type mapping, exclusion logic              |
+| `json-to-graphql.config.mjs`            | 597        | Configuration for mappings | Very High - manual field mappings                 |
+| `validate-graphql-vs-jsonschema.mjs`    | 131        | Validation                 | Medium                                            |
+| `validate-schema-sync.mjs`              | 223        | Bi-directional sync check  | Medium                                            |
+| `generate-schema-interop.js`            | 50         | Orchestration              | Low                                               |
+| **Total**                               | **~1,558** |                            |                                                   |
 
 ### Installed But Unused Libraries
 
 You already have these schema conversion tools installed:
+
 - ✅ `core-types-graphql` (^3.0.0)
 - ✅ `core-types-json-schema` (^2.2.0)
 - ✅ `json-schema-to-graphql-types` (^1.0.0)
 - ✅ `typeconv` (^2.3.1)
 
 **None of these are currently used in your scripts**, suggesting either:
+
 1. They were evaluated and found insufficient
 2. The custom scripts predate these installations
 3. They provide different capabilities than needed
@@ -47,6 +49,7 @@ You already have these schema conversion tools installed:
 **NPM**: https://www.npmjs.com/package/typeconv
 
 **Capabilities**:
+
 - ✅ JSON Schema → GraphQL SDL
 - ✅ GraphQL SDL → JSON Schema
 - ✅ TypeScript, OpenAPI, Protocol Buffers, and 10+ more formats
@@ -54,6 +57,7 @@ You already have these schema conversion tools installed:
 - ✅ Actively maintained
 
 **Usage Example**:
+
 ```bash
 # JSON Schema to GraphQL
 typeconv -f json-schema -t graphql -o output.graphql src/data/schema_unification.schema.json
@@ -63,25 +67,28 @@ typeconv -f graphql -t json-schema -o output.json src/data/schema_unification.gr
 ```
 
 **Programmatic Usage**:
+
 ```javascript
-import { convert } from 'typeconv';
+import { convert } from "typeconv";
 
 const result = await convert({
-  fromFilename: 'src/data/schema_unification.schema.json',
-  fromType: 'json-schema',
-  toType: 'graphql'
+  fromFilename: "src/data/schema_unification.schema.json",
+  fromType: "json-schema",
+  toType: "graphql",
 });
 
 console.log(result.data); // GraphQL SDL
 ```
 
 **Pros**:
+
 - Already in your dependencies
 - Handles 90% of standard conversions automatically
 - CLI available for simple scripts
 - Well-documented and actively maintained
 
 **Cons**:
+
 - May need custom post-processing for domain-specific naming (like your `Contract` type vs auto-generated names)
 - Limited control over enum value transformations
 
@@ -94,23 +101,29 @@ console.log(result.data); // GraphQL SDL
 **What it is**: A universal type system for converting between different schema languages with a shared intermediate representation.
 
 **GitHub**: https://github.com/grantila/core-types  
-**NPM**: 
+**NPM**:
+
 - `core-types-graphql`: https://www.npmjs.com/package/core-types-graphql
 - `core-types-json-schema`: https://www.npmjs.com/package/core-types-json-schema
 
 **Capabilities**:
+
 - ✅ JSON Schema ↔ Core Types ↔ GraphQL
 - ✅ TypeScript, OpenAPI, JSONSchema (v4, v6, v7, 2019-09, 2020-12)
 - ✅ Preserves descriptions, constraints, and annotations
 - ✅ Programmatic API with full type safety
 
 **Usage Example**:
+
 ```javascript
-import { graphqlToCoreTypes } from 'core-types-graphql';
-import { coreTypesToJsonSchema } from 'core-types-json-schema';
+import { graphqlToCoreTypes } from "core-types-graphql";
+import { coreTypesToJsonSchema } from "core-types-json-schema";
 
 // GraphQL → Core Types → JSON Schema
-const graphqlSdl = fs.readFileSync('src/data/schema_unification.graphql', 'utf8');
+const graphqlSdl = fs.readFileSync(
+  "src/data/schema_unification.graphql",
+  "utf8",
+);
 const coreTypes = graphqlToCoreTypes(graphqlSdl, {
   // Options
 });
@@ -118,17 +131,19 @@ const coreTypes = graphqlToCoreTypes(graphqlSdl, {
 const jsonSchema = coreTypesToJsonSchema(coreTypes, {
   // Options
   useRef: true,
-  includeDefinitions: true
+  includeDefinitions: true,
 });
 ```
 
 **Pros**:
+
 - Already installed
 - Type-safe intermediate representation
 - More control than `typeconv`
 - Supports complex schema features (unions, interfaces, etc.)
 
 **Cons**:
+
 - More complex API than `typeconv`
 - May still need custom logic for domain-specific mappings
 - Documentation could be more comprehensive
@@ -140,25 +155,29 @@ const jsonSchema = coreTypesToJsonSchema(coreTypes, {
 **NPM**: https://www.npmjs.com/package/json-schema-to-graphql-types
 
 **Capabilities**:
+
 - ✅ JSON Schema Draft 7 → GraphQL types
 - ✅ Handles nested objects, arrays, enums
 - ✅ Simple API
 
 **Usage Example**:
-```javascript
-import { jsonSchemaToGraphQL } from 'json-schema-to-graphql-types';
 
-const jsonSchema = JSON.parse(fs.readFileSync('schema.json', 'utf8'));
+```javascript
+import { jsonSchemaToGraphQL } from "json-schema-to-graphql-types";
+
+const jsonSchema = JSON.parse(fs.readFileSync("schema.json", "utf8"));
 const graphqlTypes = jsonSchemaToGraphQL(jsonSchema);
 console.log(graphqlTypes);
 ```
 
 **Pros**:
+
 - Already installed
 - Lightweight and focused
 - Good for one-way conversion (JSON Schema → GraphQL)
 
 **Cons**:
+
 - Only handles JSON Schema → GraphQL (not bidirectional)
 - Less mature than typeconv/core-types
 
@@ -169,15 +188,18 @@ console.log(graphqlTypes);
 **NPM**: https://www.npmjs.com/package/@airtasker/graphql-schema-gen
 
 **Capabilities**:
+
 - ✅ Generate GraphQL schema from JSON Schema
 - ✅ Handles complex nested types
 - ✅ Custom type mappings
 
 **Pros**:
+
 - Production-tested (Airtasker)
 - Good documentation
 
 **Cons**:
+
 - Not currently installed
 - Less flexible than typeconv for multi-format support
 
@@ -189,22 +211,26 @@ console.log(graphqlTypes);
 **NPM**: https://www.npmjs.com/package/graphql-compose-json
 
 **Capabilities**:
+
 - ✅ Create GraphQL types from JSON structures
 - ✅ Flexible type composition
 - ✅ Resolvers generation
 
 **Usage Example**:
-```javascript
-import { composeWithJson } from 'graphql-compose-json';
 
-const MyGraphQLType = composeWithJson('MyTypeName', jsonData);
+```javascript
+import { composeWithJson } from "graphql-compose-json";
+
+const MyGraphQLType = composeWithJson("MyTypeName", jsonData);
 ```
 
 **Pros**:
+
 - Very powerful for building GraphQL schemas programmatically
 - Great for APIs that need resolvers too
 
 **Cons**:
+
 - Not installed
 - Designed more for runtime than schema transformation
 - Heavier dependency
@@ -213,14 +239,14 @@ const MyGraphQLType = composeWithJson('MyTypeName', jsonData);
 
 ## Comparison Matrix
 
-| Tool | JSON→GQL | GQL→JSON | Bidirectional | Custom Mappings | Complexity | Maintenance |
-|------|----------|----------|---------------|-----------------|------------|-------------|
-| **Current Custom Scripts** | ✅ | ✅ | ✅ | ✅✅✅ | Very High | You maintain it |
-| **typeconv** | ✅ | ✅ | ✅ | ⚠️ Limited | Low | Community |
-| **core-types** | ✅ | ✅ | ✅ | ✅ | Medium | Community |
-| **json-schema-to-graphql-types** | ✅ | ❌ | ❌ | ⚠️ Limited | Low | Community |
-| **graphql-compose** | ✅ | ❌ | ❌ | ✅✅ | High | Community |
-| **@airtasker/graphql-schema-gen** | ✅ | ❌ | ❌ | ✅ | Medium | Airtasker |
+| Tool                              | JSON→GQL | GQL→JSON | Bidirectional | Custom Mappings | Complexity | Maintenance     |
+| --------------------------------- | -------- | -------- | ------------- | --------------- | ---------- | --------------- |
+| **Current Custom Scripts**        | ✅       | ✅       | ✅            | ✅✅✅          | Very High  | You maintain it |
+| **typeconv**                      | ✅       | ✅       | ✅            | ⚠️ Limited      | Low        | Community       |
+| **core-types**                    | ✅       | ✅       | ✅            | ✅              | Medium     | Community       |
+| **json-schema-to-graphql-types**  | ✅       | ❌       | ❌            | ⚠️ Limited      | Low        | Community       |
+| **graphql-compose**               | ✅       | ❌       | ❌            | ✅✅            | High       | Community       |
+| **@airtasker/graphql-schema-gen** | ✅       | ❌       | ❌            | ✅              | Medium     | Airtasker       |
 
 ---
 
@@ -231,6 +257,7 @@ const MyGraphQLType = composeWithJson('MyTypeName', jsonData);
 Since `typeconv` is already installed and mentioned in ADR 0002:
 
 1. **Test basic conversion**:
+
 ```bash
 pnpm exec typeconv -f json-schema -t graphql \
   -o generated-schemas/schema_unification.typeconv.graphql \
@@ -243,30 +270,35 @@ pnpm exec typeconv -f json-schema -t graphql \
 ### Phase 2: Replace Bi-Directional Scripts
 
 **Option A: Use typeconv for both directions** (Simplest)
+
 ```javascript
 // scripts/generate-schema-with-typeconv.mjs
-import { convert } from 'typeconv';
+import { convert } from "typeconv";
 
 // JSON Schema → GraphQL
 const jsonToGql = await convert({
-  fromFilename: 'src/data/schema_unification.schema.json',
-  fromType: 'json-schema',
-  toType: 'graphql'
+  fromFilename: "src/data/schema_unification.schema.json",
+  fromType: "json-schema",
+  toType: "graphql",
 });
 
 // GraphQL → JSON Schema
 const gqlToJson = await convert({
-  fromFilename: 'src/data/schema_unification.graphql',
-  fromType: 'graphql',
-  toType: 'json-schema'
+  fromFilename: "src/data/schema_unification.graphql",
+  fromType: "graphql",
+  toType: "json-schema",
 });
 ```
 
 **Option B: Use core-types for more control** (Medium complexity)
+
 ```javascript
-import { graphqlToCoreTypes } from 'core-types-graphql';
-import { coreTypesToJsonSchema, jsonSchemaToCoreTypes } from 'core-types-json-schema';
-import { coreTypesToGraphQL } from 'core-types-graphql';
+import { graphqlToCoreTypes } from "core-types-graphql";
+import {
+  coreTypesToJsonSchema,
+  jsonSchemaToCoreTypes,
+} from "core-types-json-schema";
+import { coreTypesToGraphQL } from "core-types-graphql";
 
 // Build both directions with intermediate representation
 ```
@@ -274,12 +306,14 @@ import { coreTypesToGraphQL } from 'core-types-graphql';
 ### Phase 3: Keep Only Domain-Specific Logic
 
 **What to keep**:
+
 - `json-to-graphql.config.mjs` → Slim down to only truly custom mappings
 - Domain-specific type naming (e.g., `Contract` vs auto-generated names)
 - Enum value transformations (if typeconv doesn't handle them)
 - Union type mappings for system extensions
 
 **What to remove**:
+
 - Custom pointer resolution (typeconv/core-types handle this)
 - Custom enum parsing (standard library handles this)
 - Manual type traversal (library handles this)
@@ -294,7 +328,7 @@ import { coreTypesToGraphQL } from 'core-types-graphql';
 ### Immediate (This Week)
 
 1. ✅ **Audit current usage**: Run your existing scripts and document output
-2. ✅ **Test typeconv**: 
+2. ✅ **Test typeconv**:
    ```bash
    pnpm exec typeconv -f json-schema -t graphql -o test-output.graphql src/data/schema_unification.schema.json
    ```
@@ -321,6 +355,7 @@ import { coreTypesToGraphQL } from 'core-types-graphql';
 ### Current Approach (Custom Scripts)
 
 **Costs**:
+
 - 1,558 lines to maintain
 - Complex pointer resolution logic
 - Manual enum transformations
@@ -328,6 +363,7 @@ import { coreTypesToGraphQL } from 'core-types-graphql';
 - Risk of bugs in custom logic
 
 **Benefits**:
+
 - Full control over output
 - Domain-specific naming
 - Custom enum transformations
@@ -335,12 +371,14 @@ import { coreTypesToGraphQL } from 'core-types-graphql';
 ### Proposed Approach (Open Source Libraries)
 
 **Costs**:
+
 - Migration effort (~1-2 weeks)
 - Learning new library APIs
 - Dependency on external projects
 - May need post-processing for some edge cases
 
 **Benefits**:
+
 - ~70-80% less code to maintain
 - Community-tested and maintained
 - Automatic updates for schema standard changes

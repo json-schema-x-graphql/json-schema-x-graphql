@@ -44,6 +44,7 @@ Successfully implemented and tested bidirectional JSON Schema ↔ GraphQL SDL co
 ### Conversion Success Rate: 100%
 
 All 10 service schemas convert successfully:
+
 - ✅ apollo-classic/users (Node + Rust)
 - ✅ apollo-classic/products (Node + Rust)
 - ✅ apollo-classic/reviews (Node + Rust)
@@ -53,6 +54,7 @@ All 10 service schemas convert successfully:
 ### SDL Validation: 100%
 
 All generated SDL files contain required federation elements:
+
 - ✅ @key directives on entity types
 - ✅ Type definitions with proper fields
 - ✅ Query types with arguments
@@ -121,6 +123,7 @@ type Query {
 ### CLI Options
 
 **Node.js Converter:**
+
 ```bash
 node converters/node/dist/cli.js \
   --input schema.json \
@@ -132,6 +135,7 @@ node converters/node/dist/cli.js \
 ```
 
 **Rust Converter:**
+
 ```bash
 jxql \
   --input schema.json \
@@ -145,6 +149,7 @@ jxql \
 ## Files Generated
 
 ### Output Directory Structure
+
 ```
 output/federation/
 ├── node/
@@ -226,11 +231,13 @@ output/federation/
 ## Validation Commands
 
 Run all tests:
+
 ```bash
 ./scripts/test-federation-examples.sh
 ```
 
 Convert single schema:
+
 ```bash
 node converters/node/dist/cli.js \
   --input examples/federation/json-schemas/apollo-classic/users-service.json \
@@ -241,6 +248,7 @@ node converters/node/dist/cli.js \
 ```
 
 View differences:
+
 ```bash
 diff -u examples/federation/sdl/apollo-classic/users-service.graphql \
         output/federation/node/apollo-classic-users.graphql
@@ -249,6 +257,7 @@ diff -u examples/federation/sdl/apollo-classic/users-service.graphql \
 ## Conclusion
 
 The JSON Schema ↔ GraphQL SDL conversion with Federation support is fully functional. The converters correctly handle:
+
 - ✅ Federation v2 directives (@key, @extends, @external, @provides, @requires)
 - ✅ Entity relationships and extensions
 - ✅ Query types with arguments

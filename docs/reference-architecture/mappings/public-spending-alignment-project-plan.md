@@ -90,6 +90,7 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
 **Schema Changes:**
 
 1. **Add `financial_history` array:**
+
    ```json
    {
      "financial_history": {
@@ -104,10 +105,19 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
              "description": "Transaction date (ISO 8601)"
            },
-           "obligation_amount": { "type": "number", "x-graphql-scalar": "Decimal" },
+           "obligation_amount": {
+             "type": "number",
+             "x-graphql-scalar": "Decimal"
+           },
            "outlay_amount": { "type": "number", "x-graphql-scalar": "Decimal" },
-           "deobligation_amount": { "type": "number", "x-graphql-scalar": "Decimal" },
-           "tas": { "type": "string", "description": "Treasury Account Symbol" },
+           "deobligation_amount": {
+             "type": "number",
+             "x-graphql-scalar": "Decimal"
+           },
+           "tas": {
+             "type": "string",
+             "description": "Treasury Account Symbol"
+           },
            "fiscal_year": { "type": "integer" },
            "fiscal_quarter": { "type": "integer", "minimum": 1, "maximum": 4 }
          },
@@ -118,6 +128,7 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
    ```
 
 2. **Add `legacy_procurementance_listing` definition:**
+
    ```json
    {
      "legacy_procurementance_listing": {
@@ -133,7 +144,10 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
          "popular_name": { "type": "string" },
          "federal_agency": { "type": "string" },
          "objectives": { "type": "string" },
-         "types_of_legacy_procurementance": { "type": "array", "items": { "type": "string" } },
+         "types_of_legacy_procurementance": {
+           "type": "array",
+           "items": { "type": "string" }
+         },
          "applicant_eligibility": { "type": "string" },
          "beneficiary_eligibility": { "type": "string" },
          "website_address": { "type": "string", "format": "uri" }
@@ -144,6 +158,7 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
    ```
 
 3. **Add `vendor_classifications` with grouped flags:**
+
    ```json
    {
      "vendor_classifications": {
@@ -195,9 +210,18 @@ This project plan outlines the strategy, phases, and deliverables for aligning t
    {
      "system_metadata": {
        "properties": {
-         "submission_id": { "type": "string", "description": "Public Spending submission ID" },
-         "job_id": { "type": "string", "description": "Public Spending job ID" },
-         "row_number": { "type": "integer", "description": "Row number in source batch" },
+         "submission_id": {
+           "type": "string",
+           "description": "Public Spending submission ID"
+         },
+         "job_id": {
+           "type": "string",
+           "description": "Public Spending job ID"
+         },
+         "row_number": {
+           "type": "integer",
+           "description": "Row number in source batch"
+         },
          "batch_timestamp": {
            "type": "string",
            "format": "date-time",
@@ -351,26 +375,26 @@ class DateParser {
     if (!dateStr || dateStr === '0000-00-00' || dateStr === '') {
       return null;
     }
-    
+
     // ISO format: YYYY-MM-DD
     if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
       return new Date(dateStr).toISOString();
     }
-    
+
     // US format: MM/DD/YYYY
     const usMatch = dateStr.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
     if (usMatch) {
       const [, mm, dd, yyyy] = usMatch;
       return new Date(`${yyyy}-${mm}-${dd}`).toISOString();
     }
-    
+
     // Compact: YYYYMMDD
     const compactMatch = dateStr.match(/^(\d{4})(\d{2})(\d{2})$/);
     if (compactMatch) {
       const [, yyyy, mm, dd] = compactMatch;
       return new Date(`${yyyy}-${mm}-${dd}`).toISOString();
     }
-    
+
     throw new Error(`Invalid date format: ${dateStr}`);
   }
 }
@@ -382,15 +406,15 @@ class DateParser {
 class NumericParser {
   static parsePublic SpendingNumeric(numStr) {
     if (!numStr || numStr === '') return null;
-    
+
     // Remove currency symbols, commas, whitespace
     const cleaned = numStr.replace(/[$,\s]/g, '');
     const parsed = parseFloat(cleaned);
-    
+
     if (isNaN(parsed)) {
       throw new Error(`Invalid numeric value: ${numStr}`);
     }
-    
+
     return parsed;
   }
 }
@@ -400,29 +424,29 @@ class NumericParser {
 
 ```javascript
 const CONTRACT_TYPE_MAP = {
-  'A': 'BPA_CALL',
-  'B': 'PURCHASE_ORDER',
-  'C': 'DELIVERY_ORDER',
-  'D': 'DEFINITIVE_CONTRACT',
-  'U': 'PURCHASE_ORDER',
+  A: "BPA_CALL",
+  B: "PURCHASE_ORDER",
+  C: "DELIVERY_ORDER",
+  D: "DEFINITIVE_CONTRACT",
+  U: "PURCHASE_ORDER",
   // ... complete mapping
 };
 
 const ACTION_TYPE_MAP = {
-  'A': 'NEW_CONTRACT',
-  'B': 'MODIFICATION',
-  'C': 'CANCELLATION',
-  'D': 'DEFINITIZATION',
+  A: "NEW_CONTRACT",
+  B: "MODIFICATION",
+  C: "CANCELLATION",
+  D: "DEFINITIZATION",
   // ... complete mapping
 };
 
 class EnumMapper {
   static mapContractType(code) {
-    return CONTRACT_TYPE_MAP[code] || 'UNKNOWN';
+    return CONTRACT_TYPE_MAP[code] || "UNKNOWN";
   }
-  
+
   static mapActionType(code) {
-    return ACTION_TYPE_MAP[code] || 'UNKNOWN';
+    return ACTION_TYPE_MAP[code] || "UNKNOWN";
   }
 }
 ```
@@ -438,7 +462,7 @@ class VendorClassificationAggregator {
         emerging_small_business: row.emerging_small_business === true,
         c8a_program_participant: row.c8a_program_participant === true,
         sba_certified_8a_joint_venture: row.sba_certified_8_a_joint_ve === true,
-        hubzone_firm: row.historically_underutilized === true
+        hubzone_firm: row.historically_underutilized === true,
       },
       socioeconomic: {
         woman_owned_business: row.woman_owned_business === true,
@@ -447,7 +471,8 @@ class VendorClassificationAggregator {
         veteran_owned_business: row.veteran_owned_business === true,
         service_disabled_veteran_owned: row.service_disabled_veteran_o === true,
         historically_black_college: row.historically_black_college === true,
-        historically_underutilized_business: row.historically_underutilized === true
+        historically_underutilized_business:
+          row.historically_underutilized === true,
       },
       entity_structure: {
         corporate_entity_tax_exempt: row.corporate_entity_tax_exemp === true,
@@ -457,8 +482,9 @@ class VendorClassificationAggregator {
         subchapter_s_corporation: row.subchapter_s_corporation === true,
         limited_liability_corporation: row.limited_liability_corporat === true,
         sole_proprietorship: row.sole_proprietorship === true,
-        partnership_or_limited_liability: row.partnership_or_limited_lia === true
-      }
+        partnership_or_limited_liability:
+          row.partnership_or_limited_lia === true,
+      },
     };
   }
 }
@@ -474,7 +500,7 @@ class ContractTransformer {
     this.enumMapper = EnumMapper;
     this.vendorAggregator = VendorClassificationAggregator;
   }
-  
+
   transformProcurement(row) {
     return {
       system_metadata: this.buildSystemMetadata(row),
@@ -486,7 +512,7 @@ class ContractTransformer {
       vendor_classifications: this.vendorAggregator.aggregateFlags(row)
     };
   }
-  
+
   buildSystemMetadata(row) {
     return {
       primary_system: 'Contract Data',
@@ -510,7 +536,7 @@ class ContractTransformer {
       batch_timestamp: new Date().toISOString()
     };
   }
-  
+
   buildCommonElements(row) {
     return {
       contract_identification: {
@@ -612,7 +638,7 @@ class ContractTransformer {
       }
     };
   }
-  
+
   buildContract DataExtension(row) {
     return {
       field_name: 'contract_data_procurement_details',
@@ -659,13 +685,13 @@ class ContractTransformer {
 
 ```yaml
 target_database:
-  type: postgresql  # or MongoDB/DynamoDB depending on platform
+  type: postgresql # or MongoDB/DynamoDB depending on platform
   schema: schema_unification_contracts
   tables:
     - contracts (main table)
     - financial_history (time-series)
     - legacy_procurementance_listings (reference)
-  
+
   indexing:
     primary:
       - global_record_id (unique)
@@ -678,7 +704,7 @@ target_database:
       - fiscal_year
     full_text:
       - description_of_requirement
-  
+
   partitioning:
     strategy: range
     key: action_date
@@ -715,12 +741,12 @@ Update Watermark
 
 **Error Categories:**
 
-| Category | Severity | Action | Example |
-|----------|----------|--------|---------|
-| Parse Error | Medium | Log + Skip | Invalid date format |
-| Validation Error | Medium | Log + Skip | Missing required field |
-| Database Error | High | Retry 3x | Connection timeout |
-| System Error | Critical | Alert + Stop | Out of memory |
+| Category         | Severity | Action       | Example                |
+| ---------------- | -------- | ------------ | ---------------------- |
+| Parse Error      | Medium   | Log + Skip   | Invalid date format    |
+| Validation Error | Medium   | Log + Skip   | Missing required field |
+| Database Error   | High     | Retry 3x     | Connection timeout     |
+| System Error     | Critical | Alert + Stop | Out of memory          |
 
 **Retry Configuration:**
 
@@ -775,7 +801,7 @@ retry_policy:
 
 ```sql
 -- Record count validation
-SELECT 
+SELECT
   'award_procurement' AS source_table,
   COUNT(*) AS source_count,
   (SELECT COUNT(*) FROM schema_unification_contracts WHERE primary_system = 'Contract Data') AS schema_unification_count,
@@ -783,7 +809,7 @@ SELECT
 FROM award_procurement;
 
 -- Financial totals validation
-SELECT 
+SELECT
   'Total Contract Value' AS metric,
   SUM(CAST(current_total_value_award AS NUMERIC)) AS public_spending_total,
   (SELECT SUM(total_contract_value) FROM schema_unification_contracts WHERE primary_system = 'Contract Data') AS schema_unification_total
@@ -791,7 +817,7 @@ FROM award_procurement
 WHERE current_total_value_award ~ '^[\d,.]+$';
 
 -- Date range validation
-SELECT 
+SELECT
   MIN(action_date) AS min_date_usa,
   MAX(action_date) AS max_date_usa,
   (SELECT MIN(action_date) FROM schema_unification_contracts WHERE primary_system = 'Contract Data') AS min_date_schema_unification,
@@ -799,7 +825,7 @@ SELECT
 FROM award_procurement;
 
 -- Vendor UEI validation
-SELECT 
+SELECT
   COUNT(DISTINCT awardee_or_recipient_uei) AS unique_vendors_usa,
   (SELECT COUNT(DISTINCT vendor_uei) FROM schema_unification_contracts WHERE primary_system = 'Contract Data') AS unique_vendors_schema_unification
 FROM award_procurement
@@ -828,14 +854,14 @@ WHERE awardee_or_recipient_uei IS NOT NULL AND awardee_or_recipient_uei != '';
 
 **Test Scenarios:**
 
-| Scenario | Description | Expected Result |
-|----------|-------------|-----------------|
-| Full Refresh | Process all 75M records | 100% ingested, < 1% errors |
-| Incremental Update | Process last 24h changes | < 2 hour completion |
-| Historical Backfill | Load FY2020-2023 data | Correct chronological order |
-| Concurrent Jobs | Run 4 parallel workers | No data corruption |
-| Database Failure | Simulate DB outage | Graceful retry, no data loss |
-| Schema Evolution | Deploy schema v2.1 | Backward compatible transform |
+| Scenario            | Description              | Expected Result               |
+| ------------------- | ------------------------ | ----------------------------- |
+| Full Refresh        | Process all 75M records  | 100% ingested, < 1% errors    |
+| Incremental Update  | Process last 24h changes | < 2 hour completion           |
+| Historical Backfill | Load FY2020-2023 data    | Correct chronological order   |
+| Concurrent Jobs     | Run 4 parallel workers   | No data corruption            |
+| Database Failure    | Simulate DB outage       | Graceful retry, no data loss  |
+| Schema Evolution    | Deploy schema v2.1       | Backward compatible transform |
 
 ### 3.3 User Acceptance Testing (UAT)
 
@@ -947,14 +973,14 @@ WHERE awardee_or_recipient_uei IS NOT NULL AND awardee_or_recipient_uei != '';
 
 **Monitoring Metrics:**
 
-| Metric | Target | Alert Threshold | Action |
-|--------|--------|-----------------|--------|
-| Pipeline Success Rate | 99%+ | < 95% | Page on-call engineer |
-| Records Processed/Hour | 100K+ | < 50K | Investigate performance |
-| Data Latency | < 2 hours | > 4 hours | Check for backlog |
-| Error Rate | < 0.5% | > 2% | Review error logs |
-| Database CPU | < 70% | > 85% | Scale up resources |
-| API Response Time | < 500ms | > 2s | Check query optimization |
+| Metric                 | Target    | Alert Threshold | Action                   |
+| ---------------------- | --------- | --------------- | ------------------------ |
+| Pipeline Success Rate  | 99%+      | < 95%           | Page on-call engineer    |
+| Records Processed/Hour | 100K+     | < 50K           | Investigate performance  |
+| Data Latency           | < 2 hours | > 4 hours       | Check for backlog        |
+| Error Rate             | < 0.5%    | > 2%            | Review error logs        |
+| Database CPU           | < 70%     | > 85%           | Scale up resources       |
+| API Response Time      | < 500ms   | > 2s            | Check query optimization |
 
 **Operational Procedures:**
 
@@ -981,13 +1007,13 @@ WHERE awardee_or_recipient_uei IS NOT NULL AND awardee_or_recipient_uei != '';
 
 ### High-Risk Items
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| Public Spending schema changes | Medium | High | Monitor schema, maintain version compatibility |
-| Data quality issues in source | High | Medium | Robust validation, error handling |
-| Performance degradation | Medium | High | Load testing, horizontal scaling |
-| Production deployment failure | Low | Critical | Rollback plan, staging environment |
-| Stakeholder alignment | Medium | Medium | Regular demos, UAT involvement |
+| Risk                           | Probability | Impact   | Mitigation                                     |
+| ------------------------------ | ----------- | -------- | ---------------------------------------------- |
+| Public Spending schema changes | Medium      | High     | Monitor schema, maintain version compatibility |
+| Data quality issues in source  | High        | Medium   | Robust validation, error handling              |
+| Performance degradation        | Medium      | High     | Load testing, horizontal scaling               |
+| Production deployment failure  | Low         | Critical | Rollback plan, staging environment             |
+| Stakeholder alignment          | Medium      | Medium   | Regular demos, UAT involvement                 |
 
 ### Contingency Plans
 
@@ -1046,15 +1072,15 @@ Weeks 13-16: Phase 4 - Production Deployment
 
 ## Appendix A: Technology Stack
 
-| Component | Technology | Rationale |
-|-----------|------------|-----------|
-| Source Database | PostgreSQL 13+ | Public Spending native format |
-| ETL Framework | Apache Airflow or Node.js | Orchestration + scheduling |
-| Transformation | JavaScript/TypeScript | Native JSON handling |
-| Target Database | PostgreSQL or MongoDB | Flexible schema support |
-| Monitoring | Prometheus + Grafana | Industry standard |
-| Logging | ELK Stack or CloudWatch | Centralized logging |
-| API Layer | GraphQL (Apollo Server) | Matches Schema Unification schema |
+| Component       | Technology                | Rationale                         |
+| --------------- | ------------------------- | --------------------------------- |
+| Source Database | PostgreSQL 13+            | Public Spending native format     |
+| ETL Framework   | Apache Airflow or Node.js | Orchestration + scheduling        |
+| Transformation  | JavaScript/TypeScript     | Native JSON handling              |
+| Target Database | PostgreSQL or MongoDB     | Flexible schema support           |
+| Monitoring      | Prometheus + Grafana      | Industry standard                 |
+| Logging         | ELK Stack or CloudWatch   | Centralized logging               |
+| API Layer       | GraphQL (Apollo Server)   | Matches Schema Unification schema |
 
 ---
 
@@ -1081,6 +1107,7 @@ Weeks 13-16: Phase 4 - Production Deployment
 ---
 
 **Document Control:**
+
 - Version: 1.0
 - Last Updated: December 4, 2025
 - Owner: Schema Unification Forest Data Integration Team

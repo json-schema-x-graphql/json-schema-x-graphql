@@ -1,6 +1,6 @@
 # X-GraphQL Attribute Reference
 
-**Complete catalog of all x-graphql-* extensions for JSON Schema to GraphQL conversion**
+**Complete catalog of all x-graphql-\* extensions for JSON Schema to GraphQL conversion**
 
 Version: 2.0.0  
 Last Updated: January 2025
@@ -46,11 +46,12 @@ All attributes follow the pattern: `x-graphql-{category}-{name}`
 
 **Type**: `string`  
 **Scope**: Object, Enum  
-**Priority**: P0  
+**Priority**: P0
 
 Specifies the exact GraphQL type name to use instead of the auto-generated name.
 
 **Example**:
+
 ```json
 {
   "type": "object",
@@ -62,6 +63,7 @@ Specifies the exact GraphQL type name to use instead of the auto-generated name.
 ```
 
 **Output**:
+
 ```graphql
 type User {
   id: String
@@ -69,6 +71,7 @@ type User {
 ```
 
 **Best Practices**:
+
 - Use PascalCase for types
 - Be explicit when auto-generation doesn't match your schema conventions
 - Required when using definitions that don't map cleanly to type names
@@ -79,17 +82,19 @@ type User {
 
 **Type**: `string` (enum)  
 **Scope**: Object  
-**Priority**: P0  
+**Priority**: P0
 
 Defines the GraphQL type kind. Overrides default behavior (objects become `OBJECT` by default).
 
 **Valid Values**:
+
 - `"OBJECT"` (default for JSON Schema objects)
-- `"INTERFACE"` 
+- `"INTERFACE"`
 - `"UNION"`
 - `"INPUT_OBJECT"`
 
 **Example - Interface**:
+
 ```json
 {
   "type": "object",
@@ -102,6 +107,7 @@ Defines the GraphQL type kind. Overrides default behavior (objects become `OBJEC
 ```
 
 **Output**:
+
 ```graphql
 interface Node {
   id: String
@@ -109,6 +115,7 @@ interface Node {
 ```
 
 **Example - Union**:
+
 ```json
 {
   "x-graphql-type-kind": "UNION",
@@ -118,6 +125,7 @@ interface Node {
 ```
 
 **Output**:
+
 ```graphql
 union SearchResult = User | Product
 ```
@@ -128,11 +136,12 @@ union SearchResult = User | Product
 
 **Type**: `string[]`  
 **Scope**: Object  
-**Priority**: P1  
+**Priority**: P1
 
 Specifies which GraphQL interfaces this type implements.
 
 **Example**:
+
 ```json
 {
   "type": "object",
@@ -146,6 +155,7 @@ Specifies which GraphQL interfaces this type implements.
 ```
 
 **Output**:
+
 ```graphql
 type User implements Node & Timestamped {
   id: String
@@ -154,6 +164,7 @@ type User implements Node & Timestamped {
 ```
 
 **Best Practices**:
+
 - Ensure all interface fields are present in the implementing type
 - List interfaces in dependency order if they extend each other
 
@@ -163,11 +174,12 @@ type User implements Node & Timestamped {
 
 **Type**: `string[]`  
 **Scope**: Object (with `x-graphql-type-kind: "UNION"`)  
-**Priority**: P1  
+**Priority**: P1
 
 Lists the member types for a union type.
 
 **Example**:
+
 ```json
 {
   "x-graphql-type-kind": "UNION",
@@ -182,6 +194,7 @@ Lists the member types for a union type.
 ```
 
 **Output**:
+
 ```graphql
 union SearchResult = User | Product | Post
 ```
@@ -192,11 +205,12 @@ union SearchResult = User | Product | Post
 
 **Type**: `object[]`  
 **Scope**: Object  
-**Priority**: P2  
+**Priority**: P2
 
 Custom directives to apply to the type definition.
 
 **Example**:
+
 ```json
 {
   "type": "object",
@@ -209,6 +223,7 @@ Custom directives to apply to the type definition.
 ```
 
 **Output**:
+
 ```graphql
 type User @cacheControl(maxAge: 60) @auth(requires: USER) {
   # fields...
@@ -223,11 +238,12 @@ type User @cacheControl(maxAge: 60) @auth(requires: USER) {
 
 **Type**: `string`  
 **Scope**: Property  
-**Priority**: P0  
+**Priority**: P0
 
 Specifies the exact GraphQL field name (overrides case conversion).
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -240,11 +256,13 @@ Specifies the exact GraphQL field name (overrides case conversion).
 ```
 
 **Output**:
+
 ```graphql
 id: String
 ```
 
 **Best Practices**:
+
 - Use camelCase for field names
 - Map database column names to GraphQL conventions
 
@@ -254,11 +272,12 @@ id: String
 
 **Type**: `string`  
 **Scope**: Property  
-**Priority**: P0  
+**Priority**: P0
 
 Overrides the auto-inferred GraphQL type for a field.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -276,12 +295,14 @@ Overrides the auto-inferred GraphQL type for a field.
 ```
 
 **Output**:
+
 ```graphql
 id: ID
 createdAt: DateTime
 ```
 
 **Common Mappings**:
+
 - `string` → `"ID"` for identifiers
 - `string` (format: date-time) → `"DateTime"`
 - `string` (format: uri) → `"URL"`
@@ -294,11 +315,12 @@ createdAt: DateTime
 
 **Type**: `boolean`  
 **Scope**: Property  
-**Priority**: P0  
+**Priority**: P0
 
 Explicitly marks a field as non-nullable (adds `!` in GraphQL).
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -311,6 +333,7 @@ Explicitly marks a field as non-nullable (adds `!` in GraphQL).
 ```
 
 **Output**:
+
 ```graphql
 email: String!
 ```
@@ -323,11 +346,12 @@ email: String!
 
 **Type**: `boolean`  
 **Scope**: Property  
-**Priority**: P0  
+**Priority**: P0
 
 Forces a field to be nullable in GraphQL, even if it's in JSON Schema `required` array.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -341,11 +365,13 @@ Forces a field to be nullable in GraphQL, even if it's in JSON Schema `required`
 ```
 
 **Output**:
+
 ```graphql
 optionalField: String
 ```
 
 **Use Cases**:
+
 - Fields required for JSON validation but optional in GraphQL queries
 - Backward compatibility during schema evolution
 
@@ -355,11 +381,12 @@ optionalField: String
 
 **Type**: `boolean`  
 **Scope**: Array property  
-**Priority**: P1  
+**Priority**: P1
 
 Makes list items non-nullable (creates `[Type!]` instead of `[Type]`).
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -373,6 +400,7 @@ Makes list items non-nullable (creates `[Type!]` instead of `[Type]`).
 ```
 
 **Output**:
+
 ```graphql
 tags: [String!]
 ```
@@ -383,11 +411,12 @@ tags: [String!]
 
 **Type**: `boolean`  
 **Scope**: Property or Object  
-**Priority**: P0  
+**Priority**: P0
 
 Completely excludes a field or type from GraphQL SDL generation.
 
 **Example - Skip Field**:
+
 ```json
 {
   "properties": {
@@ -401,6 +430,7 @@ Completely excludes a field or type from GraphQL SDL generation.
 ```
 
 **Output**:
+
 ```graphql
 type User {
   id: String
@@ -409,6 +439,7 @@ type User {
 ```
 
 **Example - Skip Type**:
+
 ```json
 {
   "definitions": {
@@ -422,6 +453,7 @@ type User {
 ```
 
 **Use Cases**:
+
 - Internal fields (passwords, tokens, secrets)
 - Computed fields handled by resolvers
 - Types only used for JSON validation
@@ -432,18 +464,22 @@ type User {
 
 **Type**: `object[]`  
 **Scope**: Property  
-**Priority**: P2  
+**Priority**: P2
 
 Custom directives to apply to the field.
 
 **Example**:
+
 ```json
 {
   "properties": {
     "email": {
       "type": "string",
       "x-graphql-field-directives": [
-        { "name": "deprecated", "args": { "reason": "Use 'emailAddress' instead" } }
+        {
+          "name": "deprecated",
+          "args": { "reason": "Use 'emailAddress' instead" }
+        }
       ]
     }
   }
@@ -451,6 +487,7 @@ Custom directives to apply to the field.
 ```
 
 **Output**:
+
 ```graphql
 email: String @deprecated(reason: "Use 'emailAddress' instead")
 ```
@@ -461,11 +498,12 @@ email: String @deprecated(reason: "Use 'emailAddress' instead")
 
 **Type**: `object`  
 **Scope**: Property  
-**Priority**: P2  
+**Priority**: P2
 
 Defines arguments for a field (for query/mutation fields).
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -480,6 +518,7 @@ Defines arguments for a field (for query/mutation fields).
 ```
 
 **Output**:
+
 ```graphql
 user(id: ID!): User
 ```
@@ -492,11 +531,12 @@ user(id: ID!): User
 
 **Type**: `string | string[]`  
 **Scope**: Object  
-**Priority**: P1  
+**Priority**: P1
 
 Defines entity keys for Apollo Federation. Can be a single key or multiple keys.
 
 **Example - Single Key**:
+
 ```json
 {
   "type": "object",
@@ -506,6 +546,7 @@ Defines entity keys for Apollo Federation. Can be a single key or multiple keys.
 ```
 
 **Output**:
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -513,6 +554,7 @@ type Product @key(fields: "id") {
 ```
 
 **Example - Multiple Keys**:
+
 ```json
 {
   "x-graphql-federation-keys": ["id", "sku"]
@@ -520,6 +562,7 @@ type Product @key(fields: "id") {
 ```
 
 **Output**:
+
 ```graphql
 type Product @key(fields: "id") @key(fields: "sku") {
   id: ID!
@@ -528,6 +571,7 @@ type Product @key(fields: "id") @key(fields: "sku") {
 ```
 
 **Example - Composite Key**:
+
 ```json
 {
   "x-graphql-federation-keys": "organizationId accountId"
@@ -535,6 +579,7 @@ type Product @key(fields: "id") @key(fields: "sku") {
 ```
 
 **Output**:
+
 ```graphql
 type Account @key(fields: "organizationId accountId") {
   organizationId: ID!
@@ -548,11 +593,12 @@ type Account @key(fields: "organizationId accountId") {
 
 **Type**: `boolean`  
 **Scope**: Object  
-**Priority**: P1  
+**Priority**: P1
 
 Marks a type as shareable across multiple subgraphs (Federation v2).
 
 **Example**:
+
 ```json
 {
   "type": "object",
@@ -562,6 +608,7 @@ Marks a type as shareable across multiple subgraphs (Federation v2).
 ```
 
 **Output**:
+
 ```graphql
 type Product @shareable {
   id: ID!
@@ -575,11 +622,12 @@ type Product @shareable {
 
 **Type**: `boolean`  
 **Scope**: Property  
-**Priority**: P1  
+**Priority**: P1
 
 Marks a field as owned by another subgraph.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -592,6 +640,7 @@ Marks a field as owned by another subgraph.
 ```
 
 **Output**:
+
 ```graphql
 type Product {
   inventoryCount: Int @external
@@ -604,11 +653,12 @@ type Product {
 
 **Type**: `string | string[]`  
 **Scope**: Property  
-**Priority**: P1  
+**Priority**: P1
 
 Specifies fields from another subgraph required to resolve this field.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -621,6 +671,7 @@ Specifies fields from another subgraph required to resolve this field.
 ```
 
 **Output**:
+
 ```graphql
 shippingEstimate: Float @requires(fields: "weight dimensions")
 ```
@@ -631,11 +682,12 @@ shippingEstimate: Float @requires(fields: "weight dimensions")
 
 **Type**: `string | string[]`  
 **Scope**: Property  
-**Priority**: P1  
+**Priority**: P1
 
 Specifies which fields from a related type this field can provide.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -649,6 +701,7 @@ Specifies which fields from a related type this field can provide.
 ```
 
 **Output**:
+
 ```graphql
 seller: User @provides(fields: "email username")
 ```
@@ -659,11 +712,12 @@ seller: User @provides(fields: "email username")
 
 **Type**: `string`  
 **Scope**: Property  
-**Priority**: P1  
+**Priority**: P1
 
 Marks a field as migrated from another subgraph.
 
 **Example**:
+
 ```json
 {
   "properties": {
@@ -676,6 +730,7 @@ Marks a field as migrated from another subgraph.
 ```
 
 **Output**:
+
 ```graphql
 legacyField: String @override(from: "legacy-service")
 ```
@@ -688,11 +743,12 @@ legacyField: String @override(from: "legacy-service")
 
 **Type**: `string`  
 **Scope**: Object, Property  
-**Priority**: P0  
+**Priority**: P0
 
 GraphQL-specific description that overrides JSON Schema `description`.
 
 **Example**:
+
 ```json
 {
   "type": "object",
@@ -709,15 +765,21 @@ GraphQL-specific description that overrides JSON Schema `description`.
 ```
 
 **Output**:
+
 ```graphql
-"""User account entity"""
+"""
+User account entity
+"""
 type User {
-  """Unique user identifier"""
+  """
+  Unique user identifier
+  """
   id: String
 }
 ```
 
 **Use Cases**:
+
 - Different documentation for API vs internal use
 - GraphQL-specific clarifications
 
@@ -727,11 +789,12 @@ type User {
 
 **Type**: `object`  
 **Scope**: String/Number types  
-**Priority**: P2  
+**Priority**: P2
 
 Defines a custom scalar type with metadata.
 
 **Example**:
+
 ```json
 {
   "type": "string",
@@ -744,8 +807,11 @@ Defines a custom scalar type with metadata.
 ```
 
 **Output**:
+
 ```graphql
-"""Valid email address"""
+"""
+Valid email address
+"""
 scalar Email @specifiedBy(url: "https://tools.ietf.org/html/rfc5322")
 ```
 
@@ -757,11 +823,12 @@ scalar Email @specifiedBy(url: "https://tools.ietf.org/html/rfc5322")
 
 **Type**: `string | object`  
 **Scope**: Object  
-**Status**: ⚠️ Deprecated (use `x-graphql-type-name` and `x-graphql-type-kind`)  
+**Status**: ⚠️ Deprecated (use `x-graphql-type-name` and `x-graphql-type-kind`)
 
 Legacy attribute for specifying type name and kind.
 
 **String Form** (equivalent to `x-graphql-type-name`):
+
 ```json
 {
   "x-graphql-type": "User"
@@ -769,6 +836,7 @@ Legacy attribute for specifying type name and kind.
 ```
 
 **Object Form**:
+
 ```json
 {
   "x-graphql-type": {
@@ -859,12 +927,20 @@ When multiple attributes could affect the same behavior, they are resolved in th
 ```
 
 **Output**:
+
 ```graphql
-"""User account with full metadata"""
-type User implements Node & Timestamped @key(fields: "id") @key(fields: "email") @shareable {
-  """Unique identifier"""
+"""
+User account with full metadata
+"""
+type User implements Node & Timestamped
+  @key(fields: "id")
+  @key(fields: "email")
+  @shareable {
+  """
+  Unique identifier
+  """
   id: ID!
-  
+
   email: Email!
   profileImage: String
   tags: [String!]

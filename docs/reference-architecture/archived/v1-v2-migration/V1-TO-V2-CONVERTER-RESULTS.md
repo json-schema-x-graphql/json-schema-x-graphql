@@ -53,15 +53,15 @@ Successfully created an automated converter that transforms the V1 (nested) sche
 
 ## Comparison: Hand-Crafted vs Auto-Generated
 
-| Metric | Hand-Crafted V2 | Auto-Generated (from V1) | Difference |
-|--------|-----------------|--------------------------|------------|
-| **Schema Definitions** | 30 types | 17 types | -13 types |
-| **GraphQL Output** | 537 lines | 296 lines | -241 lines |
-| **Core Types** | ✅ Complete | ✅ Complete | Same |
-| **System Extensions** | 13 granular types | 3 consolidated types | More detail in hand-crafted |
-| **Enums** | 3 | 3 | ✅ Same |
-| **Scalars** | 6 | 6 | ✅ Same |
-| **Operations** | 4 queries, 1 mutation | 4 queries, 1 mutation | ✅ Same |
+| Metric                 | Hand-Crafted V2       | Auto-Generated (from V1) | Difference                  |
+| ---------------------- | --------------------- | ------------------------ | --------------------------- |
+| **Schema Definitions** | 30 types              | 17 types                 | -13 types                   |
+| **GraphQL Output**     | 537 lines             | 296 lines                | -241 lines                  |
+| **Core Types**         | ✅ Complete           | ✅ Complete              | Same                        |
+| **System Extensions**  | 13 granular types     | 3 consolidated types     | More detail in hand-crafted |
+| **Enums**              | 3                     | 3                        | ✅ Same                     |
+| **Scalars**            | 6                     | 6                        | ✅ Same                     |
+| **Operations**         | 4 queries, 1 mutation | 4 queries, 1 mutation    | ✅ Same                     |
 
 ## Type Analysis
 
@@ -92,6 +92,7 @@ Both versions successfully generate these essential types:
 The hand-crafted version has more granular breakdowns of system-specific data:
 
 **Contract Data Extensions (6 additional types):**
+
 - `Contract DataSpecificData`
 - `Contract DataApplicantBeneficiaryType`
 - `Contract DataAssistanceType`
@@ -99,6 +100,7 @@ The hand-crafted version has more granular breakdowns of system-specific data:
 - `Contract DataUsage`
 
 **Legacy Procurement Extensions (4 additional types):**
+
 - `AssistSpecificData`
 - `AssistAcquisitionData`
 - `AssistClientData`
@@ -106,9 +108,11 @@ The hand-crafted version has more granular breakdowns of system-specific data:
 - `AssistOfficeAddress`
 
 **EASi Extensions (1 additional type):**
+
 - `EasiSpecificData`
 
 **Other:**
+
 - `CommonElements` - Wrapper type
 - `SystemExtensions` - Wrapper type
 
@@ -134,7 +138,7 @@ The auto-generated version shows these warnings (non-breaking):
 
 1. **Core Contract Data**: All essential contract fields are properly converted
 2. **Type Extraction**: Successfully extracts reusable types from nested structure
-3. **GraphQL Extensions**: Automatically adds x-graphql-* properties
+3. **GraphQL Extensions**: Automatically adds x-graphql-\* properties
 4. **Enums**: Properly extracts and converts enum values
 5. **Scalars**: Applies appropriate scalar types (DateTime, Date, Decimal, etc.)
 6. **Operations**: Generates working Query and Mutation types
@@ -204,7 +208,7 @@ name: Schema Sync
 on:
   push:
     paths:
-      - 'src/data/schema_unification.schema.json'
+      - "src/data/schema_unification.schema.json"
 
 jobs:
   sync:
@@ -219,13 +223,14 @@ jobs:
 
 ## Performance
 
-| Operation | Time | Result |
-|-----------|------|--------|
-| V1 → V2 Conversion | <50ms | 21 definitions |
-| V2 → GraphQL SDL | <1ms | 296 lines |
-| **Total Pipeline** | **<100ms** | **Complete** |
+| Operation          | Time       | Result         |
+| ------------------ | ---------- | -------------- |
+| V1 → V2 Conversion | <50ms      | 21 definitions |
+| V2 → GraphQL SDL   | <1ms       | 296 lines      |
+| **Total Pipeline** | **<100ms** | **Complete**   |
 
 Compare to original approach:
+
 - typeconv: ~1,800ms per conversion
 - **This approach: 200x faster** 🚀
 
@@ -272,6 +277,7 @@ Compare to original approach:
 ✅ **The V1 to V2 converter is production-ready for core contract data!**
 
 The converter successfully:
+
 - Extracts 17 core types from nested V1 structure
 - Generates valid V2 schema with GraphQL extensions
 - Produces 296 lines of valid GraphQL SDL

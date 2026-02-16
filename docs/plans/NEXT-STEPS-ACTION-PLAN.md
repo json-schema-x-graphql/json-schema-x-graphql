@@ -21,6 +21,7 @@ The Node.js converter has been fully implemented and tested with comprehensive x
 **Risk Level:** Low
 
 #### Tasks:
+
 - [ ] Install/verify Rust toolchain (if not available)
 - [ ] Run Rust test suite
 - [ ] Run x-graphql shared tests
@@ -28,6 +29,7 @@ The Node.js converter has been fully implemented and tested with comprehensive x
 - [ ] Fix any test failures
 
 #### Commands:
+
 ```bash
 # Navigate to Rust converter
 cd converters/rust
@@ -50,12 +52,14 @@ cargo test comprehensive -- --nocapture
 ```
 
 #### Success Criteria:
+
 - ✅ All tests passing
 - ✅ No clippy warnings
 - ✅ SDL output matches expected files
 - ✅ All 8 test schemas convert correctly
 
 #### Documentation:
+
 - Update RUST-PARITY-IMPLEMENTATION.md with test results
 - Document any issues found and resolutions
 
@@ -68,6 +72,7 @@ cargo test comprehensive -- --nocapture
 **Risk Level:** Low
 
 #### Tasks:
+
 - [ ] Run Node.js performance benchmarks
 - [ ] Run Rust performance benchmarks
 - [ ] Compare results with baseline
@@ -75,6 +80,7 @@ cargo test comprehensive -- --nocapture
 - [ ] Document any performance regressions
 
 #### Commands:
+
 ```bash
 # Node.js benchmarks
 cd converters/node
@@ -91,12 +97,14 @@ cp target/criterion/*/base/estimates.json ../../benchmark-results/rust-baseline.
 ```
 
 #### Success Criteria:
+
 - ✅ Benchmarks complete without errors
 - ✅ Performance within 10% of baseline
 - ✅ No memory leaks detected
 - ✅ Results documented
 
 #### Output Files:
+
 - `benchmark-results/node-baseline.json`
 - `benchmark-results/rust-baseline.json`
 - `docs/PERFORMANCE-BENCHMARK-RESULTS.md`
@@ -110,6 +118,7 @@ cp target/criterion/*/base/estimates.json ../../benchmark-results/rust-baseline.
 **Risk Level:** Medium
 
 #### Tasks:
+
 - [ ] Create GitHub Actions workflow for validation
 - [ ] Add JSON Schema validation step
 - [ ] Add GraphQL SDL validation step
@@ -119,6 +128,7 @@ cp target/criterion/*/base/estimates.json ../../benchmark-results/rust-baseline.
 - [ ] Configure notifications
 
 #### Workflow Structure:
+
 ```yaml
 name: X-GraphQL Validation
 
@@ -165,6 +175,7 @@ jobs:
 ```
 
 #### Success Criteria:
+
 - ✅ Pipeline runs on every push/PR
 - ✅ All validation steps passing
 - ✅ Outputs compared automatically
@@ -172,6 +183,7 @@ jobs:
 - ✅ Failures reported clearly
 
 #### Files to Create:
+
 - `.github/workflows/x-graphql-validation.yml`
 - `.github/workflows/benchmark-comparison.yml`
 
@@ -184,6 +196,7 @@ jobs:
 **Risk Level:** Low
 
 #### Tasks:
+
 - [ ] Update package.json version to 2.0.0
 - [ ] Update Cargo.toml version to 2.0.0
 - [ ] Generate release notes
@@ -193,6 +206,7 @@ jobs:
 - [ ] Prepare changelog
 
 #### Commands:
+
 ```bash
 # Node.js package
 cd converters/node
@@ -211,6 +225,7 @@ cargo install --path .
 ```
 
 #### Success Criteria:
+
 - ✅ Version numbers consistent across packages
 - ✅ Packages build successfully
 - ✅ Local installation works
@@ -218,6 +233,7 @@ cargo install --path .
 - ✅ All files included
 
 #### Release Checklist:
+
 - [ ] CHANGELOG.md updated
 - [ ] Version bumped in all package files
 - [ ] Git tags created
@@ -234,6 +250,7 @@ cargo install --path .
 **Estimated Time:** 2-3 hours
 
 #### Tasks:
+
 - [ ] Review all documentation for accuracy
 - [ ] Add more code examples
 - [ ] Create visual diagrams
@@ -242,6 +259,7 @@ cargo install --path .
 - [ ] Create FAQ document
 
 #### Documents to Update:
+
 - `README.md` - Main project readme
 - `docs/X-GRAPHQL-ATTRIBUTE-REFERENCE.md` - Add examples for all attributes
 - `docs/QUICKSTART.md` - Update with v2.0 syntax
@@ -256,6 +274,7 @@ cargo install --path .
 **Estimated Time:** 2-3 hours
 
 #### Tasks:
+
 - [ ] Create test federated schemas
 - [ ] Run composition with Apollo Rover
 - [ ] Verify all federation directives work
@@ -263,6 +282,7 @@ cargo install --path .
 - [ ] Document federation patterns
 
 #### Test Schemas:
+
 ```graphql
 # accounts-service.graphql
 type User @key(fields: "id") {
@@ -278,6 +298,7 @@ type Product @key(fields: "id") {
 ```
 
 #### Commands:
+
 ```bash
 # Install Rover
 curl -sSL https://rover.apollo.dev/nix/latest | sh
@@ -296,6 +317,7 @@ rover graph check --schema supergraph.graphql
 **Estimated Time:** 1-2 hours
 
 #### Tasks:
+
 - [ ] Store baseline benchmarks in repository
 - [ ] Create CI step to compare against baseline
 - [ ] Set regression thresholds (e.g., 10% slowdown)
@@ -303,6 +325,7 @@ rover graph check --schema supergraph.graphql
 - [ ] Create performance tracking dashboard
 
 #### CI Integration:
+
 ```yaml
 - name: Compare benchmarks
   run: |
@@ -320,6 +343,7 @@ rover graph check --schema supergraph.graphql
 **Estimated Time:** 3-4 hours
 
 #### Tasks:
+
 - [ ] Build CLI tool for v1 → v2 migration
 - [ ] Add automatic attribute renaming
 - [ ] Add validation of migrated schemas
@@ -327,6 +351,7 @@ rover graph check --schema supergraph.graphql
 - [ ] Add dry-run mode
 
 #### Features:
+
 ```bash
 # Migrate a schema
 jxql migrate schema.json --output schema-v2.json
@@ -347,6 +372,7 @@ jxql migrate schemas/*.json --output-dir schemas-v2/
 **Estimated Time:** 8-12 hours
 
 #### Features:
+
 - Inline validation for x-graphql attributes
 - Auto-completion for attribute names
 - Hover documentation
@@ -360,6 +386,7 @@ jxql migrate schemas/*.json --output-dir schemas-v2/
 **Estimated Time:** 2-3 hours
 
 #### Tasks:
+
 - Profile memory usage during conversion
 - Identify allocation hotspots
 - Optimize if needed
@@ -372,6 +399,7 @@ jxql migrate schemas/*.json --output-dir schemas-v2/
 **Estimated Time:** 4-6 hours
 
 #### Tasks:
+
 - Benchmark with various schema sizes
 - Test with deeply nested schemas
 - Measure memory vs speed tradeoffs
@@ -382,16 +410,19 @@ jxql migrate schemas/*.json --output-dir schemas-v2/
 ## Execution Timeline
 
 ### Week 1 (Current)
+
 - Day 1-2: Verify Rust implementation, run tests
 - Day 3: Run benchmarks, document results
 - Day 4-5: Set up CI pipeline
 
 ### Week 2
+
 - Day 1-2: Finalize release artifacts
 - Day 3-4: Documentation polish
 - Day 5: Federation composition testing
 
 ### Week 3+
+
 - Medium priority tasks as time permits
 - Future enhancements planning
 
@@ -400,13 +431,16 @@ jxql migrate schemas/*.json --output-dir schemas-v2/
 ## Risk Assessment
 
 ### High Risk Items
+
 None identified
 
 ### Medium Risk Items
+
 - **CI pipeline setup** - May require iteration to get right
 - **Federation composition** - External dependencies (Rover)
 
 ### Low Risk Items
+
 - **Rust testing** - Code changes are minimal and safe
 - **Benchmarks** - Non-blocking, informational only
 - **Documentation** - No technical risk
@@ -418,6 +452,7 @@ None identified
 If critical issues are discovered:
 
 1. **Revert Rust changes:**
+
    ```bash
    git revert <commit-hash>
    ```
@@ -437,6 +472,7 @@ If critical issues are discovered:
 ## Success Metrics
 
 ### Must Have (Release Blockers)
+
 - [ ] All tests passing (Node + Rust)
 - [ ] SDL outputs match between implementations
 - [ ] No regressions from v1.x
@@ -444,12 +480,14 @@ If critical issues are discovered:
 - [ ] Breaking changes documented
 
 ### Should Have (Post-Release)
+
 - [ ] CI pipeline operational
 - [ ] Benchmarks stored
 - [ ] Federation composition verified
 - [ ] Migration guide available
 
 ### Nice to Have (Future)
+
 - [ ] VS Code extension
 - [ ] Performance dashboard
 - [ ] Community examples
@@ -459,11 +497,13 @@ If critical issues are discovered:
 ## Communication Plan
 
 ### Internal Updates
+
 - Daily: Quick status updates
 - Weekly: Detailed progress reports
 - Milestone: Documentation of completions
 
 ### External Communication
+
 - Release announcement (blog post, Twitter)
 - npm/crates.io publish notifications
 - Community examples and tutorials
@@ -484,6 +524,7 @@ If critical issues are discovered:
 ## Current Status Summary
 
 ### ✅ Completed
+
 - Node.js converter fully implemented (7 fixes)
 - Node.js tests passing (40/40)
 - Expected SDL outputs generated (8 files)
@@ -491,9 +532,11 @@ If critical issues are discovered:
 - Comprehensive documentation created
 
 ### 🚧 In Progress
+
 - Rust testing (code ready, needs execution)
 
 ### ⏳ Not Started
+
 - Performance benchmarks
 - CI pipeline
 - Release artifacts

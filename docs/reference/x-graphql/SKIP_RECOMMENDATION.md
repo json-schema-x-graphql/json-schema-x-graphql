@@ -27,12 +27,14 @@ This document describes the recommended semantics and best practices for using t
 ## When to use `x-graphql-skip`
 
 Appropriate use cases:
+
 - Sensitive fields that must not be exposed (passwords, secrets, internal tokens).
 - Implementation-only metadata that is never part of public API (internal URIs, debug-only flags).
 - Deprecated/internal types that should be fully removed from public SDL (short-lived migration use when you absolutely must remove artifacts at source).
 - Edge-case fields created for system bookkeeping that clients must never see.
 
 When to avoid:
+
 - Do not use for role-based, tenant-based, or feature-flag-driven visibility. Those are runtime concerns and should be managed by:
   - Server-side resolver logic,
   - Separate generated schemas per target audience, or
@@ -45,7 +47,7 @@ Converters must document how `x-graphql-skip` interacts with other annotations. 
 
 1. If `x-graphql-skip` is truthy on a field or type, the converter should omit that field/type from GraphQL generation unconditionally at conversion time.
 2. If skipping a field results in:
-   - An object type with zero remaining fields: 
+   - An object type with zero remaining fields:
      - If converter option `emitEmptyTypes` is `false` (recommended default), then omit the type as well.
      - If `emitEmptyTypes` is `true`, emit the type as an empty GraphQL `type` (not recommended for public APIs).
      - Alternatively, converter can map the object to `JSON` scalar if the inline object threshold and policy permit (configurable via `inlineObjectThreshold`).
@@ -144,6 +146,7 @@ Q: Can `x-graphql-skip` be tested automatically?
 A: Yes. Add unit and integration tests as described above; ensure CI enforces these tests.
 
 ## Governance checklist (quick)
+
 - [ ] Use boolean `true` for absolute skips.
 - [ ] Add a short comment or commit message explaining why you skipped.
 - [ ] Prefer `visibility` and global rules for broad omission policies.
@@ -153,6 +156,7 @@ A: Yes. Add unit and integration tests as described above; ensure CI enforces th
 ---
 
 If you'd like, I can:
+
 - Produce a small example script that scans schemas and emits a skip report (JSON list of pointers + reasons), or
 - Add the three unit tests for `x-graphql-skip` to the Node converter test harness and a skeleton of the skip-report CLI.
 

@@ -68,6 +68,7 @@ The component's direct subscription would set the update flag, which blocked the
 **Remove the redundant component-level subscription** and rely solely on the store's subscription → value prop flow:
 
 #### Before (Broken):
+
 ```typescript
 // Component had BOTH:
 // 1. Value prop effect
@@ -88,6 +89,7 @@ useEffect(() => {
 ```
 
 #### After (Fixed):
+
 ```typescript
 // Single update path via value prop
 useEffect(() => {

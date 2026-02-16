@@ -2,30 +2,30 @@
 
 ## Comparison Table: Feature Loss in Transformation
 
-| Feature Category | JSON Schema → GraphQL | GraphQL → JSON Schema | Impact Assessment |
-|-----------------|---------------------|---------------------|-------------------|
-| **Type Definitions** | ✅ Fully Preserved | ✅ Fully Preserved | Both handle object types, primitives, arrays |
-| **Field Descriptions** | ✅ Maps to descriptions | ⚠️ Limited to `description` field | GraphQL has richer inline documentation |
-| **Required Fields** | ✅ `required[]` → `!` | ✅ `!` → `required[]` | Direct mapping possible |
-| **Enumerations** | ✅ `enum` → `enum` | ✅ `enum` → `enum` with `type: string` | Slight semantic difference |
-| **Union Types** | ⚠️ `oneOf` → `union` (complex) | ✅ `union` → `oneOf` | JSON Schema more verbose |
-| **Interface Types** | ❌ No direct equivalent | ⚠️ Becomes shared properties | Loss of polymorphism |
-| **Custom Scalars** | ❌ Only format hints | ⚠️ Becomes string with format | GraphQL more expressive |
-| **Field Arguments** | ❌ Not applicable | ❌ Lost completely | Only relevant for operations |
-| **Directives** | ❌ No equivalent | ❌ Lost completely | Metadata loss |
-| **Query/Mutation/Subscription** | ❌ No equivalent | ❌ Lost completely | Operations not data |
-| **Input Types** | ⚠️ Regular schemas | ⚠️ Becomes regular object | Semantic difference lost |
-| **Relationships** | ⚠️ Via `$ref` only | ✅ Can use `$ref` | GraphQL more explicit |
-| **Nullability** | ✅ Via `required` | ✅ Explicit with `!` | GraphQL clearer |
-| **Default Values** | ✅ `default` property | ⚠️ Directive-based | JSON Schema clearer |
-| **Validation Rules** | ✅ Rich constraints | ❌ Very limited | JSON Schema superior |
-| **Pattern Matching** | ✅ `pattern` property | ❌ No equivalent | JSON Schema advantage |
-| **Numeric Constraints** | ✅ min/max/multiple | ❌ No equivalent | JSON Schema advantage |
-| **Array Constraints** | ✅ minItems/maxItems | ❌ Limited to type | JSON Schema richer |
-| **Conditional Logic** | ✅ if/then/else | ❌ No equivalent | JSON Schema advantage |
-| **Inheritance** | ⚠️ Via allOf | ✅ Via interfaces | Different paradigms |
-| **Deprecation** | ⚠️ Via custom field | ✅ `@deprecated` | GraphQL clearer |
-| **Examples** | ✅ `examples` array | ⚠️ In descriptions | JSON Schema structured |
+| Feature Category                | JSON Schema → GraphQL          | GraphQL → JSON Schema                  | Impact Assessment                            |
+| ------------------------------- | ------------------------------ | -------------------------------------- | -------------------------------------------- |
+| **Type Definitions**            | ✅ Fully Preserved             | ✅ Fully Preserved                     | Both handle object types, primitives, arrays |
+| **Field Descriptions**          | ✅ Maps to descriptions        | ⚠️ Limited to `description` field      | GraphQL has richer inline documentation      |
+| **Required Fields**             | ✅ `required[]` → `!`          | ✅ `!` → `required[]`                  | Direct mapping possible                      |
+| **Enumerations**                | ✅ `enum` → `enum`             | ✅ `enum` → `enum` with `type: string` | Slight semantic difference                   |
+| **Union Types**                 | ⚠️ `oneOf` → `union` (complex) | ✅ `union` → `oneOf`                   | JSON Schema more verbose                     |
+| **Interface Types**             | ❌ No direct equivalent        | ⚠️ Becomes shared properties           | Loss of polymorphism                         |
+| **Custom Scalars**              | ❌ Only format hints           | ⚠️ Becomes string with format          | GraphQL more expressive                      |
+| **Field Arguments**             | ❌ Not applicable              | ❌ Lost completely                     | Only relevant for operations                 |
+| **Directives**                  | ❌ No equivalent               | ❌ Lost completely                     | Metadata loss                                |
+| **Query/Mutation/Subscription** | ❌ No equivalent               | ❌ Lost completely                     | Operations not data                          |
+| **Input Types**                 | ⚠️ Regular schemas             | ⚠️ Becomes regular object              | Semantic difference lost                     |
+| **Relationships**               | ⚠️ Via `$ref` only             | ✅ Can use `$ref`                      | GraphQL more explicit                        |
+| **Nullability**                 | ✅ Via `required`              | ✅ Explicit with `!`                   | GraphQL clearer                              |
+| **Default Values**              | ✅ `default` property          | ⚠️ Directive-based                     | JSON Schema clearer                          |
+| **Validation Rules**            | ✅ Rich constraints            | ❌ Very limited                        | JSON Schema superior                         |
+| **Pattern Matching**            | ✅ `pattern` property          | ❌ No equivalent                       | JSON Schema advantage                        |
+| **Numeric Constraints**         | ✅ min/max/multiple            | ❌ No equivalent                       | JSON Schema advantage                        |
+| **Array Constraints**           | ✅ minItems/maxItems           | ❌ Limited to type                     | JSON Schema richer                           |
+| **Conditional Logic**           | ✅ if/then/else                | ❌ No equivalent                       | JSON Schema advantage                        |
+| **Inheritance**                 | ⚠️ Via allOf                   | ✅ Via interfaces                      | Different paradigms                          |
+| **Deprecation**                 | ⚠️ Via custom field            | ✅ `@deprecated`                       | GraphQL clearer                              |
+| **Examples**                    | ✅ `examples` array            | ⚠️ In descriptions                     | JSON Schema structured                       |
 
 ## Detailed Analysis
 
@@ -88,16 +88,22 @@ Given your use case and the comparison highlights, I recommend **JSON Schema as 
 ### Implementation Strategy:
 
 1. **Enhance Core Schema** (Priority 1)
+
    ```json
    {
      "x-graphql-metadata": {
        "schemaVersion": { "type": "string", "x-graphql-required": true },
-       "lastModified": { "type": "string", "format": "date-time", "x-graphql-required": true }
+       "lastModified": {
+         "type": "string",
+         "format": "date-time",
+         "x-graphql-required": true
+       }
      }
    }
    ```
 
 2. **Add GraphQL-Specific Metadata** (Priority 2)
+
    ```json
    {
      "x-graphql-operations": {
@@ -109,11 +115,17 @@ Given your use case and the comparison highlights, I recommend **JSON Schema as 
    ```
 
 3. **Enum Enhancement** (Priority 3)
+
    ```json
    {
      "ContactRole": {
        "type": "string",
-       "enum": ["primary", "technical", "administrative", "contracting_officer"],
+       "enum": [
+         "primary",
+         "technical",
+         "administrative",
+         "contracting_officer"
+       ],
        "x-graphql-enum": {
          "additional": ["PROGRAM_MANAGER", "COR"],
          "transform": "UPPER_CASE"
@@ -123,6 +135,7 @@ Given your use case and the comparison highlights, I recommend **JSON Schema as 
    ```
 
 4. **Relationship Mapping** (Priority 4)
+
    ```json
    {
      "x-graphql-relationships": {
@@ -168,25 +181,31 @@ Given your use case and the comparison highlights, I recommend **JSON Schema as 
 This approach gives you the best of both worlds: JSON Schema's validation power as the canonical source, with enough metadata to generate a complete GraphQL schema that matches your curated version.
 
 ## comparison highlights
+
 ### Missing top-level surface area
+
 - The generated artifact contains only domain objects; the curated SDL also defines `Query`, `Mutation`, `Subscription`, inputs, filters, sort types, analytics models, mutations, and quality/analytics types. These scaffolding types aren’t in the JSON Schema today, so the generator can’t emit them.
 - Relationships (`relatedContracts`, `parentContract`, `analytics`, etc.) live only in the curated SDL; the JSON Schema has no equivalent structures to project.
 
 ### Core `Contract` differences
+
 - Fields that are required in the curated SDL (`schemaVersion`, `lastModified`, `contacts`, `[SystemExtension!]!`, etc.) are optional in the generated copy because the JSON Schema doesn’t mark them `required`. Result: `String!` vs `String`, `[Contact!]!` vs `[Contact!]`.
 - Entire sections are absent: vendor classifications (`vendorType`, `registrationStatus`, `businessSize`), performance periods, `qualityMetrics`, analytics blocks, and unionized extensions (flattened array of `SystemExtension`). Those objects are simply missing in the JSON Schema.
 
 ### Nested types
+
 - `OrganizationInfo` in the generated SDL stops at departments; the curated SDL also models `organizationHierarchy`. The JSON Schema currently lacks that subtree.
 - `FinancialInfo` excludes obligations/funding sources/payments; `BusinessClassification` omits `naicsDetails`/`pscDetails`; `ContractCharacteristics` lacks competition/security fields.
 - System extensions: the generated SDL exposes a wrapper `SystemExtensions { contract_data legacy_procurement intake_process }` because the JSON Schema groups them. The curated SDL flattens to `[SystemExtension!]!`, and Contract Data types there include `projects`, `relatedPrograms`, `historicalIndex`—none of which exist in the JSON Schema.
 - Assist/EASi specifics: the generated SDL stops at the basic attributes the JSON Schema documents; the curated SDL expects richer award data, templates, CLIN structures, and Contract Data field mappings.
 
 ### Enums and scalars
+
 - `ContactRole` in JSON Schema has four lowercase values; the curated SDL enum has six uppercase entries (adds `PROGRAM_MANAGER`, `COR`). Same pattern for `ContractStatus` (canonical has `IN_PROGRESS`, `TERMINATED`, etc.).
 - Scalars align (`Date`, `DateTime`, `Decimal`, `JSON`), but the generator doesn’t emit custom scalars like `JSON` descriptions.
 
 ## transformation updates to consider
+
 1. **Enhance the JSON Schema (preferred long-term)**  
    Add missing properties/arrays to schema_unification.schema.json so the generator can emit richer types:
    - `systemMetadata.schemaVersion/lastModified` should be `required` if you want the GraphQL fields non-null.

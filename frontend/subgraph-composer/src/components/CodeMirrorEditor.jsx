@@ -1,13 +1,13 @@
-import React from 'react';
-import { useEffect, useRef } from 'react';
-import { EditorState } from '@codemirror/state';
-import { EditorView } from '@codemirror/view';
-import { json } from '@codemirror/lang-json';
+import React from "react";
+import { useEffect, useRef } from "react";
+import { EditorState } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
+import { json } from "@codemirror/lang-json";
 
 const theme = EditorView.theme({
-  '.cm-editor': { height: '100%', fontSize: '13px' },
-  '.cm-gutters': { backgroundColor: '#f5f5f5' },
-  '.cm-activeLineGutter': { backgroundColor: '#e8e8e8' },
+  ".cm-editor": { height: "100%", fontSize: "13px" },
+  ".cm-gutters": { backgroundColor: "#f5f5f5" },
+  ".cm-activeLineGutter": { backgroundColor: "#e8e8e8" },
 });
 
 export default function CodeMirrorEditor({ value, onChange }) {
@@ -56,5 +56,5 @@ export default function CodeMirrorEditor({ value, onChange }) {
     }
   }, [value]);
 
-  return <div ref={editorRef} style={{ height: '100%', width: '100%' }} />;
+  return <div ref={editorRef} style={{ height: "100%", width: "100%" }} />;
 }

@@ -5,17 +5,17 @@ This guide maps the concepts and steps from the [Apollo Odyssey "Voyage" series]
 ## Series Overview
 
 1.  [**Part 1: Federation from Day One**](#part-1-federation-from-day-one)
-    *   Defining Subgraphs in JSON Schema
-    *   Entity Keys & References (`x-graphql-federation`)
-    *   Generating & Publishing SDL
+    - Defining Subgraphs in JSON Schema
+    - Entity Keys & References (`x-graphql-federation`)
+    - Generating & Publishing SDL
 2.  [**Part 2: Federating the Monolith**](#part-2-federating-the-monolith)
-    *   The Strangler Fig Pattern with JSON Schema
-    *   Using `@override` via `x-graphql-federation-override-from`
-    *   Authentication & Router Config
+    - The Strangler Fig Pattern with JSON Schema
+    - Using `@override` via `x-graphql-federation-override-from`
+    - Authentication & Router Config
 3.  [**Part 3: Federation in Production**](#part-3-federation-in-production)
-    *   CI/CD Integration
-    *   Schema Checks for JSON-source pipelines
-    *   Using `@inaccessible` via `x-graphql-federation-inaccessible`
+    - CI/CD Integration
+    - Schema Checks for JSON-source pipelines
+    - Using `@inaccessible` via `x-graphql-federation-inaccessible`
 
 ---
 
@@ -29,9 +29,11 @@ This guide maps the concepts and steps from the [Apollo Odyssey "Voyage" series]
 **JSON Schema Way**: Define `locations.schema.json` and `reviews.schema.json`.
 
 #### Locations Subgraph
+
 Define the `Location` entity.
 
 **`locations.schema.json`**:
+
 ```json
 {
   "$id": "https://example.com/locations.schema.json",
@@ -56,9 +58,11 @@ Define the `Location` entity.
 ```
 
 #### Reviews Subgraph
+
 Define `Review` type and reference `Location` entity.
 
 **`reviews.schema.json`**:
+
 ```json
 {
   "$id": "https://example.com/reviews.schema.json",
@@ -94,9 +98,10 @@ Define `Review` type and reference `Location` entity.
 ### 1.2 Accessing Entities (The "Lookup")
 
 **Apollo Way**: Implement `__resolveReference` in resolvers.
-**JSON Schema Way**: The schema defines the *shape*. You still implement resolvers in your server, but the SDL is generated.
+**JSON Schema Way**: The schema defines the _shape_. You still implement resolvers in your server, but the SDL is generated.
 
 When generating the SDL:
+
 ```bash
 # Generate Locations Subgraph
 json-schema-x-graphql convert locations.schema.json --out locations.graphql --federation-version 2
@@ -108,6 +113,7 @@ json-schema-x-graphql convert reviews.schema.json --out reviews.graphql --federa
 ### 1.3 Supergraph Composition
 
 Once SDLs are generated, the steps are identical to Apollo's tutorial:
+
 1.  Push schemas to Apollo GraphOS (or use `rover supergraph compose` locally).
 2.  Start the Router.
 
@@ -122,6 +128,7 @@ Once SDLs are generated, the steps are identical to Apollo's tutorial:
 Start with a single JSON Schema representing the monolith.
 
 **`monolith.schema.json`**:
+
 ```json
 {
   "definitions": {
@@ -142,6 +149,7 @@ Start with a single JSON Schema representing the monolith.
 Create a new schema for the extracted service.
 
 **`listings.schema.json`**:
+
 ```json
 {
   "definitions": {
@@ -162,7 +170,7 @@ Create a new schema for the extracted service.
 }
 ```
 
-*Note: The `x-graphql-federation-override-from` attribute generates the `@override(from: "monolith-subgraph")` directive.*
+_Note: The `x-graphql-federation-override-from` attribute generates the `@override(from: "monolith-subgraph")` directive._
 
 ### 2.3 Router Configuration & Authentication
 
@@ -190,6 +198,7 @@ This step is infrastructure-level and remains largely the same. However, you can
 To deprecate or hide a field from the supergraph API while keeping it in the subgraph:
 
 **`users.schema.json`**:
+
 ```json
 {
   "properties": {
@@ -233,13 +242,13 @@ Using `x-graphql-description` ensures that all types and fields in GraphOS have 
 
 ## Detailed Feature Map
 
-| Apollo Concept | GraphQL Directive | JSON Schema Attribute (`x-graphql-`) |
-| :--- | :--- | :--- |
-| **Entity Key** | `@key(fields: "id")` | `federation: { keys: ["id"] }` |
-| **Shareable** | `@shareable` | `federation: { shareable: true }` |
-| **Override** | `@override(from: "x")` | `federation-override-from: "x"` |
-| **Inaccessible** | `@inaccessible` | `federation-inaccessible: true` |
-| **Authenticated** | `@authenticated` | `federation-authenticated: true` |
-| **Requires** | `@requires(fields: "x")` | `federation-requires: "x"` |
-| **Provides** | `@provides(fields: "x")` | `federation-provides: "x"` |
-| **Tag** | `@tag(name: "x")` | `federation-tag: "x"` |
+| Apollo Concept    | GraphQL Directive        | JSON Schema Attribute (`x-graphql-`) |
+| :---------------- | :----------------------- | :----------------------------------- |
+| **Entity Key**    | `@key(fields: "id")`     | `federation: { keys: ["id"] }`       |
+| **Shareable**     | `@shareable`             | `federation: { shareable: true }`    |
+| **Override**      | `@override(from: "x")`   | `federation-override-from: "x"`      |
+| **Inaccessible**  | `@inaccessible`          | `federation-inaccessible: true`      |
+| **Authenticated** | `@authenticated`         | `federation-authenticated: true`     |
+| **Requires**      | `@requires(fields: "x")` | `federation-requires: "x"`           |
+| **Provides**      | `@provides(fields: "x")` | `federation-provides: "x"`           |
+| **Tag**           | `@tag(name: "x")`        | `federation-tag: "x"`                |

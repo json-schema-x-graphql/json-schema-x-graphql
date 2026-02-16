@@ -22,9 +22,9 @@ export function extractDirectives(
       if (typeof dir === "string") {
         const match = dir.match(/@(\w+)/);
         if (match) {
-            const name = match[1];
-            if (!includeFederation && isFederationDirective(name)) continue;
-            directives.push({ name, raw: dir });
+          const name = match[1];
+          if (!includeFederation && isFederationDirective(name)) continue;
+          directives.push({ name, raw: dir });
         }
         continue;
       }
@@ -94,7 +94,6 @@ export function extractDirectives(
   return directives;
 }
 
-
 export function printDirectives(directives: GeneralizedDirective[]): string {
   if (directives.length === 0) {
     return "";
@@ -103,13 +102,17 @@ export function printDirectives(directives: GeneralizedDirective[]): string {
   const parts = directives.map((dir) => {
     if (dir.raw) return dir.raw;
     if (!dir.name) return "";
-    const args = dir.args && Object.keys(dir.args).length > 0
-      ? `(${formatDirectiveArgs(dir.args)})`
-      : "";
+    const args =
+      dir.args && Object.keys(dir.args).length > 0
+        ? `(${formatDirectiveArgs(dir.args)})`
+        : "";
     return `@${dir.name}${args}`;
   });
 
-  return parts.filter(Boolean).map(p => " " + p).join("");
+  return parts
+    .filter(Boolean)
+    .map((p) => " " + p)
+    .join("");
 }
 
 function formatDirectiveArgs(args: Record<string, any>): string {
@@ -126,7 +129,7 @@ function formatDirectiveArgs(args: Record<string, any>): string {
           )
           .join(", ")} ]`;
       }
-      
+
       return `${key}: ${JSON.stringify(value)}`;
     })
     .join(", ");

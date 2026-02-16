@@ -71,36 +71,36 @@ export type Diagnostic = {
     /** The category or kind of the diagnostic. */
     kind?: Maybe<DiagnosticKind>;
     /** The message describing the issue. */
-    message: Scalars['String'];
+    message: Scalars["String"];
     /** The path in the JSON schema where the issue occurred (if applicable). */
-    path?: Maybe<Array<Scalars['String']>>;
+    path?: Maybe<Array<Scalars["String"]>>;
     /**
      * The error code or category.
      * Intended to be stable for programmatic handling (e.g. JSON_SCHEMA_INVALID_REF).
      */
-    code?: Maybe<Scalars['String']>;
+    code?: Maybe<Scalars["String"]>;
 };
 /** The result of a conversion operation. */
 export type ConversionResult = {
     /** The generated output string. This contains the SDL string if outputFormat is SDL or SDL_WITH_FEDERATION_METADATA. This contains a JSON string if outputFormat is AST_JSON. Null if conversion failed completely. */
-    output?: Maybe<Scalars['String']>;
+    output?: Maybe<Scalars["String"]>;
     /** A list of warnings or errors encountered during conversion. */
     diagnostics: Array<Diagnostic>;
     /** Whether the conversion was successful. */
-    success: Scalars['Boolean'];
+    success: Scalars["Boolean"];
     /** Total number of errors encountered. */
-    errorCount: Scalars['Int'];
+    errorCount: Scalars["Int"];
     /** Total number of warnings encountered. */
-    warningCount: Scalars['Int'];
+    warningCount: Scalars["Int"];
 };
 /** Configuration options for the JSON Schema to GraphQL converter. */
 export type ConverterOptions = {
     /** Whether to validate the input JSON Schema before conversion. Default: true */
-    validate?: InputMaybe<Scalars['Boolean']>;
+    validate?: InputMaybe<Scalars["Boolean"]>;
     /** Whether to include descriptions (docstrings) in the output SDL. Default: true */
-    includeDescriptions?: InputMaybe<Scalars['Boolean']>;
+    includeDescriptions?: InputMaybe<Scalars["Boolean"]>;
     /** Whether to preserve the order of fields from the source JSON Schema. If false, fields may be sorted alphabetically. Default: true */
-    preserveFieldOrder?: InputMaybe<Scalars['Boolean']>;
+    preserveFieldOrder?: InputMaybe<Scalars["Boolean"]>;
     /** The version of Apollo Federation to target. */
     federationVersion?: InputMaybe<FederationVersion>;
     /**
@@ -108,28 +108,28 @@ export type ConverterOptions = {
      * If false, federation-specific directives are stripped even if federationVersion is set.
      * Note: If federationVersion is NONE, this flag is ignored and no federation directives are emitted.
      */
-    includeFederationDirectives?: InputMaybe<Scalars['Boolean']>;
+    includeFederationDirectives?: InputMaybe<Scalars["Boolean"]>;
     /** Strategy for naming GraphQL types and fields. */
     namingConvention?: InputMaybe<NamingConvention>;
     /** If true, attempts to infer the ID scalar for fields named 'id', '_id', etc. Deprecated: Use idStrategy instead. */
-    inferIds?: InputMaybe<Scalars['Boolean']>;
+    inferIds?: InputMaybe<Scalars["Boolean"]>;
     /** Strategy for inferring ID fields. Default: NONE */
     idStrategy?: InputMaybe<IdInferenceStrategy>;
     /** The format of the output. Default: SDL */
     outputFormat?: InputMaybe<OutputFormat>;
     /** If true, treats warnings as errors and fails the conversion. Default: false */
-    failOnWarning?: InputMaybe<Scalars['Boolean']>;
+    failOnWarning?: InputMaybe<Scalars["Boolean"]>;
     /** List of type names to exclude from generation. */
-    excludeTypes?: InputMaybe<Array<Scalars['String']>>;
+    excludeTypes?: InputMaybe<Array<Scalars["String"]>>;
     /** List of regex patterns to exclude fields or types. Patterns are applied to Type names and Field names individually. */
-    excludePatterns?: InputMaybe<Array<Scalars['String']>>;
+    excludePatterns?: InputMaybe<Array<Scalars["String"]>>;
 };
 /** Input payload for the conversion mutation. */
 export type ConvertInput = {
     /** The JSON Schema to convert. Must be a valid JSON string. */
-    jsonSchema: Scalars['String'];
+    jsonSchema: Scalars["String"];
     /** Optional name or identifier for the source schema (e.g. filename). Useful for diagnostics. */
-    sourceName?: InputMaybe<Scalars['String']>;
+    sourceName?: InputMaybe<Scalars["String"]>;
     /** Configuration options for this conversion run. */
     options?: InputMaybe<ConverterOptions>;
 };
@@ -142,5 +142,5 @@ export type MutationConvertJsonToGraphqlArgs = {
 };
 export type Query = {
     /** Returns the version of the converter service/library. */
-    version: Scalars['String'];
+    version: Scalars["String"];
 };

@@ -1,9 +1,11 @@
 # Test Fixes Summary
 
 ## Overview
+
 Fixed two failing Rust tests in the converter library that were caused by incorrect test assertions rather than bugs in the implementation.
 
 ## Date
+
 December 30, 2024
 
 ## Tests Fixed
@@ -12,10 +14,11 @@ December 30, 2024
 
 **Location**: `converters/rust/src/json_to_graphql.rs`
 
-**Issue**: 
+**Issue**:
 The test schema defined properties `email` (string) and `count` (integer), but the assertions were checking for non-existent properties `content` and `data`. This was a copy-paste error.
 
 **Test Schema**:
+
 ```json
 {
   "title": "Document",
@@ -28,18 +31,21 @@ The test schema defined properties `email` (string) and `count` (integer), but t
 ```
 
 **Incorrect Assertions** (before):
+
 ```rust
 assert!(result.contains("content: ID"));
 assert!(result.contains("data: ID"));
 ```
 
 **Corrected Assertions** (after):
+
 ```rust
 assert!(result.contains("email: ID"));
 assert!(result.contains("count: Int"));
 ```
 
 **Rationale**:
+
 - With `IdInferenceStrategy::AllStrings`, string properties should be converted to `ID` type
 - Integer properties should remain as `Int` regardless of the ID strategy
 - The assertions now check for the actual properties defined in the test schema
@@ -54,6 +60,7 @@ assert!(result.contains("count: Int"));
 The test expected a JSON Schema with a `$ref` pointer and nested `definitions` structure, but the actual converter behavior outputs the root type inline at the top level. The test expectations did not match the implementation's design.
 
 **Expected Structure** (before - incorrect):
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -71,6 +78,7 @@ The test expected a JSON Schema with a `$ref` pointer and nested `definitions` s
 ```
 
 **Actual Converter Output** (after - correct):
+
 ```json
 {
   "x-graphql": {
@@ -90,6 +98,7 @@ The test expected a JSON Schema with a `$ref` pointer and nested `definitions` s
 ```
 
 **Rationale**:
+
 - The GraphQL-to-JSON converter's design (lines 41-103) intentionally places the "best type" (type with most fields, excluding Query/Mutation) at the root level
 - Other types go into the `definitions` section, but the primary type is expanded inline
 - This design decision reduces indirection and makes the resulting schema more straightforward
@@ -100,10 +109,11 @@ The test expected a JSON Schema with a `$ref` pointer and nested `definitions` s
 ## Converter Behavior Validation
 
 ### GraphQL → JSON Schema Converter Logic
+
 The converter follows this algorithm (see `graphql_to_json.rs:41-103`):
 
 1. **Parse SDL** into type registry
-2. **Select root type**: 
+2. **Select root type**:
    - Type with most fields
    - Excludes `Query`, `Mutation`, `Subscription`
    - Fallback: `Query` → first Object type → first type
@@ -118,6 +128,7 @@ This design prioritizes simplicity for single-type schemas while still supportin
 ## Test Results
 
 ### Before Fixes
+
 ```
 failures:
     graphql_to_json::tests::test_convert_simple_type
@@ -127,6 +138,7 @@ test result: FAILED. 40 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
 ### After Fixes
+
 ```
 test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 ```
@@ -138,17 +150,21 @@ All 42 tests now pass successfully! ✅
 ## Additional Changes
 
 ### Shell Configuration
+
 Updated shell configuration files to ensure `cargo` is always available:
 
 **Files Modified**:
+
 - `~/.bashrc` - Added `. "$HOME/.cargo/env"`
 - `~/.profile` - Added `. "$HOME/.cargo/env"`
 - `~/.zshrc` - Added `. "$HOME/.cargo/env"`
 
 **Helper Script Created**:
+
 - `converters/rust/cargo.sh` - Wrapper script that sources Rust environment before executing cargo commands
 
 **Usage**:
+
 ```bash
 # Direct usage (after shell restart)
 cargo test --lib

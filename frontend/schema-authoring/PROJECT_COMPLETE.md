@@ -37,6 +37,7 @@ pnpm run typecheck
 ## 📦 What's Included
 
 ### Core Features ✅
+
 - Dual Monaco editors (JSON Schema & GraphQL SDL)
 - Bidirectional conversion (JSON ↔ GraphQL)
 - Swappable converters (Rust WASM / Node.js)
@@ -48,6 +49,7 @@ pnpm run typecheck
 - Keyboard shortcuts
 
 ### Architecture ✅
+
 - **State**: Zustand + Immer + persist
 - **UI**: React 18 + TypeScript
 - **Editors**: Monaco Editor
@@ -88,6 +90,7 @@ src/
 **Issue**: TypeScript discriminated union narrowing after async operations
 
 **Solution**: Store state in local variables before/after async calls
+
 ```typescript
 const postInitState = this.state;
 if (postInitState.status === "ready") {
@@ -102,6 +105,7 @@ if (postInitState.status === "ready") {
 ## 🧪 Verification
 
 ### Manual Testing Checklist ✅
+
 - [x] App loads without errors
 - [x] JSON→GraphQL conversion works
 - [x] GraphQL→JSON conversion works
@@ -113,6 +117,7 @@ if (postInitState.status === "ready") {
 - [x] Keyboard shortcuts respond
 
 ### Build Output ✅
+
 ```
 ✓ TypeScript: 0 errors
 ✓ Vite build: SUCCESS
@@ -126,39 +131,43 @@ if (postInitState.status === "ready") {
 
 ## 📚 Documentation
 
-| Document | Purpose |
-|----------|---------|
-| **README.md** | Overview & quick start |
-| **QUICKSTART.md** | 5-minute setup |
-| **DEVELOPMENT_GUIDE.md** | Architecture deep-dive |
-| **FINAL_STATUS.md** | Complete implementation details |
-| **COMPLETION_SUMMARY.md** | Build success summary |
-| **COMMANDS.md** | All npm scripts |
-| **TODO.md** | Future enhancements |
+| Document                  | Purpose                         |
+| ------------------------- | ------------------------------- |
+| **README.md**             | Overview & quick start          |
+| **QUICKSTART.md**         | 5-minute setup                  |
+| **DEVELOPMENT_GUIDE.md**  | Architecture deep-dive          |
+| **FINAL_STATUS.md**       | Complete implementation details |
+| **COMPLETION_SUMMARY.md** | Build success summary           |
+| **COMMANDS.md**           | All npm scripts                 |
+| **TODO.md**               | Future enhancements             |
 
 ---
 
 ## 🚀 Deployment
 
 ### Option 1: Vercel (Recommended)
+
 ```bash
 pnpm run build
 vercel deploy --prod dist/
 ```
 
 ### Option 2: Netlify
+
 ```bash
 pnpm run build
 netlify deploy --prod --dir=dist
 ```
 
 ### Option 3: GitHub Pages
+
 ```bash
 pnpm run build
 # Push dist/ to gh-pages branch
 ```
 
 ### Option 4: Any Static Host
+
 ```bash
 pnpm run build
 # Upload dist/ directory
@@ -169,11 +178,13 @@ pnpm run build
 ## 🎯 What Works
 
 ### Converters ✅
+
 - **Node.js**: Works out of the box
 - **Rust WASM**: Works when built (optional)
 - **Auto-fallback**: Node.js used when WASM unavailable
 
 ### WASM Build (Optional)
+
 ```bash
 # Requires: Rust + wasm-pack
 pnpm run build:wasm
@@ -201,6 +212,7 @@ pnpm run build:wasm
 ## 🎨 Key Features
 
 ### For Users
+
 - Professional code editors
 - Real-time conversion
 - Instant validation
@@ -210,6 +222,7 @@ pnpm run build:wasm
 - Keyboard shortcuts
 
 ### For Developers
+
 - TypeScript strict mode
 - Hot module replacement
 - Redux DevTools
@@ -219,11 +232,12 @@ pnpm run build:wasm
 - Extensive documentation
 
 ### For AI Agents
+
 ```javascript
 // Global API available
-window.__schemaAuthoringAPI__.getState()
-window.__schemaAuthoringAPI__.convert()
-window.__schemaAuthoringAPI__.validate()
+window.__schemaAuthoringAPI__.getState();
+window.__schemaAuthoringAPI__.convert();
+window.__schemaAuthoringAPI__.validate();
 ```
 
 ---
@@ -244,17 +258,20 @@ window.__schemaAuthoringAPI__.validate()
 ## 🔮 Future (Optional)
 
 ### High Priority
+
 - [ ] Unit tests (Vitest/Jest)
 - [ ] E2E tests (Playwright)
 - [ ] More auto-fix suggestions
 
 ### Medium Priority
+
 - [ ] Schema-aware autocomplete
 - [ ] Diff viewer
 - [ ] Example library
 - [ ] History UI
 
 ### Low Priority
+
 - [ ] Collaborative editing
 - [ ] Cloud storage
 - [ ] Version control
@@ -265,18 +282,21 @@ window.__schemaAuthoringAPI__.validate()
 ## 💡 Next Steps
 
 ### Immediate (Choose One)
+
 1. **Deploy**: `pnpm run build && vercel deploy`
 2. **Add Tests**: Set up Vitest/Playwright
 3. **Build WASM**: If Rust available
 4. **Gather Feedback**: Share with users
 
 ### Short-term
+
 - Add automated tests
 - Performance profiling
 - Accessibility audit
 - User feedback iteration
 
 ### Long-term
+
 - Additional features from roadmap
 - Mobile responsive design
 - Advanced collaboration
@@ -286,24 +306,28 @@ window.__schemaAuthoringAPI__.validate()
 ## 🎓 Technical Decisions
 
 ### Why Zustand?
+
 - Lightweight (~1kB)
 - TypeScript-first
 - No boilerplate
 - Built-in persistence
 
 ### Why Monaco?
+
 - Industry standard
 - Full IntelliSense
 - Language support
 - Customizable
 
 ### Why Vite?
+
 - Fast HMR
 - Native ESM
 - Great WASM support
 - Small bundle
 
 ### Why Tailwind?
+
 - Utility-first
 - Built-in dark mode
 - Purged CSS
@@ -314,12 +338,14 @@ window.__schemaAuthoringAPI__.validate()
 ## 🆘 Support
 
 ### Resources
+
 - 📖 [README.md](./README.md) - Start here
 - 🚀 [QUICKSTART.md](./QUICKSTART.md) - 5-min setup
 - 💡 [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) - Architecture
 - ✅ [FINAL_STATUS.md](./FINAL_STATUS.md) - Complete status
 
 ### Common Issues
+
 **Q**: App won't start?
 **A**: Run `pnpm install` and check Node version >= 18
 
@@ -357,11 +383,11 @@ Thank you for using the JSON Schema ↔ GraphQL Authoring UI!
 
 **Status**: ✅ COMPLETE  
 **Quality**: ✅ PRODUCTION GRADE  
-**Readiness**: ✅ DEPLOY NOW  
+**Readiness**: ✅ DEPLOY NOW
 
 **Happy schema authoring!** 🎉
 
 ---
 
-*Last updated: After successful build with 0 TypeScript errors*  
-*Build status: TypeScript ✓ | Vite ✓ | Bundle ✓*
+_Last updated: After successful build with 0 TypeScript errors_  
+_Build status: TypeScript ✓ | Vite ✓ | Bundle ✓_

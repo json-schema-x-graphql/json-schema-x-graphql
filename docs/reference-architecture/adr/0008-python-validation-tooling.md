@@ -3,7 +3,7 @@
 **Status:** Accepted  
 **Date:** 2024-12-01  
 **Authors:** Development Team  
-**Supersedes:** None  
+**Supersedes:** None
 
 ## Context
 
@@ -27,6 +27,7 @@ python/
 ```
 
 **pyproject.toml Configuration:**
+
 ```toml
 [project]
 name = "ttse-schema-unification-project"
@@ -42,6 +43,7 @@ dependencies = [
 ```
 
 **Key Tools:**
+
 1. **jsonschema (Python library):** Reference implementation of JSON Schema Draft 2020-12
 2. **sourcemeta-jsonschema:** High-performance C++ validator with Python bindings
 3. **pytest:** Test framework with coverage reporting
@@ -51,21 +53,25 @@ dependencies = [
 ### Why Python for Validation?
 
 **Cross-Language Verification:**
+
 - JavaScript tooling (AJV) might miss edge cases
 - Python jsonschema is reference implementation (official test suite)
 - Validates schemas work across multiple language ecosystems
 
 **Performance:**
+
 - sourcemeta-jsonschema: C++ core, 10-100x faster than pure Python
 - Handles large schemas (46 fields, 8 types, 1200+ lines) efficiently
 - Suitable for CI/CD pipeline (fast feedback)
 
 **Ecosystem Maturity:**
+
 - jsonschema library: 10+ years, battle-tested
 - pytest: Industry standard for Python testing
 - ruff: Modern, fast replacement for legacy tools (black, flake8, isort)
 
 **Government Compliance:**
+
 - Python common in government/data science workflows
 - Federal data teams familiar with Python tooling
 - Easier integration with future data pipeline work
@@ -83,7 +89,7 @@ dependencies = [
 
 - Python 3.9+ required (type hints, modern syntax)
 - JSON Schema Draft 2020-12 compliance required
-- Must validate schemas with x-graphql-* extensions (custom keywords)
+- Must validate schemas with x-graphql-\* extensions (custom keywords)
 - Must work in CI without Docker (GitHub Actions Python environment)
 - Must validate against JSON Schema meta-schema
 
@@ -98,6 +104,7 @@ dependencies = [
 **Purpose:** Standalone script to validate JSON Schema files
 
 **Usage:**
+
 ```bash
 # Validate single file
 python python/validate_schemas.py src/data/schema_unification.schema.json
@@ -109,13 +116,15 @@ python python/validate_schemas.py src/data/*.schema.json
 ```
 
 **Features:**
+
 - Validates against JSON Schema Draft 2020-12 meta-schema
 - Checks `$schema` declaration
 - Verifies `$ref` pointers resolve correctly
 - Reports detailed error messages with line numbers
-- Supports custom x-graphql-* extensions
+- Supports custom x-graphql-\* extensions
 
 **Implementation:**
+
 ```python
 import jsonschema
 from pathlib import Path
@@ -124,18 +133,18 @@ def validate_schema_file(schema_path: Path) -> bool:
     """Validate a JSON Schema file."""
     with open(schema_path) as f:
         schema = json.load(f)
-    
+
     # Check $schema declaration
     if "$schema" not in schema:
         raise ValueError("Missing $schema declaration")
-    
+
     # Validate against meta-schema
     jsonschema.Draft202012Validator.check_schema(schema)
-    
+
     # Verify $ref resolution
     resolver = jsonschema.RefResolver.from_schema(schema)
     # ... ref resolution logic
-    
+
     return True
 ```
 
@@ -144,17 +153,20 @@ def validate_schema_file(schema_path: Path) -> bool:
 **Test Categories:**
 
 **Unit Tests (`test_validator.py`):**
+
 - Schema validation function correctness
 - Error handling for invalid schemas
 - $ref pointer resolution
-- x-graphql-* extension handling
+- x-graphql-\* extension handling
 
 **Integration Tests (`test_integration.py`):**
+
 - Validate all canonical schemas in `src/data/`
 - Verify generated schemas in `generated-schemas/`
 - Cross-check field names with field-name-mapping.json
 
 **Fixture Tests (`test_fixtures.py`):**
+
 - Test with known-good schemas
 - Test with intentionally broken schemas
 - Edge cases (empty schema, deeply nested refs)
@@ -162,6 +174,7 @@ def validate_schema_file(schema_path: Path) -> bool:
 **Coverage Target:** >90% (currently tracking via `pytest-cov`)
 
 **Run Tests:**
+
 ```bash
 # Basic test run
 pytest python/tests/ -v
@@ -175,12 +188,14 @@ pytest --cov=python --cov-report=term-missing
 #### 3. Package Management (`pyproject.toml` + `uv`)
 
 **Why uv over pip/virtualenv:**
+
 - **10-100x faster** than pip for dependency resolution
 - Unified tool (replaces pip, virtualenv, pip-tools)
 - Lockfile support (reproducible installs)
 - Modern, maintained by Astral (same team as ruff)
 
 **Setup Workflow:**
+
 ```bash
 # Install uv (once)
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -204,6 +219,7 @@ pytest python/tests/ -v
 #### 4. Code Quality Tools
 
 **ruff (Linter + Formatter):**
+
 ```bash
 # Format code
 ruff format python/
@@ -216,6 +232,7 @@ ruff check python/ --fix
 ```
 
 **Configuration in pyproject.toml:**
+
 ```toml
 [tool.ruff]
 line-length = 100
@@ -234,6 +251,7 @@ select = [
 ```
 
 **Why ruff over black/flake8/isort:**
+
 - **10-100x faster** (written in Rust)
 - Single tool replaces 3-5 tools
 - Auto-fix support
@@ -242,6 +260,7 @@ select = [
 ### CI/CD Integration
 
 **GitHub Actions Workflow:**
+
 ```yaml
 name: Python Validation
 
@@ -252,23 +271,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
-      
+          python-version: "3.9"
+
       - name: Install uv
         run: pip install uv
-      
+
       - name: Install dependencies
         run: uv pip install -e ".[dev]"
-      
+
       - name: Run validator
         run: python python/validate_schemas.py src/data/*.schema.json
-      
+
       - name: Run tests
         run: pytest --cov=python --cov-report=term-missing
-      
+
       - name: Lint code
         run: ruff check python/
 ```
@@ -308,6 +327,7 @@ jobs:
 **Approach:** Use AJV (JavaScript) exclusively, remove Python tooling
 
 **Why Rejected:**
+
 - Single-language validation risky (no cross-verification)
 - AJV might miss edge cases specific to Python/other languages
 - Government data teams expect Python tooling
@@ -319,7 +339,8 @@ jobs:
 **Approach:** Use `jsonschema` CLI tool, skip custom validator script
 
 **Why Rejected:**
-- Generic CLI lacks project-specific checks (x-graphql-* extensions)
+
+- Generic CLI lacks project-specific checks (x-graphql-\* extensions)
 - No way to verify $ref pointers specific to project structure
 - Harder to integrate with pytest test suite
 - Less control over error messages and formatting
@@ -330,6 +351,7 @@ jobs:
 **Approach:** Run Python validator in Docker container
 
 **Why Rejected:**
+
 - Adds Docker overhead (slower CI/CD)
 - GitHub Actions has native Python support (no Docker needed)
 - Local development more complex (requires Docker setup)
@@ -341,6 +363,7 @@ jobs:
 **Approach:** Write validator in Go or Rust for max performance
 
 **Why Rejected:**
+
 - Adds third language to project (JavaScript, Python, Go/Rust)
 - sourcemeta-jsonschema already provides C++ performance via Python bindings
 - Python has better JSON Schema ecosystem (jsonschema library is reference)

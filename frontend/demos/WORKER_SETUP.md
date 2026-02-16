@@ -49,6 +49,7 @@ const workerUrl = new URL(
 ```
 
 **Key Points:**
+
 - `new URL()` with `import.meta.url` creates a proper module URL
 - Vite handles resolving the node_modules path at build time
 - The worker is loaded asynchronously by the GraphQL editor
@@ -125,12 +126,14 @@ export default defineConfig({
 ### 404 Error for validation.worker.js
 
 **Symptom:**
+
 ```
 GET http://localhost:3002/node_modules/.vite/deps/validation.worker.js?worker_file&type=classic
 Status: 404 Not Found
 ```
 
 **Solution:**
+
 1. Check that `graphql-editor-worker` is installed:
    ```bash
    npm list graphql-editor-worker
@@ -149,11 +152,13 @@ Status: 404 Not Found
 ### Worker Import Error
 
 **Symptom:**
+
 ```
 Error: Cannot find module 'graphql-editor-worker/lib/worker/validation.worker.js'
 ```
 
 **Solution:**
+
 1. Verify the package is installed:
    ```bash
    ls node_modules/graphql-editor-worker/lib/worker/validation.worker.js
@@ -168,12 +173,14 @@ Error: Cannot find module 'graphql-editor-worker/lib/worker/validation.worker.js
 ### CORS or Module Type Errors
 
 **Symptom:**
+
 ```
 Worker script failed to load due to CORS policy
 ```
 
 **Solution:**
 Ensure proper server headers in `vite.config.ts`:
+
 ```typescript
 server: {
   headers: {
@@ -251,7 +258,7 @@ The `graphql-editor-worker` is automatically installed as a peer dependency of `
 ✅ **Loro Demo:** Worker configured and working  
 ✅ **Yjs Demo:** Worker configured and working  
 ✅ **Vite Config:** Optimized for worker loading  
-✅ **Documentation:** Complete  
+✅ **Documentation:** Complete
 
 ---
 

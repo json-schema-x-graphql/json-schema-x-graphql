@@ -1,32 +1,33 @@
 /**
  * DirectiveSuggester.jsx
- * 
+ *
  * UI component for previewing and managing federation directive suggestions
  * Shows before/after comparisons, allows individual selection and bulk operations
  */
 
-import React, { useState, useMemo } from 'react';
-import './DirectiveSuggester.css';
+import React, { useState, useMemo } from "react";
+import "./DirectiveSuggester.css";
 
 export function DirectiveSuggester({
   suggestions = [],
-  supergraphSdl = '',
+  supergraphSdl = "",
   onApplyDirectives = () => {},
   onDismissSuggestion = () => {},
-  isLoading = false
+  isLoading = false,
 }) {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [selectedSuggestions, setSelectedSuggestions] = useState(
-    new Set(suggestions.map((_, i) => i))
+    new Set(suggestions.map((_, i) => i)),
   );
-  const [filterType, setFilterType] = useState('all');
-  const [filterSeverity, setFilterSeverity] = useState('all');
+  const [filterType, setFilterType] = useState("all");
+  const [filterSeverity, setFilterSeverity] = useState("all");
 
   // Filter suggestions
   const filteredSuggestions = useMemo(() => {
     return suggestions.filter((s, i) => {
-      if (filterType !== 'all' && s.type !== filterType) return false;
-      if (filterSeverity !== 'all' && s.severity !== filterSeverity) return false;
+      if (filterType !== "all" && s.type !== filterType) return false;
+      if (filterSeverity !== "all" && s.severity !== filterSeverity)
+        return false;
       return true;
     });
   }, [suggestions, filterType, filterSeverity]);
@@ -35,8 +36,8 @@ export function DirectiveSuggester({
   const previewSdl = useMemo(() => {
     let preview = supergraphSdl;
     const selected = Array.from(selectedSuggestions)
-      .filter(i => suggestions[i])
-      .map(i => suggestions[i]);
+      .filter((i) => suggestions[i])
+      .map((i) => suggestions[i]);
 
     for (const suggestion of selected) {
       preview = applySuggestionToSdl(preview, suggestion);
@@ -58,8 +59,8 @@ export function DirectiveSuggester({
 
   // Select all filtered suggestions
   const selectAll = () => {
-    const indices = filteredSuggestions.map((_, i) => 
-      suggestions.indexOf(filteredSuggestions[i])
+    const indices = filteredSuggestions.map((_, i) =>
+      suggestions.indexOf(filteredSuggestions[i]),
     );
     setSelectedSuggestions(new Set(indices));
   };
@@ -72,8 +73,8 @@ export function DirectiveSuggester({
   // Apply selected suggestions
   const applySelected = () => {
     const selected = Array.from(selectedSuggestions)
-      .filter(i => suggestions[i])
-      .map(i => suggestions[i]);
+      .filter((i) => suggestions[i])
+      .map((i) => suggestions[i]);
 
     if (selected.length === 0) return;
 
@@ -97,7 +98,9 @@ export function DirectiveSuggester({
         <div className="empty-message">
           <span className="icon">✓</span>
           <p>No directive suggestions at this time</p>
-          <p className="hint">Compose multiple schemas to generate federation directives</p>
+          <p className="hint">
+            Compose multiple schemas to generate federation directives
+          </p>
         </div>
       </div>
     );
@@ -111,7 +114,9 @@ export function DirectiveSuggester({
       {/* Header with stats */}
       <div className="suggester-header">
         <div className="header-title">
-          <h3>Federation Directives ({selectedCount}/{totalCount})</h3>
+          <h3>
+            Federation Directives ({selectedCount}/{totalCount})
+          </h3>
           <span className="badge">{suggestions.length} total</span>
         </div>
 
@@ -157,7 +162,7 @@ export function DirectiveSuggester({
         >
           Deselect All
         </button>
-        
+
         <div className="spacer"></div>
 
         <button
@@ -165,9 +170,9 @@ export function DirectiveSuggester({
           disabled={selectedCount === 0 || isLoading}
           className="btn-primary"
         >
-          {isLoading ? 'Applying...' : `Apply (${selectedCount})`}
+          {isLoading ? "Applying..." : `Apply (${selectedCount})`}
         </button>
-        
+
         <button
           onClick={dismissAll}
           disabled={selectedCount === 0}
@@ -188,8 +193,8 @@ export function DirectiveSuggester({
             <div
               key={actualIndex}
               className={`suggestion-item severity-${suggestion.severity} ${
-                isSelected ? 'selected' : ''
-              } ${isExpanded ? 'expanded' : ''}`}
+                isSelected ? "selected" : ""
+              } ${isExpanded ? "expanded" : ""}`}
             >
               {/* Checkbox and summary */}
               <div className="suggestion-summary">
@@ -217,7 +222,7 @@ export function DirectiveSuggester({
                   className="expand-btn"
                   aria-label="Toggle details"
                 >
-                  {isExpanded ? '▼' : '▶'}
+                  {isExpanded ? "▼" : "▶"}
                 </button>
               </div>
 
@@ -234,18 +239,19 @@ export function DirectiveSuggester({
                     <code>{suggestion.directive}</code>
                   </div>
 
-                  {suggestion.dependencies && suggestion.dependencies.length > 0 && (
-                    <div className="detail-row">
-                      <label>Dependencies:</label>
-                      <div className="dependency-list">
-                        {suggestion.dependencies.map((dep) => (
-                          <span key={dep} className="dependency-tag">
-                            {dep}
-                          </span>
-                        ))}
+                  {suggestion.dependencies &&
+                    suggestion.dependencies.length > 0 && (
+                      <div className="detail-row">
+                        <label>Dependencies:</label>
+                        <div className="dependency-list">
+                          {suggestion.dependencies.map((dep) => (
+                            <span key={dep} className="dependency-tag">
+                              {dep}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
                   {suggestion.schemas && (
                     <div className="detail-row">
@@ -308,18 +314,18 @@ export function DirectiveSuggester({
  * Helper: Apply a single suggestion to SDL
  */
 function applySuggestionToSdl(sdl, suggestion) {
-  if (suggestion.type !== 'requires') return sdl;
+  if (suggestion.type !== "requires") return sdl;
 
   const { typeName, fieldName, directive } = suggestion;
 
   // Find and update the field
   const typeRegex = new RegExp(
     `(type\\s+${typeName}\\s*[^{]*\\{[^}]*?)(\\s+${fieldName}\\s*(?:\\([^)]*\\))?:\\s*[!\\[\\w$]+)(\\s*)`,
-    's'
+    "s",
   );
 
   return sdl.replace(typeRegex, (match, before, field, after) => {
-    if (match.includes('@requires')) {
+    if (match.includes("@requires")) {
       return match; // Already has directive
     }
     return `${before}${field} ${directive}${after}`;
@@ -332,9 +338,9 @@ function applySuggestionToSdl(sdl, suggestion) {
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     // Show brief feedback
-    const temp = document.createElement('div');
-    temp.textContent = 'Copied!';
-    temp.className = 'copy-feedback';
+    const temp = document.createElement("div");
+    temp.textContent = "Copied!";
+    temp.className = "copy-feedback";
     document.body.appendChild(temp);
     setTimeout(() => temp.remove(), 1500);
   });

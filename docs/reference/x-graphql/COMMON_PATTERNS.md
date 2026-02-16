@@ -25,6 +25,7 @@ Last Updated: January 2025
 **Use Case**: Map a database model to a GraphQL type with renamed fields.
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -54,6 +55,7 @@ Last Updated: January 2025
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User {
   id: ID!
@@ -63,6 +65,7 @@ type User {
 ```
 
 **Best Practices**:
+
 - Use `x-graphql-field-name` to convert snake_case to camelCase
 - Use `x-graphql-field-type: "ID"` for identifier fields
 - Let `required` array control nullability unless you need exceptions
@@ -74,6 +77,7 @@ type User {
 **Use Case**: Exclude internal/sensitive fields from GraphQL API.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -104,6 +108,7 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User {
   id: ID!
@@ -113,6 +118,7 @@ type User {
 ```
 
 **Best Practices**:
+
 - Always skip password fields, tokens, and secrets
 - Skip internal metadata fields
 - Keep JSON Schema validation intact for backend use
@@ -124,6 +130,7 @@ type User {
 **Use Case**: Use GraphQL custom scalars for formatted strings.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -159,6 +166,7 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Event {
   id: ID!
@@ -170,6 +178,7 @@ type Event {
 ```
 
 **Common Scalar Mappings**:
+
 - `date-time` → `DateTime`
 - `uri` → `URL`
 - `email` → `Email`
@@ -185,6 +194,7 @@ type Event {
 **Use Case**: Define shared fields across multiple types.
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -249,6 +259,7 @@ type Event {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 interface Node {
   id: ID!
@@ -276,6 +287,7 @@ type Product implements Node & Timestamped {
 ```
 
 **Best Practices**:
+
 - Define common fields once in interfaces
 - Ensure implementing types include all interface fields
 - Use `Node` interface for relay-style pagination
@@ -287,6 +299,7 @@ type Product implements Node & Timestamped {
 **Use Case**: Search results that can return different entity types.
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -330,6 +343,7 @@ type Product implements Node & Timestamped {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 union SearchResult = User | Product | Post
 
@@ -339,6 +353,7 @@ type Query {
 ```
 
 **Best Practices**:
+
 - Use `oneOf` in JSON Schema to match union semantics
 - List all member types in `x-graphql-union-types`
 - Consider using interfaces instead if types share common fields
@@ -350,6 +365,7 @@ type Query {
 **Use Case**: Define a fixed set of allowed values.
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -382,8 +398,11 @@ type Query {
 ```
 
 **GraphQL Output**:
+
 ```graphql
-"""User authorization level"""
+"""
+User authorization level
+"""
 enum UserRole {
   ADMIN
   MODERATOR
@@ -406,6 +425,7 @@ type User {
 ```
 
 **Best Practices**:
+
 - Use SCREAMING_SNAKE_CASE for enum values
 - Define enums in `definitions` and reference with `$ref` or `x-graphql-field-type`
 - Add descriptions to clarify enum purpose
@@ -419,6 +439,7 @@ type User {
 **Use Case**: Fine control over field nullability independent of JSON Schema.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -446,12 +467,13 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User {
   id: ID!
   email: String!
   phone: String
-  bio: String  # nullable despite being in 'required'
+  bio: String # nullable despite being in 'required'
 }
 ```
 
@@ -470,6 +492,7 @@ type User {
 **Use Case**: Arrays that can be empty but never contain null items.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -494,14 +517,16 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User {
-  tags: [String!]        # nullable list, non-null items
-  friendIds: [ID!]!      # non-null list, non-null items
+  tags: [String!] # nullable list, non-null items
+  friendIds: [ID!]! # non-null list, non-null items
 }
 ```
 
 **List Nullability Combinations**:
+
 - `[String]` - Nullable list, nullable items
 - `[String!]` - Nullable list, non-null items
 - `[String]!` - Non-null list, nullable items
@@ -514,6 +539,7 @@ type User {
 **Use Case**: Fields resolved by server logic, not stored in database.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -542,15 +568,20 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User {
   firstName: String
   lastName: String
-  
-  """Computed from firstName and lastName"""
+
+  """
+  Computed from firstName and lastName
+  """
   fullName: String
-  
-  """Computed from birthDate"""
+
+  """
+  Computed from birthDate
+  """
   age: Int
 }
 ```
@@ -566,6 +597,7 @@ type User {
 **Use Case**: Define an entity resolvable by other subgraphs.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -589,6 +621,7 @@ type User {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type User @key(fields: "id") {
   id: ID!
@@ -604,6 +637,7 @@ type User @key(fields: "id") {
 **Use Case**: Entity resolvable by different fields in different contexts.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -631,6 +665,7 @@ type User @key(fields: "id") {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Product @key(fields: "id") @key(fields: "sku") @key(fields: "upc") {
   id: ID!
@@ -647,6 +682,7 @@ type Product @key(fields: "id") @key(fields: "sku") @key(fields: "upc") {
 **Use Case**: Entity identified by multiple fields together.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -673,6 +709,7 @@ type Product @key(fields: "id") @key(fields: "sku") @key(fields: "upc") {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Membership @key(fields: "organizationId userId") {
   organizationId: ID!
@@ -688,6 +725,7 @@ type Membership @key(fields: "organizationId userId") {
 **Use Case**: Add fields to an entity defined in another subgraph.
 
 **JSON Schema (Subgraph A - defines User)**:
+
 ```json
 {
   "type": "object",
@@ -701,6 +739,7 @@ type Membership @key(fields: "organizationId userId") {
 ```
 
 **JSON Schema (Subgraph B - extends User)**:
+
 ```json
 {
   "type": "object",
@@ -722,6 +761,7 @@ type Membership @key(fields: "organizationId userId") {
 ```
 
 **GraphQL Output (Subgraph B)**:
+
 ```graphql
 extend type User @key(fields: "id") {
   id: ID! @external
@@ -736,6 +776,7 @@ extend type User @key(fields: "id") {
 **Use Case**: Field needs data from another subgraph to resolve.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -762,6 +803,7 @@ extend type User @key(fields: "id") {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -778,6 +820,7 @@ type Product @key(fields: "id") {
 **Use Case**: Optimization - field returns entity with some of its fields already resolved.
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -800,6 +843,7 @@ type Product @key(fields: "id") {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Review {
   id: ID
@@ -815,6 +859,7 @@ type Review {
 **Use Case**: Type can be defined in multiple subgraphs (Federation v2).
 
 **JSON Schema**:
+
 ```json
 {
   "type": "object",
@@ -833,6 +878,7 @@ type Review {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Currency @shareable {
   code: String!
@@ -841,6 +887,7 @@ type Currency @shareable {
 ```
 
 **Use Cases**:
+
 - Reference data (currencies, countries, etc.)
 - Value objects shared across domains
 - Types that don't change often
@@ -852,6 +899,7 @@ type Currency @shareable {
 **Use Case**: Migrate field ownership from one subgraph to another.
 
 **JSON Schema (New Service)**:
+
 ```json
 {
   "type": "object",
@@ -869,6 +917,7 @@ type Currency @shareable {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Product @key(fields: "id") {
   id: ID!
@@ -877,6 +926,7 @@ type Product @key(fields: "id") {
 ```
 
 **Migration Process**:
+
 1. Deploy new service with @override
 2. Route queries to new service
 3. Deprecate old service
@@ -889,6 +939,7 @@ type Product @key(fields: "id") {
 ### Pattern: Pagination with Relay Connection
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -954,6 +1005,7 @@ type Product @key(fields: "id") {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type PageInfo {
   hasNextPage: Boolean!
@@ -978,6 +1030,7 @@ type UserConnection {
 ### Pattern: Input Types
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -1008,6 +1061,7 @@ type UserConnection {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 input CreateUserInput {
   email: String!
@@ -1021,6 +1075,7 @@ input CreateUserInput {
 ### Pattern: Recursive Types
 
 **JSON Schema**:
+
 ```json
 {
   "definitions": {
@@ -1054,6 +1109,7 @@ input CreateUserInput {
 ```
 
 **GraphQL Output**:
+
 ```graphql
 type Comment {
   id: ID!
@@ -1070,6 +1126,7 @@ type Comment {
 ### ❌ Anti-Pattern: Over-Specifying Everything
 
 **Bad**:
+
 ```json
 {
   "properties": {
@@ -1083,6 +1140,7 @@ type Comment {
 ```
 
 **Good** (let converter infer):
+
 ```json
 {
   "properties": {
@@ -1098,17 +1156,19 @@ type Comment {
 ### ❌ Anti-Pattern: Inconsistent Naming
 
 **Bad**:
+
 ```json
 {
   "properties": {
     "user_id": { "x-graphql-field-name": "userId" },
     "email_address": { "x-graphql-field-name": "email" },
-    "created_at": {}  // inconsistent - no rename
+    "created_at": {} // inconsistent - no rename
   }
 }
 ```
 
 **Good**:
+
 ```json
 {
   "properties": {
@@ -1126,6 +1186,7 @@ type Comment {
 ### ❌ Anti-Pattern: Ignoring JSON Schema Semantics
 
 **Bad**:
+
 ```json
 {
   "properties": {
@@ -1134,11 +1195,12 @@ type Comment {
       "x-graphql-field-type": "ID"
     }
   },
-  "required": []  // ID not in required!
+  "required": [] // ID not in required!
 }
 ```
 
 **Good**:
+
 ```json
 {
   "properties": {
@@ -1159,6 +1221,7 @@ type Comment {
 ### ❌ Anti-Pattern: Exposing Internal Structure
 
 **Bad**:
+
 ```json
 {
   "properties": {
@@ -1170,6 +1233,7 @@ type Comment {
 ```
 
 **Good**:
+
 ```json
 {
   "properties": {
@@ -1196,6 +1260,7 @@ type Comment {
 ### ❌ Anti-Pattern: Mixing Concerns
 
 **Bad**:
+
 ```json
 {
   "x-graphql-type-name": "User",
@@ -1206,6 +1271,7 @@ type Comment {
 ```
 
 **Good**:
+
 ```json
 {
   "x-graphql-type-name": "User",

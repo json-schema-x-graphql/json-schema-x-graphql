@@ -13,6 +13,7 @@ The `TTSE-petrified-forest` implementation represents a mature, production-ready
 The `json-schema-x-graphql` project is a more structured, TypeScript-based library aiming for broader usage and stricter type safety. It covers most of the core features found in the target codebase but handles them with a more configuration-driven approach.
 
 **Key Findings:**
+
 - **Parity:** High on core features (Type/Field naming, basic scalars, Enums).
 - **Federation:** The target codebase has hardcoded support for Apollo Federation v2.3 directives. The current project has structural support for federation via options and extensions.
 - **Extensions:** The target `X-GRAPHQL-ATTRIBUTE-REGISTRY.md` is exhaustive and well-documented. The current project's `x-graphql-extensions.ts` captures the majority of these but may miss some nuance in specific areas like "Relay/Pagination" or "Operations" mapping if not fully implemented in the converter logic.
@@ -21,11 +22,13 @@ The `json-schema-x-graphql` project is a more structured, TypeScript-based libra
 ## 2. Setup & Methodology
 
 The review process involved analyzing the following key files from `~/TTSE-petrified-forest`:
+
 1.  **Core Logic:** `scripts/lib/jsonschema-to-graphql.mjs` - The implementation of the conversion logic.
 2.  **Specification:** `docs/x-graphql/X-GRAPHQL-ATTRIBUTE-REGISTRY.md` - The source of truth for supported extensions.
 3.  **Entry Point:** `scripts/bin/generate-graphql.mjs` - How the CLI orchestrates the generation.
 
 These were compared against the current workspace (`~/json-schema-x-graphql`):
+
 1.  `converters/node/src/converter.ts`
 2.  `converters/node/src/x-graphql-extensions.ts`
 
@@ -33,21 +36,21 @@ The goal was to identify discrepancies in feature support, attribute handling, a
 
 ## 3. Detailed Feature Comparison
 
-| Feature Category | Target (`TTSE-petrified-forest`) | Current (`json-schema-x-graphql`) | Status |
-| :--- | :--- | :--- | :--- |
-| **Language** | JavaScript (ESM) | TypeScript | ✅ Superior |
-| **Architecture** | Functional/Script-based | Class/Interface-based | ✅ Superior |
-| **Type Naming** | `x-graphql-type-name` / `snakeToPascal` | `x-graphql-type-name` / Configurable Naming Strategy | ✅ Parity |
-| **Field Naming** | `x-graphql-field-name` / `snakeToCamel` | `x-graphql-field-name` / Configurable Naming Strategy | ✅ Parity |
-| **Scalars** | Auto-maps `format` (date, time, email, uri) to GraphQL scalars. | Supports `x-graphql-scalar`. Needs verification of `format` auto-mapping. | ⚠️ Verify |
-| **Enums** | Supports `x-graphql-enum` (values list or object map). | Supports `x-graphql-enum`. | ✅ Parity |
-| **Unions** | `oneOf`/`anyOf` inference. `x-graphql-union`. | `oneOf`/`anyOf` inference. `x-graphql-union-types`. | ✅ Parity |
-| **Federation** | Hardcoded directives (`@key`, `@shareable`, etc.). | `federationVersion` option. Parses extensions like `federationKeys`. | ✅ Parity |
-| **Directives** | `formatDirectives` helper. Supports generic args. | `x-graphql-directives` struct. | ✅ Parity |
-| **Operations** | `x-graphql-operations` (Queries, Mutations). | `x-graphql-operations` supported in extensions. | ✅ Parity |
-| **Descriptions** | `x-graphql-description` > `description`. Triple-quote escaping. | `x-graphql-description` > `description`. | ✅ Parity |
-| **Nullability** | `x-graphql-nullable`. Defaults based on `required`. | `x-graphql-nullable`, `fieldNonNull`. Defaults based on `required`. | ✅ Parity |
-| **Relay** | `generateRelayTypes` (Pagination). | Not explicitly seen in core `converter.ts` logic. | ⚠️ Missing? |
+| Feature Category | Target (`TTSE-petrified-forest`)                                | Current (`json-schema-x-graphql`)                                         | Status      |
+| :--------------- | :-------------------------------------------------------------- | :------------------------------------------------------------------------ | :---------- |
+| **Language**     | JavaScript (ESM)                                                | TypeScript                                                                | ✅ Superior |
+| **Architecture** | Functional/Script-based                                         | Class/Interface-based                                                     | ✅ Superior |
+| **Type Naming**  | `x-graphql-type-name` / `snakeToPascal`                         | `x-graphql-type-name` / Configurable Naming Strategy                      | ✅ Parity   |
+| **Field Naming** | `x-graphql-field-name` / `snakeToCamel`                         | `x-graphql-field-name` / Configurable Naming Strategy                     | ✅ Parity   |
+| **Scalars**      | Auto-maps `format` (date, time, email, uri) to GraphQL scalars. | Supports `x-graphql-scalar`. Needs verification of `format` auto-mapping. | ⚠️ Verify   |
+| **Enums**        | Supports `x-graphql-enum` (values list or object map).          | Supports `x-graphql-enum`.                                                | ✅ Parity   |
+| **Unions**       | `oneOf`/`anyOf` inference. `x-graphql-union`.                   | `oneOf`/`anyOf` inference. `x-graphql-union-types`.                       | ✅ Parity   |
+| **Federation**   | Hardcoded directives (`@key`, `@shareable`, etc.).              | `federationVersion` option. Parses extensions like `federationKeys`.      | ✅ Parity   |
+| **Directives**   | `formatDirectives` helper. Supports generic args.               | `x-graphql-directives` struct.                                            | ✅ Parity   |
+| **Operations**   | `x-graphql-operations` (Queries, Mutations).                    | `x-graphql-operations` supported in extensions.                           | ✅ Parity   |
+| **Descriptions** | `x-graphql-description` > `description`. Triple-quote escaping. | `x-graphql-description` > `description`.                                  | ✅ Parity   |
+| **Nullability**  | `x-graphql-nullable`. Defaults based on `required`.             | `x-graphql-nullable`, `fieldNonNull`. Defaults based on `required`.       | ✅ Parity   |
+| **Relay**        | `generateRelayTypes` (Pagination).                              | Not explicitly seen in core `converter.ts` logic.                         | ⚠️ Missing? |
 
 ## 4. Discrepancies & Findings
 

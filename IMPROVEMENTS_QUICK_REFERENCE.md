@@ -38,11 +38,13 @@ The converter now automatically resolves `$ref` paths even when the casing doesn
 ```
 
 **Works with:**
+
 - `#/$defs/userInfo` (exact match)
 - `#/$defs/UserInfo` (PascalCase)
 - `#/$defs/user_info` (snake_case)
 
 The converter tries:
+
 1. Direct match (exact case)
 2. snake_case conversion
 3. camelCase conversion
@@ -71,6 +73,7 @@ Self-referencing and mutually referencing types are now fully supported.
 ```
 
 **Output:**
+
 ```graphql
 type Node {
   value: String
@@ -107,6 +110,7 @@ type Node {
 ```
 
 **Output:**
+
 ```graphql
 type Person {
   name: String
@@ -140,6 +144,7 @@ type Company {
 ```
 
 **Output:**
+
 ```graphql
 type Tree {
   value: String
@@ -156,6 +161,7 @@ Control which types appear in the output with powerful filtering options.
 ### Default Behavior
 
 By default, these types are **excluded**:
+
 - `Query`, `Mutation`, `Subscription` (operational types)
 - `PageInfo` (standard pagination type)
 - Types ending with: `Filter`, `Sort`, `SortInput`, `FilterInput`, `Connection`, `Edge`, `Payload`, `Args`
@@ -164,20 +170,20 @@ By default, these types are **excluded**:
 
 ```typescript
 // Node.js
-import { jsonSchemaToGraphQL } from './converter';
+import { jsonSchemaToGraphQL } from "./converter";
 
 const result = jsonSchemaToGraphQL(schema, {
   // Include operational types
   includeOperationalTypes: true,
-  
+
   // Custom exclude list
-  excludeTypes: ['InternalType', 'DebugInfo'],
-  
+  excludeTypes: ["InternalType", "DebugInfo"],
+
   // Custom suffix exclusions
-  excludeTypeSuffixes: ['Filter', 'Input'],
-  
+  excludeTypeSuffixes: ["Filter", "Input"],
+
   // Regex patterns for exclusion
-  excludePatterns: ['^Internal.*', '.*Debug$']
+  excludePatterns: ["^Internal.*", ".*Debug$"],
 });
 ```
 
@@ -195,16 +201,16 @@ options.exclude_type_suffixes = vec!["Filter".to_string(), "Input".to_string()];
 
 ```typescript
 const result = jsonSchemaToGraphQL(schema, {
-  includeOperationalTypes: false,  // Exclude Query/Mutation/Subscription
+  includeOperationalTypes: false, // Exclude Query/Mutation/Subscription
   excludeTypeSuffixes: [
-    'Filter',
-    'Sort',
-    'Connection',
-    'Edge',
-    'Payload',
-    'Args',
-    'Input'
-  ]
+    "Filter",
+    "Sort",
+    "Connection",
+    "Edge",
+    "Payload",
+    "Args",
+    "Input",
+  ],
 });
 ```
 
@@ -215,7 +221,7 @@ const result = jsonSchemaToGraphQL(schema, {
   includeOperationalTypes: true,
   excludeTypes: [],
   excludeTypeSuffixes: [],
-  excludePatterns: []
+  excludePatterns: [],
 });
 ```
 
@@ -228,20 +234,24 @@ Utility functions for working with different naming conventions.
 ### Node.js
 
 ```typescript
-import { camelToSnake, snakeToCamel, convertObjectKeys } from './case-conversion';
+import {
+  camelToSnake,
+  snakeToCamel,
+  convertObjectKeys,
+} from "./case-conversion";
 
 // Convert strings
-camelToSnake('camelCase');      // → 'camel_case'
-camelToSnake('HTTPResponse');   // → 'http_response'
-snakeToCamel('snake_case');     // → 'snakeCase'
-snakeToCamel('user_profile');   // → 'userProfile'
+camelToSnake("camelCase"); // → 'camel_case'
+camelToSnake("HTTPResponse"); // → 'http_response'
+snakeToCamel("snake_case"); // → 'snakeCase'
+snakeToCamel("user_profile"); // → 'userProfile'
 
 // Convert object keys
 const input = {
-  user_name: 'John',
+  user_name: "John",
   user_profile: {
-    avatar_url: 'http://example.com'
-  }
+    avatar_url: "http://example.com",
+  },
 };
 
 const camelCased = convertObjectKeys(input, snakeToCamel);
@@ -284,14 +294,8 @@ let result = convert(&schema, &options)?;
 ```typescript
 const result = jsonSchemaToGraphQL(schema, {
   includeDescriptions: true,
-  includeOperationalTypes: false,  // Exclude Query/Mutation
-  excludeTypeSuffixes: [
-    'Filter',
-    'Sort',
-    'Connection',
-    'Edge',
-    'Payload'
-  ]
+  includeOperationalTypes: false, // Exclude Query/Mutation
+  excludeTypeSuffixes: ["Filter", "Sort", "Connection", "Edge", "Payload"],
 });
 ```
 
@@ -302,7 +306,7 @@ const result = jsonSchemaToGraphQL(schema, {
   includeDescriptions: true,
   includeOperationalTypes: true,
   excludeTypes: [],
-  excludeTypeSuffixes: []
+  excludeTypeSuffixes: [],
 });
 ```
 
@@ -312,28 +316,20 @@ const result = jsonSchemaToGraphQL(schema, {
 const result = jsonSchemaToGraphQL(schema, {
   // Include operational types
   includeOperationalTypes: true,
-  
+
   // But exclude specific ones
-  excludeTypes: ['InternalQuery', 'DebugMutation'],
-  
+  excludeTypes: ["InternalQuery", "DebugMutation"],
+
   // Exclude relay/pagination types
-  excludeTypeSuffixes: [
-    'Connection',
-    'Edge',
-    'Payload'
-  ],
-  
+  excludeTypeSuffixes: ["Connection", "Edge", "Payload"],
+
   // Exclude test/internal types by pattern
-  excludePatterns: [
-    '^Test.*',
-    '.*Debug$',
-    '^Internal.*'
-  ],
-  
+  excludePatterns: ["^Test.*", ".*Debug$", "^Internal.*"],
+
   // Other options
   includeDescriptions: true,
   preserveFieldOrder: true,
-  namingConvention: 'GRAPHQL_IDIOMATIC'
+  namingConvention: "GRAPHQL_IDIOMATIC",
 });
 ```
 
@@ -350,6 +346,7 @@ ConversionError: Circular $ref detected: #/$defs/A
 ```
 
 **Example of circular $ref chain (invalid):**
+
 ```json
 {
   "$defs": {
@@ -380,20 +377,20 @@ This indicates a bug in the converter logic, not the schema itself.
 ### Node.js Test
 
 ```typescript
-import { jsonSchemaToGraphQL } from './converter';
-import * as fs from 'fs';
+import { jsonSchemaToGraphQL } from "./converter";
+import * as fs from "fs";
 
-const schema = JSON.parse(fs.readFileSync('schema.json', 'utf-8'));
+const schema = JSON.parse(fs.readFileSync("schema.json", "utf-8"));
 
 try {
   const result = jsonSchemaToGraphQL(schema, {
     includeDescriptions: true,
-    includeOperationalTypes: false
+    includeOperationalTypes: false,
   });
-  
+
   console.log(result);
 } catch (error) {
-  console.error('Conversion failed:', error.message);
+  console.error("Conversion failed:", error.message);
 }
 ```
 
@@ -481,17 +478,19 @@ Add descriptions to circular types for clarity:
 ### Type Not Appearing in Output
 
 **Check if it's filtered:**
+
 ```typescript
 const result = jsonSchemaToGraphQL(schema, {
   includeOperationalTypes: true,
   excludeTypes: [],
-  excludeTypeSuffixes: []
+  excludeTypeSuffixes: [],
 });
 ```
 
 ### Case Mismatch Errors
 
 The converter auto-resolves case differences, but ensure:
+
 1. Definition exists in `$defs`
 2. Reference path is correct (check `/` separators)
 3. Definition has valid structure
@@ -541,6 +540,7 @@ If upgrading from an earlier version:
 ## Support
 
 For issues or questions:
+
 1. Check test files for examples
 2. Review error messages carefully
 3. Enable verbose logging if available

@@ -6,22 +6,12 @@ export function extractDirectives(schema, options) {
     if (Array.isArray(schema["x-graphql-directives"])) {
         for (const dir of schema["x-graphql-directives"]) {
             if (typeof dir === "string") {
-                // Parse string directives like "@key(fields: \"id\")"
-                // For now, we support raw strings by wrapping them in a special way or just parsing names
-                // But to keep it structured, let's just support object style directives primarily.
-                // If it's a string, we might need to parse it or just pass it through if the caller handles it.
-                // However, this function returns GeneralizedDirective objects.
-                // Let's assume for now mixed usage is rare or we can parse simple ones.
-                const match = dir.match(/@(\w+)(?:\((.*)\))?/);
+                const match = dir.match(/@(\w+)/);
                 if (match) {
                     const name = match[1];
                     if (!includeFederation && isFederationDirective(name))
                         continue;
-                    // Todo: robust argument parsing for string directives
-                    // For now, we might need to keep raw string support or just ignore complex string directives here
-                    // This is a limitation of strictly structured internal representation.
-                    // Let's defer string directives to a "raw" property or similar if needed.
-                    directives.push({ name, args: {} }); // Placeholder for string parsing
+                    directives.push({ name, raw: dir });
                 }
                 continue;
             }
@@ -94,6 +84,8 @@ export function printDirectives(directives) {
         return "";
     }
     const parts = directives.map((dir) => {
+        if (dir.raw)
+            return dir.raw;
         if (!dir.name)
             return "";
         const args = dir.args && Object.keys(dir.args).length > 0
@@ -101,7 +93,10 @@ export function printDirectives(directives) {
             : "";
         return `@${dir.name}${args}`;
     });
-    return parts.filter(Boolean).map(p => " " + p).join("");
+    return parts
+        .filter(Boolean)
+        .map((p) => " " + p)
+        .join("");
 }
 function formatDirectiveArgs(args) {
     return Object.entries(args)
@@ -113,14 +108,6 @@ function formatDirectiveArgs(args) {
                 .map((s) => `"${s}"`)
                 .join(", ")}]`)
                 .join(", ")} ]`;
-        }
-        // Handle array of fields for @key
-        if (key === "fields" && Array.isArray(value)) {
-            // Wait, earlier logic output raw string if it was a string directive, but here we normalized it.
-            // Is `fields` used in @key(fields: "id")? Yes.
-            // Is existing logic doing something special?
-            // Existing logic: arguments: { fields: key } where key is string.
-            // Or arguments: { fields: key.fields } where key.fields might be string.
         }
         return `${key}: ${JSON.stringify(value)}`;
     })

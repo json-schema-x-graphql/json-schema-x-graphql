@@ -12,12 +12,12 @@ The Rust converter demonstrates **excellent performance** with microsecond-level
 
 ### Key Metrics
 
-| Benchmark | Average Time | Throughput |
-|-----------|-------------|------------|
-| JSON Schema → GraphQL (Small) | **36.92 µs** | ~27,000 ops/sec |
-| GraphQL → JSON Schema (Small) | **125.76 µs** | ~7,950 ops/sec |
-| Cached Conversion | **38.26 µs** | ~26,100 ops/sec |
-| No Validation Mode | **36.73 µs** | ~27,200 ops/sec |
+| Benchmark                     | Average Time  | Throughput      |
+| ----------------------------- | ------------- | --------------- |
+| JSON Schema → GraphQL (Small) | **36.92 µs**  | ~27,000 ops/sec |
+| GraphQL → JSON Schema (Small) | **125.76 µs** | ~7,950 ops/sec  |
+| Cached Conversion             | **38.26 µs**  | ~26,100 ops/sec |
+| No Validation Mode            | **36.73 µs**  | ~27,200 ops/sec |
 
 ---
 
@@ -35,13 +35,14 @@ Time: [36.692 µs, 36.924 µs, 37.179 µs]
 Samples: 100 measurements
 Outliers: 17 (17.00%)
   - 13 low mild
-  - 3 high mild  
+  - 3 high mild
   - 1 high severe
 
 Performance: 27,088 conversions/second
 ```
 
 **Schema Complexity:**
+
 - 1 type definition (User)
 - 5 fields (id, name, email, age, createdAt)
 - Field name mappings (snake_case → camelCase)
@@ -49,6 +50,7 @@ Performance: 27,088 conversions/second
 - Descriptions included
 
 **Analysis:**
+
 - ✅ Consistent performance (~37 µs)
 - ✅ Low variance (< 500 ns)
 - ✅ Suitable for real-time API conversion
@@ -74,12 +76,14 @@ Performance: 7,951 conversions/second
 ```
 
 **Analysis:**
+
 - ✅ Stable performance (~126 µs)
 - ✅ 3.4x slower than JSON→GraphQL (expected due to parsing complexity)
 - ✅ Still suitable for tooling/codegen use cases
 - ⚠️ GraphQL parsing is more computationally intensive
 
 **Why GraphQL→JSON is slower:**
+
 - GraphQL SDL parsing requires more complex lexical analysis
 - Type inference from GraphQL to JSON Schema is more involved
 - Additional validation steps for GraphQL syntax
@@ -103,15 +107,18 @@ Performance: 26,136 conversions/second
 ```
 
 **Cache Configuration:**
+
 - LRU cache with 100 entry capacity
 - Cache hit ratio: N/A (benchmark measures cache overhead)
 
 **Analysis:**
+
 - ⚠️ Cache overhead: ~1.3 µs (3.5% slower than uncached)
 - ℹ️ For this benchmark, cache overhead exceeds benefit (same schema repeated)
 - ✅ Cache would be beneficial with varied schemas in production
 
 **When to use caching:**
+
 - ✅ Microservices with schema registry (same schemas repeatedly converted)
 - ✅ API gateways with common schema patterns
 - ❌ One-off conversions or unique schemas each time
@@ -136,6 +143,7 @@ Performance: 27,227 conversions/second
 ```
 
 **Analysis:**
+
 - ✅ Minimal difference from validated mode (~200 ns faster, 0.5%)
 - ✅ Validation overhead is negligible
 - ✅ Safe to leave validation enabled in production
@@ -162,6 +170,7 @@ p99        | 39.2 µs
 ```
 
 **Interpretation:**
+
 - Very tight distribution (99% within 2.3 µs of median)
 - Predictable performance for production use
 - No significant tail latency
@@ -175,12 +184,12 @@ p99        | 39.2 µs
 Based on benchmark results and code analysis:
 
 | Schema Size | Fields | Est. Time | Throughput |
-|-------------|--------|-----------|------------|
-| Tiny | 1-3 | ~25 µs | ~40,000/s |
-| Small | 4-10 | ~37 µs | ~27,000/s |
-| Medium | 11-50 | ~150 µs | ~6,600/s |
-| Large | 51-200 | ~600 µs | ~1,600/s |
-| X-Large | 201+ | ~2.5 ms | ~400/s |
+| ----------- | ------ | --------- | ---------- |
+| Tiny        | 1-3    | ~25 µs    | ~40,000/s  |
+| Small       | 4-10   | ~37 µs    | ~27,000/s  |
+| Medium      | 11-50  | ~150 µs   | ~6,600/s   |
+| Large       | 51-200 | ~600 µs   | ~1,600/s   |
+| X-Large     | 201+   | ~2.5 ms   | ~400/s     |
 
 **Scaling factor:** Approximately **O(n)** where n = number of fields
 
@@ -214,24 +223,26 @@ With caching           | +5-10       | +5-10 KB
 
 Based on typical Rust vs Node.js performance patterns:
 
-| Metric | Rust | Node.js (est.) | Advantage |
-|--------|------|----------------|-----------|
-| JSON→GraphQL | 37 µs | ~200-500 µs | **5-13x faster** |
-| Memory usage | ~50 KB | ~500 KB-2 MB | **10-40x less** |
-| Cold start | ~1 ms | ~50-200 ms | **50-200x faster** |
-| Binary size | ~5-10 MB | ~40-80 MB | **8-15x smaller** |
+| Metric       | Rust     | Node.js (est.) | Advantage          |
+| ------------ | -------- | -------------- | ------------------ |
+| JSON→GraphQL | 37 µs    | ~200-500 µs    | **5-13x faster**   |
+| Memory usage | ~50 KB   | ~500 KB-2 MB   | **10-40x less**    |
+| Cold start   | ~1 ms    | ~50-200 ms     | **50-200x faster** |
+| Binary size  | ~5-10 MB | ~40-80 MB      | **8-15x smaller**  |
 
 **Note:** Node.js estimates based on typical V8 performance characteristics. Actual measurements would be needed for precise comparison.
 
 ### When to Use Each
 
 **Use Rust Converter When:**
+
 - ✅ Performance is critical (API gateway, high-throughput services)
 - ✅ Memory constraints exist (embedded, edge computing)
 - ✅ Startup time matters (CLI tools, serverless functions)
 - ✅ Type safety is important (compile-time guarantees)
 
 **Use Node.js Converter When:**
+
 - ✅ Ecosystem integration needed (npm packages, build tools)
 - ✅ Rapid development/iteration required
 - ✅ JavaScript/TypeScript codebase
@@ -257,12 +268,14 @@ Real-time Streaming        | 15,000/s    | 65 µs
 ### Multi-core Scaling
 
 With 4 cores (parallel processing):
+
 - **Theoretical max:** 108,000 conversions/second
 - **Realistic sustained:** 80,000-90,000 conversions/second (accounting for coordination overhead)
 
 ### Latency Budget
 
 For 99th percentile latency < 100 µs:
+
 - ✅ JSON→GraphQL: 39.2 µs (well within budget)
 - ✅ No validation: 37.1 µs (even better)
 - ⚠️ GraphQL→JSON: 126.5 µs (slightly over, but still acceptable for most use cases)
@@ -272,6 +285,7 @@ For 99th percentile latency < 100 µs:
 ## Optimization Opportunities
 
 ### Current Optimizations
+
 1. ✅ Zero-copy string handling where possible
 2. ✅ Efficient string building with pre-allocation
 3. ✅ Minimal allocations during conversion
@@ -280,21 +294,25 @@ For 99th percentile latency < 100 µs:
 ### Future Optimization Potential
 
 **1. SIMD String Processing**
+
 - Potential: 10-20% faster string operations
 - Complexity: Medium
 - Impact: Modest (most time in logic, not string ops)
 
 **2. Arena Allocation**
+
 - Potential: 5-15% faster overall
 - Complexity: Medium-High
 - Impact: Reduced allocation overhead
 
 **3. Parallel Field Processing**
+
 - Potential: 30-50% faster for large schemas (50+ fields)
 - Complexity: High
 - Impact: Significant for enterprise schemas
 
 **4. GraphQL Parser Optimization**
+
 - Potential: 20-40% faster GraphQL→JSON conversion
 - Complexity: High (requires custom parser)
 - Impact: Significant for reverse conversion
@@ -316,8 +334,8 @@ For 99th percentile latency < 100 µs:
         "name": { "type": "string" },
         "email": { "type": "string", "format": "email" },
         "age": { "type": "integer" },
-        "createdAt": { 
-            "type": "string", 
+        "createdAt": {
+            "type": "string",
             "format": "date-time",
             "x-graphql-field-type": "DateTime"
         }
@@ -327,12 +345,14 @@ For 99th percentile latency < 100 µs:
 ```
 
 ### Hardware Specifications
+
 - **CPU:** x86_64 (specific model not measured)
 - **Memory:** Sufficient for benchmarking (exact amount not measured)
 - **OS:** Linux
 - **Compiler:** rustc 1.70+ (with optimizations enabled)
 
 ### Benchmark Framework
+
 - **Tool:** Criterion.rs v0.5
 - **Samples:** 100 measurements per benchmark
 - **Warmup:** 3 seconds
@@ -357,6 +377,7 @@ For 99th percentile latency < 100 µs:
 ✅ **READY FOR PRODUCTION**
 
 The Rust converter demonstrates:
+
 - Consistent, predictable performance
 - Low memory usage
 - Excellent scalability
@@ -365,6 +386,7 @@ The Rust converter demonstrates:
 ### Recommended Use Cases
 
 **Ideal For:**
+
 - API gateways requiring < 100 µs latency
 - High-throughput schema transformation services (10,000+ req/s)
 - CLI tools needing instant startup
@@ -372,6 +394,7 @@ The Rust converter demonstrates:
 - Serverless/edge functions (fast cold start)
 
 **Also Suitable For:**
+
 - Build-time code generation
 - CI/CD schema validation
 - Development tooling

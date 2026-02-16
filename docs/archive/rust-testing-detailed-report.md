@@ -1,4 +1,5 @@
 # Rust Testing & Security Audit Report
+
 ## JSON Schema x GraphQL Converter
 
 **Date:** November 24, 2025  
@@ -28,14 +29,14 @@ This report documents the comprehensive testing, security auditing, and quality 
 
 The following cargo testing and security tools were successfully installed and executed:
 
-| Tool | Version | Purpose | Status |
-|------|---------|---------|--------|
-| **cargo-audit** | 0.22.0 | Security vulnerability scanner | ✅ Installed |
-| **cargo-geiger** | 0.13.0 | Unsafe code detector | ✅ Installed |
-| **cargo-deny** | Latest | License & dependency checker | ✅ Installed |
-| **cargo-fuzz** | Latest | Fuzzing framework | ⚠️ Ready to configure |
-| **MIRAI** | N/A | Abstract interpretation | ℹ️ Research tool (optional) |
-| **Rudra** | N/A | Memory safety detector | ℹ️ Research tool (optional) |
+| Tool             | Version | Purpose                        | Status                      |
+| ---------------- | ------- | ------------------------------ | --------------------------- |
+| **cargo-audit**  | 0.22.0  | Security vulnerability scanner | ✅ Installed                |
+| **cargo-geiger** | 0.13.0  | Unsafe code detector           | ✅ Installed                |
+| **cargo-deny**   | Latest  | License & dependency checker   | ✅ Installed                |
+| **cargo-fuzz**   | Latest  | Fuzzing framework              | ⚠️ Ready to configure       |
+| **MIRAI**        | N/A     | Abstract interpretation        | ℹ️ Research tool (optional) |
+| **Rudra**        | N/A     | Memory safety detector         | ℹ️ Research tool (optional) |
 
 ### 1.2 Test Automation Scripts
 
@@ -135,7 +136,8 @@ json-schema-graphql-converter v0.1.0
 - `regex-automata` (83/638 expressions) - Performance-critical regex engine
 - `memchr` (1700/2421 expressions) - Optimized memory operations
 
-**Conclusion:** 
+**Conclusion:**
+
 - ✅ Main converter code is 100% safe Rust
 - ✅ Unsafe code is limited to well-audited dependencies
 - ✅ All unsafe code is in performance-critical or FFI contexts
@@ -147,6 +149,7 @@ json-schema-graphql-converter v0.1.0
 ```
 
 **Issue:** The `deny.toml` configuration file has a syntax error:
+
 ```
 error[unexpected-value]: expected '["all", "workspace", "transitive", "none"]'
 unmaintained = "warn"
@@ -155,6 +158,7 @@ unmaintained = "warn"
 **Action Required:** Update `deny.toml` with correct syntax for advisory checking.
 
 **Recommended Fix:**
+
 ```toml
 [advisories]
 db-path = "~/.cargo/advisory-db"
@@ -174,6 +178,7 @@ unmaintained = "warn"  # This line needs to match expected format
 ```
 
 The main library unit tests pass:
+
 - ✅ `test_converter_creation`
 - ✅ `test_converter_with_options`
 - ✅ `test_simple_json_to_graphql`
@@ -189,6 +194,7 @@ The main library unit tests pass:
 The integration tests (`tests/integration_tests.rs`) have been updated to use the new `Converter` API, but require complete implementation of the conversion logic to pass:
 
 **Tests Updated (21 total):**
+
 - Basic type conversion (5 tests)
 - Federation directives (5 tests)
 - Advanced features (1 test)
@@ -198,12 +204,14 @@ The integration tests (`tests/integration_tests.rs`) have been updated to use th
 - Custom scalars (1 test)
 
 **Test Status:**
+
 - Tests compile successfully ✅
 - Tests require full converter implementation to run ⚠️
 
 ### 4.3 Code Coverage
 
 **Not yet measured** - Recommended tools:
+
 - `cargo-tarpaulin` (Linux/macOS)
 - `cargo-llvm-cov` (Cross-platform)
 
@@ -222,6 +230,7 @@ No clippy errors found. Warnings are related to unused code for future implement
 ### 5.2 Code Structure
 
 **Modules:**
+
 - `lib.rs` - Main converter interface
 - `types.rs` - Type definitions and data structures
 - `json_to_graphql.rs` - JSON Schema → GraphQL conversion
@@ -231,6 +240,7 @@ No clippy errors found. Warnings are related to unused code for future implement
 - `wasm.rs` - WebAssembly bindings (feature-gated)
 
 **Architecture Quality:**
+
 - ✅ Clear module separation
 - ✅ Comprehensive error handling with `thiserror`
 - ✅ Type-safe APIs
@@ -244,6 +254,7 @@ No clippy errors found. Warnings are related to unused code for future implement
 ### 6.1 Optimization Settings
 
 **Release Profile:**
+
 ```toml
 [profile.release]
 opt-level = "z"     # Optimize for size (WASM-friendly)
@@ -256,6 +267,7 @@ strip = true        # Strip debug symbols
 ### 6.2 Caching
 
 Optional LRU cache available via `caching` feature:
+
 - Uses `lru` crate (v0.12.5)
 - Configurable cache size (default: 100 entries)
 - Thread-safe with `Mutex`
@@ -291,6 +303,7 @@ cargo install cargo-fuzz
 ### 8.2 Fuzzing Targets (Recommended)
 
 Create fuzz targets for:
+
 1. JSON Schema parsing
 2. GraphQL SDL parsing
 3. Round-trip conversion
@@ -322,16 +335,19 @@ fuzz_target!(|data: &[u8]| {
 **Purpose:** Abstract interpretation for detecting potential bugs
 
 **Requirements:**
+
 - Nightly Rust
 - Complex setup with RUSTC_WRAPPER
 - Research-grade tool
 
 **When to use:**
+
 - Critical production deployments
 - Security-sensitive applications
 - Research projects
 
 **Installation:**
+
 ```bash
 # Requires nightly Rust
 rustup install nightly
@@ -343,6 +359,7 @@ cargo +nightly install mirai
 **Purpose:** Memory safety and undefined behavior detection
 
 **Requirements:**
+
 - Nightly Rust
 - Academic research tool
 - May have false positives
@@ -350,6 +367,7 @@ cargo +nightly install mirai
 **Repository:** https://github.com/sslab-gatech/Rudra
 
 **When to use:**
+
 - Academic research
 - Advanced security audits
 - Pre-production hardening
@@ -373,22 +391,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          
+
       - name: Install cargo-audit
         run: cargo install cargo-audit
-        
+
       - name: Security Audit
         run: cargo audit
         working-directory: ./converters/rust
-        
+
       - name: Install cargo-geiger
         run: cargo install cargo-geiger
-        
+
       - name: Check Unsafe Code
         run: cargo geiger --all-features
         working-directory: ./converters/rust
@@ -410,6 +428,7 @@ cargo audit
 ## 11. Security Reports Location
 
 All security audit reports are saved to:
+
 ```
 converters/rust/security-reports/
 ├── cargo-audit-TIMESTAMP.log
@@ -452,15 +471,15 @@ converters/rust/security-reports/
 
 ## 13. Comparison: Rust vs Node.js
 
-| Metric | Node.js | Rust | Status |
-|--------|---------|------|--------|
-| Build | ✅ Pass | ✅ Pass | Equal |
-| Tests | ✅ 15/15 | ⚠️ Partial | Node ahead |
-| Security | ✅ Clean | ✅ Clean | Equal |
-| Type Safety | ✅ TypeScript | ✅ Rust | Equal |
-| Performance | Good | Excellent | Rust advantage |
-| WASM Support | ❌ No | ✅ Yes | Rust advantage |
-| Maturity | ✅ Complete | ⚠️ In Progress | Node ahead |
+| Metric       | Node.js       | Rust           | Status         |
+| ------------ | ------------- | -------------- | -------------- |
+| Build        | ✅ Pass       | ✅ Pass        | Equal          |
+| Tests        | ✅ 15/15      | ⚠️ Partial     | Node ahead     |
+| Security     | ✅ Clean      | ✅ Clean       | Equal          |
+| Type Safety  | ✅ TypeScript | ✅ Rust        | Equal          |
+| Performance  | Good          | Excellent      | Rust advantage |
+| WASM Support | ❌ No         | ✅ Yes         | Rust advantage |
+| Maturity     | ✅ Complete   | ⚠️ In Progress | Node ahead     |
 
 ---
 
@@ -468,21 +487,21 @@ converters/rust/security-reports/
 
 ### 14.1 Security Risks
 
-| Risk | Severity | Status | Mitigation |
-|------|----------|--------|------------|
-| Dependency vulnerabilities | LOW | ✅ None found | Regular `cargo audit` |
-| Unsafe code in crate | LOW | ✅ None found | Verified by geiger |
-| Supply chain attacks | MEDIUM | ⚠️ Monitoring | Use `cargo-deny` |
-| WASM security | LOW | ✅ Isolated | Sandboxed execution |
+| Risk                       | Severity | Status        | Mitigation            |
+| -------------------------- | -------- | ------------- | --------------------- |
+| Dependency vulnerabilities | LOW      | ✅ None found | Regular `cargo audit` |
+| Unsafe code in crate       | LOW      | ✅ None found | Verified by geiger    |
+| Supply chain attacks       | MEDIUM   | ⚠️ Monitoring | Use `cargo-deny`      |
+| WASM security              | LOW      | ✅ Isolated   | Sandboxed execution   |
 
 ### 14.2 Quality Risks
 
-| Risk | Severity | Status | Mitigation |
-|------|----------|--------|------------|
-| Incomplete implementation | HIGH | ⚠️ Active | Continue development |
-| Test coverage | MEDIUM | ⚠️ Partial | Add comprehensive tests |
-| Documentation | LOW | ✅ Good | Maintain docs |
-| Performance | LOW | ✅ Optimized | Add benchmarks |
+| Risk                      | Severity | Status       | Mitigation              |
+| ------------------------- | -------- | ------------ | ----------------------- |
+| Incomplete implementation | HIGH     | ⚠️ Active    | Continue development    |
+| Test coverage             | MEDIUM   | ⚠️ Partial   | Add comprehensive tests |
+| Documentation             | LOW      | ✅ Good      | Maintain docs           |
+| Performance               | LOW      | ✅ Optimized | Add benchmarks          |
 
 ---
 
@@ -500,16 +519,16 @@ The Rust converter infrastructure is **production-ready** from a security and to
 
 ### 15.2 Readiness Assessment
 
-| Component | Readiness | Notes |
-|-----------|-----------|-------|
-| Build system | 🟢 100% | Cargo configured correctly |
-| Security tools | 🟢 100% | All tools installed and working |
-| Type system | 🟢 100% | Comprehensive type definitions |
-| Error handling | 🟢 100% | Robust error types |
-| WASM support | 🟢 100% | Feature-complete bindings |
-| Core logic | 🟡 40% | Implementation in progress |
-| Tests | 🟡 30% | Structure ready, needs implementation |
-| Documentation | 🟢 90% | Good coverage |
+| Component      | Readiness | Notes                                 |
+| -------------- | --------- | ------------------------------------- |
+| Build system   | 🟢 100%   | Cargo configured correctly            |
+| Security tools | 🟢 100%   | All tools installed and working       |
+| Type system    | 🟢 100%   | Comprehensive type definitions        |
+| Error handling | 🟢 100%   | Robust error types                    |
+| WASM support   | 🟢 100%   | Feature-complete bindings             |
+| Core logic     | 🟡 40%    | Implementation in progress            |
+| Tests          | 🟡 30%    | Structure ready, needs implementation |
+| Documentation  | 🟢 90%    | Good coverage                         |
 
 ### 15.3 Next Steps
 

@@ -132,7 +132,16 @@
           "type": "string",
           "title": "kind",
           "description": "The kind of type this is",
-          "enum": ["SCALAR", "OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "LIST", "NON_NULL"],
+          "enum": [
+            "SCALAR",
+            "OBJECT",
+            "INTERFACE",
+            "UNION",
+            "ENUM",
+            "INPUT_OBJECT",
+            "LIST",
+            "NON_NULL"
+          ],
           "x-graphql": {
             "type": "__TypeKind!"
           }
@@ -416,7 +425,16 @@
       "type": "string",
       "title": "__TypeKind",
       "description": "The kinds of possible types of a GraphQL type system.",
-      "enum": ["SCALAR", "OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "LIST", "NON_NULL"],
+      "enum": [
+        "SCALAR",
+        "OBJECT",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "INPUT_OBJECT",
+        "LIST",
+        "NON_NULL"
+      ],
       "x-graphql": {
         "type": "enum",
         "typeName": "__TypeKind"

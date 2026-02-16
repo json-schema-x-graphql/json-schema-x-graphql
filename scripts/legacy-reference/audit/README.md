@@ -11,6 +11,7 @@ The scripts audit tracks the conversion of CLI-only scripts into testable, progr
 ## Documents
 
 ### [`scripts-audit.md`](scripts-audit.md)
+
 **Comprehensive audit and implementation plan for all scripts**
 
 - Complete inventory of all scripts in `scripts/`
@@ -21,6 +22,7 @@ The scripts audit tracks the conversion of CLI-only scripts into testable, progr
 - Status tracking for all scripts
 
 **Use this document for:**
+
 - Understanding what needs to be done for each script
 - Tracking implementation progress
 - Reference for testing standards
@@ -31,7 +33,9 @@ The scripts audit tracks the conversion of CLI-only scripts into testable, progr
 ## Quick Overview
 
 ### Goal
+
 Convert long-running CLI-only scripts into modules that:
+
 1. Export programmatic functions for testing and reuse
 2. Keep thin CLI wrappers for command-line usage
 3. Have comprehensive unit tests (80%+ coverage for generators, 90%+ for validators)
@@ -40,20 +44,24 @@ Convert long-running CLI-only scripts into modules that:
 ### Phases
 
 **Phase 1: Core Generators (Weeks 1-2)**
+
 - Fix blocking function signature issue
 - Convert 4 core generator scripts
 - Add unit tests for all generators
 
 **Phase 2: Validators (Weeks 2-3)**
+
 - Convert 3 validator scripts
 - Add unit tests for all validators
 
 **Phase 3: Consolidation (Weeks 3-4)**
+
 - Extract common GraphQL hints logic
 - Create shared library modules
 - Consolidate duplicate code
 
 **Phase 4: Testing & Documentation (Weeks 4-5)**
+
 - Complete test coverage
 - Full API documentation
 - CI/CD enhancements
@@ -65,6 +73,7 @@ Convert long-running CLI-only scripts into modules that:
 **Overall Progress:** 15% complete
 
 **Phase 1:** 🔄 In Progress (1 blocker)
+
 - ⚠️ **BLOCKER:** `generate-graphql-json-schema.mjs` function signature mismatch
 - Must be resolved before proceeding
 
@@ -80,13 +89,14 @@ Convert long-running CLI-only scripts into modules that:
 ✅ Generators write to both `generated-schemas/` and `src/data/generated/`  
 ✅ Legacy pages and archived files reorganized  
 ✅ One-off conversion scripts moved to `scripts/dev/`  
-✅ CI workflow updated for schema generation and publishing  
+✅ CI workflow updated for schema generation and publishing
 
 ---
 
 ## Script Inventory Summary
 
 ### Generators (8 scripts)
+
 - `generate-graphql-from-json-schema.mjs` — ✅ Updated, ❌ Needs tests
 - `generate-graphql-json-schema.mjs` — ⚠️ Signature issue, ❌ Needs tests
 - `generate-graphql-json-schema-v2.mjs` — 🔄 Needs review and tests
@@ -97,12 +107,14 @@ Convert long-running CLI-only scripts into modules that:
 - `generate-field-mapping.mjs` — ✅ Updated, ❌ Needs tests
 
 ### Validators (4 scripts)
+
 - `validate-schema.mjs` — ✅ Updated, ❌ Needs exports and tests
 - `validate-graphql-vs-jsonschema.mjs` — ✅ Updated, ❌ Needs exports and tests
 - `validate-graphql-vs-jsonschema-v2.mjs` — ✅ Updated, ❌ Needs exports and tests
 - `validate-schema-sync.mjs` — ✅ Updated, ❌ Needs exports and tests
 
 ### Helpers (5 modules)
+
 - `helpers/case-conversion.mjs` — ✅ Working, ❌ Needs tests
 - `helpers/format-json.mjs` — ✅ Working, ❌ Needs tests
 - `generate-graphql-json-schema-helpers.mjs` — ✅ Working, ❌ Needs tests
@@ -110,6 +122,7 @@ Convert long-running CLI-only scripts into modules that:
 - `json-to-graphql.config.mjs` — ✅ Updated, ❌ Needs tests
 
 ### Status Legend
+
 - ✅ Complete / Working correctly
 - ⚠️ Blocking issue / Needs immediate fix
 - 🔄 In progress / Needs work
@@ -120,11 +133,13 @@ Convert long-running CLI-only scripts into modules that:
 ## Next Actions
 
 ### Week 1 (Current)
+
 1. **🔴 HIGH:** Fix `generate-graphql-json-schema.mjs` function signature (BLOCKER)
 2. **🟡 MEDIUM:** Create test fixtures directory structure
 3. **🟡 MEDIUM:** Start converting `generate-graphql-from-json-schema.mjs`
 
 ### Week 2
+
 1. Complete all Phase 1 generator conversions
 2. Ensure all 4 core generators have unit tests
 3. Validate pointer resolution with snake_case
@@ -134,6 +149,7 @@ Convert long-running CLI-only scripts into modules that:
 ## Testing Strategy
 
 ### Test Organization
+
 ```
 __tests__/
 ├── scripts/           # Generator & validator tests
@@ -145,11 +161,13 @@ __tests__/
 ```
 
 ### Coverage Goals
+
 - **Generators:** 80%+ coverage
 - **Validators:** 90%+ coverage
 - **Helpers:** 95%+ coverage
 
 ### Commands
+
 ```bash
 pnpm test:scripts       # Run script tests
 pnpm test:helpers       # Run helper tests
@@ -161,6 +179,7 @@ pnpm test:coverage      # Run with coverage report
 ## Documentation Standards
 
 All exported functions must have JSDoc with:
+
 1. Description of what the function does
 2. `@param` tags for all parameters with types and descriptions
 3. `@returns` tag with return type and description
@@ -168,10 +187,11 @@ All exported functions must have JSDoc with:
 5. `@example` tag with usage example
 
 Example:
+
 ```javascript
 /**
  * Generate GraphQL SDL from JSON Schema with snake_case field support
- * 
+ *
  * @param {string} inputPath - Path to input JSON Schema file
  * @param {string} outputPath - Path to output GraphQL SDL file
  * @param {object} options - Generation options
@@ -179,14 +199,18 @@ Example:
  * @param {boolean} [options.publishToGenerated=true] - Copy to src/data/generated/
  * @returns {Promise<{success: boolean, sdl: string, errors?: string[]}>}
  * @throws {Error} If input file doesn't exist or is invalid
- * 
+ *
  * @example
  * const result = await generateFromJSONSchema(
  *   'src/data/schema_unification.schema.json',
  *   'generated-schemas/schema_unification.sdl.graphql'
  * );
  */
-export async function generateFromJSONSchema(inputPath, outputPath, options = {}) {
+export async function generateFromJSONSchema(
+  inputPath,
+  outputPath,
+  options = {},
+) {
   // Implementation
 }
 ```

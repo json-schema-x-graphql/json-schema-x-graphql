@@ -7,8 +7,8 @@
  */
 export function camelToSnake(str: string): string {
   return str
-    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
-    .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
     .toLowerCase();
 }
 
@@ -24,16 +24,16 @@ export function snakeToCamel(str: string): string {
  */
 export function convertObjectKeys(
   obj: any,
-  converter: (key: string) => string
+  converter: (key: string) => string,
 ): any {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertObjectKeys(item, converter));
-  } else if (obj !== null && typeof obj === 'object') {
+  } else if (obj !== null && typeof obj === "object") {
     return Object.fromEntries(
       Object.entries(obj).map(([key, value]) => [
         converter(key),
         convertObjectKeys(value, converter),
-      ])
+      ]),
     );
   }
   return obj;
@@ -44,9 +44,10 @@ export function convertObjectKeys(
  */
 export function convertGraphQLFields(
   sdl: string,
-  converter: (field: string) => string
+  converter: (field: string) => string,
 ): string {
-  return sdl.replace(/(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g, (match, ws, field) =>
-    `${ws}${converter(field)}:`
+  return sdl.replace(
+    /(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g,
+    (match, ws, field) => `${ws}${converter(field)}:`,
   );
 }

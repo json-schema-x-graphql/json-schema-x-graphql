@@ -16,9 +16,13 @@
  *   --verbose            Show detailed validation information
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import { validateSchema, formatValidationErrors, ValidationResult } from './x-graphql-validator';
+import * as fs from "fs";
+import * as path from "path";
+import {
+  validateSchema,
+  formatValidationErrors,
+  ValidationResult,
+} from "./x-graphql-validator";
 
 interface CliOptions {
   failOnWarning: boolean;
@@ -41,26 +45,26 @@ function parseArgs(args: string[]): CliOptions {
     const arg = args[i];
 
     switch (arg) {
-      case '--fail-on-warning':
+      case "--fail-on-warning":
         options.failOnWarning = true;
         break;
-      case '--json':
+      case "--json":
         options.json = true;
         break;
-      case '--quiet':
+      case "--quiet":
         options.quiet = true;
         break;
-      case '--verbose':
-      case '-v':
+      case "--verbose":
+      case "-v":
         options.verbose = true;
         break;
-      case '--help':
-      case '-h':
+      case "--help":
+      case "-h":
         showHelp();
         process.exit(0);
         break;
       default:
-        if (!arg.startsWith('--')) {
+        if (!arg.startsWith("--")) {
           options.files.push(arg);
         } else {
           console.error(`Unknown option: ${arg}`);
@@ -124,7 +128,7 @@ function findSchemaFiles(target: string): string[] {
   const stat = fs.statSync(target);
 
   if (stat.isFile()) {
-    if (target.endsWith('.json')) {
+    if (target.endsWith(".json")) {
       files.push(target);
     }
   } else if (stat.isDirectory()) {
@@ -140,10 +144,13 @@ function findSchemaFiles(target: string): string[] {
 
 function loadSchema(filePath: string): Record<string, unknown> | null {
   try {
-    const content = fs.readFileSync(filePath, 'utf-8');
+    const content = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(content);
   } catch (error) {
-    console.error(`Error loading schema from ${filePath}:`, (error as Error).message);
+    console.error(
+      `Error loading schema from ${filePath}:`,
+      (error as Error).message,
+    );
     return null;
   }
 }
@@ -157,8 +164,8 @@ function validateFile(filePath: string, options: CliOptions): ValidationResult {
       errors: [
         {
           path: filePath,
-          message: 'Failed to load or parse schema file',
-          severity: 'error',
+          message: "Failed to load or parse schema file",
+          severity: "error",
         },
       ],
       warnings: [],
@@ -173,7 +180,10 @@ interface FileValidationResult {
   result: ValidationResult;
 }
 
-function validateFiles(files: string[], options: CliOptions): FileValidationResult[] {
+function validateFiles(
+  files: string[],
+  options: CliOptions,
+): FileValidationResult[] {
   const results: FileValidationResult[] = [];
 
   for (const file of files) {
@@ -188,7 +198,10 @@ function validateFiles(files: string[], options: CliOptions): FileValidationResu
   return results;
 }
 
-function outputResults(results: FileValidationResult[], options: CliOptions): number {
+function outputResults(
+  results: FileValidationResult[],
+  options: CliOptions,
+): number {
   let totalErrors = 0;
   let totalWarnings = 0;
 
@@ -210,7 +223,10 @@ function outputResults(results: FileValidationResult[], options: CliOptions): nu
       totalErrors += result.errors.length;
       totalWarnings += result.warnings.length;
 
-      if (result.errors.length === 0 && (result.warnings.length === 0 || options.quiet)) {
+      if (
+        result.errors.length === 0 &&
+        (result.warnings.length === 0 || options.quiet)
+      ) {
         if (options.verbose) {
           console.log(`✓ ${file}: Valid`);
         }
@@ -220,7 +236,7 @@ function outputResults(results: FileValidationResult[], options: CliOptions): nu
       console.log(`\n${file}:`);
 
       if (result.errors.length > 0) {
-        console.log('  Errors:');
+        console.log("  Errors:");
         for (const error of result.errors) {
           console.log(`    ✗ [${error.path}] ${error.message}`);
           if (options.verbose && error.attribute) {
@@ -230,7 +246,7 @@ function outputResults(results: FileValidationResult[], options: CliOptions): nu
       }
 
       if (result.warnings.length > 0 && !options.quiet) {
-        console.log('  Warnings:');
+        console.log("  Warnings:");
         for (const warning of result.warnings) {
           console.log(`    ⚠ [${warning.path}] ${warning.message}`);
           if (options.verbose && warning.attribute) {
@@ -241,7 +257,7 @@ function outputResults(results: FileValidationResult[], options: CliOptions): nu
     }
 
     console.log();
-    console.log('Summary:');
+    console.log("Summary:");
     console.log(`  Files validated: ${results.length}`);
     console.log(`  Total errors: ${totalErrors}`);
     if (!options.quiet) {
@@ -265,7 +281,7 @@ function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.error('Error: No schema files specified\n');
+    console.error("Error: No schema files specified\n");
     showHelp();
     process.exit(3);
   }
@@ -273,7 +289,7 @@ function main() {
   const options = parseArgs(args);
 
   if (options.files.length === 0) {
-    console.error('Error: No schema files specified\n');
+    console.error("Error: No schema files specified\n");
     showHelp();
     process.exit(3);
   }
@@ -289,7 +305,7 @@ function main() {
   }
 
   if (allFiles.length === 0) {
-    console.error('Error: No JSON schema files found');
+    console.error("Error: No JSON schema files found");
     process.exit(3);
   }
 

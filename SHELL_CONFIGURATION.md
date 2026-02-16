@@ -1,9 +1,11 @@
 # Shell Configuration Summary
 
 ## Overview
+
 This document summarizes the shell configuration changes made to ensure `cargo` and `pnpm` are always available.
 
 ## Date
+
 December 30, 2024
 
 ---
@@ -15,16 +17,19 @@ December 30, 2024
 Added Rust environment initialization to all shell configuration files to ensure `cargo` is available in new shell sessions.
 
 **Files Modified:**
+
 - `~/.bashrc` - For bash interactive shells
 - `~/.profile` - For login shells (sourced by bash, sh, and other shells)
 - `~/.zshrc` - For zsh interactive shells
 
 **Line Added:**
+
 ```bash
 . "$HOME/.cargo/env"
 ```
 
 **Effect:**
+
 - `cargo` command is now available in all new terminal sessions
 - Rust toolchain binaries are in `$PATH` automatically
 - No need to manually source the environment file
@@ -34,16 +39,19 @@ Added Rust environment initialization to all shell configuration files to ensure
 Added alias to redirect `npm` commands to `pnpm` automatically.
 
 **Files Modified:**
+
 - `~/.bashrc` - For bash interactive shells
 - `~/.profile` - For login shells
 - `~/.zshrc` - For zsh interactive shells
 
 **Line Added:**
+
 ```bash
 alias npm='pnpm'
 ```
 
 **Effect:**
+
 - Running `npm install` will execute `pnpm install` instead
 - Running `npm run test` will execute `pnpm run test` instead
 - All `npm` commands transparently use `pnpm`
@@ -120,6 +128,7 @@ Created: `converters/rust/cargo.sh`
 A convenience script that sources the Rust environment before running cargo. Useful in environments where the shell config hasn't been loaded yet.
 
 **Usage:**
+
 ```bash
 cd converters/rust
 ./cargo.sh test --lib
@@ -127,6 +136,7 @@ cd converters/rust
 ```
 
 **Content:**
+
 ```bash
 #!/bin/bash
 # Cargo wrapper script that ensures Rust environment is loaded
@@ -159,6 +169,7 @@ This project uses `pnpm` as its package manager (which is faster and more disk-e
 If you run scripts that invoke `cargo` and get "command not found" errors:
 
 1. Ensure the script sources the environment:
+
    ```bash
    #!/bin/bash
    . "$HOME/.cargo/env"
@@ -175,11 +186,13 @@ If you run scripts that invoke `cargo` and get "command not found" errors:
 If the `npm` alias doesn't work:
 
 1. Verify the alias is defined:
+
    ```bash
    alias npm
    ```
 
 2. If not, source your shell config:
+
    ```bash
    source ~/.bashrc   # for bash
    source ~/.zshrc    # for zsh
@@ -192,12 +205,14 @@ If the `npm` alias doesn't work:
 If you need to use the actual `npm` command (not pnpm), you can:
 
 1. **Temporarily bypass the alias:**
+
    ```bash
    \npm --version    # backslash bypasses aliases
    command npm --version
    ```
 
 2. **Remove the alias for the session:**
+
    ```bash
    unalias npm
    ```
@@ -221,6 +236,7 @@ If you need to use the actual `npm` command (not pnpm), you can:
 ## Summary of Current Shell Config
 
 ### ~/.bashrc (relevant lines)
+
 ```bash
 export PATH=$HOME/.local/bin:$PATH
 . "$HOME/.cargo/env"
@@ -228,6 +244,7 @@ alias npm='pnpm'
 ```
 
 ### ~/.profile (relevant lines)
+
 ```bash
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
@@ -237,6 +254,7 @@ alias npm='pnpm'
 ```
 
 ### ~/.zshrc (relevant lines)
+
 ```bash
 . "$HOME/.cargo/env"
 alias npm='pnpm'
@@ -249,6 +267,7 @@ alias npm='pnpm'
 ✅ **Complete** - All shell configurations updated and tested.
 
 **Next Steps:**
+
 - Restart your terminal or source the config files
 - Verify with `cargo --version` and `alias npm`
 - Use `npm` commands (they will run `pnpm` automatically)

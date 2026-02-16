@@ -1,15 +1,15 @@
-import { parse, printSchema, buildASTSchema, visit } from 'graphql';
+import { parse, printSchema, buildASTSchema, visit } from "graphql";
 
 /**
  * Compose multiple GraphQL subgraphs into a unified supergraph
- * 
+ *
  * @param {Map<string, string>} subgraphs - Map of schemaId -> GraphQL SDL
  * @param {Object} options - Composition options
  * @returns {{success: boolean, sdl: string, errors: string[], stats: CompositionStats}}
  */
 export function composeSupergraph(subgraphs, options = {}) {
   const {
-    mergeStrategy = 'extend',
+    mergeStrategy = "extend",
     includeRootQuery = true,
     federationMode = false,
   } = options;
@@ -25,7 +25,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         parsedSubgraphs.set(schemaId, doc);
       } catch (parseError) {
         errors.push(
-          `Failed to parse subgraph ${schemaId}: ${parseError.message}`
+          `Failed to parse subgraph ${schemaId}: ${parseError.message}`,
         );
       }
     }
@@ -34,7 +34,7 @@ export function composeSupergraph(subgraphs, options = {}) {
       // All subgraphs failed to parse
       return {
         success: false,
-        sdl: '',
+        sdl: "",
         errors,
         stats: { totalTypes: 0, totalFields: 0, mergedTypes: 0, conflicts: [] },
       };
@@ -51,13 +51,13 @@ export function composeSupergraph(subgraphs, options = {}) {
         if (!typeName) continue;
 
         // Skip special types
-        if (['Query', 'Mutation', 'Subscription'].includes(typeName)) {
-          if (!typeRegistry.has('_rootTypes')) {
-            typeRegistry.set('_rootTypes', []);
-            typeSourceMap.set('_rootTypes', []);
+        if (["Query", "Mutation", "Subscription"].includes(typeName)) {
+          if (!typeRegistry.has("_rootTypes")) {
+            typeRegistry.set("_rootTypes", []);
+            typeSourceMap.set("_rootTypes", []);
           }
-          typeRegistry.get('_rootTypes').push(def);
-          typeSourceMap.get('_rootTypes').push(schemaId);
+          typeRegistry.get("_rootTypes").push(def);
+          typeSourceMap.get("_rootTypes").push(schemaId);
           continue;
         }
 
@@ -71,13 +71,13 @@ export function composeSupergraph(subgraphs, options = {}) {
             strategy: mergeStrategy,
             fieldCount: def.fields?.length || 0,
           };
-          
+
           conflicts.push(conflictInfo);
 
-          if (mergeStrategy === 'extend') {
+          if (mergeStrategy === "extend") {
             // Keep existing, skip duplicate
             continue;
-          } else if (mergeStrategy === 'union') {
+          } else if (mergeStrategy === "union") {
             // Mark as union
             // This would require more sophisticated merging
             continue;
@@ -97,7 +97,7 @@ export function composeSupergraph(subgraphs, options = {}) {
     let fieldCount = 0;
 
     for (const [typeName, def] of typeRegistry.entries()) {
-      if (typeName === '_rootTypes') continue;
+      if (typeName === "_rootTypes") continue;
       if (!def.kind) continue;
 
       const sdlString = definitionToSDL(def);
@@ -114,31 +114,31 @@ export function composeSupergraph(subgraphs, options = {}) {
 
     // 4. Create or merge root types
     if (includeRootQuery) {
-      const rootTypeDefs = typeRegistry.get('_rootTypes') || [];
+      const rootTypeDefs = typeRegistry.get("_rootTypes") || [];
       const queryFields = [];
 
       for (const def of rootTypeDefs) {
-        if (def.name?.value === 'Query' && def.fields) {
+        if (def.name?.value === "Query" && def.fields) {
           queryFields.push(...def.fields);
         }
       }
 
       // If no Query type exists, create a minimal one
       if (queryFields.length === 0) {
-        sdlLines.unshift('type Query {\n  _empty: String\n}\n');
+        sdlLines.unshift("type Query {\n  _empty: String\n}\n");
         typeCount++;
       } else {
         // Create Query type with merged fields
         const fieldSDLs = queryFields
-          .map(f => `  ${fieldToSDL(f)}`)
-          .join('\n');
+          .map((f) => `  ${fieldToSDL(f)}`)
+          .join("\n");
         sdlLines.unshift(`type Query {\n${fieldSDLs}\n}\n`);
         typeCount++;
         fieldCount += queryFields.length;
       }
     }
 
-    const finalSDL = sdlLines.filter(Boolean).join('\n\n');
+    const finalSDL = sdlLines.filter(Boolean).join("\n\n");
 
     return {
       success: errors.length === 0,
@@ -147,7 +147,9 @@ export function composeSupergraph(subgraphs, options = {}) {
       stats: {
         totalTypes: typeCount,
         totalFields: fieldCount,
-        mergedTypes: Array.from(typeRegistry.values()).filter(d => d && d.kind).length,
+        mergedTypes: Array.from(typeRegistry.values()).filter(
+          (d) => d && d.kind,
+        ).length,
         conflicts: conflicts, // Return full conflict objects, not just strings
       },
     };
@@ -155,7 +157,7 @@ export function composeSupergraph(subgraphs, options = {}) {
     errors.push(`Composition failed: ${error.message}`);
     return {
       success: false,
-      sdl: '',
+      sdl: "",
       errors,
       stats: { totalTypes: 0, totalFields: 0, mergedTypes: 0, conflicts: [] },
     };
@@ -167,12 +169,12 @@ export function composeSupergraph(subgraphs, options = {}) {
  * @private
  */
 function definitionToSDL(def) {
-  if (!def) return '';
+  if (!def) return "";
 
   const { kind, name, description, fields, interfaces } = def;
-  const typeName = name?.value || 'Unknown';
+  const typeName = name?.value || "Unknown";
 
-  let sdl = '';
+  let sdl = "";
 
   // Description
   if (description?.value) {
@@ -181,51 +183,49 @@ function definitionToSDL(def) {
 
   // Type declaration
   switch (kind) {
-    case 'ObjectTypeDefinition': {
+    case "ObjectTypeDefinition": {
       const implStr = interfaces?.length
-        ? ` implements ${interfaces.map(i => i.name.value).join(' & ')}`
-        : '';
+        ? ` implements ${interfaces.map((i) => i.name.value).join(" & ")}`
+        : "";
       sdl += `type ${typeName}${implStr} {\n`;
       if (fields?.length) {
-        sdl += fields.map(f => `  ${fieldToSDL(f)}`).join('\n');
+        sdl += fields.map((f) => `  ${fieldToSDL(f)}`).join("\n");
       }
-      sdl += '\n}';
+      sdl += "\n}";
       break;
     }
 
-    case 'InterfaceTypeDefinition': {
+    case "InterfaceTypeDefinition": {
       sdl += `interface ${typeName} {\n`;
       if (fields?.length) {
-        sdl += fields.map(f => `  ${fieldToSDL(f)}`).join('\n');
+        sdl += fields.map((f) => `  ${fieldToSDL(f)}`).join("\n");
       }
-      sdl += '\n}';
+      sdl += "\n}";
       break;
     }
 
-    case 'EnumTypeDefinition': {
+    case "EnumTypeDefinition": {
       sdl += `enum ${typeName} {\n`;
       if (def.values?.length) {
-        sdl += def.values
-          .map(v => `  ${v.name?.value || ''}`)
-          .join('\n');
+        sdl += def.values.map((v) => `  ${v.name?.value || ""}`).join("\n");
       }
-      sdl += '\n}';
+      sdl += "\n}";
       break;
     }
 
-    case 'UnionTypeDefinition': {
-      const types = def.types?.map(t => t.name?.value).join(' | ') || '';
+    case "UnionTypeDefinition": {
+      const types = def.types?.map((t) => t.name?.value).join(" | ") || "";
       sdl += `union ${typeName} = ${types}`;
       break;
     }
 
-    case 'ScalarTypeDefinition': {
+    case "ScalarTypeDefinition": {
       sdl += `scalar ${typeName}`;
       break;
     }
 
     default:
-      return '';
+      return "";
   }
 
   return sdl;
@@ -236,13 +236,13 @@ function definitionToSDL(def) {
  * @private
  */
 function fieldToSDL(field) {
-  if (!field) return '';
+  if (!field) return "";
 
-  const name = field.name?.value || '';
+  const name = field.name?.value || "";
   const type = typeToSDL(field.type);
   const args = field.arguments?.length
-    ? `(${field.arguments.map(a => `${a.name?.value}: ${typeToSDL(a.type)}`).join(', ')})`
-    : '';
+    ? `(${field.arguments.map((a) => `${a.name?.value}: ${typeToSDL(a.type)}`).join(", ")})`
+    : "";
 
   return `${name}${args}: ${type}`;
 }
@@ -252,21 +252,21 @@ function fieldToSDL(field) {
  * @private
  */
 function typeToSDL(type) {
-  if (!type) return 'String';
+  if (!type) return "String";
 
-  if (type.kind === 'NonNullType') {
+  if (type.kind === "NonNullType") {
     return `${typeToSDL(type.type)}!`;
   }
 
-  if (type.kind === 'ListType') {
+  if (type.kind === "ListType") {
     return `[${typeToSDL(type.type)}]`;
   }
 
-  if (type.kind === 'NamedType') {
-    return type.name?.value || 'String';
+  if (type.kind === "NamedType") {
+    return type.name?.value || "String";
   }
 
-  return 'String';
+  return "String";
 }
 
 /**
@@ -292,8 +292,8 @@ export function validateSupergraphSDL(sdl) {
     parse(sdl);
 
     // Basic validation
-    if (!sdl.includes('type Query')) {
-      errors.push('Supergraph must have a Query type');
+    if (!sdl.includes("type Query")) {
+      errors.push("Supergraph must have a Query type");
     }
 
     return {

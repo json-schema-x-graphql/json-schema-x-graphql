@@ -8,7 +8,13 @@
   "x-graphql-enums": {
     "SystemName": {
       "description": "Enumeration of system identifiers",
-      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+      "values": [
+        "Legacy Procurement",
+        "Intake Process",
+        "Logistics Mgmt",
+        "Contract Data",
+        "PRISM"
+      ]
     }
   },
 

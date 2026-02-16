@@ -1,0 +1,124 @@
+type Level2 {
+  "Bottom of the rabbit hole"
+  level1: String
+}
+
+type Level3 {
+  level2: Level2
+}
+
+type Level4 {
+  level3: Level3
+}
+
+type Level5 {
+  level4: Level4
+}
+
+type Level6 {
+  level5: Level5
+}
+
+type Level7 {
+  level6: Level6
+}
+
+type Level8 {
+  level7: Level7
+}
+
+type Level9 {
+  level8: Level8
+}
+
+type Level10 {
+  level9: Level9
+}
+
+type Level11 {
+  level10: Level10
+}
+
+type Level12 {
+  level11: Level11
+}
+
+type Level13 {
+  level12: Level12
+}
+
+type Level14 {
+  level13: Level13
+}
+
+type Level15 {
+  level14: Level14
+}
+
+type Level16 {
+  level15: Level15
+}
+
+type Level17 {
+  level16: Level16
+}
+
+type Level18 {
+  level17: Level17
+}
+
+type Level19 {
+  level18: Level18
+}
+
+type Level20 {
+  level19: Level19
+}
+
+type Level21 {
+  level20: Level20
+}
+
+type Level22 {
+  level21: Level21
+}
+
+type Level23 {
+  level22: Level22
+}
+
+type Level24 {
+  level23: Level23
+}
+
+type Level25 {
+  level24: Level24
+}
+
+type Level26 {
+  level25: Level25
+}
+
+type Level27 {
+  level26: Level26
+}
+
+type Level28 {
+  level27: Level27
+}
+
+type Level29 {
+  level28: Level28
+}
+
+type Level30 {
+  level29: Level29
+}
+
+type Root {
+  level30: Level30
+}
+
+type Deeplynestedschema {
+  root: Root
+}

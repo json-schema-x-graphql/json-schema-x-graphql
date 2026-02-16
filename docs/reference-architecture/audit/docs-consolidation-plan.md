@@ -50,23 +50,24 @@ The `/docs` directory currently contains **38 markdown files** with significant 
 
 ### Document Count by Category
 
-| Category | Count | Files |
-|----------|-------|-------|
-| **Implementation Logs** | 11 | GRAPHQL-*.md, V1-TO-V2-*.md, BENCHMARK-*.md, VOYAGER-*.md, MERMAID-*.md, SCHEMA-RESTRUCTURING-*.md |
-| **User Guides** | 8 | x-graphql-*.md, graphql-extensions-guide.md, PYTHON-VALIDATION-*.md, SCHEMA-LINTING-*.md, Reporting-*.md |
-| **Reference Docs** | 5 | schema-*.md, transformation*.md, why.md, BusinessPlan.md |
-| **System Mappings** | 3 | pertrified2*.md (contract_data, legacy_procurement, intake_process) |
-| **External Systems** | 2 | fiscal.treasury.gov.md, deltalake.md |
-| **Diagrams** | 2 | schema_unification-v1-diagram.md, schema_unification-v2-diagram.md |
-| **ADRs** | 4 | adr/*.md (including README) |
-| **Meta** | 1 | README.md |
-| **Assets** | 2 | APIs/*.xml, APIs/*.yaml, diagrams/*.svg |
+| Category                | Count | Files                                                                                                    |
+| ----------------------- | ----- | -------------------------------------------------------------------------------------------------------- |
+| **Implementation Logs** | 11    | GRAPHQL-_.md, V1-TO-V2-_.md, BENCHMARK-_.md, VOYAGER-_.md, MERMAID-_.md, SCHEMA-RESTRUCTURING-_.md       |
+| **User Guides**         | 8     | x-graphql-_.md, graphql-extensions-guide.md, PYTHON-VALIDATION-_.md, SCHEMA-LINTING-_.md, Reporting-_.md |
+| **Reference Docs**      | 5     | schema-_.md, transformation_.md, why.md, BusinessPlan.md                                                 |
+| **System Mappings**     | 3     | pertrified2\*.md (contract_data, legacy_procurement, intake_process)                                     |
+| **External Systems**    | 2     | fiscal.treasury.gov.md, deltalake.md                                                                     |
+| **Diagrams**            | 2     | schema_unification-v1-diagram.md, schema_unification-v2-diagram.md                                       |
+| **ADRs**                | 4     | adr/\*.md (including README)                                                                             |
+| **Meta**                | 1     | README.md                                                                                                |
+| **Assets**              | 2     | APIs/_.xml, APIs/_.yaml, diagrams/\*.svg                                                                 |
 
 **Total:** 38 markdown files + assets
 
 ### Redundancy Analysis
 
 #### GraphQL Documentation (5 files → consolidate to 2)
+
 - `GRAPHQL-SCHEMA-ANALYSIS-AND-STRATEGY.md` — analysis and comparison
 - `GRAPHQL-CONVERTER-BUG-FIXES.md` — implementation log
 - `graphql-extensions-guide.md` — user guide for extensions
@@ -76,6 +77,7 @@ The `/docs` directory currently contains **38 markdown files** with significant 
 **Recommendation:** Keep `x-graphql-hints-guide.md` (comprehensive) and `x-graphql-quick-reference.md` (reference). Archive implementation logs.
 
 #### V1/V2 Comparison (4 files → consolidate to 1)
+
 - `V1-VS-V2-QUICK-REFERENCE.md` — quick comparison
 - `V1-VS-V2-SCHEMA-COMPARISON.md` — detailed comparison
 - `V1-TO-V2-CONVERTER-RESULTS.md` — conversion results log
@@ -84,6 +86,7 @@ The `/docs` directory currently contains **38 markdown files** with significant 
 **Recommendation:** Consolidate into single `schema-v1-vs-v2-guide.md`. Archive implementation logs.
 
 #### Schema Management (5 files → consolidate to 2)
+
 - `schema-pipeline.md` — generation pipeline
 - `schemaManagement.md` — management guide
 - `schema-tooling-alternatives.md` — tooling comparison
@@ -93,6 +96,7 @@ The `/docs` directory currently contains **38 markdown files** with significant 
 **Recommendation:** Consolidate into `schema-pipeline-guide.md` and `schema-tooling-reference.md`. Archive TODO and migration log.
 
 #### Implementation Logs (6 files → archive all)
+
 - `BENCHMARK-SETUP-COMPLETE.md`
 - `GRAPHQL-CONVERTER-BUG-FIXES.md`
 - `GRAPHQL-VOYAGER-PAGES.md`
@@ -171,6 +175,7 @@ Historical Archive (docs/archived/)
 ### Target: 15 Core Documents
 
 #### Essential (Always Keep)
+
 1. `README.md` — Documentation system overview
 2. `why.md` — Project rationale and vision
 3. `x-graphql-hints-guide.md` — Comprehensive x-graphql guide
@@ -178,6 +183,7 @@ Historical Archive (docs/archived/)
 5. `adr/` — All ADRs (4 files)
 
 #### New Consolidated Guides (Create)
+
 6. `quick-start.md` — 5-minute getting started guide
 7. `schema-pipeline-guide.md` — Schema generation and management (consolidates 3 files)
 8. `schema-v1-vs-v2-guide.md` — V1/V2 comparison and migration (consolidates 4 files)
@@ -186,17 +192,20 @@ Historical Archive (docs/archived/)
 11. `external-systems-reference.md` — Treasury, Delta Lake, etc. (consolidates 2 files)
 
 #### Renamed Guides (Improve naming)
+
 12. `python-validation-guide.md` — Python validation setup and usage
 13. `schema-linting-guide.md` — Schema linting and validation
 14. `reporting-guide.md` — Reporting use cases and implementation
 15. `business-plan.md` — Business plan and strategy
 
 #### Assets (Keep)
+
 - `APIs/openapi.yaml`
 - `APIs/solicitation.xml`
 - `diagrams/schema_unification.svg`
 
 #### Archived (Move to `docs/archived/`)
+
 - 17 files moved to archive with organized subdirectories
 
 ---
@@ -206,9 +215,11 @@ Historical Archive (docs/archived/)
 ### Phase 1: Create New Consolidated Guides
 
 #### 1. `quick-start.md` (NEW)
+
 **Purpose:** Get developers up and running in 5 minutes
 
 **Content:**
+
 - Prerequisites check (Node, Python, pnpm)
 - Installation steps
 - Run first validation
@@ -217,6 +228,7 @@ Historical Archive (docs/archived/)
 - Next steps (links to detailed guides)
 
 **Sources:**
+
 - README.md sections
 - chatmode.md setup instructions
 - Common onboarding questions
@@ -224,45 +236,54 @@ Historical Archive (docs/archived/)
 ---
 
 #### 2. `schema-pipeline-guide.md` (NEW)
+
 **Purpose:** Complete guide to schema generation, validation, and publishing
 
 **Consolidates:**
+
 - `schema-pipeline.md` — generation pipeline overview
 - `schemaManagement.md` — management best practices
 - `migration-to-json-schema-canonical.md` — canonical schema approach
 
 **Content Structure:**
+
 ```markdown
 # Schema Pipeline Guide
 
 ## Overview
+
 - Architecture diagram
 - Source of truth: src/data/schema_unification.schema.json
 
 ## Generation Pipeline
+
 - GraphQL SDL → JSON Schema
 - JSON Schema → GraphQL SDL
 - Interop generation
 - Publishing to website
 
 ## Validation Suite
+
 - Schema validation (Ajv)
 - Parity validation (GraphQL ↔ JSON)
 - Sync validation (strict mode)
 - Python validation
 
 ## Management Best Practices
+
 - When to regenerate
 - Testing changes
 - Committing artifacts
 - CI/CD workflow
 
 ## Canonical Schema
+
 - Snake_case convention
 - Migration from camelCase
 - Pointer resolution
 
 ## Troubleshooting
+
 - Common issues
 - Debug workflows
 ```
@@ -270,40 +291,48 @@ Historical Archive (docs/archived/)
 ---
 
 #### 3. `schema-v1-vs-v2-guide.md` (NEW)
+
 **Purpose:** Understanding differences and migration path
 
 **Consolidates:**
+
 - `V1-VS-V2-QUICK-REFERENCE.md` — quick comparison
 - `V1-VS-V2-SCHEMA-COMPARISON.md` — detailed comparison
 - `schema_unification-v2-diagram.md` — V2 diagram
 
 **Content Structure:**
+
 ```markdown
 # Schema V1 vs V2 Guide
 
 ## Quick Reference
+
 - Key differences table
 - Migration checklist
 - Breaking changes
 
 ## Detailed Comparison
+
 - Type system changes
 - Field naming (camelCase → snake_case)
-- GraphQL hints (x-graphql-*)
+- GraphQL hints (x-graphql-\*)
 - Interface and union handling
 - Directive changes
 
 ## V2 Architecture
+
 - Diagram (embed schema_unification.svg)
 - Design decisions
 - Benefits and tradeoffs
 
 ## Migration Guide
+
 - Converting V1 schemas
 - Testing migration
 - Rollout strategy
 
 ## See Also
+
 - Link to archived conversion results
 - Link to ADRs
 ```
@@ -311,27 +340,33 @@ Historical Archive (docs/archived/)
 ---
 
 #### 4. `schema-tooling-reference.md` (NEW)
+
 **Purpose:** Comparison and evaluation of schema tooling
 
 **Consolidates:**
+
 - `schema-tooling-alternatives.md` — tooling comparison
 - `typeconv-evaluation-results.md` — typeconv evaluation
 
 **Content Structure:**
+
 ```markdown
 # Schema Tooling Reference
 
 ## Overview
+
 - Tooling landscape
 - Selection criteria
 
 ## Current Stack
+
 - graphql-js
 - json-schema
 - Ajv validator
 - Python validation
 
 ## Alternatives Evaluated
+
 - typeconv (evaluation results)
 - graphql-compose
 - nexus
@@ -339,11 +374,13 @@ Historical Archive (docs/archived/)
 - Others
 
 ## Decision Matrix
+
 - Feature comparison table
 - Performance benchmarks
 - Maintenance considerations
 
 ## Future Considerations
+
 - Emerging tools
 - Migration paths
 ```
@@ -351,45 +388,54 @@ Historical Archive (docs/archived/)
 ---
 
 #### 5. `system-mappings-guide.md` (NEW)
+
 **Purpose:** How Schema Unification Forest maps to external procurement systems
 
 **Consolidates:**
+
 - `pertrified2contract_data.md` — Contract Data mapping
 - `pertrified2legacy_procurement.md` — Legacy Procurement mapping
 - `pertrified2intake_process.md` — EASi mapping
 
 **Content Structure:**
+
 ```markdown
 # System Mappings Guide
 
 ## Overview
+
 - Why mappings matter
 - Mapping strategy
 
 ## Contract Data (Federal Procurement Data System)
+
 - Entity mappings
 - Field mappings
 - Data transformations
 - Example queries
 
 ## Legacy Procurement (Assisted Search)
+
 - Entity mappings
 - Field mappings
 - Data transformations
 - Example queries
 
 ## EASi (Easy Acquisition System Interface)
+
 - Entity mappings
 - Field mappings
 - Data transformations
 - Example queries
 
 ## Cross-System Analysis
+
 - Common patterns
 - Divergences
 - Harmonization approach
 
 ## Extending Mappings
+
 - Adding new systems
 - Testing mappings
 - Documentation requirements
@@ -398,21 +444,26 @@ Historical Archive (docs/archived/)
 ---
 
 #### 6. `external-systems-reference.md` (NEW)
+
 **Purpose:** Reference for integrating external data sources
 
 **Consolidates:**
+
 - `fiscal.treasury.gov.md` — Treasury API
 - `deltalake.md` — Delta Lake integration
 
 **Content Structure:**
+
 ```markdown
 # External Systems Reference
 
 ## Overview
+
 - Integration architecture
 - Authentication strategies
 
 ## Treasury API (fiscal.treasury.gov)
+
 - API overview
 - Authentication
 - Key endpoints
@@ -420,12 +471,14 @@ Historical Archive (docs/archived/)
 - Example integration
 
 ## Delta Lake
+
 - Architecture
 - Data storage patterns
 - Query examples
 - Integration with Schema Unification Forest
 
 ## Future Integrations
+
 - Planned systems
 - Integration patterns
 ```
@@ -435,23 +488,31 @@ Historical Archive (docs/archived/)
 ### Phase 2: Rename and Update Existing Guides
 
 #### 7. `python-validation-guide.md` (RENAME from PYTHON-VALIDATION-QUICK-START.md)
+
 **Actions:**
+
 - Rename file (lowercase, consistent naming)
 - Update cross-references
 - Ensure up-to-date with current Python setup
 
 #### 8. `schema-linting-guide.md` (RENAME from SCHEMA-LINTING-GUIDE.md)
+
 **Actions:**
+
 - Rename to lowercase
 - Update cross-references
 
 #### 9. `reporting-guide.md` (RENAME from Reporting-Use-Case-Implementation-Guide.md)
+
 **Actions:**
+
 - Simplify name
 - Update cross-references
 
 #### 10. `business-plan.md` (RENAME from BusinessPlan.md)
+
 **Actions:**
+
 - Rename to lowercase
 - Review for outdated content
 
@@ -495,6 +556,7 @@ This directory contains historical documentation that has been superseded by con
 ## Why Archive?
 
 These documents are preserved for:
+
 - Historical context and decision tracking
 - Reference during troubleshooting
 - Understanding project evolution
@@ -522,32 +584,39 @@ Remove references to archived files and update with new consolidated structure:
 ## Documentation Organization
 
 ### Getting Started
+
 - [Quick Start](quick-start.md) — Get up and running in 5 minutes
 - [Why Schema Unification Forest?](why.md) — Project rationale
 
 ### Schema Documentation
+
 - [Schema Pipeline Guide](schema-pipeline-guide.md) — Generation, validation, and publishing
 - [Schema V1 vs V2 Guide](schema-v1-vs-v2-guide.md) — Differences and migration
 - [Schema Tooling Reference](schema-tooling-reference.md) — Tooling comparison
 
 ### GraphQL Documentation
+
 - [x-graphql Hints Guide](x-graphql-hints-guide.md) — Comprehensive guide to x-graphql hints
 - [x-graphql Quick Reference](x-graphql-quick-reference.md) — Quick lookup
 
 ### System Integration
+
 - [System Mappings Guide](system-mappings-guide.md) — Contract Data, Legacy Procurement, EASi mappings
 - [External Systems Reference](external-systems-reference.md) — Treasury, Delta Lake
 
 ### Developer Guides
+
 - [Python Validation Guide](python-validation-guide.md) — Python setup and validation
 - [Schema Linting Guide](schema-linting-guide.md) — Linting and best practices
 - [Reporting Guide](reporting-guide.md) — Reporting use cases
 
 ### Architecture & Planning
+
 - [Business Plan](business-plan.md) — Strategy and roadmap
 - [Architecture Decision Records](adr/) — ADRs documenting key decisions
 
 ### Historical Documentation
+
 - [Documentation Archive](archived/) — Implementation logs and deprecated docs
 ```
 
@@ -566,12 +635,14 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ### What to Archive
 
 **Archive if:**
+
 - Implementation log or completion report (historical record, not user guide)
 - Superseded by consolidated guide
 - Specific to outdated version or approach
 - TODO list or planning doc that's no longer current
 
 **Keep if:**
+
 - Reference material still relevant
 - User guide with current information
 - ADR or architectural decision
@@ -587,11 +658,11 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 
 ```markdown
 > **⚠️ ARCHIVED DOCUMENTATION**
-> 
+>
 > This document has been archived and is preserved for historical reference only.
-> 
+>
 > **See instead:** [Schema Pipeline Guide](../schema-pipeline-guide.md)
-> 
+>
 > **Archived:** December 2024  
 > **Reason:** Consolidated into comprehensive pipeline guide
 ```
@@ -601,23 +672,27 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ## Implementation Timeline
 
 ### Week 1: Planning and Setup
+
 - ✅ Create consolidation plan (this document)
 - [ ] Review plan with team
 - [ ] Create `docs/archived/` structure
 - [ ] Set up archive READMEs
 
 ### Week 2: Create Consolidated Guides
+
 - [ ] Write `quick-start.md`
 - [ ] Write `schema-pipeline-guide.md`
 - [ ] Write `schema-v1-vs-v2-guide.md`
 
 ### Week 3: More Consolidated Guides + Renames
+
 - [ ] Write `schema-tooling-reference.md`
 - [ ] Write `system-mappings-guide.md`
 - [ ] Write `external-systems-reference.md`
 - [ ] Rename existing guides (lowercase, consistent)
 
 ### Week 4: Archive and Update References
+
 - [ ] Move files to archive
 - [ ] Add ARCHIVED notices
 - [ ] Update README.md
@@ -625,6 +700,7 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 - [ ] Update cross-references throughout docs
 
 ### Week 5: Review and Polish
+
 - [ ] Review all consolidated guides
 - [ ] Verify all cross-references work
 - [ ] Update copilot instructions
@@ -636,12 +712,14 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ## Success Metrics
 
 ### Quantitative
+
 - ✅ **Document count reduced from 38 to ~15** (60% reduction)
 - ✅ **All implementation logs archived** (6+ files)
 - ✅ **All redundant comparisons consolidated** (4 → 1)
 - ✅ **All naming made consistent** (lowercase-with-dashes)
 
 ### Qualitative
+
 - [ ] **New developers can get started in <5 minutes** using quick-start
 - [ ] **Each topic has one authoritative source** (no confusion)
 - [ ] **Historical context preserved** (nothing lost, just organized)
@@ -649,6 +727,7 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 - [ ] **Maintenance burden reduced** (fewer files to update)
 
 ### Validation Checks
+
 - [ ] All markdown files have valid frontmatter
 - [ ] All internal links resolve correctly
 - [ ] All code examples are current and work
@@ -662,11 +741,13 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ### Document Lifecycle
 
 **Active Documentation:**
+
 - Review quarterly for accuracy
 - Update with major changes
 - Keep synchronized with code
 
 **Archived Documentation:**
+
 - Do not update (historical record)
 - Add redirects to current docs if needed
 - Preserve as-is for reference
@@ -674,12 +755,14 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ### Adding New Documentation
 
 **Before adding new doc, ask:**
+
 1. Does this belong in an existing guide?
 2. Is this a user guide or implementation log?
 3. Will this need regular updates?
 4. Does this overlap with existing docs?
 
 **If adding new doc:**
+
 - Use lowercase-with-dashes naming
 - Add to README.md organization
 - Add cross-references to related docs
@@ -688,6 +771,7 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 ### Preventing Documentation Bloat
 
 **Guidelines:**
+
 - Implementation logs go in Git history or PR descriptions, not docs
 - Consolidate rather than create new files
 - Archive rather than delete
@@ -699,68 +783,68 @@ Update `.github/chatmodes/schema-unification-project.chatmode.md` with new doc p
 
 ### Before → After Mapping
 
-| Current File | Action | New Location | Notes |
-|--------------|--------|--------------|-------|
-| `README.md` | UPDATE | `README.md` | Update with new structure |
-| `why.md` | KEEP | `why.md` | No changes |
-| `BusinessPlan.md` | RENAME | `business-plan.md` | Lowercase |
-| | | | |
-| **GraphQL Docs** | | | |
-| `x-graphql-hints-guide.md` | KEEP | `x-graphql-hints-guide.md` | Comprehensive guide |
-| `x-graphql-quick-reference.md` | KEEP | `x-graphql-quick-reference.md` | Quick reference |
-| `graphql-extensions-guide.md` | ARCHIVE | `archived/deprecated/` | Superseded by hints guide |
-| `GRAPHQL-SCHEMA-ANALYSIS-AND-STRATEGY.md` | ARCHIVE | `archived/deprecated/` | Analysis, not user guide |
-| `GRAPHQL-CONVERTER-BUG-FIXES.md` | ARCHIVE | `archived/implementation-logs/` | Implementation log |
-| `GRAPHQL-VOYAGER-PAGES.md` | ARCHIVE | `archived/implementation-logs/` | Implementation log |
-| | | | |
-| **V1/V2 Docs** | | | |
-| `V1-VS-V2-QUICK-REFERENCE.md` | CONSOLIDATE | → `schema-v1-vs-v2-guide.md` | |
-| `V1-VS-V2-SCHEMA-COMPARISON.md` | CONSOLIDATE | → `schema-v1-vs-v2-guide.md` | |
-| `V1-TO-V2-CONVERTER-RESULTS.md` | ARCHIVE | `archived/v1-v2-migration/` | Results log |
-| `V2-GRAPHQL-ENHANCEMENT-SUMMARY.md` | ARCHIVE | `archived/v1-v2-migration/` | Enhancement log |
-| `schema_unification-v1-diagram.md` | ARCHIVE | `archived/v1-v2-migration/` | V1 diagram |
-| `schema_unification-v2-diagram.md` | CONSOLIDATE | → `schema-v1-vs-v2-guide.md` | Embed diagram |
-| | | | |
-| **Schema Management** | | | |
-| `schema-pipeline.md` | CONSOLIDATE | → `schema-pipeline-guide.md` | |
-| `schemaManagement.md` | CONSOLIDATE | → `schema-pipeline-guide.md` | |
-| `schema-tooling-alternatives.md` | CONSOLIDATE | → `schema-tooling-reference.md` | |
-| `schema-todo.md` | ARCHIVE | `archived/deprecated/` | Outdated TODO |
-| `migration-to-json-schema-canonical.md` | CONSOLIDATE | → `schema-pipeline-guide.md` | Migration section |
-| `typeconv-evaluation-results.md` | CONSOLIDATE | → `schema-tooling-reference.md` | |
-| | | | |
-| **System Mappings** | | | |
-| `pertrified2contract_data.md` | CONSOLIDATE | → `system-mappings-guide.md` | |
-| `pertrified2legacy_procurement.md` | CONSOLIDATE | → `system-mappings-guide.md` | |
-| `pertrified2intake_process.md` | CONSOLIDATE | → `system-mappings-guide.md` | |
-| | | | |
-| **External Systems** | | | |
-| `fiscal.treasury.gov.md` | CONSOLIDATE | → `external-systems-reference.md` | |
-| `deltalake.md` | CONSOLIDATE | → `external-systems-reference.md` | |
-| | | | |
-| **Developer Guides** | | | |
-| `PYTHON-VALIDATION-QUICK-START.md` | RENAME | `python-validation-guide.md` | Lowercase |
-| `SCHEMA-LINTING-GUIDE.md` | RENAME | `schema-linting-guide.md` | Lowercase |
-| `Reporting-Use-Case-Implementation-Guide.md` | RENAME | `reporting-guide.md` | Simplified |
-| | | | |
-| **Implementation Logs** | | | |
-| `BENCHMARK-SETUP-COMPLETE.md` | ARCHIVE | `archived/implementation-logs/` | |
-| `MERMAID-DIAGRAM-PAGES-IMPLEMENTATION.md` | ARCHIVE | `archived/implementation-logs/` | |
-| `SCHEMA-RESTRUCTURING-SUCCESS.md` | ARCHIVE | `archived/implementation-logs/` | |
-| `VOYAGER-V2-HINTED-IMPLEMENTATION.md` | ARCHIVE | `archived/implementation-logs/` | |
-| | | | |
-| **Transformation** | | | |
-| `transformationRules.md` | CONSOLIDATE | → `schema-pipeline-guide.md` | Rules section |
-| `transformationHistory.md` | ARCHIVE | `archived/deprecated/` | Historical |
-| | | | |
-| **ADRs** | | | |
-| `adr/*.md` | KEEP | `adr/*.md` | All ADRs preserved |
-| | | | |
-| **Assets** | | | |
-| `APIs/openapi.yaml` | KEEP | `APIs/openapi.yaml` | |
-| `APIs/solicitation.xml` | KEEP | `APIs/solicitation.xml` | |
-| `diagrams/schema_unification.svg` | KEEP | `diagrams/schema_unification.svg` | |
-| `fiscal.treasury.gov.json` | KEEP | `fiscal.treasury.gov.json` | Reference data |
+| Current File                                 | Action      | New Location                      | Notes                     |
+| -------------------------------------------- | ----------- | --------------------------------- | ------------------------- |
+| `README.md`                                  | UPDATE      | `README.md`                       | Update with new structure |
+| `why.md`                                     | KEEP        | `why.md`                          | No changes                |
+| `BusinessPlan.md`                            | RENAME      | `business-plan.md`                | Lowercase                 |
+|                                              |             |                                   |                           |
+| **GraphQL Docs**                             |             |                                   |                           |
+| `x-graphql-hints-guide.md`                   | KEEP        | `x-graphql-hints-guide.md`        | Comprehensive guide       |
+| `x-graphql-quick-reference.md`               | KEEP        | `x-graphql-quick-reference.md`    | Quick reference           |
+| `graphql-extensions-guide.md`                | ARCHIVE     | `archived/deprecated/`            | Superseded by hints guide |
+| `GRAPHQL-SCHEMA-ANALYSIS-AND-STRATEGY.md`    | ARCHIVE     | `archived/deprecated/`            | Analysis, not user guide  |
+| `GRAPHQL-CONVERTER-BUG-FIXES.md`             | ARCHIVE     | `archived/implementation-logs/`   | Implementation log        |
+| `GRAPHQL-VOYAGER-PAGES.md`                   | ARCHIVE     | `archived/implementation-logs/`   | Implementation log        |
+|                                              |             |                                   |                           |
+| **V1/V2 Docs**                               |             |                                   |                           |
+| `V1-VS-V2-QUICK-REFERENCE.md`                | CONSOLIDATE | → `schema-v1-vs-v2-guide.md`      |                           |
+| `V1-VS-V2-SCHEMA-COMPARISON.md`              | CONSOLIDATE | → `schema-v1-vs-v2-guide.md`      |                           |
+| `V1-TO-V2-CONVERTER-RESULTS.md`              | ARCHIVE     | `archived/v1-v2-migration/`       | Results log               |
+| `V2-GRAPHQL-ENHANCEMENT-SUMMARY.md`          | ARCHIVE     | `archived/v1-v2-migration/`       | Enhancement log           |
+| `schema_unification-v1-diagram.md`           | ARCHIVE     | `archived/v1-v2-migration/`       | V1 diagram                |
+| `schema_unification-v2-diagram.md`           | CONSOLIDATE | → `schema-v1-vs-v2-guide.md`      | Embed diagram             |
+|                                              |             |                                   |                           |
+| **Schema Management**                        |             |                                   |                           |
+| `schema-pipeline.md`                         | CONSOLIDATE | → `schema-pipeline-guide.md`      |                           |
+| `schemaManagement.md`                        | CONSOLIDATE | → `schema-pipeline-guide.md`      |                           |
+| `schema-tooling-alternatives.md`             | CONSOLIDATE | → `schema-tooling-reference.md`   |                           |
+| `schema-todo.md`                             | ARCHIVE     | `archived/deprecated/`            | Outdated TODO             |
+| `migration-to-json-schema-canonical.md`      | CONSOLIDATE | → `schema-pipeline-guide.md`      | Migration section         |
+| `typeconv-evaluation-results.md`             | CONSOLIDATE | → `schema-tooling-reference.md`   |                           |
+|                                              |             |                                   |                           |
+| **System Mappings**                          |             |                                   |                           |
+| `pertrified2contract_data.md`                | CONSOLIDATE | → `system-mappings-guide.md`      |                           |
+| `pertrified2legacy_procurement.md`           | CONSOLIDATE | → `system-mappings-guide.md`      |                           |
+| `pertrified2intake_process.md`               | CONSOLIDATE | → `system-mappings-guide.md`      |                           |
+|                                              |             |                                   |                           |
+| **External Systems**                         |             |                                   |                           |
+| `fiscal.treasury.gov.md`                     | CONSOLIDATE | → `external-systems-reference.md` |                           |
+| `deltalake.md`                               | CONSOLIDATE | → `external-systems-reference.md` |                           |
+|                                              |             |                                   |                           |
+| **Developer Guides**                         |             |                                   |                           |
+| `PYTHON-VALIDATION-QUICK-START.md`           | RENAME      | `python-validation-guide.md`      | Lowercase                 |
+| `SCHEMA-LINTING-GUIDE.md`                    | RENAME      | `schema-linting-guide.md`         | Lowercase                 |
+| `Reporting-Use-Case-Implementation-Guide.md` | RENAME      | `reporting-guide.md`              | Simplified                |
+|                                              |             |                                   |                           |
+| **Implementation Logs**                      |             |                                   |                           |
+| `BENCHMARK-SETUP-COMPLETE.md`                | ARCHIVE     | `archived/implementation-logs/`   |                           |
+| `MERMAID-DIAGRAM-PAGES-IMPLEMENTATION.md`    | ARCHIVE     | `archived/implementation-logs/`   |                           |
+| `SCHEMA-RESTRUCTURING-SUCCESS.md`            | ARCHIVE     | `archived/implementation-logs/`   |                           |
+| `VOYAGER-V2-HINTED-IMPLEMENTATION.md`        | ARCHIVE     | `archived/implementation-logs/`   |                           |
+|                                              |             |                                   |                           |
+| **Transformation**                           |             |                                   |                           |
+| `transformationRules.md`                     | CONSOLIDATE | → `schema-pipeline-guide.md`      | Rules section             |
+| `transformationHistory.md`                   | ARCHIVE     | `archived/deprecated/`            | Historical                |
+|                                              |             |                                   |                           |
+| **ADRs**                                     |             |                                   |                           |
+| `adr/*.md`                                   | KEEP        | `adr/*.md`                        | All ADRs preserved        |
+|                                              |             |                                   |                           |
+| **Assets**                                   |             |                                   |                           |
+| `APIs/openapi.yaml`                          | KEEP        | `APIs/openapi.yaml`               |                           |
+| `APIs/solicitation.xml`                      | KEEP        | `APIs/solicitation.xml`           |                           |
+| `diagrams/schema_unification.svg`            | KEEP        | `diagrams/schema_unification.svg` |                           |
+| `fiscal.treasury.gov.json`                   | KEEP        | `fiscal.treasury.gov.json`        | Reference data            |
 
 ### New Files to Create
 

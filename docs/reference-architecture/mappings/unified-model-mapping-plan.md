@@ -1,16 +1,20 @@
 # Unified Model Mapping & Migration Plan
+
 Path: `enterprise-schema-unification/docs/Unified Model-mapping-plan.md`
 
 ## Executive summary
+
 You want to retain the current canonical model shape used by the Schema Unification Forest pipeline while adopting the U.S. Spending Unified Model vocabulary (the "Unified Model target"). The preferred approach is to introduce a stable mapping layer from the existing canonical model to Unified Model terms, update generation/composition artifacts to emit both canonical fields and (optionally) Unified Model aliases, and keep provenance and generation steps intact. This document explains mapping principles, a suggested field-level mapping strategy (high-level), and an implementation/migration plan that integrates with the current generators and CI pipeline.
 
 Key outcomes:
+
 - Keep canonical model and generation/canonical-subgraph steps unchanged.
 - Add a transform/mapping artifact (JSON) that defines how canonical fields map to Unified Model paths.
 - Update schema-generation pipeline to optionally produce Unified Model-named views (SDL + JSON Schema) and mapping metadata.
 - Keep provenance and system metadata (system_chain, schema_version, x-source-path) for traceability.
 
 References:
+
 - Existing canonical schema: `src/data/schema_unification.schema.json`
 - Existing Contract Data→Unified Model mapping artifact: `resources/USASPENDING/Contract Data-to-Unified Model.json`
 - Goal vocabulary: Unified Model as documented at https://www.public_spending.gov/data-dictionary
@@ -18,6 +22,7 @@ References:
 ---
 
 ## Principles / Constraints
+
 - Non-breaking: Do not change the canonical JSON Schema shapes or GraphQL types in-place in a way that invalidates current consumers.
 - Mapping-first: Introduce a mapping layer that is authoritative for name translations rather than renaming fields across repos.
 - Traceability: Maintain `x-source-path` or similar provenance metadata on translated fields so we can trace back to original feed / generator.
@@ -28,6 +33,7 @@ References:
 ---
 
 ## High-level mapping approach
+
 1. Create a single mapping artifact (JSON) that expresses canonical → Unified Model relationships:
    - Mapping file location: `resources/USASPENDING/canonical-to-unified_model.json` (new)
    - Each mapping entry should include:
@@ -55,6 +61,7 @@ References:
 ---
 
 ## Example mapping patterns (conceptual)
+
 - One-to-one rename:
   - Canonical: `contract_identification.piid`
   - Unified Model: `award.award_contract_id.piid`
@@ -70,6 +77,7 @@ Important: All transforms should be implemented as a small library (JavaScript/N
 ---
 
 ## Suggested mapping categories (apply to canonical subschemas)
+
 Below are the canonical top-level types in `src/data/schema_unification.schema.json` and Unified Model counterpart guidance. Use this as the seed for a mapping matrix.
 
 - `contract_identification` → Unified Model `award.award_contract_id` (PIID, modification numbers, titles)
@@ -88,6 +96,7 @@ Record ambiguous mappings explicitly in the mapping JSON with human-review requi
 ---
 
 ## Implementation plan (concrete steps)
+
 1. Create mapping artifact
    - Add `resources/USASPENDING/canonical-to-unified_model.json` with entries seeded from `resources/USASPENDING/Contract Data-to-Unified Model.json` and `src/data/schema_unification.schema.json`.
    - Provide `description` and `confidence` (e.g., `high | medium | low`) for each mapping entry.
@@ -127,6 +136,7 @@ Record ambiguous mappings explicitly in the mapping JSON with human-review requi
 ---
 
 ## CI / Composition notes
+
 - Composition ownership and diagnostics:
   - If you generate Unified Model SDLs and intend to compose them, update `ownership.json` generation to target the canonical ownership owners but include Unified Model type/field names. The existing composition pipeline can remain intact; only the artifact inputs change.
 - Linting:
@@ -137,6 +147,7 @@ Record ambiguous mappings explicitly in the mapping JSON with human-review requi
 ---
 
 ## Provenance and auditability
+
 - Each Unified Model-mapped field in the generated artifacts must carry metadata:
   - `x-source-path` → original canonical path (and if applicable the original feed path from `Contract Data-to-Unified Model.json`)
   - `system_metadata.system_chain` entry describing the transformation step (script name, version, timestamp)
@@ -146,12 +157,14 @@ Record ambiguous mappings explicitly in the mapping JSON with human-review requi
 ---
 
 ## Rollback & fallback
+
 - Since canonical artifacts remain unchanged, rollback is straightforward: stop publishing Unified Model artifacts or revert the generator changes.
 - Keep mapping artifacts in VCS; changes to mapping should be accompanied by unit tests and a changelog entry.
 
 ---
 
 ## Deliverables
+
 1. `resources/USASPENDING/canonical-to-unified_model.json` — mapping seed file (review-required)
 2. `scripts/generate-unified_model-views.mjs` — transformation script that emits:
    - `generated-schemas/unified_model/unified_model.schema.json`
@@ -163,15 +176,17 @@ Record ambiguous mappings explicitly in the mapping JSON with human-review requi
 ---
 
 ## Timeline & estimates (rough)
+
 - Create mapping artifact (seed): 1-2 days (includes review)
 - Implement generator + transforms library: 2-4 days
 - Unit/integration tests + CI adjustments: 1-2 days
 - Review / iterate with stakeholders + sample runs: 1-3 days
-Total: ~1–2 weeks end-to-end depending on review cycles.
+  Total: ~1–2 weeks end-to-end depending on review cycles.
 
 ---
 
 ## Migration checklist (short)
+
 - [ ] Seed `canonical-to-unified_model.json` from `Contract Data-to-Unified Model.json` & `schema_unification.schema.json`.
 - [ ] Implement transform library & generation script.
 - [ ] Emit Unified Model artifacts under `generated-schemas/unified_model/`.
@@ -185,10 +200,11 @@ Total: ~1–2 weeks end-to-end depending on review cycles.
 ---
 
 ## Suggested next actions (what I can do next)
+
 - I can author the initial `resources/USASPENDING/canonical-to-unified_model.json` seeded from `Contract Data-to-Unified Model.json` and `src/data/schema_unification.schema.json`.
 - I can implement `scripts/generate-unified_model-views.mjs` to generate JSON Schema + SDL views and mapping-resolved artifacts.
 - I can add unit tests for common transforms and wire the generation step into the existing CI workflow.
-Tell me which of these you want me to implement first and whether you prefer:
+  Tell me which of these you want me to implement first and whether you prefer:
 - "safe" mode (Unified Model artifacts generated but canonical API unchanged), or
 - "aggressive" mode (canonical schema SDLs augmented with field aliases).
 

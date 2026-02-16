@@ -42,10 +42,14 @@ Use `x-graphql-args` on a property definition to define arguments. Arguments the
 
 ```graphql
 type UserProfile {
-  """The user's avatar image URL"""
+  """
+  The user's avatar image URL
+  """
   avatarUrl(
-    """Size in pixels"""
-    size: Int = 128, 
+    """
+    Size in pixels
+    """
+    size: Int = 128
     format: String = "PNG"
   ): String
 }

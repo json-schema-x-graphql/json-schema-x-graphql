@@ -68,7 +68,12 @@ export class WasmConverter {
   convert(input: string, direction: string): string;
 }
 
-export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
+export type InitInput =
+  | RequestInfo
+  | URL
+  | Response
+  | BufferSource
+  | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
@@ -84,41 +89,79 @@ export interface InitOutput {
   readonly wasmconversionoptions_include_descriptions: (a: number) => number;
   readonly wasmconversionoptions_new: () => number;
   readonly wasmconversionoptions_preserve_field_order: (a: number) => number;
-  readonly wasmconversionoptions_set_federation_version: (a: number, b: number) => void;
-  readonly wasmconversionoptions_set_include_descriptions: (a: number, b: number) => void;
-  readonly wasmconversionoptions_set_preserve_field_order: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_federation_version: (
+    a: number,
+    b: number,
+  ) => void;
+  readonly wasmconversionoptions_set_include_descriptions: (
+    a: number,
+    b: number,
+  ) => void;
+  readonly wasmconversionoptions_set_preserve_field_order: (
+    a: number,
+    b: number,
+  ) => void;
   readonly wasmconversionoptions_set_validate: (a: number, b: number) => void;
   readonly wasmconversionoptions_validate: (a: number) => number;
-  readonly wasmconverter_convert: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
-  readonly wasmconverter_graphqlToJsonSchema: (a: number, b: number, c: number, d: number) => void;
-  readonly wasmconverter_jsonSchemaToGraphQL: (a: number, b: number, c: number, d: number) => void;
+  readonly wasmconverter_convert: (
+    a: number,
+    b: number,
+    c: number,
+    d: number,
+    e: number,
+    f: number,
+  ) => void;
+  readonly wasmconverter_graphqlToJsonSchema: (
+    a: number,
+    b: number,
+    c: number,
+    d: number,
+  ) => void;
+  readonly wasmconverter_jsonSchemaToGraphQL: (
+    a: number,
+    b: number,
+    c: number,
+    d: number,
+  ) => void;
   readonly wasmconverter_withOptions: (a: number) => number;
   readonly __wbg_wasmconverter_free: (a: number, b: number) => void;
   readonly wasmconverter_new: () => number;
   readonly __wbindgen_export: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export2: (a: number, b: number) => number;
-  readonly __wbindgen_export3: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbindgen_export3: (
+    a: number,
+    b: number,
+    c: number,
+    d: number,
+  ) => number;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_start: () => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
 /**
-* Instantiates the given `module`, which can either be bytes or
-* a precompiled `WebAssembly.Module`.
-*
-* @param {{ module: SyncInitInput }} module - Passing `SyncInitInput` directly is deprecated.
-*
-* @returns {InitOutput}
-*/
-export function initSync(module: { module: SyncInitInput } | SyncInitInput): InitOutput;
+ * Instantiates the given `module`, which can either be bytes or
+ * a precompiled `WebAssembly.Module`.
+ *
+ * @param {{ module: SyncInitInput }} module - Passing `SyncInitInput` directly is deprecated.
+ *
+ * @returns {InitOutput}
+ */
+export function initSync(
+  module: { module: SyncInitInput } | SyncInitInput,
+): InitOutput;
 
 /**
-* If `module_or_path` is {RequestInfo} or {URL}, makes a request and
-* for everything else, calls `WebAssembly.instantiate` directly.
-*
-* @param {{ module_or_path: InitInput | Promise<InitInput> }} module_or_path - Passing `InitInput` directly is deprecated.
-*
-* @returns {Promise<InitOutput>}
-*/
-export default function __wbg_init (module_or_path?: { module_or_path: InitInput | Promise<InitInput> } | InitInput | Promise<InitInput>): Promise<InitOutput>;
+ * If `module_or_path` is {RequestInfo} or {URL}, makes a request and
+ * for everything else, calls `WebAssembly.instantiate` directly.
+ *
+ * @param {{ module_or_path: InitInput | Promise<InitInput> }} module_or_path - Passing `InitInput` directly is deprecated.
+ *
+ * @returns {Promise<InitOutput>}
+ */
+export default function __wbg_init(
+  module_or_path?:
+    | { module_or_path: InitInput | Promise<InitInput> }
+    | InitInput
+    | Promise<InitInput>,
+): Promise<InitOutput>;

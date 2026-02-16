@@ -1,10 +1,11 @@
 # X-GraphQL Test Data
 
-This directory contains comprehensive test schemas for validating x-graphql-* extension handling in the JSON Schema to GraphQL converters.
+This directory contains comprehensive test schemas for validating x-graphql-\* extension handling in the JSON Schema to GraphQL converters.
 
 ## Overview
 
 These test schemas are designed to validate:
+
 - Core x-graphql attribute functionality
 - Edge cases and error conditions
 - Complex nested scenarios
@@ -13,9 +14,11 @@ These test schemas are designed to validate:
 ## Test Schemas
 
 ### basic-types.json
+
 **Purpose**: Test fundamental type and field name mapping
 
 **Features Tested**:
+
 - `x-graphql-type-name` - Custom type names
 - `x-graphql-field-name` - Custom field names
 - `x-graphql-field-type` - Type overrides (ID, DateTime)
@@ -31,9 +34,11 @@ These test schemas are designed to validate:
 ---
 
 ### nullability.json
+
 **Purpose**: Test all nullability control mechanisms
 
 **Features Tested**:
+
 - `x-graphql-field-non-null` - Explicit non-null fields
 - `x-graphql-nullable` - Explicit nullable override
 - `x-graphql-field-list-item-non-null` - List item nullability
@@ -46,6 +51,7 @@ These test schemas are designed to validate:
 **Lines**: 105
 
 **Nullability Patterns**:
+
 - `String` - Nullable field
 - `String!` - Non-null field
 - `[String]` - Nullable list of nullable items
@@ -58,9 +64,11 @@ These test schemas are designed to validate:
 ---
 
 ### skip-fields.json
+
 **Purpose**: Test field and type exclusion from GraphQL SDL
 
 **Features Tested**:
+
 - `x-graphql-skip` on individual fields
 - `x-graphql-skip` on entire types
 - Skip nested objects
@@ -72,6 +80,7 @@ These test schemas are designed to validate:
 **Lines**: 144
 
 **Use Cases**:
+
 - Hide sensitive data (passwords, tokens, SSN)
 - Exclude internal metadata
 - Remove database-specific fields
@@ -82,9 +91,11 @@ These test schemas are designed to validate:
 ---
 
 ### descriptions.json
+
 **Purpose**: Test GraphQL-specific description handling
 
 **Features Tested**:
+
 - `x-graphql-description` - GraphQL-specific descriptions
 - Description priority (x-graphql > JSON Schema)
 - Multiline description formatting
@@ -97,6 +108,7 @@ These test schemas are designed to validate:
 **Lines**: 143
 
 **Priority Order**:
+
 1. `x-graphql-description` (highest)
 2. `description` (JSON Schema)
 
@@ -105,9 +117,11 @@ These test schemas are designed to validate:
 ---
 
 ### interfaces.json
+
 **Purpose**: Test GraphQL interface definition and implementation
 
 **Features Tested**:
+
 - `x-graphql-type-kind: "INTERFACE"` - Interface definition
 - `x-graphql-implements` - Interface implementation
 - Single interface implementation
@@ -128,9 +142,11 @@ These test schemas are designed to validate:
 ---
 
 ### unions.json
+
 **Purpose**: Test GraphQL union type generation
 
 **Features Tested**:
+
 - `x-graphql-type-kind: "UNION"` - Union type definition
 - `x-graphql-union-types` - Union member specification
 - Multiple union types in schema
@@ -148,9 +164,11 @@ These test schemas are designed to validate:
 ---
 
 ### comprehensive.json
+
 **Purpose**: Real-world scenario combining all P0 features
 
 **Features Tested**:
+
 - All P0 attributes together
 - Complex nested structures
 - Interface implementation with skip/nullable
@@ -162,6 +180,7 @@ These test schemas are designed to validate:
 **Lines**: 467
 
 **P0 Features Combined**:
+
 - ✅ Type/field naming
 - ✅ Nullability control (nullable, non-null, list items)
 - ✅ Field skipping (sensitive data, internal fields)
@@ -191,16 +210,22 @@ expected/
 ### Node.js Tests
 
 ```typescript
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 // Load test schema
-const schemaPath = path.join(__dirname, '../test-data/x-graphql/basic-types.json');
-const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf-8'));
+const schemaPath = path.join(
+  __dirname,
+  "../test-data/x-graphql/basic-types.json",
+);
+const schema = JSON.parse(fs.readFileSync(schemaPath, "utf-8"));
 
 // Load expected output
-const expectedPath = path.join(__dirname, '../test-data/x-graphql/expected/basic-types.graphql');
-const expected = fs.readFileSync(expectedPath, 'utf-8');
+const expectedPath = path.join(
+  __dirname,
+  "../test-data/x-graphql/expected/basic-types.graphql",
+);
+const expected = fs.readFileSync(expectedPath, "utf-8");
 
 // Run conversion and compare
 const result = jsonToGraphQL(schema);
@@ -214,10 +239,10 @@ expect(result).toBe(expected);
 fn test_basic_types() {
     let schema_path = "test-data/x-graphql/basic-types.json";
     let schema = load_schema(schema_path);
-    
+
     let expected_path = "test-data/x-graphql/expected/basic-types.graphql";
     let expected = fs::read_to_string(expected_path).unwrap();
-    
+
     let result = json_to_graphql(&schema);
     assert_eq!(result, expected);
 }
@@ -228,22 +253,26 @@ fn test_basic_types() {
 ## Test Schema Conventions
 
 ### Naming
+
 - Use `snake_case` for JSON Schema property names
 - Use `x-graphql-field-name` to specify `camelCase` GraphQL names
 - Type names should be `PascalCase`
 
 ### Structure
+
 - Always include `$schema` reference
 - Provide `title` and `description` at root level
 - Use `definitions` for type definitions
 - Document what each schema tests in the description
 
 ### Documentation
+
 - Add `description` to all types and fields
 - Use `x-graphql-description` when GraphQL description should differ
 - Include comments about expected behavior
 
 ### Organization
+
 - One primary feature per test schema
 - Include related features when they interact
 - Use comprehensive.json for multi-feature integration
@@ -297,11 +326,13 @@ fn test_basic_types() {
 **Total Lines**: 1,571
 
 **Coverage**:
+
 - ✅ P0 Features: 100%
 - ✅ P1 Features: 80% (interfaces, unions)
 - ⚠️ P2 Features: 0% (directives, arguments)
 
 **Attributes Tested**:
+
 - `x-graphql-type-name` ✅
 - `x-graphql-type-kind` ✅
 - `x-graphql-field-name` ✅

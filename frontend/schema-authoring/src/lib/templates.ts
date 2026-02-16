@@ -34,9 +34,7 @@ export function getTemplateNames(): TemplateMetadata[] {
 /**
  * Get template by key
  */
-export function getTemplate(
-  key: string,
-): {
+export function getTemplate(key: string): {
   name: string;
   description: string;
   content: string;

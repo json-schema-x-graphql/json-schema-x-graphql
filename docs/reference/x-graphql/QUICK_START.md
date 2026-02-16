@@ -76,7 +76,7 @@ type User {
 ### 2. Using the Converter (Node.js)
 
 ```javascript
-import { Converter, ConversionDirection } from 'json-schema-x-graphql';
+import { Converter, ConversionDirection } from "json-schema-x-graphql";
 
 const converter = new Converter();
 
@@ -92,7 +92,7 @@ const jsonSchema = `{
 
 const graphql = converter.convert(
   jsonSchema,
-  ConversionDirection.JsonSchemaToGraphQL
+  ConversionDirection.JsonSchemaToGraphQL,
 );
 
 console.log(graphql);
@@ -110,7 +110,7 @@ use json_schema_x_graphql::{Converter, ConversionDirection};
 
 fn main() {
     let converter = Converter::new();
-    
+
     let json_schema = r#"{
         "type": "object",
         "x-graphql-type-name": "Product",
@@ -119,11 +119,11 @@ fn main() {
             "name": { "type": "string" }
         }
     }"#;
-    
+
     let graphql = converter
         .convert(json_schema, ConversionDirection::JsonSchemaToGraphQL)
         .unwrap();
-    
+
     println!("{}", graphql);
 }
 ```
@@ -252,10 +252,7 @@ Define union types:
 
 ```json
 {
-  "oneOf": [
-    { "$ref": "#/definitions/User" },
-    { "$ref": "#/definitions/Post" }
-  ],
+  "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Post" }],
   "x-graphql-type-name": "SearchResult",
   "x-graphql-type-kind": "UNION",
   "x-graphql-union-types": ["User", "Post"]
@@ -363,6 +360,7 @@ cargo bench
 ### Examples
 
 Check out the complete examples in:
+
 - `converters/test-data/x-graphql/` - Test schemas with all features
 - `converters/test-data/x-graphql/expected/` - Expected GraphQL outputs
 
@@ -378,13 +376,13 @@ Check out the complete examples in:
 
 ```json
 {
-  "x-graphql-type-name": "UserProfile"  // ✅ Clear and specific
+  "x-graphql-type-name": "UserProfile" // ✅ Clear and specific
 }
 ```
 
 ```json
 {
-  "x-graphql-type-name": "Users"  // ⚠️ Avoid plurals
+  "x-graphql-type-name": "Users" // ⚠️ Avoid plurals
 }
 ```
 
@@ -401,9 +399,9 @@ jxql validate json-schema schema.json
 Ensure your schema survives round-trip conversion:
 
 ```javascript
-const original = readJsonSchema('schema.json');
-const graphql = converter.convert(original, 'json-to-graphql');
-const backToJson = converter.convert(graphql, 'graphql-to-json');
+const original = readJsonSchema("schema.json");
+const graphql = converter.convert(original, "json-to-graphql");
+const backToJson = converter.convert(graphql, "graphql-to-json");
 // Verify: original ≈ backToJson
 ```
 
@@ -412,7 +410,7 @@ const backToJson = converter.convert(graphql, 'graphql-to-json');
 ```javascript
 const converter = new Converter({
   validate: true,
-  strict: true
+  strict: true,
 });
 ```
 
@@ -424,27 +422,27 @@ const converter = new Converter({
 
 ## Quick Reference Card
 
-| JSON Schema Type | GraphQL Type | Non-Null |
-|-----------------|--------------|----------|
-| `"type": "string"` | `String` | Add `x-graphql-field-non-null: true` |
-| `"type": "integer"` | `Int` | or use `required` array |
-| `"type": "number"` | `Float` | |
-| `"type": "boolean"` | `Boolean` | |
-| `"type": "array"` | `[Type]` | Use `x-graphql-field-type` |
-| `"type": "object"` | Custom Type | Define with `x-graphql-type-name` |
+| JSON Schema Type    | GraphQL Type | Non-Null                             |
+| ------------------- | ------------ | ------------------------------------ |
+| `"type": "string"`  | `String`     | Add `x-graphql-field-non-null: true` |
+| `"type": "integer"` | `Int`        | or use `required` array              |
+| `"type": "number"`  | `Float`      |                                      |
+| `"type": "boolean"` | `Boolean`    |                                      |
+| `"type": "array"`   | `[Type]`     | Use `x-graphql-field-type`           |
+| `"type": "object"`  | Custom Type  | Define with `x-graphql-type-name`    |
 
-| X-GraphQL Extension | Purpose |
-|--------------------|---------|
-| `x-graphql-type-name` | Set GraphQL type name |
-| `x-graphql-type-kind` | `OBJECT`, `INTERFACE`, `UNION`, `INPUT_OBJECT`, `ENUM` |
-| `x-graphql-field-name` | Override field name |
-| `x-graphql-field-type` | Explicit GraphQL type |
-| `x-graphql-field-non-null` | Make field required |
-| `x-graphql-implements` | Implement interfaces |
-| `x-graphql-union-types` | Union member types |
-| `x-graphql-federation-keys` | Federation @key fields |
-| `x-graphql-federation-shareable` | Mark as @shareable |
-| `x-graphql-skip` | Exclude from GraphQL |
+| X-GraphQL Extension              | Purpose                                                |
+| -------------------------------- | ------------------------------------------------------ |
+| `x-graphql-type-name`            | Set GraphQL type name                                  |
+| `x-graphql-type-kind`            | `OBJECT`, `INTERFACE`, `UNION`, `INPUT_OBJECT`, `ENUM` |
+| `x-graphql-field-name`           | Override field name                                    |
+| `x-graphql-field-type`           | Explicit GraphQL type                                  |
+| `x-graphql-field-non-null`       | Make field required                                    |
+| `x-graphql-implements`           | Implement interfaces                                   |
+| `x-graphql-union-types`          | Union member types                                     |
+| `x-graphql-federation-keys`      | Federation @key fields                                 |
+| `x-graphql-federation-shareable` | Mark as @shareable                                     |
+| `x-graphql-skip`                 | Exclude from GraphQL                                   |
 
 ---
 

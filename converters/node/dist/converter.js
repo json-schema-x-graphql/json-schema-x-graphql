@@ -5,9 +5,9 @@
  * and produces deterministic GraphQL SDL output that mirrors the behavior of the
  * Rust implementation as closely as possible.
  */
-import { parse } from "graphql";
+import { parse, print } from "graphql";
 import { camelToSnake, snakeToCamel } from "./case-conversion.js";
-import { extractDirectives, printDirectives } from "./normalization/directives.js";
+import { extractDirectives, printDirectives, } from "./normalization/directives.js";
 import { ensureConnectionType } from "./features/relay.js";
 // ExtendedConverterOptions and others moved to interfaces.ts
 // NormalizedConverterOptions moved to interfaces.ts
@@ -24,6 +24,10 @@ class ConversionError extends Error {
 function shouldExcludeType(typeName, options) {
     if (!typeName)
         return true;
+    // Debug filtering
+    if (typeName === "Mutation" || typeName === "Query" || typeName === "PageInfo") {
+        console.log(`Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`);
+    }
     // Always exclude introspection types
     if (typeName.startsWith("__")) {
         return true;
@@ -108,6 +112,10 @@ export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
         for (const [defKey, defSchema] of entries) {
             const typeName = context.typeNames.get(`/$defs/${defKey}`) ||
                 context.typeNames.get(`/definitions/${defKey}`);
+            // Debug logging
+            if (typeName === "Mutation") {
+                console.log(`Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`);
+            }
             if (typeName && !shouldExcludeType(typeName, context.options)) {
                 convertTypeDefinition(defSchema, typeName, context);
             }
@@ -152,6 +160,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
                         description: def.description?.value,
                         fields: def.fields || [],
                         interfaces: def.interfaces || [],
+                        directives: def.directives || [],
                     });
                 }
                 if (typeName === "Query")
@@ -167,6 +176,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
                         name: enumName,
                         description: def.description?.value,
                         enumValues: def.values || [],
+                        directives: def.directives || [],
                     });
                 }
             }
@@ -178,6 +188,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
                         name: unionName,
                         description: def.description?.value,
                         types: def.types || [],
+                        directives: def.directives || [],
                     });
                 }
             }
@@ -189,6 +200,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
                         kind: "ScalarTypeDefinition",
                         name: scalarName,
                         description: def.description?.value,
+                        directives: def.directives || [],
                     });
                 }
             }
@@ -241,6 +253,9 @@ function convertGraphQLTypeToSchema(typeDef, typeRegistry, options) {
         schema.description = typeDef.description;
     }
     schema["x-graphql-type"] = typeDef.name;
+    if (typeDef.directives && typeDef.directives.length > 0) {
+        schema["x-graphql-directives"] = typeDef.directives.map((d) => print(d));
+    }
     if (typeDef.kind === "EnumTypeDefinition") {
         schema.type = "string";
         schema.enum = typeDef.enumValues?.map((v) => v.name?.value) || [];
@@ -284,6 +299,9 @@ function convertGraphQLFieldToSchema(field, typeRegistry, options) {
     // Merge description if present
     if (field.description?.value && options.includeDescriptions) {
         typeSchema.description = field.description.value;
+    }
+    if (field.directives && field.directives.length > 0) {
+        typeSchema["x-graphql-directives"] = field.directives.map((d) => print(d));
     }
     return typeSchema;
 }

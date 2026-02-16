@@ -7,6 +7,7 @@ The `x-graphql-*` hint system allows JSON Schema authors to provide GraphQL-spec
 ## Motivation
 
 **Problem:** Automatic JSON Schema → GraphQL conversion has limitations:
+
 - Generic naming (e.g., `JSON` type for all objects)
 - Loss of semantic relationships
 - No way to express GraphQL-specific concepts (interfaces, unions, directives)
@@ -36,6 +37,7 @@ The `x-graphql-*` hint system allows JSON Schema authors to provide GraphQL-spec
 ```
 
 **Result:**
+
 ```graphql
 type Contract DataAssistanceType {
   code: String
@@ -44,8 +46,9 @@ type Contract DataAssistanceType {
 ```
 
 Without hint:
+
 ```graphql
-type AssistanceType {  # Generic name
+type AssistanceType { # Generic name
   code: String
   description: String
 }
@@ -71,9 +74,10 @@ type AssistanceType {  # Generic name
 ```
 
 **Result:**
+
 ```graphql
 type Contract {
-  contractType: String  # Avoids 'type' reserved word conflict
+  contractType: String # Avoids 'type' reserved word conflict
 }
 ```
 
@@ -84,6 +88,7 @@ type Contract {
 **Purpose:** Specify exact GraphQL type (scalar, enum, interface, union)
 
 **Values:**
+
 - `"interface"` - Generate a GraphQL interface
 - `"union"` - Generate a GraphQL union
 - `"enum"` - Force enum generation
@@ -92,6 +97,7 @@ type Contract {
 - `"JSON"` - Use JSON scalar for opaque data
 
 **Use Case: Interface**
+
 ```json
 {
   "type": "object",
@@ -105,6 +111,7 @@ type Contract {
 ```
 
 **Result:**
+
 ```graphql
 interface BaseContract {
   piid: String!
@@ -113,6 +120,7 @@ interface BaseContract {
 ```
 
 **Use Case: Custom Scalar**
+
 ```json
 {
   "lastModified": {
@@ -124,6 +132,7 @@ interface BaseContract {
 ```
 
 **Result:**
+
 ```graphql
 type Contract {
   lastModified: DateTime
@@ -151,6 +160,7 @@ type Contract {
 ```
 
 **Result:**
+
 ```graphql
 type Contract DataContract implements BaseContract & Timestamped {
   piid: String!
@@ -175,6 +185,7 @@ type Contract DataContract implements BaseContract & Timestamped {
 ```
 
 **Result:**
+
 ```graphql
 """
 Unique contract identifier assigned by the contracting agency
@@ -208,10 +219,11 @@ piid: String!
 ```
 
 **Result:**
+
 ```graphql
 type Contract {
-  id: String!        # Non-null from required + hint
-  optional: String   # Nullable despite not in required
+  id: String! # Non-null from required + hint
+  optional: String # Nullable despite not in required
 }
 ```
 
@@ -228,7 +240,11 @@ type Contract {
   "systemExtension": {
     "x-graphql-type": "union",
     "x-graphql-type-name": "SystemExtension",
-    "x-graphql-union-types": ["Contract DataExtension", "Legacy ProcurementExtension", "EASiExtension"],
+    "x-graphql-union-types": [
+      "Contract DataExtension",
+      "Legacy ProcurementExtension",
+      "EASiExtension"
+    ],
     "oneOf": [
       { "$ref": "#/definitions/Contract DataExtension" },
       { "$ref": "#/definitions/Legacy ProcurementExtension" },
@@ -239,6 +255,7 @@ type Contract {
 ```
 
 **Result:**
+
 ```graphql
 union SystemExtension = Contract DataExtension | Legacy ProcurementExtension | EASiExtension
 ```
@@ -261,15 +278,14 @@ union SystemExtension = Contract DataExtension | Legacy ProcurementExtension | E
   "properties": {
     "ssn": {
       "type": "string",
-      "x-graphql-directives": [
-        { "name": "redact" }
-      ]
+      "x-graphql-directives": [{ "name": "redact" }]
     }
   }
 }
 ```
 
 **Result:**
+
 ```graphql
 type SensitiveData @auth(requires: ADMIN) @cacheControl(maxAge: 3600) {
   ssn: String @redact
@@ -299,9 +315,10 @@ type SensitiveData @auth(requires: ADMIN) @cacheControl(maxAge: 3600) {
 ```
 
 **Result:**
+
 ```graphql
 type Contract {
-  publicId: String  # _internalId not included
+  publicId: String # _internalId not included
 }
 ```
 
@@ -328,6 +345,7 @@ type Contract {
 ```
 
 **Result:**
+
 ```graphql
 type Query {
   contracts(
@@ -345,6 +363,7 @@ type Query {
 ### Before (No Hints)
 
 **JSON Schema:**
+
 ```json
 {
   "systemExtensions": {
@@ -362,13 +381,14 @@ type Query {
 ```
 
 **Generated GraphQL:**
+
 ```graphql
 type SystemExtensions {
   contract_data: Fpds
 }
 
 type Fpds {
-  data: JSON  # Opaque, not queryable!
+  data: JSON # Opaque, not queryable!
 }
 ```
 
@@ -377,6 +397,7 @@ type Fpds {
 ### After (With Hints)
 
 **Enhanced JSON Schema:**
+
 ```json
 {
   "systemExtensions": {
@@ -440,6 +461,7 @@ type Fpds {
 ```
 
 **Generated GraphQL:**
+
 ```graphql
 type SystemExtensions {
   """
@@ -530,19 +552,19 @@ START: Does this schema need GraphQL exposure?
 
 ### When to Use Each Hint Type
 
-| Scenario | Hint | Example |
-|----------|------|---------|
-| Type name is too generic | `x-graphql-type-name` | `"contract_data"` → `"Contract DataExtension"` |
-| Field conflicts with reserved word | `x-graphql-field-name` | `"type"` → `"contractType"` |
-| Polymorphic relationship | `x-graphql-type: "interface"` | `BaseContract` interface |
-| Multiple possible types | `x-graphql-type: "union"` | `SystemExtension` union |
-| Special scalar needed | `x-graphql-type` | `"DateTime"`, `"ID"`, `"JSON"` |
-| Inheritance relationship | `x-graphql-implements` | `implements BaseContract` |
-| API docs differ from validation | `x-graphql-description` | User-friendly vs technical |
-| Override nullability | `x-graphql-nullable` | Force non-null or nullable |
-| Add GraphQL directives | `x-graphql-directives` | `@auth`, `@deprecated` |
-| Internal field | `x-graphql-skip` | `_metadata`, `_version` |
-| Query parameters | `x-graphql-args` | `limit`, `offset`, `filter` |
+| Scenario                           | Hint                          | Example                                        |
+| ---------------------------------- | ----------------------------- | ---------------------------------------------- |
+| Type name is too generic           | `x-graphql-type-name`         | `"contract_data"` → `"Contract DataExtension"` |
+| Field conflicts with reserved word | `x-graphql-field-name`        | `"type"` → `"contractType"`                    |
+| Polymorphic relationship           | `x-graphql-type: "interface"` | `BaseContract` interface                       |
+| Multiple possible types            | `x-graphql-type: "union"`     | `SystemExtension` union                        |
+| Special scalar needed              | `x-graphql-type`              | `"DateTime"`, `"ID"`, `"JSON"`                 |
+| Inheritance relationship           | `x-graphql-implements`        | `implements BaseContract`                      |
+| API docs differ from validation    | `x-graphql-description`       | User-friendly vs technical                     |
+| Override nullability               | `x-graphql-nullable`          | Force non-null or nullable                     |
+| Add GraphQL directives             | `x-graphql-directives`        | `@auth`, `@deprecated`                         |
+| Internal field                     | `x-graphql-skip`              | `_metadata`, `_version`                        |
+| Query parameters                   | `x-graphql-args`              | `limit`, `offset`, `filter`                    |
 
 ---
 
@@ -642,6 +664,7 @@ Hints are for schema conversion, not runtime behavior.
 **Goal:** Prove the hint system with Contract Data extension
 
 1. **Add type names**
+
    ```json
    "contract_data": {
      "x-graphql-type-name": "Contract DataExtension"
@@ -649,6 +672,7 @@ Hints are for schema conversion, not runtime behavior.
    ```
 
 2. **Add descriptions**
+
    ```json
    "legacy_procurementanceType": {
      "x-graphql-description": "Classification of financial legacy_procurementance"
@@ -656,6 +680,7 @@ Hints are for schema conversion, not runtime behavior.
    ```
 
 3. **Test generation**
+
    ```bash
    pnpm run generate:graphql:v2
    ```
@@ -705,24 +730,24 @@ Create a custom validator for hint structure:
 // scripts/validate-hints.js
 function validateHints(schema) {
   const validHints = [
-    'x-graphql-type-name',
-    'x-graphql-field-name',
-    'x-graphql-type',
-    'x-graphql-implements',
-    'x-graphql-description',
-    'x-graphql-nullable',
-    'x-graphql-union-types',
-    'x-graphql-directives',
-    'x-graphql-skip',
-    'x-graphql-args'
+    "x-graphql-type-name",
+    "x-graphql-field-name",
+    "x-graphql-type",
+    "x-graphql-implements",
+    "x-graphql-description",
+    "x-graphql-nullable",
+    "x-graphql-union-types",
+    "x-graphql-directives",
+    "x-graphql-skip",
+    "x-graphql-args",
   ];
-  
+
   // Check for typos in hint names
-  const hints = Object.keys(schema).filter(k => k.startsWith('x-graphql-'));
-  const invalid = hints.filter(h => !validHints.includes(h));
-  
+  const hints = Object.keys(schema).filter((k) => k.startsWith("x-graphql-"));
+  const invalid = hints.filter((h) => !validHints.includes(h));
+
   if (invalid.length > 0) {
-    console.error(`Invalid hints found: ${invalid.join(', ')}`);
+    console.error(`Invalid hints found: ${invalid.join(", ")}`);
     process.exit(1);
   }
 }
@@ -762,15 +787,15 @@ Update `scripts/generate-graphql-custom.mjs` to recognize hints:
 
 ```javascript
 function getTypeName(schema, defaultName) {
-  return schema['x-graphql-type-name'] || defaultName;
+  return schema["x-graphql-type-name"] || defaultName;
 }
 
 function getDescription(schema) {
-  return schema['x-graphql-description'] || schema.description;
+  return schema["x-graphql-description"] || schema.description;
 }
 
 function shouldSkipField(schema) {
-  return schema['x-graphql-skip'] === true;
+  return schema["x-graphql-skip"] === true;
 }
 ```
 
@@ -796,7 +821,11 @@ function shouldSkipField(schema) {
 {
   "contract": {
     "x-graphql-type": "union",
-    "x-graphql-union-types": ["Contract DataContract", "Legacy ProcurementContract", "EASiContract"],
+    "x-graphql-union-types": [
+      "Contract DataContract",
+      "Legacy ProcurementContract",
+      "EASiContract"
+    ],
     "oneOf": [
       { "$ref": "#/definitions/Contract DataContract" },
       { "$ref": "#/definitions/Legacy ProcurementContract" },
@@ -844,15 +873,15 @@ Test hint parsing:
 
 ```javascript
 // tests/x-graphql-hints.test.js
-describe('x-graphql hints', () => {
-  it('should extract type name hint', () => {
-    const schema = { 'x-graphql-type-name': 'Contract DataExtension' };
-    expect(getTypeName(schema, 'Default')).toBe('Contract DataExtension');
+describe("x-graphql hints", () => {
+  it("should extract type name hint", () => {
+    const schema = { "x-graphql-type-name": "Contract DataExtension" };
+    expect(getTypeName(schema, "Default")).toBe("Contract DataExtension");
   });
 
-  it('should fall back to default when no hint', () => {
+  it("should fall back to default when no hint", () => {
     const schema = {};
-    expect(getTypeName(schema, 'Default')).toBe('Default');
+    expect(getTypeName(schema, "Default")).toBe("Default");
   });
 });
 ```
@@ -862,13 +891,15 @@ describe('x-graphql hints', () => {
 Test full schema conversion:
 
 ```javascript
-describe('hint-based generation', () => {
-  it('should generate typed Contract Data extension', () => {
-    const schema = loadSchema('schema_unification.schema.v2-hinted.json');
+describe("hint-based generation", () => {
+  it("should generate typed Contract Data extension", () => {
+    const schema = loadSchema("schema_unification.schema.v2-hinted.json");
     const graphql = generateGraphQL(schema);
-    
-    expect(graphql).toContain('type Contract DataExtension');
-    expect(graphql).toContain('legacy_procurementanceType: Contract DataAssistanceType');
+
+    expect(graphql).toContain("type Contract DataExtension");
+    expect(graphql).toContain(
+      "legacy_procurementanceType: Contract DataAssistanceType",
+    );
   });
 });
 ```
@@ -878,9 +909,9 @@ describe('hint-based generation', () => {
 Compare generated GraphQL against expected output:
 
 ```javascript
-describe('GraphQL generation snapshots', () => {
-  it('matches expected output', () => {
-    const schema = loadSchema('schema_unification.schema.v2-hinted.json');
+describe("GraphQL generation snapshots", () => {
+  it("matches expected output", () => {
+    const schema = loadSchema("schema_unification.schema.v2-hinted.json");
     const graphql = generateGraphQL(schema);
     expect(graphql).toMatchSnapshot();
   });
@@ -902,9 +933,7 @@ Allow child schemas to inherit parent hints:
       "x-graphql-directives": [{ "name": "auth" }]
     },
     "Contract DataExtension": {
-      "allOf": [
-        { "$ref": "#/definitions/BaseExtension" }
-      ]
+      "allOf": [{ "$ref": "#/definitions/BaseExtension" }]
       // Inherits @auth directive
     }
   }
@@ -971,6 +1000,7 @@ For questions or issues with the x-graphql hint system:
 **Status:** ✅ Complete Guide - Ready for Implementation
 
 **Next Steps:**
+
 1. ✅ Document hint system (this file)
 2. 🔄 Enhance converter to support hints
 3. ⏳ Add example annotations to V1 schema (Contract Data system)

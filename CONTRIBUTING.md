@@ -40,18 +40,21 @@ Unacceptable behavior will not be tolerated and may result in removal from the p
 ### Development Setup
 
 1. **Clone the repository**:
+
    ```bash
    git clone https://github.com/JJediny/json-schema-x-graphql.git
    cd json-schema-x-graphql
    ```
 
 2. **Install Rust dependencies**:
+
    ```bash
    cargo build
    cargo test
    ```
 
 3. **Install Node.js dependencies**:
+
    ```bash
    # Use Corepack + pnpm (preferred)
    corepack enable
@@ -60,15 +63,17 @@ Unacceptable behavior will not be tolerated and may result in removal from the p
    ```
 
 4. **Build WASM module**:
+
    ```bash
    npm run build:wasm
    ```
 
 5. **Run tests**:
+
    ```bash
    # Rust tests
    cargo test
-   
+
    # JavaScript tests
    npm test
    ```
@@ -129,6 +134,7 @@ Follow standard Rust conventions:
 - **Testing**: Write unit tests for all new functionality
 
 **Example**:
+
 ```rust
 /// Converts GraphQL SDL to JSON Schema with x-graphql extensions.
 ///
@@ -159,10 +165,11 @@ Follow TypeScript best practices:
 - **Testing**: Write tests for all new functionality
 
 **Example**:
+
 ```typescript
 /**
  * Converts GraphQL SDL to JSON Schema.
- * 
+ *
  * @param sdl - GraphQL SDL string
  * @returns JSON Schema with x-graphql extensions
  * @throws Error if SDL is invalid
@@ -198,7 +205,7 @@ mod tests {
                 name: String
             }
         "#;
-        
+
         let json_schema = sdl_to_json(sdl).unwrap();
         assert_eq!(json_schema.definitions.len(), 1);
     }
@@ -208,17 +215,17 @@ mod tests {
 ### Integration Tests (JavaScript)
 
 ```typescript
-describe('SDL to JSON conversion', () => {
-  it('should preserve directives', async () => {
+describe("SDL to JSON conversion", () => {
+  it("should preserve directives", async () => {
     const sdl = `
       type User @key(fields: "id") {
         id: ID!
       }
     `;
-    
+
     const result = await convertSdlToJson(sdl);
     expect(result.success).toBe(true);
-    expect(result.data.$defs.User['x-graphql-federation-keys']).toBeDefined();
+    expect(result.data.$defs.User["x-graphql-federation-keys"]).toBeDefined();
   });
 });
 ```
@@ -257,6 +264,7 @@ git checkout -b feature/your-feature-name
 ```
 
 **Branch naming conventions**:
+
 - `feature/description` - New features
 - `fix/description` - Bug fixes
 - `docs/description` - Documentation changes
@@ -272,6 +280,7 @@ git checkout -b feature/your-feature-name
 - Keep commits atomic and well-described
 
 **Commit message format**:
+
 ```
 type: short description (50 chars max)
 
@@ -312,6 +321,7 @@ npm run build
 5. Request review from maintainers
 
 **PR Title Format**: `[Type] Short description`
+
 - Examples: `[Feature] Add union type support`, `[Fix] Correct field argument parsing`
 
 ### 6. Address Review Feedback
@@ -349,21 +359,27 @@ For **major changes** that affect the architecture or API, we use an RFC (Reques
 # RFC: [Feature Name]
 
 ## Summary
+
 Brief explanation of the feature.
 
 ## Motivation
+
 Why are we doing this? What use cases does it support?
 
 ## Detailed Design
+
 Explain the design in enough detail for someone familiar with the codebase to implement it.
 
 ## Drawbacks
-Why should we *not* do this?
+
+Why should we _not_ do this?
 
 ## Alternatives
+
 What other designs have been considered? What is the impact of not doing this?
 
 ## Unresolved Questions
+
 What parts of the design are still TBD?
 ```
 
@@ -382,6 +398,7 @@ What parts of the design are still TBD?
 ### Maintainer Responsibilities
 
 Maintainers will:
+
 - Review PRs within the timeline
 - Provide constructive feedback
 - Merge approved PRs promptly
@@ -390,6 +407,7 @@ Maintainers will:
 ### Contributor Responsibilities
 
 Contributors should:
+
 - Respond to feedback within 1 week
 - Keep PRs focused on one change
 - Update documentation
@@ -450,6 +468,7 @@ Releases are managed by maintainers:
 ### Maintainer Office Hours
 
 Join our weekly office hours:
+
 - **When**: Every Friday, 3-4pm UTC
 - **Where**: Discord voice channel
 - **What**: Ask questions, discuss proposals, pair programming

@@ -7,6 +7,7 @@
 ## The Problem
 
 Both `GraphQLVisualEditor.tsx` files had:
+
 1. ✅ Store subscription (in `store.ts`) → updates `value` prop
 2. ❌ Component subscription (direct to Loro/Yjs) → also tries to update
 
@@ -17,6 +18,7 @@ These competed and blocked each other, preventing the editor from updating.
 **Removed the redundant component-level subscription** in both demos:
 
 ### Before (Broken):
+
 ```typescript
 // Two update paths (CONFLICT!)
 useEffect(() => {
@@ -35,6 +37,7 @@ useEffect(() => {
 ```
 
 ### After (Fixed):
+
 ```typescript
 // Single update path via value prop
 useEffect(() => {

@@ -55,12 +55,12 @@ setMode: (mode: AppMode) => {
 
 applyAutoFix: async (error: ValidationError) => {
   if (!error.fix) return;
-  
+
   const state = get();
   const currentContent = state.mode === 'json-to-graphql'
     ? state.jsonSchemaEditor.content
     : state.graphqlEditor.content;
-  
+
   // Apply the fix changes
   let newContent = currentContent;
   for (const change of error.fix.changes) {
@@ -74,7 +74,7 @@ applyAutoFix: async (error: ValidationError) => {
       newContent = lines.join('\n');
     }
   }
-  
+
   // Update the appropriate editor
   if (state.mode === 'json-to-graphql') {
     get().setJsonSchemaContent(newContent);
@@ -93,6 +93,7 @@ clearValidationResult: () => {
 ### 2. Fix Component Type Errors (30 minutes)
 
 **Files to update:**
+
 - `src/components/Toolbar.tsx` - Already updated to use correct types
 - `src/components/StatusBar.tsx` - Needs `mode` instead of `conversionDirection`
 - `src/components/ErrorPanel.tsx` - Already mostly correct
@@ -101,11 +102,13 @@ clearValidationResult: () => {
 **Quick fixes needed in StatusBar.tsx:**
 
 Change line with `conversionDirection` to:
+
 ```typescript
 const mode = useAppStore((state) => state.mode);
 ```
 
 And update the display logic:
+
 ```typescript
 <span className="font-mono text-xs">
   {mode === 'json-to-graphql' ? 'JSON→GQL' : 'GQL→JSON'}
@@ -130,10 +133,12 @@ Fix any remaining import errors or type mismatches.
 Once types are fixed, verify these work:
 
 ### Test 1: Basic Startup
+
 ```bash
 cd frontend/schema-authoring
 pnpm run dev
 ```
+
 - [ ] App loads without errors
 - [ ] Both editors render
 - [ ] Toolbar displays correctly
@@ -142,6 +147,7 @@ pnpm run dev
 ### Test 2: JSON Schema → GraphQL Conversion
 
 Paste this into left editor:
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -172,6 +178,7 @@ Paste this into left editor:
 ### Test 3: Validation
 
 Paste invalid JSON into left editor (missing closing brace):
+
 ```json
 {
   "type": "object"
@@ -207,14 +214,14 @@ Create `src/examples/templates.ts`:
 ```typescript
 export const templates = {
   basic: {
-    name: 'Basic User Schema',
-    jsonSchema: '{ ... }',
-    description: 'Simple user object with common fields'
+    name: "Basic User Schema",
+    jsonSchema: "{ ... }",
+    description: "Simple user object with common fields",
   },
   federation: {
-    name: 'Federated Entity',
-    jsonSchema: '{ ... }',
-    description: 'Apollo Federation entity with @key directive'
+    name: "Federated Entity",
+    jsonSchema: "{ ... }",
+    description: "Apollo Federation entity with @key directive",
   },
   // Add 3-5 more
 };
@@ -225,6 +232,7 @@ Add "Load Template" dropdown to Toolbar.
 ### B. Improve Error Messages (1 hour)
 
 Enhance `src/lib/validators.ts`:
+
 - Add more helpful suggestions
 - Add common fix recipes
 - Improve error context
@@ -232,6 +240,7 @@ Enhance `src/lib/validators.ts`:
 ### C. Add Help Panel (1-2 hours)
 
 Create `src/components/HelpPanel.tsx`:
+
 - Document x-graphql extensions
 - Show keyboard shortcuts
 - Link to external docs
@@ -239,6 +248,7 @@ Create `src/components/HelpPanel.tsx`:
 ### D. Write Tests (3-4 hours)
 
 Create `src/__tests__/`:
+
 - `converter-manager.test.ts`
 - `validators.test.ts`
 - `app-store.test.ts`
@@ -248,16 +258,19 @@ Create `src/__tests__/`:
 ## 🔧 Known Issues & Workarounds
 
 ### Issue 1: WASM Not Built
+
 **Status:** Expected  
 **Workaround:** App automatically falls back to Node converter  
 **Fix:** Run `wasm-pack build` when Rust toolchain available
 
 ### Issue 2: Auto-conversion Timing
+
 **Status:** May fire too frequently  
 **Workaround:** Increase debounce delay in settings  
 **Fix:** Optimize debouncing logic in App.tsx
 
 ### Issue 3: Large Schemas Slow
+
 **Status:** Not yet tested with >1000 lines  
 **Workaround:** None yet  
 **Fix:** Add virtualization or web worker for conversion
@@ -277,6 +290,7 @@ Create `src/__tests__/`:
 ## 🚀 Path to Production
 
 ### Phase 1: MVP (Current - 1 week)
+
 - [x] Basic UI structure ✅
 - [x] Components implemented ✅
 - [ ] Fix type errors ⚠️
@@ -285,6 +299,7 @@ Create `src/__tests__/`:
 - [ ] Write README
 
 ### Phase 2: Polish (2-3 weeks)
+
 - [ ] Unit tests (80% coverage)
 - [ ] Performance optimization
 - [ ] Better error messages
@@ -292,6 +307,7 @@ Create `src/__tests__/`:
 - [ ] Accessibility audit
 
 ### Phase 3: Deploy (1 week)
+
 - [ ] Set up CI/CD
 - [ ] Deploy to Vercel/Netlify
 - [ ] Add analytics
@@ -330,18 +346,21 @@ Create `src/__tests__/`:
 ## 📞 Getting Help
 
 ### If Stuck On Type Errors:
+
 1. Read error messages carefully
 2. Check `src/types/index.ts` for correct type names
 3. Compare component usage to store API in `src/store/app-store.ts`
 4. Use TypeScript's "Go to Definition" to verify property names
 
 ### If Conversion Fails:
+
 1. Check browser console for errors
 2. Verify converter manager is initialized (should log at startup)
 3. Test with simple schema first
 4. Check that Node converter is bundled correctly
 
 ### If UI Looks Broken:
+
 1. Verify Tailwind is compiling (check `npm run dev` output)
 2. Check dark mode class on `<html>` element
 3. Verify Monaco editor loaded (Network tab in DevTools)

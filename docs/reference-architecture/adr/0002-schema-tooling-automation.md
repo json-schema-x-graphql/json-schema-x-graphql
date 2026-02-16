@@ -67,6 +67,7 @@ After restructuring the JSON Schema to use `definitions` (enabling standard tool
 To preserve GraphQL features that don't map directly to JSON Schema, we use custom extensions:
 
 #### 1. Type Metadata (`x-graphql-type`)
+
 ```json
 {
   "Contract": {
@@ -78,6 +79,7 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
 ```
 
 #### 2. Enum Transformations (`x-graphql-enum`)
+
 ```json
 {
   "ContactRole": {
@@ -97,6 +99,7 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
 ```
 
 #### 3. Required Field Override (`x-graphql-required`)
+
 ```json
 {
   "schemaVersion": {
@@ -107,6 +110,7 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
 ```
 
 #### 4. Union Types (`x-graphql-union`)
+
 ```json
 {
   "SystemExtension": {
@@ -125,6 +129,7 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
 ```
 
 #### 5. GraphQL Operations (`x-graphql-operations`)
+
 ```json
 {
   "x-graphql-operations": {
@@ -148,7 +153,10 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
       "triggerDataIngestion": {
         "type": "Boolean",
         "args": {
-          "system": { "type": "String!", "enum": ["Contract Data", "Legacy Procurement", "Intake Process"] }
+          "system": {
+            "type": "String!",
+            "enum": ["Contract Data", "Legacy Procurement", "Intake Process"]
+          }
         }
       }
     }
@@ -157,6 +165,7 @@ To preserve GraphQL features that don't map directly to JSON Schema, we use cust
 ```
 
 #### 6. Relationships (`x-graphql-relationships`)
+
 ```json
 {
   "Contract": {
@@ -181,13 +190,13 @@ We benchmarked 5 different approaches for JSON Schema to GraphQL conversion to v
 
 #### Performance Results (Complex Schema - 30+ types)
 
-| Approach | Ops/sec | Avg Time | Feature Score | Maintainability |
-|----------|---------|----------|---------------|-----------------|
-| **custom graphql-js** ⭐ | 3,134 | 0.32ms | 70/100 | ★★★☆☆ (350 LOC) |
-| refparser + graphql-js | 251 | 3.98ms | 70/100 | ★★★☆☆ (400 LOC) |
-| typeconv (base) | 0.56 | 1,779ms | 45/100 | ★★★★★ (External) |
-| typeconv + extensions | 0.56 | 1,775ms | 45/100 | ★★★★☆ (420 LOC) |
-| json-schema-to-graphql-types | N/A | N/A | 0/100 | ★★★★☆ (CLI only) |
+| Approach                     | Ops/sec | Avg Time | Feature Score | Maintainability  |
+| ---------------------------- | ------- | -------- | ------------- | ---------------- |
+| **custom graphql-js** ⭐     | 3,134   | 0.32ms   | 70/100        | ★★★☆☆ (350 LOC)  |
+| refparser + graphql-js       | 251     | 3.98ms   | 70/100        | ★★★☆☆ (400 LOC)  |
+| typeconv (base)              | 0.56    | 1,779ms  | 45/100        | ★★★★★ (External) |
+| typeconv + extensions        | 0.56    | 1,775ms  | 45/100        | ★★★★☆ (420 LOC)  |
+| json-schema-to-graphql-types | N/A     | N/A      | 0/100         | ★★★★☆ (CLI only) |
 
 #### Key Findings
 
@@ -200,14 +209,16 @@ We benchmarked 5 different approaches for JSON Schema to GraphQL conversion to v
 ### Final Decision: Custom GraphQL.js Implementation
 
 **Rationale:**
+
 - ✅ **Best Real-World Performance**: 3,134 ops/sec (0.32ms per conversion) vs 0.56 ops/sec for typeconv
 - ✅ **Best Feature Support**: Handles types, enums, unions, scalars, and operations (70/100 score)
 - ✅ **Full Control**: Direct access to GraphQL schema building APIs
 - ✅ **No Subprocess Overhead**: In-process execution eliminates spawn costs
-- ✅ **Extension-Aware**: Native support for x-graphql-* custom properties
+- ✅ **Extension-Aware**: Native support for x-graphql-\* custom properties
 - ⚠️ **Medium Complexity**: ~350 LOC with 2 dependencies (graphql, @apidevtools/json-schema-ref-parser)
 
 **Trade-offs Accepted:**
+
 - Increased LOC vs external tool (350 vs 0), but significant performance gain
 - Medium maintenance complexity vs high performance and feature completeness
 - Custom code ownership vs third-party tool dependency

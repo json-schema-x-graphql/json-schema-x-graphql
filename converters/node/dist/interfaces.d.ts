@@ -1,4 +1,4 @@
-import { ConvertInput, ConversionResult, ConverterOptions, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat } from './generated/types.js';
+import { ConvertInput, ConversionResult, ConverterOptions, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat } from "./generated/types.js";
 export interface IJsonSchemaConverter {
     convert(input: ConvertInput): Promise<ConversionResult>;
 }

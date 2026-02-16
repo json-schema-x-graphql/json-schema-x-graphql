@@ -4,10 +4,11 @@
 >
 > This document has been archived and is preserved for historical reference only.
 >
-> **See instead:**  
-> - [Schema Tooling Reference](../../schema-tooling-reference.md)  
-> - [System Mappings Guide](../../system-mappings-guide.md)  
-> - [External Systems Reference](../../external-systems-reference.md)  
+> **See instead:**
+>
+> - [Schema Tooling Reference](../../schema-tooling-reference.md)
+> - [System Mappings Guide](../../system-mappings-guide.md)
+> - [External Systems Reference](../../external-systems-reference.md)
 > - [Docs Index](../../README.md)
 >
 > **Archived:** 2025  
@@ -26,6 +27,7 @@ This document tracks the implementation of two major initiatives:
 2. **Documentation Consolidation** — Reduce and organize documentation from 38 to ~15 core files
 
 Both initiatives are detailed in their respective audit documents:
+
 - [`scripts/audit/scripts-audit.md`](scripts/audit/scripts-audit.md)
 - [`docs/audit/docs-consolidation-plan.md`](docs/audit/docs-consolidation-plan.md)
 
@@ -46,17 +48,20 @@ Both initiatives are detailed in their respective audit documents:
 ## Quick Status Overview
 
 ### Scripts Audit
+
 - **Phase:** 1 of 4 (Core Generators)
 - **Progress:** 15% complete
 - **Blocking Issues:** 1 (function signature mismatch in `generate-graphql-json-schema.mjs`)
 - **Next Action:** Fix signature mismatch, add exports and tests
 
 ### Documentation Consolidation
+
 - **Phase:** 1 of 5 (Planning and Setup)
 - **Progress:** 20% complete (plan created)
 - **Next Action:** Create archive structure, write first consolidated guides
 
 ### Overall Health
+
 - 🟡 **YELLOW** — Planning complete, execution starting, 1 blocker identified
 
 ---
@@ -68,6 +73,7 @@ Both initiatives are detailed in their respective audit documents:
 **Goal:** Convert 4 core generator scripts to programmatic modules with unit tests
 
 #### 1.1 Fix `generate-graphql-json-schema.mjs` ⚠️ BLOCKING
+
 - [ ] **Review function signature** — expects 4 params, CLI passes 5
 - [ ] **Update function** — `generateFromSDL(sdlFilePath, outputPath, options = {})`
 - [ ] **Add JSDoc** — document all parameters
@@ -75,6 +81,7 @@ Both initiatives are detailed in their respective audit documents:
 - [ ] **Test round-trip** — SDL → JSON → SDL
 
 **Files to modify:**
+
 - `scripts/generate-graphql-json-schema.mjs`
 
 **Estimated effort:** 4 hours
@@ -82,6 +89,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 1.2 Convert `generate-graphql-from-json-schema.mjs`
+
 - [ ] **Verify exports** — `generateFromJSONSchema()` is already exported
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/generate-graphql-from-json-schema.test.mjs`
@@ -99,13 +107,14 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 1.3 Convert `generate-graphql-json-schema-v2.mjs`
+
 - [ ] **Review implementation** — understand V2-specific logic
 - [ ] **Export function** — `generateV2(sdlFilePath, outputPath, options = {})`
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/generate-graphql-json-schema-v2.test.mjs`
 - [ ] **Test cases:**
   - [ ] V2 SDL with x-graphql hints → JSON Schema
-  - [ ] x-graphql-* extensions preserved
+  - [ ] x-graphql-\* extensions preserved
   - [ ] Custom directives handled
 
 **Estimated effort:** 6 hours
@@ -113,6 +122,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 1.4 Convert `generate-schema-interop.mjs`
+
 - [ ] **Export function** — `runInteropGeneration(options = {})`
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/generate-schema-interop.test.mjs`
@@ -126,6 +136,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 1.5 Validate Pointer Resolution
+
 - [ ] **Create test file** — `__tests__/helpers/pointer-resolution.test.mjs`
 - [ ] **Test cases:**
   - [ ] Resolve snake_case pointer segments
@@ -145,6 +156,7 @@ Both initiatives are detailed in their respective audit documents:
 **Goal:** Add programmatic exports and tests for all validators
 
 #### 2.1 Convert `validate-schema.mjs`
+
 - [ ] **Export function** — `validateSchema(schemaPath, options = {})`
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/validate-schema.test.mjs`
@@ -159,6 +171,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 2.2 Convert `validate-graphql-vs-jsonschema.mjs`
+
 - [ ] **Export function** — `validateParity(graphqlPath, jsonSchemaPath, options = {})`
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/validate-graphql-vs-jsonschema.test.mjs`
@@ -173,6 +186,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 2.3 Convert `validate-schema-sync.mjs`
+
 - [ ] **Export function** — `compareSchemas(graphqlSchema, jsonSchema, options = {})`
 - [ ] **Add JSDoc** — complete documentation
 - [ ] **Create test file** — `__tests__/scripts/validate-schema-sync.test.mjs`
@@ -191,6 +205,7 @@ Both initiatives are detailed in their respective audit documents:
 **Goal:** Consolidate duplicate logic and improve code reuse
 
 #### 3.1 Create `scripts/lib/graphql-hints.mjs`
+
 - [ ] **Audit common code** — across enhanced/with-extensions/custom generators
 - [ ] **Extract functions:**
   - [ ] `processXGraphQLHints(schema)`
@@ -205,6 +220,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 3.2 Update Generators to Use Shared Lib
+
 - [ ] **Update `generate-graphql-enhanced.mjs`** — import and use lib
 - [ ] **Update `generate-graphql-with-extensions.mjs`** — import and use lib
 - [ ] **Update `generate-graphql-custom.mjs`** — import and use lib
@@ -216,6 +232,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 3.3 Move Dev Tools
+
 - [ ] **Check for `map-missing-fields.mjs`** — move to `scripts/dev/` if exists
 - [ ] **Check `test-core-types.mjs`** — convert to test harness or move to dev
 - [ ] **Create `scripts/dev/README.md`** — explain purpose of dev tools
@@ -229,6 +246,7 @@ Both initiatives are detailed in their respective audit documents:
 **Goal:** Complete test coverage and documentation
 
 #### 4.1 Add Unit Tests for Helper Modules
+
 - [ ] **`helpers/case-conversion.mjs`** — test camelCase ↔ snake_case
 - [ ] **`helpers/format-json.mjs`** — test JSON formatting
 - [ ] **`generate-graphql-json-schema-helpers.mjs`** — test all helpers
@@ -239,6 +257,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 4.2 Update Documentation
+
 - [ ] **Add JSDoc to all exports** — complete coverage
 - [ ] **Update `scripts/README.md`:**
   - [ ] List all programmatic APIs
@@ -253,6 +272,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 4.3 CI/CD Enhancements
+
 - [ ] **Add CI step** — run unit tests for scripts
 - [ ] **Add CI check** — verify generated files are committed
 - [ ] **Add CI step** — verify no uncommitted changes after generation
@@ -268,6 +288,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Phase 1: Planning and Setup (Week 1)
 
 #### 1.1 Planning
+
 - [x] **Create consolidation plan** — `docs/audit/docs-consolidation-plan.md`
 - [ ] **Review plan with team** — get feedback and approval
 - [ ] **Finalize approach** — confirm archive strategy
@@ -277,6 +298,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 1.2 Setup Archive Structure
+
 - [ ] **Create directories:**
   - [ ] `docs/archived/`
   - [ ] `docs/archived/implementation-logs/`
@@ -295,6 +317,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Phase 2: Create Consolidated Guides (Week 2)
 
 #### 2.1 Quick Start Guide
+
 - [ ] **Create `docs/quick-start.md`**
 - [ ] **Content:**
   - [ ] Prerequisites check
@@ -309,6 +332,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 2.2 Schema Pipeline Guide
+
 - [ ] **Create `docs/schema-pipeline-guide.md`**
 - [ ] **Consolidate content from:**
   - [ ] `schema-pipeline.md`
@@ -327,6 +351,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 2.3 Schema V1 vs V2 Guide
+
 - [ ] **Create `docs/schema-v1-vs-v2-guide.md`**
 - [ ] **Consolidate content from:**
   - [ ] `V1-VS-V2-QUICK-REFERENCE.md`
@@ -345,6 +370,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Phase 3: More Consolidated Guides + Renames (Week 3)
 
 #### 3.1 Schema Tooling Reference
+
 - [ ] **Create `docs/schema-tooling-reference.md`**
 - [ ] **Consolidate content from:**
   - [ ] `schema-tooling-alternatives.md`
@@ -360,6 +386,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 3.2 System Mappings Guide
+
 - [ ] **Create `docs/system-mappings-guide.md`**
 - [ ] **Consolidate content from:**
   - [ ] `pertrified2contract_data.md`
@@ -377,6 +404,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 3.3 External Systems Reference
+
 - [ ] **Create `docs/external-systems-reference.md`**
 - [ ] **Consolidate content from:**
   - [ ] `fiscal.treasury.gov.md`
@@ -392,6 +420,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 3.4 Rename Existing Guides
+
 - [ ] **Rename to lowercase:**
   - [ ] `PYTHON-VALIDATION-QUICK-START.md` → `python-validation-guide.md`
   - [ ] `SCHEMA-LINTING-GUIDE.md` → `schema-linting-guide.md`
@@ -406,6 +435,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Phase 4: Archive and Update References (Week 4)
 
 #### 4.1 Move Files to Archive
+
 - [ ] **Move implementation logs:**
   - [ ] `BENCHMARK-SETUP-COMPLETE.md`
   - [ ] `GRAPHQL-CONVERTER-BUG-FIXES.md`
@@ -429,14 +459,16 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 4.2 Add ARCHIVED Notices
+
 - [ ] **Add notice to top of each archived file:**
+
 ```markdown
 > **⚠️ ARCHIVED DOCUMENTATION**
-> 
+>
 > This document has been archived and is preserved for historical reference only.
-> 
+>
 > **See instead:** [Relevant Current Guide](../relevant-guide.md)
-> 
+>
 > **Archived:** December 2024  
 > **Reason:** [Brief reason]
 ```
@@ -446,6 +478,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 4.3 Update Cross-References
+
 - [ ] **Update `docs/README.md`:**
   - [ ] New organization structure
   - [ ] Links to all consolidated guides
@@ -461,6 +494,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Phase 5: Review and Polish (Week 5)
 
 #### 5.1 Content Review
+
 - [ ] **Review all consolidated guides** — accuracy and completeness
 - [ ] **Verify all cross-references work** — no broken links
 - [ ] **Test all code examples** — ensure they work
@@ -471,6 +505,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 5.2 Team Feedback
+
 - [ ] **Share with team** — get feedback on new structure
 - [ ] **Address feedback** — make requested changes
 - [ ] **Final approval** — from stakeholders
@@ -480,6 +515,7 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 #### 5.3 Final Polish
+
 - [ ] **Fix any issues found** in review
 - [ ] **Final proofreading pass** — spelling, grammar, formatting
 - [ ] **Verify build succeeds** — no warnings or errors
@@ -492,19 +528,23 @@ Both initiatives are detailed in their respective audit documents:
 ## Weekly Milestones
 
 ### Week 1 (Dec 9-15, 2024)
+
 **Focus:** Planning complete, fix blocking issue, start Phase 1
 
 **Scripts:**
+
 - [ ] Fix `generate-graphql-json-schema.mjs` signature (BLOCKER)
 - [ ] Start `generate-graphql-from-json-schema.mjs` conversion
 - [ ] Create test fixtures directory structure
 
 **Docs:**
+
 - [x] Complete consolidation plan
 - [ ] Review plan with team
 - [ ] Create archive structure
 
 **Deliverables:**
+
 - Blocker resolved
 - Test infrastructure set up
 - Archive structure ready
@@ -512,38 +552,46 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 ### Week 2 (Dec 16-22, 2024)
+
 **Focus:** Complete Phase 1 generators, start consolidated guides
 
 **Scripts:**
+
 - [ ] Complete all Phase 1 generator conversions
 - [ ] All 4 core generators have tests
 - [ ] Pointer resolution validated
 
 **Docs:**
+
 - [ ] `quick-start.md` written
 - [ ] `schema-pipeline-guide.md` written
 - [ ] `schema-v1-vs-v2-guide.md` written
 
 **Deliverables:**
+
 - 4 generators fully tested
 - 3 major guides consolidated
 
 ---
 
 ### Week 3 (Dec 23-29, 2024)
+
 **Focus:** Validators and more consolidated guides
 
 **Scripts:**
+
 - [ ] Complete Phase 2 validator conversions
 - [ ] All 3 validators have tests
 
 **Docs:**
+
 - [ ] `schema-tooling-reference.md` written
 - [ ] `system-mappings-guide.md` written
 - [ ] `external-systems-reference.md` written
 - [ ] All guides renamed to lowercase
 
 **Deliverables:**
+
 - 3 validators fully tested
 - 3 more guides consolidated
 - Consistent naming across all docs
@@ -551,19 +599,23 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 ### Week 4 (Dec 30 - Jan 5, 2025)
+
 **Focus:** Consolidation and archiving
 
 **Scripts:**
+
 - [ ] Create `scripts/lib/graphql-hints.mjs`
 - [ ] Update 3 generators to use shared lib
 - [ ] Move dev tools to `scripts/dev/`
 
 **Docs:**
+
 - [ ] Move all files to archive
 - [ ] Add ARCHIVED notices
 - [ ] Update all cross-references
 
 **Deliverables:**
+
 - Shared GraphQL hints library
 - All outdated docs archived
 - All references updated
@@ -571,19 +623,23 @@ Both initiatives are detailed in their respective audit documents:
 ---
 
 ### Week 5 (Jan 6-12, 2025)
+
 **Focus:** Testing, documentation, final polish
 
 **Scripts:**
+
 - [ ] Unit tests for all helper modules
 - [ ] Update `scripts/README.md` and create `scripts/API.md`
 - [ ] CI enhancements complete
 
 **Docs:**
+
 - [ ] Content review complete
 - [ ] Team feedback addressed
 - [ ] Final polish complete
 
 **Deliverables:**
+
 - Complete test coverage
 - Complete API documentation
 - Polished, reviewed documentation
@@ -595,6 +651,7 @@ Both initiatives are detailed in their respective audit documents:
 ### Current Blockers
 
 #### 🔴 HIGH PRIORITY
+
 1. **`generate-graphql-json-schema.mjs` function signature mismatch**
    - **Impact:** Blocks Phase 1 progress
    - **Owner:** TBD
@@ -604,10 +661,12 @@ Both initiatives are detailed in their respective audit documents:
 ### Dependencies
 
 #### Scripts → Docs
+
 - Archive strategy must be finalized before moving implementation logs
 - New generator APIs should be documented in consolidated guides
 
 #### Phase Dependencies
+
 - **Scripts Phase 2** depends on Phase 1 (need test infrastructure)
 - **Scripts Phase 3** depends on Phase 1 & 2 (need working exports)
 - **Docs Phase 4** depends on Phase 2 & 3 (need content to reference)
@@ -617,16 +676,19 @@ Both initiatives are detailed in their respective audit documents:
 ## Testing Strategy
 
 ### Unit Tests
+
 - **Location:** `__tests__/scripts/`, `__tests__/helpers/`, `__tests__/lib/`
 - **Coverage goal:** 80%+ for generators, 90%+ for validators
 - **Framework:** Jest (already in use)
 
 ### Integration Tests
+
 - **Focus:** Full pipeline workflows
 - **Example:** SDL → JSON → SDL round-trip
 - **Location:** `__tests__/integration/`
 
 ### Test Fixtures
+
 - **Location:** `__tests__/fixtures/`
 - **Structure:**
   ```
@@ -642,6 +704,7 @@ Both initiatives are detailed in their respective audit documents:
   ```
 
 ### CI Testing
+
 - Run on every PR
 - Require passing tests for merge
 - Coverage reporting with badge
@@ -651,6 +714,7 @@ Both initiatives are detailed in their respective audit documents:
 ## Success Criteria
 
 ### Scripts Audit Success
+
 - ✅ **All generators export programmatic functions**
 - ✅ **All validators export programmatic functions**
 - ✅ **80%+ test coverage** for generators
@@ -660,6 +724,7 @@ Both initiatives are detailed in their respective audit documents:
 - ✅ **No blockers** remaining
 
 ### Documentation Consolidation Success
+
 - ✅ **Document count reduced from 38 to ~15** (60% reduction)
 - ✅ **All implementation logs archived** (with ARCHIVED notices)
 - ✅ **All redundancy eliminated** (consolidated into single guides)
@@ -669,6 +734,7 @@ Both initiatives are detailed in their respective audit documents:
 - ✅ **Team approval** of new structure
 
 ### Overall Project Success
+
 - ✅ **Both initiatives complete** within 5 weeks
 - ✅ **No functionality lost** (all code works, all content preserved)
 - ✅ **Maintenance burden reduced** (fewer files, better organization)
@@ -682,6 +748,7 @@ Both initiatives are detailed in their respective audit documents:
 **Last Updated:** December 2024
 
 ### Scripts Audit: 15% Complete
+
 - Planning: ✅ Complete
 - Phase 1: 🔄 In Progress (1 blocker)
 - Phase 2: ⏸️ Not Started
@@ -689,6 +756,7 @@ Both initiatives are detailed in their respective audit documents:
 - Phase 4: ⏸️ Not Started
 
 ### Documentation Consolidation: 20% Complete
+
 - Planning: ✅ Complete
 - Phase 1: 🔄 In Progress (setup needed)
 - Phase 2: ⏸️ Not Started
@@ -697,6 +765,7 @@ Both initiatives are detailed in their respective audit documents:
 - Phase 5: ⏸️ Not Started
 
 ### Overall: 17% Complete
+
 - **Completed:** 2 of 9 phases
 - **In Progress:** 2 of 9 phases
 - **Not Started:** 5 of 9 phases
@@ -707,6 +776,7 @@ Both initiatives are detailed in their respective audit documents:
 ## Next Actions
 
 ### This Week (Week 1)
+
 1. **🔴 HIGH:** Fix `generate-graphql-json-schema.mjs` function signature
 2. **🟡 MEDIUM:** Create test fixtures directory
 3. **🟡 MEDIUM:** Create docs archive structure
@@ -714,6 +784,7 @@ Both initiatives are detailed in their respective audit documents:
 5. **🟢 LOW:** Set up CI for running script tests
 
 ### Next Week (Week 2)
+
 1. Complete Phase 1 generator conversions
 2. Write first 3 consolidated docs guides
 3. Begin Phase 2 validator conversions

@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { convertSchema } from '../lib/converter';
+import { useState, useCallback } from "react";
+import { convertSchema } from "../lib/converter";
 
 export function useSubgraphGenerator() {
   const [subgraphs, setSubgraphs] = useState(new Map());
@@ -14,8 +14,8 @@ export function useSubgraphGenerator() {
           validate: options.validate ?? true,
           descriptions: options.descriptions ?? true,
           federation: options.federation ?? true,
-          federationVersion: options.federationVersion ?? 'AUTO',
-          naming: options.naming ?? 'GRAPHQL_IDIOMATIC',
+          federationVersion: options.federationVersion ?? "AUTO",
+          naming: options.naming ?? "GRAPHQL_IDIOMATIC",
           ...options, // Allow additional options
         });
 
@@ -43,7 +43,7 @@ export function useSubgraphGenerator() {
         setIsLoading(false);
       }
     },
-    []
+    [],
   );
 
   const clearSubgraph = useCallback((schemaId) => {

@@ -43,7 +43,7 @@
       "properties": {
         "max_int": { "type": "integer", "maximum": 9007199254740991 },
         "min_int": { "type": "integer", "minimum": -9007199254740991 },
-        "large_float": { "type": "number", "maximum": 1.7976931348623157e+308 },
+        "large_float": { "type": "number", "maximum": 1.7976931348623157e308 },
         "small_float": { "type": "number", "minimum": 5e-324 }
       }
     },
@@ -76,10 +76,7 @@
         "one_of_empty": { "oneOf": [] },
         "any_of_single": { "anyOf": [{ "type": "string" }] },
         "all_of_conflict": {
-          "allOf": [
-            { "type": "string" },
-            { "type": "number" }
-          ]
+          "allOf": [{ "type": "string" }, { "type": "number" }]
         }
       }
     },
@@ -88,16 +85,11 @@
       "properties": {
         "tuple_validation": {
           "type": "array",
-          "items": [
-            { "type": "string" },
-            { "type": "number" }
-          ]
+          "items": [{ "type": "string" }, { "type": "number" }]
         },
         "array_with_additional_items": {
           "type": "array",
-          "items": [
-            { "type": "string" }
-          ],
+          "items": [{ "type": "string" }],
           "additionalItems": { "type": "boolean" }
         }
       }

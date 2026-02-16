@@ -31,7 +31,7 @@ yarn add json-schema-x-graphql
 **Basic usage**:
 
 ```typescript
-import { convertSdlToJson, convertJsonToSdl } from 'json-schema-x-graphql';
+import { convertSdlToJson, convertJsonToSdl } from "json-schema-x-graphql";
 
 // Convert GraphQL SDL to JSON Schema
 const jsonSchema = await convertSdlToJson(`
@@ -71,6 +71,7 @@ npm test
 ### What Problem Does This Solve?
 
 Organizations often need to:
+
 1. **Validate data** before it enters their systems (JSON Schema)
 2. **Expose that data** via GraphQL APIs (GraphQL SDL)
 3. **Maintain a single source of truth** for both
@@ -85,15 +86,16 @@ The project uses three distinct naming conventions:
 
 ```json
 {
-  "user_id": "123",                           // snake_case (database/JSON Schema)
-  "x-graphql-field-name": "userId",          // camelCase (GraphQL API)
-  "x-graphql-federation-requires": "email"   // hyphen-case (metadata)
+  "user_id": "123", // snake_case (database/JSON Schema)
+  "x-graphql-field-name": "userId", // camelCase (GraphQL API)
+  "x-graphql-federation-requires": "email" // hyphen-case (metadata)
 }
 ```
 
 #### 2. Minimal Extensions
 
 Only **15 core fields** are required for lossless conversion:
+
 - 4 always required (type-name, type-kind, field-name, field-type)
 - 3 when applicable (field-non-null, list-item-non-null, argument-default-value)
 - 6 for federation (keys, requires, provides, external, shareable, override-from)
@@ -206,10 +208,11 @@ The intake_processest way to contribute!
 4. Submit a PR
 
 **Files to check**:
+
 - README.md
 - CONTEXT.md
 - CONTRIBUTING.md
-- examples/*.schema.json
+- examples/\*.schema.json
 
 ### Option 2: Add a Test Case
 
@@ -236,12 +239,12 @@ mod tests {
                 ARCHIVED
             }
         "#;
-        
+
         let json_schema = sdl_to_json(sdl).unwrap();
-        
+
         let status_def = &json_schema.definitions["Status"];
         assert_eq!(status_def.x_graphql_type_kind, GraphQLKind::Enum);
-        
+
         let configs = status_def.x_graphql_enum_value_configs.unwrap();
         assert!(configs["DISABLED"].deprecated.unwrap());
     }
@@ -300,17 +303,17 @@ fn test_round_trip() {
             price: Float
         }
     "#;
-    
+
     // SDL → JSON
     let json_schema = sdl_to_json(original_sdl).unwrap();
-    
+
     // JSON → SDL
     let regenerated_sdl = json_to_sdl(&json_schema).unwrap();
-    
+
     // Parse both and compare ASTs
     let original_ast = parse_sdl(original_sdl);
     let regenerated_ast = parse_sdl(&regenerated_sdl);
-    
+
     assert_eq!(original_ast, regenerated_ast);
 }
 ```
@@ -343,6 +346,7 @@ If you need to add a new `x-graphql-*` extension:
 ### Problem: Rust compilation fails
 
 **Solution**:
+
 ```bash
 # Update Rust
 rustup update
@@ -355,6 +359,7 @@ cargo build
 ### Problem: WASM build fails
 
 **Solution**:
+
 ```bash
 # Reinstall wasm-pack
 curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
@@ -366,6 +371,7 @@ wasm-pack build --target web --release
 ### Problem: Tests fail
 
 **Solution**:
+
 ```bash
 # Run tests with output
 cargo test -- --nocapture
@@ -381,6 +387,7 @@ cargo clippy
 ### Problem: JSON Schema validation fails
 
 **Solution**:
+
 1. Check that `$schema` points to `https://json-schema.org/draft/2020-12/schema`
 2. Ensure all `x-graphql-*` keys use `hyphen-case`
 3. Verify GraphQL type names use `PascalCase`
@@ -390,6 +397,7 @@ cargo clippy
 ### Problem: Round-trip conversion loses data
 
 **Solution**:
+
 1. Check if you're using a required extension field
 2. Verify directive arguments are preserved
 3. Ensure enum value configs are included

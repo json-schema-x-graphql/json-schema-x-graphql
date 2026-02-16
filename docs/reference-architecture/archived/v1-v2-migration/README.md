@@ -18,6 +18,7 @@ These documents preserve the history of the major schema architecture transition
 ## Files in This Directory
 
 ### `V1-TO-V2-CONVERTER-RESULTS.md`
+
 **Conversion results and analysis from V1 to V2 schema**
 
 - Field-by-field conversion results
@@ -31,9 +32,10 @@ These documents preserve the history of the major schema architecture transition
 ---
 
 ### `V2-GRAPHQL-ENHANCEMENT-SUMMARY.md`
+
 **Summary of V2 GraphQL enhancements and new features**
 
-- x-graphql-* hint system
+- x-graphql-\* hint system
 - Interface and union improvements
 - Custom directive support
 - Extension mechanisms
@@ -44,6 +46,7 @@ These documents preserve the history of the major schema architecture transition
 ---
 
 ### `migration-to-json-schema-canonical.md`
+
 **Migration guide to canonical JSON Schema approach**
 
 - Decision to use snake_case as canonical
@@ -57,6 +60,7 @@ These documents preserve the history of the major schema architecture transition
 ---
 
 ### `schema_unification-v1-diagram.md`
+
 **V1 schema architecture diagram and documentation**
 
 - V1 type system overview
@@ -74,7 +78,9 @@ These documents preserve the history of the major schema architecture transition
 For up-to-date V1/V2 comparison and migration guidance, see:
 
 ### **[Schema V1 vs V2 Guide](../../schema-v1-vs-v2-guide.md)**
+
 Consolidated guide covering:
+
 - Quick reference comparison table
 - Detailed type system changes
 - Field naming (camelCase → snake_case)
@@ -87,23 +93,27 @@ Consolidated guide covering:
 ## Migration Timeline
 
 ### Phase 1: Planning (Completed)
+
 - Analysis of V1 limitations
 - V2 architecture design
 - Decision to adopt snake_case canonical schema
 
 ### Phase 2: Implementation (Completed)
+
 - Converter script development
 - Field mapping generation
 - x-graphql hint system implementation
 - Schema generation pipeline updates
 
 ### Phase 3: Validation (Completed)
+
 - Parity checking between V1 and V2
 - Round-trip testing (SDL ↔ JSON)
 - Pointer resolution validation
 - Production deployment
 
 ### Phase 4: Consolidation (Completed)
+
 - Legacy V1 pages moved to `src/legacy-pages/`
 - V1 schema files moved to `src/data/archived/`
 - Documentation consolidated
@@ -114,8 +124,10 @@ Consolidated guide covering:
 ## Key Migration Decisions
 
 ### 1. Snake_case as Canonical
+
 **Decision:** Use snake_case for canonical JSON Schema  
-**Rationale:** 
+**Rationale:**
+
 - Better alignment with JSON Schema conventions
 - Improved compatibility with Python validators
 - Clearer separation from GraphQL (camelCase SDL)
@@ -125,8 +137,10 @@ Consolidated guide covering:
 ---
 
 ### 2. x-graphql Hints System
-**Decision:** Use x-graphql-* extensions for GraphQL-specific metadata  
+
+**Decision:** Use x-graphql-\* extensions for GraphQL-specific metadata  
 **Rationale:**
+
 - Preserve GraphQL semantics in JSON Schema
 - Support interfaces, unions, and custom directives
 - Enable rich GraphQL generation from JSON Schema
@@ -136,8 +150,10 @@ Consolidated guide covering:
 ---
 
 ### 3. Dual Schema Generation
+
 **Decision:** Maintain both SDL → JSON and JSON → SDL generators  
 **Rationale:**
+
 - Bidirectional parity validation
 - Flexibility in source of truth
 - Round-trip testing capabilities
@@ -149,17 +165,20 @@ Consolidated guide covering:
 ## Lessons Learned
 
 ### What Worked Well
+
 ✅ Comprehensive field mapping before migration  
 ✅ Automated conversion scripts (reduced errors)  
 ✅ Parity validation throughout process  
-✅ Preserving V1 for historical reference  
+✅ Preserving V1 for historical reference
 
 ### Challenges Encountered
+
 ⚠️ Pointer resolution required updates for snake_case  
 ⚠️ Some manual fixes needed for complex nested types  
-⚠️ CI/CD pipeline required updates for dual output  
+⚠️ CI/CD pipeline required updates for dual output
 
 ### Recommendations for Future Migrations
+
 - Start with comprehensive field mapping
 - Automate as much as possible
 - Validate parity continuously

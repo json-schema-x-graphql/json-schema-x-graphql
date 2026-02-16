@@ -62,12 +62,14 @@ The testing suite ensures:
 Test individual functions and modules in isolation.
 
 **Rust:**
+
 ```bash
 cd converters/rust
 cargo test --lib
 ```
 
 **Node.js:**
+
 ```bash
 cd converters/node
 pnpm test
@@ -78,12 +80,14 @@ pnpm test
 Test complete conversion workflows with real schemas.
 
 **Rust:**
+
 ```bash
 cd converters/rust
 cargo test --test '*'
 ```
 
 **Node.js:**
+
 ```bash
 cd converters/node
 pnpm test tests/integration
@@ -99,6 +103,7 @@ Validate that conversions are truly lossless by converting back and forth multip
 ```
 
 **What it tests:**
+
 - JSON Schema → GraphQL SDL → JSON Schema (Cycle 1)
 - Repeat 2 more times (Cycles 2 & 3)
 - Verify no drift between cycles
@@ -119,6 +124,7 @@ pnpm -w -C converters/node test --silent
 ```
 
 You can override converter options for a given run by setting either:
+
 - `JXQL_OPTIONS_PATH`: path to a JSON file containing `ConverterOptions` fields
 - `JXQL_OPTIONS_JSON`: inline JSON string of options
 
@@ -131,12 +137,14 @@ Fixtures in `converters/test-data` may include a sibling `*.options.json` file; 
 ### Prerequisites
 
 **Rust:**
+
 - Rust 1.70+ installed via [rustup](https://rustup.rs/)
 - `cargo-audit`: `cargo install cargo-audit`
 - `cargo-tarpaulin`: `cargo install cargo-tarpaulin` (Linux only, optional)
 - `cargo-deny`: `cargo install cargo-deny` (optional)
 
 **Node.js:**
+
 - Node.js 18+ from [nodejs.org](https://nodejs.org/)
 - pnpm: `npm install -g pnpm`
 
@@ -190,12 +198,14 @@ The comprehensive test suite runs:
 ### Rust Security Audit
 
 **Using cargo-audit:**
+
 ```bash
 cd converters/rust
 cargo audit --deny warnings
 ```
 
 **Using cargo-deny:**
+
 ```bash
 cd converters/rust
 cargo deny check advisories
@@ -205,6 +215,7 @@ cargo deny check sources
 ```
 
 **What it checks:**
+
 - Known security vulnerabilities (RustSec Advisory Database)
 - Unmaintained dependencies
 - Yanked crates
@@ -214,12 +225,14 @@ cargo deny check sources
 ### Node.js Security Audit
 
 **Using npm/pnpm audit:**
+
 ```bash
 cd converters/node
 pnpm audit --audit-level=moderate
 ```
 
 **Using Snyk (optional):**
+
 ```bash
 cd converters/node
 npm install -g snyk
@@ -228,6 +241,7 @@ snyk monitor
 ```
 
 **What it checks:**
+
 - Known vulnerabilities (npm Advisory Database)
 - Outdated packages with security issues
 - License compliance
@@ -238,6 +252,7 @@ snyk monitor
 **Rust:** See `converters/rust/deny.toml` for cargo-deny configuration
 
 **Node.js:** Security policies in `package.json`:
+
 - Audit level: `moderate` (blocks medium+ severity)
 - Auto-fix: `pnpm audit fix`
 
@@ -256,6 +271,7 @@ JSON Schema → GraphQL SDL → JSON Schema (Cycle 3)
 ```
 
 Then validates:
+
 - JSON output from Cycle 1 === Cycle 2 === Cycle 3
 - GraphQL output from Cycle 1 === Cycle 2 === Cycle 3
 
@@ -270,6 +286,7 @@ If all 3 cycles produce identical output, the conversion is truly lossless.
 ### Running Round-Trip Tests Manually
 
 **Rust:**
+
 ```bash
 cd converters/rust
 
@@ -296,6 +313,7 @@ diff target/roundtrip-test/cycle2.graphql target/roundtrip-test/cycle3.graphql
 ```
 
 **Node.js:**
+
 ```bash
 cd converters/node
 
@@ -310,20 +328,24 @@ node tests/roundtrip.test.js
 ### Common Round-Trip Issues
 
 **Silent field dropping:**
+
 - Fields present in input but missing in output
 - Detection: Compare field counts and keys
 
 **Type simplification:**
+
 - Complex types reduced to simpler forms
 - Example: `["string", "null"]` → `string?`
 - Detection: Deep equality checks
 
 **Metadata loss:**
+
 - Loss of `x-graphql-*` extensions
 - Loss of descriptions, examples
 - Detection: Full schema comparison
 
 **Normalization drift:**
+
 - Output format differs but semantically equivalent
 - Example: Property order changes
 - Solution: Canonical JSON serialization
@@ -335,6 +357,7 @@ node tests/roundtrip.test.js
 ### Rust Coverage
 
 **Using cargo-tarpaulin (Linux/macOS):**
+
 ```bash
 cd converters/rust
 cargo tarpaulin --out Html --out Lcov --output-dir coverage
@@ -342,6 +365,7 @@ cargo tarpaulin --out Html --out Lcov --output-dir coverage
 ```
 
 **Using cargo-llvm-cov (all platforms):**
+
 ```bash
 cargo install cargo-llvm-cov
 cd converters/rust
@@ -372,16 +396,19 @@ Minimum required coverage (enforced in CI):
 ### GitHub Actions Workflows
 
 **1. Comprehensive Tests** (`.github/workflows/comprehensive-tests.yml`)
+
 - Runs on: Push to main/develop, PRs
 - Tests: All platforms (Linux, macOS, Windows)
 - Includes: Unit, integration, round-trip, parity tests
 
 **2. Security Audit** (`.github/workflows/security-audit.yml`)
+
 - Runs on: Push, PRs, daily schedule (2 AM UTC)
 - Scans: Dependencies, licenses, vulnerabilities
 - Tools: cargo-audit, cargo-deny, npm audit, CodeQL
 
 **3. Coverage Report** (included in comprehensive-tests.yml)
+
 - Uploads to Codecov
 - Separate reports for Rust and Node.js
 
@@ -406,6 +433,7 @@ act -W .github/workflows/security-audit.yml
 ### Rust Tests Failing
 
 **Issue: Cargo not found**
+
 ```bash
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -413,6 +441,7 @@ source $HOME/.cargo/env
 ```
 
 **Issue: Clippy warnings**
+
 ```bash
 cd converters/rust
 cargo clippy --fix --allow-dirty
@@ -420,6 +449,7 @@ cargo fmt
 ```
 
 **Issue: Test compilation errors**
+
 ```bash
 # Clean and rebuild
 cargo clean
@@ -430,6 +460,7 @@ cargo test
 ### Node.js Tests Failing
 
 **Issue: TypeScript compilation errors**
+
 ```bash
 cd converters/node
 pnpm run lint:fix
@@ -438,6 +469,7 @@ pnpm run build
 ```
 
 **Issue: Module not found**
+
 ```bash
 cd converters/node
 rm -rf node_modules pnpm-lock.yaml
@@ -446,6 +478,7 @@ pnpm run build
 ```
 
 **Issue: ESM import errors**
+
 - Ensure `"type": "module"` in `package.json`
 - Use `.js` extensions in imports
 - Check Jest ESM configuration
@@ -455,6 +488,7 @@ pnpm run build
 **Drift detected between cycles:**
 
 1. **Examine the diff:**
+
    ```bash
    diff -u test-output/cycle1.json test-output/cycle2.json
    ```
@@ -471,6 +505,7 @@ pnpm run build
    - Check for conditional logic
 
 **Example output not matching:**
+
 - Verify examples are in test-data directory
 - Check file paths in scripts
 - Ensure converters are built
@@ -478,6 +513,7 @@ pnpm run build
 ### Security Audit Failures
 
 **Rust vulnerability found:**
+
 ```bash
 cd converters/rust
 cargo audit
@@ -487,6 +523,7 @@ cargo audit
 ```
 
 **Node.js vulnerability found:**
+
 ```bash
 cd converters/node
 pnpm audit
@@ -501,12 +538,14 @@ pnpm audit fix  # Attempt automatic fix
 ### Benchmarking
 
 **Rust:**
+
 ```bash
 cd converters/rust
 cargo bench
 ```
 
 **Node.js:**
+
 ```bash
 cd converters/node
 pnpm run bench
@@ -515,6 +554,7 @@ pnpm run bench
 ### Profiling
 
 **Rust:**
+
 ```bash
 # CPU profiling
 cargo install flamegraph
@@ -526,6 +566,7 @@ cargo instruments -t time --bench conversion_bench
 ```
 
 **Node.js:**
+
 ```bash
 # CPU profiling
 node --prof tests/benchmark.js
@@ -561,6 +602,7 @@ Test schemas are located in `converters/test-data/`:
 ### Writing Tests
 
 1. **Use descriptive test names**
+
    ```rust
    #[test]
    fn test_json_to_graphql_preserves_all_fields() { }
@@ -586,10 +628,11 @@ Test schemas are located in `converters/test-data/`:
 ### Code Quality
 
 1. **Run linters before commit**
+
    ```bash
    # Rust
    cargo clippy && cargo fmt --check
-   
+
    # Node.js
    pnpm run lint && pnpm run format:check
    ```
@@ -605,6 +648,7 @@ Test schemas are located in `converters/test-data/`:
 ### Security
 
 1. **Update dependencies regularly**
+
    ```bash
    # Weekly dependency updates
    cargo update

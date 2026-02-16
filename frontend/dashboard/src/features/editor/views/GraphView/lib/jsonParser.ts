@@ -62,7 +62,9 @@ export function parser(jsonStr: string): Graph {
       const emptyNode = { id: null, text: "", isEmpty: true, data: {} };
       const emptyId = addNodeToGraph({ graph, ...emptyNode });
 
-      notHaveParent.forEach(childId => addEdgeToGraph(graph, emptyId, childId));
+      notHaveParent.forEach((childId) =>
+        addEdgeToGraph(graph, emptyId, childId),
+      );
     }
 
     if (states.graph.nodes.length === 0) {
@@ -75,20 +77,20 @@ export function parser(jsonStr: string): Graph {
 
     // filter parent nodes that have no children
     // not the best way to do this, but it works
-    const filteredNodes = states.graph.nodes.filter(node => {
+    const filteredNodes = states.graph.nodes.filter((node) => {
       return !(node.data.isParent && node.data.childrenCount === 0);
     });
 
     // add path to nodes
-    states.graph.nodes = filteredNodes.map(node => ({
+    states.graph.nodes = filteredNodes.map((node) => ({
       ...node,
       path: getNodePath(states.graph.nodes, states.graph.edges, node.id),
     }));
 
     // filter edges that have no from or to node (since we filtered empty parent nodes)
-    states.graph.edges = states.graph.edges.filter(edge => {
-      const fromNode = states.graph.nodes.find(node => node.id === edge.from);
-      const toNode = states.graph.nodes.find(node => node.id === edge.to);
+    states.graph.edges = states.graph.edges.filter((edge) => {
+      const fromNode = states.graph.nodes.find((node) => node.id === edge.from);
+      const toNode = states.graph.nodes.find((node) => node.id === edge.to);
 
       if (!fromNode || !toNode) return false;
       return true;

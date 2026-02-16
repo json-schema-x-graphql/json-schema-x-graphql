@@ -13,7 +13,7 @@
 **File:** `src/data/archived/schema_unification.graphql.legacy`
 
 - Added header explaining why file was archived
-- Documented that x-graphql-* annotations are now single source of truth
+- Documented that x-graphql-\* annotations are now single source of truth
 - Preserved reference to original content (truncated for space)
 
 ### ✅ 2. Created src/data/README.md
@@ -21,10 +21,11 @@
 **File:** `src/data/README.md`
 
 Comprehensive documentation including:
+
 - Directory structure explanation
 - Workflow diagrams
-- Naming conventions (snake_case, camelCase, x-graphql-*)
-- When to use x-graphql-* annotations
+- Naming conventions (snake_case, camelCase, x-graphql-\*)
+- When to use x-graphql-\* annotations
 - Validation commands
 - CI/CD integration details
 
@@ -49,6 +50,7 @@ Comprehensive documentation including:
 ### ✅ 5. Updated docs/SCHEMA-ARCHITECTURE.md
 
 **Changes:**
+
 - Removed `schema_unification.graphql` from canonical sources table
 - Added `public_spending.schema.json` to sources table
 - Updated data flow diagram to show actual reality (JSON → SDL, not bidirectional)
@@ -58,6 +60,7 @@ Comprehensive documentation including:
 ### ✅ 6. Created docs/CLEANUP-PLAN-src-data.md
 
 **Complete cleanup plan with:**
+
 - Executive summary
 - Rationale for each change
 - Git commands to execute
@@ -141,6 +144,7 @@ grep -r "supgraphs" src/ || echo "✓ No supgraphs references"
 ## Files Created/Modified
 
 ### Created:
+
 1. `src/data/README.md` - Complete directory documentation
 2. `src/data/generated/README.md` - CI-managed warning
 3. `src/data/archived/schema_unification.graphql.legacy` - Archived SDL with header
@@ -148,9 +152,11 @@ grep -r "supgraphs" src/ || echo "✓ No supgraphs references"
 5. `docs/CLEANUP-PLAN-src-data.md` - Full cleanup plan
 
 ### Modified:
+
 1. `docs/SCHEMA-ARCHITECTURE.md` - Updated to reflect reality
 
 ### To Be Removed (Manual):
+
 1. `src/data/schema_unification.graphql` - Move to archived/
 2. `src/data/supgraphs/contract_data.graphql` - Legacy SDL
 3. `src/data/supgraphs/contract_data.schema.json` - Legacy schema
@@ -196,7 +202,7 @@ src/data/
 
 ## Key Takeaways
 
-1. **JSON Schema with x-graphql-* annotations** = Single source of truth
+1. **JSON Schema with x-graphql-\* annotations** = Single source of truth
 2. **All GraphQL SDL is generated**, not manually edited
 3. **`src/data/generated/`** = CI-managed mirror (do not edit)
 4. **Legacy files archived**, not deleted (Git history preserved)

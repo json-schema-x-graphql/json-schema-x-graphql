@@ -5,29 +5,193 @@
   "description": "A comprehensive test schema covering all JSON Schema features for round-trip validation",
   "type": "object",
   "properties": {
-    "id": { "type": "string", "format": "uuid", "description": "Unique identifier", "x-graphql-type": "ID" },
-    "name": { "type": "string", "minLength": 1, "maxLength": 100, "description": "Name field with length constraints" },
-    "email": { "type": "string", "format": "email", "description": "Email address" },
-    "age": { "type": "integer", "minimum": 0, "maximum": 150, "description": "Age in years" },
-    "score": { "type": "number", "minimum": 0, "maximum": 100, "multipleOf": 0.1, "description": "Score value" },
-    "isActive": { "type": "boolean", "default": true, "description": "Active status flag" },
-    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 0, "maxItems": 10, "uniqueItems": true, "description": "Array of tags" },
-    "roles": { "type": "array", "items": { "type": "string", "enum": ["admin", "user", "guest", "moderator"] }, "description": "User roles" },
-    "metadata": { "type": "object", "description": "Additional metadata", "properties": { "createdAt": { "type": "string", "format": "date-time" }, "updatedAt": { "type": "string", "format": "date-time" }, "version": { "type": "integer", "minimum": 1 } }, "additionalProperties": true },
-    "status": { "type": "string", "enum": ["pending", "active", "inactive", "deleted"], "description": "Current status" },
-    "address": { "type": "object", "properties": { "street": { "type": "string" }, "city": { "type": "string" }, "state": { "type": "string", "pattern": "^[A-Z]{2}$" }, "zipCode": { "type": "string", "pattern": "^\\d{5}(-\\d{4})?$" }, "country": { "type": "string", "default": "US" } }, "required": ["street", "city", "country"] },
-    "phoneNumbers": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string", "enum": ["home", "work", "mobile"] }, "number": { "type": "string", "pattern": "^\\+?[1-9]\\d{1,14}$" }, "primary": { "type": "boolean", "default": false } }, "required": ["type", "number"] } },
-    "preferences": { "type": "object", "properties": { "theme": { "type": "string", "enum": ["light", "dark", "auto"], "default": "auto" }, "notifications": { "type": "object", "properties": { "email": { "type": "boolean", "default": true }, "sms": { "type": "boolean", "default": false }, "push": { "type": "boolean", "default": true } } }, "language": { "type": "string", "pattern": "^[a-z]{2}(-[A-Z]{2})?$", "default": "en" } } },
-    "nullableField": { "type": ["string", "null"], "description": "Field that can be null" },
-    "mixedArray": { "type": "array", "items": { "oneOf": [ { "type": "string" }, { "type": "number" }, { "type": "boolean" } ] }, "description": "Array with mixed types" },
-    "dateFields": { "type": "object", "properties": { "birthDate": { "type": "string", "format": "date" }, "registrationTime": { "type": "string", "format": "date-time" }, "lastLogin": { "type": "string", "format": "date-time" } } },
-    "complexNested": { "type": "object", "properties": { "level1": { "type": "object", "properties": { "level2": { "type": "object", "properties": { "level3": { "type": "object", "properties": { "deepValue": { "type": "string" } } } } } } } } },
-    "conditionalField": { "type": "object", "properties": { "type": { "type": "string", "enum": ["personal", "business"] }, "taxId": { "type": "string" } }, "required": ["type"], "if": { "properties": { "type": { "const": "business" } } }, "then": { "required": ["taxId"] } },
-    "anyOfExample": { "anyOf": [ { "type": "string", "format": "email" }, { "type": "string", "format": "uri" } ], "description": "Field that accepts either email or URI" },
-    "allOfExample": { "allOf": [ { "type": "object", "properties": { "baseField": { "type": "string" } } }, { "type": "object", "properties": { "extendedField": { "type": "string" } } } ], "description": "Combined schema using allOf" }
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier",
+      "x-graphql-type": "ID"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Name field with length constraints"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 150,
+      "description": "Age in years"
+    },
+    "score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "multipleOf": 0.1,
+      "description": "Score value"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "description": "Active status flag"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "description": "Array of tags"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["admin", "user", "guest", "moderator"]
+      },
+      "description": "User roles"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "version": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": true
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "active", "inactive", "deleted"],
+      "description": "Current status"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "zipCode": { "type": "string", "pattern": "^\\d{5}(-\\d{4})?$" },
+        "country": { "type": "string", "default": "US" }
+      },
+      "required": ["street", "city", "country"]
+    },
+    "phoneNumbers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string", "enum": ["home", "work", "mobile"] },
+          "number": { "type": "string", "pattern": "^\\+?[1-9]\\d{1,14}$" },
+          "primary": { "type": "boolean", "default": false }
+        },
+        "required": ["type", "number"]
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["light", "dark", "auto"],
+          "default": "auto"
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "boolean", "default": true },
+            "sms": { "type": "boolean", "default": false },
+            "push": { "type": "boolean", "default": true }
+          }
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+          "default": "en"
+        }
+      }
+    },
+    "nullableField": {
+      "type": ["string", "null"],
+      "description": "Field that can be null"
+    },
+    "mixedArray": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" }
+        ]
+      },
+      "description": "Array with mixed types"
+    },
+    "dateFields": {
+      "type": "object",
+      "properties": {
+        "birthDate": { "type": "string", "format": "date" },
+        "registrationTime": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      }
+    },
+    "complexNested": {
+      "type": "object",
+      "properties": {
+        "level1": {
+          "type": "object",
+          "properties": {
+            "level2": {
+              "type": "object",
+              "properties": {
+                "level3": {
+                  "type": "object",
+                  "properties": { "deepValue": { "type": "string" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "conditionalField": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["personal", "business"] },
+        "taxId": { "type": "string" }
+      },
+      "required": ["type"],
+      "if": { "properties": { "type": { "const": "business" } } },
+      "then": { "required": ["taxId"] }
+    },
+    "anyOfExample": {
+      "anyOf": [
+        { "type": "string", "format": "email" },
+        { "type": "string", "format": "uri" }
+      ],
+      "description": "Field that accepts either email or URI"
+    },
+    "allOfExample": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": { "baseField": { "type": "string" } }
+        },
+        {
+          "type": "object",
+          "properties": { "extendedField": { "type": "string" } }
+        }
+      ],
+      "description": "Combined schema using allOf"
+    }
   },
   "required": ["id", "name", "email"],
   "additionalProperties": false,
-  "x-graphql-federation": { "keys": [ { "fields": "id" } ], "extends": false },
-  "x-graphql-directives": [ { "name": "auth", "args": { "requires": "USER" } } ]
+  "x-graphql-federation": { "keys": [{ "fields": "id" }], "extends": false },
+  "x-graphql-directives": [{ "name": "auth", "args": { "requires": "USER" } }]
 }

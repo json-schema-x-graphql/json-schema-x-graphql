@@ -174,7 +174,14 @@
           "x-graphql-description": "Posts created by this user"
         }
       },
-      "required": ["id", "username", "email", "email_verified", "permissions", "created_at"]
+      "required": [
+        "id",
+        "username",
+        "email",
+        "email_verified",
+        "permissions",
+        "created_at"
+      ]
     },
     "UserProfile": {
       "type": "object",
@@ -368,7 +375,16 @@
           "x-graphql-field-type": "DateTime"
         }
       },
-      "required": ["id", "title", "slug", "content", "published", "author", "view_count", "created_at"]
+      "required": [
+        "id",
+        "title",
+        "slug",
+        "content",
+        "published",
+        "author",
+        "view_count",
+        "created_at"
+      ]
     },
     "InternalType": {
       "type": "object",

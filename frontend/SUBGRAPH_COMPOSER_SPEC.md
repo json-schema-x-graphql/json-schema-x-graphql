@@ -3,6 +3,7 @@
 ## Overview
 
 The **Subgraph Composer** is a lightweight, browser-based utility that allows users to:
+
 1. Input 1-10 JSON Schemas with `x-graphql` extensions
 2. Generate GraphQL subgraphs from each schema
 3. Compose subgraphs into a unified supergraph
@@ -16,14 +17,14 @@ The **Subgraph Composer** is a lightweight, browser-based utility that allows us
 
 ### Technology Stack
 
-| Component | Technology | Reason |
-|-----------|-----------|--------|
-| **JSON Schema Editor** | CodeMirror v6 + JSON mode | ~5KB gzipped, highly configurable |
-| **Converter** | `@json-schema-x-graphql/core` (Node.js) | Already built, tested, supports federation |
-| **GraphQL Preview** | `graphql-editor` (existing) | Already integrated, proven |
-| **UI Framework** | React 18 | Consistent with project |
-| **Build Tool** | Vite | Fast, lightweight, already used |
-| **Bundler Strategy** | Code splitting + lazy loading | Defer CodeMirror/GraphQL Editor until needed |
+| Component              | Technology                              | Reason                                       |
+| ---------------------- | --------------------------------------- | -------------------------------------------- |
+| **JSON Schema Editor** | CodeMirror v6 + JSON mode               | ~5KB gzipped, highly configurable            |
+| **Converter**          | `@json-schema-x-graphql/core` (Node.js) | Already built, tested, supports federation   |
+| **GraphQL Preview**    | `graphql-editor` (existing)             | Already integrated, proven                   |
+| **UI Framework**       | React 18                                | Consistent with project                      |
+| **Build Tool**         | Vite                                    | Fast, lightweight, already used              |
+| **Bundler Strategy**   | Code splitting + lazy loading           | Defer CodeMirror/GraphQL Editor until needed |
 
 ### Bundle Size Targets
 
@@ -39,16 +40,17 @@ Total initial load:   ~50 KB (scales well to 10 schemas)
 ## Component Architecture
 
 ### 1. SchemaManager Component
+
 Manages the collection of JSON schemas with minimal UI footprint.
 
 ```typescript
 interface SchemaEntry {
-  id: string;           // Unique ID for tracking
-  name: string;         // User-friendly name (e.g., "User Service")
-  content: string;      // Raw JSON Schema
+  id: string; // Unique ID for tracking
+  name: string; // User-friendly name (e.g., "User Service")
+  content: string; // Raw JSON Schema
   lastModified: number; // Timestamp
-  error?: string;       // Validation/conversion errors
-  isLoading?: boolean;  // Conversion in progress
+  error?: string; // Validation/conversion errors
+  isLoading?: boolean; // Conversion in progress
 }
 
 interface SchemaManagerState {
@@ -61,6 +63,7 @@ interface SchemaManagerState {
 ```
 
 **Features:**
+
 - Add schema (up to 10)
 - Remove schema
 - Rename schema
@@ -69,6 +72,7 @@ interface SchemaManagerState {
 - Clear all
 
 ### 2. SchemaEditor Component
+
 Minimal JSON editor using CodeMirror v6.
 
 ```typescript
@@ -80,6 +84,7 @@ interface SchemaEditorProps {
 ```
 
 **Features:**
+
 - Syntax highlighting (JSON)
 - Line numbers
 - Auto-indent
@@ -88,23 +93,25 @@ interface SchemaEditorProps {
 - Quick buttons: Format, Validate, Generate
 
 ### 3. SubgraphGenerator Component
+
 Handles conversion from JSON Schema → GraphQL SDL.
 
 ```typescript
 interface SubgraphGeneratorOptions {
   includeDescriptions: boolean;
   includeFederationDirectives: boolean;
-  federationVersion: 'V1' | 'V2' | 'AUTO';
-  namingConvention: 'PRESERVE' | 'GRAPHQL_IDIOMATIC';
+  federationVersion: "V1" | "V2" | "AUTO";
+  namingConvention: "PRESERVE" | "GRAPHQL_IDIOMATIC";
 }
 
 async function generateSubgraph(
   jsonSchema: Record<string, any>,
-  options: SubgraphGeneratorOptions
-): Promise<{ sdl: string; warnings: string[] }>
+  options: SubgraphGeneratorOptions,
+): Promise<{ sdl: string; warnings: string[] }>;
 ```
 
 **Features:**
+
 - Uses `@json-schema-x-graphql/core` library
 - Batch generation for multiple schemas
 - Error recovery (continue on single schema failure)
@@ -112,19 +119,20 @@ async function generateSubgraph(
 - Validation of output SDL
 
 ### 4. SupergraphComposer Component
+
 Merges multiple subgraphs into a unified supergraph.
 
 ```typescript
 interface CompositionOptions {
-  mergeStrategy: 'union' | 'extend';      // How to handle type conflicts
-  includeRootQuery: boolean;               // Auto-create Query root
-  federationMode: boolean;                 // Enable federation features
+  mergeStrategy: "union" | "extend"; // How to handle type conflicts
+  includeRootQuery: boolean; // Auto-create Query root
+  federationMode: boolean; // Enable federation features
 }
 
 async function composeSupergraph(
-  subgraphs: Map<string, string>,     // id -> SDL
-  options: CompositionOptions
-): Promise<{ sdl: string; errors: string[]; stats: CompositionStats }>
+  subgraphs: Map<string, string>, // id -> SDL
+  options: CompositionOptions,
+): Promise<{ sdl: string; errors: string[]; stats: CompositionStats }>;
 
 interface CompositionStats {
   totalTypes: number;
@@ -135,6 +143,7 @@ interface CompositionStats {
 ```
 
 **Algorithm:**
+
 1. Parse all subgraph SDLs
 2. Build type registry (detect conflicts)
 3. Merge type definitions (extend or union strategy)
@@ -142,6 +151,7 @@ interface CompositionStats {
 5. Validate final SDL
 
 ### 5. SupergraphPreview Component
+
 Displays and explores the generated supergraph.
 
 ```typescript
@@ -154,6 +164,7 @@ interface SupergraphPreviewProps {
 ```
 
 **Features:**
+
 - Syntax-highlighted SDL display
 - Type browser (show all types, search)
 - Error display with line numbers
@@ -344,7 +355,7 @@ Merge Strategy: [EXTEND ▼] (UNION | EXTEND)
 
 ```javascript
 // lib/converter.js
-import { jsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
 
 export async function convertSchema(jsonSchema, options = {}) {
   try {
@@ -352,8 +363,8 @@ export async function convertSchema(jsonSchema, options = {}) {
       validate: true,
       includeDescriptions: options.descriptions ?? true,
       includeFederationDirectives: options.federation ?? true,
-      federationVersion: options.federationVersion ?? 'AUTO',
-      namingConvention: options.naming ?? 'GRAPHQL_IDIOMATIC',
+      federationVersion: options.federationVersion ?? "AUTO",
+      namingConvention: options.naming ?? "GRAPHQL_IDIOMATIC",
     });
     return { sdl, success: true };
   } catch (error) {
@@ -366,7 +377,7 @@ export async function convertSchema(jsonSchema, options = {}) {
 
 ```javascript
 // lib/composer.js
-import { parse, buildSchema, printSchema } from 'graphql';
+import { parse, buildSchema, printSchema } from "graphql";
 
 export function composeSupergraph(subgraphs, options = {}) {
   // 1. Parse all SDL strings

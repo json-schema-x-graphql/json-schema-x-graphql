@@ -88,3 +88,7 @@ type IntakeProcessCanonicalSchema {
   "Root Intake Process entity."
   intakeProcessRecord: EasiRecord
 }
+
+# Implied Scalars
+scalar DateTime
+scalar Date

@@ -8,10 +8,11 @@
 ## 🔴 CRITICAL (Blocks Everything) - ~1 hour
 
 ### Fix Store Methods
+
 **File:** `src/store/app-store.ts`
 
 - [ ] Add `convert()` method to `AppActions` interface
-- [ ] Add `validate()` method to `AppActions` interface  
+- [ ] Add `validate()` method to `AppActions` interface
 - [ ] Add `setMode(mode: AppMode)` method to `AppActions` interface
 - [ ] Add `applyAutoFix(error: ValidationError)` method to `AppActions` interface
 - [ ] Add `clearValidationResult()` method to `AppActions` interface
@@ -23,6 +24,7 @@
 - [ ] Run `pnpm run type-check` - should pass with 0 errors
 
 ### Verify Build
+
 - [ ] `cd frontend/schema-authoring`
 - [ ] `pnpm run type-check` passes
 - [ ] `pnpm run dev` starts without errors
@@ -34,6 +36,7 @@
 ## 🟡 HIGH PRIORITY (Get to Demo) - ~2 hours
 
 ### Manual Testing
+
 - [ ] Paste JSON Schema in left editor
 - [ ] Click "Convert" button
 - [ ] GraphQL appears in right editor
@@ -47,6 +50,7 @@
 - [ ] Reload page - content and settings persist
 
 ### Add Sample Templates
+
 - [ ] Create `src/examples/templates.ts`
 - [ ] Add "Basic User" template
 - [ ] Add "Federated Entity" template
@@ -57,6 +61,7 @@
 - [ ] Test template loading
 
 ### Polish
+
 - [ ] Add loading states to buttons
 - [ ] Improve empty state (welcome message)
 - [ ] Add "Copy to Clipboard" button to output
@@ -69,6 +74,7 @@
 ## 🟢 MEDIUM PRIORITY (Production Ready) - 1-2 weeks
 
 ### Testing
+
 - [ ] Set up Vitest
 - [ ] Write tests for `converter-manager.ts`
 - [ ] Write tests for `validators.ts`
@@ -81,6 +87,7 @@
 - [ ] Achieve >70% test coverage
 
 ### Documentation
+
 - [ ] Add screenshots to README
 - [ ] Record demo GIF/video
 - [ ] Document x-graphql extensions
@@ -89,6 +96,7 @@
 - [ ] Create API reference page
 
 ### Features
+
 - [ ] Implement jump-to-line when clicking errors
 - [ ] Add keyboard shortcut: Ctrl+Enter for convert
 - [ ] Add keyboard shortcut: Ctrl+Shift+F for format
@@ -98,6 +106,7 @@
 - [ ] Implement undo/redo in UI (store has it)
 
 ### WASM (Optional)
+
 - [ ] Install Rust + wasm-pack
 - [ ] Build WASM: `cd converters/rust && wasm-pack build --target web`
 - [ ] Copy WASM to `frontend/schema-authoring/src/wasm/`
@@ -110,6 +119,7 @@
 ## 🔵 LOW PRIORITY (Nice to Have) - 1-3 months
 
 ### Advanced Features
+
 - [ ] Visual schema builder (drag-and-drop)
 - [ ] Schema diff viewer
 - [ ] Import from OpenAPI/Swagger
@@ -121,6 +131,7 @@
 - [ ] LLM integration (schema generation)
 
 ### Performance
+
 - [ ] Bundle size optimization
 - [ ] Code splitting for Monaco
 - [ ] Lazy load components
@@ -129,6 +140,7 @@
 - [ ] Benchmark and optimize
 
 ### Accessibility
+
 - [ ] Run axe-core audit
 - [ ] Add ARIA labels
 - [ ] Ensure keyboard navigation
@@ -136,6 +148,7 @@
 - [ ] Achieve WCAG AA compliance
 
 ### Deployment
+
 - [ ] Set up CI/CD (GitHub Actions)
 - [ ] Add Sentry for error monitoring
 - [ ] Add analytics (privacy-respecting)
@@ -172,12 +185,14 @@
 ## 📊 Metrics to Track
 
 ### Code Quality
+
 - [ ] TypeScript errors: 0
 - [ ] ESLint warnings: 0
 - [ ] Test coverage: >70%
 - [ ] Bundle size: <500 KB (initial)
 
 ### Performance
+
 - [ ] Initial load: <3s
 - [ ] Monaco load: <2s
 - [ ] Small schema conversion: <50ms
@@ -185,6 +200,7 @@
 - [ ] Keystroke latency: <16ms
 
 ### User Experience
+
 - [ ] No console errors
 - [ ] Settings persist
 - [ ] Theme switches instantly

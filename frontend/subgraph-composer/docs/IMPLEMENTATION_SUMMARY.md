@@ -11,12 +11,12 @@ Successfully implemented comprehensive enhancements to the JSON Schema to GraphQ
 **File**: `src/lib/converter.js`
 
 Added `enhanceSchemaWithIdMetadata()` function that:
+
 - Automatically detects ID fields based on multiple patterns:
   - UUID format: `"type": "string", "format": "uuid"`
   - Explicit ID type: `"x-graphql-type": "ID!"`
   - Common naming patterns: Fields ending with `_id` (e.g., `user_id`, `post_id`)
   - Common ID names: `id`, `uid`, `entity_id`
-  
 - Adds metadata to identified ID fields:
   - `x-graphql-type`: Set to `ID!` if not already set
   - `x-graphql-field-type-name`: Set to `ID` for type tracking
@@ -30,6 +30,7 @@ Added `enhanceSchemaWithIdMetadata()` function that:
 **File**: `docs/SUPERGRAPH_ENTITY_DESIGN.md`
 
 Defined new JSON Schema extensions for explicit federation entity metadata:
+
 - `x-graphql-supergraph-name`: Unique subgraph identifier (e.g., "users-service")
 - `x-graphql-supergraph-type`: Role in supergraph - `base-entity` | `entity-extending` | `utility`
 - `x-graphql-supergraph-entity`: Entity type name (e.g., "User")
@@ -41,6 +42,7 @@ Defined new JSON Schema extensions for explicit federation entity metadata:
 **File**: `src/lib/federation-validator.js`
 
 Added `validateSupergraphMetadata()` function:
+
 - Validates supergraph entity metadata completeness
 - Ensures proper metadata for base-entity and entity-extending subgraphs
 - Warns about improper configurations (e.g., entity-extending with query-root=true)
@@ -53,6 +55,7 @@ Added `validateSupergraphMetadata()` function:
 Enhanced all 3 federation example templates with supergraph metadata:
 
 **basic_scalars (Owner)**:
+
 ```json
 {
   "x-graphql-supergraph-name": "users-service",
@@ -63,6 +66,7 @@ Enhanced all 3 federation example templates with supergraph metadata:
 ```
 
 **enums (Extending)**:
+
 ```json
 {
   "x-graphql-supergraph-name": "user-status-service",
@@ -73,6 +77,7 @@ Enhanced all 3 federation example templates with supergraph metadata:
 ```
 
 **nested_objects (Extending)**:
+
 ```json
 {
   "x-graphql-supergraph-name": "user-details-service",
@@ -85,19 +90,22 @@ Enhanced all 3 federation example templates with supergraph metadata:
 ### 5. Comprehensive Test Coverage
 
 **Files**:
+
 - `src/__tests__/converter.test.js`: 8 new tests for ID metadata enhancement
 - `src/__tests__/federation-validator.test.js`: 8 new tests for supergraph metadata validation
 
 **Test Results**: **149/149 tests passing** ✓
 
 #### Converter Tests:
+
 - ✓ Add ID type metadata to UUID fields
-- ✓ Mark fields ending with _id as ID type
-- ✓ Preserve existing ID type annotations  
+- ✓ Mark fields ending with \_id as ID type
+- ✓ Preserve existing ID type annotations
 - ✓ Handle nested objects recursively
 - ✓ Don't modify non-ID fields
 
 #### Federation Validator Tests:
+
 - ✓ Recognize schema without metadata
 - ✓ Validate base-entity metadata
 - ✓ Validate entity-extending metadata
@@ -110,27 +118,33 @@ Enhanced all 3 federation example templates with supergraph metadata:
 ## Architecture Benefits
 
 ### 1. **Explicit Entity Ownership**
+
 Clear declaration of which subgraph owns each federated entity type
 
 ### 2. **Better Composition**
+
 Validators understand entity relationships and dependencies between subgraphs
 
 ### 3. **API Gateway Routing**
+
 Gateways can identify which subgraph to query for specific entities
 
 ### 4. **Self-Documenting**
+
 Metadata makes federation design explicit and discoverable
 
 ### 5. **Automatic ID Detection**
+
 Converters automatically recognize common ID patterns without manual annotation
 
 ### 6. **Backward Compatible**
+
 Existing federation patterns continue to work; metadata is optional
 
 ## Usage Example
 
 ```javascript
-import { convertSchema, enhanceSchemaWithIdMetadata } from './converter.js';
+import { convertSchema, enhanceSchemaWithIdMetadata } from "./converter.js";
 
 // Schema with common ID naming
 const userSchema = {
@@ -140,9 +154,9 @@ const userSchema = {
   "x-graphql-supergraph-type": "base-entity",
   "x-graphql-supergraph-entity": "User",
   properties: {
-    user_id: { type: "string", format: "uuid" },  // Detected as ID
-    email: { type: "string", format: "email" }
-  }
+    user_id: { type: "string", format: "uuid" }, // Detected as ID
+    email: { type: "string", format: "email" },
+  },
 };
 
 // Converter automatically enhances with ID metadata

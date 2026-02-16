@@ -30,10 +30,10 @@ These schemas serve different purposes but must remain synchronized to ensure da
 
 ### Why Two Schemas?
 
-| Schema Type | Purpose | Use Case |
-|-------------|---------|----------|
-| **GraphQL SDL** | API contract, type system | GraphQL queries, voyager visualization, API documentation |
-| **JSON Schema** | Data validation, structure | JSON validation, data ingestion, storage schema |
+| Schema Type     | Purpose                    | Use Case                                                  |
+| --------------- | -------------------------- | --------------------------------------------------------- |
+| **GraphQL SDL** | API contract, type system  | GraphQL queries, voyager visualization, API documentation |
+| **JSON Schema** | Data validation, structure | JSON validation, data ingestion, storage schema           |
 
 ---
 
@@ -46,6 +46,7 @@ pnpm run validate:sync
 ```
 
 **What it checks**:
+
 - Field name matching between GraphQL and JSON Schema
 - Reports unmapped fields in both directions
 - **Exit code 1** is normal (informational warnings)
@@ -59,6 +60,7 @@ pnpm run validate:sync:strict
 ```
 
 **What it checks**:
+
 - Everything in loose mode, plus:
 - JSON Schema path mappings for all GraphQL fields
 - Validates paths exist in JSON Schema
@@ -88,6 +90,7 @@ Both validation scripts exit with code 1 to **flag schema differences for review
 ```
 
 **Interpretation**:
+
 - ✓ = Field exists in both schemas
 - ✗ = Field exists only in GraphQL
 - ℹ️ = Property exists only in JSON Schema
@@ -106,6 +109,7 @@ The following 6 JSON Schema properties intentionally have no direct GraphQL fiel
 **Why no direct mapping**: JSON Schema uses nesting for organization; GraphQL flattens for query convenience.
 
 **Example**:
+
 ```json
 // JSON Schema
 {
@@ -118,7 +122,7 @@ The following 6 JSON Schema properties intentionally have no direct GraphQL fiel
 ```graphql
 # GraphQL
 type Contract {
-  piid: String  # From common_elements.contractIdentification.piid
+  piid: String # From common_elements.contractIdentification.piid
 }
 ```
 
@@ -170,6 +174,7 @@ Path mappings define how GraphQL field names correspond to JSON Schema paths.
 **Location**: `scripts/schema-sync.config.json`
 
 **Structure**:
+
 ```json
 {
   "types": {
@@ -198,6 +203,7 @@ Path mappings define how GraphQL field names correspond to JSON Schema paths.
 ```
 
 **This maps**:
+
 - GraphQL `Contract.globalRecordId` → JSON Schema `/systemMetadata/globalRecordId`
 - GraphQL `Contract.piid` → JSON Schema `/commonElements/contractIdentification/piid`
 
@@ -244,6 +250,7 @@ When strict mode reports missing mappings, it means:
 3. **OR** the field truly doesn't exist in JSON Schema yet
 
 **Action**: Review each warning and either:
+
 - Add the mapping to the config file
 - Add the field to JSON Schema
 - Document why the field isn't mapped (if intentional)
@@ -255,11 +262,13 @@ When strict mode reports missing mappings, it means:
 ### Step 1: Identify Missing Mappings
 
 Run strict validation:
+
 ```bash
 pnpm run validate:sync:strict
 ```
 
 Look for warnings like:
+
 ```
 - [TypeName] JSON Schema path missing: fieldName -> /expected/path
 ```
@@ -324,6 +333,7 @@ git commit -m "docs: add JSON Schema path mapping for TypeName.fieldName"
 **Cause**: Config file path is incorrect or not being loaded
 
 **Solution**:
+
 1. Verify `scripts/schema-sync.config.json` exists
 2. Check the path in `validate-schema-sync.mjs`
 3. Ensure JSON is valid (no trailing commas)
@@ -333,6 +343,7 @@ git commit -m "docs: add JSON Schema path mapping for TypeName.fieldName"
 **Cause**: Path doesn't actually exist in JSON Schema
 
 **Solution**:
+
 1. Verify the JSON Schema path is correct
 2. Check for typos in property names
 3. Ensure the property isn't nested deeper than expected
@@ -343,6 +354,7 @@ git commit -m "docs: add JSON Schema path mapping for TypeName.fieldName"
 
 **Solution**:
 Document in the config with a comment:
+
 ```json
 {
   "types": {
@@ -366,6 +378,7 @@ Or add to an ignore list (feature to be implemented).
 CI should expect exit code 1 and check for specific error patterns instead.
 
 **Example GitHub Actions**:
+
 ```yaml
 - name: Validate schema sync
   run: |

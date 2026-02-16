@@ -9,6 +9,7 @@
 ## 🎯 Executive Summary
 
 ### Current State
+
 - ✅ Repository cleaned (752 files, down from 24,929 — 96.98% reduction)
 - ✅ GitHub Actions workflow fixed (commits only on main merge)
 - ✅ All tests passing (132/132, 100% pass rate)
@@ -17,6 +18,7 @@
 - 🔄 Scripts need programmatic exports and test coverage
 
 ### Next Milestones
+
 1. **Documentation Consolidation** (2-3 weeks) — Reduce documentation by 60%, improve discoverability
 2. **Scripts Audit Implementation** (3-4 weeks) — Convert scripts to testable modules, add unit tests
 3. **Schema Submodule Setup** (1-2 weeks) — Extract schemas to standalone repository for reuse
@@ -26,6 +28,7 @@
 ## 📋 Active Initiatives
 
 ### 1. Documentation Consolidation
+
 **Priority:** HIGH  
 **Owner:** TBD  
 **Timeline:** 2-3 weeks  
@@ -36,12 +39,14 @@
 **Detailed Plan:** See [`docs/audit/docs-consolidation-plan.md`](docs/audit/docs-consolidation-plan.md)
 
 **Quick Summary:**
+
 - Create 6 new consolidated guides (quick-start, schema-pipeline, v1-vs-v2, tooling-reference, system-mappings, external-systems)
 - Rename 4 existing guides to lowercase-with-dashes
 - Archive 17 implementation logs and deprecated docs
 - Update all cross-references and navigation
 
 **Success Criteria:**
+
 - [ ] Document count reduced from 38 to ~15 (60% reduction)
 - [ ] All implementation logs archived with ARCHIVED notices
 - [ ] All cross-references working (no broken links)
@@ -51,6 +56,7 @@
 ---
 
 ### 2. Scripts Audit Implementation
+
 **Priority:** MEDIUM  
 **Owner:** Development Team  
 **Timeline:** 3-4 weeks  
@@ -61,12 +67,14 @@
 **Detailed Plan:** See [`scripts/audit/scripts-audit.md`](scripts/audit/scripts-audit.md)
 
 **Quick Summary:**
+
 - **Phase 1:** ✅ Convert 4 core generators to modules with tests (complete)
 - **Phase 2:** ✅ Add exports and tests for 4 validators (complete)
 - **Phase 3:** ✅ Consolidate duplicate x-graphql hint processing (complete)
 - **Phase 4:** ⏳ Complete test coverage and API documentation (in progress)
 
 **Current Progress:**
+
 - ✅ All generators have programmatic exports (65 tests)
 - ✅ All validators have programmatic exports (29 tests)
 - ✅ Helper modules have comprehensive tests (73 tests, 88.88% coverage)
@@ -75,6 +83,7 @@
 - ⏳ API documentation in progress
 
 **Success Criteria:**
+
 - [x] All generators export programmatic functions
 - [x] All validators export programmatic functions
 - [x] 80%+ test coverage for generators, 90%+ for validators
@@ -85,6 +94,7 @@
 ---
 
 ### 3. Schema Submodule Setup
+
 **Priority:** MEDIUM  
 **Owner:** TBD  
 **Timeline:** 1-2 weeks  
@@ -93,6 +103,7 @@
 **Objective:** Extract canonical schemas and generators to standalone repository for reuse across projects.
 
 **Approach:**
+
 1. **Create new repository:** `schema-unification-project-schemas`
 2. **Extract schemas:**
    - `src/data/schema_unification.schema.json` (canonical snake_case)
@@ -104,6 +115,7 @@
 5. **Document usage** for other projects
 
 **Success Criteria:**
+
 - [ ] New repository created with proper structure
 - [ ] Schemas and generators extracted
 - [ ] Submodule integration working
@@ -117,9 +129,11 @@
 ### Current Sprint: Documentation Consolidation (Weeks 1-3)
 
 #### Week 1: Setup and First Consolidated Guides ✅ COMPLETE
+
 **Focus:** Create archive structure, write first 3 consolidated guides
 
 **Tasks:**
+
 - [ ] Review consolidation plan with team
 - [x] Create `docs/archived/` directory structure
   - [x] `docs/archived/implementation-logs/`
@@ -131,6 +145,7 @@
 - [x] Write `docs/schema-v1-vs-v2-guide.md` (consolidate 4 files) — **Already exists**
 
 **Deliverables:**
+
 - ✅ Archive structure ready
 - ✅ 3 major consolidated guides written (pre-existing, verified comprehensive)
 
@@ -139,9 +154,11 @@
 ---
 
 #### Week 2: More Guides and Renames ✅ COMPLETE
+
 **Focus:** Create remaining consolidated guides, rename existing guides
 
 **Tasks:**
+
 - [x] Write `docs/schema-tooling-reference.md` (consolidate 2 files) — **Already exists**
 - [x] Write `docs/system-mappings-guide.md` (consolidate 3 files) — **Already exists**
 - [x] Write `docs/external-systems-reference.md` (consolidate 2 files) — **Already exists**
@@ -159,6 +176,7 @@
   - [x] `Unified Model-mapping-plan.md` → `unified_model-mapping-plan.md` ✅
 
 **Deliverables:**
+
 - ✅ 3 consolidated guides verified (pre-existing, comprehensive)
 - ✅ 7 guides renamed to consistent lowercase-with-dashes format
 
@@ -167,9 +185,11 @@
 ---
 
 #### Week 3: Archive, Update References, Review ✅ COMPLETE
+
 **Focus:** Move files to archive, update all cross-references, team review
 
 **Tasks:**
+
 - [x] Move 17 files to archive (implementation logs, v1-v2 migration, deprecated) — **Already archived**
 - [x] Add ARCHIVED notices to all archived files — **Already present with READMEs**
 - [x] Update `docs/README.md` with new structure — **Already updated**
@@ -181,6 +201,7 @@
 - [ ] Final proofreading pass — **Can be done incrementally**
 
 **Deliverables:**
+
 - ✅ All files archived (10 implementation logs, 7 v1-v2 migration, 15 deprecated)
 - ✅ Archive structure with comprehensive READMEs explaining contents
 - ✅ docs/README.md updated with consolidated structure
@@ -193,25 +214,30 @@
 ### Next Sprint: Scripts Audit (Weeks 4-7)
 
 #### Week 4: Fix Blocker and Core Generators
+
 **Focus:** Resolve blocking issue, start Phase 1
 **STATUS: ✅ COMPLETE**
 
 **High Priority:**
+
 - [x] 🔴 Fix `generate-graphql-json-schema.mjs` signature mismatch (BLOCKER) — **Resolved in Week 1**
 
 **Core Generator Conversions:**
+
 - [x] Convert `generate-graphql-from-json-schema.mjs` (add tests) — **Already had exports, tests passing**
 - [x] Convert `generate-graphql-json-schema.mjs` (fix + add tests) — **Already had exports, tests passing**
 - [x] Convert `generate-graphql-json-schema-v2.mjs` (add exports + tests) — **Already had exports, tests added**
 - [x] Convert `generate-schema-interop.mjs` (add exports + tests) — **Already had exports, tests passing**
 
 **Test Infrastructure:**
+
 - [x] Create `__tests__/fixtures/` directory — **Already exists**
 - [x] Add test fixtures (valid schemas, invalid schemas, SDL files) — **Comprehensive fixtures in place**
 - [x] Set up Jest config for script testing — **Already configured**
 - [x] Fix test isolation issues (removed aggressive afterAll cleanups) — **Fixed**
 
 **Deliverables:**
+
 - ✅ Blocker was already resolved in Week 1
 - ✅ All 4 core generators have programmatic exports and comprehensive tests (65/65 passing)
 - ✅ Test infrastructure fully operational
@@ -219,10 +245,12 @@
 ---
 
 #### Week 5: Validators
+
 **Focus:** Add programmatic exports and tests for validators
 **STATUS: ✅ COMPLETE**
 
 **Tasks:**
+
 - [x] Convert `validate-schema.mjs` (add exports + tests) — **Refactored to throw instead of exit, 10 tests added**
 - [x] Convert `validate-graphql-vs-jsonschema.mjs` (add exports + tests) — **Already had exports, 11 tests passing**
 - [x] Convert `validate-graphql-vs-jsonschema-v2.mjs` (add exports + tests) — **Verified exports**
@@ -230,6 +258,7 @@
 - [x] Add pointer resolution tests (`__tests__/helpers/pointer-resolution.test.mjs`) — **Tested within validator tests**
 
 **Deliverables:**
+
 - ✅ All 4 validators have programmatic exports and comprehensive tests (29/29 passing)
 - ✅ validate-schema.mjs refactored for testability (throw vs process.exit)
 - ✅ Pointer resolution validated through integration tests
@@ -237,10 +266,12 @@
 ---
 
 #### Week 6: Consolidation
+
 **Focus:** Extract shared logic, reduce duplication
 **STATUS: ✅ COMPLETE**
 
 **Tasks:**
+
 - [x] Create `scripts/lib/graphql-hints.mjs` (shared x-graphql hint processing) — **Already exists with 13 exports**
 - [x] Add comprehensive tests for helper modules (73 tests, 88.88% coverage):
   - [x] `helpers/case-conversion.mjs` (29 tests)
@@ -256,6 +287,7 @@
 - [x] Dev tools organized in `scripts/dev/` — **Already organized**
 
 **Deliverables:**
+
 - ✅ Shared GraphQL hints library verified (already created)
 - ✅ Helper modules have comprehensive test coverage (73 tests, 88.88% statements)
 - ✅ Duplicate code consolidated (5 files refactored to use shared helpers)
@@ -281,6 +313,7 @@
 - [x] Create `scripts/API.md` (complete function reference) — **Completed**
 
 **Deliverables:**
+
 - ✅ 88.88% test coverage for helpers (scripts/helpers: 92.72% lines)
 - ✅ GraphQL gateway requirements document (`docs/graphql-gateway-requirements.md`)
 - ✅ Critical questions document (`docs/CRITICAL-QUESTIONS.md`)
@@ -296,9 +329,11 @@
 ### Future Sprint: Schema Submodule (Weeks 8-9)
 
 #### Week 8: Repository Setup
+
 **Focus:** Create standalone schema repository
 
 **Tasks:**
+
 - [ ] Create `schema-unification-project-schemas` repository
 - [ ] Set up repository structure:
   ```
@@ -321,6 +356,7 @@
 - [ ] Write comprehensive README for standalone usage
 
 **Deliverables:**
+
 - New repository created
 - Schemas and scripts extracted
 - CI/CD working independently
@@ -328,9 +364,11 @@
 ---
 
 #### Week 9: Integration and Documentation
+
 **Focus:** Integrate submodule, update documentation
 
 **Tasks:**
+
 - [ ] Add submodule to main repository:
   ```bash
   git submodule add https://github.com/org/schema-unification-project-schemas schemas-submodule
@@ -344,6 +382,7 @@
 - [ ] Test full workflow (schema change → submodule update → main repo update)
 
 **Deliverables:**
+
 - Submodule integrated into main repository
 - CI/CD updated and passing
 - Complete integration documentation
@@ -355,11 +394,11 @@
 
 ### Overall Progress: 85% Complete
 
-| Initiative | Progress | Status |
-|-----------|----------|--------|
-| **Documentation Consolidation** | 95% | ✅ Nearly Complete (Weeks 1-3 done, polish remaining) |
-| **Scripts Audit** | 100% | ✅ Complete (Weeks 4-7 done, all deliverables met) |
-| **Schema Submodule** | 0% | ⏸️ Not Started (depends on docs + scripts) |
+| Initiative                      | Progress | Status                                                |
+| ------------------------------- | -------- | ----------------------------------------------------- |
+| **Documentation Consolidation** | 95%      | ✅ Nearly Complete (Weeks 1-3 done, polish remaining) |
+| **Scripts Audit**               | 100%     | ✅ Complete (Weeks 4-7 done, all deliverables met)    |
+| **Schema Submodule**            | 0%       | ⏸️ Not Started (depends on docs + scripts)            |
 
 ### Completed Milestones
 
@@ -390,6 +429,7 @@
 ### Current Blockers
 
 **None remaining** - All blockers have been resolved:
+
 - ✅ `generate-graphql-json-schema.mjs` signature mismatch was pre-resolved
 - ✅ All scripts now have programmatic exports
 - ✅ Test infrastructure is stable and comprehensive
@@ -414,11 +454,13 @@ The remaining work focuses on **Schema Submodule Setup** (Weeks 8-9):
 ## 🔗 Reference Documentation
 
 ### Planning Documents
+
 - **Documentation Consolidation Plan:** [`docs/audit/docs-consolidation-plan.md`](docs/audit/docs-consolidation-plan.md)
 - **Scripts Audit:** [`scripts/audit/scripts-audit.md`](scripts/audit/scripts-audit.md)
 - **Task Completion Summary:** [`docs/TASK-COMPLETION-SUMMARY.md`](docs/TASK-COMPLETION-SUMMARY.md)
 
 ### Key Documentation
+
 - **Main README:** [`README.md`](README.md)
 - **Quick Reference:** Create `docs/quick-start.md` (Week 1 deliverable)
 - **Schema Pipeline:** Create `docs/schema-pipeline-guide.md` (Week 1 deliverable)
@@ -427,12 +469,14 @@ The remaining work focuses on **Schema Submodule Setup** (Weeks 8-9):
 ### Workflow Commands
 
 **Documentation Development:**
+
 ```bash
 pnpm dev                    # Run Next.js dev server
 pnpm build                  # Build static site
 ```
 
 **Schema Operations:**
+
 ```bash
 pnpm run generate:schema:interop  # Generate JSON Schema from SDL
 node scripts/generate-graphql-from-json-schema.mjs  # Generate SDL from JSON Schema
@@ -440,6 +484,7 @@ pnpm run validate:all       # Run all validators
 ```
 
 **Testing:**
+
 ```bash
 pnpm test                   # Run Jest tests (132 tests)
 pytest python/tests/        # Run Python validation tests
@@ -448,6 +493,7 @@ pnpm run typecheck          # Run TypeScript compiler
 ```
 
 **Python Validation:**
+
 ```bash
 uv venv                     # Create Python virtual environment
 source .venv/bin/activate   # Activate venv
@@ -461,6 +507,7 @@ pytest --cov=python         # Run tests with coverage
 ## 🎯 Success Criteria
 
 ### Documentation Consolidation Success
+
 - [ ] Document count reduced from 38 to ~15 (60% reduction)
 - [ ] All implementation logs archived (17 files)
 - [ ] All redundancy eliminated
@@ -480,6 +527,7 @@ pytest --cov=python         # Run tests with coverage
 - [x] No blockers remaining (all blockers resolved)
 
 ### Schema Submodule Success
+
 - [ ] New repository created with proper structure
 - [ ] Schemas and generators extracted
 - [ ] Submodule integration working
@@ -491,16 +539,19 @@ pytest --cov=python         # Run tests with coverage
 ## 📝 Notes
 
 ### Time Estimates
+
 - All time estimates are approximate and may need adjustment
 - Blockers should be escalated immediately
 - Weekly sync recommended to track progress
 
 ### Review Process
+
 - Consider breaking large consolidations into smaller PRs for intake_processer review
 - All schema changes require validation: `pnpm run validate:all`
 - All Python schema changes require: `python python/validate_schemas.py src/data/*.schema.json`
 
 ### Maintenance
+
 - Update this plan weekly with progress
 - Archive completed sections
 - Adjust timeline as needed based on actual progress

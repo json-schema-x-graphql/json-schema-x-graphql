@@ -6,13 +6,13 @@ A fast lookup guide for the json-schema-x-graphql dashboard learning hub.
 
 ## Scalar Types at a Glance
 
-| Type | GraphQL | JSON Schema | Example | Use |
-|------|---------|-------------|---------|-----|
-| **String** | `String` | `"string"` | `"banana"` | Text, URLs, emails |
-| **Integer** | `Int` | `"integer"` | `42` | Counts, prices in cents |
-| **Decimal** | `Float` | `"number"` | `3.14` | Measurements, percentages |
-| **Boolean** | `Boolean` | `"boolean"` | `true` | Flags, toggles |
-| **ID** | `ID` | `"string"` | `"user123"` | Unique identifiers |
+| Type        | GraphQL   | JSON Schema | Example     | Use                       |
+| ----------- | --------- | ----------- | ----------- | ------------------------- |
+| **String**  | `String`  | `"string"`  | `"banana"`  | Text, URLs, emails        |
+| **Integer** | `Int`     | `"integer"` | `42`        | Counts, prices in cents   |
+| **Decimal** | `Float`   | `"number"`  | `3.14`      | Measurements, percentages |
+| **Boolean** | `Boolean` | `"boolean"` | `true`      | Flags, toggles            |
+| **ID**      | `ID`      | `"string"`  | `"user123"` | Unique identifiers        |
 
 ---
 
@@ -20,14 +20,14 @@ A fast lookup guide for the json-schema-x-graphql dashboard learning hub.
 
 ### Nullability (Next, Optional)
 
-| GraphQL | JSON Schema | Meaning |
-|---------|-------------|---------|
-| `String` | (default) | Can be `null` or a string |
-| `String!` | `"type": "string"` in required | Must be a string, never `null` |
-| `[String]` | `"array"` | List that can be `null` |
-| `[String!]` | List of non-null items | List where items can't be `null` |
-| `[String]!` | Required list (but can be empty) | List that can't be `null` |
-| `[String!]!` | Required non-null list | Everything required |
+| GraphQL      | JSON Schema                      | Meaning                          |
+| ------------ | -------------------------------- | -------------------------------- |
+| `String`     | (default)                        | Can be `null` or a string        |
+| `String!`    | `"type": "string"` in required   | Must be a string, never `null`   |
+| `[String]`   | `"array"`                        | List that can be `null`          |
+| `[String!]`  | List of non-null items           | List where items can't be `null` |
+| `[String]!`  | Required list (but can be empty) | List that can't be `null`        |
+| `[String!]!` | Required non-null list           | Everything required              |
 
 ---
 
@@ -62,7 +62,7 @@ Represents a user in the system
 type User {
   "Unique identifier"
   id: ID!
-  
+
   "User's full name"
   name: String!
 }
@@ -102,7 +102,9 @@ type User {
     }
   },
   "$defs": {
-    "User": { /* ...type definition... */ }
+    "User": {
+      /* ...type definition... */
+    }
   }
 }
 ```
@@ -134,6 +136,7 @@ type User {
 ### List of Items
 
 **GraphQL:**
+
 ```graphql
 type User {
   tags: [String!]!
@@ -141,6 +144,7 @@ type User {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "tags": {
@@ -154,6 +158,7 @@ type User {
 ### Pagination
 
 **GraphQL:**
+
 ```graphql
 type UserConnection {
   users: [User!]!
@@ -167,6 +172,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -188,6 +194,7 @@ type Query {
 ### Nested Objects
 
 **GraphQL:**
+
 ```graphql
 type User {
   id: ID!
@@ -202,6 +209,7 @@ type UserProfile {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -228,25 +236,25 @@ type UserProfile {
 
 ### GraphQL → JSON Schema
 
-| GraphQL | → | JSON Schema |
-|---------|---|-------------|
-| `type Foo { ... }` | → | `{ "type": "object", "title": "Foo", ... }` |
-| Field name | → | Property in `properties` |
-| `String` | → | `"type": "string"` |
-| `[Type]` | → | `"type": "array", "items": { $ref or type }` |
-| `Type!` | → | Add to `required` array |
-| Comments `"""..."""` | → | `"description": "..."` |
+| GraphQL              | →   | JSON Schema                                  |
+| -------------------- | --- | -------------------------------------------- |
+| `type Foo { ... }`   | →   | `{ "type": "object", "title": "Foo", ... }`  |
+| Field name           | →   | Property in `properties`                     |
+| `String`             | →   | `"type": "string"`                           |
+| `[Type]`             | →   | `"type": "array", "items": { $ref or type }` |
+| `Type!`              | →   | Add to `required` array                      |
+| Comments `"""..."""` | →   | `"description": "..."`                       |
 
 ### JSON Schema → GraphQL
 
-| JSON Schema | → | GraphQL |
-|-------------|---|---------|
-| `"type": "object"` | → | `type ObjectName { ... }` |
-| `"properties"` | → | Fields of the type |
-| `"type": "string"` | → | `String` |
-| `"type": "array"` | → | `[ItemType]` |
-| `"required"` | → | Add `!` to field types |
-| `"description"` | → | `"""..."""` comment |
+| JSON Schema        | →   | GraphQL                   |
+| ------------------ | --- | ------------------------- |
+| `"type": "object"` | →   | `type ObjectName { ... }` |
+| `"properties"`     | →   | Fields of the type        |
+| `"type": "string"` | →   | `String`                  |
+| `"type": "array"`  | →   | `[ItemType]`              |
+| `"required"`       | →   | Add `!` to field types    |
+| `"description"`    | →   | `"""..."""` comment       |
 
 ---
 
@@ -272,6 +280,7 @@ type UserProfile {
 ### Simple Query
 
 **GraphQL:**
+
 ```graphql
 query GetUser {
   user(id: "123") {
@@ -282,6 +291,7 @@ query GetUser {
 ```
 
 **Response:**
+
 ```json
 {
   "data": {
@@ -296,6 +306,7 @@ query GetUser {
 ### With Variables
 
 **GraphQL:**
+
 ```graphql
 query GetUser($userId: ID!) {
   user(id: $userId) {
@@ -311,6 +322,7 @@ query GetUser($userId: ID!) {
 ### Nested Query
 
 **GraphQL:**
+
 ```graphql
 query GetUserWithPosts {
   user(id: "123") {
@@ -346,36 +358,40 @@ query GetUserWithPosts {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| `type: String` in JSON Schema | Missing property key | Use `"type": "string"` |
-| Using `Float` for money | Precision loss | Use `Int` with smallest unit |
-| Field `status: String` | No type safety | Use `enum OrderStatus` |
-| List of lists `[[String]]` | Confusing syntax | Use pagination instead |
-| Circular types without refs | Hard to process | Use `$ref` or proper typing |
-| No descriptions | Hard to understand | Add `description` fields |
-| Mixing camelCase/snake_case | Inconsistent API | Pick one convention |
-| Required field with wrong type | Validation fails | Match `required` with type |
+| Mistake                        | Problem              | Fix                          |
+| ------------------------------ | -------------------- | ---------------------------- |
+| `type: String` in JSON Schema  | Missing property key | Use `"type": "string"`       |
+| Using `Float` for money        | Precision loss       | Use `Int` with smallest unit |
+| Field `status: String`         | No type safety       | Use `enum OrderStatus`       |
+| List of lists `[[String]]`     | Confusing syntax     | Use pagination instead       |
+| Circular types without refs    | Hard to process      | Use `$ref` or proper typing  |
+| No descriptions                | Hard to understand   | Add `description` fields     |
+| Mixing camelCase/snake_case    | Inconsistent API     | Pick one convention          |
+| Required field with wrong type | Validation fails     | Match `required` with type   |
 
 ---
 
 ## Tools & Resources
 
 ### Validators
+
 - [GraphQL Schema Validator](https://www.apollographql.com/docs/apollo-server/schema/schema)
 - [JSON Schema Validator](https://www.jsonschemavalidator.net/)
 - json-schema-x-graphql Converter
 
 ### Visualizers
+
 - [GraphQL Voyager](https://graphql-voyager.herokuapp.com/) - See schema as graph
 - [JSON Schema Viewer](https://json-schema.org/understanding-json-schema/) - Learn JSON Schema
 
 ### Learning
+
 - [graphql.com/learn](https://graphql.com/learn/) - GraphQL official learning
 - [json-schema.org](https://json-schema.org/) - JSON Schema docs
 - [Dashboard Learning Hub](/learning/) - This site's tutorials
 
 ### Communities
+
 - [GraphQL Community](https://graphql.org/community/)
 - [Stack Overflow: GraphQL](https://stackoverflow.com/questions/tagged/graphql)
 - [Stack Overflow: JSON Schema](https://stackoverflow.com/questions/tagged/json-schema)
@@ -410,17 +426,17 @@ query GetUserWithPosts {
 
 ## Module Map
 
-| Module | Topics | Read Time |
-|--------|--------|-----------|
-| [01: Introducing Types](/learning/01-introducing-types) | Object types, scalars, Query type | 12 min |
-| [02: Scalars, Objects, Lists](/learning/02-scalars-objects-lists) | All 5 scalars, Lists, real examples | 15 min |
-| [03: Nullability](/learning/03-nullability) | Required fields, Non-null type | 10 min |
-| [04: Querying Between Types](/learning/04-querying-between-types) | Type relationships, graph traversal | 14 min |
-| [05: Schema](/learning/05-schema) | Schema structure, introspection | 13 min |
-| [06: Enums](/learning/06-enums) | Constrained values, type safety | 11 min |
-| [07: Interfaces & Unions](/learning/07-interfaces-unions) | Polymorphism, shared fields | 16 min |
-| [08: Arguments](/learning/08-arguments) | Field parameters, input types | 14 min |
-| [09: Mutations](/learning/09-mutations) | Write operations, state changes | 13 min |
+| Module                                                            | Topics                              | Read Time |
+| ----------------------------------------------------------------- | ----------------------------------- | --------- |
+| [01: Introducing Types](/learning/01-introducing-types)           | Object types, scalars, Query type   | 12 min    |
+| [02: Scalars, Objects, Lists](/learning/02-scalars-objects-lists) | All 5 scalars, Lists, real examples | 15 min    |
+| [03: Nullability](/learning/03-nullability)                       | Required fields, Non-null type      | 10 min    |
+| [04: Querying Between Types](/learning/04-querying-between-types) | Type relationships, graph traversal | 14 min    |
+| [05: Schema](/learning/05-schema)                                 | Schema structure, introspection     | 13 min    |
+| [06: Enums](/learning/06-enums)                                   | Constrained values, type safety     | 11 min    |
+| [07: Interfaces & Unions](/learning/07-interfaces-unions)         | Polymorphism, shared fields         | 16 min    |
+| [08: Arguments](/learning/08-arguments)                           | Field parameters, input types       | 14 min    |
+| [09: Mutations](/learning/09-mutations)                           | Write operations, state changes     | 13 min    |
 
 **Total Learning Time**: ~118 minutes (~2 hours)
 

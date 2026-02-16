@@ -2,16 +2,20 @@ import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
-import { cleanupHighlight, searchQuery, highlightMatchedNodes } from "../lib/utils/search";
+import {
+  cleanupHighlight,
+  searchQuery,
+  highlightMatchedNodes,
+} from "../lib/utils/search";
 
 export const useFocusNode = () => {
-  const viewPort = useGraph(state => state.viewPort);
+  const viewPort = useGraph((state) => state.viewPort);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
   const [value, setValue] = React.useState("");
   const [debouncedValue] = useDebouncedValue(value, 600);
 
-  const skip = () => setSelectedNode(current => (current + 1) % nodeCount);
+  const skip = () => setSelectedNode((current) => (current + 1) % nodeCount);
 
   React.useEffect(() => {
     if (!value) {
@@ -22,7 +26,9 @@ export const useFocusNode = () => {
     }
 
     if (!viewPort || !debouncedValue) return;
-    const matchedNodes: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
+    const matchedNodes: NodeListOf<Element> = searchQuery(
+      `span[data-key*='${debouncedValue}' i]`,
+    );
     const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
     cleanupHighlight();

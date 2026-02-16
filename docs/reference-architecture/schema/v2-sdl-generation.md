@@ -16,7 +16,7 @@ The V2 GraphQL SDL generation capability (`generate-graphql-json-schema-v2.mjs`)
 
 V2 generation refers to the process of converting a "V2" or "enhanced" GraphQL SDL file (with x-graphql hint extensions) into JSON Schema format. The V2 SDL would contain:
 
-- Custom x-graphql-* directives embedded in comments
+- Custom x-graphql-\* directives embedded in comments
 - Enhanced type metadata
 - Union type hints
 - Interface type markers
@@ -38,11 +38,13 @@ This file is currently **not present** in the repository.
 ### 1. Single Source of Truth Philosophy
 
 The project currently maintains a **single canonical GraphQL SDL** at:
+
 ```
 src/data/schema_unification.graphql
 ```
 
 This file serves as the authoritative schema definition and is:
+
 - ✅ Actively maintained and updated
 - ✅ Used by all generation and validation scripts
 - ✅ Deployed to the web UI
@@ -52,6 +54,7 @@ This file serves as the authoritative schema definition and is:
 ### 2. Reduced Maintenance Burden
 
 Maintaining multiple SDL variants would require:
+
 - Keeping both files in sync
 - Duplicate schema validation
 - Additional CI/CD checks
@@ -76,6 +79,7 @@ This workflow satisfies all current requirements without needing a V2 variant.
 ### 4. V2 Features Can Be Added to Canonical SDL
 
 If x-graphql hint extensions become necessary, they can be:
+
 - Added directly to `schema_unification.graphql` as comments
 - Processed by the existing generator with minimal changes
 - Maintained as a single authoritative source
@@ -129,7 +133,7 @@ type Contract {
   @x-graphql-required true
   """
   globalRecordId: ID
-  
+
   """
   System chain
   @x-graphql-scalar DateTime
@@ -150,6 +154,7 @@ type SearchResult {
 ### Step 2: Update Generation Scripts
 
 The V2 generation script already exists and will automatically:
+
 - Detect the V2 target file
 - Parse x-graphql hints from comments
 - Generate enhanced JSON Schema
@@ -191,8 +196,9 @@ pnpm run generate:schema:interop
 ```
 
 **Output**:
+
 ```
-Skipping 'V2 JSON Schema from V2 GraphQL SDL' 
+Skipping 'V2 JSON Schema from V2 GraphQL SDL'
 because target SDL not found at /path/to/src/data/schema_unification.target.graphql
 ```
 
@@ -203,11 +209,13 @@ This is **expected behavior** and not an error.
 ## V2 Generation Script Details
 
 ### Script Location
+
 ```
 scripts/generate-graphql-json-schema-v2.mjs
 ```
 
 ### What It Does
+
 - Attempts to read `src/data/schema_unification.target.graphql`
 - Falls back to `src/data/schema_unification.graphql` if V2 not found
 - Parses x-graphql hint extensions from SDL comments
@@ -215,6 +223,7 @@ scripts/generate-graphql-json-schema-v2.mjs
 - Outputs to `generated-schemas/schema_unification.v2.from-graphql.json`
 
 ### Current Status
+
 ✅ **Fully implemented and tested**
 ⚠️ **Not executed** (V2 target file missing)
 📝 **Documented** (fallback behavior working as designed)
@@ -247,22 +256,24 @@ The V2 generation functionality is **fully tested**:
 
 ## Decision Log
 
-| Date | Decision | Rationale |
-|------|----------|-----------|
-| 2024 | V2 generation disabled | Single source of truth; no V2 target needed |
-| 2024 | V2 script retained | Future-proofing; fully tested implementation |
-| 2024 | Fallback implemented | Graceful handling when V2 target missing |
+| Date | Decision               | Rationale                                    |
+| ---- | ---------------------- | -------------------------------------------- |
+| 2024 | V2 generation disabled | Single source of truth; no V2 target needed  |
+| 2024 | V2 script retained     | Future-proofing; fully tested implementation |
+| 2024 | Fallback implemented   | Graceful handling when V2 target missing     |
 
 ---
 
 ## Recommendations
 
 ### For Current Development
+
 ✅ **Continue using canonical SDL** (`schema_unification.graphql`)
 ✅ **Leave V2 generation disabled** (no current requirement)
 ✅ **Keep V2 script and tests** (minimal maintenance, future-ready)
 
 ### For Future Consideration
+
 - Review annually if V2 needs arise
 - Consider V2 if schema variants become necessary
 - Document any decision to enable V2 generation
@@ -272,8 +283,9 @@ The V2 generation functionality is **fully tested**:
 ## Summary
 
 V2 GraphQL SDL generation is:
+
 - ✅ **Implemented** and working
-- ✅ **Tested** and validated  
+- ✅ **Tested** and validated
 - ⚠️ **Intentionally disabled** (no V2 target file)
 - 📝 **Documented** and understood
 - 🔮 **Ready to enable** if future needs arise

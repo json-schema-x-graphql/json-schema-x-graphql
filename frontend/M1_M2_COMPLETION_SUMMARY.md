@@ -8,8 +8,9 @@
 ### M1 – Baseline & Plumbing (✅ Complete)
 
 #### Environment Alignment
+
 - ✅ **Node version pinned**: Created `.nvmrc` with Node 18 specification
-- ✅ **pnpm version aligned**: 
+- ✅ **pnpm version aligned**:
   - Root and `converters/node`: `10.13.1`
   - Fixed `frontend/dashboard`: Updated from `10.22.0` to `10.13.1`
 - ✅ **Workspace configuration**: Added frontend demos to `pnpm-workspace.yaml`:
@@ -17,6 +18,7 @@
   - `frontend/demos/loro-monaco` (actively maintained)
 
 #### Shared Environment Contract
+
 - ✅ **`.env.example` created** at project root with comprehensive defaults:
   - Converter mode selection (wasm vs node)
   - Server URLs for WebSocket and converter server
@@ -27,41 +29,50 @@
 ### M2 – Core Editors & Converter Integration (✅ Complete)
 
 #### Enhanced Converter Options Architecture
+
 Updated `frontend/demos/loro-monaco/src/store.ts` to expose full converter surface:
 
 **Validation & Processing:**
+
 - `validate` (boolean)
-- `includeDescriptions` (boolean)  
+- `includeDescriptions` (boolean)
 - `preserveFieldOrder` (boolean)
 - `failOnWarning` (boolean)
 
 **Federation Support:**
+
 - `federationVersion`: "NONE" | "V1" | "V2" | "AUTO"
 - `includeFederationDirectives` (boolean)
 
 **Naming & ID Strategy:**
+
 - `namingConvention`: "PRESERVE" | "GRAPHQL_IDIOMATIC"
 - `idStrategy`: "NONE" | "COMMON_PATTERNS" | "ALL_STRINGS"
 
 **Output Format:**
+
 - `outputFormat`: "SDL" | "SDL_WITH_FEDERATION_METADATA" | "AST_JSON"
 - `prettyPrint` (boolean) - UI formatting preference
 
 #### Converter API Module
+
 Created `frontend/demos/loro-monaco/src/converter-api.ts` with:
 
 **New Functions:**
+
 - `convertJsonSchemaToGraphQL(schema, options)` - Full option support with error handling
 - `convertGraphQLToJsonSchema(sdl, options)` - GraphQL-to-JSON conversion
 - `formatOutput(output, format, prettify)` - Output formatting utility
 
 **Features:**
+
 - Proper enum mapping for WASM API compatibility
 - Comprehensive error handling with diagnostics
 - Result normalization with error counts and diagnostic messages
 - Fallback error reporting for conversion failures
 
 #### UI Integration
+
 1. **Updated `App.tsx`**:
    - Imports new `converter-api` module
    - Updated `handleConvert` to use full option set
@@ -70,9 +81,9 @@ Created `frontend/demos/loro-monaco/src/converter-api.ts` with:
    - Proper error display via store
 
 2. **Created `ConverterSettingsPanel.tsx`**:
-   - **Validation & Processing section**: 
+   - **Validation & Processing section**:
      - Toggle inputs, checkbox controls
-   - **Federation section**: 
+   - **Federation section**:
      - Dropdown for Federation version (None/V1/V2/Auto)
      - Toggle for including federation directives
    - **Naming & ID Strategy section**:
@@ -92,6 +103,7 @@ Created `frontend/demos/loro-monaco/src/converter-api.ts` with:
 ## Key Architecture Decisions
 
 ### Converter Options Flow
+
 ```
 ConverterSettingsPanel (UI)
   ↓ (setOptions via Zustand store)
@@ -109,6 +121,7 @@ MonacoEditor / GraphQL Visual Editor
 ```
 
 ### Error Handling Strategy
+
 - Converter API returns `ConversionResult` with:
   - `success` boolean
   - `output` string | null
@@ -119,6 +132,7 @@ MonacoEditor / GraphQL Visual Editor
 - Graceful fallback for WASM failures
 
 ### Option Persistence
+
 - All converter options stored in Zustand persist middleware
 - Options survive page reloads
 - Per-document option state (not per-user)
@@ -127,6 +141,7 @@ MonacoEditor / GraphQL Visual Editor
 ## Files Modified/Created
 
 ### Modified
+
 - [pnpm-workspace.yaml](pnpm-workspace.yaml) - Added frontend demos
 - [package.json](package.json) - Root configuration
 - [frontend/dashboard/package.json](frontend/dashboard/package.json) - pnpm version alignment
@@ -134,6 +149,7 @@ MonacoEditor / GraphQL Visual Editor
 - [frontend/demos/loro-monaco/src/App.tsx](frontend/demos/loro-monaco/src/App.tsx) - Integration and UI updates
 
 ### Created
+
 - [.nvmrc](.nvmrc) - Node version pinning
 - [.env.example](.env.example) - Shared environment template
 - [frontend/demos/loro-monaco/src/converter-api.ts](frontend/demos/loro-monaco/src/converter-api.ts) - Advanced converter API
@@ -142,6 +158,7 @@ MonacoEditor / GraphQL Visual Editor
 ## Testing Checklist
 
 ### M2 Functional Tests (Manual)
+
 - [ ] Open `frontend/demos/loro-monaco` in browser
 - [ ] Click "⚙️ Settings" button
 - [ ] Verify all option categories visible:
@@ -160,6 +177,7 @@ MonacoEditor / GraphQL Visual Editor
 - [ ] Verify options persisted after page reload
 
 ### Edge Cases
+
 - [ ] Convert with `failOnWarning=true` on valid schema
 - [ ] Convert with invalid JSON schema - error displayed
 - [ ] Convert with AST_JSON output - pretty-printed
@@ -169,6 +187,7 @@ MonacoEditor / GraphQL Visual Editor
 ## Next Steps (M3 & Beyond)
 
 ### Recommended Order
+
 1. **M3 – UX Polish** (1 day, recommended next):
    - Responsive layout for mobile (<768px)
    - Keyboard shortcuts (Ctrl+K for settings, Ctrl+Enter for convert)
@@ -206,6 +225,7 @@ MonacoEditor / GraphQL Visual Editor
 ## Known Limitations & Future Work
 
 ### Current Scope Limitations
+
 - GraphQL-to-JSON conversion in WASM not fully wired (returns "not implemented" error)
   - **Fix needed**: Implement `graphqlToJsonSchema` WASM export or use Node converter fallback
 - No yjs-monaco demo yet (phase 3 mentioned it, but not in current tree)
@@ -215,6 +235,7 @@ MonacoEditor / GraphQL Visual Editor
   - **Improvement**: Could support both compact modal and sidebar on large screens
 
 ### Converter API TODOs
+
 - [ ] Support output streaming for large schemas
 - [ ] Add caching layer for repeated conversions
 - [ ] Implement diagnostic kind enum (currently uses strings)
@@ -226,7 +247,7 @@ From IMPLEMENTATION_PLAN.md:
 
 - ✅ Both demos build and run locally (loro-monaco ready, yjs-monaco pending)
 - ✅ Option panel drives converter outputs for SDL, SDL_WITH_FEDERATION_METADATA, and AST_JSON
-- ✅ Diagnostics surface in UI error handling  
+- ✅ Diagnostics surface in UI error handling
 - ✅ `failOnWarning` honored in converter API
 - ✅ Single-user editing/conversion UX responsive and accessible (M3 todo for responsive design)
 - ✅ Keyboard shortcuts documented (M3 todo for implementation)

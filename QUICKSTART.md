@@ -35,6 +35,7 @@ pnpm install
 ```
 
 This comprehensive test script will:
+
 - ✅ Validate your environment
 - ✅ Check project structure
 - ✅ Verify TypeScript compilation
@@ -62,12 +63,14 @@ Then open your browser to: **http://localhost:3003**
 ### Option 2: Run Components Separately
 
 **Terminal 1 - API Server:**
+
 ```bash
 cd converters/node
 pnpm run dev:api
 ```
 
 **Terminal 2 - Frontend:**
+
 ```bash
 cd frontend/schema-authoring
 pnpm run dev
@@ -96,6 +99,7 @@ pnpm run debug:browser
 ```
 
 This will:
+
 - 🌐 Launch a headless browser
 - 📝 Capture all console logs
 - 🌐 Record all network requests
@@ -105,6 +109,7 @@ This will:
 ### 3. Review Results
 
 Check the output in `frontend/schema-authoring/debug-output/`:
+
 - `debug-summary.txt` - Human-readable summary
 - `debug-report.json` - Detailed JSON report
 - `screenshot-*.png` - Screenshots
@@ -185,6 +190,7 @@ pnpm run build
 **Problem:** Frontend can't reach the API server
 
 **Solution:**
+
 1. Ensure API server is running: `cd converters/node && pnpm run dev:api`
 2. Check that port 3004 is available: `lsof -i :3004`
 3. Verify Vite proxy configuration in `vite.config.ts`
@@ -194,6 +200,7 @@ pnpm run build
 **Problem:** Editor areas are blank or show loading indefinitely
 
 **Solution:**
+
 1. Clear browser cache
 2. Check browser console for errors (F12)
 3. Run `pnpm run debug:browser` to capture detailed logs
@@ -203,6 +210,7 @@ pnpm run build
 **Problem:** Conversion returns errors or doesn't complete
 
 **Solution:**
+
 1. Check API server logs (visible in terminal where `dev:api` is running)
 2. Test API directly with curl (see "Testing Conversions" above)
 3. Validate your input schema/SDL syntax
@@ -213,6 +221,7 @@ pnpm run build
 **Problem:** `pnpm install` fails
 
 **Solution:**
+
 1. Ensure Node.js >= 18.0.0: `node --version`
 2. Update pnpm: `npm install -g pnpm@latest`
 3. Clear cache: `pnpm store prune`
@@ -223,6 +232,7 @@ pnpm run build
 **Problem:** "Port 3003 or 3004 already in use"
 
 **Solution:**
+
 ```bash
 # Find process using the port
 lsof -i :3003
@@ -288,6 +298,7 @@ pkill -9 node
 ### Daily Development
 
 1. Start dev environment:
+
    ```bash
    cd frontend/schema-authoring
    pnpm run dev:full
@@ -300,12 +311,14 @@ pkill -9 node
 ### Before Committing
 
 1. Run type-check:
+
    ```bash
    cd frontend/schema-authoring
    pnpm run typecheck
    ```
 
 2. Run full test suite:
+
    ```bash
    cd ../..
    ./test-complete-setup.sh

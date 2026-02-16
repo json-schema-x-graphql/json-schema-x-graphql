@@ -2,7 +2,7 @@
 
 **Version:** 2.0  
 **Date:** December 4, 2025  
-**Status:** Design Proposal  
+**Status:** Design Proposal
 
 ## Overview
 
@@ -11,6 +11,7 @@ This document describes an architecture where system-specific schemas (Contract 
 ## Design Philosophy
 
 **Leverage GraphQL Federation, not custom metadata:**
+
 - ✅ Use `@key` directives to identify join fields
 - ✅ Use `@external` to reference common fields
 - ✅ Use `additionalProperties` for dynamic extensions
@@ -20,17 +21,19 @@ This document describes an architecture where system-specific schemas (Contract 
 ## Current Architecture (Problems)
 
 **Before:**
+
 ```json
 {
   "system_extensions": {
-    "contract_data": [ { "field_name": "...", "value": "..." } ],
-    "legacy_procurement": [ { "field_name": "...", "value": "..." } ],
-    "intake_process": [ { "field_name": "...", "value": "..." } ]
+    "contract_data": [{ "field_name": "...", "value": "..." }],
+    "legacy_procurement": [{ "field_name": "...", "value": "..." }],
+    "intake_process": [{ "field_name": "...", "value": "..." }]
   }
 }
 ```
 
 **Issues:**
+
 1. ❌ Schema Unification must pre-define all extension types
 2. ❌ Adding new systems requires core schema changes
 3. ❌ No GraphQL Federation support
@@ -61,20 +64,21 @@ type Contract @key(fields: "id") {
 Each system schema declares which fields it can resolve:
 
 **Public Spending Schema:**
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://api.public_spending.gov/schemas/public_spending.schema.json",
   "title": "Public Spending Procurement Schema",
-  
+
   "x-graphql-federation-keys": ["piid", "id"],
-  
+
   "$defs": {
     "public_spending_procurement": {
       "type": "object",
       "x-graphql-type-name": "Public SpendingProcurement",
       "x-graphql-federation-keys": ["piid"],
-      
+
       "properties": {
         "piid": {
           "type": "string",
@@ -82,17 +86,17 @@ Each system schema declares which fields it can resolve:
           "x-graphql-field-type": "String",
           "x-graphql-field-non-null": true
         },
-        
+
         "award_procurement_id": {
           "type": "integer",
           "description": "Public Spending internal ID"
         },
-        
+
         "dod_claimant_program_code": {
           "type": "string",
           "description": "DoD-specific field (not in common_elements)"
         },
-        
+
         "woman_owned_business": {
           "type": "boolean",
           "description": "Vendor classification flag"
@@ -104,6 +108,7 @@ Each system schema declares which fields it can resolve:
 ```
 
 **Generated GraphQL:**
+
 ```graphql
 type Public SpendingProcurement @key(fields: "piid") {
   piid: String!
@@ -166,10 +171,7 @@ Schema Unification stores system-specific data in `system_extensions` using `add
       "properties": {},
       "additionalProperties": {
         "description": "System-specific data (any structure)",
-        "oneOf": [
-          { "type": "object" },
-          { "type": "array" }
-        ]
+        "oneOf": [{ "type": "object" }, { "type": "array" }]
       }
     }
   }
@@ -181,6 +183,7 @@ Schema Unification stores system-specific data in `system_extensions` using `add
 ### Phase 2: Create System Schemas with Federation Directives
 
 **Directory Structure:**
+
 ```
 src/data/systems/
 ├── public_spending/
@@ -207,7 +210,7 @@ src/data/systems/
   "$id": "https://api.public_spending.gov/schemas/public_spending-procurement.schema.json",
   "title": "Public Spending Procurement Schema",
   "description": "Schema for Public Spending procurement data that extends Schema Unification Contract type",
-  
+
   "x-graphql-scalars": {
     "DateTime": {
       "description": "ISO 8601 date-time"
@@ -216,16 +219,16 @@ src/data/systems/
       "description": "High-precision decimal"
     }
   },
-  
+
   "$defs": {
     "public_spending_procurement": {
       "type": "object",
       "description": "Public Spending procurement contract record",
-      
+
       "x-graphql-type-name": "Public SpendingProcurement",
       "x-graphql-type-kind": "OBJECT",
       "x-graphql-federation-keys": ["piid", "unique_award_key"],
-      
+
       "properties": {
         "piid": {
           "type": "string",
@@ -234,7 +237,7 @@ src/data/systems/
           "x-graphql-field-type": "String",
           "x-graphql-field-non-null": true
         },
-        
+
         "unique_award_key": {
           "type": "string",
           "description": "Unique award identifier",
@@ -242,35 +245,35 @@ src/data/systems/
           "x-graphql-field-type": "String",
           "x-graphql-field-non-null": true
         },
-        
+
         "award_procurement_id": {
           "type": "integer",
           "description": "Internal database ID",
           "x-graphql-field-name": "awardProcurementId",
           "x-graphql-field-type": "Int"
         },
-        
+
         "current_total_value_award": {
           "type": "string",
           "description": "Total contract value (raw from DB)",
           "x-graphql-field-name": "currentTotalValueAward",
           "x-graphql-field-type": "String"
         },
-        
+
         "parsed_total_value": {
           "type": "number",
           "description": "Parsed numeric total value",
           "x-graphql-field-name": "parsedTotalValue",
           "x-graphql-field-type": "Decimal"
         },
-        
+
         "dod_claimant_program_code": {
           "type": "string",
           "description": "DoD-specific claimant program code",
           "x-graphql-field-name": "dodClaimantProgramCode",
           "x-graphql-field-type": "String"
         },
-        
+
         "vendor_classifications": {
           "type": "object",
           "description": "Vendor business type flags",
@@ -289,7 +292,7 @@ src/data/systems/
             }
           }
         },
-        
+
         "updated_at": {
           "type": "string",
           "format": "date-time",
@@ -298,7 +301,7 @@ src/data/systems/
           "x-graphql-field-type": "DateTime"
         }
       },
-      
+
       "required": ["piid", "unique_award_key"]
     }
   }
@@ -313,10 +316,10 @@ src/data/systems/
 """
 Public Spending procurement contract record
 """
-type Public SpendingProcurement 
-  @key(fields: "piid") 
+type Public SpendingProcurement
+  @key(fields: "piid")
   @key(fields: "uniqueAwardKey") {
-  
+
   piid: String!
   uniqueAwardKey: String!
   awardProcurementId: Int
@@ -366,29 +369,29 @@ export const resolvers = {
     __resolveReference(reference: { id: string }) {
       return fetchContractById(reference.id);
     },
-    
+
     // Resolve public_spendingData field
     async public_spendingData(contract: Contract) {
       const piid = contract.common_elements?.contract_identification?.piid;
-      
+
       if (!piid) return null;
-      
+
       // Fetch from system_extensions or query Public Spending DB
       if (contract.system_extensions?.public_spending) {
         return contract.system_extensions.public_spending;
       }
-      
+
       // Fallback: query Public Spending database
       return await queryPublic SpendingByPIID(piid);
     }
   },
-  
+
   Public SpendingProcurement: {
     // Federation entity resolver
     __resolveReference(reference: { piid: string }) {
       return queryPublic SpendingByPIID(reference.piid);
     },
-    
+
     // Field resolver: parse total value on-demand
     parsedTotalValue(procurement: any) {
       const raw = procurement.current_total_value_award;
@@ -396,12 +399,12 @@ export const resolvers = {
       return parseFloat(raw.replace(/[$,]/g, ''));
     }
   },
-  
+
   Query: {
     public_spendingProcurement(_: any, { piid }: { piid: string }) {
       return queryPublic SpendingByPIID(piid);
     },
-    
+
     public_spendingProcurements(_: any, { limit, offset }: any) {
       return queryPublic SpendingProcurements(limit, offset);
     }
@@ -410,7 +413,7 @@ export const resolvers = {
 
 async function queryPublic SpendingByPIID(piid: string) {
   const result = await db.query(`
-    SELECT 
+    SELECT
       piid,
       unique_award_key,
       award_procurement_id,
@@ -422,7 +425,7 @@ async function queryPublic SpendingByPIID(piid: string) {
     FROM award_procurement
     WHERE piid = $1
   `, [piid]);
-  
+
   return result.rows[0];
 }
 ```
@@ -432,30 +435,30 @@ async function queryPublic SpendingByPIID(piid: string) {
 **Gateway Setup:**
 
 ```typescript
-import { ApolloGateway, IntrospectAndCompose } from '@apollo/gateway';
-import { ApolloServer } from '@apollo/server';
+import { ApolloGateway, IntrospectAndCompose } from "@apollo/gateway";
+import { ApolloServer } from "@apollo/server";
 
 const gateway = new ApolloGateway({
   supergraphSdl: new IntrospectAndCompose({
     subgraphs: [
       {
-        name: 'schema_unification-core',
-        url: 'http://schema_unification-api:4000/graphql'
+        name: "schema_unification-core",
+        url: "http://schema_unification-api:4000/graphql",
       },
       {
-        name: 'public_spending',
-        url: 'http://public_spending-service:4001/graphql'
+        name: "public_spending",
+        url: "http://public_spending-service:4001/graphql",
       },
       {
-        name: 'contract_data',
-        url: 'http://contract_data-service:4002/graphql'
+        name: "contract_data",
+        url: "http://contract_data-service:4002/graphql",
       },
       {
-        name: 'logistics_mgmt',
-        url: 'http://logistics_mgmt-service:4003/graphql'
-      }
-    ]
-  })
+        name: "logistics_mgmt",
+        url: "http://logistics_mgmt-service:4003/graphql",
+      },
+    ],
+  }),
 });
 
 const server = new ApolloServer({ gateway });
@@ -468,7 +471,7 @@ query GetContractWithPublic SpendingData {
   contract(id: "contract-12345") {
     id
     piid
-    
+
     # From Schema Unification core
     common_elements {
       contract_identification {
@@ -479,7 +482,7 @@ query GetContractWithPublic SpendingData {
         total_contract_value
       }
     }
-    
+
     # From Public Spending service
     public_spendingData {
       awardProcurementId
@@ -500,26 +503,31 @@ query GetContractWithPublic SpendingData {
 ## Benefits
 
 ### 1. **Standard GraphQL Federation**
+
 - No custom metadata — uses `@key`, `@external`, `@shareable`
 - Works with Apollo Gateway, Mesh, Mercurius
 - Standard tooling and documentation
 
 ### 2. **True Independence**
+
 - Systems deploy their own services
 - No coordination for adding fields
 - Independent scaling and versioning
 
 ### 3. **Simple Storage Model**
+
 - `additionalProperties` accepts any structure
 - No schema updates needed in Schema Unification
 - Systems own their data format
 
 ### 4. **Flexible Queries**
+
 - Clients can fetch only what they need
 - Federation handles joins automatically
 - Type-safe across systems
 
 ### 5. **Backward Compatible**
+
 - Existing Contract Data/Legacy Procurement/EASi extensions still work
 - Gradual migration path
 - No breaking changes
@@ -529,23 +537,27 @@ query GetContractWithPublic SpendingData {
 ## Migration Path
 
 ### Week 1: Update Schema Unification Core
+
 - ✅ Change `system_extensions` to `additionalProperties` (DONE)
 - Update GraphQL schema generation scripts
 - Test backward compatibility
 
 ### Week 2: Create Public Spending Service
+
 - Create `src/data/systems/public_spending/` directory
 - Write JSON Schema with `x-graphql-federation-keys`
 - Generate GraphQL SDL
 - Build resolver service
 
 ### Week 3: Deploy Federation Gateway
+
 - Set up Apollo Gateway
 - Configure subgraph URLs
 - Test federated queries
 - Deploy to staging
 
 ### Week 4: Migrate Existing Systems
+
 - Extract Contract Data/Legacy Procurement/EASi as subgraphs
 - Add `@key` directives
 - Deploy independent services
@@ -605,14 +617,14 @@ curl -X POST http://gateway:4000/graphql \
 
 ## Comparison: Custom Mapping vs Federation
 
-| Aspect | Custom x-schema_unification-mapping | GraphQL Federation |
-|--------|---------------------------|-------------------|
-| Metadata | Custom `x-schema_unification-mapping` | Standard `@key`, `@external` |
-| Tooling | Custom validators needed | Apollo Gateway, Rover, etc. |
-| Learning Curve | New concepts to learn | Standard Federation patterns |
-| Query Model | ETL batch processing | Real-time federated queries |
-| Deployment | Monolithic ETL pipeline | Independent microservices |
-| Complexity | Complex transformation layer | Simple resolvers |
+| Aspect         | Custom x-schema_unification-mapping   | GraphQL Federation           |
+| -------------- | ------------------------------------- | ---------------------------- |
+| Metadata       | Custom `x-schema_unification-mapping` | Standard `@key`, `@external` |
+| Tooling        | Custom validators needed              | Apollo Gateway, Rover, etc.  |
+| Learning Curve | New concepts to learn                 | Standard Federation patterns |
+| Query Model    | ETL batch processing                  | Real-time federated queries  |
+| Deployment     | Monolithic ETL pipeline               | Independent microservices    |
+| Complexity     | Complex transformation layer          | Simple resolvers             |
 
 **Winner:** GraphQL Federation ✅
 
@@ -624,15 +636,15 @@ curl -X POST http://gateway:4000/graphql \
 
 ```javascript
 // Recognize x-graphql-federation-keys
-if (schema['x-graphql-federation-keys']) {
-  const keys = schema['x-graphql-federation-keys'];
-  keys.forEach(key => {
+if (schema["x-graphql-federation-keys"]) {
+  const keys = schema["x-graphql-federation-keys"];
+  keys.forEach((key) => {
     typeDecl += ` @key(fields: "${key}")`;
   });
 }
 
 // Generate extend type Contract for system extensions
-if (systemId && systemId !== 'schema_unification') {
+if (systemId && systemId !== "schema_unification") {
   sdl += `\nextend type Contract @key(fields: "id") {\n`;
   sdl += `  ${systemId}Data: ${typeName}\n`;
   sdl += `}\n`;
@@ -646,31 +658,33 @@ if (systemId && systemId !== 'schema_unification') {
 - [GraphQL Federation Spec](https://www.apollographql.com/docs/federation/)
 - [Apollo Subgraph Development](https://www.apollographql.com/docs/federation/subgraphs/)
 - [Schema Unification Schema v2.0](../../src/data/schema_unification.schema.json)
-- [Existing x-graphql-* Guide](./x-graphql-hints-guide.md)
+- [Existing x-graphql-\* Guide](./x-graphql-hints-guide.md)
 
 ---
 
 **Document Control:**
+
 - Version: 2.0 (Simplified to use GraphQL Federation)
 - Author: Schema Unification Forest Schema Team
 - Status: Design Proposal
 - Next Review: After Phase 1 implementation
 
-
 ## Current Architecture (Limitations)
 
 **Current State:**
+
 ```json
 {
   "system_extensions": {
-    "contract_data": [ { "field_name": "...", "value": "..." } ],
-    "legacy_procurement": [ { "field_name": "...", "value": "..." } ],
-    "intake_process": [ { "field_name": "...", "value": "..." } ]
+    "contract_data": [{ "field_name": "...", "value": "..." }],
+    "legacy_procurement": [{ "field_name": "...", "value": "..." }],
+    "intake_process": [{ "field_name": "...", "value": "..." }]
   }
 }
 ```
 
 **Problems:**
+
 1. ❌ Schema Unification schema must pre-define all extension types
 2. ❌ Adding new systems requires modifying core schema
 3. ❌ No explicit mapping declarations in system schemas
@@ -700,7 +714,7 @@ Each system schema declares its identity and mapping strategy:
   "$id": "https://api.public_spending.gov/schemas/public_spending.schema.json",
   "title": "Public Spending Contract Schema",
   "description": "Canonical schema for Public Spending (GDSM) contract data",
-  
+
   "x-schema_unification-mapping": {
     "system_id": "USASPENDING",
     "target_schema": "https://github.com/GSA-TTS/enterprise-schema-unification/schemas/v2.0",
@@ -721,7 +735,7 @@ Each field declares how it maps to Schema Unification:
     "piid": {
       "type": "string",
       "description": "Procurement Instrument Identifier",
-      
+
       "x-schema_unification-mapping": {
         "target_path": "common_elements.contract_identification.piid",
         "mapping_type": "direct",
@@ -729,11 +743,11 @@ Each field declares how it maps to Schema Unification:
         "transformation": null
       }
     },
-    
+
     "current_total_value_award": {
       "type": "string",
       "description": "Total contract value with currency symbols",
-      
+
       "x-schema_unification-mapping": {
         "target_path": "common_elements.financial_info.total_contract_value",
         "mapping_type": "transformed",
@@ -747,11 +761,11 @@ Each field declares how it maps to Schema Unification:
         }
       }
     },
-    
+
     "woman_owned_business": {
       "type": "boolean",
       "description": "Woman-owned business flag",
-      
+
       "x-schema_unification-mapping": {
         "target_path": "vendor_classifications.socioeconomic.woman_owned_business",
         "mapping_type": "aggregated",
@@ -760,11 +774,11 @@ Each field declares how it maps to Schema Unification:
         "transformation": null
       }
     },
-    
+
     "dod_claimant_program_code": {
       "type": "string",
       "description": "DoD-specific claimant program code",
-      
+
       "x-schema_unification-mapping": {
         "target_path": null,
         "mapping_type": "system_extension",
@@ -779,14 +793,14 @@ Each field declares how it maps to Schema Unification:
 
 #### 3. Mapping Types
 
-| Mapping Type | Description | Example |
-|--------------|-------------|---------|
-| `direct` | 1:1 field mapping, no transformation | `piid → piid` |
-| `transformed` | Requires data transformation | `"$1,234.56" → 1234.56` |
-| `aggregated` | Multiple fields combine into structure | `100 boolean flags → vendor_classifications` |
-| `computed` | Derived from multiple sources | `base_value + options → total_value` |
-| `conditional` | Mapping depends on business rules | `contract_type determines target path` |
-| `system_extension` | No common mapping, preserved as extension | `dod_claimant_code` stays in extension |
+| Mapping Type       | Description                               | Example                                      |
+| ------------------ | ----------------------------------------- | -------------------------------------------- |
+| `direct`           | 1:1 field mapping, no transformation      | `piid → piid`                                |
+| `transformed`      | Requires data transformation              | `"$1,234.56" → 1234.56`                      |
+| `aggregated`       | Multiple fields combine into structure    | `100 boolean flags → vendor_classifications` |
+| `computed`         | Derived from multiple sources             | `base_value + options → total_value`         |
+| `conditional`      | Mapping depends on business rules         | `contract_type determines target path`       |
+| `system_extension` | No common mapping, preserved as extension | `dod_claimant_code` stays in extension       |
 
 #### 4. Transformation Declarations
 
@@ -806,7 +820,7 @@ Standard transformations are declared with reusable function names:
         "handle_empty": "null"
       }
     },
-    
+
     "parsePublic SpendingDate": {
       "description": "Parse date from multiple Public Spending formats",
       "input_type": "string",
@@ -819,7 +833,7 @@ Standard transformations are declared with reusable function names:
         "handle_empty": "null"
       }
     },
-    
+
     "mapContractType": {
       "description": "Map Public Spending contract type codes to Schema Unification enums",
       "input_type": "string",
@@ -868,7 +882,7 @@ Standard transformations are declared with reusable function names:
         }
       }
     },
-    
+
     "system_extension_field": {
       "type": "object",
       "description": "Generic system extension field",
@@ -911,6 +925,7 @@ Standard transformations are declared with reusable function names:
 ```
 
 **Key Changes:**
+
 - Replace hardcoded `contract_data`, `legacy_procurement`, `intake_process` properties with `additionalProperties`
 - Use generic `system_extension_field` type
 - Add `source_system` to track origin
@@ -919,6 +934,7 @@ Standard transformations are declared with reusable function names:
 ### Phase 2: Create Independent System Schemas
 
 **Directory Structure:**
+
 ```
 src/data/systems/
 ├── contract_data/
@@ -949,7 +965,7 @@ src/data/systems/
   "$id": "https://api.public_spending.gov/schemas/public_spending-procurement.schema.json",
   "title": "Public Spending Procurement Contract Schema",
   "description": "Canonical schema for Public Spending (GDSM) procurement contract data from award_procurement table",
-  
+
   "x-schema_unification-mapping": {
     "system_id": "USASPENDING",
     "system_name": "Public Spending (Government-wide Data Standards Management)",
@@ -962,19 +978,18 @@ src/data/systems/
       "unmapped_fields": 45
     }
   },
-  
+
   "x-graphql-type": {
     "name": "Public SpendingProcurement",
     "description": "Public Spending procurement contract record",
     "extends": "Contract"
   },
-  
+
   "$defs": {
     "public_spending_procurement": {
       "type": "object",
       "description": "Public Spending award_procurement table record",
       "properties": {
-        
         "system_metadata": {
           "type": "object",
           "properties": {
@@ -1008,7 +1023,7 @@ src/data/systems/
             }
           }
         },
-        
+
         "contract_identification": {
           "type": "object",
           "properties": {
@@ -1050,7 +1065,7 @@ src/data/systems/
             }
           }
         },
-        
+
         "vendor_classifications": {
           "type": "object",
           "description": "Vendor business type classifications (100+ boolean flags)",
@@ -1061,21 +1076,21 @@ src/data/systems/
             "aggregation_strategy": "group_by_category"
           },
           "properties": {
-            "small_business_competitive": { 
+            "small_business_competitive": {
               "type": "boolean",
               "x-schema_unification-mapping": {
                 "target_path": "vendor_classifications.small_business.small_business_competitive",
                 "mapping_type": "direct"
               }
             },
-            "woman_owned_business": { 
+            "woman_owned_business": {
               "type": "boolean",
               "x-schema_unification-mapping": {
                 "target_path": "vendor_classifications.socioeconomic.woman_owned_business",
                 "mapping_type": "direct"
               }
             },
-            "veteran_owned_business": { 
+            "veteran_owned_business": {
               "type": "boolean",
               "x-schema_unification-mapping": {
                 "target_path": "vendor_classifications.socioeconomic.veteran_owned_business",
@@ -1085,7 +1100,7 @@ src/data/systems/
             // ... 100+ more boolean flags
           }
         },
-        
+
         "dod_specific": {
           "type": "object",
           "description": "DoD-specific compliance fields",
@@ -1128,7 +1143,7 @@ src/data/systems/
   "mapping_version": "1.0",
   "target_schema": "https://github.com/GSA-TTS/enterprise-schema-unification/schemas/v2.0",
   "generated_at": "2025-12-04T10:00:00Z",
-  
+
   "mappings": [
     {
       "source_field": "piid",
@@ -1152,7 +1167,7 @@ src/data/systems/
       "transformation": "parsePublic SpendingDate"
     }
   ],
-  
+
   "unmapped_fields": [
     {
       "source_field": "dod_claimant_program_code",
@@ -1165,7 +1180,7 @@ src/data/systems/
       "extension_category": "contract_characteristics"
     }
   ],
-  
+
   "statistics": {
     "total_fields": 315,
     "mapped_to_common": 268,
@@ -1185,38 +1200,49 @@ src/data/systems/
 /**
  * Validates that system schema mappings are consistent with Schema Unification schema
  */
-import Ajv from 'ajv';
-import fs from 'fs';
+import Ajv from "ajv";
+import fs from "fs";
 
-async function validateSystemMapping(systemSchemaPath, schema_unificationSchemaPath) {
-  const systemSchema = JSON.parse(fs.readFileSync(systemSchemaPath, 'utf-8'));
-  const schema_unificationSchema = JSON.parse(fs.readFileSync(schema_unificationSchemaPath, 'utf-8'));
-  
+async function validateSystemMapping(
+  systemSchemaPath,
+  schema_unificationSchemaPath,
+) {
+  const systemSchema = JSON.parse(fs.readFileSync(systemSchemaPath, "utf-8"));
+  const schema_unificationSchema = JSON.parse(
+    fs.readFileSync(schema_unificationSchemaPath, "utf-8"),
+  );
+
   const errors = [];
-  
+
   // Validate x-schema_unification-mapping declarations
-  function validateMappings(obj, path = '') {
-    if (obj['x-schema_unification-mapping']) {
-      const mapping = obj['x-schema_unification-mapping'];
+  function validateMappings(obj, path = "") {
+    if (obj["x-schema_unification-mapping"]) {
+      const mapping = obj["x-schema_unification-mapping"];
       const targetPath = mapping.target_path;
-      
-      if (targetPath && !resolveSchemaPath(schema_unificationSchema, targetPath)) {
+
+      if (
+        targetPath &&
+        !resolveSchemaPath(schema_unificationSchema, targetPath)
+      ) {
         errors.push({
           source_path: path,
           target_path: targetPath,
-          error: `Target path does not exist in Schema Unification schema`
+          error: `Target path does not exist in Schema Unification schema`,
         });
       }
-      
-      if (mapping.transformation && !KNOWN_TRANSFORMATIONS.includes(mapping.transformation)) {
+
+      if (
+        mapping.transformation &&
+        !KNOWN_TRANSFORMATIONS.includes(mapping.transformation)
+      ) {
         errors.push({
           source_path: path,
           transformation: mapping.transformation,
-          error: `Unknown transformation function`
+          error: `Unknown transformation function`,
         });
       }
     }
-    
+
     // Recurse through nested properties
     if (obj.properties) {
       for (const [key, value] of Object.entries(obj.properties)) {
@@ -1224,13 +1250,13 @@ async function validateSystemMapping(systemSchemaPath, schema_unificationSchemaP
       }
     }
   }
-  
+
   validateMappings(systemSchema);
-  
+
   return {
     valid: errors.length === 0,
     errors,
-    system_id: systemSchema['x-schema_unification-mapping']?.system_id
+    system_id: systemSchema["x-schema_unification-mapping"]?.system_id,
   };
 }
 ```
@@ -1260,15 +1286,15 @@ export class TransformationExecutor {
     toStringId: (val: number) => val.toString(),
     prefixWithSystem: (val: string, params: any) => `${params.prefix}${val}`
   };
-  
+
   execute(value: any, config: TransformationConfig): any {
     const transformer = this.transformers[config.function];
-    
+
     if (!transformer) {
       throw new Error(`Unknown transformation: ${config.function}`);
     }
-    
-    return config.params 
+
+    return config.params
       ? transformer(value, config.params)
       : transformer(value);
   }
@@ -1285,18 +1311,24 @@ export class TransformationExecutor {
  */
 export function generateMappingReport(systemSchema) {
   const mappings = extractMappings(systemSchema);
-  
+
   const report = {
-    system_id: systemSchema['x-schema_unification-mapping'].system_id,
+    system_id: systemSchema["x-schema_unification-mapping"].system_id,
     coverage: {
       total_fields: mappings.length,
-      mapped_to_common: mappings.filter(m => m.target_path?.startsWith('common_')).length,
-      system_extensions: mappings.filter(m => m.mapping_type === 'system_extension').length
+      mapped_to_common: mappings.filter((m) =>
+        m.target_path?.startsWith("common_"),
+      ).length,
+      system_extensions: mappings.filter(
+        (m) => m.mapping_type === "system_extension",
+      ).length,
     },
-    mappings_by_category: groupBy(mappings, 'category'),
-    transformations_used: unique(mappings.map(m => m.transformation).filter(Boolean))
+    mappings_by_category: groupBy(mappings, "category"),
+    transformations_used: unique(
+      mappings.map((m) => m.transformation).filter(Boolean),
+    ),
   };
-  
+
   return report;
 }
 ```
@@ -1342,13 +1374,13 @@ export const resolvers = {
       // Resolve Contract by Schema Unification global ID
       return fetchContractById(reference.id);
     },
-    
+
     public_spendingExtensions(contract: Contract) {
       // Fetch Public Spending extensions from system_extensions
       const extensions = contract.system_extensions?.public_spending || [];
       return parseExtensions(extensions);
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -1359,26 +1391,31 @@ export const resolvers = {
 ## Benefits of This Architecture
 
 ### 1. **Decoupled System Management**
+
 - Each system team manages their own schema
 - No coordination needed to add new systems
 - System schemas can evolve independently
 
 ### 2. **Explicit Mapping Documentation**
+
 - Every field documents its Schema Unification mapping
 - Mapping confidence levels tracked
 - Unmapped fields clearly identified
 
 ### 3. **Automated Validation**
+
 - Tools validate mappings are correct
 - Catch breaking changes early
 - Generate coverage reports
 
 ### 4. **Flexible Extensions**
+
 - Systems can add fields without Schema Unification changes
 - Extensions are first-class data
 - GraphQL Federation enables dynamic type extension
 
 ### 5. **Improved Maintainability**
+
 - Clear ownership boundaries
 - Easier to onboard new systems
 - Reduces coordination overhead
@@ -1461,14 +1498,14 @@ node etl/public_spending/index.js
 
 ## Tooling Roadmap
 
-| Tool | Purpose | Priority | Effort |
-|------|---------|----------|--------|
-| `validate-system-mapping.mjs` | Validate mappings against Schema Unification | High | 1 week |
-| `generate-mapping-manifest.mjs` | Generate mapping.json from schema | High | 3 days |
-| `generate-transformations.mjs` | Codegen transformation functions | Medium | 1 week |
-| `mapping-coverage-report.mjs` | Generate coverage dashboard | Medium | 3 days |
-| `extract-system-schema.mjs` | Extract existing system schemas | High | 3 days |
-| `test-mapping-roundtrip.mjs` | Test data transformation roundtrips | Low | 1 week |
+| Tool                            | Purpose                                      | Priority | Effort |
+| ------------------------------- | -------------------------------------------- | -------- | ------ |
+| `validate-system-mapping.mjs`   | Validate mappings against Schema Unification | High     | 1 week |
+| `generate-mapping-manifest.mjs` | Generate mapping.json from schema            | High     | 3 days |
+| `generate-transformations.mjs`  | Codegen transformation functions             | Medium   | 1 week |
+| `mapping-coverage-report.mjs`   | Generate coverage dashboard                  | Medium   | 3 days |
+| `extract-system-schema.mjs`     | Extract existing system schemas              | High     | 3 days |
+| `test-mapping-roundtrip.mjs`    | Test data transformation roundtrips          | Low      | 1 week |
 
 ---
 
@@ -1495,22 +1532,22 @@ interface Schema UnificationMappingMetadata {
 
 ```typescript
 interface FieldMapping {
-  target_path: string | null;      // JSON pointer to Schema Unification field (null if extension)
+  target_path: string | null; // JSON pointer to Schema Unification field (null if extension)
   mapping_type: MappingType;
-  confidence: 'exact' | 'high' | 'medium' | 'low' | 'not_applicable';
+  confidence: "exact" | "high" | "medium" | "low" | "not_applicable";
   transformation?: string | TransformationConfig;
   aggregation_group?: string;
   extension_category?: string;
   description?: string;
 }
 
-type MappingType = 
-  | 'direct'              // 1:1 copy
-  | 'transformed'         // Requires transformation
-  | 'aggregated'          // Combines multiple fields
-  | 'computed'            // Derived value
-  | 'conditional'         // Conditional logic
-  | 'system_extension';   // No common mapping
+type MappingType =
+  | "direct" // 1:1 copy
+  | "transformed" // Requires transformation
+  | "aggregated" // Combines multiple fields
+  | "computed" // Derived value
+  | "conditional" // Conditional logic
+  | "system_extension"; // No common mapping
 
 interface TransformationConfig {
   function: string;
@@ -1522,18 +1559,18 @@ interface TransformationConfig {
 
 ## Appendix B: Standard Transformation Functions
 
-| Function | Input | Output | Description |
-|----------|-------|--------|-------------|
-| `parseNumericCurrency` | string | decimal | Remove $, commas from currency |
+| Function                   | Input  | Output    | Description                        |
+| -------------------------- | ------ | --------- | ---------------------------------- |
+| `parseNumericCurrency`     | string | decimal   | Remove $, commas from currency     |
 | `parsePublic SpendingDate` | string | date-time | Parse YYYY-MM-DD, MM/DD/YYYY, etc. |
-| `mapContractType` | string | enum | Map contract type codes |
-| `mapActionType` | string | enum | Map action type codes |
-| `toStringId` | number | string | Convert numeric ID to string |
-| `prefixWithSystem` | string | string | Add system prefix to ID |
-| `parseAddress` | object | object | Normalize address structure |
-| `aggregateFlags` | object | object | Group boolean flags by category |
-| `calculateTotal` | array | decimal | Sum financial values |
-| `coalesceValues` | array | any | First non-null value |
+| `mapContractType`          | string | enum      | Map contract type codes            |
+| `mapActionType`            | string | enum      | Map action type codes              |
+| `toStringId`               | number | string    | Convert numeric ID to string       |
+| `prefixWithSystem`         | string | string    | Add system prefix to ID            |
+| `parseAddress`             | object | object    | Normalize address structure        |
+| `aggregateFlags`           | object | object    | Group boolean flags by category    |
+| `calculateTotal`           | array  | decimal   | Sum financial values               |
+| `coalesceValues`           | array  | any       | First non-null value               |
 
 ---
 
@@ -1559,6 +1596,7 @@ interface TransformationConfig {
 ---
 
 **Document Control:**
+
 - Version: 1.0
 - Author: Schema Unification Forest Schema Team
 - Status: Design Proposal

@@ -17,6 +17,6 @@
     "noImplicitAny": false,
     "typeRoots": ["types"]
   },
-  "include": ["src", "next-env.d.ts",],
+  "include": ["src", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }

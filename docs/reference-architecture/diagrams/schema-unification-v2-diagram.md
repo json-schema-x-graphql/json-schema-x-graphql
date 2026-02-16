@@ -28,14 +28,14 @@ erDiagram
         string globalRecordId PK "Global unique identifier across all systems"
         string schemaVersion "Schema version (2.0)"
     }
-    
+
     SYSTEM_METADATA {
         string globalRecordId PK "FK to CONTRACT"
         string primarySystem "Primary source: Contract Data, Legacy Procurement, Intake Process, Logistics Mgmt"
         string schemaVersion "Version 2.0"
         datetime lastModified "Last modification timestamp"
     }
-    
+
     SYSTEM_CHAIN_ENTRY {
         string chainId PK "System chain entry identifier"
         string globalRecordId FK "FK to SYSTEM_METADATA"
@@ -44,7 +44,7 @@ erDiagram
         datetime processedDate "When data was processed"
         array transformationRules "Applied transformation rules"
     }
-    
+
     DATA_QUALITY {
         string qualityId PK "Data quality record identifier"
         string chainId FK "FK to SYSTEM_CHAIN_ENTRY"
@@ -52,12 +52,12 @@ erDiagram
         array validationErrors "List of validation errors"
         datetime lastValidated "Last validation timestamp"
     }
-    
+
     COMMON_ELEMENTS {
         string commonId PK "Common elements identifier"
         string globalRecordId FK "FK to CONTRACT"
     }
-    
+
     CONTRACT_IDENTIFICATION {
         string identId PK "Contract identification identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -68,12 +68,12 @@ erDiagram
         string contractType "Type of contract instrument"
         string descriptionOfRequirement "Detailed description"
     }
-    
+
     ORGANIZATION_INFO {
         string orgId PK "Organization info identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
     }
-    
+
     AGENCY_INFO_CONTRACTING {
         string agencyId PK "Contracting agency identifier"
         string orgId FK "FK to ORGANIZATION_INFO"
@@ -81,7 +81,7 @@ erDiagram
         string name "Agency or Department Name"
         string role "contracting_agency"
     }
-    
+
     AGENCY_INFO_FUNDING {
         string agencyId PK "Funding agency identifier"
         string orgId FK "FK to ORGANIZATION_INFO"
@@ -89,7 +89,7 @@ erDiagram
         string name "Agency or Department Name"
         string role "funding_agency"
     }
-    
+
     AGENCY_INFO_CONTRACTING_DEPT {
         string deptId PK "Contracting dept identifier"
         string orgId FK "FK to ORGANIZATION_INFO"
@@ -97,7 +97,7 @@ erDiagram
         string name "Department Name"
         string role "contracting_department"
     }
-    
+
     AGENCY_INFO_FUNDING_DEPT {
         string deptId PK "Funding dept identifier"
         string orgId FK "FK to ORGANIZATION_INFO"
@@ -105,14 +105,14 @@ erDiagram
         string name "Department Name"
         string role "funding_department"
     }
-    
+
     VENDOR_INFO {
         string vendorId PK "Vendor info identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
         string vendorName "Name of vendor providing goods/services"
         string vendorUei "Vendor Unique Entity Identifier"
     }
-    
+
     PLACE_OF_PERFORMANCE {
         string perfId PK "Performance location identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -124,7 +124,7 @@ erDiagram
         string country "Country where work delivered"
         string congressionalDistrict "Congressional district"
     }
-    
+
     FINANCIAL_INFO {
         string finId PK "Financial record identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -134,7 +134,7 @@ erDiagram
         decimal amountSpentOnProduct "Amount spent on products"
         string contractFiscalYear "Fiscal year when awarded"
     }
-    
+
     BUSINESS_CLASSIFICATION {
         string bizId PK "Business classification identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -148,7 +148,7 @@ erDiagram
         boolean localAreaSetAside "Local area set-aside flag"
         string coSizeDetermination "CO size determination"
     }
-    
+
     CONTRACT_CHARACTERISTICS {
         string charId PK "Contract characteristics identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -158,7 +158,7 @@ erDiagram
         boolean recurringService "Recurring services flag"
         boolean recurringUtilities "Recurring utilities flag"
     }
-    
+
     CONTACT {
         string contactId PK "Contact identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -168,7 +168,7 @@ erDiagram
         string phone "Contact phone number"
         string role "primary, technical, administrative, contracting_officer"
     }
-    
+
     STATUS_INFO {
         string statusId PK "Status info identifier"
         string commonId FK "FK to COMMON_ELEMENTS"
@@ -181,12 +181,12 @@ erDiagram
         date contractCompleteDate "Contract completion date"
         date lastCarDateSigned "Last CAR signed date"
     }
-    
+
     SYSTEM_EXTENSIONS {
         string extId PK "System extensions identifier"
         string globalRecordId FK "FK to CONTRACT"
     }
-    
+
     Contract Data_EXTENSION {
         string contract_dataExtId PK "Contract Data extension identifier"
         string extId FK "FK to SYSTEM_EXTENSIONS"
@@ -194,7 +194,7 @@ erDiagram
         string fieldType "Field type"
         string value "Field value"
     }
-    
+
     Contract Data_SPECIFIC_DATA {
         string contract_dataDataId PK "Contract Data specific data identifier"
         string contract_dataExtId FK "FK to Contract Data_EXTENSION"
@@ -203,7 +203,7 @@ erDiagram
         string objective "Program objective"
         string website "Program website URL"
     }
-    
+
     Contract Data_Legacy ProcurementANCE_TYPE {
         string legacy_procurementTypeId PK "Contract Data legacy_procurementance type identifier"
         string contract_dataDataId FK "FK to Contract Data_SPECIFIC_DATA"
@@ -211,13 +211,13 @@ erDiagram
         string value "Assistance type value"
         integer level "Assistance level"
     }
-    
+
     Contract Data_ELIGIBILITY {
         string eligId PK "Contract Data eligibility identifier"
         string contract_dataDataId FK "FK to Contract Data_SPECIFIC_DATA"
         string additionalInfo "Additional eligibility info"
     }
-    
+
     Contract Data_APPLICANT_BENEFICIARY_TYPE {
         string abTypeId PK "Applicant/Beneficiary type ID"
         string eligId FK "FK to Contract Data_ELIGIBILITY"
@@ -225,7 +225,7 @@ erDiagram
         string code "Type code"
         string typeCategory "applicant or beneficiary"
     }
-    
+
     Contract Data_USAGE {
         string usageId PK "Contract Data usage identifier"
         string contract_dataDataId FK "FK to Contract Data_SPECIFIC_DATA"
@@ -234,7 +234,7 @@ erDiagram
         string loanTerms "Loan terms if applicable"
         string discretionaryFund "Discretionary fund info"
     }
-    
+
     Legacy Procurement_EXTENSION {
         string legacy_procurementExtId PK "Legacy Procurement extension identifier"
         string extId FK "FK to SYSTEM_EXTENSIONS"
@@ -242,25 +242,25 @@ erDiagram
         string fieldType "Field type"
         string value "Field value"
     }
-    
+
     Legacy Procurement_SPECIFIC_DATA {
         string legacy_procurementDataId PK "Legacy Procurement specific data identifier"
         string legacy_procurementExtId FK "FK to Legacy Procurement_EXTENSION"
     }
-    
+
     Legacy Procurement_ACQUISITION_DATA {
         string acqId PK "Legacy Procurement acquisition data identifier"
         string legacy_procurementDataId FK "FK to Legacy Procurement_SPECIFIC_DATA"
         string iaPiidOrUniqueId "IA PIID or unique ID"
         string natureOfAcquisition "Nature of acquisition relationship"
     }
-    
+
     Legacy Procurement_CLIENT_DATA {
         string clientId PK "Legacy Procurement client data identifier"
         string legacy_procurementDataId FK "FK to Legacy Procurement_SPECIFIC_DATA"
         string clientOrganizationName "Client organization name"
     }
-    
+
     Legacy Procurement_OFFICE_ADDRESS {
         string officeAddrId PK "Legacy Procurement office address identifier"
         string clientId FK "FK to Legacy Procurement_CLIENT_DATA"
@@ -268,14 +268,14 @@ erDiagram
         string city "Office city"
         string state "Office state"
     }
-    
+
     Legacy Procurement_AWARD_DATA {
         string awardId PK "Legacy Procurement award data identifier"
         string legacy_procurementDataId FK "FK to Legacy Procurement_SPECIFIC_DATA"
         string typeOfIdc "Type of IDC"
         string whoCanUseIdc "Who can use IDC"
     }
-    
+
     Intake Process_EXTENSION {
         string intake_processExtId PK "EASi extension identifier"
         string extId FK "FK to SYSTEM_EXTENSIONS"
@@ -283,7 +283,7 @@ erDiagram
         string fieldType "Field type"
         string value "Field value"
     }
-    
+
     Intake Process_SPECIFIC_DATA {
         string intake_processDataId PK "EASi specific data identifier"
         string intake_processExtId FK "FK to Intake Process_EXTENSION"
@@ -295,14 +295,14 @@ erDiagram
         string notToExceed "Not to Exceed field"
         string notSeparatelyPriced "Maps to Qualifier at CLIN level"
     }
-    
+
     CONTRACT ||--|| SYSTEM_METADATA : contains
     CONTRACT ||--|| COMMON_ELEMENTS : contains
     CONTRACT ||--o| SYSTEM_EXTENSIONS : "may contain"
-    
+
     SYSTEM_METADATA ||--|{ SYSTEM_CHAIN_ENTRY : "tracks through"
     SYSTEM_CHAIN_ENTRY ||--o| DATA_QUALITY : "has quality metrics"
-    
+
     COMMON_ELEMENTS ||--|| CONTRACT_IDENTIFICATION : includes
     COMMON_ELEMENTS ||--|| ORGANIZATION_INFO : includes
     COMMON_ELEMENTS ||--o| VENDOR_INFO : includes
@@ -312,28 +312,28 @@ erDiagram
     COMMON_ELEMENTS ||--o| CONTRACT_CHARACTERISTICS : includes
     COMMON_ELEMENTS ||--o{ CONTACT : "may have multiple"
     COMMON_ELEMENTS ||--|| STATUS_INFO : includes
-    
+
     ORGANIZATION_INFO ||--|| AGENCY_INFO_CONTRACTING : "has contracting agency"
     ORGANIZATION_INFO ||--o| AGENCY_INFO_FUNDING : "may have funding agency"
     ORGANIZATION_INFO ||--o| AGENCY_INFO_CONTRACTING_DEPT : "may have contracting dept"
     ORGANIZATION_INFO ||--o| AGENCY_INFO_FUNDING_DEPT : "may have funding dept"
-    
+
     SYSTEM_EXTENSIONS ||--o{ Contract Data_EXTENSION : "may have Contract Data extensions"
     SYSTEM_EXTENSIONS ||--o{ Legacy Procurement_EXTENSION : "may have Legacy Procurement extensions"
     SYSTEM_EXTENSIONS ||--o{ Intake Process_EXTENSION : "may have EASi extensions"
-    
+
     Contract Data_EXTENSION ||--o| Contract Data_SPECIFIC_DATA : contains
     Contract Data_SPECIFIC_DATA ||--o{ Contract Data_Legacy ProcurementANCE_TYPE : "may have types"
     Contract Data_SPECIFIC_DATA ||--o| Contract Data_ELIGIBILITY : "may have eligibility"
     Contract Data_SPECIFIC_DATA ||--o| Contract Data_USAGE : "may have usage"
     Contract Data_ELIGIBILITY ||--o{ Contract Data_APPLICANT_BENEFICIARY_TYPE : "has applicants/beneficiaries"
-    
+
     Legacy Procurement_EXTENSION ||--o| Legacy Procurement_SPECIFIC_DATA : contains
     Legacy Procurement_SPECIFIC_DATA ||--o| Legacy Procurement_ACQUISITION_DATA : "may have acquisition data"
     Legacy Procurement_SPECIFIC_DATA ||--o| Legacy Procurement_CLIENT_DATA : "may have client data"
     Legacy Procurement_SPECIFIC_DATA ||--o| Legacy Procurement_AWARD_DATA : "may have award data"
     Legacy Procurement_CLIENT_DATA ||--|| Legacy Procurement_OFFICE_ADDRESS : "has office address"
-    
+
     Intake Process_EXTENSION ||--o| Intake Process_SPECIFIC_DATA : contains
 ```
 
@@ -366,6 +366,7 @@ erDiagram
 ### System Extensions (Typed)
 
 #### Contract Data Extension Tree
+
 - **Contract Data_EXTENSION** → **Contract Data_SPECIFIC_DATA**
   - **Contract Data_Legacy ProcurementANCE_TYPE** - Assistance types with levels
   - **Contract Data_ELIGIBILITY** - Eligibility criteria
@@ -373,6 +374,7 @@ erDiagram
   - **Contract Data_USAGE** - Usage rules and restrictions
 
 #### Legacy Procurement Extension Tree
+
 - **Legacy Procurement_EXTENSION** → **Legacy Procurement_SPECIFIC_DATA**
   - **Legacy Procurement_ACQUISITION_DATA** - IA PIID and acquisition nature
   - **Legacy Procurement_CLIENT_DATA** - Client organization
@@ -380,6 +382,7 @@ erDiagram
   - **Legacy Procurement_AWARD_DATA** - IDC type and usage
 
 #### EASi Extension Tree
+
 - **Intake Process_EXTENSION** → **Intake Process_SPECIFIC_DATA**
   - Business/system owners
   - CLIN-level pricing (unitPrice, unitOfMeasure)
@@ -388,35 +391,47 @@ erDiagram
 ## V2 Design Improvements
 
 ### 1. System Chain Tracking
+
 Track data lineage as it flows through multiple systems:
+
 ```
 Contract Data → Legacy Procurement → EASi → Schema Unification
 ```
+
 Each step records:
+
 - System name
 - System-specific record ID
 - Processing timestamp
 - Transformation rules applied
 
 ### 2. Data Quality Metrics
+
 Per-system quality tracking:
+
 - Completeness score (0-1)
 - Validation errors list
 - Last validation timestamp
 
 ### 3. Typed Extensions
+
 Strongly-typed system-specific data:
+
 - Field name, type, and value
 - Nested specific data structures
 - Type safety for tooling
 
 ### 4. Hierarchical Organization
+
 Clear parent-child relationships:
+
 - Organization → Multiple Agency types
 - Extensions → Specific data → Nested structures
 
 ### 5. Enhanced Status Tracking
+
 Lifecycle management:
+
 - Status enum (draft, published, awarded, completed, cancelled)
 - Published date
 - Last modified date
@@ -425,15 +440,15 @@ Lifecycle management:
 
 ## V1 vs V2 Comparison
 
-| Feature | V1 | V2 |
-|---------|----|----|
-| System Tracking | Source system only | Full system chain |
-| Data Quality | Completeness score | Per-system quality metrics |
-| Extensions | Flat system sections | Typed hierarchical extensions |
-| Organization | Single level | Hierarchical with roles |
-| Contacts | Not structured | Multiple contacts with roles |
-| Status | Basic flags | Enhanced lifecycle tracking |
-| Global IDs | recordId | globalRecordId |
+| Feature         | V1                   | V2                            |
+| --------------- | -------------------- | ----------------------------- |
+| System Tracking | Source system only   | Full system chain             |
+| Data Quality    | Completeness score   | Per-system quality metrics    |
+| Extensions      | Flat system sections | Typed hierarchical extensions |
+| Organization    | Single level         | Hierarchical with roles       |
+| Contacts        | Not structured       | Multiple contacts with roles  |
+| Status          | Basic flags          | Enhanced lifecycle tracking   |
+| Global IDs      | recordId             | globalRecordId                |
 
 ## Related Documentation
 
@@ -444,4 +459,4 @@ Lifecycle management:
 
 ---
 
-*This is the V2 (Draft) schema diagram with enhanced tracking and typed extensions. For the stable V1 schema, see [V1 Entity Relationship Diagram](schema_unification-v1-diagram).*
+_This is the V2 (Draft) schema diagram with enhanced tracking and typed extensions. For the stable V1 schema, see [V1 Entity Relationship Diagram](schema_unification-v1-diagram)._

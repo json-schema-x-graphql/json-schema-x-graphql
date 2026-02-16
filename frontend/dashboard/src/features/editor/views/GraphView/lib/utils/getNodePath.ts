@@ -1,10 +1,14 @@
 import type { NodeData, EdgeData } from "../../../../../../types/graph";
 
-export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string) {
+export function getNodePath(
+  nodes: NodeData[],
+  edges: EdgeData[],
+  nodeId: string,
+) {
   const { getParentsForNodeId } = require("reaflow");
 
   let resolvedPath = "";
-  const parentIds = getParentsForNodeId(nodes, edges, nodeId).map(n => n.id);
+  const parentIds = getParentsForNodeId(nodes, edges, nodeId).map((n) => n.id);
   const path = parentIds.reverse().concat(nodeId);
   const rootArrayElementIds = ["1"];
   const edgesMap = new Map();
@@ -26,7 +30,7 @@ export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string
   }
 
   if (rootArrayElementIds.length > 1) {
-    resolvedPath += `Root[${rootArrayElementIds.findIndex(id => id === path[0])}]`;
+    resolvedPath += `Root[${rootArrayElementIds.findIndex((id) => id === path[0])}]`;
   } else {
     resolvedPath += "{Root}";
   }

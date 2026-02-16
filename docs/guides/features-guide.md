@@ -143,12 +143,12 @@ Add arguments to fields to support filtering, pagination, etc.
       "items": { "$ref": "#/$defs/Post" },
       "x-graphql": {
         "args": {
-          "first": { 
-            "type": "integer", 
+          "first": {
+            "type": "integer",
             "default": 10,
             "description": "Number of items to return"
           },
-          "after": { 
+          "after": {
             "type": "string",
             "x-graphql": { "type": "Cursor" },
             "description": "Pagination cursor"
@@ -364,7 +364,9 @@ Explicitly define Query, Mutation, and Subscription roots.
         "fields": {
           "user": {
             "type": "User",
-            "args": { "id": { "type": "string", "x-graphql": { "type": "ID!" } } }
+            "args": {
+              "id": { "type": "string", "x-graphql": { "type": "ID!" } }
+            }
           }
         }
       },
@@ -427,7 +429,7 @@ Override JSON Schema's `required` behavior for GraphQL nullability.
       "items": { "type": "string" },
       "x-graphql": {
         "nullable": false,
-        "nullableItems": true  // Result: [String]!
+        "nullableItems": true // Result: [String]!
       }
     }
   }

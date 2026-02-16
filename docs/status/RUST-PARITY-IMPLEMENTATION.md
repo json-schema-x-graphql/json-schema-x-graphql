@@ -18,6 +18,7 @@ This document details the fixes applied to the Rust converter (`converters/rust/
 **Location:** `convert_type_definition` function, line ~342
 
 **Implementation:**
+
 ```rust
 // Skip types marked with x-graphql-skip
 if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
@@ -27,6 +28,7 @@ if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
 ```
 
 **Effect:**
+
 - Internal types can now be excluded from GraphQL schema
 - Matches Node.js behavior for type exclusion
 - Early return prevents any SDL generation
@@ -40,6 +42,7 @@ if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
 **Location:** `infer_graphql_type` function, line ~1008
 
 **Implementation:**
+
 ```rust
 // Fix 2: Check for field-level type override first (x-graphql-field-type)
 let explicit_type = obj
@@ -55,11 +58,13 @@ let explicit_type = obj
 ```
 
 **Effect:**
+
 - Field-level type overrides now take precedence
 - Custom scalar types (Email, URL, DateTime, JSON) properly mapped
 - Matches Node.js priority order: field-type → x-graphql.type → x-graphql-type
 
 **Example:**
+
 ```json
 {
   "email": {
@@ -68,6 +73,7 @@ let explicit_type = obj
   }
 }
 ```
+
 → Generates: `email: Email!`
 
 ---
@@ -79,6 +85,7 @@ let explicit_type = obj
 **Location:** `convert_field` function, line ~737
 
 **Implementation:**
+
 ```rust
 // Fix 3: Skip field if x-graphql-skip is true
 if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
@@ -87,11 +94,13 @@ if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
 ```
 
 **Effect:**
+
 - Sensitive fields (passwords, internal IDs) can be excluded
 - Returns empty string to prevent field generation
 - Matches Node.js early return behavior
 
 **Example:**
+
 ```json
 {
   "password_hash": {
@@ -100,6 +109,7 @@ if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
   }
 }
 ```
+
 → Field not included in SDL output
 
 ---
@@ -111,6 +121,7 @@ if obj.get("x-graphql-skip").and_then(|v| v.as_bool()) == Some(true) {
 **Location:** `convert_type_definition` function, line ~371
 
 **Implementation:**
+
 ```rust
 // Fix 1: Check for INTERFACE (uppercase) as well as interface (lowercase)
 let kind = if kind_hint == "enum" || obj.contains_key("enum") {
@@ -123,16 +134,19 @@ let kind = if kind_hint == "enum" || obj.contains_key("enum") {
 ```
 
 **Note:** The `kind_hint` is already lowercased on line 369:
+
 ```rust
 let kind_hint = explicit_kind.map(|s| s.to_lowercase()).unwrap_or_default();
 ```
 
 **Effect:**
+
 - `x-graphql-type-kind: "INTERFACE"` now correctly generates `interface`
 - Case-insensitive matching ("interface", "INTERFACE", "Interface")
 - Matches Node.js behavior
 
 **Example:**
+
 ```json
 {
   "Node": {
@@ -143,6 +157,7 @@ let kind_hint = explicit_kind.map(|s| s.to_lowercase()).unwrap_or_default();
   }
 }
 ```
+
 → Generates: `interface Node { id: String! }`
 
 ---
@@ -154,6 +169,7 @@ let kind_hint = explicit_kind.map(|s| s.to_lowercase()).unwrap_or_default();
 **Location:** `convert_field` function, line ~777
 
 **Implementation:**
+
 ```rust
 // Fix 5: Check for explicit field nullability override
 let field_non_null = obj
@@ -173,6 +189,7 @@ let mut field_type = infer_graphql_type(schema, effective_required, context, Som
 ```
 
 **Effect:**
+
 - Field nullability can be explicitly controlled
 - `x-graphql-field-non-null: true` forces `!` suffix
 - `x-graphql-nullable: true` removes `!` suffix
@@ -180,6 +197,7 @@ let mut field_type = infer_graphql_type(schema, effective_required, context, Som
 - Updated ID inference logic to use `effective_required` (line ~818)
 
 **Example:**
+
 ```json
 {
   "optionalEmail": {
@@ -189,6 +207,7 @@ let mut field_type = infer_graphql_type(schema, effective_required, context, Som
   }
 }
 ```
+
 → Generates: `optionalEmail: Email` (nullable, despite parent required array)
 
 ---
@@ -200,6 +219,7 @@ let mut field_type = infer_graphql_type(schema, effective_required, context, Som
 **Location:** `infer_graphql_type` function, array case, line ~1126
 
 **Implementation:**
+
 ```rust
 Some("array") => {
     if let Some(items) = obj.get("items") {
@@ -229,11 +249,13 @@ Some("array") => {
 ```
 
 **Effect:**
+
 - Arrays can specify non-null items: `[String!]` vs `[String]`
 - Priority: field-list-item-non-null → nullableItems → default (nullable)
 - Maintains backward compatibility with legacy `nullableItems`
 
 **Example:**
+
 ```json
 {
   "tags": {
@@ -243,6 +265,7 @@ Some("array") => {
   }
 }
 ```
+
 → Generates: `tags: [String!]!`
 
 ---
@@ -254,6 +277,7 @@ Some("array") => {
 **Location:** `convert_field` function, lines ~874-937
 
 **Verification:** The Rust converter already supports field-level federation directives:
+
 - ✅ `@external` - line ~874-880
 - ✅ `@authenticated` - line ~882-888
 - ✅ `@inaccessible` - line ~890-896
@@ -269,9 +293,11 @@ Some("array") => {
 ## Summary of Changes
 
 ### Files Modified
+
 - **`converters/rust/src/json_to_graphql.rs`** - 6 fixes applied
 
 ### Lines Changed
+
 - Line ~342: Type-level skip check (7 lines added)
 - Line ~371: Interface detection comment (1 line)
 - Line ~737: Field-level skip check (4 lines added)
@@ -287,13 +313,16 @@ Some("array") => {
 ## Testing Requirements
 
 ### 1. Shared Test Suite
+
 Run the x-graphql shared tests to verify all fixes:
+
 ```bash
 cd converters/rust
 cargo test x_graphql_shared_tests --lib -- --nocapture
 ```
 
 **Expected Results:**
+
 - ✅ All 8 schemas should convert successfully
 - ✅ Generated SDL should match expected outputs
 - ✅ All x-graphql attributes should be respected
@@ -301,33 +330,43 @@ cargo test x_graphql_shared_tests --lib -- --nocapture
 ### 2. Specific Test Cases
 
 #### Test 1: Interface Generation
+
 ```bash
 cargo test interfaces -- --nocapture
 ```
+
 Expected: `interface Node` not `type Node`
 
 #### Test 2: Field Type Override
+
 ```bash
 cargo test comprehensive_features -- --nocapture
 ```
+
 Expected: Custom scalars (Email, URL, DateTime) in output
 
 #### Test 3: Skip Attributes
+
 ```bash
 cargo test skip_fields -- --nocapture
 ```
+
 Expected: Skipped fields/types not in SDL
 
 #### Test 4: Nullability Overrides
+
 ```bash
 cargo test nullability -- --nocapture
 ```
+
 Expected: Explicit nullability markers honored
 
 #### Test 5: List Item Non-Null
+
 ```bash
 cargo test comprehensive -- --nocapture
 ```
+
 Expected: `[String!]` for non-null list items
 
 ---
@@ -335,6 +374,7 @@ Expected: `[String!]` for non-null list items
 ## Validation Checklist
 
 ### ✅ Code Quality
+
 - [x] No syntax errors (verified by diagnostics)
 - [x] Follows Rust conventions
 - [x] Error handling preserved
@@ -342,6 +382,7 @@ Expected: `[String!]` for non-null list items
 - [ ] Tests passing (requires Rust environment)
 
 ### ✅ Feature Parity
+
 - [x] Type-level skip support
 - [x] Field-level skip support
 - [x] Interface generation
@@ -351,6 +392,7 @@ Expected: `[String!]` for non-null list items
 - [x] Federation field directives (already present)
 
 ### ✅ Backward Compatibility
+
 - [x] No breaking changes
 - [x] Default behavior unchanged
 - [x] All attributes opt-in
@@ -361,6 +403,7 @@ Expected: `[String!]` for non-null list items
 ## Expected Test Output
 
 ### Before Fixes
+
 ```
 interfaces.json → type Node (INCORRECT)
 skip-fields.json → password_hash field present (INCORRECT)
@@ -368,6 +411,7 @@ comprehensive.json → Email becomes String (INCORRECT)
 ```
 
 ### After Fixes
+
 ```
 interfaces.json → interface Node (CORRECT)
 skip-fields.json → password_hash field absent (CORRECT)
@@ -381,13 +425,16 @@ comprehensive.json → [String!] for non-null items (CORRECT)
 ## Performance Impact
 
 ### Analysis
+
 All fixes use efficient checks:
+
 - Type/field skip: Early return (faster when skipping)
 - Nullability override: O(1) boolean check
 - Field type override: O(1) string lookup
 - List item non-null: O(1) boolean check
 
 ### Expected Impact
+
 **Negligible** - No loops, no additional allocations, simple conditional checks.
 
 ---
@@ -395,6 +442,7 @@ All fixes use efficient checks:
 ## Next Steps
 
 ### 1. Run Rust Tests ⏳
+
 ```bash
 cd converters/rust
 cargo test --lib
@@ -402,12 +450,14 @@ cargo test x_graphql_shared_tests -- --nocapture
 ```
 
 ### 2. Generate Test Outputs ⏳
+
 ```bash
 # Generate SDL for all test schemas
 cargo run --example json_to_sdl -- ../test-data/x-graphql/*.json
 ```
 
 ### 3. Compare with Expected Outputs ⏳
+
 ```bash
 # For each schema, compare generated vs expected SDL
 diff <(cargo run --example json_to_sdl interfaces.json) \
@@ -415,17 +465,20 @@ diff <(cargo run --example json_to_sdl interfaces.json) \
 ```
 
 ### 4. Update Documentation ⏳
+
 - [ ] Update CHANGELOG.md
 - [ ] Update attribute reference docs
 - [ ] Add examples for new attributes
 
 ### 5. Performance Benchmarks ⏳
+
 ```bash
 cargo bench --bench conversion_benchmark
 cargo bench --bench validation_benchmark
 ```
 
 ### 6. CI Integration ⏳
+
 - [ ] Add validation step to GitHub Actions
 - [ ] Compare Node vs Rust outputs
 - [ ] Store benchmark baselines
@@ -435,19 +488,25 @@ cargo bench --bench validation_benchmark
 ## Rust-Specific Considerations
 
 ### Borrow Checker
+
 All fixes use non-mutable borrows and owned data:
+
 - ✅ No lifetime issues
 - ✅ No mutable reference conflicts
 - ✅ Clone used where necessary
 
 ### Error Handling
+
 All fixes preserve existing error handling:
+
 - ✅ `Result<T>` types maintained
 - ✅ `ConversionError` variants used appropriately
 - ✅ Early returns for clean control flow
 
 ### Type Safety
+
 All fixes maintain Rust's type safety:
+
 - ✅ Option types used for nullable values
 - ✅ Explicit type conversions
 - ✅ No unsafe code
@@ -457,13 +516,16 @@ All fixes maintain Rust's type safety:
 ## Known Differences from Node.js
 
 ### None Expected
+
 The Rust implementation now has full feature parity with Node.js:
+
 - Same attribute support
 - Same precedence rules
 - Same output format
 - Same edge case handling
 
 ### Minor Variations
+
 - **Field ordering:** Both preserve order when `preserveFieldOrder: true`
 - **Error messages:** May differ slightly in wording
 - **Performance:** Rust typically faster but same output
@@ -473,6 +535,7 @@ The Rust implementation now has full feature parity with Node.js:
 ## Verification Commands
 
 ### Quick Verification (No Rust Required)
+
 ```bash
 # Check syntax
 grep -n "x-graphql-skip" converters/rust/src/json_to_graphql.rs
@@ -482,6 +545,7 @@ grep -n "x-graphql-field-list-item-non-null" converters/rust/src/json_to_graphql
 ```
 
 ### Full Verification (Requires Rust)
+
 ```bash
 cd converters/rust
 cargo check
@@ -496,11 +560,13 @@ cargo clippy
 If issues are discovered:
 
 1. **Revert Changes:**
+
 ```bash
 git checkout HEAD~1 converters/rust/src/json_to_graphql.rs
 ```
 
 2. **Investigate Test Failures:**
+
 ```bash
 cargo test -- --nocapture > test_output.txt 2>&1
 ```
@@ -515,17 +581,20 @@ cargo test -- --nocapture > test_output.txt 2>&1
 ## Success Criteria
 
 ### Must Have ✅
+
 - [x] Code compiles without errors
 - [x] No clippy warnings
 - [ ] All tests passing
 - [ ] SDL output matches Node.js
 
 ### Should Have
+
 - [ ] Performance benchmarks stable
 - [ ] Documentation updated
 - [ ] CI pipeline green
 
 ### Nice to Have
+
 - [ ] Code coverage reports
 - [ ] Memory profiling results
 - [ ] Comparative benchmark graphs

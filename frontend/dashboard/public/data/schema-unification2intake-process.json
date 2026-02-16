@@ -9,7 +9,10 @@
         "systemName": "Logistics Mgmt",
         "recordId": "Logistics Mgmt-SBA-001-2024",
         "processedDate": "2024-01-10T09:00:00Z",
-        "transformationRules": ["logistics_mgmt_to_legacy_procurement_mapping", "sba_client_defaults"],
+        "transformationRules": [
+          "logistics_mgmt_to_legacy_procurement_mapping",
+          "sba_client_defaults"
+        ],
         "dataQuality": {
           "completenessScore": 0.72,
           "validationErrors": ["Missing IGE - defaulted to 1.0"],
@@ -20,7 +23,10 @@
         "systemName": "Legacy Procurement",
         "recordId": "Legacy Procurement-GSA-001-2024",
         "processedDate": "2024-01-12T14:30:00Z",
-        "transformationRules": ["legacy_procurement_template_processing", "ucf_simplified_rules"],
+        "transformationRules": [
+          "legacy_procurement_template_processing",
+          "ucf_simplified_rules"
+        ],
         "dataQuality": {
           "completenessScore": 0.85,
           "validationErrors": [],
@@ -31,7 +37,10 @@
         "systemName": "Intake Process",
         "recordId": "Intake Process-CLIN-001-2024",
         "processedDate": "2024-01-15T16:20:00Z",
-        "transformationRules": ["legacy_procurement_to_intake_process_clin_mapping", "contract_data_field_preparation"],
+        "transformationRules": [
+          "legacy_procurement_to_intake_process_clin_mapping",
+          "contract_data_field_preparation"
+        ],
         "dataQuality": {
           "completenessScore": 0.95,
           "validationErrors": [],
@@ -55,7 +64,7 @@
         "name": "organization.contractingAgencyName"
       },
       "contractingDepartment": {
-        "code": "organization.contractingDepartmentCode", 
+        "code": "organization.contractingDepartmentCode",
         "name": "organization.contractingDepartmentName"
       },
       "fundingAgency": {
@@ -73,7 +82,7 @@
     },
     "placeOfPerformance": {
       "streetAddress": "placeOfPerformance.streetAddress",
-      "city": "placeOfPerformance.city", 
+      "city": "placeOfPerformance.city",
       "county": "placeOfPerformance.county",
       "state": "placeOfPerformance.state",
       "zip": "placeOfPerformance.zip",
@@ -82,7 +91,7 @@
     },
     "financialInfo": {
       "totalContractValue": "financial.totalValue",
-      "baseAndAllOptionsValue": "financial.baseAndAllOptions", 
+      "baseAndAllOptionsValue": "financial.baseAndAllOptions",
       "independentGovernmentEstimate": "financial.ige",
       "amountSpentOnProduct": "clin.totalAmount",
       "contractFiscalYear": "financial.fiscalYear"
@@ -90,7 +99,7 @@
     "businessClassification": {
       "naicsCode": "naicsCode",
       "naicsDescription": "naicsDescription",
-      "pscCode": "pscCode", 
+      "pscCode": "pscCode",
       "pscDescription": "pscDescription",
       "categoryOfProduct": "categoryOfProduct",
       "typeOfProduct": "typeOfProduct",
@@ -101,7 +110,7 @@
     "contractCharacteristics": {
       "emergencyAcquisition": "emergencyAcquisition",
       "governmentFurnishedProperty": "governmentFurnishedProperty",
-      "includesCui": "includesCui", 
+      "includesCui": "includesCui",
       "recurringService": "recurringService",
       "recurringUtilities": "recurringUtilities"
     },
@@ -110,7 +119,7 @@
         "name": "contacts.name",
         "title": "contacts.title",
         "email": "contacts.email",
-        "phone": "contacts.phone", 
+        "phone": "contacts.phone",
         "role": "contacts.role"
       }
     ],
@@ -133,8 +142,8 @@
         "value": "clin.unitPrice",
         "intake_processSpecific": {
           "businessOwner": "Margaret Quinn",
-          "systemOwner": "Eric Matyko", 
-          "unitPrice": 125.50,
+          "systemOwner": "Eric Matyko",
+          "unitPrice": 125.5,
           "unitOfMeasure": "Hour",
           "optional": "Base Period",
           "notToExceed": "250000.00",

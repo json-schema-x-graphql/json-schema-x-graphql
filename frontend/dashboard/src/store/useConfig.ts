@@ -24,23 +24,26 @@ export interface ConfigActions {
 
 const useConfig = create(
   persist<typeof initialStates & ConfigActions>(
-    set => ({
+    (set) => ({
       ...initialStates,
-      toggleRulers: rulersEnabled => set({ rulersEnabled }),
-      toggleGestures: gesturesEnabled => set({ gesturesEnabled }),
-      toggleLiveTransform: liveTransformEnabled => set({ liveTransformEnabled }),
-      toggleDarkMode: darkmodeEnabled => set({ darkmodeEnabled }),
-      toggleCollapseButton: collapseButtonVisible => set({ collapseButtonVisible }),
-      toggleChildrenCount: childrenCountVisible => set({ childrenCountVisible }),
-      toggleImagePreview: imagePreviewEnabled => {
+      toggleRulers: (rulersEnabled) => set({ rulersEnabled }),
+      toggleGestures: (gesturesEnabled) => set({ gesturesEnabled }),
+      toggleLiveTransform: (liveTransformEnabled) =>
+        set({ liveTransformEnabled }),
+      toggleDarkMode: (darkmodeEnabled) => set({ darkmodeEnabled }),
+      toggleCollapseButton: (collapseButtonVisible) =>
+        set({ collapseButtonVisible }),
+      toggleChildrenCount: (childrenCountVisible) =>
+        set({ childrenCountVisible }),
+      toggleImagePreview: (imagePreviewEnabled) => {
         set({ imagePreviewEnabled });
         useGraph.getState().setGraph();
       },
     }),
     {
       name: "config",
-    }
-  )
+    },
+  ),
 );
 
 export default useConfig;

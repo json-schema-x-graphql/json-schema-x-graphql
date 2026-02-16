@@ -284,7 +284,7 @@ import { validateFiles } from '@gsa-tts/schema-unification-project-schemas/valid
 
 // Generate GraphQL SDL from JSON Schema
 const outputPath = await generateFromJSONSchema({
-  schemaPath: './schemas/schema_unification.schema.json'
+schemaPath: './schemas/schema_unification.schema.json'
 });
 
 // Validate schemas
@@ -319,22 +319,17 @@ Create `.github/workflows/test.yml`:
 name: Test
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+push:
+branches: [main]
+pull_request:
+branches: [main]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: npm test
-      - run: npm run validate:all
+test:
+runs-on: ubuntu-latest
+steps: - uses: actions/checkout@v4 - uses: actions/setup-node@v4
+with:
+node-version: '20' - run: npm ci - run: npm test - run: npm run validate:all
 \`\`\`
 
 #### Task 10: Initial Commit and Push
@@ -376,11 +371,11 @@ Add submodule scripts:
 
 \`\`\`json
 {
-  "scripts": {
-    "submodule:update": "git submodule update --remote schemas-submodule",
-    "submodule:test": "cd schemas-submodule && npm test",
-    "generate:schema:interop": "cd schemas-submodule && npm run generate"
-  }
+"scripts": {
+"submodule:update": "git submodule update --remote schemas-submodule",
+"submodule:test": "cd schemas-submodule && npm test",
+"generate:schema:interop": "cd schemas-submodule && npm run generate"
+}
 }
 \`\`\`
 
@@ -392,24 +387,19 @@ Update `.github/workflows/validate-schemas.yml`:
 name: Validate Schemas
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+push:
+branches: [main]
+pull_request:
+branches: [main]
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm ci
-      - run: cd schemas-submodule && npm ci
-      - run: cd schemas-submodule && npm run validate:all
+validate:
+runs-on: ubuntu-latest
+steps: - uses: actions/checkout@v4
+with:
+submodules: recursive - uses: actions/setup-node@v4
+with:
+node-version: '20' - run: npm ci - run: cd schemas-submodule && npm ci - run: cd schemas-submodule && npm run validate:all
 \`\`\`
 
 #### Task 5: Create Integration Documentation
@@ -417,6 +407,7 @@ jobs:
 Create `docs/schema-submodule-guide.md`:
 
 \`\`\`markdown
+
 # Schema Submodule Guide
 
 ## Working with the Submodule
@@ -430,10 +421,13 @@ git clone --recurse-submodules https://github.com/GSA-TTS/enterprise-schema-unif
 ### Updating the Submodule
 
 \`\`\`bash
+
 # Update to latest version
+
 pnpm run submodule:update
 
 # Or manually
+
 git submodule update --remote schemas-submodule
 \`\`\`
 
@@ -449,10 +443,13 @@ git submodule update --remote schemas-submodule
 ### Using Schemas in Other Projects
 
 \`\`\`bash
+
 # Add as npm dependency
+
 npm install @gsa-tts/schema-unification-project-schemas
 
 # Or add as git submodule
+
 git submodule add https://github.com/GSA-TTS/schema-unification-project-schemas.git schemas
 \`\`\`
 \`\`\`
@@ -470,17 +467,19 @@ git submodule add https://github.com/GSA-TTS/schema-unification-project-schemas.
 Create team documentation in main repository's README:
 
 \`\`\`markdown
+
 ## Schema Development
 
 Schemas are maintained in a separate repository: [schema-unification-project-schemas](https://github.com/GSA-TTS/schema-unification-project-schemas)
 
 To update schemas:
+
 1. Clone the schemas repository
 2. Make your changes
 3. Run tests: `npm test`
 4. Submit PR to schemas repository
 5. After merge, update submodule reference in this repository
-\`\`\`
+   \`\`\`
 
 ---
 
@@ -510,12 +509,12 @@ To update schemas:
 
 ## Risks and Mitigations
 
-| Risk | Mitigation |
-|------|------------|
+| Risk                          | Mitigation                                                    |
+| ----------------------------- | ------------------------------------------------------------- |
 | Breaking changes in submodule | Pin to specific commits in main repo; use semantic versioning |
-| Sync issues between repos | Automate submodule updates in CI; document update process |
-| Circular dependencies | Keep submodule focused on schemas only; no application code |
-| Learning curve for team | Comprehensive documentation; team training session |
+| Sync issues between repos     | Automate submodule updates in CI; document update process     |
+| Circular dependencies         | Keep submodule focused on schemas only; no application code   |
+| Learning curve for team       | Comprehensive documentation; team training session            |
 
 ---
 
@@ -537,3 +536,4 @@ To update schemas:
 4. Coordinate with stakeholders for testing
 
 **Questions?** Contact the development team.
+```

@@ -1,5 +1,5 @@
 // Jest setup file for DOM testing
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock localStorage
 const localStorageMock = {
@@ -12,11 +12,10 @@ const localStorageMock = {
 global.localStorage = localStorageMock;
 
 // Mock URL.createObjectURL
-global.URL.createObjectURL = jest.fn(() => 'mock-url');
+global.URL.createObjectURL = jest.fn(() => "mock-url");
 global.URL.revokeObjectURL = jest.fn();
 
 // Reset mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();
 });
-

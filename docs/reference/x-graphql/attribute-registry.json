@@ -24,7 +24,14 @@
       "name": "x-graphql-type-kind",
       "scope": ["type"],
       "type": "string",
-      "enum": ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"],
+      "enum": [
+        "OBJECT",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "INPUT_OBJECT",
+        "SCALAR"
+      ],
       "default": "OBJECT",
       "description": "Specifies the GraphQL kind to generate for this schema (e.g. OBJECT, INTERFACE). Useful when the schema shape alone is ambiguous.",
       "example": {
@@ -216,7 +223,10 @@
             "email": {
               "type": "string",
               "x-graphql-field-directives": [
-                { "name": "deprecated", "args": { "reason": "Use 'contactEmail'" } }
+                {
+                  "name": "deprecated",
+                  "args": { "reason": "Use 'contactEmail'" }
+                }
               ]
             }
           }
@@ -343,7 +353,9 @@
       "example": {
         "jsonSchema": {
           "properties": {
-            "fullName": { "x-graphql-federation-requires": ["firstName", "lastName"] }
+            "fullName": {
+              "x-graphql-federation-requires": ["firstName", "lastName"]
+            }
           }
         }
       },
@@ -372,7 +384,10 @@
       "example": {
         "jsonSchema": {
           "properties": {
-            "ownerId": { "type": "string", "x-graphql-federation-external": true }
+            "ownerId": {
+              "type": "string",
+              "x-graphql-federation-external": true
+            }
           }
         }
       },
@@ -386,7 +401,10 @@
       "example": {
         "jsonSchema": {
           "properties": {
-            "price": { "type": "number", "x-graphql-federation-override-from": "legacy-subgraph" }
+            "price": {
+              "type": "number",
+              "x-graphql-federation-override-from": "legacy-subgraph"
+            }
           }
         }
       },
@@ -427,7 +445,10 @@
       "description": "Type-level map of original property names to GraphQL names for multiple fields.",
       "example": {
         "jsonSchema": {
-          "x-graphql-field-rename-map": { "first_name": "firstName", "last_name": "lastName" }
+          "x-graphql-field-rename-map": {
+            "first_name": "firstName",
+            "last_name": "lastName"
+          }
         }
       },
       "recommendedUsage": "Use to centralize per-type field renames instead of sprinkling `x-graphql-field-name` on each property."
@@ -495,7 +516,10 @@
       "example": {
         "jsonSchema": {
           "properties": {
-            "id": { "type": "string", "x-graphql-metadata": { "deprecatedIn": "v2" } }
+            "id": {
+              "type": "string",
+              "x-graphql-metadata": { "deprecatedIn": "v2" }
+            }
           }
         }
       },
@@ -537,7 +561,15 @@
   ],
   "statistics": {
     "totalAttributes": 40,
-    "coreCategories": ["Type-Level", "Field-Level", "Federation", "Scalars", "Directives", "Operations", "Metadata"]
+    "coreCategories": [
+      "Type-Level",
+      "Field-Level",
+      "Federation",
+      "Scalars",
+      "Directives",
+      "Operations",
+      "Metadata"
+    ]
   },
   "recommendations": {
     "skipAttributeGuidance": {

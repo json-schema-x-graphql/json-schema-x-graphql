@@ -29,17 +29,17 @@ use regex::Regex;
 pub fn camel_to_snake(s: &str) -> String {
     let re1 = Regex::new(r"([a-z0-9])([A-Z])").unwrap();
     let re2 = Regex::new(r"([A-Z])([A-Z][a-z])").unwrap();
-    
+
     let temp = re1.replace_all(s, "${1}_${2}");
     let result = re2.replace_all(&temp, "${1}_${2}");
-    
+
     result.to_lowercase()
 }
 
 /// Convert snake_case to camelCase
 pub fn snake_to_camel(s: &str) -> String {
     let re = Regex::new(r"_([a-zA-Z0-9])").unwrap();
-    
+
     re.replace_all(s, |caps: &regex::Captures| {
         caps[1].to_uppercase()
     }).to_string()
@@ -66,6 +66,7 @@ mod tests {
 ```
 
 **Add to Cargo.toml:**
+
 ```toml
 [dependencies]
 regex = "1.10"
@@ -321,7 +322,7 @@ for (def_name, def_schema) in defs_obj {
         if !should_include_type(type_name, context.options) {
             continue;  // Skip filtered types
         }
-        
+
         let type_def = convert_type_definition(def_schema, type_name, &mut context)?;
         output.push_str(&type_def);
     }
@@ -346,8 +347,8 @@ for (def_name, def_schema) in defs_obj {
  */
 export function camelToSnake(str: string): string {
   return str
-    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
-    .replace(/([A-Z])([A-Z][a-z])/g, '$1_$2')
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
     .toLowerCase();
 }
 
@@ -363,16 +364,16 @@ export function snakeToCamel(str: string): string {
  */
 export function convertObjectKeys(
   obj: any,
-  converter: (key: string) => string
+  converter: (key: string) => string,
 ): any {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertObjectKeys(item, converter));
-  } else if (obj !== null && typeof obj === 'object') {
+  } else if (obj !== null && typeof obj === "object") {
     return Object.fromEntries(
       Object.entries(obj).map(([key, value]) => [
         converter(key),
         convertObjectKeys(value, converter),
-      ])
+      ]),
     );
   }
   return obj;
@@ -383,10 +384,11 @@ export function convertObjectKeys(
  */
 export function convertGraphQLFields(
   sdl: string,
-  converter: (field: string) => string
+  converter: (field: string) => string,
 ): string {
-  return sdl.replace(/(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g, (match, ws, field) =>
-    `${ws}${converter(field)}:`
+  return sdl.replace(
+    /(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g,
+    (match, ws, field) => `${ws}${converter(field)}:`,
   );
 }
 ```
@@ -398,8 +400,9 @@ export function convertGraphQLFields(
 **File:** `converters/node/src/json-to-graphql.ts`
 
 **Add to imports:**
+
 ```typescript
-import { camelToSnake, snakeToCamel } from './case-conversion.js';
+import { camelToSnake, snakeToCamel } from "./case-conversion.js";
 ```
 
 **Update JsonSchemaToGraphQL class:**
@@ -418,9 +421,9 @@ export class JsonSchemaToGraphQL {
   private resolveRef(
     schema: JsonSchema,
     refPath: string,
-    visited: Set<string> = new Set()
+    visited: Set<string> = new Set(),
   ): JsonSchema | null {
-    if (!refPath.startsWith('#')) {
+    if (!refPath.startsWith("#")) {
       // External references not supported yet
       return null;
     }
@@ -430,24 +433,24 @@ export class JsonSchemaToGraphQL {
       throw new ConversionError(
         `Circular $ref detected: ${refPath}`,
         undefined,
-        'CIRCULAR_REF'
+        "CIRCULAR_REF",
       );
     }
     visited.add(refPath);
 
-    const path = refPath.replace(/^#\//, '');
+    const path = refPath.replace(/^#\//, "");
     if (!path) {
       return schema; // Reference to root
     }
 
-    const parts = path.split('/');
+    const parts = path.split("/");
     let current: any = schema;
 
     for (const part of parts) {
       if (!part) continue;
 
       // If current node has $ref, resolve it first (recursive)
-      if (current.$ref && typeof current.$ref === 'string') {
+      if (current.$ref && typeof current.$ref === "string") {
         const resolved = this.resolveRef(schema, current.$ref, visited);
         if (resolved) {
           current = resolved;
@@ -460,7 +463,7 @@ export class JsonSchemaToGraphQL {
         throw new ConversionError(
           `Failed to resolve $ref: ${refPath} (missing part: ${part})`,
           undefined,
-          'INVALID_REF'
+          "INVALID_REF",
         );
       }
     }
@@ -472,7 +475,7 @@ export class JsonSchemaToGraphQL {
    * Try to get a property with case conversion fallbacks
    */
   private tryGetProperty(obj: any, key: string): any {
-    if (!obj || typeof obj !== 'object') {
+    if (!obj || typeof obj !== "object") {
       return null;
     }
 
@@ -521,7 +524,7 @@ public convert(schema: JsonSchema): string {
   if (defs && typeof defs === 'object') {
     for (const [defName, defSchema] of Object.entries(defs)) {
       const typeName = this.getTypeName(defSchema as JsonSchema);
-      
+
       if (typeName && !this.shouldExcludeType(typeName)) {
         const typeDef = this.convertTypeDefinition(
           defSchema as JsonSchema,
@@ -578,7 +581,7 @@ private getTypeName(schema: JsonSchema): string | null {
 interface ConversionContext {
   schema: JsonSchema;
   processedTypes: Set<string>;
-  building: Set<string>;  // ← Add this
+  building: Set<string>; // ← Add this
 }
 ```
 
@@ -638,25 +641,25 @@ export interface ConversionOptions {
   validate?: boolean;
   includeDescriptions?: boolean;
   prettyPrint?: boolean;
-  excludeTypes?: string[];           // ← Add
-  excludeTypeSuffixes?: string[];    // ← Add
-  includeOperationalTypes?: boolean;  // ← Add
+  excludeTypes?: string[]; // ← Add
+  excludeTypeSuffixes?: string[]; // ← Add
+  includeOperationalTypes?: boolean; // ← Add
 }
 
 export const DEFAULT_OPTIONS: Required<ConversionOptions> = {
   validate: false,
   includeDescriptions: true,
   prettyPrint: true,
-  excludeTypes: ['Query', 'Mutation', 'Subscription', 'PageInfo'],
+  excludeTypes: ["Query", "Mutation", "Subscription", "PageInfo"],
   excludeTypeSuffixes: [
-    'Filter',
-    'Sort',
-    'SortInput',
-    'FilterInput',
-    'Connection',
-    'Edge',
-    'Payload',
-    'Args',
+    "Filter",
+    "Sort",
+    "SortInput",
+    "FilterInput",
+    "Connection",
+    "Edge",
+    "Payload",
+    "Args",
   ],
   includeOperationalTypes: false,
 };
@@ -705,81 +708,82 @@ private shouldExcludeType(typeName: string): boolean {
 ### 1. $ref Resolution Tests
 
 ```typescript
-describe('$ref Resolution', () => {
-  it('should resolve simple internal $ref', () => {
+describe("$ref Resolution", () => {
+  it("should resolve simple internal $ref", () => {
     const schema = {
-      type: 'object',
-      'x-graphql-type-name': 'User',
+      type: "object",
+      "x-graphql-type-name": "User",
       properties: {
-        address: { $ref: '#/$defs/Address' }
+        address: { $ref: "#/$defs/Address" },
       },
       $defs: {
         Address: {
-          type: 'object',
-          'x-graphql-type-name': 'Address',
+          type: "object",
+          "x-graphql-type-name": "Address",
           properties: {
-            street: { type: 'string' }
-          }
-        }
-      }
+            street: { type: "string" },
+          },
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('type User');
-    expect(result).toContain('type Address');
-    expect(result).toContain('address: Address');
+    expect(result).toContain("type User");
+    expect(result).toContain("type Address");
+    expect(result).toContain("address: Address");
   });
 
-  it('should resolve nested $refs', () => {
+  it("should resolve nested $refs", () => {
     const schema = {
       $defs: {
-        A: { $ref: '#/$defs/B' },
-        B: { $ref: '#/$defs/C' },
+        A: { $ref: "#/$defs/B" },
+        B: { $ref: "#/$defs/C" },
         C: {
-          type: 'object',
-          'x-graphql-type-name': 'C',
-          properties: { value: { type: 'string' } }
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "C",
+          properties: { value: { type: "string" } },
+        },
+      },
     };
 
     // Should follow A → B → C
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('type C');
+    expect(result).toContain("type C");
   });
 
-  it('should handle $ref with case mismatch', () => {
+  it("should handle $ref with case mismatch", () => {
     const schema = {
-      type: 'object',
-      'x-graphql-type-name': 'User',
+      type: "object",
+      "x-graphql-type-name": "User",
       properties: {
         // Ref uses snake_case
-        user_info: { $ref: '#/$defs/UserInfo' }
+        user_info: { $ref: "#/$defs/UserInfo" },
       },
       $defs: {
         // Def is camelCase
         userInfo: {
-          type: 'object',
-          'x-graphql-type-name': 'UserInfo',
-          properties: { name: { type: 'string' } }
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "UserInfo",
+          properties: { name: { type: "string" } },
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('userInfo: UserInfo');
+    expect(result).toContain("userInfo: UserInfo");
   });
 
-  it('should error on circular $ref', () => {
+  it("should error on circular $ref", () => {
     const schema = {
       $defs: {
-        A: { $ref: '#/$defs/B' },
-        B: { $ref: '#/$defs/A' }
-      }
+        A: { $ref: "#/$defs/B" },
+        B: { $ref: "#/$defs/A" },
+      },
     };
 
-    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema)))
-      .toThrow(/Circular.*ref/i);
+    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(
+      /Circular.*ref/i,
+    );
   });
 });
 ```
@@ -787,45 +791,46 @@ describe('$ref Resolution', () => {
 ### 2. Circular Reference Tests
 
 ```typescript
-describe('Circular Reference Protection', () => {
-  it('should detect self-referencing type', () => {
+describe("Circular Reference Protection", () => {
+  it("should detect self-referencing type", () => {
     const schema = {
-      type: 'object',
-      'x-graphql-type-name': 'Node',
+      type: "object",
+      "x-graphql-type-name": "Node",
       properties: {
-        next: { $ref: '#' }
-      }
+        next: { $ref: "#" },
+      },
     };
 
-    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema)))
-      .toThrow(/Circular reference/i);
+    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(
+      /Circular reference/i,
+    );
   });
 
-  it('should detect mutual references', () => {
+  it("should detect mutual references", () => {
     const schema = {
       $defs: {
         A: {
-          type: 'object',
-          'x-graphql-type-name': 'A',
+          type: "object",
+          "x-graphql-type-name": "A",
           properties: {
-            b: { $ref: '#/$defs/B' }
-          }
+            b: { $ref: "#/$defs/B" },
+          },
         },
         B: {
-          type: 'object',
-          'x-graphql-type-name': 'B',
+          type: "object",
+          "x-graphql-type-name": "B",
           properties: {
-            a: { $ref: '#/$defs/A' }
-          }
-        }
-      }
+            a: { $ref: "#/$defs/A" },
+          },
+        },
+      },
     };
 
     // This is actually valid - types can reference each other
     // Only the building process itself should not be circular
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('type A');
-    expect(result).toContain('type B');
+    expect(result).toContain("type A");
+    expect(result).toContain("type B");
   });
 });
 ```
@@ -833,62 +838,62 @@ describe('Circular Reference Protection', () => {
 ### 3. Type Filtering Tests
 
 ```typescript
-describe('Type Filtering', () => {
-  it('should exclude Query/Mutation by default', () => {
+describe("Type Filtering", () => {
+  it("should exclude Query/Mutation by default", () => {
     const schema = {
       $defs: {
         Query: {
-          type: 'object',
-          'x-graphql-type-name': 'Query',
-          properties: { hello: { type: 'string' } }
+          type: "object",
+          "x-graphql-type-name": "Query",
+          properties: { hello: { type: "string" } },
         },
         User: {
-          type: 'object',
-          'x-graphql-type-name': 'User',
-          properties: { id: { type: 'string' } }
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "User",
+          properties: { id: { type: "string" } },
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).not.toContain('type Query');
-    expect(result).toContain('type User');
+    expect(result).not.toContain("type Query");
+    expect(result).toContain("type User");
   });
 
-  it('should exclude types with Connection suffix', () => {
+  it("should exclude types with Connection suffix", () => {
     const schema = {
       $defs: {
         UserConnection: {
-          type: 'object',
-          'x-graphql-type-name': 'UserConnection',
+          type: "object",
+          "x-graphql-type-name": "UserConnection",
         },
         User: {
-          type: 'object',
-          'x-graphql-type-name': 'User',
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "User",
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).not.toContain('UserConnection');
-    expect(result).toContain('type User');
+    expect(result).not.toContain("UserConnection");
+    expect(result).toContain("type User");
   });
 
-  it('should include operational types when configured', () => {
+  it("should include operational types when configured", () => {
     const schema = {
       $defs: {
         Query: {
-          type: 'object',
-          'x-graphql-type-name': 'Query',
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "Query",
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema), {
-      includeOperationalTypes: true
+      includeOperationalTypes: true,
     });
-    
-    expect(result).toContain('type Query');
+
+    expect(result).toContain("type Query");
   });
 });
 ```
@@ -896,47 +901,48 @@ describe('Type Filtering', () => {
 ### 4. $defs Extraction Tests
 
 ```typescript
-describe('$defs Extraction', () => {
-  it('should extract all types from $defs', () => {
+describe("$defs Extraction", () => {
+  it("should extract all types from $defs", () => {
     const schema = {
       $defs: {
         User: {
-          type: 'object',
-          'x-graphql-type-name': 'User',
-          properties: { id: { type: 'string' } }
+          type: "object",
+          "x-graphql-type-name": "User",
+          properties: { id: { type: "string" } },
         },
         Post: {
-          type: 'object',
-          'x-graphql-type-name': 'Post',
-          properties: { title: { type: 'string' } }
+          type: "object",
+          "x-graphql-type-name": "Post",
+          properties: { title: { type: "string" } },
         },
         Comment: {
-          type: 'object',
-          'x-graphql-type-name': 'Comment',
-          properties: { text: { type: 'string' } }
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "Comment",
+          properties: { text: { type: "string" } },
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('type User');
-    expect(result).toContain('type Post');
-    expect(result).toContain('type Comment');
+    expect(result).toContain("type User");
+    expect(result).toContain("type Post");
+    expect(result).toContain("type Comment");
   });
 
-  it('should support both $defs and definitions', () => {
+  it("should support both $defs and definitions", () => {
     const schema = {
-      definitions: {  // Old JSON Schema draft
+      definitions: {
+        // Old JSON Schema draft
         User: {
-          type: 'object',
-          'x-graphql-type-name': 'User',
-          properties: { id: { type: 'string' } }
-        }
-      }
+          type: "object",
+          "x-graphql-type-name": "User",
+          properties: { id: { type: "string" } },
+        },
+      },
     };
 
     const result = jsonSchemaToGraphQL(JSON.stringify(schema));
-    expect(result).toContain('type User');
+    expect(result).toContain("type User");
   });
 });
 ```
@@ -957,48 +963,47 @@ module.exports = {
   prettyPrint: true,
 
   // Type filtering
-  excludeTypes: [
-    'Query',
-    'Mutation',
-    'Subscription',
-    'PageInfo',
-  ],
-  
+  excludeTypes: ["Query", "Mutation", "Subscription", "PageInfo"],
+
   excludeTypeSuffixes: [
-    'Filter',
-    'Sort',
-    'Connection',
-    'Edge',
-    'Input',
-    'Args',
-    'Payload',
+    "Filter",
+    "Sort",
+    "Connection",
+    "Edge",
+    "Input",
+    "Args",
+    "Payload",
   ],
 
   includeOperationalTypes: false,
 
   // Custom scalars
   customScalars: [
-    { name: 'Date', jsonSchemaType: 'string', jsonSchemaFormat: 'date' },
-    { name: 'DateTime', jsonSchemaType: 'string', jsonSchemaFormat: 'date-time' },
-    { name: 'Decimal', jsonSchemaType: 'number' },
-    { name: 'JSON', jsonSchemaType: 'object' },
+    { name: "Date", jsonSchemaType: "string", jsonSchemaFormat: "date" },
+    {
+      name: "DateTime",
+      jsonSchemaType: "string",
+      jsonSchemaFormat: "date-time",
+    },
+    { name: "Decimal", jsonSchemaType: "number" },
+    { name: "JSON", jsonSchemaType: "object" },
   ],
 
   // Advanced: Pointer-based field mappings (optional)
   typeConfigs: [
     {
-      name: 'Contract',
-      pointer: '/',
+      name: "Contract",
+      pointer: "/",
       fields: [
         {
-          name: 'id',
-          pointer: '/systemMetadata/globalRecordId',
-          graphqlType: 'ID!',
+          name: "id",
+          pointer: "/systemMetadata/globalRecordId",
+          graphqlType: "ID!",
         },
         {
-          name: 'lastModified',
-          pointer: '/systemMetadata/lastModified',
-          graphqlType: 'DateTime',
+          name: "lastModified",
+          pointer: "/systemMetadata/lastModified",
+          graphqlType: "DateTime",
         },
       ],
     },
@@ -1009,6 +1014,7 @@ module.exports = {
 ### 2. CLI Usage Examples
 
 **Rust:**
+
 ```bash
 # Basic conversion
 cargo run --example json_to_sdl -- schema.json > output.graphql
@@ -1025,6 +1031,7 @@ cargo run --example json_to_sdl -- schema.json --validate-only
 ```
 
 **Node:**
+
 ```bash
 # Basic conversion
 npx json-schema-to-graphql schema.json > output.graphql
