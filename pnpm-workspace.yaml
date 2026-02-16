@@ -1,5 +1,6 @@
 packages:
   - "converters/node"
+  - "frontend/subgraph-composer"
   - "frontend/demos/yjs-monaco"
   - "frontend/demos/loro-monaco"
   - "frontend/schema-authoring"

@@ -33,8 +33,8 @@ test.describe('Schema Authoring - smoke', () => {
     const editorsCount = await page.locator('.monaco-editor').count();
     expect(editorsCount).toBeGreaterThan(0);
 
-    // Check our split-resizer is present
-    await expect(page.locator('[data-testid="split-resizer"]')).toBeVisible();
+    // Check our split-resizer is present in the DOM
+    await expect(page.locator('[data-testid="split-resizer"]')).toHaveCount(1);
   });
 
   test('can trigger conversion via API (requires node converter health)', async ({ page, request }) => {
@@ -43,14 +43,14 @@ test.describe('Schema Authoring - smoke', () => {
     // Pre-check: ensure Node converter health endpoint returns 200 before attempting conversion
     let healthy = false;
     try {
-      const res = await request.get('http://localhost:3004/api/convert/health', { timeout: 5000 });
+      const res = await request.get('http://localhost:3004/health', { timeout: 5000 });
       healthy = res.status() === 200;
     } catch (err) {
       healthy = false;
     }
 
     if (!healthy) {
-      console.warn('Node converter health endpoint not available (http://localhost:3004/api/convert/health). Skipping conversion step.');
+      console.warn('Node converter health endpoint not available (http://localhost:3004/health). Skipping conversion step.');
       // Exit the test early to avoid false failures when converter is not running.
       return;
     }

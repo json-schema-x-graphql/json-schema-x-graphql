@@ -19,6 +19,7 @@ if (!hasWasm) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), wasm(), topLevelAwait()],
+  base: process.env.VITE_BASE_URL || "./", // Support for GitHub Pages or relative paths
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
