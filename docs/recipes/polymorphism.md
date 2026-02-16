@@ -1,0 +1,59 @@
+# Polymorphism Recipe: Interfaces
+
+This recipe demonstrates how to define an Interface and a concrete Type that implements it.
+
+## Concept
+
+Use `x-graphql-type: "interface"` to define the contracts, and use `allOf` + `x-graphql-implements` to connect implementations.
+
+## JSON Schema
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Node": {
+      "type": "object",
+      "title": "Node",
+      "description": "An object with an ID",
+      "x-graphql-type": "interface",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-type": "ID"
+        }
+      },
+      "required": ["id"]
+    },
+    "User": {
+      "type": "object",
+      "title": "User",
+      "x-graphql-implements": ["Node"],
+      "allOf": [
+        {
+          "$ref": "#/definitions/Node"
+        }
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": ["username"]
+    }
+  }
+}
+```
+
+## Generated GraphQL
+
+```graphql
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID!
+  username: String!
+}
+```

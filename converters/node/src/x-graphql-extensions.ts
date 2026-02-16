@@ -119,6 +119,11 @@ export function extractExtensions(
       case "type-kind":
         extensions.typeKind = value as XGraphQLExtensions["typeKind"];
         break;
+      case "input":
+        if (value === true) {
+          extensions.typeKind = "INPUT_OBJECT";
+        }
+        break;
       case "implements":
       case "type-implements":
         extensions.implements = Array.isArray(value)
@@ -129,6 +134,16 @@ export function extractExtensions(
         extensions.unionTypes = Array.isArray(value)
           ? value
           : [value as string];
+        break;
+      case "union":
+        if (typeof value === "object" && value !== null) {
+          const u = value as any;
+          if (u.types) {
+            extensions.unionTypes = Array.isArray(u.types)
+              ? u.types
+              : [u.types];
+          }
+        }
         break;
       case "type-directives":
       case "directives":
@@ -173,6 +188,34 @@ export function extractExtensions(
       case "federation-keys":
       case "federation-key":
         extensions.federationKeys = value as string | string[];
+        break;
+      case "federation":
+        if (typeof value === "object" && value !== null) {
+          const fed = value as any;
+          if (fed.keys) extensions.federationKeys = fed.keys;
+          if (fed.shareable) extensions.federationShareable = fed.shareable;
+          if (fed.inaccessible)
+            extensions.federationInaccessible = fed.inaccessible;
+          if (fed.authenticated) {
+            // Add to directives if not handled by interface properties
+            const directives = extensions.typeDirectives || [];
+            if (Array.isArray(directives)) {
+              if (
+                !directives.some((d) =>
+                  typeof d === "string"
+                    ? d.includes("authenticated")
+                    : d.name === "authenticated",
+                )
+              ) {
+                // @ts-ignore
+                directives.push({ name: "authenticated" });
+                extensions.typeDirectives = directives;
+              }
+            }
+          }
+        } else if (value === true) {
+          // Legacy check or simple verify
+        }
         break;
       case "federation-shareable":
         extensions.federationShareable = value as boolean;

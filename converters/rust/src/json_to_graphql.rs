@@ -131,6 +131,43 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         }
     }
 
+    // Emit implied scalars
+    // Check defined scalars from x-graphql-scalars first to avoid duplicates
+    let defined_scalars = if let Some(root) = context.root_schema {
+        if let Some(scalars) = root.get("x-graphql-scalars").and_then(|v| v.as_object()) {
+            scalars.keys().cloned().collect::<HashSet<_>>()
+        } else {
+            HashSet::new()
+        }
+    } else {
+        HashSet::new()
+    };
+
+    let standard_scalars: HashSet<&str> = ["String", "Int", "Float", "Boolean", "ID"]
+        .iter()
+        .cloned()
+        .collect();
+
+    let mut scalars_to_emit: Vec<_> = context
+        .used_scalars
+        .iter()
+        .filter(|s| !defined_scalars.contains(*s))
+        .filter(|s| !standard_scalars.contains(s.as_str()))
+        .cloned()
+        .collect();
+
+    scalars_to_emit.sort();
+
+    if !scalars_to_emit.is_empty() {
+        // Prepend to output or append?
+        // Node implementation appends.
+        context.output.push("# Implied Scalars\n".to_string());
+        for scalar in scalars_to_emit {
+            context.output.push(format!("scalar {}\n", scalar));
+        }
+        context.output.push("\n".to_string());
+    }
+
     // If there are no types rendered, return an empty SDL string rather than an error
     // so the parity harness can compare empty outputs deterministically.
     let final_output = context.output.join("");
@@ -144,6 +181,7 @@ struct ConversionContext<'a> {
     external_schemas: HashMap<String, JsonValue>,
     generated_types: HashSet<String>,
     building: HashSet<String>,
+    used_scalars: HashSet<String>,
     output: Vec<String>,
 }
 
@@ -156,6 +194,7 @@ impl<'a> ConversionContext<'a> {
             external_schemas: HashMap::new(),
             generated_types: HashSet::new(),
             building: HashSet::new(),
+            used_scalars: HashSet::new(),
             output: Vec::new(),
         }
     }
@@ -1088,12 +1127,29 @@ fn infer_graphql_type(
     }
 
     // 3. Format Hints
-    // Note: We don't automatically map formats to custom scalars to match Node.js behavior
-    // Users should use x-graphql-field-type to explicitly set custom scalar types
-    // Only uuid is mapped to ID as a special case for common GraphQL patterns
     if let Some(format) = obj.get("format").and_then(|v| v.as_str()) {
         let mapped = match format {
             "uuid" => Some("ID"),
+            "date-time" => {
+                context.used_scalars.insert("DateTime".to_string());
+                Some("DateTime")
+            }
+            "date" => {
+                context.used_scalars.insert("Date".to_string());
+                Some("Date")
+            }
+            "time" => {
+                context.used_scalars.insert("Time".to_string());
+                Some("Time")
+            }
+            "email" => {
+                context.used_scalars.insert("Email".to_string());
+                Some("Email")
+            }
+            "uri" | "url" => {
+                context.used_scalars.insert("URI".to_string());
+                Some("URI")
+            }
             _ => None,
         };
         if let Some(t) = mapped {

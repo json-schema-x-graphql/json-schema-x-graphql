@@ -18,121 +18,34 @@ import type {
   DiagnosticSeverity,
   DiagnosticKind,
 } from "./generated/types.js";
-import { parse } from "graphql";
-import { IJsonSchemaConverter } from "./interfaces";
+import { parse, print } from "graphql";
+import {
+  IJsonSchemaConverter,
+  JsonSchema,
+  ExtendedConverterOptions,
+  NormalizedConverterOptions,
+  GraphQLArgumentConfig,
+  GraphQLDirective,
+  GraphQLEnumConfig,
+  GraphQLOperations,
+  GraphQLOperationArg,
+  GraphQLScalarConfig,
+  ConversionContext,
+  JsonSchemaInput
+} from "./interfaces.js";
 import { camelToSnake, snakeToCamel } from "./case-conversion.js";
+import { extractDirectives, GeneralizedDirective, printDirectives } from "./normalization/directives.js";
+import { ensureConnectionType } from "./features/relay.js";
 
-export type ExtendedConverterOptions = ConverterOptions & {
-  maxDepth?: number;
-  excludeTypeSuffixes?: string[];
-  includeOperationalTypes?: boolean;
-};
+// ExtendedConverterOptions and others moved to interfaces.ts
 
-interface NormalizedConverterOptions {
-  validate: boolean;
-  includeDescriptions: boolean;
-  preserveFieldOrder: boolean;
-  federationVersion: FederationVersion;
-  includeFederationDirectives: boolean;
-  namingConvention: NamingConvention;
-  inferIds: boolean;
-  idStrategy: IdInferenceStrategy;
-  outputFormat: OutputFormat;
-  failOnWarning: boolean;
-  maxDepth: number;
-  excludeTypes: string[];
-  excludePatterns: string[];
-  excludeRegexes: RegExp[];
-  descriptionBlockThreshold: number;
-  emitEmptyTypes: boolean;
-  inlineObjectThreshold: number;
-  refNaming: "basename" | "file_and_path" | "hash";
-  excludeTypeSuffixes: string[];
-  includeOperationalTypes: boolean;
-}
+// NormalizedConverterOptions moved to interfaces.ts
 
-interface JsonSchema {
-  $schema?: string;
-  title?: string;
-  description?: string;
-  type?: string | string[];
-  properties?: Record<string, JsonSchema>;
-  required?: string[];
-  items?: JsonSchema;
-  $ref?: string;
-  enum?: (string | number)[];
-  format?: string;
-  $defs?: Record<string, JsonSchema>;
-  definitions?: Record<string, JsonSchema>;
-  oneOf?: JsonSchema[];
-  anyOf?: JsonSchema[];
-  allOf?: JsonSchema[];
-  "x-graphql-arguments"?: Record<string, GraphQLArgumentConfig>;
-  "x-graphql-directives"?: GraphQLDirective[];
-  "x-graphql-enum"?: GraphQLEnumConfig;
-  "x-graphql-field-name"?: string;
-  "x-graphql-implements"?: string[];
-  "x-graphql-operations"?: GraphQLOperations;
-  "x-graphql-scalar"?: string;
-  "x-graphql-scalars"?: Record<string, GraphQLScalarConfig>;
-  "x-graphql-type"?: string | { name?: string };
-  "x-graphql-type-implements"?: string[];
-  "x-graphql-type-name"?: string;
-  "x-graphql-union-types"?: string[];
-  [key: string]: any;
-}
+// JsonSchema moved to interfaces.ts
 
-interface GraphQLArgumentConfig {
-  type?: string;
-  "x-graphql-type"?: string;
-  default?: unknown;
-  [key: string]: unknown;
-}
+// Helper interfaces moved to interfaces.ts
 
-interface GraphQLOperationArg extends GraphQLArgumentConfig {}
-
-interface GraphQLDirective {
-  name?: string;
-  arguments?: Record<string, unknown>;
-}
-
-interface GraphQLEnumValue {
-  name?: string;
-  value?: string | number;
-  description?: string;
-}
-
-interface GraphQLEnumConfig {
-  values?: Array<string | number | GraphQLEnumValue>;
-}
-
-interface GraphQLOperationField {
-  description?: string;
-  type?: string;
-  args?: Record<string, GraphQLOperationArg>;
-}
-
-interface GraphQLOperations {
-  queries?: Record<string, GraphQLOperationField>;
-  mutations?: Record<string, GraphQLOperationField>;
-}
-
-interface GraphQLScalarConfig {
-  description?: string;
-  [key: string]: unknown;
-}
-
-interface ConversionContext {
-  rootSchema: JsonSchema;
-  options: NormalizedConverterOptions;
-  generatedTypes: Set<string>;
-  generating: Set<string>;
-  building: Set<string>;
-  output: string[];
-  typeNames: Map<string, string>;
-}
-
-type JsonSchemaInput = string | JsonSchema;
+// ConversionContext and JsonSchemaInput moved to interfaces.ts
 
 class ConversionError extends Error {
   constructor(
@@ -218,6 +131,7 @@ export function jsonSchemaToGraphQL(
     generatedTypes: new Set<string>(),
     generating: new Set<string>(),
     building: new Set<string>(),
+    usedScalars: new Set<string>(),
     output: [],
     typeNames: new Map(),
   };
@@ -263,6 +177,7 @@ export function jsonSchemaToGraphQL(
     convertTypeDefinition(schema, rootTypeName, context);
   }
 
+  emitImpliedScalars(context);
   emitOperations(schema, context);
 
   const finalSDL = context.output
@@ -309,6 +224,7 @@ export function graphqlToJsonSchema(
             description: def.description?.value,
             fields: def.fields || [],
             interfaces: def.interfaces || [],
+            directives: def.directives || [],
           });
         }
         if (typeName === "Query") rootTypes.query = typeName;
@@ -321,6 +237,7 @@ export function graphqlToJsonSchema(
             name: enumName,
             description: def.description?.value,
             enumValues: def.values || [],
+            directives: def.directives || [],
           });
         }
       } else if (def.kind === "UnionTypeDefinition") {
@@ -331,6 +248,7 @@ export function graphqlToJsonSchema(
             name: unionName,
             description: def.description?.value,
             types: def.types || [],
+            directives: def.directives || [],
           });
         }
       } else if (def.kind === "ScalarTypeDefinition") {
@@ -343,6 +261,7 @@ export function graphqlToJsonSchema(
             kind: "ScalarTypeDefinition",
             name: scalarName,
             description: def.description?.value,
+            directives: def.directives || [],
           });
         }
       }
@@ -407,6 +326,7 @@ interface GraphQLTypeDefinition {
   enumValues?: readonly any[];
   types?: readonly any[];
   interfaces?: readonly any[];
+  directives?: readonly any[];
 }
 
 function convertGraphQLTypeToSchema(
@@ -423,6 +343,10 @@ function convertGraphQLTypeToSchema(
   }
 
   schema["x-graphql-type"] = typeDef.name;
+
+  if (typeDef.directives && typeDef.directives.length > 0) {
+    schema["x-graphql-directives"] = typeDef.directives.map((d: any) => print(d));
+  }
 
   if (typeDef.kind === "EnumTypeDefinition") {
     schema.type = "string";
@@ -488,6 +412,10 @@ function convertGraphQLFieldToSchema(
   // Merge description if present
   if (field.description?.value && options.includeDescriptions) {
     typeSchema.description = field.description.value;
+  }
+
+  if (field.directives && field.directives.length > 0) {
+    typeSchema["x-graphql-directives"] = field.directives.map((d: any) => print(d));
   }
 
   return typeSchema;
@@ -638,6 +566,14 @@ function convertTypeDefinition(
   context.generating.add(typeName);
   context.building.add(typeName);
   const { options } = context;
+
+  // Handle Relay Connection generation
+  if (schema["x-graphql-connection"]) {
+    const connectionBase = typeof schema["x-graphql-connection"] === "string" 
+      ? schema["x-graphql-connection"] 
+      : typeName;
+    ensureConnectionType(connectionBase, context);
+  }
 
   if (schema["x-graphql-enum"] || schema.enum) {
     const r = renderEnum(typeName, schema, options);
@@ -919,7 +855,7 @@ function inferGraphQLType(
 
   switch (typeValue) {
     case "string":
-      return finalizeType(mapStringFormat(schema.format), isRequired);
+      return finalizeType(mapStringFormat(schema.format, context), isRequired);
     case "integer":
       return finalizeType("Int", isRequired);
     case "number":
@@ -1005,7 +941,7 @@ function ensureReferencedType(
     return null;
   }
 
-  const primitive = derivePrimitiveGraphQLType(target);
+  const primitive = derivePrimitiveGraphQLType(target, context);
   if (primitive) {
     return primitive;
   }
@@ -1124,6 +1060,40 @@ function resolveRef(
 }
 
 // --- Operations & Scalars ------------------------------------------------------
+
+function emitImpliedScalars(context: ConversionContext) {
+  if (context.usedScalars.size === 0) return;
+
+  const scalars = context.rootSchema["x-graphql-scalars"];
+  const existing = new Set(Object.keys(scalars || {}));
+
+  // Standard GraphQL scalars to exclude
+  const standardScalars = new Set(["String", "Int", "Float", "Boolean", "ID"]);
+
+  const lines: string[] = [];
+  let addedHeader = false;
+
+  for (const scalar of context.usedScalars) {
+    if (existing.has(scalar)) continue;
+    if (context.generatedTypes.has(scalar)) continue;
+    if (standardScalars.has(scalar)) continue;
+
+    if (!addedHeader) {
+      lines.push("# Implied Scalars");
+      addedHeader = true;
+    }
+    lines.push(`scalar ${scalar}`);
+  }
+
+  if (lines.length > 0) {
+    // Determine where to insert:
+    // If Custom Scalars are emitted first, append after them.
+    // However, context.output has everything mixed.
+    // Simple approach: unshift to top, or append to end.
+    // Appending to end is safer for now.
+    context.output.push(lines.join("\n") + "\n");
+  }
+}
 
 function emitCustomScalars(schema: JsonSchema, context: ConversionContext) {
   const scalars = schema["x-graphql-scalars"];
@@ -1399,7 +1369,11 @@ function getTypeName(
 
   const typeOverride = schema["x-graphql-type"];
   if (typeof typeOverride === "string" && typeOverride.trim()) {
-    return sanitizeTypeName(typeOverride, namingConvention);
+    // If explicit type is "scalar", don't treat it as the name.
+    // This allows x-graphql-type: "scalar" to indicate kind only.
+    if (typeOverride.trim() !== "scalar") {
+      return sanitizeTypeName(typeOverride, namingConvention);
+    }
   }
   if (
     typeof typeOverride === "object" &&
@@ -1496,7 +1470,10 @@ function accessChild(node: any, key: string): any {
   return node?.[key];
 }
 
-function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
+function derivePrimitiveGraphQLType(
+  schema: JsonSchema,
+  context?: ConversionContext,
+): string | null {
   if (!schema || typeof schema !== "object") {
     return null;
   }
@@ -1507,11 +1484,18 @@ function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
       : schema["x-graphql-type"]?.name;
 
   if (explicit) {
+    if (context && context.generatedTypes.has(explicit)) {
+      // It's a type we generated, not a primitive/scalar necessarily
+      // But if it IS a scalar type we generated, we might want to track it?
+      // For now, assume explicit types are handled.
+    }
     return explicit;
   }
 
   if (schema["x-graphql-scalar"]) {
-    return toPascalCase(schema["x-graphql-scalar"]);
+    const sName = toPascalCase(schema["x-graphql-scalar"]);
+    if (context) context.usedScalars.add(sName);
+    return sName;
   }
 
   const schemaType = Array.isArray(schema.type)
@@ -1522,7 +1506,7 @@ function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
 
   switch (schemaType) {
     case "string":
-      return mapStringFormat(schema.format);
+      return mapStringFormat(schema.format, context);
     case "integer":
       return "Int";
     case "number":
@@ -1530,7 +1514,10 @@ function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
     case "boolean":
       return "Boolean";
     case "array": {
-      const itemType = derivePrimitiveGraphQLType(schema.items ?? {});
+      const itemType = derivePrimitiveGraphQLType(
+        schema.items ?? {},
+        context,
+      );
       return itemType ? `[${itemType}]` : null;
     }
     default:
@@ -1538,20 +1525,29 @@ function derivePrimitiveGraphQLType(schema: JsonSchema): string | null {
   }
 }
 
-function mapStringFormat(format?: string): string {
+function mapStringFormat(
+  format?: string,
+  context?: ConversionContext,
+): string {
   switch (format) {
     case "date-time":
+      if (context) context.usedScalars.add("DateTime");
       return "DateTime";
     case "date":
+      if (context) context.usedScalars.add("Date");
       return "Date";
     case "time":
+      if (context) context.usedScalars.add("Time");
       return "Time";
     case "email":
+      if (context) context.usedScalars.add("Email");
       return "Email";
     case "uuid":
       return "ID";
     case "uri":
-      return "URL";
+    case "url":
+      if (context) context.usedScalars.add("URI");
+      return "URI";
     default:
       return "String";
   }
@@ -1635,105 +1631,8 @@ function formatDirectives(
   schema: JsonSchema,
   options?: NormalizedConverterOptions,
 ): string {
-  const directives: GraphQLDirective[] = [];
-
-  const includeFederation =
-    (options?.includeFederationDirectives ?? true) &&
-    options?.federationVersion !== "NONE";
-
-  if (Array.isArray(schema["x-graphql-directives"])) {
-    for (const dir of schema["x-graphql-directives"]) {
-      if (!dir?.name) continue;
-      if (!includeFederation && isFederationDirective(dir.name)) continue;
-      directives.push(dir);
-    }
-  }
-
-  if (includeFederation) {
-    if (schema["x-graphql-federation-shareable"]) {
-      directives.push({ name: "shareable" });
-    }
-    if (schema["x-graphql-federation-inaccessible"]) {
-      directives.push({ name: "inaccessible" });
-    }
-    if (schema["x-graphql-federation-authenticated"]) {
-      directives.push({ name: "authenticated" });
-    }
-    if (schema["x-graphql-federation-interface-object"]) {
-      directives.push({ name: "interfaceObject" });
-    }
-    if (schema["x-graphql-federation-requires-scopes"]) {
-      directives.push({
-        name: "requiresScopes",
-        arguments: { scopes: schema["x-graphql-federation-requires-scopes"] },
-      });
-    }
-
-    if (Array.isArray(schema["x-graphql-federation-keys"])) {
-      for (const key of schema["x-graphql-federation-keys"]) {
-        if (typeof key === "string") {
-          directives.push({ name: "key", arguments: { fields: key } });
-        } else if (key && typeof key === "object" && key.fields) {
-          directives.push({
-            name: "key",
-            arguments: { fields: key.fields, resolvable: key.resolvable },
-          });
-        }
-      }
-    }
-
-    // Field-level federation directives
-    if (schema["x-graphql-federation-requires"]) {
-      directives.push({
-        name: "requires",
-        arguments: { fields: schema["x-graphql-federation-requires"] },
-      });
-    }
-    if (schema["x-graphql-federation-provides"]) {
-      directives.push({
-        name: "provides",
-        arguments: { fields: schema["x-graphql-federation-provides"] },
-      });
-    }
-    if (schema["x-graphql-federation-external"]) {
-      directives.push({ name: "external" });
-    }
-    if (schema["x-graphql-federation-override-from"]) {
-      directives.push({
-        name: "override",
-        arguments: { from: schema["x-graphql-federation-override-from"] },
-      });
-    }
-  }
-
-  if (directives.length === 0) {
-    return "";
-  }
-
-  const parts = directives.map((dir) => {
-    if (!dir?.name) return "";
-    const args = dir.arguments
-      ? `(${Object.entries(dir.arguments)
-          .map(([key, value]) => {
-            if (key === "scopes" && Array.isArray(value)) {
-              return `${key}: [${value
-                .map(
-                  (v: any) =>
-                    `[${(Array.isArray(v) ? v : [v])
-                      .map((s: string) => `"${s}"`)
-                      .join(", ")}]`,
-                )
-                .join(", ")} ]`;
-            }
-            return `${key}: ${JSON.stringify(value)}`;
-          })
-          .join(", ")})`
-      : "";
-    return `@${dir.name}${args}`;
-  });
-
-  const joined = parts.filter(Boolean).join(" ");
-  return joined ? ` ${joined}` : "";
+  const directives: GeneralizedDirective[] = extractDirectives(schema, options);
+  return printDirectives(directives);
 }
 
 function isFederationDirective(name: string): boolean {

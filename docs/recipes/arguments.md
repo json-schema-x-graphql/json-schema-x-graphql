@@ -1,0 +1,52 @@
+# Field Arguments Recipe
+
+This recipe demonstrates how to add arguments to a field.
+
+## Concept
+
+Use `x-graphql-args` on a property definition to define arguments. Arguments themselves are defined using JSON Schema.
+
+## JSON Schema
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "UserProfile": {
+      "type": "object",
+      "title": "UserProfile",
+      "properties": {
+        "avatarUrl": {
+          "type": "string",
+          "description": "The user's avatar image URL",
+          "x-graphql-args": {
+            "size": {
+              "type": "integer",
+              "description": "Size in pixels",
+              "default": 128
+            },
+            "format": {
+              "type": "string",
+              "enum": ["PNG", "JPG"],
+              "default": "PNG"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Generated GraphQL
+
+```graphql
+type UserProfile {
+  """The user's avatar image URL"""
+  avatarUrl(
+    """Size in pixels"""
+    size: Int = 128, 
+    format: String = "PNG"
+  ): String
+}
+```
