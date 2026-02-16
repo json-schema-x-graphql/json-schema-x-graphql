@@ -68,8 +68,14 @@ function shouldExcludeType(
   if (!typeName) return true;
 
   // Debug filtering
-  if (typeName === "Mutation" || typeName === "Query" || typeName === "PageInfo") {
-    console.log(`Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`);
+  if (
+    typeName === "Mutation" ||
+    typeName === "Query" ||
+    typeName === "PageInfo"
+  ) {
+    console.log(
+      `Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`,
+    );
   }
 
   // Always exclude introspection types
@@ -177,7 +183,9 @@ export function jsonSchemaToGraphQL(
         context.typeNames.get(`/definitions/${defKey}`);
       // Debug logging
       if (typeName === "Mutation") {
-          console.log(`Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`);
+        console.log(
+          `Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`,
+        );
       }
 
       if (typeName && !shouldExcludeType(typeName, context.options)) {

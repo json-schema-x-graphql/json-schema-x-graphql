@@ -198,10 +198,10 @@ describe("Parity: Node vs Rust converter outputs", () => {
         if (a === b) return true;
         if (a == null || b == null) return a === b;
         if (typeof a !== "object" || typeof b !== "object") return a === b;
-        
+
         // Ignore "block" property on StringValue nodes (formatting difference)
-        if (a.kind === 'StringValue' && b.kind === 'StringValue') {
-            return a.value === b.value;
+        if (a.kind === "StringValue" && b.kind === "StringValue") {
+          return a.value === b.value;
         }
 
         if (visited.has(a) || visited.has(b)) return true;
