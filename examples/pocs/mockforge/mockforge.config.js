@@ -2,7 +2,7 @@
  * MockForge Configuration
  * 
  * Custom resolvers and faker.js integration for realistic mock data
- * generation from the Schema Unification Forest supergraph.
+ * generation from the Petrified Forest supergraph.
  */
 
 import { faker } from '@faker-js/faker';
@@ -24,7 +24,10 @@ class SeedDataLoader {
   load(system) {
     if (this.cache[system]) return this.cache[system];
     
-    const csvPath = path.join(process.cwd(), 'dev/pocs/mockforge/seed-data', `${system}.csv`);
+    // Adjusted path slightly to work relative to where mock-server.js runs or project root
+    // The original code used process.cwd() joined with dev/pocs/mockforge which might be specific to that project structure.
+    // I'll update it to check local seed-data directory first.
+    const csvPath = path.join(process.cwd(), 'seed-data', `${system}.csv`);
     
     try {
       if (fs.existsSync(csvPath)) {
@@ -36,7 +39,7 @@ class SeedDataLoader {
         });
         console.log(`✅ Loaded ${this.cache[system].length} records from ${system}.csv`);
       } else {
-        console.warn(`⚠️  Seed file not found: ${csvPath}`);
+        // console.warn(`⚠️  Seed file not found: ${csvPath}`);
         this.cache[system] = [];
       }
     } catch (e) {
@@ -83,8 +86,7 @@ function generateUEI() {
  * Generate realistic NAICS codes
  */
 function generateNAICS() {
-  const codes = ['541511', '541512', '541513', '541519', '541611', '541618', 
-                 '541690', '541715', '541990', '561210', '561320', '561499'];
+  const codes = ['541511', '541512', '541513', '541519', '541611', '541618', '541690', '541715', '541990', '561210', '561320', '561499'];
   return faker.helpers.arrayElement(codes);
 }
 
@@ -92,8 +94,7 @@ function generateNAICS() {
  * Generate realistic PSC (Product Service Code)
  */
 function generatePSC() {
-  const codes = ['D302', 'D307', 'D310', 'D313', 'D314', 'D316', 'D399', 
-                 'R408', 'R413', 'R425', 'R497', 'R499'];
+  const codes = ['D302', 'D307', 'D310', 'D313', 'D314', 'D316', 'D399', 'R408', 'R413', 'R425', 'R497', 'R499'];
   return faker.helpers.arrayElement(codes);
 }
 
@@ -113,14 +114,14 @@ function generateContractAmount() {
  * Custom resolvers for specific GraphQL types
  */
 export const customResolvers = {
-  // Contract Data-specific resolvers
-  Contract DataProcurement: {
+  // FPDS-specific resolvers
+  FPDSProcurement: {
     piid: () => generatePIID(),
     contractNumber: () => generatePIID(),
     vendorDuns: () => generateDUNS(),
     vendorUei: () => generateUEI(),
     vendorName: () => {
-      const seed = seedLoader.getRandomRecord('contract_data');
+      const seed = seedLoader.getRandomRecord('fpds');
       return seed?.vendor_name || faker.company.name();
     },
     naics: () => generateNAICS(),
@@ -138,14 +139,14 @@ export const customResolvers = {
     placeOfPerformanceCongressionalDistrict: () => faker.number.int({ min: 1, max: 53 }).toString().padStart(2, '0'),
   },
 
-  // Public Spending-specific resolvers
-  Public SpendingProcurement: {
+  // USAspending-specific resolvers
+  USAspendingProcurement: {
     piid: () => generatePIID(),
     unique_award_key: () => `CONT_AWD_${faker.string.alphanumeric(20).toUpperCase()}`,
     awardee_or_recipient_uniqu: () => generateDUNS(),
     awardee_or_recipient_uei: () => generateUEI(),
     awardee_or_recipient_legal: () => {
-      const seed = seedLoader.getRandomRecord('public_spending');
+      const seed = seedLoader.getRandomRecord('usaspending');
       return seed?.awardee_name || faker.company.name();
     },
     naics: () => generateNAICS(),
@@ -159,11 +160,11 @@ export const customResolvers = {
     place_of_performance_zip4a: () => faker.location.zipCode(),
   },
 
-  // Legacy Procurement-specific resolvers
+  // ASSIST-specific resolvers
   AssistRecord: {
     ia_piid_or_unique_id: () => `IA${generatePIID()}`,
     source_record_id: () => faker.string.uuid(),
-    legacy_procurement_award_data: () => ({
+    assist_award_data: () => ({
       award_amount: generateContractAmount(),
       award_date: faker.date.past({ years: 2 }).toISOString().split('T')[0],
       recipient_name: faker.company.name(),
@@ -171,12 +172,12 @@ export const customResolvers = {
     }),
   },
 
-  // Intake Process-specific resolvers
-  Intake ProcessProcurement: {
+  // EASI-specific resolvers
+  EASIProcurement: {
     piid: () => generatePIID(),
     contract_number: () => generatePIID(),
     vendor_name: () => {
-      const seed = seedLoader.getRandomRecord('intake_process');
+      const seed = seedLoader.getRandomRecord('easi');
       return seed?.vendor_name || faker.company.name();
     },
     vendor_duns: () => generateDUNS(),
@@ -186,12 +187,12 @@ export const customResolvers = {
     period_of_performance_end: () => faker.date.future({ years: 2 }).toISOString().split('T')[0],
   },
 
-  // Logistics Mgmt-specific resolvers
-  Logistics MgmtContract: {
+  // CALM-specific resolvers
+  CALMContract: {
     contract_id: () => faker.string.uuid(),
     piid: () => generatePIID(),
     vendor_name: () => {
-      const seed = seedLoader.getRandomRecord('logistics_mgmt');
+      const seed = seedLoader.getRandomRecord('calm');
       return seed?.vendor_name || faker.company.name();
     },
     vendor_duns: () => generateDUNS(),

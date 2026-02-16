@@ -1,22 +1,22 @@
 services:
-  # SQLite Database (shared volume)
+  # SQLite Database (shared volume - unused but kept for volume def)
   db-init:
     image: alpine:latest
     volumes:
       - mock-data:/data
     command: sh -c "touch /data/mock-data.db && chmod 666 /data/mock-data.db"
-  
-  # Contract Data Mock Service
-  contract_data-mock:
+
+  # FPDS Mock Service
+  fpds-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-contract_data-mock
+    container_name: petrified-fpds-mock
     environment:
       - PORT=4001
-      - SYSTEM=contract_data
+      - SYSTEM=fpds
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -34,17 +34,17 @@ services:
       timeout: 5s
       retries: 3
 
-  # Public Spending Mock Service
-  public_spending-mock:
+  # USAspending Mock Service
+  usaspending-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-public_spending-mock
+    container_name: petrified-usaspending-mock
     environment:
       - PORT=4002
-      - SYSTEM=public_spending
+      - SYSTEM=usaspending
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -62,17 +62,17 @@ services:
       timeout: 5s
       retries: 3
 
-  # Legacy Procurement Mock Service
-  legacy_procurement-mock:
+  # ASSIST Mock Service
+  assist-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-legacy_procurement-mock
+    container_name: petrified-assist-mock
     environment:
       - PORT=4003
-      - SYSTEM=legacy_procurement
+      - SYSTEM=assist
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -90,17 +90,17 @@ services:
       timeout: 5s
       retries: 3
 
-  # Intake Process Mock Service
-  intake_process-mock:
+  # EASI Mock Service
+  easi-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-intake_process-mock
+    container_name: petrified-easi-mock
     environment:
       - PORT=4004
-      - SYSTEM=intake_process
+      - SYSTEM=easi
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -118,17 +118,17 @@ services:
       timeout: 5s
       retries: 3
 
-  # Logistics Mgmt Mock Service
-  logistics_mgmt-mock:
+  # CALM Mock Service
+  calm-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-logistics_mgmt-mock
+    container_name: petrified-calm-mock
     environment:
       - PORT=4005
-      - SYSTEM=logistics_mgmt
+      - SYSTEM=calm
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -153,7 +153,7 @@ services:
       dockerfile: Dockerfile.mesh
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-mesh-gateway
+    container_name: petrified-mesh-gateway
     environment:
       - NODE_ENV=development
     volumes:
@@ -162,11 +162,11 @@ services:
     ports:
       - "5050:5050"
     depends_on:
-      - contract_data-mock
-      - public_spending-mock
-      - legacy_procurement-mock
-      - intake_process-mock
-      - logistics_mgmt-mock
+      - fpds-mock
+      - usaspending-mock
+      - assist-mock
+      - easi-mock
+      - calm-mock
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:5050/graphql"]
@@ -181,7 +181,7 @@ services:
       dockerfile: Dockerfile.gateway
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: schema_unification-hive-gateway
+    container_name: petrified-hive-gateway
     environment:
       - NODE_ENV=development
       - PORT=5100
@@ -191,15 +191,15 @@ services:
     ports:
       - "5100:5100"
     depends_on:
-      contract_data-mock:
+      fpds-mock:
         condition: service_healthy
-      public_spending-mock:
+      usaspending-mock:
         condition: service_healthy
-      legacy_procurement-mock:
+      assist-mock:
         condition: service_healthy
-      intake_process-mock:
+      easi-mock:
         condition: service_healthy
-      logistics_mgmt-mock:
+      calm-mock:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
@@ -209,54 +209,10 @@ services:
       retries: 3
       start_period: 20s
 
-  # Legacy MockForge (single service - for backwards compatibility)
-  mockforge:
-    image: rust:1.75-bookworm
-    container_name: schema_unification-mockforge
-    working_dir: /workspace
-    profiles: ["legacy"]  # Only starts with: docker compose --profile legacy up
-    volumes:
-      - ../../../:/workspace
-    ports:
-      - "3000:3000"
-    environment:
-      - RUST_LOG=info
-    tty: true
-    stdin_open: true
-    command:
-      - bash
-      - -c
-      - |
-        echo "🔨 Installing MockForge CLI..."
-        cargo install --locked mockforge-cli 2>/dev/null || cargo install mockforge-cli
-        
-        SUPERGRAPH="generated-schemas/schema_unification.supergraph.graphql"
-        
-        if [ ! -f "$$SUPERGRAPH" ]; then
-          echo "❌ Supergraph not found: $$SUPERGRAPH"
-          echo "   Run: pnpm run generate:supergraph"
-          exit 1
-        fi
-        
-        echo "✅ Starting MockForge server..."
-        echo "   Supergraph: $$SUPERGRAPH"
-        echo "   Endpoint: http://localhost:3000/graphql"
-        echo ""
-        
-        mockforge serve --spec "$$SUPERGRAPH" --port 3000 --host 0.0.0.0
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
-
 volumes:
   mock-data:
     driver: local
 
 networks:
   default:
-    name: schema_unification-mock-network
-
+    name: petrified-mock-network
