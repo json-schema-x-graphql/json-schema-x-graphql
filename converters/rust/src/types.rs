@@ -420,7 +420,7 @@ pub enum JsonSchemaType {
 
 impl JsonSchemaType {
     /// Convert from JSON Schema type string
-    pub fn from_str(s: &str) -> Option<Self> {
+    pub fn parse(s: &str) -> Option<Self> {
         match s {
             "string" => Some(Self::String),
             "number" => Some(Self::Number),
@@ -511,7 +511,7 @@ mod tests {
     #[test]
     fn test_json_schema_type_conversion() {
         assert_eq!(
-            JsonSchemaType::from_str("string"),
+            JsonSchemaType::parse("string"),
             Some(JsonSchemaType::String)
         );
         assert_eq!(JsonSchemaType::String.as_str(), "string");

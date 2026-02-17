@@ -4,7 +4,7 @@
 //!   cargo run --example json_to_sdl -- <input.json>
 //!   cargo run --example json_to_sdl -- <input.json> > output.graphql
 
-use json_schema_graphql_converter::{ConversionOptions, Converter, NamingConvention};
+use json_schema_x_graphql::{ConversionOptions, Converter, NamingConvention};
 use std::env;
 use std::fs;
 use std::process;

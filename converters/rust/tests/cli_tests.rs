@@ -12,9 +12,9 @@ fn get_jxql_command() -> Command {
     if bin_path.exists() {
         Command::new(bin_path)
     } else {
-        // Fallback to cargo run (slower, might lock if running concurrent tests)
+        // Fallback to cargo run with cli feature enabled
         let mut cmd = Command::new("cargo");
-        cmd.args(&["run", "--bin", "jxql", "--quiet", "--"]);
+        cmd.args(["run", "--bin", "jxql", "--features", "cli", "--quiet", "--"]);
         cmd.current_dir(manifest_dir);
         cmd
     }

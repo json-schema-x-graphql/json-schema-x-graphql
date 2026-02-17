@@ -81,64 +81,44 @@ impl Default for ConverterOptions {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
 pub enum FederationVersion {
     None,
     V1,
+    #[default]
     V2,
     Auto,
 }
 
-impl Default for FederationVersion {
-    fn default() -> Self {
-        Self::V2
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
 pub enum NamingConvention {
     Preserve,
+    #[default]
     GraphqlIdiomatic,
 }
 
-impl Default for NamingConvention {
-    fn default() -> Self {
-        Self::GraphqlIdiomatic
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
 pub enum IdInferenceStrategy {
+    #[default]
     None,
     CommonPatterns,
     AllStrings,
 }
 
-impl Default for IdInferenceStrategy {
-    fn default() -> Self {
-        Self::None
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 #[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
 pub enum OutputFormat {
+    #[default]
     Sdl,
     SdlWithFederationMetadata,
     AstJson,
-}
-
-impl Default for OutputFormat {
-    fn default() -> Self {
-        Self::Sdl
-    }
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, SimpleObject)]

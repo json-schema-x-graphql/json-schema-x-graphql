@@ -374,7 +374,7 @@ fn bench_real_world_schemas(c: &mut Criterion) {
         .unwrap()
         .filter_map(|e| e.ok())
         .map(|e| e.path())
-        .filter(|p| p.is_file() && p.extension().map_or(false, |ext| ext == "json"))
+        .filter(|p| p.is_file() && p.extension().is_some_and(|ext| ext == "json"))
         .take(5) // Limit to 5 files for benchmark
         .collect();
 

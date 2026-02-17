@@ -13,10 +13,8 @@ fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
     }
 
     // Check operational types
-    if !options.include_operational_types {
-        if options.exclude_types.contains(&type_name.to_string()) {
-            return false;
-        }
+    if !options.include_operational_types && options.exclude_types.contains(&type_name.to_string()) {
+        return false;
     }
 
     // Check suffixes
@@ -718,7 +716,7 @@ fn convert_type_definition(
                     prop_names = numeric_keys
                         .into_iter()
                         .map(|(_, k)| k)
-                        .chain(other_keys.into_iter())
+                        .chain(other_keys)
                         .collect();
                 } else {
                     prop_names.sort();
@@ -1704,6 +1702,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::field_reassign_with_default)]
     fn test_infer_ids_option() {
         let mut options = ConversionOptions::default();
         options.infer_ids = true;
@@ -1728,6 +1727,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::field_reassign_with_default)]
     fn test_all_strings_id_strategy() {
         let mut options = ConversionOptions::default();
         options.id_strategy = crate::types::IdInferenceStrategy::AllStrings;
@@ -1864,6 +1864,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::field_reassign_with_default)]
     fn test_type_filtering_includes_operational_when_configured() {
         let mut options = ConversionOptions::default();
         options.include_operational_types = true;

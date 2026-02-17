@@ -23,6 +23,7 @@ pub struct MutationRoot;
 #[Object]
 impl MutationRoot {
     /// Converts a JSON Schema string into GraphQL SDL.
+    #[allow(clippy::field_reassign_with_default)]
     async fn convert_json_to_graphql(&self, input: ConvertInput) -> GqlResult<ConversionResult> {
         let options = input.options.unwrap_or_default();
         let mut internal_options = ConversionOptions::default();

@@ -93,6 +93,7 @@ impl WasmConversionOptions {
     }
 
     /// Convert to internal options type
+    #[allow(clippy::field_reassign_with_default)]
     fn to_internal(&self) -> ConversionOptions {
         let mut options = ConversionOptions::default();
 
@@ -247,6 +248,7 @@ pub fn get_version() -> String {
 
 /// Standardized API conversion function
 #[wasm_bindgen(js_name = convert)]
+#[allow(clippy::field_reassign_with_default)]
 pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
     let input: ConvertInput = serde_wasm_bindgen::from_value(input)?;
 
@@ -325,10 +327,10 @@ mod tests {
     #[test]
     fn test_wasm_options() {
         let mut options = WasmConversionOptions::new();
-        assert_eq!(options.validate(), true);
+        assert!(options.validate());
 
         options.set_validate(false);
-        assert_eq!(options.validate(), false);
+        assert!(!options.validate());
 
         options.set_federation_version(1);
         assert_eq!(options.federation_version(), 1);

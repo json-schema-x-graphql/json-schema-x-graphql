@@ -136,7 +136,7 @@ fn test_validate_all_json_schemas() {
         let entry = entry.unwrap();
         let path = entry.path();
 
-        if path.is_file() && path.extension().map_or(false, |ext| ext == "json") {
+        if path.is_file() && path.extension().is_some_and(|ext| ext == "json") {
             schemas_validated += 1;
             let result = json_validator.validate_file(&path);
 
@@ -221,7 +221,7 @@ fn test_validate_all_graphql_sdl_files() {
         if path.is_file()
             && path
                 .extension()
-                .map_or(false, |ext| ext == "graphql" || ext == "gql")
+                .is_some_and(|ext| ext == "graphql" || ext == "gql")
         {
             sdl_validated += 1;
             let result = graphql_validator.validate_file(&path);
@@ -442,7 +442,7 @@ fn test_graphql_sdl_syntax_errors() {
         !report.apollo_parser_valid,
         "Invalid SDL syntax should fail parser validation"
     );
-    assert!(report.apollo_parser_errors.len() > 0);
+    assert!(!report.apollo_parser_errors.is_empty());
 }
 
 #[test]

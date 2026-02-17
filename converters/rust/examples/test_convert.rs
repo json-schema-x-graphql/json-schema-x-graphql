@@ -1,4 +1,4 @@
-use json_schema_graphql_converter::{ConversionOptions, Converter};
+use json_schema_x_graphql::{ConversionOptions, Converter};
 use std::fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

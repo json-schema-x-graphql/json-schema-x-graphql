@@ -5,7 +5,7 @@
   "description": "Complete user service schema demonstrating all x-graphql-* extensions",
   "type": "object",
   "x-graphql-type-name": "User",
-  "x-graphql-type-kind": "type",
+  "x-graphql-type-kind": "OBJECT",
   "x-graphql-directives": [
     {
       "name": "key",
