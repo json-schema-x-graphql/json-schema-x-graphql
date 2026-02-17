@@ -1,15 +1,11 @@
-"""
-A user type that should be included
-"""
+"A user type that should be included"
 type User {
   id: ID!
   name: String!
   email: Email
 }
 
-"""
-A product type that should be included
-"""
+"A product type that should be included"
 type Product {
   id: ID!
   name: String!

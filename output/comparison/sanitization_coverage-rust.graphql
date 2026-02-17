@@ -2,9 +2,7 @@ type ComplexTypeName123 {
   innerProp: String
 }
 
-"""
-Type name starts with number
-"""
+"Type name starts with number"
 type _123numerictype {
   val: Int
 }
@@ -17,49 +15,27 @@ type ReservedKeywords {
   input: String
 }
 
-"""
-Schema to test naming convention application (PRESERVE vs GRAPHQL_IDIOMATIC) and identifier sanitization.
-"""
+"""Schema to test naming convention application (PRESERVE vs GRAPHQL_IDIOMATIC) and identifier sanitization."""
 type Sanitizationcoverage {
-  """
-  Already camelCase
-  """
+  "Already camelCase"
   standardField: String
-  """
-  Should become camelCase in idiomatic mode
-  """
+  "Should become camelCase in idiomatic mode"
   pascalCaseField: String
-  """
-  Should become camelCase in idiomatic mode
-  """
+  "Should become camelCase in idiomatic mode"
   snakeCaseField: String
-  """
-  Should become camelCase in idiomatic mode
-  """
+  "Should become camelCase in idiomatic mode"
   sCREAMINGSNAKECASE: String
-  """
-  Contains dashes, needs sanitization
-  """
+  "Contains dashes, needs sanitization"
   kebabCaseField: String
-  """
-  Contains dots, needs sanitization
-  """
+  "Contains dots, needs sanitization"
   fieldWithDots: String
-  """
-  Contains spaces, needs sanitization
-  """
+  "Contains spaces, needs sanitization"
   fieldWithSpaces: String
-  """
-  Contains special chars, needs sanitization
-  """
+  "Contains special chars, needs sanitization"
   fieldWithSpecialChars: String
-  """
-  Starts with number, invalid GraphQL identifier
-  """
+  "Starts with number, invalid GraphQL identifier"
   _123numericStart: String
-  """
-  Starts with double underscore, reserved in GraphQL
-  """
+  "Starts with double underscore, reserved in GraphQL"
   doubleUnderscore: String
   reservedKeywords: ReservedKeywords
   complexTypeRef: ComplexTypeName123

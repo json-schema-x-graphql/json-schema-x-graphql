@@ -1,7 +1,5 @@
 type Level2 {
-  """
-  Bottom of the rabbit hole
-  """
+  "Bottom of the rabbit hole"
   level1: String
 }
 

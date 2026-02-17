@@ -6,9 +6,7 @@ type Structure {
   data: DeepData
 }
 
-"""
-Test schema for deeply nested $ref resolution
-"""
+"Test schema for deeply nested $ref resolution"
 type Root {
   simple: String
   deep: DeepData

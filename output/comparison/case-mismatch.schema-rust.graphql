@@ -1,55 +1,35 @@
-"""
-User information (defined in camelCase)
-"""
+"User information (defined in camelCase)"
 type UserInfo {
-  """
-  User ID
-  """
+  "User ID"
   userId: ID!
-  """
-  Full name
-  """
+  "Full name"
   fullName: String!
   emailAddress: Email
 }
 
-"""
-Account details (defined in PascalCase)
-"""
+"Account details (defined in PascalCase)"
 type AccountDetails {
   accountId: ID!
   accountType: String!
   createdAt: DateTime
 }
 
-"""
-User profile (defined in snake_case)
-"""
+"User profile (defined in snake_case)"
 type UserProfile {
   profileId: ID
   bio: String
   avatarUrl: URI
 }
 
-"""
-Test schema where $ref paths use different casing than definitions
-"""
+"Test schema where $ref paths use different casing than definitions"
 type Casemismatchtest {
-  """
-  Reference using snake_case when definition is camelCase
-  """
+  "Reference using snake_case when definition is camelCase"
   user: UserInfo
-  """
-  Reference using snake_case when definition is PascalCase
-  """
+  "Reference using snake_case when definition is PascalCase"
   account: AccountDetails
-  """
-  Reference using camelCase when definition is snake_case
-  """
+  "Reference using camelCase when definition is snake_case"
   profile: UserProfile
-  """
-  Reference using PascalCase when definition is camelCase
-  """
+  "Reference using PascalCase when definition is camelCase"
   alternateUser: UserInfo
 }
 

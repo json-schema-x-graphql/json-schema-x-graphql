@@ -1,35 +1,21 @@
-"""
-External reference to ./ref_target.json
-"""
+"External reference to ./ref_target.json"
 type RefTargetJson {
-  """
-  Placeholder for external reference
-  """
+  "Placeholder for external reference"
   externalRef: String
 }
 
-"""
-External reference to ./ref_target.json#/definitions/Address
-"""
+"External reference to ./ref_target.json#/definitions/Address"
 type Address {
-  """
-  Placeholder for external reference
-  """
+  "Placeholder for external reference"
   externalRef: String
 }
 
 type Maindocument {
-  """
-  A property defined locally in the main document
-  """
+  "A property defined locally in the main document"
   localProp: String
-  """
-  Reference to the root of an external document
-  """
+  "Reference to the root of an external document"
   externalRoot: RefTargetJson
-  """
-  Reference to a specific definition in an external document
-  """
+  "Reference to a specific definition in an external document"
   externalDefinition: Address
 }
 

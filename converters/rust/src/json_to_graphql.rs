@@ -1367,12 +1367,22 @@ fn format_directives(directives: &JsonValue) -> Result<String> {
     Ok(output)
 }
 
-fn format_description(description: &str, _options: &crate::types::ConversionOptions) -> String {
-    // Always use block-style (triple-quoted) format to match Node.js output
-    format!(
-        "\"\"\"\n{}\n\"\"\"\n",
-        description.replace("\"\"\"", "\\\"\"\"")
-    )
+fn format_description(description: &str, options: &crate::types::ConversionOptions) -> String {
+    // Use block-style (triple-quoted) format if description exceeds threshold or contains newlines
+    let should_block =
+        description.contains('\n') || description.len() >= options.description_block_threshold;
+
+    if should_block {
+        // Format as block string without extra newlines: """description"""
+        // The calling context will add newlines as needed
+        format!(
+            "\"\"\"{}\"\"\"\n",
+            description.replace("\"\"\"", "\\\"\"\"")
+        )
+    } else {
+        // Format as inline string without extra newlines: "description"
+        format!("\"{}\"\n", description.replace('"', "\\\""))
+    }
 }
 
 fn sanitize_type_name(value: &str, naming: NamingConvention) -> String {

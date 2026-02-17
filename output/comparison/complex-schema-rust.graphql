@@ -1,6 +1,4 @@
-"""
-Additional metadata
-"""
+"Additional metadata"
 type Metadata {
   createdAt: DateTime
   updatedAt: DateTime
@@ -60,71 +58,41 @@ type Conditionalfield {
   taxId: ID
 }
 
-"""
-A comprehensive test schema covering all JSON Schema features for round-trip validation
-"""
+"""A comprehensive test schema covering all JSON Schema features for round-trip validation"""
 type Complextestschema @auth {
-  """
-  Unique identifier
-  """
+  "Unique identifier"
   id: ID!
-  """
-  Name field with length constraints
-  """
+  "Name field with length constraints"
   name: String!
-  """
-  Email address
-  """
+  "Email address"
   email: Email!
-  """
-  Age in years
-  """
+  "Age in years"
   age: Int
-  """
-  Score value
-  """
+  "Score value"
   score: Float
-  """
-  Active status flag
-  """
+  "Active status flag"
   isActive: Boolean
-  """
-  Array of tags
-  """
+  "Array of tags"
   tags: [String]
-  """
-  User roles
-  """
+  "User roles"
   roles: [String]
-  """
-  Additional metadata
-  """
+  "Additional metadata"
   metadata: Metadata
-  """
-  Current status
-  """
+  "Current status"
   status: String
   address: Address
   phoneNumbers: [Phonenumbers]
   preferences: Preferences
-  """
-  Field that can be null
-  """
+  "Field that can be null"
   nullableField: JSON
-  """
-  Array with mixed types
-  """
+  "Array with mixed types"
   mixedArray: [JSON]
   dateFields: Datefields
   complexNested: Complexnested
   conditionalField: Conditionalfield
-  """
-  Field that accepts either email or URI
-  """
+  "Field that accepts either email or URI"
   anyOfExample: JSON
-  """
-  Combined schema using allOf
-  """
+  "Combined schema using allOf"
   allOfExample: JSON
 }
 

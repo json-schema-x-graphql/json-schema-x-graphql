@@ -1,90 +1,46 @@
-"""
-Complete user service schema demonstrating all x-graphql-* extensions
-"""
+"Complete user service schema demonstrating all x-graphql-* extensions"
 type User @key(fields: "\"id\"") @extends {
-  """
-  Unique user identifier
-  """
+  "Unique user identifier"
   id: ID! @external
-  """
-  Unique username for login
-  """
+  "Unique username for login"
   username: String!
-  """
-  User's email address
-  """
+  "User's email address"
   email: Email!
-  """
-  User's first name
-  """
+  "User's first name"
   firstName: String
-  """
-  User's last name
-  """
+  "User's last name"
   lastName: String
-  """
-  User's full name (computed)
-  """
+  "User's full name (computed)"
   fullName: String @requires(fields: "\"firstName lastName\"")
-  """
-  User's date of birth
-  """
+  "User's date of birth"
   dateOfBirth: Date
-  """
-  Account creation timestamp
-  """
+  "Account creation timestamp"
   createdAt: DateTime!
-  """
-  Last update timestamp
-  """
+  "Last update timestamp"
   updatedAt: DateTime!
-  """
-  Whether the user account is active
-  """
+  "Whether the user account is active"
   isActive: Boolean!
-  """
-  Whether the user's email is verified
-  """
+  "Whether the user's email is verified"
   isVerified: Boolean!
-  """
-  User's role in the system
-  """
+  "User's role in the system"
   role: UserRole!
-  """
-  User's age in years
-  """
+  "User's age in years"
   age: Int
-  """
-  Number of profile views
-  """
+  "Number of profile views"
   profileViews: Int!
-  """
-  User's average rating
-  """
+  "User's average rating"
   rating: Float
-  """
-  URL to user's avatar image
-  """
+  "URL to user's avatar image"
   avatarUrl: URL
-  """
-  User tags for categorization
-  """
+  "User tags for categorization"
   tags: [String!]!
-  """
-  List of user's friends
-  """
+  "List of user's friends"
   friends(limit: Int = 10, offset: Int = 0): [User!]
-  """
-  User's posts
-  """
+  "User's posts"
   posts(limit: Int = 20, filter: PostFilter): [Post!]!
-  """
-  User preferences and settings
-  """
+  "User preferences and settings"
   settings: UserSettings
-  """
-  Additional user metadata
-  """
+  "Additional user metadata"
   metadata: JSONObject
 }
 

@@ -1,6 +1,4 @@
-"""
-An address defined in an external file
-"""
+"An address defined in an external file"
 type Address {
   street: String
   city: String
@@ -8,9 +6,7 @@ type Address {
 }
 
 type Externalreftarget {
-  """
-  A field in the external document root
-  """
+  "A field in the external document root"
   commonField: String
 }
 
