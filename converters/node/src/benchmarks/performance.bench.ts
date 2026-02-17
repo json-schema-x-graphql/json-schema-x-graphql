@@ -6,7 +6,6 @@
 
 import * as fs from "fs";
 import * as path from "path";
-// @ts-expect-error - benchmark types may not be available in all environments
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Benchmark = require("benchmark");
 import { JsonSchemaValidator } from "../cli/validate";

@@ -197,7 +197,8 @@ class GraphQLSDLValidator {
         const warnings = [];
         try {
             // Parse the SDL
-            const document = parse(sdl);
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const _document = parse(sdl);
             // Validate using GraphQL's built-in validator
             try {
                 const schema = buildSchema(sdl);

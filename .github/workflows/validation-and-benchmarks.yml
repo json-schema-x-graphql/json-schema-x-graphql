@@ -34,12 +34,12 @@ jobs:
 
       - name: Build validation CLI
         working-directory: converters/rust
-        run: cargo build --release --bin validate --features cli
+        run: cargo build --release --bin jxql --features cli
 
       - name: Run JSON Schema validation
         working-directory: converters/rust
         run: |
-          ./target/release/validate json-schema ../test-data/x-graphql -r || true
+          ./target/release/jxql json-schema ../test-data/x-graphql -r || true
           echo "Validation completed (exit code: $?)"
 
       - name: Run validation tests
@@ -70,13 +70,13 @@ jobs:
 
       - name: Build validation CLI
         working-directory: converters/rust
-        run: cargo build --release --bin validate --features cli
+        run: cargo build --release --bin jxql --features cli
 
       - name: Run GraphQL SDL validation
         working-directory: converters/rust
         run: |
           if [ -d "../test-data/x-graphql/expected" ]; then
-            ./target/release/validate graphql ../test-data/x-graphql/expected -r || true
+            ./target/release/jxql graphql ../test-data/x-graphql/expected -r || true
             echo "SDL validation completed (exit code: $?)"
           else
             echo "Expected SDL directory not found, skipping"
@@ -171,7 +171,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
           cache: 'npm'
           cache-dependency-path: converters/node/package-lock.json
 
@@ -208,7 +208,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '24'
           cache: 'npm'
           cache-dependency-path: converters/node/package-lock.json
 
@@ -247,7 +247,7 @@ jobs:
         run: |
           echo "Testing full validation pipeline..."
           cd converters/rust
-          cargo run --bin validate --features cli -- json-schema ../test-data/x-graphql -r --format json > rust-validation.json || true
+          cargo run --bin jxql --features cli -- json-schema ../test-data/x-graphql -r --format json > rust-validation.json || true
 
           cd ../node
           node dist/cli/validate.js json-schema ../test-data/x-graphql -r --format json > node-validation.json || true
