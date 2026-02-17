@@ -13,7 +13,7 @@ enum UserRole {
   GUEST
 }
 
-type User implements Node & Timestamped @shareable @key(fields: "id") @key(fields: "email") {
+type User implements Node & Timestamped @shareable @key(fields: "id email") {
   id: ID!
   email: Email!
   username: String!

@@ -73,7 +73,7 @@
     "combinator_edge_cases": {
       "type": "object",
       "properties": {
-        "one_of_empty": { "oneOf": [] },
+        "one_of_valid": { "oneOf": [{ "type": "string" }] },
         "any_of_single": { "anyOf": [{ "type": "string" }] },
         "all_of_conflict": {
           "allOf": [{ "type": "string" }, { "type": "number" }]
