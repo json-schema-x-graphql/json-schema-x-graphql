@@ -55,16 +55,40 @@ export function extractDirectives(
       });
     }
 
+    // Only process federation-keys if it's an array (matching Rust behavior)
     if (Array.isArray(schema["x-graphql-federation-keys"])) {
+      // Collect all keys into a single directive
+      const keyFields: string[] = [];
+      const keyConfigs: Array<{ fields: string; resolvable?: boolean }> = [];
+      
       for (const key of schema["x-graphql-federation-keys"]) {
         if (typeof key === "string") {
-          directives.push({ name: "key", args: { fields: key } });
+          keyFields.push(key);
         } else if (key && typeof key === "object" && key.fields) {
-          directives.push({
-            name: "key",
-            args: { fields: key.fields, resolvable: key.resolvable },
+          keyConfigs.push({
+            fields: key.fields,
+            resolvable: key.resolvable,
           });
         }
+      }
+      
+      // If we have string keys, combine them into a single directive
+      if (keyFields.length > 0) {
+        directives.push({
+          name: "key",
+          args: { fields: keyFields.join(" ") },
+        });
+      }
+      
+      // Add any object-format key configs as separate directives
+      for (const config of keyConfigs) {
+        directives.push({
+          name: "key",
+          args: {
+            fields: config.fields,
+            ...(config.resolvable !== undefined && { resolvable: config.resolvable }),
+          },
+        });
       }
     }
 
