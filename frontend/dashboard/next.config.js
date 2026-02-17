@@ -5,7 +5,9 @@ import path from "path";
 // Create a CommonJS `require` in this ESM context so calls like `require.resolve` work.
 const require = createRequire(import.meta.url);
 
-const withBundleAnalyzerPlugin = withBundleAnalyzer({ enabled: process.env.ANALYZE === "true" });
+const withBundleAnalyzerPlugin = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 // Use project root for path resolution
 const projectRoot = process.cwd();
@@ -16,8 +18,8 @@ const projectRoot = process.cwd();
 const config = {
   // Added by scripts/linkinator/track-broken-links.cjs to ensure /graphql-editor is served
   rewrites: async () => [
-    { source: '/graphql-editor', destination: '/graphql-editor/index.html' },
-    { source: '/graphql-editor/:path*', destination: '/graphql-editor/:path*' },
+    { source: "/graphql-editor", destination: "/graphql-editor/index.html" },
+    { source: "/graphql-editor/:path*", destination: "/graphql-editor/:path*" },
   ],
 
   output: "export",
@@ -47,19 +49,36 @@ const config = {
     // the installed CJS entry point under the project root.
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      "js-yaml/dist/js-yaml.mjs": path.resolve(projectRoot, "node_modules", "js-yaml", "index.js"),
-      "js-yaml": path.resolve(projectRoot, "node_modules", "js-yaml", "index.js"),
+      "js-yaml/dist/js-yaml.mjs": path.resolve(
+        projectRoot,
+        "node_modules",
+        "js-yaml",
+        "index.js",
+      ),
+      "js-yaml": path.resolve(
+        projectRoot,
+        "node_modules",
+        "js-yaml",
+        "index.js",
+      ),
     };
 
     // When building on the server, some packages import Monaco CSS via exact paths
     // which Next's CSS handling inspects too early. Provide server-only aliases that
     // map those CSS imports to a tiny CommonJS shim so the server build won't fail.
     if (isServer) {
-      const serverShim = path.resolve(projectRoot, "src", "compat", "server", "empty-css.cjs");
+      const serverShim = path.resolve(
+        projectRoot,
+        "src",
+        "compat",
+        "server",
+        "empty-css.cjs",
+      );
       config.resolve.alias = {
         ...(config.resolve.alias || {}),
         "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": serverShim,
-        "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css": serverShim,
+        "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css":
+          serverShim,
         "monaco-editor/esm/vs/editor/editor.main.css": serverShim,
         "monaco-editor/esm/vs/editor/edcore.main.css": serverShim,
         "graphql-editor/dist/style.css": serverShim,
@@ -80,31 +99,27 @@ const config = {
         projectRoot,
         "src",
         "compat",
-        "monaco-css-shim.js"
+        "monaco-css-shim.js",
       ),
-      "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css": path.resolve(
-        projectRoot,
-        "src",
-        "compat",
-        "monaco-css-shim.js"
-      ),
+      "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css":
+        path.resolve(projectRoot, "src", "compat", "monaco-css-shim.js"),
       "monaco-editor/esm/vs/editor/editor.main.css": path.resolve(
         projectRoot,
         "src",
         "compat",
-        "monaco-css-shim.js"
+        "monaco-css-shim.js",
       ),
       "monaco-editor/esm/vs/editor/edcore.main.css": path.resolve(
         projectRoot,
         "src",
         "compat",
-        "monaco-css-shim.js"
+        "monaco-css-shim.js",
       ),
       "graphql-editor/dist/style.css": path.resolve(
         projectRoot,
         "src",
         "compat",
-        "monaco-css-shim.js"
+        "monaco-css-shim.js",
       ),
     };
 
@@ -119,7 +134,7 @@ const config = {
     // This helps prevent the Next.js error: "Global CSS cannot be imported from within node_modules"
     // for known monaco-editor CSS imports (e.g. aria.css, editor.main.css).
     config.module.rules.unshift({
-      test: modulePath =>
+      test: (modulePath) =>
         typeof modulePath === "string" &&
         /node_modules[\\/]+monaco-editor[\\/].*aria\\.css$/i.test(modulePath),
       use: [
@@ -130,10 +145,10 @@ const config = {
     });
 
     config.module.rules.unshift({
-      test: modulePath =>
+      test: (modulePath) =>
         typeof modulePath === "string" &&
         /node_modules[\\/]+monaco-editor[\\/].*(editor\\.main\\.css$|vs[\\/].*\\.css$)/i.test(
-          modulePath
+          modulePath,
         ),
       use: [
         {
@@ -153,11 +168,11 @@ const config = {
     // targeted node_modules. This keeps the rule narrowly scoped and avoids triggering
     // Next.js' "custom CSS" detection for general CSS handling.
     config.module.rules.push({
-      test: modulePath =>
+      test: (modulePath) =>
         typeof modulePath === "string" &&
         /\.css$/i.test(modulePath) &&
         /node_modules[\\/]+(monaco-editor|graphql-editor|@monaco-editor[\\/]+react|@mantine[\\/]+code-highlight)/.test(
-          modulePath
+          modulePath,
         ),
       include: [
         /node_modules[\\/]+monaco-editor/,
@@ -178,7 +193,7 @@ const config = {
     // Use a function-based test to keep the rule narrowly targeted and avoid Next.js
     // detecting a broad custom CSS configuration.
     config.module.rules.push({
-      test: modulePath =>
+      test: (modulePath) =>
         typeof modulePath === "string" &&
         /(actionbar\.css$|editor\.main\.css$)/.test(modulePath) &&
         /node_modules[\\/]+monaco-editor/.test(modulePath),
@@ -219,7 +234,7 @@ const config = {
             new webpack.IgnorePlugin({
               resourceRegExp:
                 /(?:graphql-editor|@monaco-editor|monaco-editor|@monaco-editor\/react)/,
-            })
+            }),
           );
         } catch (err) {
           // If IgnorePlugin isn't available for some reason, continue gracefully.
@@ -227,40 +242,55 @@ const config = {
       }
 
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(/monaco-editor[\\/].*\\.css$/i, resource => {
-          resource.request = emptyCss;
-        })
+        new webpack.NormalModuleReplacementPlugin(
+          /monaco-editor[\\/].*\\.css$/i,
+          (resource) => {
+            resource.request = emptyCss;
+          },
+        ),
       );
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(/graphql-editor[\\/].*\\.css$/i, resource => {
-          resource.request = emptyCss;
-        })
+        new webpack.NormalModuleReplacementPlugin(
+          /graphql-editor[\\/].*\\.css$/i,
+          (resource) => {
+            resource.request = emptyCss;
+          },
+        ),
       );
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(/@monaco-editor[\\/].*\\.css$/i, resource => {
-          resource.request = emptyCss;
-        })
+        new webpack.NormalModuleReplacementPlugin(
+          /@monaco-editor[\\/].*\\.css$/i,
+          (resource) => {
+            resource.request = emptyCss;
+          },
+        ),
       );
       config.plugins.push(
         new webpack.NormalModuleReplacementPlugin(
           /@mantine[\\/].*code-highlight.*\\.css$/i,
-          resource => {
+          (resource) => {
             resource.request = emptyCss;
-          }
-        )
+          },
+        ),
       );
     } catch (e) {
       // If webpack isn't available or plugin fails, continue without plugin — the earlier rules should help.
       // We intentionally do not throw here to avoid breaking Next.js startup.
       // eslint-disable-next-line no-console
-      console.warn("Could not register NormalModuleReplacementPlugin for editor CSS:", e);
+      console.warn(
+        "Could not register NormalModuleReplacementPlugin for editor CSS:",
+        e,
+      );
     }
 
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
     config.experiments = { asyncWebAssembly: true, layers: true };
 
     if (!isServer) {
-      config.output.environment = { ...config.output.environment, asyncFunction: true };
+      config.output.environment = {
+        ...config.output.environment,
+        asyncFunction: true,
+      };
     }
 
     return config;

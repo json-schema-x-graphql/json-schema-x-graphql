@@ -72,25 +72,27 @@ pnpm run preview
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl/Cmd + S` | Save current state |
-| `Ctrl/Cmd + Z` | Undo |
-| `Ctrl/Cmd + Shift + Z` | Redo |
-| `Ctrl/Cmd + F` | Find |
-| `Ctrl/Cmd + H` | Replace |
-| `Ctrl/Cmd + /` | Toggle comment |
-| `Alt + Shift + F` | Format document |
-| `F1` | Command palette |
+| Shortcut               | Action             |
+| ---------------------- | ------------------ |
+| `Ctrl/Cmd + S`         | Save current state |
+| `Ctrl/Cmd + Z`         | Undo               |
+| `Ctrl/Cmd + Shift + Z` | Redo               |
+| `Ctrl/Cmd + F`         | Find               |
+| `Ctrl/Cmd + H`         | Replace            |
+| `Ctrl/Cmd + /`         | Toggle comment     |
+| `Alt + Shift + F`      | Format document    |
+| `F1`                   | Command palette    |
 
 ### Converter Selection
 
 **Auto Mode (Recommended)**
+
 - Automatically selects the best available converter
 - Prefers WASM (faster, no network) when available
 - Falls back to Node.js if WASM initialization fails
 
 **Manual Selection**
+
 - `rust-wasm`: High performance, runs in browser, no network required
 - `node`: Server-side conversion, requires backend API endpoint
 
@@ -139,17 +141,17 @@ type Product @key(fields: "upc") {
   Universal Product Code
   """
   upc: String!
-  
+
   """
   Product name
   """
   name: String!
-  
+
   """
   Price in USD
   """
   price: Float
-  
+
   inStock: Boolean
 }
 ```
@@ -168,43 +170,43 @@ const graphqlSchema = api.getGraphQLSchema();
 
 // Update schemas
 await api.setJsonSchema('{ "type": "object" }');
-await api.setGraphQLSchema('type User { id: ID! }');
+await api.setGraphQLSchema("type User { id: ID! }");
 
 // Get all schemas at once
 const { jsonSchema, graphqlSchema } = api.getAllSchemas();
 
 // Trigger conversion manually
 const result = await api.convert();
-console.log('Conversion:', result.success ? 'succeeded' : 'failed');
+console.log("Conversion:", result.success ? "succeeded" : "failed");
 
 // Validate current schema
 const validation = await api.validate();
-console.log('Validation errors:', validation.errors);
+console.log("Validation errors:", validation.errors);
 
 // Get validation errors
 const errors = api.getValidationErrors();
 
 // Get conversion metadata
 const metadata = api.getConversionMetadata();
-console.log('Types generated:', metadata?.typesGenerated);
+console.log("Types generated:", metadata?.typesGenerated);
 
 // Update settings
 api.updateSettings({
-  converterEngine: 'rust-wasm',
+  converterEngine: "rust-wasm",
   autoConvert: true,
-  theme: 'vs-dark'
+  theme: "vs-dark",
 });
 
 // Get current settings
 const settings = api.getSettings();
 
 // Export schemas
-const exported = await api.exportSchemas('json');
-console.log('Exported:', exported.filename);
+const exported = await api.exportSchemas("json");
+console.log("Exported:", exported.filename);
 
 // Get complete state snapshot
 const snapshot = api.getStateSnapshot();
-console.log('State:', snapshot);
+console.log("State:", snapshot);
 ```
 
 ### State Snapshot Structure
@@ -232,9 +234,9 @@ interface AppStateSnapshot {
 // Update WASM configuration
 converterManager.updateConfig({
   wasmConfig: {
-    wasmPath: '/custom/path/to/wasm',
+    wasmPath: "/custom/path/to/wasm",
     autoInit: true,
-  }
+  },
 });
 ```
 
@@ -244,9 +246,9 @@ converterManager.updateConfig({
 // Update Node converter endpoint
 converterManager.updateConfig({
   nodeConfig: {
-    endpoint: 'https://api.example.com/convert',
+    endpoint: "https://api.example.com/convert",
     timeout: 30000,
-  }
+  },
 });
 ```
 
@@ -256,8 +258,8 @@ Settings are persisted in localStorage and include:
 
 ```typescript
 interface AppSettings {
-  converterEngine: 'rust-wasm' | 'node' | 'auto';
-  theme: 'vs-dark' | 'vs-light' | 'hc-black' | 'hc-light';
+  converterEngine: "rust-wasm" | "node" | "auto";
+  theme: "vs-dark" | "vs-light" | "hc-black" | "hc-light";
   autoConvert: boolean;
   autoValidate: boolean;
   showLineNumbers: boolean;
@@ -278,20 +280,20 @@ interface AppSettings {
 The application tracks converter performance:
 
 ```javascript
-import { converterManager } from './converters/converter-manager';
+import { converterManager } from "./converters/converter-manager";
 
 // Get all performance metrics
 const metrics = converterManager.getPerformanceMetrics();
 
 // Get average conversion time by engine
 const avgTimes = converterManager.getAverageConversionTime();
-console.log('WASM avg:', avgTimes['rust-wasm'], 'ms');
-console.log('Node avg:', avgTimes['node'], 'ms');
+console.log("WASM avg:", avgTimes["rust-wasm"], "ms");
+console.log("Node avg:", avgTimes["node"], "ms");
 
 // Get success rates
 const successRates = converterManager.getSuccessRate();
-console.log('WASM success:', successRates['rust-wasm'] * 100, '%');
-console.log('Node success:', successRates['node'] * 100, '%');
+console.log("WASM success:", successRates["rust-wasm"] * 100, "%");
+console.log("Node success:", successRates["node"] * 100, "%");
 
 // Clear metrics
 converterManager.clearPerformanceMetrics();
@@ -303,7 +305,7 @@ converterManager.clearPerformanceMetrics();
 
 ```typescript
 interface ValidationError {
-  severity: 'error' | 'warning' | 'info' | 'hint';
+  severity: "error" | "warning" | "info" | "hint";
   message: string;
   path?: string; // JSON path (e.g., "properties.name.type")
   line?: number;
@@ -322,19 +324,19 @@ Many validation errors include auto-fix suggestions:
 interface AutoFix {
   description: string;
   changes: TextChange[];
-  confidence: 'high' | 'medium' | 'low';
+  confidence: "high" | "medium" | "low";
 }
 ```
 
 ### Common Error Messages
 
-| Error | Suggestion |
-|-------|------------|
-| Invalid JSON | Check syntax: trailing commas, quotes, brackets |
-| Empty schema | Add at least one type definition |
-| Missing required property | Add required fields to satisfy the schema |
-| Type mismatch | Ensure value matches expected type |
-| Unknown keyword | Check JSON Schema version compatibility |
+| Error                     | Suggestion                                      |
+| ------------------------- | ----------------------------------------------- |
+| Invalid JSON              | Check syntax: trailing commas, quotes, brackets |
+| Empty schema              | Add at least one type definition                |
+| Missing required property | Add required fields to satisfy the schema       |
+| Type mismatch             | Ensure value matches expected type              |
+| Unknown keyword           | Check JSON Schema version compatibility         |
 
 ## 🏗️ Architecture
 
@@ -374,6 +376,7 @@ schema-authoring/
 ### State Management
 
 Uses Zustand with:
+
 - **Immer**: Immutable state updates
 - **Persist**: LocalStorage persistence
 - **Devtools**: Redux DevTools integration
@@ -447,6 +450,7 @@ The Node.js converter requires a backend API with these endpoints:
 ### POST `/api/convert`
 
 **Request:**
+
 ```json
 {
   "direction": "json-to-graphql" | "graphql-to-json",
@@ -461,6 +465,7 @@ The Node.js converter requires a backend API with these endpoints:
 ```
 
 **Response:**
+
 ```json
 {
   "output": "string",
@@ -477,6 +482,7 @@ The Node.js converter requires a backend API with these endpoints:
 Health check endpoint.
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -489,6 +495,7 @@ Health check endpoint.
 Get converter version.
 
 **Response:**
+
 ```json
 {
   "version": "2.0.0"

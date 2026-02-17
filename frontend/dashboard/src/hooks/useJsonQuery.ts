@@ -3,12 +3,16 @@ import useFile from "../store/useFile";
 import useJson from "../store/useJson";
 
 const useJsonQuery = () => {
-  const getJson = useJson(state => state.getJson);
-  const setContents = useFile(state => state.setContents);
+  const getJson = useJson((state) => state.getJson);
+  const setContents = useFile((state) => state.setContents);
 
   const transformer = async ({ value }) => {
     const { run } = await import("json_typegen_wasm");
-    return run("Root", value, JSON.stringify({ output_mode: "typescript/typealias" }));
+    return run(
+      "Root",
+      value,
+      JSON.stringify({ output_mode: "typescript/typealias" }),
+    );
   };
 
   const updateJson = async (query: string, cb?: () => void) => {

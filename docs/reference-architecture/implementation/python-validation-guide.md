@@ -132,7 +132,7 @@ Add to your GitHub Actions workflow:
 - name: Set up Python
   uses: actions/setup-python@v5
   with:
-    python-version: '3.9'
+    python-version: "3.9"
 
 - name: Install uv
   run: curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -201,6 +201,7 @@ Example of a valid schema structure:
 ## What Gets Validated
 
 ### Schema Validation
+
 The validation script checks:
 
 - ✅ Schema is valid JSON
@@ -212,33 +213,40 @@ The validation script checks:
 ### Best Practices Linting (with `--lint` or `-v`)
 
 **Schema Version & Structure:**
+
 - Missing or outdated `$schema` declaration
 - Missing top-level `type` definition
 - Missing `title` or `description`
 
 **Documentation:**
+
 - Properties without descriptions
 - Missing examples in the schema
 
 **Type Constraints:**
+
 - Numbers without min/max constraints
 - Strings without format/pattern (suggests formats for email, URL, dates)
 - Arrays without `items` definition or size constraints
 
 **Validation Rules:**
+
 - Invalid `required` fields (not in properties)
 - Missing `required` fields specification
 - Missing or ambiguous `additionalProperties`
 
 **Enum & Constants:**
+
 - Empty enum definitions
 - Single-value enums (should use `const`)
 
 **Deprecated Features:**
+
 - Old keywords like `definitions` (use `$defs` in modern drafts)
 - References to old JSON Schema drafts
 
 **$ref Usage:**
+
 - Invalid or malformed `$ref` paths
 
 ## Files Validated

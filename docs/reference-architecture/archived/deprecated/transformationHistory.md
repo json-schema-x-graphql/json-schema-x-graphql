@@ -7,9 +7,9 @@
 > Archived: December 2024  
 > Reason: Superseded by consolidated mapping & transformation guides
 
-## TransformationHistory Storage 
+## TransformationHistory Storage
 
->This is an example of the information that should be stored separately in the ETL job pipeline.
+> This is an example of the information that should be stored separately in the ETL job pipeline.
 
 Based on the schema design, `transformationHistory` provides a comprehensive audit trail of all data transformations applied throughout the multi-system integration pipeline. Here's how it's expected to be stored and used:
 
@@ -20,9 +20,15 @@ Based on the schema design, `transformationHistory` provides a comprehensive aud
 ```json
 {
   "transformationHistory": {
-    "logistics_mgmtToAssist": { /* transformation details */ },
-    "legacy_procurementToEasi": { /* transformation details */ },
-    "intake_processToFpdsPrep": { /* transformation details */ }
+    "logistics_mgmtToAssist": {
+      /* transformation details */
+    },
+    "legacy_procurementToEasi": {
+      /* transformation details */
+    },
+    "intake_processToFpdsPrep": {
+      /* transformation details */
+    }
   }
 }
 ```
@@ -38,7 +44,7 @@ Each transformation record follows this comprehensive structure:
   "transformationName": {
     "transformationId": "unique-transformation-id",
     "sourceSystem": "Logistics Mgmt",
-    "targetSystem": "Legacy Procurement", 
+    "targetSystem": "Legacy Procurement",
     "transformedDate": "2024-01-10T09:00:00Z",
     "transformationVersion": "v2.1.3",
     "executionContext": {
@@ -55,7 +61,10 @@ Each transformation record follows this comprehensive structure:
       "fieldsTransformed": 45,
       "fieldsSkipped": 7,
       "defaultsApplied": 3,
-      "businessRulesApplied": ["sba_client_defaults", "logistics_mgmt_field_mapping"],
+      "businessRulesApplied": [
+        "sba_client_defaults",
+        "logistics_mgmt_field_mapping"
+      ],
       "validationErrors": 1,
       "warnings": 2
     },
@@ -80,6 +89,7 @@ Each transformation record follows this comprehensive structure:
 ### 3. Detailed Transformation Examples
 
 #### **A. Logistics Mgmt to Legacy Procurement Transformation**
+
 ```json
 {
   "logistics_mgmtToAssist": {
@@ -93,14 +103,18 @@ Each transformation record follows this comprehensive structure:
       "contractScope": "Active contracts from approved contract list",
       "templatesTargeted": [
         "01 GSA Acquisition Template - Acquisition Data.xlsx",
-        "02 GSA Acquisition Template - Client Data.xlsx", 
+        "02 GSA Acquisition Template - Client Data.xlsx",
         "03 GSA Acquisition Template - Award Base In-Process Data.xlsx"
       ]
     },
     "businessRulesApplied": {
       "sba_client_defaults": {
         "applied": true,
-        "fieldsAffected": ["agencyCode", "clientOrganizationName", "officeAddress"],
+        "fieldsAffected": [
+          "agencyCode",
+          "clientOrganizationName",
+          "officeAddress"
+        ],
         "defaultValues": {
           "agencyCode": "073-00",
           "clientOrganizationName": "SMALL BUSINESS ADMINISTRATION"
@@ -116,7 +130,7 @@ Each transformation record follows this comprehensive structure:
     "fieldTransformations": [
       {
         "sourceField": "data.programNumber",
-        "targetField": "acquisitionData.originalAwardPiid", 
+        "targetField": "acquisitionData.originalAwardPiid",
         "transformationType": "direct_mapping",
         "success": true,
         "dataType": "string"
@@ -136,7 +150,7 @@ Each transformation record follows this comprehensive structure:
         "reason": "Standard GSA interagency relationship"
       },
       {
-        "field": "independentGovernmentEstimate", 
+        "field": "independentGovernmentEstimate",
         "defaultValue": 1.0,
         "reason": "IGE data not populated in legacy Logistics Mgmt system"
       }
@@ -168,10 +182,11 @@ Each transformation record follows this comprehensive structure:
 ```
 
 #### **B. Legacy Procurement to EASi Transformation**
+
 ```json
 {
   "legacy_procurementToEasi": {
-    "transformationId": "Legacy Procurement-Intake Process-20240112-001", 
+    "transformationId": "Legacy Procurement-Intake Process-20240112-001",
     "sourceSystem": "Legacy Procurement",
     "targetSystem": "Intake Process",
     "transformedDate": "2024-01-12T14:30:00Z",
@@ -191,7 +206,7 @@ Each transformation record follows this comprehensive structure:
     "templateProcessing": {
       "legacy_procurementTemplatesProcessed": [
         "01 GSA Acquisition Template - Acquisition Data.xlsx",
-        "03 GSA Acquisition Template - Award Base In-Process Data.xlsx", 
+        "03 GSA Acquisition Template - Award Base In-Process Data.xlsx",
         "04 GSA Acquisition Template - Award Base Line Item Data.xlsx"
       ],
       "intake_processFieldsGenerated": 127,
@@ -213,7 +228,7 @@ Each transformation record follows this comprehensive structure:
     "fieldLevelTransformations": [
       {
         "sourceField": "awardData.lineItems[].unitPrice",
-        "targetField": "clin.unitPrice", 
+        "targetField": "clin.unitPrice",
         "transformationType": "array_to_individual_records",
         "recordsCreated": 2891,
         "businessRule": "quantity_based_clin_only"
@@ -227,7 +242,10 @@ Each transformation record follows this comprehensive structure:
     ],
     "contract_dataPreparation": {
       "fieldsPrepped": 15,
-      "complianceRulesApplied": ["principal_naics_mapping", "gfp_indicator_mapping"],
+      "complianceRulesApplied": [
+        "principal_naics_mapping",
+        "gfp_indicator_mapping"
+      ],
       "reportingReadiness": true
     }
   }
@@ -235,22 +253,27 @@ Each transformation record follows this comprehensive structure:
 ```
 
 #### **C. EASi to Contract Data Preparation**
+
 ```json
 {
   "intake_processToFpdsPrep": {
     "transformationId": "Intake Process-Contract Data-20240115-001",
-    "sourceSystem": "Intake Process", 
+    "sourceSystem": "Intake Process",
     "targetSystem": "Contract Data_PREP",
     "preparedDate": "2024-01-15T16:20:00Z",
     "complianceContext": {
       "contract_dataReportingRequirements": "Federal Procurement Data System compliance",
       "reportingPeriod": "FY2024_Q2",
-      "mandatoryFields": ["principalNaicsCode", "gfpProvidedUnderThisAction", "localAreaSetAside"]
+      "mandatoryFields": [
+        "principalNaicsCode",
+        "gfpProvidedUnderThisAction",
+        "localAreaSetAside"
+      ]
     },
     "fieldMappings": [
       {
         "intake_processSourceField": "naicsCode",
-        "contract_dataTargetField": "principalNaicsCode", 
+        "contract_dataTargetField": "principalNaicsCode",
         "mappingType": "direct_compliance_mapping",
         "validationRule": "must_be_valid_naics_2022_code"
       },
@@ -269,7 +292,7 @@ Each transformation record follows this comprehensive structure:
     },
     "dataValidation": {
       "contract_dataSchemaValidation": "passed",
-      "businessRuleValidation": "passed", 
+      "businessRuleValidation": "passed",
       "crossSystemConsistency": "verified"
     }
   }
@@ -279,12 +302,13 @@ Each transformation record follows this comprehensive structure:
 ### 4. Usage Patterns and Applications
 
 #### **A. Audit Trail and Compliance**
+
 ```json
 {
   "auditTrail": {
     "transformationChain": [
       "Logistics Mgmt → Legacy Procurement (2024-01-10)",
-      "Legacy Procurement → EASi (2024-01-12)", 
+      "Legacy Procurement → EASi (2024-01-12)",
       "EASi → Contract Data Prep (2024-01-15)"
     ],
     "dataLineage": "Complete transformation history maintained",
@@ -294,6 +318,7 @@ Each transformation record follows this comprehensive structure:
 ```
 
 #### **B. Data Quality Tracking**
+
 ```json
 {
   "qualityProgression": {
@@ -307,13 +332,17 @@ Each transformation record follows this comprehensive structure:
 ```
 
 #### **C. Performance Monitoring**
+
 ```json
 {
   "performanceMetrics": {
     "totalTransformationTime": "5 days 7 hours 20 minutes",
     "recordsProcessed": 1247,
     "averageRecordProcessingTime": "6.2 seconds",
-    "systemBottlenecks": ["CLIN-level processing", "Contract Data compliance validation"]
+    "systemBottlenecks": [
+      "CLIN-level processing",
+      "Contract Data compliance validation"
+    ]
   }
 }
 ```
@@ -321,6 +350,7 @@ Each transformation record follows this comprehensive structure:
 ### 5. Schema Integration Points
 
 #### **Cross-Reference with systemMetadata**
+
 ```json
 {
   "systemMetadata": {
@@ -335,14 +365,17 @@ Each transformation record follows this comprehensive structure:
 ```
 
 #### **Integration with systemExtensions**
+
 ```json
 {
   "systemExtensions": {
-    "intake_process": [{
-      "transformationApplied": "legacy_procurementToEasi",
-      "businessRuleUsed": "ucf_award_rules",
-      "generatedFrom": "legacy_procurement.awardData.lineItems"
-    }]
+    "intake_process": [
+      {
+        "transformationApplied": "legacy_procurementToEasi",
+        "businessRuleUsed": "ucf_award_rules",
+        "generatedFrom": "legacy_procurement.awardData.lineItems"
+      }
+    ]
   }
 }
 ```
@@ -354,7 +387,7 @@ Each transformation record follows this comprehensive structure:
   "errorRecovery": {
     "rollbackCapability": true,
     "recoveryPoints": [
-      "pre_logistics_mgmt_to_legacy_procurement", 
+      "pre_logistics_mgmt_to_legacy_procurement",
       "post_legacy_procurement_validation",
       "pre_intake_process_clin_processing"
     ],

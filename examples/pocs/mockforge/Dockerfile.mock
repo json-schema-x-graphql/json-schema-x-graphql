@@ -1,15 +1,19 @@
 # Dockerfile for Mock GraphQL Services
-FROM node:20-alpine
+FROM node:20-slim
 
 ARG BUILD_ENV=PRODUCTION
 
 WORKDIR /workspace
 
-# Install build dependencies for better-sqlite3
-RUN apk add --no-cache python3 make g++ sqlite ca-certificates
+# Install build dependencies and utilities
+# added wget for healthcheck
+RUN apt-get update && apt-get install -y python3 make g++ sqlite3 ca-certificates curl wget && rm -rf /var/lib/apt/lists/*
 
 # Add the zscaler certificate to the trusted certs only on local builds
 # COPY cannot be conditional, but RUN can run conditional code.
+# We assume .docker/zscaler_cert.pem might not exist in the context, so we create a dummy one if needed or handle failure?
+# Docker COPY will fail if source doesn't exist.
+# The user's POC had it. I will create a dummy .docker directory in the scaffolding next.
 COPY .docker/zscaler_cert.pem /tmp/zscaler.crt
 RUN if [ x"${BUILD_ENV}" = x"LOCAL" ] ; then cp /tmp/zscaler.crt /usr/local/share/ca-certificates/zscaler.crt ; update-ca-certificates ; fi
 

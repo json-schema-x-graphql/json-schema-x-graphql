@@ -9,11 +9,13 @@ This document summarizes the work completed to find, document, and create JSON S
 ### 1. Reference SDL Files Created
 
 **Apollo Classic Example (Users, Reviews, Products)**
+
 - ✅ `sdl/apollo-classic/users-service.graphql` - Users service with `@key(fields: "email")`
 - ✅ `sdl/apollo-classic/products-service.graphql` - Products service with `@key(fields: "upc")`
 - ✅ `sdl/apollo-classic/reviews-service.graphql` - Reviews service extending User and Product entities
 
 **Strawberry GraphQL Example (Books, Reviews)**
+
 - ✅ `sdl/strawberry/books-service.graphql` - Books service with `@key(fields: "id")`
 - ✅ `sdl/strawberry/reviews-service.graphql` - Reviews service extending Book entity
 
@@ -22,11 +24,13 @@ This document summarizes the work completed to find, document, and create JSON S
 ### 2. JSON Schema Implementations
 
 **Apollo Classic Example**
+
 - ✅ `json-schemas/apollo-classic/users-service.json` - User entity with email as federation key
 - ✅ `json-schemas/apollo-classic/products-service.json` - Product entity with UPC as federation key
 - ✅ `json-schemas/apollo-classic/reviews-service.json` - Review entity with User and Product extensions
 
 **Strawberry Example**
+
 - ✅ `json-schemas/strawberry/books-service.json` - Book entity with ID as federation key
 - ✅ `json-schemas/strawberry/reviews-service.json` - Review entity with Book extension
 
@@ -35,6 +39,7 @@ This document summarizes the work completed to find, document, and create JSON S
 ### 3. Documentation
 
 #### Comprehensive Guides
+
 - ✅ `docs/FEDERATION_EXAMPLES_PLAN.md` (437 lines)
   - Complete federation directive mapping tables
   - Implementation phases and timeline
@@ -55,6 +60,7 @@ This document summarizes the work completed to find, document, and create JSON S
   - Next steps with priorities
 
 #### Test Infrastructure
+
 - ✅ `scripts/test-federation-examples.sh` (332 lines)
   - Automated test suite for federation examples
   - Node.js and Rust converter testing
@@ -68,15 +74,15 @@ This document summarizes the work completed to find, document, and create JSON S
 
 ### Complete Mapping Table
 
-| Federation Directive | X-GraphQL Extension | Example | Status |
-|---------------------|---------------------|---------|--------|
-| `@key(fields: "id")` | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }` | All services | ✅ Implemented |
-| `@external` | `"x-graphql-federation": { "external": true }` | Reviews service | ✅ Implemented |
-| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "username" }` | Reviews service | ✅ Implemented |
-| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "firstName lastName" }` | Documented | ✅ Implemented |
-| `extend type` | `"x-graphql-federation": { "extends": true }` | Reviews service | ✅ Implemented |
-| `@shareable` | `"x-graphql-federation": { "shareable": true }` | Users service | ✅ Documented |
-| `@override(from: "...")` | `"x-graphql-federation": { "override": { "from": "service" } }` | Documented | ✅ Documented |
+| Federation Directive       | X-GraphQL Extension                                             | Example         | Status         |
+| -------------------------- | --------------------------------------------------------------- | --------------- | -------------- |
+| `@key(fields: "id")`       | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }`      | All services    | ✅ Implemented |
+| `@external`                | `"x-graphql-federation": { "external": true }`                  | Reviews service | ✅ Implemented |
+| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "username" }`            | Reviews service | ✅ Implemented |
+| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "firstName lastName" }`  | Documented      | ✅ Implemented |
+| `extend type`              | `"x-graphql-federation": { "extends": true }`                   | Reviews service | ✅ Implemented |
+| `@shareable`               | `"x-graphql-federation": { "shareable": true }`                 | Users service   | ✅ Documented  |
+| `@override(from: "...")`   | `"x-graphql-federation": { "override": { "from": "service" } }` | Documented      | ✅ Documented  |
 
 ### Key Patterns Documented
 
@@ -147,6 +153,7 @@ scripts/
    - Query: review(id: ID!), reviews
 
 **Federation Features Demonstrated:**
+
 - ✅ Entity keys
 - ✅ Entity extensions (extend type)
 - ✅ External fields
@@ -171,6 +178,7 @@ scripts/
    - Query: reviews
 
 **Federation Features Demonstrated:**
+
 - ✅ Simple entity key
 - ✅ Entity extension
 - ✅ External field marking
@@ -181,15 +189,14 @@ scripts/
 ### JSON Schema Patterns
 
 #### Entity with Federation Key
+
 ```json
 {
   "User": {
     "type": "object",
     "x-graphql-type-name": "User",
     "x-graphql-federation": {
-      "keys": [
-        { "fields": "email" }
-      ]
+      "keys": [{ "fields": "email" }]
     },
     "properties": {
       "email": {
@@ -203,6 +210,7 @@ scripts/
 ```
 
 #### Entity Extension with External Field
+
 ```json
 {
   "UserExtension": {
@@ -230,6 +238,7 @@ scripts/
 ```
 
 #### Field with @provides
+
 ```json
 {
   "author": {
@@ -304,6 +313,7 @@ chmod +x scripts/test-federation-examples.sh
 **Challenge**: JSON Schema doesn't natively support "extending" types.
 
 **Solution**: Use separate definitions with same type name:
+
 - Original: `User` definition in Users service
 - Extension: `UserExtension` definition in Reviews service
 - Both use `"x-graphql-type-name": "User"`
@@ -314,6 +324,7 @@ chmod +x scripts/test-federation-examples.sh
 **Challenge**: Need to mark fields owned by other services.
 
 **Solution**: Field-level federation metadata:
+
 ```json
 {
   "email": {
@@ -329,6 +340,7 @@ chmod +x scripts/test-federation-examples.sh
 **Challenge**: Each service defines its own Query type.
 
 **Solution**: Define Query as a regular definition in each schema:
+
 ```json
 {
   "Query": {
@@ -342,24 +354,28 @@ chmod +x scripts/test-federation-examples.sh
 ## Next Steps (Recommendations)
 
 ### Immediate (High Priority)
+
 1. Run test script on all examples
 2. Fix any converter issues discovered
 3. Validate with Apollo Rover CLI
 4. Document any edge cases
 
 ### Short-Term
+
 1. Add Semantic Objects example (Planet entity)
 2. Test with Apollo Gateway composition
 3. Create supergraph.yaml configuration
 4. Test end-to-end queries
 
 ### Medium-Term
+
 1. Add Federation 2.x authorization directives
 2. Add composite key examples
 3. Create Docker Compose setup
 4. Add example resolvers
 
 ### Long-Term
+
 1. Real-world production examples
 2. Performance benchmarks
 3. Schema registry integration
@@ -368,12 +384,14 @@ chmod +x scripts/test-federation-examples.sh
 ## Resources Created
 
 ### Documentation (1,505+ lines)
+
 - Master plan with implementation phases
 - Complete user guide with patterns
 - Status tracking document
 - This deliverables summary
 
 ### Code (484+ lines)
+
 - 5 reference SDL files (240 lines)
 - 5 JSON schemas with federation extensions (484 lines)
 - 1 test automation script (332 lines)

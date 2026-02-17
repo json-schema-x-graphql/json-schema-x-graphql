@@ -82,6 +82,7 @@ When one service references an entity from another service, the gateway needs to
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") {
   upc: ID!
@@ -158,6 +159,7 @@ type Product @key(fields: "upc") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") {
   upc: ID!
@@ -191,6 +193,7 @@ type Review @key(fields: "id") {
 ### When to Use
 
 Use non-resolvable references when:
+
 - You only need to reference an entity stub without fetching additional fields
 - The referenced entity's data is fully contained in the referencing service
 - You want to avoid unnecessary network calls
@@ -221,6 +224,7 @@ Use non-resolvable references when:
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc", resolvable: false) {
   upc: ID!
@@ -241,9 +245,7 @@ With `resolvable: false`, the gateway will **not** attempt to fetch fields from 
 {
   "User": {
     "type": "object",
-    "x-graphql-federation-keys": [
-      "id organizationId"
-    ],
+    "x-graphql-federation-keys": ["id organizationId"],
     "properties": {
       "id": {
         "type": "string",
@@ -266,6 +268,7 @@ With `resolvable: false`, the gateway will **not** attempt to fetch fields from 
 ```
 
 **Generated SDL:**
+
 ```graphql
 type User @key(fields: "id organizationId") {
   id: ID!
@@ -280,9 +283,7 @@ type User @key(fields: "id organizationId") {
 {
   "User": {
     "type": "object",
-    "x-graphql-federation-keys": [
-      "id organization { id }"
-    ],
+    "x-graphql-federation-keys": ["id organization { id }"],
     "properties": {
       "id": {
         "type": "string",
@@ -312,6 +313,7 @@ type User @key(fields: "id organizationId") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type User @key(fields: "id organization { id }") {
   id: ID!
@@ -329,10 +331,7 @@ type Organization {
 {
   "Product": {
     "type": "object",
-    "x-graphql-federation-keys": [
-      "upc",
-      "sku"
-    ],
+    "x-graphql-federation-keys": ["upc", "sku"],
     "properties": {
       "upc": {
         "type": "string",
@@ -350,10 +349,9 @@ type Organization {
 ```
 
 **Generated SDL:**
+
 ```graphql
-type Product 
-  @key(fields: "upc")
-  @key(fields: "sku") {
+type Product @key(fields: "upc") @key(fields: "sku") {
   upc: ID!
   sku: ID!
 }
@@ -366,6 +364,7 @@ type Product
 ### Extending vs Owning
 
 **Owner Service** (defines the entity):
+
 ```json
 {
   "User": {
@@ -388,6 +387,7 @@ type Product
 ```
 
 **Extending Service** (adds fields):
+
 ```json
 {
   "User": {
@@ -450,6 +450,7 @@ When you need to access external fields to compute your own:
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") {
   upc: ID!
@@ -480,6 +481,7 @@ Tell the gateway you can provide certain fields of a referenced entity:
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Review {
   product: Product! @provides(fields: "name")
@@ -490,41 +492,41 @@ type Review {
 
 ## Resolver Implementation
 
-### __resolveReference Method
+### \_\_resolveReference Method
 
 Every entity type needs a `__resolveReference` resolver:
 
 **Node.js Example:**
+
 ```javascript
 const resolvers = {
   Product: {
     __resolveReference(reference) {
       // reference contains the key field(s), e.g., { __typename: 'Product', upc: '12345' }
       return fetchProductByUpc(reference.upc);
-    }
-  }
+    },
+  },
 };
 ```
 
 **Using DataLoader (Recommended):**
+
 ```javascript
 const productLoader = new DataLoader(async (upcs) => {
   const products = await db.products.findMany({
-    where: { upc: { in: upcs } }
+    where: { upc: { in: upcs } },
   });
-  
+
   // Return in same order as input
-  return upcs.map(upc => 
-    products.find(p => p.upc === upc)
-  );
+  return upcs.map((upc) => products.find((p) => p.upc === upc));
 });
 
 const resolvers = {
   Product: {
     __resolveReference(reference, context) {
       return context.productLoader.load(reference.upc);
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -539,12 +541,12 @@ const resolvers = {
     product(review, args, context) {
       return context.productLoader.load(review.productUpc);
     },
-    
+
     // Resolve the author relationship using the foreign key
     author(review, args, context) {
       return context.userLoader.load(review.authorEmail);
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -558,10 +560,10 @@ const resolvers = {
     // Resolve new field added by this service
     reviews(product, args, context) {
       return context.db.reviews.findMany({
-        where: { productUpc: product.upc }
+        where: { productUpc: product.upc },
       });
-    }
-  }
+    },
+  },
 };
 ```
 
@@ -572,6 +574,7 @@ const resolvers = {
 ### 1. Missing Foreign Keys ❌
 
 **Problem:**
+
 ```json
 {
   "Review": {
@@ -588,6 +591,7 @@ const resolvers = {
 **Issue:** No `product_upc` field means the gateway cannot resolve Product queries.
 
 **Fix:** ✅
+
 ```json
 {
   "Review": {
@@ -610,6 +614,7 @@ const resolvers = {
 ### 2. Incorrect @external Usage ❌
 
 **Problem:**
+
 ```json
 {
   "Product": {
@@ -627,6 +632,7 @@ const resolvers = {
 **Issue:** Key field marked @external in extension means the service cannot resolve Product entities.
 
 **Fix:** ✅
+
 ```json
 {
   "Product": {
@@ -648,7 +654,7 @@ const resolvers = {
 
 **Fix:** Restructure so one service owns the entity, others only extend it.
 
-### 4. Missing __resolveReference ❌
+### 4. Missing \_\_resolveReference ❌
 
 **Problem:** Entity defined but no resolver implementation.
 
@@ -657,11 +663,12 @@ const resolvers = {
 ### 5. Mismatched Key Types ❌
 
 **Problem:**
+
 ```json
 // Service A
 { "upc": { "x-graphql-field-type": "String" } }
 
-// Service B  
+// Service B
 { "upc": { "x-graphql-field-type": "ID" } }
 ```
 
@@ -680,12 +687,14 @@ node scripts/validate-federation-composition.js
 ```
 
 **Successful Output:**
+
 ```
 ✓ Composition successful!
 ✓ Supergraph schema written
 ```
 
 **Failed Output with Error Details:**
+
 ```
 ✗ Composition failed with errors:
   - cannot move to subgraph "products" using @key(fields: "upc")
@@ -738,6 +747,7 @@ query {
 ```
 
 Query planning inspection:
+
 ```bash
 # Using Apollo Router
 router --dev --supergraph=supergraph.graphql
@@ -750,6 +760,7 @@ router --dev --supergraph=supergraph.graphql
 Complete working example with proper patterns:
 
 ### Users Service
+
 ```json
 {
   "User": {
@@ -768,6 +779,7 @@ Complete working example with proper patterns:
 ```
 
 ### Products Service
+
 ```json
 {
   "Product": {
@@ -786,6 +798,7 @@ Complete working example with proper patterns:
 ```
 
 ### Reviews Service
+
 ```json
 {
   "User": {

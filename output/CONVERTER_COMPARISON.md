@@ -3,6 +3,7 @@
 ## Test Schema: `schema/test.json`
 
 A complex schema with 1,133 lines containing:
+
 - Root Contract type with Node interface
 - 34 type definitions in `$defs`
 - Custom scalars (DateTime, Date, Decimal, etc.)
@@ -17,6 +18,7 @@ A complex schema with 1,133 lines containing:
 ### Status: ✅ PASSING
 
 **Command:**
+
 ```bash
 cd converters/node
 npm run build
@@ -32,25 +34,34 @@ fs.writeFileSync('../../output/test-node.graphql', result);
 **Output:** `output/test-node.graphql` (783 bytes)
 
 **Generated SDL:**
+
 ```graphql
 # Generated from JSON Schema by json-schema-x-graphql
 
 "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation"
 type Contract implements Node {
-  "Alias for globalRecordId for GraphQL Node interface" id: String
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: String
   systemMetadata: String!
   commonElements: String!
   systemExtensions: String
-  "Related contracts via referencedPiid" relatedContracts: String
-  "Procurement Instrument Identifier" piid: String
-  "Vendor information structure" vendorInfo: String
-  "Alias (camelCase) for vendor_info for GraphQL parity" vendorInfo: String
-  "Location data" placeOfPerformance: String
-  "Alias (camelCase) for place_of_performance for GraphQL parity" placeOfPerformance: String
+  "Related contracts via referencedPiid"
+  relatedContracts: String
+  "Procurement Instrument Identifier"
+  piid: String
+  "Vendor information structure"
+  vendorInfo: String
+  "Alias (camelCase) for vendor_info for GraphQL parity"
+  vendorInfo: String
+  "Location data"
+  placeOfPerformance: String
+  "Alias (camelCase) for place_of_performance for GraphQL parity"
+  placeOfPerformance: String
 }
 ```
 
 **What Works:**
+
 - ✅ Schema validation
 - ✅ Type name extraction (`Contract`)
 - ✅ Type kind mapping (OBJECT → type)
@@ -59,6 +70,7 @@ type Contract implements Node {
 - ✅ Required field markers (`!`)
 
 **Limitations:**
+
 - ⚠️ All field types show as scalars (String, String!)
 - ⚠️ Doesn't resolve `$ref` to actual type names
 - ⚠️ Duplicate field names (vendorInfo, placeOfPerformance appear twice)
@@ -72,6 +84,7 @@ type Contract implements Node {
 ### Status: ✅ PASSING
 
 **Command:**
+
 ```bash
 source "$HOME/.cargo/env"
 cd converters/rust
@@ -81,30 +94,42 @@ cargo run --example json_to_sdl -- ../../schema/test.json
 **Output:** `output/test-rust.graphql` (38 lines)
 
 **Generated SDL:**
+
 ```graphql
 "Unified schema for Contract Data, Legacy Procurement, and EASi systems..."
 type Contract implements Node {
   commonElements: CommonElements!
-  "Alias for globalRecordId for GraphQL Node interface" id: ID!
-  "Procurement Instrument Identifier" piid: String
-  "Alias (camelCase) for place_of_performance for GraphQL parity" placeOfPerformance: PlaceOfPerformance
-  "Related contracts via referencedPiid" relatedContracts: [Contract!]
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: ID!
+  "Procurement Instrument Identifier"
+  piid: String
+  "Alias (camelCase) for place_of_performance for GraphQL parity"
+  placeOfPerformance: PlaceOfPerformance
+  "Related contracts via referencedPiid"
+  relatedContracts: [Contract!]
   systemExtensions: SystemExtensions
   systemMetadata: SystemMetadata!
-  "Vendor information structure" vendorInfo: VendorInfo
+  "Vendor information structure"
+  vendorInfo: VendorInfo
 }
 
 "Metadata supporting multiple nested systems"
 type SystemMetadata {
-  "Global unique identifier across all systems" globalRecordId: String!
-  "Last modification timestamp" lastModified: DateTime
-  "Primary source system" primarySystem: SystemType!
-  "Schema version" schemaVersion: String
-  "Chain of systems data has flowed through" systemChain: [SystemChainEntry]!
+  "Global unique identifier across all systems"
+  globalRecordId: String!
+  "Last modification timestamp"
+  lastModified: DateTime
+  "Primary source system"
+  primarySystem: SystemType!
+  "Schema version"
+  schemaVersion: String
+  "Chain of systems data has flowed through"
+  systemChain: [SystemChainEntry]!
 }
 ```
 
 **What Works:**
+
 - ✅ Schema validation
 - ✅ Type name extraction
 - ✅ Type kind mapping (OBJECT → type)
@@ -115,11 +140,13 @@ type SystemMetadata {
 - ✅ Handles `x-graphql-field.type` nested property
 
 **Improvements Over Node:**
+
 - ✅ Resolves `$ref` → actual types (CommonElements, SystemMetadata vs String)
 - ✅ Extracts and converts types from `$defs` section
 - ✅ Better type inference from x-graphql-field
 
 **Limitations:**
+
 - ⚠️ Duplicate type definitions (Contract appears twice - from $defs and root)
 - ⚠️ Only processes 2 types from $defs (out of 34 available)
 - ⚠️ Doesn't generate operations from `x-graphql-operations`
@@ -128,24 +155,25 @@ type SystemMetadata {
 
 ## Comparison
 
-| Feature | Node.js | Rust |
-|---------|---------|------|
-| **Compilation** | ✅ Success | ✅ Success |
-| **Validation** | ✅ Pass | ✅ Pass |
-| **Conversion** | ✅ Success | ✅ Success |
-| **Type Name** | ✅ Contract | ✅ Contract |
-| **Interface Impl** | ✅ `implements Node` | ✅ `implements Node` |
-| **Descriptions** | ✅ Preserved | ✅ Preserved |
-| **$ref Resolution** | ⚠️ Partial (shows String) | ✅ **Full (actual types!)** |
-| **$defs Processing** | ❌ Not supported | ✅ **Partial (2 types)** |
-| **Operations** | ❌ Not supported | ❌ Not supported |
-| **Field Types** | ⚠️ All scalars | ✅ **Proper types** |
+| Feature              | Node.js                   | Rust                        |
+| -------------------- | ------------------------- | --------------------------- |
+| **Compilation**      | ✅ Success                | ✅ Success                  |
+| **Validation**       | ✅ Pass                   | ✅ Pass                     |
+| **Conversion**       | ✅ Success                | ✅ Success                  |
+| **Type Name**        | ✅ Contract               | ✅ Contract                 |
+| **Interface Impl**   | ✅ `implements Node`      | ✅ `implements Node`        |
+| **Descriptions**     | ✅ Preserved              | ✅ Preserved                |
+| **$ref Resolution**  | ⚠️ Partial (shows String) | ✅ **Full (actual types!)** |
+| **$defs Processing** | ❌ Not supported          | ✅ **Partial (2 types)**    |
+| **Operations**       | ❌ Not supported          | ❌ Not supported            |
+| **Field Types**      | ⚠️ All scalars            | ✅ **Proper types**         |
 
 ---
 
 ## Recommendations
 
 ### For Rust Converter (Priority: MEDIUM) ✅ PARTIALLY COMPLETE
+
 1. **✅ Add $ref resolution** - DONE
    - Detects `$ref` in properties
    - Extracts type name from reference path
@@ -168,6 +196,7 @@ type SystemMetadata {
    - Should process all 34 types with x-graphql-type-name
 
 ### For Both Converters (Priority: MEDIUM)
+
 1. **Process $defs**
    - Extract type definitions from `$defs`
    - Generate separate type/enum/interface definitions
@@ -183,6 +212,7 @@ type SystemMetadata {
    - Generate scalar definitions
 
 ### For test.json Schema (Priority: LOW)
+
 1. **Fix duplicate fields**
    - Remove either snake_case or camelCase versions
    - Or use different GraphQL field names
@@ -192,6 +222,7 @@ type SystemMetadata {
 ## Summary of Fixes Applied
 
 ### Rust Converter Fixes (HIGH PRIORITY - COMPLETED ✅)
+
 1. **Added $ref resolution** in `infer_graphql_type()` function
 2. **Added type kind mapping** (OBJECT → type, ENUM → enum, etc.)
 3. **Added x-graphql-field.type support** for nested type definitions
@@ -199,10 +230,12 @@ type SystemMetadata {
 5. **Fixed interface implementation** property name to x-graphql-type-implements
 
 ### Node Converter Fixes (COMPLETED ✅)
+
 1. **Added type kind mapping** from enum values to SDL keywords
 2. **Fixed interface implementation** property name
 
 ### Schema Fixes (COMPLETED ✅)
+
 1. **Converted x-graphql-type object** to separate standard extensions
 
 ---
@@ -221,16 +254,19 @@ type SystemMetadata {
 **Winner: Rust Converter 🏆**
 
 The Rust converter now significantly outperforms the Node converter:
+
 - Resolves `$ref` references to actual type names
 - Extracts additional types from `$defs` section
 - Produces more accurate GraphQL SDL with proper types
 
 **Node Converter:**
+
 - Simpler output, single type only
 - All references show as String/String!
 - Good for basic conversion
 
 **Rust Converter:**
+
 - More comprehensive output
 - Proper type resolution
 - Better for complex schemas

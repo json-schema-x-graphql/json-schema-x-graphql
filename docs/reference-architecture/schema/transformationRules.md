@@ -5,6 +5,7 @@ Based on the schema design, `transformationRules` are expected to be stored and 
 ### 1. Storage Location and Structure
 
 **Primary Storage**: In the `systemMetadata.systemChain` array, where each system entry contains:
+
 ```json
 {
   "transformationRules": ["rule_name_1", "rule_name_2", "rule_name_3"]
@@ -16,11 +17,13 @@ Based on the schema design, `transformationRules` are expected to be stored and 
 ### 2. Rule Naming Convention
 
 TransformationRules follow a structured naming pattern:
+
 - `{source_system}_to_{target_system}_{rule_type}`
 - `{business_context}_{rule_category}`
 - `{field_specific}_{transformation_type}`
 
 **Examples from the EASi instance:**
+
 ```json
 "transformationRules": [
   "logistics_mgmt_to_legacy_procurement_mapping",           // System-to-system mapping
@@ -37,6 +40,7 @@ TransformationRules follow a structured naming pattern:
 ### 3. Rule Categories and Types
 
 #### **A. System Integration Rules**
+
 ```yaml
 # YAML representation of transformation rules
 logistics_mgmt_to_legacy_procurement_mapping:
@@ -47,11 +51,11 @@ logistics_mgmt_to_legacy_procurement_mapping:
   fieldMappings:
     - source: "data.programNumber"
       target: "acquisitionData.originalAwardPiid"
-    - source: "organizationHierarchy.organizationId" 
+    - source: "organizationHierarchy.organizationId"
       target: "clientData.agencyCode"
 
 legacy_procurement_to_intake_process_clin_mapping:
-  type: "system_integration" 
+  type: "system_integration"
   source: "Legacy Procurement"
   target: "Intake Process"
   description: "Transforms Legacy Procurement award data to EASi CLIN structure"
@@ -61,6 +65,7 @@ legacy_procurement_to_intake_process_clin_mapping:
 ```
 
 #### **B. Business Logic Rules**
+
 ```yaml
 ucf_simplified_rules:
   type: "business_logic"
@@ -75,11 +80,12 @@ sba_client_defaults:
   scope: "SBA contracts"
   defaults:
     agencyCode: "073-00"
-    clientOrganizationName: "SMALL BUSINESS ADMINISTRATION" 
+    clientOrganizationName: "SMALL BUSINESS ADMINISTRATION"
     natureOfAcquisition: "ADMIN_CONTINUE_TRANSFER"
 ```
 
 #### **C. Data Transformation Rules**
+
 ```yaml
 boolean_direct_mapping:
   type: "data_transformation"
@@ -98,6 +104,7 @@ current_future_clins_only:
 ### 4. Usage Patterns
 
 #### **During Data Transformation**
+
 ```json
 {
   "transformationExecution": {
@@ -114,7 +121,7 @@ current_future_clins_only:
       "validationErrors": 1
     },
     "outputData": {
-      "system": "Legacy Procurement", 
+      "system": "Legacy Procurement",
       "template": "01 GSA Acquisition Template - Acquisition Data.xlsx",
       "recordCount": 1,
       "fieldCount": 48
@@ -124,15 +131,18 @@ current_future_clins_only:
 ```
 
 #### **In System Extensions**
+
 ```json
 {
   "systemExtensions": {
-    "intake_process": [{
-      "fieldName": "unitPrice",
-      "transformationRule": "legacy_procurement_line_item_to_clin_pricing",
-      "mappingSource": "legacy_procurement.awardData.lineItems[].unitPrice",
-      "businessLogic": ["quantity_based_clin_only", "exclude_nsp_items"]
-    }]
+    "intake_process": [
+      {
+        "fieldName": "unitPrice",
+        "transformationRule": "legacy_procurement_line_item_to_clin_pricing",
+        "mappingSource": "legacy_procurement.awardData.lineItems[].unitPrice",
+        "businessLogic": ["quantity_based_clin_only", "exclude_nsp_items"]
+      }
+    ]
   }
 }
 ```
@@ -140,19 +150,21 @@ current_future_clins_only:
 ### 5. Rule Resolution and Execution Order
 
 **Rule Dependencies**: Rules can reference other rules for complex transformations:
+
 ```json
 {
   "transformationRules": [
-    "logistics_mgmt_to_legacy_procurement_mapping",        // Step 1: Basic field mapping
-    "sba_client_defaults",           // Step 2: Apply defaults
-    "legacy_procurement_template_validation"     // Step 3: Validate template completeness
+    "logistics_mgmt_to_legacy_procurement_mapping", // Step 1: Basic field mapping
+    "sba_client_defaults", // Step 2: Apply defaults
+    "legacy_procurement_template_validation" // Step 3: Validate template completeness
   ]
 }
 ```
 
 **Execution Context**: Rules are executed within specific system contexts with access to:
+
 - Source system data structure
-- Target system schema requirements  
+- Target system schema requirements
 - Business rule parameters
 - Default value definitions
 - Validation requirements
@@ -166,7 +178,7 @@ current_future_clins_only:
     "status": "partial_success",
     "errorsEncountered": [
       {
-        "field": "principalNaicsCode", 
+        "field": "principalNaicsCode",
         "error": "Source field empty",
         "resolution": "Applied default from business classification"
       }
@@ -184,12 +196,13 @@ current_future_clins_only:
 ### 7. Rule Versioning and Maintenance
 
 TransformationRules support versioning for schema evolution:
+
 ```json
 {
   "transformationRules": [
-    "logistics_mgmt_to_legacy_procurement_mapping_v2.1",    // Versioned rule
-    "sba_client_defaults_2024",       // Year-specific rule
-    "contract_data_compliance_updated"         // Updated for new requirements
+    "logistics_mgmt_to_legacy_procurement_mapping_v2.1", // Versioned rule
+    "sba_client_defaults_2024", // Year-specific rule
+    "contract_data_compliance_updated" // Updated for new requirements
   ]
 }
 ```

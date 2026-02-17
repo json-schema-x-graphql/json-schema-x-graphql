@@ -20,6 +20,7 @@ You asked: **"Is there no way to setup the project so you can get full insight i
 **File**: `debug-browser.ts` (468 lines)
 
 A Playwright-based script that:
+
 - ✅ Launches a real Chrome browser
 - ✅ Navigates to your app
 - ✅ Captures **every** console message (log, error, warning, info)
@@ -33,6 +34,7 @@ A Playwright-based script that:
 ### 2. Package Scripts
 
 Added to `package.json`:
+
 ```json
 {
   "scripts": {
@@ -104,11 +106,13 @@ This installs Playwright (~170MB download).
 ### Every Time You Want to Debug
 
 **Terminal 1** - Start the app:
+
 ```bash
 pnpm run dev:full
 ```
 
 **Terminal 2** - Run the debug tool:
+
 ```bash
 pnpm run debug:browser
 ```
@@ -156,6 +160,7 @@ Network Requests: 15
 ### 2. Detailed JSON Report (`debug-output/debug-report.json`)
 
 Complete structured data:
+
 ```json
 {
   "timestamp": "2025-01-03T20:30:00.000Z",
@@ -183,8 +188,8 @@ Complete structured data:
       "statusText": "Not Found",
       "postData": "{\"direction\":\"json-to-graphql\",\"input\":{...}}",
       "responseBody": "{\"error\":\"Not found\"}",
-      "requestHeaders": {"Content-Type": "application/json"},
-      "responseHeaders": {"Content-Type": "application/json"}
+      "requestHeaders": { "Content-Type": "application/json" },
+      "responseHeaders": { "Content-Type": "application/json" }
     }
   ],
   "summary": {
@@ -202,6 +207,7 @@ Complete structured data:
 ### 3. Human-Readable Summary (`debug-output/debug-summary.txt`)
 
 Easy-to-read overview:
+
 ```
 Browser Debug Report
 ============================================================
@@ -267,6 +273,7 @@ Full page screenshots showing exactly what the browser displays.
 ## What Gets Captured
 
 ### Console Messages
+
 - ✅ All `console.log()`, `console.info()`
 - ✅ All `console.error()`, `console.warn()`
 - ✅ React error boundaries
@@ -276,6 +283,7 @@ Full page screenshots showing exactly what the browser displays.
 - ✅ Timestamps and locations
 
 ### Network Activity
+
 - ✅ Every HTTP request (method, URL, headers)
 - ✅ POST body data
 - ✅ Response status and headers
@@ -285,6 +293,7 @@ Full page screenshots showing exactly what the browser displays.
 - ✅ API vs asset categorization
 
 ### Page Errors
+
 - ✅ JavaScript exceptions
 - ✅ Unhandled promise rejections
 - ✅ React component errors
@@ -292,12 +301,14 @@ Full page screenshots showing exactly what the browser displays.
 - ✅ Full stack traces
 
 ### Visual State
+
 - ✅ Screenshots at initial load
 - ✅ Screenshots after actions
 - ✅ Full page (scrollable content)
 - ✅ High resolution
 
 ### App State
+
 - ✅ Checks if Monaco loaded
 - ✅ Checks if React loaded
 - ✅ Checks Schema Authoring API
@@ -312,10 +323,11 @@ Full page screenshots showing exactly what the browser displays.
 ### See the Browser While It Runs
 
 Edit `debug-browser.ts`:
+
 ```typescript
 browser = await chromium.launch({
-  headless: false,  // Change from true
-  slowMo: 1000,     // Slow down actions
+  headless: false, // Change from true
+  slowMo: 1000, // Slow down actions
 });
 ```
 
@@ -340,16 +352,17 @@ jq '.consoleMessages[] | select(.type == "warning")' debug-output/debug-report.j
 ### Add Custom Tests
 
 Extend `debug-browser.ts`:
+
 ```typescript
 // Test clicking a button
 await page.click('[data-testid="convert-button"]');
 await page.waitForTimeout(500);
-await page.screenshot({ path: 'debug-output/after-click.png' });
+await page.screenshot({ path: "debug-output/after-click.png" });
 
 // Test template selection
 await page.click('[data-testid="template-button"]');
 await page.waitForTimeout(500);
-const templates = await page.locator('.template-item').count();
+const templates = await page.locator(".template-item").count();
 console.log(`Found ${templates} templates`);
 ```
 
@@ -393,29 +406,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      
+          node-version: "18"
+
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Run debug test
         run: |
           cd frontend/schema-authoring
           pnpm run dev:full &
           sleep 5
           pnpm run debug:browser
-      
+
       - name: Upload debug artifacts
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: debug-output
           path: frontend/schema-authoring/debug-output/
-      
+
       - name: Check for errors
         run: |
           cd frontend/schema-authoring
@@ -430,17 +443,17 @@ jobs:
 
 ## Comparison
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| **Console logs** | Manual copy/paste | Automated capture |
-| **Network activity** | Guess from errors | Complete request/response logs |
-| **Errors** | Partial information | Full stack traces |
-| **Screenshots** | Manual if remembered | Automatic at key moments |
-| **Reproducibility** | Hard | Same test every time |
-| **Sharing** | Screenshots/text | Complete JSON reports |
-| **Time to debug** | 30+ minutes | 2-5 minutes |
-| **CI/CD friendly** | No | Yes |
-| **Historical data** | None | Save all reports |
+| Aspect               | Before               | After                          |
+| -------------------- | -------------------- | ------------------------------ |
+| **Console logs**     | Manual copy/paste    | Automated capture              |
+| **Network activity** | Guess from errors    | Complete request/response logs |
+| **Errors**           | Partial information  | Full stack traces              |
+| **Screenshots**      | Manual if remembered | Automatic at key moments       |
+| **Reproducibility**  | Hard                 | Same test every time           |
+| **Sharing**          | Screenshots/text     | Complete JSON reports          |
+| **Time to debug**    | 30+ minutes          | 2-5 minutes                    |
+| **CI/CD friendly**   | No                   | Yes                            |
+| **Historical data**  | None                 | Save all reports               |
 
 ---
 
@@ -514,6 +527,7 @@ xdg-open debug-output/*.png  # Linux
 ## Benefits Summary
 
 ### For You (Developer)
+
 - 🎯 Complete visibility without guessing
 - ⚡ Faster debugging (minutes vs hours)
 - 📊 Structured data for analysis
@@ -522,12 +536,14 @@ xdg-open debug-output/*.png  # Linux
 - 📈 Historical comparison
 
 ### For Users
+
 - 🚀 Faster issue resolution
 - 📝 No need to explain complex steps
 - ✅ Single command to get diagnostics
 - 🔍 Complete information first time
 
 ### For the Project
+
 - ✅ Better quality assurance
 - 📉 Fewer bugs reaching production
 - 🔧 Easier maintenance
@@ -540,6 +556,7 @@ xdg-open debug-output/*.png  # Linux
 ### Scenario: User Reports "Editors not showing"
 
 **Old way**:
+
 1. "Can you check the console?"
 2. "What do you see?"
 3. "Take a screenshot"
@@ -548,6 +565,7 @@ xdg-open debug-output/*.png  # Linux
 6. 30 minutes back-and-forth...
 
 **New way**:
+
 1. User runs: `pnpm run debug:browser`
 2. User sends: `debug-output/` folder
 3. You open: `debug-summary.txt`
@@ -587,6 +605,7 @@ You now have **complete visibility** into the browser without any manual work:
 ## Support
 
 For detailed information, see:
+
 - [DEBUG_GUIDE.md](./DEBUG_GUIDE.md) - Complete usage guide
 - [BROWSER_DEBUG_README.md](./BROWSER_DEBUG_README.md) - System overview
 - [RUNNING.md](./RUNNING.md) - How to run the servers

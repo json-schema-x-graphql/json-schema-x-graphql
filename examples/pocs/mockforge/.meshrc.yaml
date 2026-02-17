@@ -1,50 +1,50 @@
 # GraphQL Mesh Configuration
-# Federation-aware data source integration for Schema Unification Forest
+# Federation-aware data source integration for Petrified Forest
 
 sources:
-  # Contract Data Mock Source
-  - name: contract_data
+  # FPDS Mock Source
+  - name: fpds
     handler:
       graphql:
-        endpoint: http://contract_data-mock:4001/graphql
+        endpoint: http://localhost:4001/graphql
         operationHeaders:
-          X-Source-System: Contract Data
+          X-Source-System: FPDS
 
-  # Public Spending Mock Source
-  - name: public_spending
+  # USAspending Mock Source
+  - name: usaspending
     handler:
       graphql:
-        endpoint: http://public_spending-mock:4002/graphql
+        endpoint: http://localhost:4002/graphql
         operationHeaders:
-          X-Source-System: Public Spending
+          X-Source-System: USAspending
 
-  # Legacy Procurement Mock Source
-  - name: legacy_procurement
+  # ASSIST Mock Source
+  - name: assist
     handler:
       graphql:
-        endpoint: http://legacy_procurement-mock:4003/graphql
+        endpoint: http://localhost:4003/graphql
         operationHeaders:
-          X-Source-System: Legacy Procurement
+          X-Source-System: ASSIST
 
-  # Intake Process Mock Source
-  - name: intake_process
+  # EASI Mock Source
+  - name: easi
     handler:
       graphql:
-        endpoint: http://intake_process-mock:4004/graphql
+        endpoint: http://localhost:4004/graphql
         operationHeaders:
-          X-Source-System: Intake Process
+          X-Source-System: EASI
 
-  # Logistics Mgmt Mock Source
-  - name: logistics_mgmt
+  # CALM Mock Source
+  - name: calm
     handler:
       graphql:
-        endpoint: http://logistics_mgmt-mock:4005/graphql
+        endpoint: http://localhost:4005/graphql
         operationHeaders:
-          X-Source-System: Logistics Mgmt
+          X-Source-System: CALM
 
 # Server configuration
 serve:
-  port: 5050
+  port: 5052
   endpoint: /graphql
   cors:
     origin: '*'

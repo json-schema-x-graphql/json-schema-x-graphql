@@ -16,6 +16,7 @@ WASM converter initialization failed: expected magic word 00 61 73 6d, found 3c 
 ```
 
 **Root Causes**:
+
 1. No backend API server running to handle conversion requests
 2. WASM converter not built (attempted to load HTML 404 page as WASM binary)
 3. Both converters unavailable → app unable to perform conversions
@@ -35,11 +36,13 @@ WASM converter initialization failed: expected magic word 00 61 73 6d, found 3c 
 - Graceful shutdown handlers (SIGTERM/SIGINT)
 
 **Endpoints**:
+
 - `POST /api/convert` - Main conversion endpoint
 - `GET /health` - Health check
 - `GET /` - Health check (alias)
 
 **Request format**:
+
 ```json
 {
   "direction": "json-to-graphql" | "graphql-to-json",
@@ -49,6 +52,7 @@ WASM converter initialization failed: expected magic word 00 61 73 6d, found 3c 
 ```
 
 **Response format**:
+
 ```json
 {
   "success": true,
@@ -65,22 +69,26 @@ WASM converter initialization failed: expected magic word 00 61 73 6d, found 3c 
 **File**: `converters/node/src/converter.ts`
 
 **Problem**: ESM modules with TypeScript types were causing import errors:
+
 ```
 SyntaxError: The requested module './generated/types' does not provide an export named 'ConverterOptions'
 ```
 
-**Fix**: 
+**Fix**:
+
 - Changed to `import type` for type-only imports
 - Removed problematic re-export of `ConverterOptions`
 - Added `.js` extension to import path (required for ESM)
 
 **Before**:
+
 ```typescript
 import { ConverterOptions, ... } from "./generated/types";
 export { ConverterOptions };
 ```
 
 **After**:
+
 ```typescript
 import type { ConverterOptions, ... } from "./generated/types.js";
 // No re-export (types don't exist at runtime)
@@ -142,6 +150,7 @@ Allows running both servers with a single command.
 ### 6. Created Documentation
 
 **Files Created/Updated**:
+
 - `frontend/schema-authoring/RUNNING.md` - Comprehensive server startup guide
 - `frontend/schema-authoring/QUICKSTART.md` - Updated with simplified instructions
 - `frontend/schema-authoring/FIXES_APPLIED.md` - This document
@@ -162,12 +171,14 @@ Then open: http://localhost:3003
 ### Manual Start (Separate Terminals)
 
 **Terminal 1 - API Server**:
+
 ```bash
 cd converters/node
 pnpm run dev:api
 ```
 
 **Terminal 2 - Frontend**:
+
 ```bash
 cd frontend/schema-authoring
 pnpm run dev
@@ -181,7 +192,7 @@ pnpm run dev
 ✅ **Frontend**: Automatically proxies requests to API server  
 ✅ **Real-time Conversion**: JSON Schema → GraphQL SDL works  
 ✅ **Error Handling**: Proper error messages for conversion failures  
-✅ **CORS**: Configured for development (localhost)  
+✅ **CORS**: Configured for development (localhost)
 
 ⚠️ **WASM Converter**: Still requires building (optional, provides better performance)
 
@@ -210,11 +221,13 @@ pnpm run dev
 ## Files Modified/Created
 
 ### Created
+
 - `converters/node/src/api-server.ts` (225 lines)
 - `frontend/schema-authoring/RUNNING.md` (177 lines)
 - `frontend/schema-authoring/FIXES_APPLIED.md` (this file)
 
 ### Modified
+
 - `converters/node/src/converter.ts` (import fixes)
 - `frontend/schema-authoring/vite.config.ts` (added proxy)
 - `frontend/schema-authoring/package.json` (added scripts + concurrently)
@@ -232,6 +245,7 @@ curl http://localhost:3004/health
 ```
 
 Expected response:
+
 ```json
 {
   "status": "ok",
@@ -271,6 +285,7 @@ curl -X POST http://localhost:3004/api/convert \
 ### 4. Test Conversion in UI
 
 1. Paste JSON Schema in left editor:
+
 ```json
 {
   "type": "object",
@@ -282,6 +297,7 @@ curl -X POST http://localhost:3004/api/convert \
 ```
 
 2. Right editor should show GraphQL SDL:
+
 ```graphql
 type Query {
   # Query type placeholder
@@ -293,11 +309,13 @@ type Query {
 ## Known Issues (Remaining)
 
 ### 1. Monaco Editors May Not Render
+
 **Status**: Pending investigation  
 **Workaround**: Check browser console for errors, hard refresh  
 **Likely cause**: Monaco worker configuration or CSS layout
 
 ### 2. WASM Converter Not Available
+
 **Status**: Expected (requires Rust toolchain)  
 **Impact**: Performance may be slower with Node converter  
 **Solution**: Run `pnpm run build:wasm` (requires wasm-pack)

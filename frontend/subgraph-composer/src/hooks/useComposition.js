@@ -1,14 +1,14 @@
-import { useState, useCallback } from 'react';
-import { composeSupergraph } from '../lib/composer';
+import { useState, useCallback } from "react";
+import { composeSupergraph } from "../lib/composer";
 
 export function useComposition() {
-  const [supergraphSDL, setSupergraphSDL] = useState('');
+  const [supergraphSDL, setSupergraphSDL] = useState("");
   const [compositionStats, setCompositionStats] = useState(null);
   const [compositionErrors, setCompositionErrors] = useState([]);
 
   const compose = useCallback(async (subgraphs) => {
     if (subgraphs.size === 0) {
-      setSupergraphSDL('');
+      setSupergraphSDL("");
       setCompositionStats(null);
       setCompositionErrors([]);
       return;
@@ -16,7 +16,7 @@ export function useComposition() {
 
     try {
       const result = composeSupergraph(subgraphs, {
-        mergeStrategy: 'extend',
+        mergeStrategy: "extend",
         includeRootQuery: true,
         federationMode: false,
       });
@@ -27,12 +27,12 @@ export function useComposition() {
         setCompositionErrors(result.errors);
       } else {
         setCompositionErrors(result.errors);
-        setSupergraphSDL('');
+        setSupergraphSDL("");
       }
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : String(error);
       setCompositionErrors([errorMsg]);
-      setSupergraphSDL('');
+      setSupergraphSDL("");
     }
   }, []);
 

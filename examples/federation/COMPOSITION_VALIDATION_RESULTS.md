@@ -35,6 +35,7 @@ Successfully implemented JSON Schema → GraphQL SDL conversion for Apollo Feder
 **Tool Used:** @theguild/federation-composition v0.21.1
 
 **Results:**
+
 - ✅ All 5 subgraph schemas parse successfully
 - ✅ All basic validation checks pass
 - ⚠️ Composition fails due to entity reference design issues
@@ -44,6 +45,7 @@ Successfully implemented JSON Schema → GraphQL SDL conversion for Apollo Feder
 ### Issue: Entity Reference Satisfiability
 
 **Example Error:**
+
 ```
 The following supergraph API query:
 {
@@ -58,7 +60,7 @@ The following supergraph API query:
 cannot be satisfied by the subgraphs because:
 - from subgraph "reviews":
   - field "Product.upc" is not resolvable because marked @external.
-  - cannot move to subgraph "products" using @key(fields: "upc") 
+  - cannot move to subgraph "products" using @key(fields: "upc")
     of "Product", the key field(s) cannot be resolved from subgraph "reviews".
 ```
 
@@ -78,6 +80,7 @@ The current schema design has a circular reference problem:
 There are three valid approaches:
 
 #### Option 1: Store Foreign Keys (Recommended)
+
 ```graphql
 # reviews-service.graphql
 type Review @key(fields: "id") {
@@ -96,6 +99,7 @@ type Product @key(fields: "upc") {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "Review": {
@@ -117,6 +121,7 @@ type Product @key(fields: "upc") {
 ```
 
 #### Option 2: Non-Resolvable References
+
 ```graphql
 # products-service.graphql
 type Product @key(fields: "upc") {
@@ -140,6 +145,7 @@ type Product @key(fields: "upc", resolvable: false) {
 ```
 
 #### Option 3: Reference Resolvers
+
 Implement `__resolveReference` resolvers that can populate stub entity fields from the Review context.
 
 ## Validation Script Features
@@ -151,6 +157,7 @@ node scripts/validate-federation-composition.js
 ```
 
 **Features:**
+
 - ✅ Parses all subgraph SDL files
 - ✅ Validates GraphQL syntax
 - ✅ Checks for federation directives
@@ -160,6 +167,7 @@ node scripts/validate-federation-composition.js
 - ✅ Color-coded output with stats
 
 **Supporting Scripts:**
+
 - `scripts/add-federation-schema-link.sh` - Adds required @link directive
 - `scripts/test-federation-examples.sh` - Tests conversions
 
@@ -342,6 +350,7 @@ The JSON Schema ↔ GraphQL SDL conversion for Apollo Federation is **fully func
 The composition failures are **not bugs** but rather **design issues** with the example schemas that don't follow proper entity reference patterns. This is actually a valuable validation - the composition tool caught real architectural problems that would cause runtime issues.
 
 **Status:**
+
 - ✅ Converter Implementation: Complete
 - ✅ SDL Generation: Working
 - ✅ Federation Directives: Correct

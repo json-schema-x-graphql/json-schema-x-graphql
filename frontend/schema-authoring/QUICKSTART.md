@@ -37,6 +37,7 @@ The frontend automatically proxies API requests to the backend, so you only need
 **Problem**: Dependencies not installed.
 
 **Solution**:
+
 ```bash
 pnpm install
 ```
@@ -44,6 +45,7 @@ pnpm install
 ### ❌ Editors not showing / stuck on loading
 
 **Possible fixes**:
+
 1. Hard refresh browser (Ctrl+Shift+R / Cmd+Shift+R)
 2. Clear browser cache
 3. Check browser console for errors (F12)
@@ -54,6 +56,7 @@ pnpm install
 **This is normal!** The app will use the Node.js converter instead. WASM is optional and provides better performance, but requires building with Rust toolchain.
 
 To enable WASM (optional):
+
 ```bash
 pnpm run build:wasm
 ```
@@ -65,12 +68,14 @@ pnpm run build:wasm
 If you want to start servers separately:
 
 **Terminal 1** - API Server:
+
 ```bash
 cd converters/node
 pnpm run dev:api
 ```
 
 **Terminal 2** - Frontend:
+
 ```bash
 cd frontend/schema-authoring
 pnpm run dev

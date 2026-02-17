@@ -24,6 +24,7 @@ Phase 3A successfully delivered **comprehensive testing infrastructure** with 1,
 ### 1. Test Suites (1,315 lines)
 
 **Rust Integration Tests** (`converters/rust/tests/integration_tests.rs`)
+
 - 603 lines of comprehensive tests
 - 34 test cases covering:
   - Basic types (Object, Enum, Interface, Union, Input)
@@ -35,6 +36,7 @@ Phase 3A successfully delivered **comprehensive testing infrastructure** with 1,
   - Performance metrics
 
 **Node.js Integration Tests** (`converters/node/tests/integration.test.ts`)
+
 - 712 lines of comprehensive tests
 - Jest-based test suites covering:
   - All GraphQL type kinds
@@ -46,6 +48,7 @@ Phase 3A successfully delivered **comprehensive testing infrastructure** with 1,
 ### 2. Automation Scripts (533 lines)
 
 **Test Runner** (`scripts/run-tests.sh`)
+
 - 258 lines
 - Runs both Rust and Node.js tests
 - Generates coverage reports
@@ -54,6 +57,7 @@ Phase 3A successfully delivered **comprehensive testing infrastructure** with 1,
 - Comprehensive summary
 
 **Parity Validator** (`scripts/test-parity.sh`)
+
 - 275 lines
 - Validates Rust and Node.js produce identical output
 - Tests round-trip conversion fidelity
@@ -108,6 +112,7 @@ Phase 3A successfully delivered **comprehensive testing infrastructure** with 1,
    - May need configuration adjustments
 
 **Commands to Fix**:
+
 ```bash
 cd converters/node
 
@@ -130,11 +135,13 @@ pnpm test
 **Status**: Cargo not in PATH, implementation incomplete
 
 **Issues**:
+
 1. Cargo not in PATH (rustup installed but PATH not configured)
 2. Source files exist but contain skeleton/incomplete implementations
 3. Core conversion logic needs implementation
 
 **Files Needing Implementation**:
+
 - `src/json_to_graphql.rs` - JSON → SDL conversion
 - `src/graphql_to_json.rs` - SDL → JSON conversion
 - `src/validator.rs` - Validation logic
@@ -142,6 +149,7 @@ pnpm test
 - `src/error.rs` - Error handling
 
 **Fix PATH**:
+
 ```bash
 # Add to ~/.zshrc or ~/.bashrc
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -157,23 +165,23 @@ cargo --version
 
 ## Test Coverage Matrix
 
-| Feature | Test Written | Node.js Ready | Rust Ready |
-|---------|--------------|---------------|------------|
-| Object Types | ✅ | 🔴 | 🔴 |
-| Enum Types | ✅ | 🔴 | 🔴 |
-| Interface Types | ✅ | 🔴 | 🔴 |
-| Union Types | ✅ | 🔴 | 🔴 |
-| Input Types | ✅ | 🔴 | 🔴 |
-| Custom Scalars | ✅ | 🔴 | 🔴 |
-| @key directive | ✅ | 🔴 | 🔴 |
-| @external directive | ✅ | 🔴 | 🔴 |
-| @requires directive | ✅ | 🔴 | 🔴 |
-| @provides directive | ✅ | 🔴 | 🔴 |
-| @shareable | ✅ | 🔴 | 🔴 |
-| @authenticated | ✅ | 🔴 | 🔴 |
-| @requiresScopes | ✅ | 🔴 | 🔴 |
-| Field Arguments | ✅ | 🔴 | 🔴 |
-| Round-Trip | ✅ | 🔴 | 🔴 |
+| Feature             | Test Written | Node.js Ready | Rust Ready |
+| ------------------- | ------------ | ------------- | ---------- |
+| Object Types        | ✅           | 🔴            | 🔴         |
+| Enum Types          | ✅           | 🔴            | 🔴         |
+| Interface Types     | ✅           | 🔴            | 🔴         |
+| Union Types         | ✅           | 🔴            | 🔴         |
+| Input Types         | ✅           | 🔴            | 🔴         |
+| Custom Scalars      | ✅           | 🔴            | 🔴         |
+| @key directive      | ✅           | 🔴            | 🔴         |
+| @external directive | ✅           | 🔴            | 🔴         |
+| @requires directive | ✅           | 🔴            | 🔴         |
+| @provides directive | ✅           | 🔴            | 🔴         |
+| @shareable          | ✅           | 🔴            | 🔴         |
+| @authenticated      | ✅           | 🔴            | 🔴         |
+| @requiresScopes     | ✅           | 🔴            | 🔴         |
+| Field Arguments     | ✅           | 🔴            | 🔴         |
+| Round-Trip          | ✅           | 🔴            | 🔴         |
 
 **Legend**: ✅ Complete | 🔴 Blocked | ⏳ In Progress
 
@@ -188,6 +196,7 @@ cargo --version
 **Value**: Validates test infrastructure works
 
 **Steps**:
+
 1. Fix type exports in `src/index.ts` (30 min)
 2. Fix async function (5 min)
 3. Remove unused variables (15 min)
@@ -195,6 +204,7 @@ cargo --version
 5. Build and test (1-2 hours)
 
 **After Success**:
+
 - Decide whether to fix Rust or proceed to Phase 3B
 
 ### Option B: Fix Both Converters
@@ -204,6 +214,7 @@ cargo --version
 **Value**: Complete Phase 3A
 
 **Timeline**:
+
 - Day 1: Fix Node.js (4 hours) + Start Rust (4 hours)
 - Day 2: Complete Rust implementation (6 hours) + Testing (2 hours)
 
@@ -214,6 +225,7 @@ cargo --version
 **Value**: Visual progress, don't block on converters
 
 **Approach**:
+
 - Build Phase 3B web UI with mock converters
 - Show working prototype
 - Integrate real converters later
@@ -227,21 +239,23 @@ cargo --version
 **File**: `converters/node/src/index.ts`
 
 **Change lines 20-34 from**:
+
 ```typescript
 export {
   ConversionOptions,
   ConversionResult,
   // ... etc
-} from './types.js';
+} from "./types.js";
 ```
 
 **To**:
+
 ```typescript
 export type {
   ConversionOptions,
   ConversionResult,
   // ... etc
-} from './types.js';
+} from "./types.js";
 ```
 
 ### 2. Fix Async Function (5 minutes)
@@ -249,11 +263,13 @@ export type {
 **File**: `converters/node/src/index.ts` line 59
 
 **Change**:
+
 ```typescript
 export function createConverter(
 ```
 
 **To**:
+
 ```typescript
 export async function createConverter(
 ```
@@ -277,6 +293,7 @@ Prefix with underscore: `const _metaSchemaValidator = ...`
 **File**: `converters/node/src/graphql-to-json.ts` line 322
 
 **Change**:
+
 ```typescript
 method() {
   console.log(arguments);
@@ -284,6 +301,7 @@ method() {
 ```
 
 **To**:
+
 ```typescript
 method(...args: any[]) {
   console.log(args);
@@ -306,6 +324,7 @@ pnpm run test:coverage
 Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 
 **Architecture**:
+
 - Three-panel layout (JSON Schema | Controls | GraphQL SDL)
 - Monaco Editor for JSON Schema
 - GraphQL Editor for SDL + visual graph
@@ -316,6 +335,7 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 **Timeline**: 5 weeks (can start with mock converters)
 
 **Technology Stack**:
+
 - React 18 + TypeScript
 - Monaco Editor + GraphQL Editor
 - TailwindCSS + shadcn/ui
@@ -335,6 +355,7 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 ## Success Metrics
 
 ### Phase 3A - Infrastructure ✅
+
 - [x] 1,315 lines of tests written
 - [x] 533 lines of scripts written
 - [x] 4,208 lines of documentation
@@ -342,6 +363,7 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 - [x] Environment setup verified
 
 ### Phase 3A - Execution 🔴
+
 - [ ] Node.js converter compiles
 - [ ] Rust converter compiles
 - [ ] Tests run successfully
@@ -349,6 +371,7 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 - [ ] Parity validated
 
 ### Phase 3B - Web UI 📋
+
 - [ ] Project initialized
 - [ ] Editors integrated
 - [ ] Converters integrated
@@ -358,25 +381,26 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 
 ## Project Statistics
 
-| Metric | Count |
-|--------|-------|
-| Files Created | 11 |
-| Lines of Test Code | 1,315 |
-| Lines of Scripts | 533 |
-| Lines of Documentation | 4,208 |
+| Metric                  | Count     |
+| ----------------------- | --------- |
+| Files Created           | 11        |
+| Lines of Test Code      | 1,315     |
+| Lines of Scripts        | 533       |
+| Lines of Documentation  | 4,208     |
 | **Total Lines Written** | **6,056** |
-| Time Invested | ~8 hours |
-| Estimated Time to Fix | 2-4 hours |
+| Time Invested           | ~8 hours  |
+| Estimated Time to Fix   | 2-4 hours |
 
 ---
 
 ## Conclusion
 
-**Phase 3A infrastructure is complete and production-ready.** The test suites are comprehensive, scripts are functional, and documentation is thorough. 
+**Phase 3A infrastructure is complete and production-ready.** The test suites are comprehensive, scripts are functional, and documentation is thorough.
 
 **The only blocker is fixing TypeScript compilation errors in the Node.js converter**, which are straightforward syntax issues that can be resolved in 2-4 hours.
 
 **Once fixed, we'll have**:
+
 - Working test infrastructure
 - Validated converter implementations
 - Coverage reports
@@ -389,6 +413,7 @@ Complete implementation plan available in `PHASE_3B_WEB_UI.md`.
 ### Immediate (User)
 
 1. **Fix Node.js TypeScript errors** (see Quick Fix Guide above)
+
    ```bash
    cd converters/node
    # Edit files per guide

@@ -154,7 +154,7 @@ Edit the workflow file to modify export options:
 Change the artifacts retention:
 
 ```yaml
-retention-days: 30  # Set between 1 and 90 (max for public repos; org policy may lower this)
+retention-days: 30 # Set between 1 and 90 (max for public repos; org policy may lower this)
 ```
 
 ### Add New Branches
@@ -167,7 +167,7 @@ on:
     branches:
       - main
       - json-graphql-schema-diff-cleanup-v2
-      - staging  # Add new branch
+      - staging # Add new branch
 ```
 
 ### Disable Auto-Commit
@@ -186,6 +186,7 @@ Remove or comment out the commit step to prevent auto-pushing:
 **Symptom**: Workflow fails at "Generate PDF" step
 
 **Solutions**:
+
 1. Check `slides.md` syntax - ensure no broken Mermaid diagrams
 2. Verify Node.js version compatibility
 3. Check disk space on runner
@@ -196,6 +197,7 @@ Remove or comment out the commit step to prevent auto-pushing:
 **Symptom**: Generated files appear in artifacts but not in repository
 
 **Solutions**:
+
 1. Check `contents:write` permission is set
 2. Verify branch protection rules allow writes
 3. Check GitHub Action configuration
@@ -206,6 +208,7 @@ Remove or comment out the commit step to prevent auto-pushing:
 **Symptom**: PDF file is very large (>20 MB)
 
 **Solutions**:
+
 1. Reduce image quality in Slidev config
 2. Remove high-resolution images from slides
 3. Use HTML export instead for web sharing
@@ -215,6 +218,7 @@ Remove or comment out the commit step to prevent auto-pushing:
 **Symptom**: Workflow takes >30 minutes
 
 **Solutions**:
+
 1. Disable PNG export if not needed
 2. Comment out the PNG generation step
 3. Run manually only when needed

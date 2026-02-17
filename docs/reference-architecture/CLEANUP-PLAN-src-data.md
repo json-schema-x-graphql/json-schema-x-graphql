@@ -11,9 +11,10 @@ The `src/data/` directory contains legacy files that should be archived or remov
 
 ## Current Single Source of Truth
 
-**✅ JSON Schema with x-graphql-* annotations**
+**✅ JSON Schema with x-graphql-\* annotations**
+
 - `src/data/*.schema.json` files are canonical (snake_case)
-- x-graphql-* extensions define GraphQL SDL generation rules
+- x-graphql-\* extensions define GraphQL SDL generation rules
 - Scripts generate SDL **from** JSON Schema (not vice versa)
 
 ---
@@ -25,17 +26,20 @@ The `src/data/` directory contains legacy files that should be archived or remov
 **Status:** Legacy SDL file marked as "canonical" in old docs but superseded by x-graphql annotations
 
 **Reason to Archive:**
+
 - Not imported by any Next.js code (verified via grep)
 - Not used as input by current generator scripts
 - Documentation incorrectly calls it "canonical source"
-- Real source: `schema_unification.schema.json` with x-graphql-* annotations
+- Real source: `schema_unification.schema.json` with x-graphql-\* annotations
 
 **Action:**
+
 ```bash
 mv src/data/schema_unification.graphql src/data/archived/schema_unification.graphql.legacy
 ```
 
 **Git Commit Message:**
+
 ```
 chore: archive legacy schema_unification.graphql SDL file
 
@@ -50,15 +54,18 @@ This SDL file is no longer used by generators or imported by website.
 ### 2. `src/data/supgraphs/`
 
 **Current Contents:**
+
 - `contract_data.graphql` (legacy SDL)
 - `contract_data.schema.json` (duplicate of main contract_data.schema.json)
 
 **Reason to Remove:**
+
 - Superseded by `generated-schemas/` outputs
 - Contract Data schema should live at `src/data/contract_data.schema.json` (canonical)
 - Generated SDL should go to `generated-schemas/contract_data.subgraph.graphql`
 
 **Action:**
+
 ```bash
 # Check if contract_data.schema.json has any unique content first
 diff src/data/supgraphs/contract_data.schema.json src/data/contract_data.schema.json
@@ -69,6 +76,7 @@ rm -rf src/data/supgraphs/
 ```
 
 **Git Commit Message:**
+
 ```
 chore: remove superseded supgraphs directory
 
@@ -84,11 +92,13 @@ Canonical schemas live at src/data/{system}.schema.json.
 
 **Status:** Auto-populated by CI workflows
 
-**Purpose:** 
+**Purpose:**
+
 - Mirror of `generated-schemas/` for direct Next.js imports
 - Allows website to import schemas without build-time copying
 
 **CI Workflows That Populate It:**
+
 - `.github/workflows/schema-validate-generate.yml` (lines 127-131)
 - `.github/workflows/composition.yml` (line 59)
 - Generator scripts with `--no-generated-copy=false` flag
@@ -96,19 +106,23 @@ Canonical schemas live at src/data/{system}.schema.json.
 **Action:** Document in README, do NOT manually edit or remove
 
 **Add to `src/data/README.md`:**
+
 ```markdown
 ## Directory Structure
 
 ### Canonical Sources (Edit These)
-- `*.schema.json` - JSON Schema with x-graphql-* annotations (snake_case)
+
+- `*.schema.json` - JSON Schema with x-graphql-\* annotations (snake_case)
 - One file per system: `contract_data.schema.json`, `legacy_procurement.schema.json`, etc.
 
 ### Auto-Generated (Do Not Edit)
+
 - `generated/` - Auto-populated by CI from `generated-schemas/`
 - Provides direct imports for Next.js website
 - Regenerated on every schema change
 
 ### Legacy Files (Archived)
+
 - `archived/` - Historical schema versions for reference
 ```
 
@@ -118,34 +132,38 @@ Canonical schemas live at src/data/{system}.schema.json.
 
 ### 4. Update `docs/SCHEMA-ARCHITECTURE.md`
 
-**Current Problem:** 
+**Current Problem:**
+
 - Lines 18, 98, 122, 309 incorrectly label `schema_unification.graphql` as "CANONICAL"
 - Diagram shows bidirectional flow (JSON ↔ SDL) when it's actually JSON → SDL only
 
 **Correction:**
+
 ```markdown
 ## Source of Truth (Revised)
 
-| File | Purpose | Status | Edit? |
-|------|---------|--------|-------|
-| `*.schema.json` | System schemas with x-graphql annotations | ✅ **CANONICAL** | ✅ Yes |
-| `schema_unification.schema.json` | Unified supergraph schema | ✅ **CANONICAL** | ✅ Yes |
-| `schema_unification.graphql` | Legacy SDL (archived) | ❌ **DEPRECATED** | ❌ No |
+| File                             | Purpose                                   | Status            | Edit?  |
+| -------------------------------- | ----------------------------------------- | ----------------- | ------ |
+| `*.schema.json`                  | System schemas with x-graphql annotations | ✅ **CANONICAL**  | ✅ Yes |
+| `schema_unification.schema.json` | Unified supergraph schema                 | ✅ **CANONICAL**  | ✅ Yes |
+| `schema_unification.graphql`     | Legacy SDL (archived)                     | ❌ **DEPRECATED** | ❌ No  |
 
 ## Data Flow (Corrected)
+```
+
+Canonical JSON Schema (snake_case)
+with x-graphql-\* annotations
+↓
+[Generator Scripts]
+↓
+Generated GraphQL SDL (camelCase)
+↓
+CI Auto-Copy
+↓
+src/data/generated/ (website import)
 
 ```
-Canonical JSON Schema (snake_case)
-with x-graphql-* annotations
-         ↓
-  [Generator Scripts]
-         ↓
-Generated GraphQL SDL (camelCase)
-         ↓
-   CI Auto-Copy
-         ↓
-src/data/generated/ (website import)
-```
+
 ```
 
 ---
@@ -155,17 +173,20 @@ src/data/generated/ (website import)
 After cleanup, verify:
 
 1. **Schema generation still works:**
+
    ```bash
    pnpm run generate:schema:interop
    node scripts/generate-graphql-from-json-schema.mjs
    ```
 
 2. **Validation passes:**
+
    ```bash
    pnpm run validate:all
    ```
 
 3. **Website builds:**
+
    ```bash
    pnpm build
    ```
@@ -212,11 +233,13 @@ pnpm build
 ## Migration Impact
 
 **Breaking Changes:** None
+
 - No code imports these files
 - All generators read from JSON Schema
 - CI workflows already use correct paths
 
 **Documentation Updates Needed:**
+
 - `docs/SCHEMA-ARCHITECTURE.md` - Remove schema_unification.graphql as canonical
 - `docs/schema-pipeline-guide.md` - Update flow diagrams
 - `README.md` - Clarify x-graphql as single source of truth
@@ -228,7 +251,7 @@ pnpm build
 - [x] Is `schema_unification.graphql` used anywhere? **No** (verified via grep)
 - [x] Does `src/data/generated/` need manual management? **No** (CI auto-populates)
 - [x] Are `supgraphs/` files referenced? **No** (legacy directory)
-- [x] What's the single source of truth? **JSON Schema with x-graphql-* annotations**
+- [x] What's the single source of truth? **JSON Schema with x-graphql-\* annotations**
 
 ---
 

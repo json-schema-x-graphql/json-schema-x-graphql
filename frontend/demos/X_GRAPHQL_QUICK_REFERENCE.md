@@ -18,6 +18,7 @@ Quick reference for using `x-graphql-*` extensions in JSON Schema for GraphQL co
 ```
 
 **Generates:**
+
 ```graphql
 "A user in the system"
 type User {
@@ -30,6 +31,7 @@ type User {
 ## Field Mappings
 
 ### Simple Field
+
 ```json
 {
   "username": {
@@ -43,12 +45,14 @@ type User {
 ```
 
 **Generates:**
+
 ```graphql
 "User's username"
 username: String!
 ```
 
 ### Field with Custom Type
+
 ```json
 {
   "userId": {
@@ -60,11 +64,13 @@ username: String!
 ```
 
 **Generates:**
+
 ```graphql
 userId: ID!
 ```
 
 ### Array Field
+
 ```json
 {
   "tags": {
@@ -80,11 +86,13 @@ userId: ID!
 ```
 
 **Generates:**
+
 ```graphql
 tags: [String!]!
 ```
 
 ### Field with Arguments
+
 ```json
 {
   "posts": {
@@ -109,6 +117,7 @@ tags: [String!]!
 ```
 
 **Generates:**
+
 ```graphql
 posts(limit: Int = 10, offset: Int = 0): [Post]
 ```
@@ -145,15 +154,16 @@ posts(limit: Int = 10, offset: Int = 0): [Post]
 ```
 
 **Generates:**
+
 ```graphql
 "Available user roles"
 enum UserRole {
   "Administrator with full access"
   ADMIN
-  
+
   "Regular user"
   USER
-  
+
   "Guest user"
   GUEST @deprecated(reason: "Being phased out")
 }
@@ -164,6 +174,7 @@ enum UserRole {
 ## Apollo Federation
 
 ### Entity with @key
+
 ```json
 {
   "type": "object",
@@ -178,6 +189,7 @@ enum UserRole {
 ```
 
 **Generates:**
+
 ```graphql
 type Product @key(fields: "id") {
   # fields
@@ -185,6 +197,7 @@ type Product @key(fields: "id") {
 ```
 
 ### Multiple Keys
+
 ```json
 {
   "x-graphql-federation-keys": [
@@ -199,15 +212,17 @@ type Product @key(fields: "id") {
 ```
 
 **Generates:**
+
 ```graphql
-type Product 
-  @key(fields: "id") 
+type Product
+  @key(fields: "id")
   @key(fields: "sku organizationId") {
   # fields
 }
 ```
 
 ### Shareable Type
+
 ```json
 {
   "x-graphql-type-name": "Product",
@@ -216,6 +231,7 @@ type Product
 ```
 
 **Generates:**
+
 ```graphql
 type Product @shareable {
   # fields
@@ -227,6 +243,7 @@ type Product @shareable {
 ## Directives
 
 ### Type Directives
+
 ```json
 {
   "x-graphql-type-name": "User",
@@ -242,6 +259,7 @@ type Product @shareable {
 ```
 
 **Generates:**
+
 ```graphql
 type User @tag(name: "public") {
   # fields
@@ -249,6 +267,7 @@ type User @tag(name: "public") {
 ```
 
 ### Field Directives
+
 ```json
 {
   "email": {
@@ -267,6 +286,7 @@ type User @tag(name: "public") {
 ```
 
 **Generates:**
+
 ```graphql
 email: String @deprecated(reason: "Use contactEmail instead")
 ```
@@ -275,24 +295,25 @@ email: String @deprecated(reason: "Use contactEmail instead")
 
 ## Type Mappings
 
-| JSON Schema Type | Default GraphQL Type | Custom Override |
-|------------------|---------------------|-----------------|
-| `"string"` | `String` | `x-graphql-field-type: "ID"` |
-| `"integer"` | `Int` | `x-graphql-field-type: "BigInt"` |
-| `"number"` | `Float` | - |
-| `"boolean"` | `Boolean` | - |
-| `"array"` | `[ItemType]` | Use `x-graphql-field-type` |
-| `"object"` | `JSON` | Reference via `$ref` |
-| `format: "date-time"` | `DateTime` | Custom scalar |
-| `format: "date"` | `Date` | Custom scalar |
-| `format: "email"` | `String` | Custom scalar |
-| `format: "uri"` | `String` | Custom scalar |
+| JSON Schema Type      | Default GraphQL Type | Custom Override                  |
+| --------------------- | -------------------- | -------------------------------- |
+| `"string"`            | `String`             | `x-graphql-field-type: "ID"`     |
+| `"integer"`           | `Int`                | `x-graphql-field-type: "BigInt"` |
+| `"number"`            | `Float`              | -                                |
+| `"boolean"`           | `Boolean`            | -                                |
+| `"array"`             | `[ItemType]`         | Use `x-graphql-field-type`       |
+| `"object"`            | `JSON`               | Reference via `$ref`             |
+| `format: "date-time"` | `DateTime`           | Custom scalar                    |
+| `format: "date"`      | `Date`               | Custom scalar                    |
+| `format: "email"`     | `String`             | Custom scalar                    |
+| `format: "uri"`       | `String`             | Custom scalar                    |
 
 ---
 
 ## Common Patterns
 
 ### 1. Reference to Another Type
+
 ```json
 {
   "profile": {
@@ -303,6 +324,7 @@ email: String @deprecated(reason: "Use contactEmail instead")
 ```
 
 ### 2. Nullable vs Non-Null
+
 ```json
 {
   "requiredField": {
@@ -316,12 +338,14 @@ email: String @deprecated(reason: "Use contactEmail instead")
 ```
 
 **Generates:**
+
 ```graphql
 requiredField: String!
 optionalField: String
 ```
 
 ### 3. Lists with Nullability Control
+
 ```json
 {
   "items": {
@@ -335,11 +359,13 @@ optionalField: String
 ```
 
 **Generates:**
+
 ```graphql
 items: [String!]!
 ```
 
 ### 4. Default Schema Config
+
 ```json
 {
   "x-graphql-schema-config": {
@@ -352,6 +378,7 @@ items: [String!]!
 ```
 
 ### 5. Link Imports (Federation)
+
 ```json
 {
   "x-graphql-link-imports": [
@@ -368,6 +395,7 @@ items: [String!]!
 ## Extension Naming Convention
 
 All extensions use **hyphen-case** (kebab-case):
+
 - ✅ `x-graphql-field-name`
 - ✅ `x-graphql-type-directives`
 - ✅ `x-graphql-federation-keys`
@@ -456,19 +484,20 @@ All extensions use **hyphen-case** (kebab-case):
 ```
 
 **Generates:**
+
 ```graphql
 "A user in the system"
 type User @key(fields: "id") {
   "Unique identifier"
   id: ID!
-  
+
   "User's username"
   username: String!
-  
+
   email: String!
-  
+
   role: UserRole!
-  
+
   posts(limit: Int = 10): [Post]
 }
 

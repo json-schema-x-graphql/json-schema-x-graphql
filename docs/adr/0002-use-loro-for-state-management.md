@@ -22,13 +22,13 @@ The core of the application will use `loro`'s data structures to represent the d
 
 ### Positive
 
-*   **Future-Proofing for Collaboration**: By building on a CRDT foundation from the start, we are architecturally prepared for future multi-user, real-time collaboration features. CRDTs are specifically designed to handle concurrent edits from multiple sources without requiring complex conflict resolution logic.
-*   **Performance**: `Loro` is implemented in Rust and is designed for high performance, which is crucial for a responsive user experience, especially when dealing with large schemas.
-*   **Offline Support (Local-First)**: The local-first nature of `loro` means the application can work seamlessly offline. State is managed locally, and synchronization can happen whenever a network connection is available.
-*   **Unified Data Model**: It provides a single, reliable source of truth for the application state that can be intake_processly synchronized between the Rust back end (WASM) and the front-end UI.
+- **Future-Proofing for Collaboration**: By building on a CRDT foundation from the start, we are architecturally prepared for future multi-user, real-time collaboration features. CRDTs are specifically designed to handle concurrent edits from multiple sources without requiring complex conflict resolution logic.
+- **Performance**: `Loro` is implemented in Rust and is designed for high performance, which is crucial for a responsive user experience, especially when dealing with large schemas.
+- **Offline Support (Local-First)**: The local-first nature of `loro` means the application can work seamlessly offline. State is managed locally, and synchronization can happen whenever a network connection is available.
+- **Unified Data Model**: It provides a single, reliable source of truth for the application state that can be intake_processly synchronized between the Rust back end (WASM) and the front-end UI.
 
 ### Negative
 
-*   **Learning Curve**: CRDTs are a specialized data structure. The team may need to invest time in understanding their concepts and the specifics of the `loro` library to use it effectively.
-*   **Increased Complexity**: Integrating a CRDT library adds a layer of abstraction compared to simpler state management solutions. This introduces some initial complexity to the codebase.
-*   **Dependency**: We are adding a significant external dependency. While `loro` is a well-regarded project, we will be reliant on its continued maintenance and development.
+- **Learning Curve**: CRDTs are a specialized data structure. The team may need to invest time in understanding their concepts and the specifics of the `loro` library to use it effectively.
+- **Increased Complexity**: Integrating a CRDT library adds a layer of abstraction compared to simpler state management solutions. This introduces some initial complexity to the codebase.
+- **Dependency**: We are adding a significant external dependency. While `loro` is a well-regarded project, we will be reliant on its continued maintenance and development.

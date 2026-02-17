@@ -1,6 +1,6 @@
 # X-GraphQL Hints: Quick Reference
 
-> **Fast reference for using x-graphql-* hints in JSON Schema to generate high-quality GraphQL SDL**
+> **Fast reference for using x-graphql-\* hints in JSON Schema to generate high-quality GraphQL SDL**
 
 ## Quick Start
 
@@ -39,18 +39,18 @@ interface Contract {
 
 ## All Hint Types
 
-| Hint | Purpose | Example |
-|------|---------|---------|
-| `x-graphql-type` | Specify GraphQL type kind | `"interface"`, `"union"`, `"enum"` |
-| `x-graphql-type-name` | Override type name | `"ProcurementInstrument"` |
-| `x-graphql-field-name` | Override field name | `"procurementInstrumentId"` |
-| `x-graphql-description` | GraphQL-specific description | `"Unique contract ID"` |
-| `x-graphql-nullable` | Override nullability | `false` (makes field required) |
-| `x-graphql-implements` | Specify interfaces | `["Contract", "Searchable"]` |
-| `x-graphql-union-types` | Union member types | `["IDVContract", "Order"]` |
-| `x-graphql-directives` | Apply directives | `[{"name": "currency", "args": {...}}]` |
-| `x-graphql-args` | Field arguments | `{"limit": {"type": "Int", "defaultValue": 100}}` |
-| `x-graphql-skip` | Exclude from GraphQL | `true` |
+| Hint                    | Purpose                      | Example                                           |
+| ----------------------- | ---------------------------- | ------------------------------------------------- |
+| `x-graphql-type`        | Specify GraphQL type kind    | `"interface"`, `"union"`, `"enum"`                |
+| `x-graphql-type-name`   | Override type name           | `"ProcurementInstrument"`                         |
+| `x-graphql-field-name`  | Override field name          | `"procurementInstrumentId"`                       |
+| `x-graphql-description` | GraphQL-specific description | `"Unique contract ID"`                            |
+| `x-graphql-nullable`    | Override nullability         | `false` (makes field required)                    |
+| `x-graphql-implements`  | Specify interfaces           | `["Contract", "Searchable"]`                      |
+| `x-graphql-union-types` | Union member types           | `["IDVContract", "Order"]`                        |
+| `x-graphql-directives`  | Apply directives             | `[{"name": "currency", "args": {...}}]`           |
+| `x-graphql-args`        | Field arguments              | `{"limit": {"type": "Int", "defaultValue": 100}}` |
+| `x-graphql-skip`        | Exclude from GraphQL         | `true`                                            |
 
 ## Common Patterns
 
@@ -63,15 +63,15 @@ interface Contract {
   "Contract": {
     "x-graphql-type": "interface",
     "properties": {
-      "contractId": {"type": "string"}
+      "contractId": { "type": "string" }
     }
   },
   "IDVContract": {
     "type": "object",
     "x-graphql-implements": ["Contract"],
     "properties": {
-      "contractId": {"type": "string"},
-      "idvType": {"type": "string"}
+      "contractId": { "type": "string" },
+      "idvType": { "type": "string" }
     }
   }
 }
@@ -100,8 +100,8 @@ type IDVContract implements Contract {
     "x-graphql-type": "union",
     "x-graphql-union-types": ["IDVContract", "Order"],
     "oneOf": [
-      {"$ref": "#/definitions/IDVContract"},
-      {"$ref": "#/definitions/Order"}
+      { "$ref": "#/definitions/IDVContract" },
+      { "$ref": "#/definitions/Order" }
     ]
   }
 }
@@ -125,10 +125,12 @@ union ContractSearchResult = IDVContract | Order
   },
   "amount": {
     "type": "number",
-    "x-graphql-directives": [{
-      "name": "currency",
-      "args": {"code": "USD"}
-    }]
+    "x-graphql-directives": [
+      {
+        "name": "currency",
+        "args": { "code": "USD" }
+      }
+    ]
   }
 }
 ```
@@ -249,17 +251,17 @@ Need advanced GraphQL features?
 
 The converter automatically infers:
 
-| JSON Schema | GraphQL |
-|-------------|---------|
-| `"type": "string"` | `String` |
-| `"type": "integer"` | `Int` |
-| `"type": "number"` | `Float` |
-| `"type": "boolean"` | `Boolean` |
-| `"type": "string", "format": "date-time"` | `DateTime` |
-| `"type": "array"` | `[Type]` |
-| `"$ref": "#/definitions/Type"` | `Type` |
-| `"enum": [...]` | `enum TypeName` |
-| In `required` array | `Type!` (non-null) |
+| JSON Schema                               | GraphQL            |
+| ----------------------------------------- | ------------------ |
+| `"type": "string"`                        | `String`           |
+| `"type": "integer"`                       | `Int`              |
+| `"type": "number"`                        | `Float`            |
+| `"type": "boolean"`                       | `Boolean`          |
+| `"type": "string", "format": "date-time"` | `DateTime`         |
+| `"type": "array"`                         | `[Type]`           |
+| `"$ref": "#/definitions/Type"`            | `Type`             |
+| `"enum": [...]`                           | `enum TypeName`    |
+| In `required` array                       | `Type!` (non-null) |
 
 ## Best Practices
 
@@ -284,6 +286,7 @@ The converter automatically infers:
 See: `src/data/schema_unification-contract_data-hinted.schema.json`
 
 Demonstrates:
+
 - Contract interface with 6 fields
 - IDVContract and Order implementing Contract
 - ContractSearchResult union type
@@ -297,6 +300,7 @@ Demonstrates:
 See: `public/data/schema_unification-contract_data-hinted.graphql`
 
 Result:
+
 - 179 lines of clean GraphQL SDL
 - 7 object types
 - 1 interface

@@ -31,9 +31,9 @@
       "@/types/*": ["./src/types/*"],
       "@/converters/*": ["./src/converters/*"],
       "@/wasm/*": ["./src/wasm/*"],
-      "@wasm/json_schema_x_graphql": ["./src/wasm/json_schema_x_graphql"],
-    },
+      "@wasm/json_schema_x_graphql": ["./src/wasm/json_schema_x_graphql"]
+    }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

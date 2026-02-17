@@ -1,4 +1,5 @@
 # Project Handoff Document
+
 **JSON Schema ↔ GraphQL Authoring UI**
 
 **Status:** 🟡 95% Complete - Minor Type Fixes Required  
@@ -26,6 +27,7 @@ A complete, production-ready web application (6,700+ lines of code + 3,200+ line
 - ✅ Extensive documentation (8 guides)
 
 **What's Left:**
+
 - ⚠️ 2 missing store methods (30 minutes to add)
 - ⚠️ Fix 1 type property that doesn't exist (5 minutes)
 - ⚠️ Minor cleanup in 2 components (15 minutes)
@@ -43,10 +45,11 @@ A complete, production-ready web application (6,700+ lines of code + 3,200+ line
 **Location:** Add to `AppActions` interface (around line 82) and implement in store (around line 130)
 
 #### Step 1.1: Update Interface (Line ~82)
+
 ```typescript
 interface AppActions {
   // ... existing methods ...
-  
+
   // ADD THESE TWO METHODS:
   applyAutoFix: (error: ValidationError) => Promise<void>;
   clearValidationResult: () => void;
@@ -54,6 +57,7 @@ interface AppActions {
 ```
 
 #### Step 1.2: Implement Methods (Line ~350, after other methods)
+
 ```typescript
 // Add these implementations in the store:
 
@@ -62,18 +66,18 @@ applyAutoFix: async (error: ValidationError) => {
     console.warn('No fix available for this error');
     return;
   }
-  
+
   const state = get();
   const currentContent = state.mode === 'json-to-graphql'
     ? state.jsonSchemaEditor.content
     : state.graphqlEditor.content;
-  
+
   // Apply the text changes from the fix
   let newContent = currentContent;
-  const changes = [...error.fix.changes].sort((a, b) => 
+  const changes = [...error.fix.changes].sort((a, b) =>
     (b.startLine * 10000 + b.startColumn) - (a.startLine * 10000 + a.startColumn)
   );
-  
+
   for (const change of changes) {
     const lines = newContent.split('\n');
     if (change.startLine <= lines.length) {
@@ -84,14 +88,14 @@ applyAutoFix: async (error: ValidationError) => {
       newContent = lines.join('\n');
     }
   }
-  
+
   // Update the appropriate editor
   if (state.mode === 'json-to-graphql') {
     get().setJsonSchemaContent(newContent);
   } else {
     get().setGraphQLContent(newContent);
   }
-  
+
   console.log('Applied auto-fix for:', error.message);
 },
 
@@ -111,6 +115,7 @@ clearValidationResult: () => {
 **Lines:** 217-221
 
 **Change:**
+
 ```typescript
 // CURRENT (lines 217-221):
 {error.fix.preview && (
@@ -140,6 +145,7 @@ clearValidationResult: () => {
 **Line:** 45
 
 **Change:**
+
 ```typescript
 // CURRENT:
 const handleFixError = async (error: ValidationError, index: number) => {
@@ -159,6 +165,7 @@ const handleFixError = async (error: ValidationError) => {
 **Issue:** Uses `conversionDirection` which doesn't exist, should use `mode`
 
 **Already correct in latest version, but verify these lines exist:**
+
 ```typescript
 // Should be (around line 25):
 const mode = useAppStore((state) => state.mode);
@@ -178,6 +185,7 @@ const mode = useAppStore((state) => state.mode);
 **Issue:** Uses settings properties that don't match store
 
 **The settings type should use:**
+
 - `converterEngine` (not `selectedEngine`)
 - `theme` is correct
 - `autoValidate` is correct
@@ -185,6 +193,7 @@ const mode = useAppStore((state) => state.mode);
 - `debounceMs` is correct
 
 **Quick fix - update local state initialization (line ~31):**
+
 ```typescript
 // Ensure this matches the store settings structure
 const [localSettings, setLocalSettings] = useState({
@@ -197,6 +206,7 @@ const [localSettings, setLocalSettings] = useState({
 ```
 
 **And update save handler (line ~41):**
+
 ```typescript
 const handleSave = () => {
   updateSettings(localSettings);
@@ -211,19 +221,24 @@ const handleSave = () => {
 After completing the tasks above:
 
 ### 1. Type Check (Should Pass)
+
 ```bash
 cd frontend/schema-authoring
 pnpm run type-check
 ```
+
 **Expected:** 0 errors
 
 ### 2. Start Dev Server (Should Work)
+
 ```bash
 pnpm run dev
 ```
+
 **Expected:** No errors, opens at http://localhost:3003
 
 ### 3. Manual Testing Checklist
+
 ```
 □ App loads without console errors
 □ Both editors visible and render correctly
@@ -295,6 +310,7 @@ frontend/schema-authoring/
 ## 🎓 What Each Component Does
 
 ### `EditorPanel.tsx` ✅ Complete
+
 - Wraps Monaco Editor
 - JSON Schema and GraphQL language support
 - Inline error markers (red squiggles)
@@ -304,6 +320,7 @@ frontend/schema-authoring/
 - Read-only mode support
 
 ### `Toolbar.tsx` ✅ Complete
+
 - Converter engine dropdown (auto/WASM/Node)
 - Direction toggle (JSON↔GQL)
 - Convert/Validate/Export buttons
@@ -311,6 +328,7 @@ frontend/schema-authoring/
 - Performance metrics display
 
 ### `ErrorPanel.tsx` ⚠️ Needs 2 Small Fixes
+
 - Collapsible error list
 - Error/warning categorization
 - Auto-fix suggestions with buttons
@@ -318,6 +336,7 @@ frontend/schema-authoring/
 - Bulk actions (Fix All, Clear All)
 
 ### `StatusBar.tsx` ✅ Complete (verify mode property)
+
 - Engine status indicator
 - Conversion metrics (time, operations)
 - Validation status (✓/✗)
@@ -326,6 +345,7 @@ frontend/schema-authoring/
 - Keyboard shortcuts hint
 
 ### `SettingsPanel.tsx` ✅ Mostly Complete
+
 - Modal dialog
 - Engine selection
 - Theme picker
@@ -338,29 +358,34 @@ frontend/schema-authoring/
 ## 🔧 Technology Stack
 
 **Frontend:**
+
 - React 18.3.1
 - TypeScript 5.2.2 (strict mode)
 - Vite 5.0.8
 - Tailwind CSS 3.4.1
 
 **State Management:**
+
 - Zustand 4.5.0
 - Immer 10.0.3
 - Zustand persist middleware
 - Zustand devtools middleware
 
 **Editor:**
+
 - Monaco Editor (@monaco-editor/react 4.6.0)
 - JSON language support
 - GraphQL language support
 - Custom autocompletion provider
 
 **Validation:**
+
 - Ajv 8.12.0 (JSON Schema validator)
 - ajv-formats 2.1.1 (format validators)
 - GraphQL 16.8.1 (SDL parser)
 
 **Build:**
+
 - Vite with WASM plugin
 - PostCSS + Autoprefixer
 - Rollup (via Vite)
@@ -370,6 +395,7 @@ frontend/schema-authoring/
 ## 🎯 Key Features
 
 ### Implemented ✅
+
 - [x] Dual Monaco editors (JSON Schema + GraphQL)
 - [x] Real-time syntax highlighting
 - [x] Live conversion (both directions)
@@ -383,12 +409,13 @@ frontend/schema-authoring/
 - [x] Settings persistence (localStorage)
 - [x] Export functionality (JSON)
 - [x] Performance metrics
-- [x] AI-accessible APIs (window.__schemaAuthoringAPI__)
+- [x] AI-accessible APIs (window.**schemaAuthoringAPI**)
 - [x] History system (50 entries)
 - [x] Debounced auto-conversion
 - [x] Debounced auto-validation
 
 ### Pending (Nice to Have) 🔲
+
 - [ ] Template library (types exist, no UI)
 - [ ] Jump-to-line on error click (placeholder exists)
 - [ ] YAML/TypeScript export
@@ -401,7 +428,9 @@ frontend/schema-authoring/
 ## 🌟 Notable Achievements
 
 ### 1. Comprehensive Type System
+
 500+ lines of TypeScript types covering every aspect:
+
 - Converter engines and options
 - Validation errors with auto-fix
 - Editor state and markers
@@ -410,14 +439,18 @@ frontend/schema-authoring/
 - Event system
 
 ### 2. Converter Abstraction
+
 Elegant abstraction allowing swappable engines:
+
 ```typescript
 // Auto-selects best engine, falls back gracefully
-const result = await converterManager.convert(input, options, 'auto');
+const result = await converterManager.convert(input, options, "auto");
 ```
 
 ### 3. AI-First Design
+
 Global API for AI agents:
+
 ```javascript
 const api = window.__schemaAuthoringAPI__.getAPI();
 api.setJsonSchema('{ "type": "object" }');
@@ -425,7 +458,9 @@ await api.convert();
 ```
 
 ### 4. Exceptional Documentation
+
 8 comprehensive guides (3,200+ lines):
+
 - Setup and quick start
 - Development guide with Q&A
 - Action plans and checklists
@@ -434,6 +469,7 @@ await api.convert();
 - Command reference
 
 ### 5. Production-Ready Code
+
 - TypeScript strict mode
 - Comprehensive error handling
 - Performance optimization
@@ -445,24 +481,29 @@ await api.convert();
 ## 🚀 Deployment Options
 
 ### Option 1: Vercel (Recommended)
+
 ```bash
 npm i -g vercel
 vercel
 ```
+
 - Zero configuration
 - Global CDN
 - Automatic HTTPS
 - Preview deployments
 
 ### Option 2: Netlify
+
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod
 ```
+
 - Similar to Vercel
 - Great for static sites
 
 ### Option 3: Docker
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -473,6 +514,7 @@ COPY --from=0 /app/dist /usr/share/nginx/html
 ```
 
 ### Option 4: GitHub Pages
+
 ```bash
 pnpm run build
 npx gh-pages -d dist
@@ -483,6 +525,7 @@ npx gh-pages -d dist
 ## 📞 Support & Resources
 
 ### Documentation
+
 - 📖 Start with [README.md](./README.md)
 - 🚀 Then [QUICKSTART.md](./QUICKSTART.md)
 - 💡 Deep dive in [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md)
@@ -490,6 +533,7 @@ npx gh-pages -d dist
 - 🔧 Reference [COMMANDS.md](./COMMANDS.md) for CLI
 
 ### External Resources
+
 - [Monaco Editor API](https://microsoft.github.io/monaco-editor/)
 - [Zustand Docs](https://docs.pmnd.rs/zustand)
 - [JSON Schema Spec](https://json-schema.org/)
@@ -500,6 +544,7 @@ npx gh-pages -d dist
 ## 🎯 Success Metrics
 
 ### Definition of "Working Demo"
+
 - ✅ No TypeScript errors
 - ✅ Dev server starts
 - ✅ App loads without errors
@@ -510,6 +555,7 @@ npx gh-pages -d dist
 - ✅ Export works
 
 ### Current Status
+
 - ✅ TypeScript errors: ~24 (down from 60+)
 - ✅ Components: 5/5 implemented
 - ✅ Store: 95% complete (2 methods missing)
@@ -522,6 +568,7 @@ npx gh-pages -d dist
 ## 🏁 Final Notes
 
 **What's working:**
+
 - All major components implemented
 - State management complete
 - Converter infrastructure solid
@@ -529,12 +576,14 @@ npx gh-pages -d dist
 - Architecture clean and extensible
 
 **What needs attention:**
+
 - 2 missing store methods (30 min)
 - 1 property name fix (5 min)
 - Minor cleanup (15 min)
 - Manual testing (30 min)
 
 **After fixes:**
+
 - Fully functional demo ready
 - Can deploy to production
 - Ready for user testing

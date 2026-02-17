@@ -2,7 +2,7 @@
 
 ## 🎯 Executive Summary
 
-**Current Reality (December 2025)**: JSON Schemas with x-graphql-* annotations are the single source of truth. All GraphQL SDL is generated from these schemas.
+**Current Reality (December 2025)**: JSON Schemas with x-graphql-\* annotations are the single source of truth. All GraphQL SDL is generated from these schemas.
 
 **Architecture**: Canonical JSON Schemas per system → Generator scripts → Federation-ready GraphQL SDL → CI auto-publishes for website consumption.
 
@@ -12,30 +12,30 @@
 
 ### Source Schemas (`src/data/`) - **Edit These**
 
-| File | Purpose | Status | Case Convention |
-|------|---------|--------|-----------------|
-| `schema_unification.schema.json` | Unified supergraph schema with all systems | ✅ **CANONICAL** | snake_case |
-| `contract_data.schema.json` | Contract Data system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case |
-| `legacy_procurement.schema.json` | Legacy Procurement system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case |
-| `intake_process.schema.json` | EASi system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case |
-| `logistics_mgmt.schema.json` | Logistics Mgmt system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case |
-| `public_spending.schema.json` | Public Spending system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case |
+| File                             | Purpose                                                 | Status           | Case Convention |
+| -------------------------------- | ------------------------------------------------------- | ---------------- | --------------- |
+| `schema_unification.schema.json` | Unified supergraph schema with all systems              | ✅ **CANONICAL** | snake_case      |
+| `contract_data.schema.json`      | Contract Data system subgraph with x-graphql hints      | ✅ **CANONICAL** | snake_case      |
+| `legacy_procurement.schema.json` | Legacy Procurement system subgraph with x-graphql hints | ✅ **CANONICAL** | snake_case      |
+| `intake_process.schema.json`     | EASi system subgraph with x-graphql hints               | ✅ **CANONICAL** | snake_case      |
+| `logistics_mgmt.schema.json`     | Logistics Mgmt system subgraph with x-graphql hints     | ✅ **CANONICAL** | snake_case      |
+| `public_spending.schema.json`    | Public Spending system subgraph with x-graphql hints    | ✅ **CANONICAL** | snake_case      |
 
 ### Generated Artifacts (`generated-schemas/`) - **Auto-Generated**
 
-| File | Generated From | Purpose | Keep? |
-|------|----------------|---------|-------|
-| `schema_unification.from-json.graphql` | `schema_unification.schema.json` | SDL from JSON Schema | ✅ Yes (validation) |
-| `contract_data.subgraph.graphql` | `contract_data.schema.json` | Contract Data federation subgraph | ✅ Yes |
-| `legacy_procurement.subgraph.graphql` | `legacy_procurement.schema.json` | Legacy Procurement federation subgraph | ✅ Yes |
-| `legacy_procurement.from-json.graphql` | `legacy_procurement.schema.json` | SDL from JSON Schema | ✅ Yes (validation) |
-| `intake_process.subgraph.graphql` | `intake_process.schema.json` | EASi federation subgraph | ✅ Yes |
-| `intake_process.from-json.graphql` | `intake_process.schema.json` | SDL from JSON Schema | ✅ Yes (validation) |
-| `logistics_mgmt.subgraph.graphql` | `logistics_mgmt.schema.json` | Logistics Mgmt federation subgraph | ✅ Yes |
-| `logistics_mgmt.from-json.graphql` | `logistics_mgmt.schema.json` | SDL from JSON Schema | ✅ Yes (validation) |
-| `public_spending.subgraph.graphql` | `public_spending.schema.json` | Public Spending federation subgraph | ✅ Yes |
-| `schema_unification.supergraph.graphql` | All `*.subgraph.graphql` | Composed supergraph | ✅ Yes (federation) |
-| `field-name-mapping.json` | Auto-generated | camelCase ↔ snake_case | ✅ Yes (validation) |
+| File                                    | Generated From                   | Purpose                                | Keep?               |
+| --------------------------------------- | -------------------------------- | -------------------------------------- | ------------------- |
+| `schema_unification.from-json.graphql`  | `schema_unification.schema.json` | SDL from JSON Schema                   | ✅ Yes (validation) |
+| `contract_data.subgraph.graphql`        | `contract_data.schema.json`      | Contract Data federation subgraph      | ✅ Yes              |
+| `legacy_procurement.subgraph.graphql`   | `legacy_procurement.schema.json` | Legacy Procurement federation subgraph | ✅ Yes              |
+| `legacy_procurement.from-json.graphql`  | `legacy_procurement.schema.json` | SDL from JSON Schema                   | ✅ Yes (validation) |
+| `intake_process.subgraph.graphql`       | `intake_process.schema.json`     | EASi federation subgraph               | ✅ Yes              |
+| `intake_process.from-json.graphql`      | `intake_process.schema.json`     | SDL from JSON Schema                   | ✅ Yes (validation) |
+| `logistics_mgmt.subgraph.graphql`       | `logistics_mgmt.schema.json`     | Logistics Mgmt federation subgraph     | ✅ Yes              |
+| `logistics_mgmt.from-json.graphql`      | `logistics_mgmt.schema.json`     | SDL from JSON Schema                   | ✅ Yes (validation) |
+| `public_spending.subgraph.graphql`      | `public_spending.schema.json`    | Public Spending federation subgraph    | ✅ Yes              |
+| `schema_unification.supergraph.graphql` | All `*.subgraph.graphql`         | Composed supergraph                    | ✅ Yes (federation) |
+| `field-name-mapping.json`               | Auto-generated                   | camelCase ↔ snake_case                 | ✅ Yes (validation) |
 
 ### Website Consumption (`src/data/generated/`) - **CI Auto-Populated**
 
@@ -45,8 +45,8 @@ This directory is a mirror of `generated-schemas/` for direct Next.js imports.
 
 ### Legacy Files (`src/data/archived/`) - **Reference Only**
 
-| File | Reason Archived | Date |
-|------|----------------|------|
+| File                         | Reason Archived                                    | Date     |
+| ---------------------------- | -------------------------------------------------- | -------- |
 | `schema_unification.graphql` | Superseded by x-graphql annotations in JSON Schema | Dec 2025 |
 
 ---
@@ -56,17 +56,17 @@ This directory is a mirror of `generated-schemas/` for direct Next.js imports.
 ```mermaid
 graph TD
     A[src/data/*.schema.json<br/>with x-graphql-* annotations] -->|Manual edit| B[Generator Scripts]
-    
+
     B -->|generate-subgraph-sdl.mjs| C[*.subgraph.graphql]
     B -->|generate-supergraph.mjs| D[schema_unification.supergraph.graphql]
     B -->|generate-graphql-from-json-schema.mjs| E[*.from-json.graphql]
-    
+
     C -->|CI auto-copy| F[src/data/generated/]
     D -->|CI auto-copy| F
     E -->|CI auto-copy| F
-    
+
     F -->|Next.js import| G[Website]
-    
+
     style A fill:#90EE90
     style B fill:#87CEEB
     style F fill:#FFD700
@@ -75,7 +75,7 @@ graph TD
 
 **Key Points:**
 
-- ✅ JSON Schema with x-graphql-* annotations is single source of truth
+- ✅ JSON Schema with x-graphql-\* annotations is single source of truth
 - ✅ All GraphQL SDL is generated (not manually edited)
 - ✅ CI automatically copies generated files to `src/data/generated/`
 - ✅ Website directly imports from `src/data/generated/`
@@ -104,11 +104,11 @@ src/data/
 
 ### One Generator Per Purpose
 
-| Script | Input | Output | Purpose |
-|--------|-------|--------|---------|
-| `generate-subgraph-sdl.mjs` | `{system}.schema.json` | `{system}.subgraph.graphql` | Federation subgraphs |
-| `generate-supergraph.mjs` | All `*.subgraph.graphql` | `schema_unification.supergraph.graphql` | Compose federation |
-| `generate-schema-interop.mjs` | `schema_unification.graphql` + `schema_unification.schema.json` | Validation artifacts | Parity checks |
+| Script                        | Input                                                           | Output                                  | Purpose              |
+| ----------------------------- | --------------------------------------------------------------- | --------------------------------------- | -------------------- |
+| `generate-subgraph-sdl.mjs`   | `{system}.schema.json`                                          | `{system}.subgraph.graphql`             | Federation subgraphs |
+| `generate-supergraph.mjs`     | All `*.subgraph.graphql`                                        | `schema_unification.supergraph.graphql` | Compose federation   |
+| `generate-schema-interop.mjs` | `schema_unification.graphql` + `schema_unification.schema.json` | Validation artifacts                    | Parity checks        |
 
 ### Clean Data Flow
 
@@ -121,12 +121,12 @@ graph TD
         D[src/data/contract_data.schema.json]
         E[src/data/schema_unification.graphql]
     end
-    
+
     subgraph "Generation Layer"
         F[generate-subgraph-sdl.mjs]
         G[generate-supergraph.mjs]
     end
-    
+
     subgraph "Generated Artifacts"
         H[legacy_procurement.subgraph.graphql]
         I[intake_process.subgraph.graphql]
@@ -134,38 +134,38 @@ graph TD
         K[contract_data.subgraph.graphql]
         L[schema_unification.supergraph.graphql]
     end
-    
+
     subgraph "Website Consumption"
         M[src/data/generated/]
         N[Website http://localhost:3000]
     end
-    
+
     A -->|auto| F
     B -->|auto| F
     C -->|auto| F
     D -->|auto| F
-    
+
     F --> H
     F --> I
     F --> J
     F --> K
-    
+
     H --> G
     I --> G
     J --> G
     K --> G
     E --> G
-    
+
     G --> L
-    
+
     L -->|CI auto-copy| M
     H -->|CI auto-copy| M
     I -->|CI auto-copy| M
     J -->|CI auto-copy| M
     K -->|CI auto-copy| M
-    
+
     M --> N
-    
+
     style A fill:#90EE90
     style B fill:#90EE90
     style C fill:#90EE90
@@ -260,14 +260,14 @@ pnpm run validate:federation
 
 ## 🎯 Benefits After Refactor
 
-| Before | After |
-|--------|-------|
-| 5+ generator scripts | 2 main scripts |
-| 20+ generated files | 5 subgraphs + 1 supergraph |
-| Manual file copying | CI auto-publishes |
-| Unclear "official" schema | One canonical per system |
-| Mixed v1/v2/enhanced variants | Single versioned approach |
-| Hard to trace provenance | Clear lineage: canonical → subgraph → supergraph |
+| Before                        | After                                            |
+| ----------------------------- | ------------------------------------------------ |
+| 5+ generator scripts          | 2 main scripts                                   |
+| 20+ generated files           | 5 subgraphs + 1 supergraph                       |
+| Manual file copying           | CI auto-publishes                                |
+| Unclear "official" schema     | One canonical per system                         |
+| Mixed v1/v2/enhanced variants | Single versioned approach                        |
+| Hard to trace provenance      | Clear lineage: canonical → subgraph → supergraph |
 
 ---
 

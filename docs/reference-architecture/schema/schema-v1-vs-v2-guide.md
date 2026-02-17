@@ -21,18 +21,18 @@
 
 ### At a Glance
 
-| Aspect | V1 | V2 |
-|--------|----|----|
-| **Field Naming** | camelCase | snake_case (canonical) |
-| **Canonical Source** | GraphQL SDL | JSON Schema |
-| **GraphQL Hints** | ❌ None | ✅ x-graphql-* extensions |
-| **Interface Support** | ⚠️ Limited | ✅ Full support |
-| **Union Types** | ⚠️ Basic | ✅ Enhanced with hints |
-| **Custom Directives** | ❌ Not supported | ✅ Supported via hints |
-| **Bidirectional Sync** | ⚠️ Manual | ✅ Automated pipeline |
-| **Validation** | GraphQL only | GraphQL + JSON Schema + Python |
-| **Type Safety** | Good | Excellent |
-| **Tooling** | Basic | Comprehensive |
+| Aspect                 | V1               | V2                             |
+| ---------------------- | ---------------- | ------------------------------ |
+| **Field Naming**       | camelCase        | snake_case (canonical)         |
+| **Canonical Source**   | GraphQL SDL      | JSON Schema                    |
+| **GraphQL Hints**      | ❌ None          | ✅ x-graphql-\* extensions     |
+| **Interface Support**  | ⚠️ Limited       | ✅ Full support                |
+| **Union Types**        | ⚠️ Basic         | ✅ Enhanced with hints         |
+| **Custom Directives**  | ❌ Not supported | ✅ Supported via hints         |
+| **Bidirectional Sync** | ⚠️ Manual        | ✅ Automated pipeline          |
+| **Validation**         | GraphQL only     | GraphQL + JSON Schema + Python |
+| **Type Safety**        | Good             | Excellent                      |
+| **Tooling**            | Basic            | Comprehensive                  |
 
 ### Migration Checklist
 
@@ -54,6 +54,7 @@
 ### What Changed?
 
 The Schema Unification Forest project transitioned from V1 to V2 to improve:
+
 - **Schema management** — JSON Schema as single source of truth
 - **Field naming** — Consistent snake_case convention
 - **Type system** — Rich GraphQL features via x-graphql hints
@@ -132,7 +133,7 @@ type Contract {
 
 ```graphql
 type Contract {
-  contractId: ID!          # Converted from contract_id
+  contractId: ID! # Converted from contract_id
   organizationInfo: OrganizationInfo
   financialInfo: FinancialInfo
 }
@@ -227,6 +228,7 @@ enum Status {
 ```
 
 **Benefits:**
+
 - Richer enum documentation
 - Proper union type support
 - Interface implementation hints
@@ -261,6 +263,7 @@ JSON Schema (Ajv) + GraphQL SDL + Parity Check + Python
 5. **Integration Tests** — End-to-end validation
 
 **Commands:**
+
 ```bash
 pnpm run validate:all               # All validators
 pnpm run validate:schema            # JSON Schema
@@ -322,22 +325,26 @@ python python/validate_schemas.py   # Python validation
 ### Components
 
 #### 1. Canonical JSON Schema
+
 - **Location:** `src/data/schema_unification.schema.json`
 - **Format:** JSON Schema draft-07/2020-12
 - **Naming:** snake_case
-- **Extensions:** x-graphql-* hints for GraphQL generation
+- **Extensions:** x-graphql-\* hints for GraphQL generation
 
 #### 2. Field Mapping
+
 - **Location:** `generated-schemas/field-name-mapping.json`
 - **Purpose:** Maps camelCase ↔ snake_case
 - **Generated:** Automatically from canonical schema
 
 #### 3. Generators
+
 - **JSON → SDL:** `generate-graphql-from-json-schema.mjs`
 - **SDL → JSON:** `generate-graphql-json-schema.mjs`
 - **V2 Enhanced:** `generate-graphql-json-schema-v2.mjs`
 
 #### 4. Validators
+
 - **Schema:** Ajv-based JSON Schema validation
 - **GraphQL:** SDL syntax and type validation
 - **Parity:** Bidirectional consistency checks
@@ -356,6 +363,7 @@ node scripts/convert-v1-to-v2.mjs
 ```
 
 This script:
+
 1. Converts camelCase → snake_case
 2. Updates $ref pointers
 3. Adds x-graphql hints (basic)
@@ -366,6 +374,7 @@ This script:
 #### Step 1: Convert Field Names
 
 **Before (V1):**
+
 ```json
 {
   "contractId": "123",
@@ -376,6 +385,7 @@ This script:
 ```
 
 **After (V2):**
+
 ```json
 {
   "contract_id": "123",
@@ -386,6 +396,7 @@ This script:
 ```
 
 **Script:**
+
 ```bash
 node scripts/dev/convert-camel-to-snake.mjs \
   input.schema.json \
@@ -395,6 +406,7 @@ node scripts/dev/convert-camel-to-snake.mjs \
 #### Step 2: Add x-graphql Hints
 
 For enums:
+
 ```json
 {
   "contact_role": {
@@ -412,6 +424,7 @@ For enums:
 ```
 
 For unions:
+
 ```json
 {
   "system_extension": {
@@ -430,6 +443,7 @@ For unions:
 #### Step 3: Update $ref Pointers
 
 **Before:**
+
 ```json
 {
   "$ref": "#/definitions/organizationInfo"
@@ -437,6 +451,7 @@ For unions:
 ```
 
 **After:**
+
 ```json
 {
   "$ref": "#/definitions/organization_info"
@@ -559,7 +574,7 @@ Override required status for GraphQL:
 {
   "schema_version": {
     "type": "string",
-    "x-graphql-required": true  // Forces non-null in GraphQL
+    "x-graphql-required": true // Forces non-null in GraphQL
   }
 }
 ```
@@ -662,12 +677,12 @@ All field names changed from camelCase to snake_case in JSON data:
 
 ```javascript
 // V1
-data.contractId
-data.organizationInfo.primaryName
+data.contractId;
+data.organizationInfo.primaryName;
 
 // V2
-data.contract_id
-data.organization_info.primary_name
+data.contract_id;
+data.organization_info.primary_name;
 ```
 
 **Migration:** Update all field access in code.
@@ -710,11 +725,11 @@ enum ContactRole {
 
 Some type names changed for consistency:
 
-| V1 | V2 |
-|----|-----|
-| `OrgInfo` | `OrganizationInfo` |
-| `FinInfo` | `FinancialInfo` |
-| `SysExtension` | `SystemExtension` |
+| V1             | V2                 |
+| -------------- | ------------------ |
+| `OrgInfo`      | `OrganizationInfo` |
+| `FinInfo`      | `FinancialInfo`    |
+| `SysExtension` | `SystemExtension`  |
 
 **Migration:** Update type references in code.
 
@@ -725,6 +740,7 @@ Some type names changed for consistency:
 ### 1. Richer Validation
 
 JSON Schema provides comprehensive validation:
+
 - Pattern matching for strings
 - Numeric ranges and constraints
 - Array length limits
@@ -756,6 +772,7 @@ JSON Schema provides comprehensive validation:
 ### 3. Consistent Naming
 
 Snake_case aligns with:
+
 - Database column names
 - Python conventions
 - REST API standards
@@ -764,6 +781,7 @@ Snake_case aligns with:
 ### 4. Bidirectional Pipeline
 
 Automated synchronization:
+
 - JSON Schema → GraphQL SDL
 - GraphQL SDL → JSON Schema
 - Parity validation
@@ -772,6 +790,7 @@ Automated synchronization:
 ### 5. Enhanced Type System
 
 x-graphql hints enable:
+
 - Rich enum documentation
 - Proper union types
 - Interface implementations
@@ -780,6 +799,7 @@ x-graphql hints enable:
 ### 6. Future-Proof
 
 JSON Schema as canonical enables:
+
 - OpenAPI generation
 - TypeScript type generation
 - Database schema generation
@@ -792,12 +812,14 @@ JSON Schema as canonical enables:
 ### File Locations
 
 **V2 (Active):**
+
 - Canonical: `src/data/schema_unification.schema.json`
 - GraphQL SDL: `src/data/schema_unification.graphql`
 - Generated: `generated-schemas/`
 - Website: `src/data/generated/`
 
 **V1 (Archived):**
+
 - Schema: `src/data/archived/schema_unification-v1.schema.json`
 - SDL: `src/data/archived/schema_unification-v1.graphql`
 - Docs: `docs/archived/v1-v2-migration/`

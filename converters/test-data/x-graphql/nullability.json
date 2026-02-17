@@ -82,7 +82,12 @@
           "description": "Complex type that is explicitly nullable"
         }
       },
-      "required": ["required_field", "non_null_list", "non_null_list_of_non_null_items", "nested_list"]
+      "required": [
+        "required_field",
+        "non_null_list",
+        "non_null_list_of_non_null_items",
+        "nested_list"
+      ]
     },
     "ComplexType": {
       "type": "object",

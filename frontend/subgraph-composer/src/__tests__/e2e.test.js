@@ -3,11 +3,11 @@
  * Tests complete user workflows
  */
 
-import { describe, it, expect } from '@jest/globals';
+import { describe, it, expect } from "@jest/globals";
 
-describe('E2E: Complete Workflows', () => {
-  describe('Schema Creation and Composition', () => {
-    it('should create schema from template and generate subgraph', () => {
+describe("E2E: Complete Workflows", () => {
+  describe("Schema Creation and Composition", () => {
+    it("should create schema from template and generate subgraph", () => {
       // Simulate user flow:
       // 1. User clicks Template button
       // 2. User selects User Service template
@@ -17,24 +17,24 @@ describe('E2E: Complete Workflows', () => {
       // 6. Subgraph appears in preview
 
       const userTemplateContent = JSON.stringify({
-        $schema: 'https://json-schema.org/draft/2020-12/schema',
-        title: 'User',
-        type: 'object',
+        $schema: "https://json-schema.org/draft/2020-12/schema",
+        title: "User",
+        type: "object",
         properties: {
-          id: { type: 'string' },
-          username: { type: 'string' },
-          email: { type: 'string' },
-          role: { type: 'string', enum: ['admin', 'user', 'guest'] },
+          id: { type: "string" },
+          username: { type: "string" },
+          email: { type: "string" },
+          role: { type: "string", enum: ["admin", "user", "guest"] },
         },
-        required: ['id', 'username', 'email'],
+        required: ["id", "username", "email"],
       });
 
       // This would be tested in actual E2E framework
       expect(userTemplateContent).toBeDefined();
-      expect(JSON.parse(userTemplateContent).title).toBe('User');
+      expect(JSON.parse(userTemplateContent).title).toBe("User");
     });
 
-    it('should compose multiple subgraphs into supergraph', () => {
+    it("should compose multiple subgraphs into supergraph", () => {
       // Simulate user flow:
       // 1. User adds User Service schema
       // 2. User generates subgraph
@@ -44,15 +44,15 @@ describe('E2E: Complete Workflows', () => {
       // 6. Preview shows all types together
 
       const userSchema = {
-        title: 'User',
-        type: 'object',
-        properties: { id: { type: 'string' }, name: { type: 'string' } },
+        title: "User",
+        type: "object",
+        properties: { id: { type: "string" }, name: { type: "string" } },
       };
 
       const orderSchema = {
-        title: 'Order',
-        type: 'object',
-        properties: { id: { type: 'string' }, userId: { type: 'string' } },
+        title: "Order",
+        type: "object",
+        properties: { id: { type: "string" }, userId: { type: "string" } },
       };
 
       expect(userSchema.properties.id).toBeDefined();
@@ -60,8 +60,8 @@ describe('E2E: Complete Workflows', () => {
     });
   });
 
-  describe('File Import/Export', () => {
-    it('should export single schema as JSON', () => {
+  describe("File Import/Export", () => {
+    it("should export single schema as JSON", () => {
       // Simulate user flow:
       // 1. User has 1 schema created
       // 2. User clicks "Export Active"
@@ -69,17 +69,17 @@ describe('E2E: Complete Workflows', () => {
       // 4. File contains schema name and content
 
       const schema = {
-        id: 'schema-1',
-        name: 'User Service',
-        content: JSON.stringify({ title: 'User', type: 'object' }),
+        id: "schema-1",
+        name: "User Service",
+        content: JSON.stringify({ title: "User", type: "object" }),
         lastModified: Date.now(),
       };
 
-      expect(schema.name).toBe('User Service');
+      expect(schema.name).toBe("User Service");
       expect(schema.content).toBeDefined();
     });
 
-    it('should import schemas from JSON file', () => {
+    it("should import schemas from JSON file", () => {
       // Simulate user flow:
       // 1. User drops JSON file with schemas
       // 2. Preview shows schemas to import
@@ -87,24 +87,24 @@ describe('E2E: Complete Workflows', () => {
       // 4. Schemas added to list
 
       const importData = {
-        version: '1.0',
+        version: "1.0",
         schemas: [
           {
-            name: 'User',
-            schema: { title: 'User', type: 'object' },
+            name: "User",
+            schema: { title: "User", type: "object" },
           },
           {
-            name: 'Order',
-            schema: { title: 'Order', type: 'object' },
+            name: "Order",
+            schema: { title: "Order", type: "object" },
           },
         ],
       };
 
       expect(importData.schemas).toHaveLength(2);
-      expect(importData.schemas[0].name).toBe('User');
+      expect(importData.schemas[0].name).toBe("User");
     });
 
-    it('should export supergraph as GraphQL file', () => {
+    it("should export supergraph as GraphQL file", () => {
       // Simulate user flow:
       // 1. User has composed supergraph
       // 2. User clicks "Export GraphQL"
@@ -128,14 +128,14 @@ describe('E2E: Complete Workflows', () => {
         }
       `;
 
-      expect(supergraphSDL).toContain('type User');
-      expect(supergraphSDL).toContain('type Order');
-      expect(supergraphSDL).toContain('type Query');
+      expect(supergraphSDL).toContain("type User");
+      expect(supergraphSDL).toContain("type Order");
+      expect(supergraphSDL).toContain("type Query");
     });
   });
 
-  describe('Schema Comparison', () => {
-    it('should show differences between two schemas', () => {
+  describe("Schema Comparison", () => {
+    it("should show differences between two schemas", () => {
       // Simulate user flow:
       // 1. User has two schemas loaded
       // 2. User clicks compare/diff
@@ -143,32 +143,32 @@ describe('E2E: Complete Workflows', () => {
       // 4. User can see detailed changes
 
       const schemaV1 = {
-        title: 'User',
-        type: 'object',
+        title: "User",
+        type: "object",
         properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
+          id: { type: "string" },
+          name: { type: "string" },
         },
       };
 
       const schemaV2 = {
-        title: 'User',
-        type: 'object',
+        title: "User",
+        type: "object",
         properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-          email: { type: 'string' }, // Added
+          id: { type: "string" },
+          name: { type: "string" },
+          email: { type: "string" }, // Added
           // status removed
         },
       };
 
-      expect(Object.keys(schemaV1.properties)).toEqual(['id', 'name']);
-      expect(Object.keys(schemaV2.properties)).toEqual(['id', 'name', 'email']);
+      expect(Object.keys(schemaV1.properties)).toEqual(["id", "name"]);
+      expect(Object.keys(schemaV2.properties)).toEqual(["id", "name", "email"]);
     });
   });
 
-  describe('Federation Metadata Extraction', () => {
-    it('should extract federation directives from subgraph', () => {
+  describe("Federation Metadata Extraction", () => {
+    it("should extract federation directives from subgraph", () => {
       // Simulate user flow:
       // 1. User generates subgraph from schema
       // 2. System analyzes federation directives
@@ -188,39 +188,39 @@ describe('E2E: Complete Workflows', () => {
         }
       `;
 
-      expect(subgraphWithFederation).toContain('@key');
-      expect(subgraphWithFederation).toContain('@external');
-      expect(subgraphWithFederation).toContain('@requires');
+      expect(subgraphWithFederation).toContain("@key");
+      expect(subgraphWithFederation).toContain("@external");
+      expect(subgraphWithFederation).toContain("@requires");
     });
   });
 
-  describe('Performance at Scale', () => {
-    it('should handle 10 schemas without performance degradation', () => {
+  describe("Performance at Scale", () => {
+    it("should handle 10 schemas without performance degradation", () => {
       // Create 10 test schemas
       const schemas = Array.from({ length: 10 }, (_, i) => ({
         id: `schema-${i}`,
         name: `Schema ${i + 1}`,
         content: JSON.stringify({
           title: `Type${i}`,
-          type: 'object',
+          type: "object",
           properties: {
-            id: { type: 'string' },
-            name: { type: 'string' },
+            id: { type: "string" },
+            name: { type: "string" },
           },
         }),
       }));
 
       expect(schemas).toHaveLength(10);
-      expect(schemas[0].name).toBe('Schema 1');
-      expect(schemas[9].name).toBe('Schema 10');
+      expect(schemas[0].name).toBe("Schema 1");
+      expect(schemas[9].name).toBe("Schema 10");
     });
 
-    it('should compose 10 subgraphs within acceptable time', () => {
+    it("should compose 10 subgraphs within acceptable time", () => {
       // This would be measured in actual performance test
       // Goal: < 2 seconds for composition
-      
+
       const startTime = Date.now();
-      
+
       // Simulate composition
       const schemas = Array.from({ length: 10 }, (_, i) => ({
         name: `Service${i}`,
@@ -236,13 +236,13 @@ describe('E2E: Complete Workflows', () => {
     });
   });
 
-  describe('Error Handling', () => {
-    it('should handle invalid JSON schema gracefully', () => {
+  describe("Error Handling", () => {
+    it("should handle invalid JSON schema gracefully", () => {
       // User pastes invalid JSON
       // System shows error message
       // User can fix and retry
 
-      const invalidJSON = '{ broken json }';
+      const invalidJSON = "{ broken json }";
       let error = null;
 
       try {
@@ -255,7 +255,7 @@ describe('E2E: Complete Workflows', () => {
       expect(error.message).toMatch(/Expected|Unexpected|JSON/i);
     });
 
-    it('should show conversion errors clearly', () => {
+    it("should show conversion errors clearly", () => {
       // User has schema that fails conversion
       // System shows specific error
       // User can see what went wrong
@@ -271,7 +271,7 @@ describe('E2E: Complete Workflows', () => {
       expect(failureResult.sdl).toBeNull();
     });
 
-    it('should handle composition conflicts', () => {
+    it("should handle composition conflicts", () => {
       // Two subgraphs define same type with @key
       // System detects conflict
       // Shows composition error to user
@@ -288,28 +288,33 @@ describe('E2E: Complete Workflows', () => {
     });
   });
 
-  describe('Data Persistence', () => {
-    it('should preserve schemas across page reload', () => {
+  describe("Data Persistence", () => {
+    it("should preserve schemas across page reload", () => {
       // User creates 3 schemas
       // User refreshes page
       // Schemas still there
 
       const storedSchemas = [
-        { id: '1', name: 'User', content: '{}' },
-        { id: '2', name: 'Order', content: '{}' },
-        { id: '3', name: 'Product', content: '{}' },
+        { id: "1", name: "User", content: "{}" },
+        { id: "2", name: "Order", content: "{}" },
+        { id: "3", name: "Product", content: "{}" },
       ];
 
-      localStorage.setItem('subgraph-composer-schemas', JSON.stringify(storedSchemas));
+      localStorage.setItem(
+        "subgraph-composer-schemas",
+        JSON.stringify(storedSchemas),
+      );
 
-      const retrieved = JSON.parse(localStorage.getItem('subgraph-composer-schemas'));
+      const retrieved = JSON.parse(
+        localStorage.getItem("subgraph-composer-schemas"),
+      );
       expect(retrieved).toHaveLength(3);
-      expect(retrieved[0].name).toBe('User');
+      expect(retrieved[0].name).toBe("User");
     });
   });
 
-  describe('Federation Directive Suggestions', () => {
-    it('should generate @requires suggestions for cross-schema field references', () => {
+  describe("Federation Directive Suggestions", () => {
+    it("should generate @requires suggestions for cross-schema field references", () => {
       // Workflow:
       // 1. User composes schemas with external type references
       // 2. Directive generator analyzes dependencies
@@ -335,12 +340,12 @@ describe('E2E: Complete Workflows', () => {
       // - Cross-schema relationship exists
       // - @requires directive needed
 
-      expect(supergraphSdl).toContain('userId');
-      expect(supergraphSdl).toContain('Order');
-      expect(supergraphSdl).toContain('User');
+      expect(supergraphSdl).toContain("userId");
+      expect(supergraphSdl).toContain("Order");
+      expect(supergraphSdl).toContain("User");
     });
 
-    it('should allow user to select and apply directive suggestions', () => {
+    it("should allow user to select and apply directive suggestions", () => {
       // Workflow:
       // 1. Suggestions panel appears after composition
       // 2. User selects checkboxes for wanted suggestions
@@ -350,22 +355,22 @@ describe('E2E: Complete Workflows', () => {
       // 6. Composition updates
       // 7. Suggestions dismissed
 
-      const baseSdl = 'type User { id: ID! }';
+      const baseSdl = "type User { id: ID! }";
       const suggestion = {
-        type: 'requires',
-        typeName: 'Order',
-        fieldName: 'userId',
+        type: "requires",
+        typeName: "Order",
+        fieldName: "userId",
         directive: '@requires(fields: "id")',
-        reason: 'Field references external type'
+        reason: "Field references external type",
       };
 
       // Simulate user selection
       const selectedSuggestions = [suggestion];
       expect(selectedSuggestions.length).toBe(1);
-      expect(selectedSuggestions[0].type).toBe('requires');
+      expect(selectedSuggestions[0].type).toBe("requires");
     });
 
-    it('should filter suggestions by severity level', () => {
+    it("should filter suggestions by severity level", () => {
       // Workflow:
       // 1. Multiple suggestions appear
       // 2. User opens filter dropdown
@@ -374,17 +379,17 @@ describe('E2E: Complete Workflows', () => {
       // 5. User applies filtered suggestions
 
       const suggestions = [
-        { type: 'requires', severity: 'error', typeName: 'User' },
-        { type: 'requires', severity: 'warning', typeName: 'Order' },
-        { type: 'extension', severity: 'info', typeName: 'Product' }
+        { type: "requires", severity: "error", typeName: "User" },
+        { type: "requires", severity: "warning", typeName: "Order" },
+        { type: "extension", severity: "info", typeName: "Product" },
       ];
 
-      const errors = suggestions.filter(s => s.severity === 'error');
+      const errors = suggestions.filter((s) => s.severity === "error");
       expect(errors).toHaveLength(1);
-      expect(errors[0].typeName).toBe('User');
+      expect(errors[0].typeName).toBe("User");
     });
 
-    it('should show preview of SDL with applied directives', () => {
+    it("should show preview of SDL with applied directives", () => {
       // Workflow:
       // 1. User selects suggestions
       // 2. Preview panel updates
@@ -392,14 +397,14 @@ describe('E2E: Complete Workflows', () => {
       // 4. Highlights new directives
       // 5. User can copy preview
 
-      const originalSdl = 'type Order { userId: ID! }';
+      const originalSdl = "type Order { userId: ID! }";
       const previewSdl = 'type Order { userId: ID! @requires(fields: "id") }';
 
-      expect(originalSdl).not.toContain('@requires');
-      expect(previewSdl).toContain('@requires');
+      expect(originalSdl).not.toContain("@requires");
+      expect(previewSdl).toContain("@requires");
     });
 
-    it('should handle bulk operations on suggestions', () => {
+    it("should handle bulk operations on suggestions", () => {
       // Workflow:
       // 1. User clicks "Select All"
       // 2. All visible suggestions checked
@@ -409,11 +414,11 @@ describe('E2E: Complete Workflows', () => {
       // 6. Loading state shown during application
 
       const suggestions = [
-        { id: 1, type: 'requires' },
-        { id: 2, type: 'extension' },
-        { id: 3, type: 'requires' },
-        { id: 4, type: 'composite_key' },
-        { id: 5, type: 'requires' }
+        { id: 1, type: "requires" },
+        { id: 2, type: "extension" },
+        { id: 3, type: "requires" },
+        { id: 4, type: "composite_key" },
+        { id: 5, type: "requires" },
       ];
 
       const selectedCount = suggestions.length;
@@ -424,7 +429,7 @@ describe('E2E: Complete Workflows', () => {
       expect(remaining.length).toBe(0);
     });
 
-    it('should allow dismissing individual suggestions', () => {
+    it("should allow dismissing individual suggestions", () => {
       // Workflow:
       // 1. User reviews suggestion
       // 2. User clicks "Dismiss" or X
@@ -433,9 +438,9 @@ describe('E2E: Complete Workflows', () => {
       // 5. Count updates
 
       let suggestions = [
-        { id: 1, typeName: 'User', dismissed: false },
-        { id: 2, typeName: 'Order', dismissed: false },
-        { id: 3, typeName: 'Product', dismissed: false }
+        { id: 1, typeName: "User", dismissed: false },
+        { id: 2, typeName: "Order", dismissed: false },
+        { id: 3, typeName: "Product", dismissed: false },
       ];
 
       // Dismiss suggestion 2
@@ -443,10 +448,10 @@ describe('E2E: Complete Workflows', () => {
       suggestions = suggestions.filter((_, i) => !dismissed.has(i));
 
       expect(suggestions).toHaveLength(2);
-      expect(suggestions.every(s => s.id !== 2)).toBe(true);
+      expect(suggestions.every((s) => s.id !== 2)).toBe(true);
     });
 
-    it('should validate suggestions before applying', () => {
+    it("should validate suggestions before applying", () => {
       // Workflow:
       // 1. User selects suggestion with non-existent type
       // 2. System validates during apply
@@ -455,18 +460,18 @@ describe('E2E: Complete Workflows', () => {
       // 5. Error message shown to user
 
       const suggestion = {
-        type: 'requires',
-        typeName: 'NonExistent',
-        directive: '@requires(fields: "id")'
+        type: "requires",
+        typeName: "NonExistent",
+        directive: '@requires(fields: "id")',
       };
 
-      const sdl = 'type User { id: ID! }';
+      const sdl = "type User { id: ID! }";
       const isValid = sdl.includes(`type ${suggestion.typeName}`);
 
       expect(isValid).toBe(false); // Type doesn't exist
     });
 
-    it('should detect and suggest entity extensions', () => {
+    it("should detect and suggest entity extensions", () => {
       // Workflow:
       // 1. Schema has 'extend type X' declaration
       // 2. Generator detects extension
@@ -484,11 +489,11 @@ describe('E2E: Complete Workflows', () => {
         }
       `;
 
-      expect(extendSdl).toContain('extend type User');
+      expect(extendSdl).toContain("extend type User");
       // Should suggest @provides directive
     });
 
-    it('should detect shared types across schemas', () => {
+    it("should detect shared types across schemas", () => {
       // Workflow:
       // 1. Type defined in multiple schemas
       // 2. Generator warns about shared type
@@ -496,21 +501,21 @@ describe('E2E: Complete Workflows', () => {
       // 4. Shows conflicting definitions
       // 5. Recommends @key consistency
 
-      const sharedType = 'User'; // Defined in users and orders schemas
+      const sharedType = "User"; // Defined in users and orders schemas
       const suggestions = [
         {
-          type: 'composite_key',
-          typeName: 'User',
-          reason: 'Type exists in multiple schemas',
-          severity: 'warning'
-        }
+          type: "composite_key",
+          typeName: "User",
+          reason: "Type exists in multiple schemas",
+          severity: "warning",
+        },
       ];
 
-      expect(suggestions[0].typeName).toBe('User');
-      expect(suggestions[0].severity).toBe('warning');
+      expect(suggestions[0].typeName).toBe("User");
+      expect(suggestions[0].severity).toBe("warning");
     });
 
-    it('should handle complex multi-schema composition with directives', () => {
+    it("should handle complex multi-schema composition with directives", () => {
       // Workflow:
       // 1. User composes 5+ schemas
       // 2. Many cross-schema references
@@ -525,14 +530,14 @@ describe('E2E: Complete Workflows', () => {
         schemas: 5,
         types: 15,
         fields: 45,
-        crossSchemaReferences: 22
+        crossSchemaReferences: 22,
       };
 
       const expectedSuggestions = complexComposition.crossSchemaReferences;
       expect(expectedSuggestions).toBeGreaterThan(10);
     });
 
-    it('should track applied directives in history', () => {
+    it("should track applied directives in history", () => {
       // Workflow:
       // 1. User applies directives
       // 2. System tracks applied list
@@ -541,16 +546,20 @@ describe('E2E: Complete Workflows', () => {
       // 5. Prepares for undo functionality
 
       const appliedDirectives = [
-        { typeName: 'Order', fieldName: 'userId', directive: '@requires(fields: "id")' },
-        { typeName: 'User', directive: '@provides(fields: "orders")' }
+        {
+          typeName: "Order",
+          fieldName: "userId",
+          directive: '@requires(fields: "id")',
+        },
+        { typeName: "User", directive: '@provides(fields: "orders")' },
       ];
 
       expect(appliedDirectives).toHaveLength(2);
-      expect(appliedDirectives[0].directive).toContain('@requires');
-      expect(appliedDirectives[1].directive).toContain('@provides');
+      expect(appliedDirectives[0].directive).toContain("@requires");
+      expect(appliedDirectives[1].directive).toContain("@provides");
     });
 
-    it('should provide suggestion statistics to user', () => {
+    it("should provide suggestion statistics to user", () => {
       // Workflow:
       // 1. Composition completes
       // 2. Statistics calculated
@@ -566,16 +575,16 @@ describe('E2E: Complete Workflows', () => {
         byType: {
           requires: 5,
           extension: 2,
-          composite_key: 1
+          composite_key: 1,
         },
         bySeverity: {
           error: 0,
           warning: 3,
-          info: 5
+          info: 5,
         },
         typeCount: 4,
         fieldCount: 6,
-        complexityScore: 45
+        complexityScore: 45,
       };
 
       expect(stats.total).toBe(8);
@@ -583,7 +592,7 @@ describe('E2E: Complete Workflows', () => {
       expect(stats.complexityScore).toBeLessThanOrEqual(100);
     });
 
-    it('should maintain suggestion state across component remounts', () => {
+    it("should maintain suggestion state across component remounts", () => {
       // Workflow:
       // 1. Suggestions displayed
       // 2. User navigates away
@@ -592,18 +601,18 @@ describe('E2E: Complete Workflows', () => {
       // 5. Selection state preserved
 
       const suggestions = [
-        { id: 1, typeName: 'User' },
-        { id: 2, typeName: 'Order' }
+        { id: 1, typeName: "User" },
+        { id: 2, typeName: "Order" },
       ];
 
       // Simulate localStorage persistence
-      localStorage.setItem('suggestions', JSON.stringify(suggestions));
-      const restored = JSON.parse(localStorage.getItem('suggestions'));
+      localStorage.setItem("suggestions", JSON.stringify(suggestions));
+      const restored = JSON.parse(localStorage.getItem("suggestions"));
 
       expect(restored).toEqual(suggestions);
     });
 
-    it('should handle rapid suggestion updates gracefully', () => {
+    it("should handle rapid suggestion updates gracefully", () => {
       // Workflow:
       // 1. User rapidly changes schemas
       // 2. Each change triggers regeneration
@@ -611,9 +620,9 @@ describe('E2E: Complete Workflows', () => {
       // 4. New suggestions appear
       // 5. No race conditions or duplicates
 
-      const suggestions1 = [{ id: 1, typeName: 'User' }];
-      const suggestions2 = [{ id: 2, typeName: 'Order' }];
-      const suggestions3 = [{ id: 3, typeName: 'Product' }];
+      const suggestions1 = [{ id: 1, typeName: "User" }];
+      const suggestions2 = [{ id: 2, typeName: "Order" }];
+      const suggestions3 = [{ id: 3, typeName: "Product" }];
 
       // Only latest should be shown
       const final = suggestions3;
@@ -622,4 +631,3 @@ describe('E2E: Complete Workflows', () => {
     });
   });
 });
-

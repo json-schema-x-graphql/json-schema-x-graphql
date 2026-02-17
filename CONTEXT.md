@@ -22,6 +22,7 @@ This project establishes a **canonical pattern** for bidirectional conversion be
 ### Why This Matters
 
 Organizations with data validation pipelines need to:
+
 - Validate incoming data against JSON Schema **before** it hits databases
 - Expose the same data through GraphQL APIs with rich type information
 - Maintain a single source of truth for both validation and API schemas
@@ -35,10 +36,10 @@ Organizations with data validation pipelines need to:
 2. **Lossless Round-Tripping**: SDL → JSON Schema → SDL preserves 100% of metadata
 3. **Namespace Isolation**: Three distinct naming conventions:
    - `snake_case` for JSON Schema/database fields
-   - `camelCase` for GraphQL SDL fields  
+   - `camelCase` for GraphQL SDL fields
    - `hyphen-case` for all `x-graphql-*` extension keys
 4. **Minimal Required Fields**: Only 15 core extension fields needed for round-trip fidelity
-5. **Standards Compliance**: 
+5. **Standards Compliance**:
    - JSON Schema 2020-12 specification
    - GraphQL October 2021 specification
    - Apollo Federation v2.9 specification
@@ -46,6 +47,7 @@ Organizations with data validation pipelines need to:
 ### Extension Strategy
 
 All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions that:
+
 - Don't interfere with standard JSON Schema validation
 - Are ignored by standard validators (AJV, fastjsonschema)
 - Can be applied at any schema level (type, field, argument, enum value)
@@ -56,17 +58,20 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 ### Minimal Required Extensions (15 Core Fields)
 
 **Always Required (Core Identity)**:
+
 - `x-graphql-type-name` - GraphQL type name (PascalCase)
 - `x-graphql-type-kind` - Type kind (OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, SCALAR)
 - `x-graphql-field-name` - Field name (camelCase)
 - `x-graphql-field-type` - GraphQL type reference
 
 **Required When Applicable (Prevents Ambiguity)**:
+
 - `x-graphql-field-non-null` - Field is non-nullable (adds `!`)
 - `x-graphql-field-list-item-non-null` - List items are non-nullable (`[Item!]`)
 - `x-graphql-argument-default-value` - Argument default value
 
 **Required for Federation**:
+
 - `x-graphql-federation-keys` - Entity keys (`@key` directive)
 - `x-graphql-federation-requires` - Required fields (`@requires`)
 - `x-graphql-federation-provides` - Provided fields (`@provides`)
@@ -75,12 +80,14 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - `x-graphql-federation-override-from` - Field migration source
 
 **Optional (Arrays for Multiple)**:
+
 - `x-graphql-type-directives` - Type-level directives
 - `x-graphql-field-directives` - Field-level directives
 - `x-graphql-field-arguments` - Field arguments
 - `x-graphql-enum-value-configs` - Per-value enum configuration
 
 **Optional Metadata (Tooling Hints)**:
+
 - `x-graphql-resolver-*` - Resolver configuration hints
 - `x-graphql-subscription-*` - Subscription transport config
 - `x-graphql-federation-tags` - Metadata tags
@@ -88,12 +95,14 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 ### Implementation Components
 
 #### 1. Meta-Schema Definition
+
 - JSON Schema 2020-12 meta-schema defining all `x-graphql-*` extensions
 - Strict validation patterns for GraphQL naming conventions
 - Support for all Apollo Federation v2.9 features
 - Location: `/schema/x-graphql-extensions.schema.json`
 
 #### 2. Rust WASM Converter (Core Engine)
+
 - Bidirectional SDL ↔ JSON Schema conversion
 - Uses `apollo-parser` for SDL parsing
 - Uses `serde` for JSON serialization
@@ -103,6 +112,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - Location: `/src/lib.rs`
 
 #### 3. React Editor (Frontend Interface)
+
 - Split-pane editor with live sync
 - Debounced conversion (300ms)
 - Real-time validation feedback
@@ -111,6 +121,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - Location: `/frontend/src/SchemaEditor.tsx`
 
 #### 4. Example Schemas
+
 - Comprehensive test cases covering all type kinds
 - Federation entity examples
 - Custom directive examples
@@ -118,6 +129,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - Location: `/examples/`
 
 #### 5. Documentation
+
 - Specification document
 - API reference
 - Integration guides
@@ -127,6 +139,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 ## Development Roadmap
 
 ### Phase 1: Foundation (Weeks 1-2)
+
 - [x] Define meta-schema with strict validation
 - [x] Create comprehensive example schemas
 - [ ] Document architectural decisions
@@ -134,6 +147,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - [ ] Create build infrastructure
 
 ### Phase 2: Core Converter (Weeks 3-5)
+
 - [ ] Implement SDL → JSON Schema converter
 - [ ] Implement JSON Schema → SDL converter
 - [ ] Add LRU caching layer
@@ -142,6 +156,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - [ ] Optimize WASM binary size
 
 ### Phase 3: Frontend Editor (Weeks 6-7)
+
 - [ ] Build React split-pane editor
 - [ ] Integrate WASM converter
 - [ ] Add syntax highlighting
@@ -150,6 +165,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - [ ] Create responsive UI
 
 ### Phase 4: Validation & Testing (Week 8)
+
 - [ ] Add comprehensive test suite
 - [ ] Test federation directive handling
 - [ ] Validate against Apollo Router
@@ -157,6 +173,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - [ ] Cross-browser WASM testing
 
 ### Phase 5: Documentation & Release (Weeks 9-10)
+
 - [ ] Write specification document
 - [ ] Create API documentation
 - [ ] Write integration guides
@@ -167,6 +184,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 ## Success Metrics
 
 ### Technical Metrics
+
 - **Round-trip fidelity**: 100% preservation of all SDL constructs
 - **Conversion performance**: <5ms for schemas <1000 lines
 - **Binary size**: <150KB gzipped WASM
@@ -174,6 +192,7 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 - **Browser support**: All modern browsers (Chrome, Firefox, Safari, Edge)
 
 ### Adoption Metrics
+
 - GitHub stars: Target 500+ in first year
 - NPM downloads: Target 1000+/month after 6 months
 - Documentation completeness: 100% API coverage
@@ -269,16 +288,19 @@ All GraphQL metadata is captured via globally-unique `x-graphql-*` extensions th
 ## References & Related Work
 
 ### Standards
+
 - [JSON Schema 2020-12](https://json-schema.org/draft/2020-12/json-schema-core.html)
 - [GraphQL Specification](https://spec.graphql.org/October2021/)
 - [Apollo Federation v2.9](https://www.apollographql.com/docs/federation/federation-2/federation-versions/)
 
 ### Prior Art
+
 - [jsonschema2graphql](https://github.com/lifeomic/json-schema-to-graphql-types)
 - [graphql-json-to-sdl](https://github.com/charlypoly/graphql-json-to-sdl)
 - [OpenAPI x- vendor extensions](https://swagger.io/docs/specification/openapi-extensions/)
 
 ### Inspiration
+
 - UML round-trip engineering (lessons on what NOT to do)
 - Prisma schema as single source of truth
 - OpenAPI's successful extension pattern

@@ -23,6 +23,7 @@ pnpm run dev
 ## 🛠️ Development Commands
 
 ### Build & Run
+
 ```bash
 # Start dev server with HMR
 pnpm run dev
@@ -44,6 +45,7 @@ pnpm run format
 ```
 
 ### Testing
+
 ```bash
 # Run tests
 pnpm test
@@ -80,6 +82,7 @@ pnpm run build:wasm
 ```
 
 ### Install Rust & wasm-pack
+
 ```bash
 # Install Rust (if not installed)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -125,6 +128,7 @@ pnpm install
 ## 🐛 Debugging
 
 ### Browser Console
+
 ```javascript
 // Access AI API
 const api = window.__schemaAuthoringAPI__.getAPI();
@@ -147,9 +151,10 @@ api.validate();
 ```
 
 ### Check Converter Status
+
 ```javascript
 // In browser console
-import { converterManager } from './src/converters/converter-manager';
+import { converterManager } from "./src/converters/converter-manager";
 
 // Get engine status
 converterManager.getEngineStatus();
@@ -165,12 +170,13 @@ converterManager.getSuccessRate();
 ```
 
 ### Clear State
+
 ```javascript
 // Clear localStorage
 localStorage.clear();
 
 // Clear specific key
-localStorage.removeItem('schema-authoring-storage');
+localStorage.removeItem("schema-authoring-storage");
 
 // Reload page
 location.reload();
@@ -181,6 +187,7 @@ location.reload();
 ## 🔍 Troubleshooting
 
 ### Fix: Module not found
+
 ```bash
 # Clear Vite cache
 rm -rf node_modules/.vite
@@ -193,6 +200,7 @@ pnpm run dev
 ```
 
 ### Fix: TypeScript errors
+
 ```bash
 # Check for errors
 pnpm run type-check
@@ -205,6 +213,7 @@ pnpm run type-check --noEmit false
 ```
 
 ### Fix: Port already in use
+
 ```bash
 # Kill process on port 3003 (Linux/Mac)
 lsof -ti:3003 | xargs kill -9
@@ -214,6 +223,7 @@ pnpm run dev -- --port 3004
 ```
 
 ### Fix: WASM not loading
+
 ```bash
 # Check if WASM file exists
 ls src/wasm/
@@ -230,6 +240,7 @@ wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm
 ## 🚢 Deployment
 
 ### Vercel
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -245,6 +256,7 @@ vercel --prod
 ```
 
 ### Netlify
+
 ```bash
 # Install Netlify CLI
 npm i -g netlify-cli
@@ -260,6 +272,7 @@ netlify deploy --prod
 ```
 
 ### Docker
+
 ```bash
 # Build Docker image
 docker build -t schema-authoring .
@@ -271,6 +284,7 @@ docker run -p 8080:80 schema-authoring
 ```
 
 ### GitHub Pages
+
 ```bash
 # Build
 pnpm run build
@@ -284,6 +298,7 @@ npx gh-pages -d dist
 ## 📊 Performance Analysis
 
 ### Bundle Analysis
+
 ```bash
 # Install analyzer
 pnpm add -D rollup-plugin-visualizer
@@ -295,6 +310,7 @@ pnpm run build -- --mode analyze
 ```
 
 ### Lighthouse Audit
+
 ```bash
 # Install Lighthouse CLI
 npm i -g lighthouse
@@ -310,6 +326,7 @@ lighthouse http://localhost:3003 --view
 ## 🔧 Configuration
 
 ### Environment Variables
+
 ```bash
 # .env.local (not committed)
 VITE_API_ENDPOINT=http://localhost:4000/api
@@ -322,6 +339,7 @@ VITE_ENABLE_ANALYTICS=true
 ```
 
 ### Vite Config
+
 ```typescript
 // vite.config.ts
 export default defineConfig({
@@ -333,8 +351,8 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       // Custom options
-    }
-  }
+    },
+  },
 });
 ```
 
@@ -360,6 +378,7 @@ gh pr create
 ```
 
 ### Conventional Commits
+
 ```bash
 feat: new feature
 fix: bug fix
@@ -395,6 +414,7 @@ pnpm install
 ## 📚 Useful Scripts
 
 ### Create Component
+
 ```bash
 # Create new component file
 touch src/components/MyComponent.tsx
@@ -420,6 +440,7 @@ EOF
 ```
 
 ### Generate Type Definitions
+
 ```bash
 # Generate types from JSON Schema
 npx json-schema-to-typescript schema.json > types.ts
@@ -433,6 +454,7 @@ npx @graphql-codegen/cli
 ## 🎯 Quick Fixes
 
 ### Fix: Store methods missing
+
 ```bash
 # Edit src/store/app-store.ts
 # Add to AppActions interface:
@@ -446,6 +468,7 @@ npx @graphql-codegen/cli
 ```
 
 ### Fix: Types not aligned
+
 ```bash
 # Check types
 pnpm run type-check

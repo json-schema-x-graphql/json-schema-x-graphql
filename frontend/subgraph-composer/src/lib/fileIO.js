@@ -10,7 +10,7 @@
  */
 export function exportSchema(schema, filename = null) {
   try {
-    const name = filename || `${schema.name.replace(/\s+/g, '-')}.json`;
+    const name = filename || `${schema.name.replace(/\s+/g, "-")}.json`;
     const data = {
       name: schema.name,
       schema: JSON.parse(schema.content),
@@ -18,7 +18,7 @@ export function exportSchema(schema, filename = null) {
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: 'application/json',
+      type: "application/json",
     });
     downloadBlob(blob, name);
 
@@ -36,10 +36,10 @@ export function exportSchema(schema, filename = null) {
  * @param {Array} schemas - Array of schema objects
  * @param {string} filename - Optional custom filename
  */
-export function exportAllSchemas(schemas, filename = 'schemas-export.json') {
+export function exportAllSchemas(schemas, filename = "schemas-export.json") {
   try {
     const data = {
-      version: '1.0',
+      version: "1.0",
       exportedAt: new Date().toISOString(),
       schemas: schemas.map((s) => ({
         name: s.name,
@@ -49,7 +49,7 @@ export function exportAllSchemas(schemas, filename = 'schemas-export.json') {
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: 'application/json',
+      type: "application/json",
     });
     downloadBlob(blob, filename);
 
@@ -70,11 +70,11 @@ export function exportAllSchemas(schemas, filename = 'schemas-export.json') {
 export async function importSchemaFile(file) {
   try {
     if (!file) {
-      throw new Error('No file provided');
+      throw new Error("No file provided");
     }
 
-    if (!file.type.includes('json')) {
-      throw new Error('File must be JSON format');
+    if (!file.type.includes("json")) {
+      throw new Error("File must be JSON format");
     }
 
     const content = await file.text();
@@ -85,7 +85,7 @@ export async function importSchemaFile(file) {
       // Bulk export format
       return {
         success: true,
-        type: 'bulk',
+        type: "bulk",
         schemas: data.schemas.map((item, idx) => ({
           name: item.name || `Imported Schema ${idx + 1}`,
           content: JSON.stringify(item.schema, null, 2),
@@ -96,25 +96,25 @@ export async function importSchemaFile(file) {
       // Single schema format
       return {
         success: true,
-        type: 'single',
+        type: "single",
         schema: {
-          name: data.name || 'Imported Schema',
+          name: data.name || "Imported Schema",
           content: JSON.stringify(data.schema, null, 2),
         },
       };
-    } else if (data.title && data.type === 'object') {
+    } else if (data.title && data.type === "object") {
       // Raw JSON schema
       return {
         success: true,
-        type: 'single',
+        type: "single",
         schema: {
-          name: data.title || 'Imported Schema',
+          name: data.title || "Imported Schema",
           content: JSON.stringify(data, null, 2),
         },
       };
     } else {
       throw new Error(
-        'Invalid schema format. Expected exported schema or JSON schema'
+        "Invalid schema format. Expected exported schema or JSON schema",
       );
     }
   } catch (error) {
@@ -130,9 +130,9 @@ export async function importSchemaFile(file) {
  * @param {string} sdl - GraphQL SDL string
  * @param {string} filename - Optional custom filename
  */
-export function exportSupergraph(sdl, filename = 'supergraph.graphql') {
+export function exportSupergraph(sdl, filename = "supergraph.graphql") {
   try {
-    const blob = new Blob([sdl], { type: 'text/plain' });
+    const blob = new Blob([sdl], { type: "text/plain" });
     downloadBlob(blob, filename);
     return { success: true, filename };
   } catch (error) {
@@ -148,7 +148,7 @@ export function exportSupergraph(sdl, filename = 'supergraph.graphql') {
  * @param {Object} report - Composition stats, errors, schemas info
  * @param {string} filename - Optional custom filename
  */
-export function exportReport(report, filename = 'composition-report.json') {
+export function exportReport(report, filename = "composition-report.json") {
   try {
     const data = {
       exportedAt: new Date().toISOString(),
@@ -156,7 +156,7 @@ export function exportReport(report, filename = 'composition-report.json') {
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: 'application/json',
+      type: "application/json",
     });
     downloadBlob(blob, filename);
 
@@ -175,7 +175,7 @@ export function exportReport(report, filename = 'composition-report.json') {
  */
 function downloadBlob(blob, filename) {
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = url;
   link.download = filename;
   document.body.appendChild(link);
@@ -198,11 +198,11 @@ export async function inspectSchemaFile(file) {
 
     if (data.schemas && Array.isArray(data.schemas)) {
       count = data.schemas.length;
-      schemaNames = data.schemas.map((s) => s.name || 'Unnamed');
+      schemaNames = data.schemas.map((s) => s.name || "Unnamed");
     } else if (data.schema) {
       count = 1;
-      schemaNames = [data.name || 'Imported Schema'];
-    } else if (data.title && data.type === 'object') {
+      schemaNames = [data.name || "Imported Schema"];
+    } else if (data.title && data.type === "object") {
       count = 1;
       schemaNames = [data.title];
     }
@@ -213,7 +213,7 @@ export async function inspectSchemaFile(file) {
       size: file.size,
       count,
       schemaNames,
-      exportedAt: data.exportedAt || 'unknown',
+      exportedAt: data.exportedAt || "unknown",
     };
   } catch (error) {
     return {

@@ -57,11 +57,15 @@ struct Args {
 
     /// Types to exclude (comma separated)
     #[arg(long, value_delimiter = ',')]
-    exclude_types: Vec<String>,
+    exclude_types: Option<Vec<String>>,
 
     /// Regex patterns to exclude (comma separated)
     #[arg(long, value_delimiter = ',')]
     exclude_patterns: Vec<String>,
+
+    /// Type suffixes to exclude (comma separated)
+    #[arg(long, value_delimiter = ',')]
+    exclude_type_suffixes: Option<Vec<String>>,
 }
 
 #[tokio::main]
@@ -117,8 +121,13 @@ async fn main() -> Result<()> {
         naming_convention,
         output_format,
         fail_on_warning: args.fail_on_warning,
-        exclude_types: args.exclude_types,
+        exclude_types: args
+            .exclude_types
+            .unwrap_or(ConversionOptions::default().exclude_types),
         exclude_patterns: args.exclude_patterns,
+        exclude_type_suffixes: args
+            .exclude_type_suffixes
+            .unwrap_or(ConversionOptions::default().exclude_type_suffixes),
         ..Default::default()
     };
 
@@ -158,12 +167,20 @@ fn detect_graphql_format(content: &str) -> bool {
     let trimmed = content.trim();
 
     // Check for JSON Schema patterns FIRST (more specific)
-    if trimmed.starts_with('{')
-        && (trimmed.contains("\"$schema\"")
+    if trimmed.starts_with('{') {
+        // If it starts with { and has typical JSON Schema fields, it's JSON
+        if trimmed.contains("\"$schema\"")
             || trimmed.contains("\"definitions\"")
-            || trimmed.contains("\"properties\""))
-    {
-        return false;
+            || trimmed.contains("\"$defs\"")
+            || trimmed.contains("\"properties\"")
+            || trimmed.contains("\"type\"")
+        {
+            return false;
+        }
+        // If it looks like a JSON object but we aren't sure, check if it's valid JSON
+        if serde_json::from_str::<serde_json::Value>(trimmed).is_ok() {
+            return false;
+        }
     }
 
     // Check for JSON arrays
@@ -184,11 +201,22 @@ fn detect_graphql_format(content: &str) -> bool {
     ];
 
     for pattern in &graphql_patterns {
-        if trimmed.contains(pattern) {
-            return true;
+        // Simple heuristic: if a line starts with the pattern
+        for line in trimmed.lines() {
+            if line.trim().starts_with(pattern) {
+                return true;
+            }
         }
+        // Fallback: check if content contains pattern (but this is risky for JSON strings)
+        // We only do this if we haven't confirmed JSON above.
     }
 
-    // Default: assume GraphQL SDL
+    // Default: assume GraphQL SDL if we can't decide, but since we check JSON validity above,
+    // this might be risky. Let's try to be safer.
+
+    // If it has typical GraphQL keywords at start of lines, it's GraphQL.
+    // Otherwise, if it parses as JSON, it's JSON.
+
+    // Existing logic just defaulted to true.
     true
 }

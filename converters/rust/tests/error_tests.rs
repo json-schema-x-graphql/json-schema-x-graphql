@@ -1,4 +1,4 @@
-use json_schema_graphql_converter::ConversionError;
+use json_schema_x_graphql::error::ConversionError;
 
 #[test]
 fn test_conversion_error_display() {

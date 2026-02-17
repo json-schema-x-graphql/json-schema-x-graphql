@@ -15,6 +15,7 @@ The website now displays two GraphQL Voyager pages that visualize the Schema Uni
 **Data Source:** `public/data/schema_unification-v1.graphql` (from `generated-schemas/schema_unification.v2-generated-custom.graphql`)
 
 **Features:**
+
 - Visualizes the auto-generated V2 schema from V1 nested structure
 - 17 core contract types extracted automatically
 - 295 lines of GraphQL SDL
@@ -22,6 +23,7 @@ The website now displays two GraphQL Voyager pages that visualize the Schema Uni
 - Navigation to V2 page
 
 **Types Included:**
+
 - Core: Contract, SystemMetadata, ContractIdentification, VendorInfo, AgencyInfo, etc.
 - Enums: SystemType, ContactRole, ContractStatus
 - Scalars: DateTime, Date, Decimal, JSON, Email, URI
@@ -33,6 +35,7 @@ The website now displays two GraphQL Voyager pages that visualize the Schema Uni
 **Data Source:** `public/data/schema_unification-v2.graphql` (from `generated-schemas/schema_unification.v2-custom.graphql`)
 
 **Features:**
+
 - Visualizes the hand-crafted V2 schema with detailed breakdowns
 - 30 types with granular system-specific extensions
 - 537 lines of GraphQL SDL
@@ -40,6 +43,7 @@ The website now displays two GraphQL Voyager pages that visualize the Schema Uni
 - Navigation to V1 page
 
 **Types Included:**
+
 - All core types from V1 (17 types)
 - Plus 13 additional specialized types:
   - **Contract Data Types:** Contract DataContractData, Contract DataVendorInfo, Contract DataFinancialInfo, Contract DataPerformanceInfo, Contract DataCompetitionInfo
@@ -67,11 +71,13 @@ Added two new menu items under the "Tools" dropdown:
 ### Development
 
 Start the development server:
+
 ```bash
 pnpm dev
 ```
 
 Access the pages:
+
 - V1 Auto-Generated: http://localhost:3000/voyager-v1
 - V2 Hand-Crafted: http://localhost:3000/voyager-v2
 
@@ -91,6 +97,7 @@ Access the pages:
 ### GraphQL Voyager Integration
 
 Both pages use:
+
 - **Library:** GraphQL Voyager via CDN (`graphql-voyager@^2.0.0`)
 - **CSS:** `https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.css`
 - **JS:** `https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.standalone.js`
@@ -107,6 +114,7 @@ Both pages use:
 ### Display Options
 
 Both pages use the same Voyager configuration:
+
 ```typescript
 {
   introspection: introspectionResult,
@@ -119,20 +127,21 @@ Both pages use the same Voyager configuration:
 
 ## Comparison: V1 vs V2
 
-| Feature | V1 Auto-Generated | V2 Hand-Crafted |
-|---------|-------------------|-----------------|
-| **Object Types** | 17 | 30 |
-| **Enums** | 3 | 3 |
-| **Scalars** | 6 | 6 |
-| **Lines of GraphQL** | 295 | 537 |
-| **Source Schema** | V2 Generated | V2 Hand-Crafted |
-| **System Extensions** | Consolidated | Granular (13 specialized types) |
-| **Best For** | Understanding core data model | Detailed API implementation |
-| **Header Color** | Purple gradient | Pink gradient |
+| Feature               | V1 Auto-Generated             | V2 Hand-Crafted                 |
+| --------------------- | ----------------------------- | ------------------------------- |
+| **Object Types**      | 17                            | 30                              |
+| **Enums**             | 3                             | 3                               |
+| **Scalars**           | 6                             | 6                               |
+| **Lines of GraphQL**  | 295                           | 537                             |
+| **Source Schema**     | V2 Generated                  | V2 Hand-Crafted                 |
+| **System Extensions** | Consolidated                  | Granular (13 specialized types) |
+| **Best For**          | Understanding core data model | Detailed API implementation     |
+| **Header Color**      | Purple gradient               | Pink gradient                   |
 
 ### Shared Types
 
 Both schemas include:
+
 - ✅ Core contract types (Contract, SystemMetadata, VendorInfo, AgencyInfo, OrganizationInfo, PlaceOfPerformance, FinancialInfo, BusinessClassification, ContractCharacteristics, Contact, StatusInfo)
 - ✅ Same enums (SystemType, ContactRole, ContractStatus)
 - ✅ Same custom scalars (DateTime, Date, Decimal, JSON, Email, URI)
@@ -141,6 +150,7 @@ Both schemas include:
 ### Differences
 
 **V2 Hand-Crafted Additional Types:**
+
 - **Contract Data System (5 types):** Contract DataContractData, Contract DataVendorInfo, Contract DataFinancialInfo, Contract DataPerformanceInfo, Contract DataCompetitionInfo
 - **Legacy Procurement System (3 types):** AssistAwardData, AssistRecipientInfo, AssistFundingInfo
 - **EASi System (5 types):** EasiProjectInfo, EasiRequirementInfo, EasiApprovalInfo, EasiGovernanceInfo, EasiBusinessCaseInfo
@@ -150,17 +160,20 @@ These additional types provide granular breakdowns of system-specific data that 
 ## Benefits
 
 ### For Developers
+
 - **Interactive Visualization:** Explore schema relationships visually
 - **Type Discovery:** Quickly understand available types and their connections
 - **Documentation:** Self-documenting schema structure
 - **Comparison:** Easy comparison between core and detailed schemas
 
 ### For Stakeholders
+
 - **Visual Understanding:** Non-technical stakeholders can see data structure
 - **System Integration:** Understand how Contract Data, Legacy Procurement, and EASi data is modeled
 - **API Planning:** Plan API implementations based on schema structure
 
 ### For Contributors
+
 - **Schema Exploration:** Understand existing schema before making changes
 - **Type Relationships:** See how types connect and depend on each other
 - **Validation:** Verify schema changes visually
@@ -168,6 +181,7 @@ These additional types provide granular breakdowns of system-specific data that 
 ## Future Enhancements
 
 ### Potential Improvements
+
 1. **Schema Diff View:** Visual comparison showing differences between V1 and V2
 2. **Interactive Filtering:** Filter by system (Contract Data, Legacy Procurement, EASi)
 3. **Export Options:** Export visualizations as SVG/PNG
@@ -180,6 +194,7 @@ These additional types provide granular breakdowns of system-specific data that 
 ## Files Created/Updated
 
 ### New Files
+
 - `src/pages/voyager-v1.tsx` - V1 auto-generated voyager page
 - `src/pages/voyager-v2.tsx` - V2 hand-crafted voyager page
 - `public/data/schema_unification-v1.graphql` - V1 GraphQL SDL (295 lines)
@@ -187,6 +202,7 @@ These additional types provide granular breakdowns of system-specific data that 
 - `docs/GRAPHQL-VOYAGER-PAGES.md` - This documentation
 
 ### Updated Files
+
 - `src/layout/PageLayout/Navbar.tsx` - Added menu items for both voyager pages
 
 ## Related Documentation
@@ -199,6 +215,7 @@ These additional types provide granular breakdowns of system-specific data that 
 ## Support
 
 For issues or questions:
+
 1. Check error messages in browser console
 2. Verify GraphQL files are in `public/data/` directory
 3. Ensure GraphQL Voyager CDN is accessible

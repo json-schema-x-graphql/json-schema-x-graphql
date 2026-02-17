@@ -66,14 +66,14 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  toggleCollapseAll: collapseAll => {
+  toggleCollapseAll: (collapseAll) => {
     set({ collapseAll });
     get().collapseGraph();
   },
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
   getCollapsedNodeIds: () => get().collapsedNodes,
   getCollapsedEdgeIds: () => get().collapsedEdges,
-  setSelectedNode: nodeData => set({ selectedNode: nodeData }),
+  setSelectedNode: (nodeData) => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 
@@ -112,30 +112,41 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     set({ direction });
     setTimeout(() => get().centerView(), 200);
   },
-  setLoading: loading => set({ loading }),
-  expandNodes: nodeId => {
+  setLoading: (loading) => set({ loading }),
+  expandNodes: (nodeId) => {
     const [childrenNodes, matchingNodes] = getOutgoers(
       nodeId,
       get().nodes,
       get().edges,
-      get().collapsedParents
+      get().collapsedParents,
     );
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    const nodesConnectedToParent = childrenEdges.reduce((nodes: string[], edge) => {
-      if (edge.from && !nodes.includes(edge.from)) nodes.push(edge.from);
-      if (edge.to && !nodes.includes(edge.to)) nodes.push(edge.to);
-      return nodes;
-    }, []);
-    const matchingNodesConnectedToParent = matchingNodes.filter(node =>
-      nodesConnectedToParent.includes(node)
+    const nodesConnectedToParent = childrenEdges.reduce(
+      (nodes: string[], edge) => {
+        if (edge.from && !nodes.includes(edge.from)) nodes.push(edge.from);
+        if (edge.to && !nodes.includes(edge.to)) nodes.push(edge.to);
+        return nodes;
+      },
+      [],
     );
-    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodesConnectedToParent);
-    const edgeIds = childrenEdges.map(edge => edge.id);
+    const matchingNodesConnectedToParent = matchingNodes.filter((node) =>
+      nodesConnectedToParent.includes(node),
+    );
+    const nodeIds = childrenNodes
+      .map((node) => node.id)
+      .concat(matchingNodesConnectedToParent);
+    const edgeIds = childrenEdges.map((edge) => edge.id);
 
-    const collapsedParents = get().collapsedParents.filter(cp => cp !== nodeId);
-    const collapsedNodes = get().collapsedNodes.filter(nodeId => !nodeIds.includes(nodeId));
-    const collapsedEdges = get().collapsedEdges.filter(edgeId => !edgeIds.includes(edgeId));
+    const collapsedParents = get().collapsedParents.filter(
+      (cp) => cp !== nodeId,
+    );
+    const collapsedNodes = get().collapsedNodes.filter(
+      (nodeId) => !nodeIds.includes(nodeId),
+    );
+    const collapsedEdges = get().collapsedEdges.filter(
+      (edgeId) => !edgeIds.includes(edgeId),
+    );
 
     set({
       collapsedParents,
@@ -144,12 +155,12 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       graphCollapsed: !!collapsedNodes.length,
     });
   },
-  collapseNodes: nodeId => {
+  collapseNodes: (nodeId) => {
     const [childrenNodes] = getOutgoers(nodeId, get().nodes, get().edges);
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    const nodeIds = childrenNodes.map(node => node.id);
-    const edgeIds = childrenEdges.map(edge => edge.id);
+    const nodeIds = childrenNodes.map((node) => node.id);
+    const edgeIds = childrenEdges.map((edge) => edge.id);
 
     set({
       collapsedParents: get().collapsedParents.concat(nodeId),
@@ -160,24 +171,28 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   collapseGraph: () => {
     const edges = get().edges;
-    const tos = edges.map(edge => edge.to);
-    const froms = edges.map(edge => edge.from);
-    const parentNodesIds = froms.filter(id => !tos.includes(id));
+    const tos = edges.map((edge) => edge.to);
+    const froms = edges.map((edge) => edge.from);
+    const parentNodesIds = froms.filter((id) => !tos.includes(id));
     const secondDegreeNodesIds = edges
-      .filter(edge => parentNodesIds.includes(edge.from))
-      .map(edge => edge.to);
+      .filter((edge) => parentNodesIds.includes(edge.from))
+      .map((edge) => edge.to);
 
     const collapsedParents = get()
-      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data?.isParent)
-      .map(node => node.id);
+      .nodes.filter(
+        (node) => !parentNodesIds.includes(node.id) && node.data?.isParent,
+      )
+      .map((node) => node.id);
 
     const collapsedNodes = get()
       .nodes.filter(
-        node => !parentNodesIds.includes(node.id) && !secondDegreeNodesIds.includes(node.id)
+        (node) =>
+          !parentNodesIds.includes(node.id) &&
+          !secondDegreeNodesIds.includes(node.id),
       )
-      .map(node => node.id);
+      .map((node) => node.id);
 
-    const closestParentToRoot = Math.min(...collapsedParents.map(n => +n));
+    const closestParentToRoot = Math.min(...collapsedParents.map((n) => +n));
     const focusNodeId = `g[id*='node-${closestParentToRoot}']`;
     const rootNode = document.querySelector(focusNodeId);
 
@@ -185,15 +200,18 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedParents,
       collapsedNodes,
       collapsedEdges: get()
-        .edges.filter(edge => !parentNodesIds.includes(edge.from))
-        .map(edge => edge.id),
+        .edges.filter((edge) => !parentNodesIds.includes(edge.from))
+        .map((edge) => edge.id),
       graphCollapsed: true,
     });
 
     if (rootNode) {
-      get().viewPort?.camera?.centerFitElementIntoView(rootNode as HTMLElement, {
-        elementExtraMarginForZoom: 300,
-      });
+      get().viewPort?.camera?.centerFitElementIntoView(
+        rootNode as HTMLElement,
+        {
+          elementExtraMarginForZoom: 300,
+        },
+      );
     }
   },
   expandGraph: () => {
@@ -210,29 +228,39 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       elementExtraMarginForZoom: 100,
     });
   },
-  setZoomFactor: zoomFactor => {
+  setZoomFactor: (zoomFactor) => {
     const viewPort = get().viewPort;
     viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, zoomFactor);
   },
   zoomIn: () => {
     const viewPort = get().viewPort;
-    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
+    viewPort?.camera?.recenter(
+      viewPort.centerX,
+      viewPort.centerY,
+      viewPort.zoomFactor + 0.1,
+    );
   },
   zoomOut: () => {
     const viewPort = get().viewPort;
-    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
+    viewPort?.camera?.recenter(
+      viewPort.centerX,
+      viewPort.centerY,
+      viewPort.zoomFactor - 0.1,
+    );
   },
   centerView: () => {
     const viewPort = get().viewPort;
     viewPort?.updateContainerSize();
 
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement | null;
+    const canvas = document.querySelector(
+      ".jsoncrack-canvas",
+    ) as HTMLElement | null;
     if (canvas) {
       viewPort?.camera?.centerFitElementIntoView(canvas);
     }
   },
-  toggleFullscreen: fullscreen => set({ fullscreen }),
-  setViewPort: viewPort => set({ viewPort }),
+  toggleFullscreen: (fullscreen) => set({ fullscreen }),
+  setViewPort: (viewPort) => set({ viewPort }),
 }));
 
 export default useGraph;

@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What interfaces are and how they work
 - Shared fields across multiple types
 - Implementing interfaces
@@ -16,6 +17,7 @@
 Real-world systems have types that share common fields. A blog system might have Posts and Videos that both need ID, title, and author. Instead of duplicating these fields in every type, interfaces let you define shared fields once. Unions let you return different types from the same query. Together, they enable powerful, expressive APIs that reduce duplication and handle complex scenarios elegantly.
 
 **Prerequisites:**
+
 - Completed: [Module 1: Introducing Types](/learning/01-introducing-types)
 - Completed: [Module 2: Scalars, Objects, Lists](/learning/02-scalars-objects-lists)
 - Completed: [Module 3: Nullability](/learning/03-nullability)
@@ -47,7 +49,7 @@ type BlogPost implements Content {
   title: String!
   author: User!
   createdAt: String!
-  content: String!          # Additional field
+  content: String! # Additional field
 }
 
 type Video implements Content {
@@ -55,7 +57,7 @@ type Video implements Content {
   title: String!
   author: User!
   createdAt: String!
-  duration: Int!            # Additional field
+  duration: Int! # Additional field
 }
 ```
 
@@ -73,12 +75,12 @@ type Query {
 
 ### Interface vs Union
 
-| Aspect | Interface | Union |
-|--------|-----------|-------|
-| **Purpose** | Share common fields | Handle alternatives |
-| **Fields** | All implementing types have them | Each type has its own fields |
-| **Use when** | Multiple types share structure | Type could be different shapes |
-| **Example** | Node (id, createdAt) | SearchResult (Post, Video, Comment) |
+| Aspect       | Interface                        | Union                               |
+| ------------ | -------------------------------- | ----------------------------------- |
+| **Purpose**  | Share common fields              | Handle alternatives                 |
+| **Fields**   | All implementing types have them | Each type has its own fields        |
+| **Use when** | Multiple types share structure   | Type could be different shapes      |
+| **Example**  | Node (id, createdAt)             | SearchResult (Post, Video, Comment) |
 
 ---
 
@@ -104,28 +106,28 @@ interface Content {
 
 ```graphql
 type BlogPost implements Content {
-  id: ID!                    # From interface
-  title: String!             # From interface
-  author: User!              # From interface
-  createdAt: String!         # From interface
-  content: String!           # Specific to BlogPost
+  id: ID! # From interface
+  title: String! # From interface
+  author: User! # From interface
+  createdAt: String! # From interface
+  content: String! # Specific to BlogPost
   tags: [String!]!
 }
 
 type Video implements Content {
-  id: ID!                    # From interface
-  title: String!             # From interface
-  author: User!              # From interface
-  createdAt: String!         # From interface
-  duration: Int!             # Specific to Video
+  id: ID! # From interface
+  title: String! # From interface
+  author: User! # From interface
+  createdAt: String! # From interface
+  duration: Int! # Specific to Video
   thumbnailUrl: String!
 }
 
 type Podcast implements Content {
-  id: ID!                    # From interface
-  title: String!             # From interface
-  author: User!              # From interface
-  createdAt: String!         # From interface
+  id: ID! # From interface
+  title: String! # From interface
+  author: User! # From interface
+  createdAt: String! # From interface
   duration: Int!
   audioUrl: String!
 }
@@ -158,25 +160,28 @@ type BlogPost implements Node & Authored {
 
 ```graphql
 type Query {
-  content(id: ID!): Content    # Returns any Content type
-  allContent: [Content!]!       # List of mixed types
+  content(id: ID!): Content # Returns any Content type
+  allContent: [Content!]! # List of mixed types
 }
 ```
 
 **Query example:**
+
 ```graphql
 query {
   allContent {
     id
     title
-    author { name }
+    author {
+      name
+    }
     # Can't access video-specific or post-specific fields here
-    
+
     ... on BlogPost {
       content
       tags
     }
-    
+
     ... on Video {
       duration
       thumbnailUrl
@@ -203,24 +208,28 @@ type Query {
 query {
   search(query: "graphql") {
     # Can't access common fields (union types might not have them)
-    
+
     ... on BlogPost {
       title
       content
-      author { name }
+      author {
+        name
+      }
     }
-    
+
     ... on Video {
       title
       duration
       thumbnailUrl
     }
-    
+
     ... on Comment {
       text
-      author { name }
+      author {
+        name
+      }
     }
-    
+
     ... on User {
       name
       email
@@ -236,7 +245,7 @@ Get the actual type of an interface/union result:
 ```graphql
 query {
   allContent {
-    __typename          # Returns "BlogPost", "Video", etc.
+    __typename # Returns "BlogPost", "Video", etc.
     id
     title
   }
@@ -244,6 +253,7 @@ query {
 ```
 
 Response:
+
 ```json
 {
   "data": {
@@ -272,6 +282,7 @@ Response:
 JSON Schema has limited support for polymorphism. Common approaches:
 
 **Approach 1: Using `oneOf`**
+
 ```json
 {
   "oneOf": [
@@ -283,6 +294,7 @@ JSON Schema has limited support for polymorphism. Common approaches:
 ```
 
 **Approach 2: Using `type` discrimination**
+
 ```json
 {
   "type": "object",
@@ -305,6 +317,7 @@ JSON Schema has limited support for polymorphism. Common approaches:
 ```
 
 **Approach 3: Shared base + extensions**
+
 ```json
 {
   "$defs": {
@@ -353,6 +366,7 @@ JSON Schema has limited support for polymorphism. Common approaches:
 ### Converting Interfaces to JSON Schema
 
 **GraphQL:**
+
 ```graphql
 interface Content {
   id: ID!
@@ -376,6 +390,7 @@ type Video implements Content {
 ```
 
 **Converts to JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -419,11 +434,13 @@ type Video implements Content {
 ### Converting Unions to JSON Schema
 
 **GraphQL:**
+
 ```graphql
 union SearchResult = BlogPost | Video | Comment
 ```
 
 **Converts to JSON Schema:**
+
 ```json
 {
   "SearchResult": {
@@ -443,6 +460,7 @@ union SearchResult = BlogPost | Video | Comment
 ### Example 1: Content Management System
 
 **GraphQL:**
+
 ```graphql
 interface Content {
   id: ID!
@@ -496,7 +514,7 @@ type Image implements Content {
 type Query {
   content(id: ID!): Content
   allContent(published: Boolean): [Content!]!
-  
+
   articles: [Article!]!
   videos: [Video!]!
   images: [Image!]!
@@ -504,23 +522,26 @@ type Query {
 ```
 
 **Query example:**
+
 ```graphql
 query {
   allContent {
     id
     title
-    author { name }
-    
+    author {
+      name
+    }
+
     ... on Article {
       body
       category
     }
-    
+
     ... on Video {
       url
       duration
     }
-    
+
     ... on Image {
       url
       altText
@@ -532,6 +553,7 @@ query {
 ### Example 2: Search Results with Union
 
 **GraphQL:**
+
 ```graphql
 union SearchResult = Article | User | Comment | Tag
 
@@ -554,19 +576,19 @@ query {
       title
       body
     }
-    
+
     ... on User {
       id
       name
       email
     }
-    
+
     ... on Comment {
       id
       text
       author { name }
     }
-    
+
     ... on Tag {
       id
       name
@@ -606,9 +628,13 @@ type Query {
 query {
   node(id: "123") {
     id
-    
-    ... on User { name }
-    ... on Post { title }
+
+    ... on User {
+      name
+    }
+    ... on Post {
+      title
+    }
   }
 }
 ```
@@ -644,12 +670,7 @@ type Post implements Timestamped {
 ### Pattern 3: Hierarchical Search Results
 
 ```graphql
-union SearchResult = 
-  | Document
-  | Folder
-  | Image
-  | Video
-  | User
+union SearchResult = Document | Folder | Image | Video | User
 
 type Query {
   search(query: String!, limit: Int): [SearchResult!]!
@@ -706,12 +727,16 @@ type SearchResult {
 ```graphql
 query {
   allContent {
-    __typename  # Use this to determine type on client
+    __typename # Use this to determine type on client
     id
     title
-    
-    ... on BlogPost { content }
-    ... on Video { duration }
+
+    ... on BlogPost {
+      content
+    }
+    ... on Video {
+      duration
+    }
   }
 }
 ```
@@ -750,11 +775,7 @@ interface Content {
 union PaymentResult = Payment | PaymentError
 
 # ❌ Too broad
-union PaymentResult = 
-  | Payment 
-  | Order
-  | User
-  | Error
+union PaymentResult = Payment | Order | User | Error
 ```
 
 ---
@@ -833,7 +854,7 @@ Design a union for a notification system that can return different types of noti
 <summary>Solution</summary>
 
 ```graphql
-union Notification = 
+union Notification =
   | CommentNotification
   | FollowNotification
   | LikeNotification
@@ -920,11 +941,11 @@ query {
   animals {
     id
     name
-    
+
     ... on Dog {
       breed
     }
-    
+
     ... on Cat {
       color
     }
@@ -959,6 +980,7 @@ query {
 ### Adding an Interface to Existing Types
 
 **Before:**
+
 ```graphql
 type User {
   id: ID!
@@ -976,6 +998,7 @@ type Post {
 ```
 
 **Step 1**: Extract common fields to interface
+
 ```graphql
 interface Entity {
   id: ID!
@@ -984,6 +1007,7 @@ interface Entity {
 ```
 
 **Step 2**: Update types to implement interface
+
 ```graphql
 type User implements Entity {
   id: ID!
@@ -1001,9 +1025,10 @@ type Post implements Entity {
 ```
 
 **Step 3**: Update queries to use interface
+
 ```graphql
 type Query {
-  entity(id: ID!): Entity  # Could be User or Post
+  entity(id: ID!): Entity # Could be User or Post
 }
 ```
 
@@ -1011,13 +1036,13 @@ type Query {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| Using interface when union needed | Can't handle different fields | Use union for type alternatives |
-| Union instead of interface | Can't query common fields | Use interface for shared structure |
-| Not using `__typename` | Client can't distinguish types | Always include `__typename` in queries |
-| Circular interface implementations | Overly complex | Keep interfaces focused |
-| Interface without consistent fields | Defeats purpose | Ensure all implementations match |
+| Mistake                             | Problem                        | Fix                                    |
+| ----------------------------------- | ------------------------------ | -------------------------------------- |
+| Using interface when union needed   | Can't handle different fields  | Use union for type alternatives        |
+| Union instead of interface          | Can't query common fields      | Use interface for shared structure     |
+| Not using `__typename`              | Client can't distinguish types | Always include `__typename` in queries |
+| Circular interface implementations  | Overly complex                 | Keep interfaces focused                |
+| Interface without consistent fields | Defeats purpose                | Ensure all implementations match       |
 
 ---
 
@@ -1052,7 +1077,7 @@ type Query {
 ✅ **Use `__typename`** - Know which type you got back  
 ✅ **Reduce duplication** - Interfaces prevent repeated fields  
 ✅ **Support polymorphism** - Return different types from one query  
-✅ **Easier evolution** - Add types implementing interface without breaking  
+✅ **Easier evolution** - Add types implementing interface without breaking
 
 ---
 

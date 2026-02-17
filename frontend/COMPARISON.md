@@ -13,6 +13,7 @@ This document provides an in-depth comparison of Yjs and Loro CRDT implementatio
 ## 1. Core Technology
 
 ### Yjs
+
 - **Language**: JavaScript
 - **First Release**: 2015
 - **Architecture**: Client-server with WebSocket/WebRTC
@@ -20,6 +21,7 @@ This document provides an in-depth comparison of Yjs and Loro CRDT implementatio
 - **Bundle Size**: ~60KB (gzipped)
 
 ### Loro
+
 - **Language**: Rust → WebAssembly
 - **First Release**: 2023
 - **Architecture**: Local-first, P2P capable
@@ -32,23 +34,25 @@ This document provides an in-depth comparison of Yjs and Loro CRDT implementatio
 
 ### Operation Speed
 
-| Operation | Yjs | Loro | Winner |
-|-----------|-----|------|--------|
-| Insert 1000 chars | ~10ms | ~5ms | Loro |
-| Delete 1000 chars | ~8ms | ~4ms | Loro |
-| Sync 10KB document | ~50ms | ~30ms | Loro |
-| Initial load | ~100ms | ~200ms | Yjs |
-| Memory per operation | ~80 bytes | ~50 bytes | Loro |
+| Operation            | Yjs       | Loro      | Winner |
+| -------------------- | --------- | --------- | ------ |
+| Insert 1000 chars    | ~10ms     | ~5ms      | Loro   |
+| Delete 1000 chars    | ~8ms      | ~4ms      | Loro   |
+| Sync 10KB document   | ~50ms     | ~30ms     | Loro   |
+| Initial load         | ~100ms    | ~200ms    | Yjs    |
+| Memory per operation | ~80 bytes | ~50 bytes | Loro   |
 
 ### Real-World Performance
 
 **Yjs:**
+
 - ✅ Fast for typical editing (99% of use cases)
 - ✅ Quick startup time
 - ⚠️ Network-dependent latency
 - ⚠️ History grows over time (needs GC)
 
 **Loro:**
+
 - ✅ Extremely fast operations
 - ✅ No network latency (local-first)
 - ✅ Efficient memory usage
@@ -61,30 +65,30 @@ This document provides an in-depth comparison of Yjs and Loro CRDT implementatio
 
 ### Core Features
 
-| Feature | Yjs | Loro |
-|---------|-----|------|
-| Text editing | ✅ Excellent | ✅ Excellent |
-| Rich text | ✅ Via Y.XmlFragment | ✅ Native support |
-| Arrays/Lists | ✅ Y.Array | ✅ List + MovableList |
-| Maps/Objects | ✅ Y.Map | ✅ Map |
-| Trees | ❌ Via workarounds | ✅ Native Tree type |
-| Undo/Redo | ✅ Via UndoManager | ✅ Built-in |
-| Time travel | ⚠️ Via snapshots | ✅ First-class feature |
-| Cursors/Awareness | ✅ Built-in | ⚠️ DIY |
-| Transactions | ✅ Yes | ✅ Yes |
-| Visual GraphQL Editor | ✅ graphql-editor | ✅ graphql-editor |
+| Feature               | Yjs                  | Loro                   |
+| --------------------- | -------------------- | ---------------------- |
+| Text editing          | ✅ Excellent         | ✅ Excellent           |
+| Rich text             | ✅ Via Y.XmlFragment | ✅ Native support      |
+| Arrays/Lists          | ✅ Y.Array           | ✅ List + MovableList  |
+| Maps/Objects          | ✅ Y.Map             | ✅ Map                 |
+| Trees                 | ❌ Via workarounds   | ✅ Native Tree type    |
+| Undo/Redo             | ✅ Via UndoManager   | ✅ Built-in            |
+| Time travel           | ⚠️ Via snapshots     | ✅ First-class feature |
+| Cursors/Awareness     | ✅ Built-in          | ⚠️ DIY                 |
+| Transactions          | ✅ Yes               | ✅ Yes                 |
+| Visual GraphQL Editor | ✅ graphql-editor    | ✅ graphql-editor      |
 
 ### Collaboration Features
 
-| Feature | Yjs | Loro |
-|---------|-----|------|
-| Real-time sync | ✅ Excellent | ✅ Excellent |
-| Offline editing | ⚠️ Limited | ✅ Full support |
-| Conflict resolution | ✅ Automatic | ✅ Automatic |
-| User presence | ✅ Awareness API | ⚠️ DIY |
-| Cursor tracking | ✅ Built-in | ⚠️ DIY |
-| Peer discovery | ✅ Via providers | ⚠️ DIY |
-| Network protocols | ✅ WebSocket, WebRTC | ⚠️ DIY |
+| Feature             | Yjs                  | Loro            |
+| ------------------- | -------------------- | --------------- |
+| Real-time sync      | ✅ Excellent         | ✅ Excellent    |
+| Offline editing     | ⚠️ Limited           | ✅ Full support |
+| Conflict resolution | ✅ Automatic         | ✅ Automatic    |
+| User presence       | ✅ Awareness API     | ⚠️ DIY          |
+| Cursor tracking     | ✅ Built-in          | ⚠️ DIY          |
+| Peer discovery      | ✅ Via providers     | ⚠️ DIY          |
+| Network protocols   | ✅ WebSocket, WebRTC | ⚠️ DIY          |
 
 ---
 
@@ -93,36 +97,43 @@ This document provides an in-depth comparison of Yjs and Loro CRDT implementatio
 ### Setup Complexity
 
 **Yjs:**
+
 ```bash
 npm install yjs y-monaco y-websocket
 npx y-websocket  # Start server
 ```
+
 ⭐ Difficulty: **Medium** (requires server)
 
 **Loro:**
+
 ```bash
 npm install loro-crdt
 # No server needed!
 ```
+
 ⭐ Difficulty: **Easy** (optional server)
 
 ### Code Complexity
 
 **Yjs - Monaco Binding:**
+
 ```typescript
-import { MonacoBinding } from 'y-monaco';
+import { MonacoBinding } from "y-monaco";
 
 const binding = new MonacoBinding(
   ytext,
   editor.getModel(),
   new Set([editor]),
-  awareness
+  awareness,
 );
 // Done! Fully integrated
 ```
+
 ⭐ Lines of code: **~5**
 
 **Loro - Monaco Binding:**
+
 ```typescript
 // Manual integration required
 loroDoc.subscribe((event) => {
@@ -137,17 +148,20 @@ editor.onDidChangeModelContent((e) => {
   }
 });
 ```
+
 ⭐ Lines of code: **~30-50**
 
 ### API Design
 
 **Yjs:**
+
 - ✅ Simple and intuitive
 - ✅ Excellent TypeScript support
 - ✅ Extensive documentation
 - ⚠️ Some quirks with nested types
 
 **Loro:**
+
 - ✅ Clean, modern API
 - ✅ Excellent TypeScript support
 - ✅ Rust-inspired type safety
@@ -160,6 +174,7 @@ editor.onDidChangeModelContent((e) => {
 ### Yjs Ecosystem
 
 **Editor Bindings:**
+
 - ✅ Monaco (official)
 - ✅ Quill (official)
 - ✅ ProseMirror (official)
@@ -167,16 +182,19 @@ editor.onDidChangeModelContent((e) => {
 - ✅ Slate (community)
 
 **Network Providers:**
+
 - ✅ y-websocket (official)
 - ✅ y-webrtc (official)
 - ✅ y-indexeddb (official)
 
 **Hosting:**
+
 - ✅ Liveblocks (managed)
 - ✅ PartyKit (managed)
 - ✅ Hocuspocus (open-source)
 
 **Community:**
+
 - 📊 GitHub Stars: 13k+
 - 👥 Contributors: 100+
 - 📚 Documentation: Extensive
@@ -185,17 +203,21 @@ editor.onDidChangeModelContent((e) => {
 ### Loro Ecosystem
 
 **Editor Bindings:**
+
 - ⚠️ Monaco (DIY)
 - ⚠️ Quill (planned)
 - ⚠️ Others (future)
 
 **Network Providers:**
+
 - ⚠️ DIY implementation
 
 **Hosting:**
+
 - ⚠️ No managed options yet
 
 **Community:**
+
 - 📊 GitHub Stars: 3k+
 - 👥 Contributors: 20+
 - 📚 Documentation: Growing
@@ -248,6 +270,7 @@ Cons:
 **Recommendation**: **Yjs**
 
 **Why:**
+
 - ✅ Proven stability for team tools
 - ✅ Built-in presence/cursors
 - ✅ Managed hosting available
@@ -263,6 +286,7 @@ Cons:
 **Recommendation**: **Loro**
 
 **Why:**
+
 - ✅ Offline-first architecture
 - ✅ No server costs
 - ✅ Built-in version control
@@ -278,6 +302,7 @@ Cons:
 **Recommendation**: **Yjs**
 
 **Why:**
+
 - ✅ Battle-tested in production
 - ✅ Managed hosting (Liveblocks)
 - ✅ Better monitoring tools
@@ -292,6 +317,7 @@ Cons:
 **Recommendation**: **Loro**
 
 **Why:**
+
 - ✅ Latest CRDT advances
 - ✅ Superior performance
 - ✅ Rich data structures
@@ -306,12 +332,14 @@ Cons:
 **Difficulty**: ⭐⭐⭐⭐ (Hard)
 
 **Challenges:**
+
 - Different document formats
 - No direct conversion tool
 - Network layer rewrite needed
 - Bindings must be reimplemented
 
 **Steps:**
+
 1. Export Yjs document as JSON
 2. Initialize Loro document
 3. Import JSON data
@@ -325,12 +353,14 @@ Cons:
 **Difficulty**: ⭐⭐⭐⭐ (Hard)
 
 **Challenges:**
+
 - Different document formats
 - No direct conversion tool
 - Lose time travel history
 - Must set up server
 
 **Steps:**
+
 1. Export Loro snapshot as JSON
 2. Initialize Yjs document
 3. Import JSON data
@@ -344,10 +374,12 @@ Cons:
 ### Yjs Total Cost of Ownership
 
 **Development:**
+
 - Initial: ⭐⭐ (Medium)
 - Maintenance: ⭐ (Low)
 
 **Infrastructure:**
+
 - Self-hosted: $20-100/month (WebSocket server)
 - Liveblocks: $0-500/month (usage-based)
 - PartyKit: $0-100/month (usage-based)
@@ -359,10 +391,12 @@ Cons:
 ### Loro Total Cost of Ownership
 
 **Development:**
+
 - Initial: ⭐⭐⭐ (High - custom sync)
 - Maintenance: ⭐⭐ (Medium)
 
 **Infrastructure:**
+
 - Self-hosted: $0 (optional relay)
 - P2P: $0 (no server)
 - Optional relay: $20-50/month
@@ -376,11 +410,13 @@ Cons:
 ### Yjs Risks
 
 **Low Risk:**
+
 - ✅ Mature, proven technology
 - ✅ Large community support
 - ✅ Multiple hosting options
 
 **Risks:**
+
 - ⚠️ Server dependency
 - ⚠️ Vendor lock-in (managed hosting)
 - ⚠️ Network requirements
@@ -390,11 +426,13 @@ Cons:
 ### Loro Risks
 
 **Medium Risk:**
+
 - ⚠️ Newer technology (less battle-tested)
 - ⚠️ Smaller ecosystem
 - ⚠️ Custom sync implementation
 
 **Mitigations:**
+
 - ✅ Active development
 - ✅ Strong technical foundation (Rust)
 - ✅ Growing community
@@ -405,16 +443,16 @@ Cons:
 
 ### Score by Priority (1-10)
 
-| Priority | Weight | Yjs | Loro | Winner |
-|----------|--------|-----|------|--------|
-| Stability | 10 | 10 | 7 | Yjs |
-| Performance | 8 | 8 | 10 | Loro |
-| Ease of Setup | 7 | 6 | 9 | Loro |
-| Ecosystem | 9 | 10 | 5 | Yjs |
-| Offline Support | 7 | 4 | 10 | Loro |
-| Time Travel | 6 | 5 | 10 | Loro |
-| Visual Editing | 8 | 9 | 9 | Tie |
-| Total | - | 435 | 417 | Yjs |
+| Priority        | Weight | Yjs | Loro | Winner |
+| --------------- | ------ | --- | ---- | ------ |
+| Stability       | 10     | 10  | 7    | Yjs    |
+| Performance     | 8      | 8   | 10   | Loro   |
+| Ease of Setup   | 7      | 6   | 9    | Loro   |
+| Ecosystem       | 9      | 10  | 5    | Yjs    |
+| Offline Support | 7      | 4   | 10   | Loro   |
+| Time Travel     | 6      | 5   | 10   | Loro   |
+| Visual Editing  | 8      | 9   | 9    | Tie    |
+| Total           | -      | 435 | 417  | Yjs    |
 
 **Conclusion**: Yjs wins by a narrow margin for general use, but Loro excels in specific scenarios.
 
@@ -484,6 +522,7 @@ Both Yjs and Loro are excellent CRDT implementations suitable for production use
 5. **Budget considerations**
 
 **For the JSON Schema ↔ GraphQL editor:**
+
 - **Production today**: Choose **Yjs** (stable + visual editor)
 - **Innovative/local-first**: Choose **Loro** (offline + visual editor)
 - **Not sure**: Start with **Yjs**, keep Loro on radar

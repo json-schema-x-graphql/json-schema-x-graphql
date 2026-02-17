@@ -13,10 +13,12 @@ All planned improvements have been successfully implemented and tested.
 ## Phase 1: Node.js Converter Enhancements ✅
 
 ### 1.1 Case Conversion Utilities ✅
+
 **Status:** Already implemented  
 **File:** `converters/node/src/case-conversion.ts`
 
 **Features:**
+
 - `camelToSnake(str)` - Converts camelCase/PascalCase to snake_case
 - `snakeToCamel(str)` - Converts snake_case to camelCase
 - `convertObjectKeys(obj, converter)` - Recursively converts object keys
@@ -27,10 +29,12 @@ All planned improvements have been successfully implemented and tested.
 ---
 
 ### 1.2 Enhanced $ref Resolution ✅
+
 **Status:** Already implemented with improvements  
 **File:** `converters/node/src/converter.ts`
 
 **Features:**
+
 - Circular reference detection using `visited` Set parameter
 - Recursive resolution for nested `$ref` chains
 - Case-insensitive property matching with fallbacks:
@@ -40,6 +44,7 @@ All planned improvements have been successfully implemented and tested.
 - Handles external references with configurable naming strategies
 
 **Example:**
+
 ```typescript
 // Schema with case mismatch
 {
@@ -56,16 +61,19 @@ All planned improvements have been successfully implemented and tested.
 ---
 
 ### 1.3 Circular Reference Protection ✅
+
 **Status:** Already implemented  
 **File:** `converters/node/src/converter.ts`
 
 **Features:**
+
 - `ConversionContext.building` Set tracks types currently being generated
 - Prevents infinite loops during type generation
 - Proper cleanup in `finally` blocks
 - Clear error messages for circular type dependencies
 
 **Supported Patterns:**
+
 - Self-referencing types (e.g., linked lists, trees)
 - Mutual references (e.g., Person ↔ Company)
 - Recursive array items (e.g., Tree with children)
@@ -73,10 +81,12 @@ All planned improvements have been successfully implemented and tested.
 ---
 
 ### 1.4 Type Filtering ✅
+
 **Status:** Already implemented with bug fix  
 **File:** `converters/node/src/converter.ts`
 
 **Features:**
+
 - `excludeTypes` - List of type names to exclude (default: `["Query", "Mutation", "Subscription", "PageInfo"]`)
 - `excludeTypeSuffixes` - List of suffixes to exclude (default: `["Filter", "Sort", "SortInput", "FilterInput", "Connection", "Edge", "Payload", "Args"]`)
 - `excludePatterns` - Regex patterns for exclusion
@@ -85,21 +95,24 @@ All planned improvements have been successfully implemented and tested.
 **Bug Fixed:** Logic now correctly handles custom `excludeTypes` when `includeOperationalTypes` is true.
 
 **Configuration Example:**
+
 ```typescript
 jsonSchemaToGraphQL(schema, {
-  excludeTypes: ['InternalType', 'DebugInfo'],
-  excludeTypeSuffixes: ['Filter', 'Connection'],
-  includeOperationalTypes: false
+  excludeTypes: ["InternalType", "DebugInfo"],
+  excludeTypeSuffixes: ["Filter", "Connection"],
+  includeOperationalTypes: false,
 });
 ```
 
 ---
 
 ### 1.5 $defs Extraction ✅
+
 **Status:** Already implemented  
 **File:** `converters/node/src/converter.ts`
 
 **Features:**
+
 - Extracts types from both `$defs` and `definitions` (JSON Schema Draft 2019-09 and earlier)
 - Two-pass processing to handle name collisions
 - Respects filtering rules
@@ -110,10 +123,12 @@ jsonSchemaToGraphQL(schema, {
 ## Phase 2: Rust Converter Enhancements ✅
 
 ### 2.1 Case Conversion Utilities ✅
+
 **Status:** Already implemented  
 **File:** `converters/rust/src/case_conversion.rs`
 
 **Features:**
+
 - `camel_to_snake(s)` - Converts to snake_case with proper handling of acronyms
 - `snake_to_camel(s)` - Converts to camelCase
 - Unit tests included in module
@@ -121,10 +136,12 @@ jsonSchemaToGraphQL(schema, {
 ---
 
 ### 2.2 Enhanced $ref Resolution ✅
+
 **Status:** Already implemented  
 **File:** `converters/rust/src/json_to_graphql.rs`
 
 **Features:**
+
 - `resolve_ref()` with `visited` parameter for circular detection
 - Recursive resolution with `try_get_property()` helper
 - Case conversion fallbacks matching Node.js behavior
@@ -133,10 +150,12 @@ jsonSchemaToGraphQL(schema, {
 ---
 
 ### 2.3 Circular Reference Protection ✅
+
 **Status:** Implemented in this session  
 **File:** `converters/rust/src/json_to_graphql.rs`
 
 **Changes Made:**
+
 ```rust
 // Added to convert_type_definition:
 if context.building.contains(type_name) {
@@ -153,10 +172,12 @@ context.building.remove(type_name);
 ---
 
 ### 2.4 Type Filtering ✅
+
 **Status:** Already implemented  
 **File:** `converters/rust/src/types.rs` and `converters/rust/src/json_to_graphql.rs`
 
 **Features:**
+
 - All filtering options in `ConversionOptions` struct
 - `should_include_type()` function with comprehensive checks
 - Default values match intended behavior
@@ -189,9 +210,11 @@ context.building.remove(type_name);
 ---
 
 ### 3.2 Node.js Tests ✅
+
 **File:** `converters/node/src/improvements.test.ts`
 
 **Test Coverage:**
+
 - ✅ Case Conversion Utilities (3 tests)
 - ✅ $ref Resolution with Case Mismatch (3 tests)
 - ✅ Circular Reference Protection (4 tests)
@@ -202,6 +225,7 @@ context.building.remove(type_name);
 **Total: 24 tests, all passing**
 
 **Run Command:**
+
 ```bash
 cd converters/node
 npm test -- improvements.test.ts
@@ -210,9 +234,11 @@ npm test -- improvements.test.ts
 ---
 
 ### 3.3 Rust Tests ✅
+
 **File:** `converters/rust/src/json_to_graphql.rs` (tests module)
 
 **Test Coverage Added:**
+
 - ✅ Circular reference handling (self-referencing, mutual, tree structures)
 - ✅ Type filtering (operational types, suffixes)
 - ✅ Case conversion utilities
@@ -226,12 +252,15 @@ npm test -- improvements.test.ts
 ## Phase 4: Documentation (Pending)
 
 ### 4.1 Configuration Guide
+
 **Status:** Pending  
 **Files to Update:**
+
 - `converters/README.md`
 - `docs/COMPREHENSIVE_GUIDE.md`
 
 **Recommended Content:**
+
 - Document new filtering options with examples
 - Explain case conversion behavior
 - Describe circular reference handling
@@ -240,12 +269,15 @@ npm test -- improvements.test.ts
 ---
 
 ### 4.2 CLI Updates
+
 **Status:** Pending  
 **Files to Update:**
+
 - `converters/node/src/cli.ts`
 - `converters/rust/src/bin/converter.rs` (if exists)
 
 **Recommended Updates:**
+
 - Add CLI flags for filtering options
 - Update help text with new options
 - Provide usage examples
@@ -288,6 +320,7 @@ npm test -- improvements.test.ts
 ## Feature Parity Achieved ✅
 
 Both Node.js and Rust implementations now have:
+
 - ✅ Case conversion utilities
 - ✅ Robust $ref resolution with case fallbacks
 - ✅ Circular reference protection
@@ -301,6 +334,7 @@ Both Node.js and Rust implementations now have:
 ## Testing Results
 
 ### Node.js
+
 ```
 Test Suites: 1 passed, 1 total
 Tests:       24 passed, 24 total
@@ -308,6 +342,7 @@ Time:        ~3.4s
 ```
 
 ### Rust
+
 - All new tests added successfully
 - No compilation errors or warnings
 - Ready for testing once Rust toolchain is available

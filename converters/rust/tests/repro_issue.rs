@@ -1,5 +1,5 @@
-use json_schema_graphql_converter::graphql_to_json::convert;
-use json_schema_graphql_converter::types::ConversionOptions;
+use json_schema_x_graphql::graphql_to_json::convert;
+use json_schema_x_graphql::types::ConversionOptions;
 
 #[test]
 fn test_repro_parsing_issue() {

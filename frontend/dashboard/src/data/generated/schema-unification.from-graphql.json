@@ -38,12 +38,7 @@
     "contact_role": {
       "type": "string",
       "description": "Role classification for contract contacts",
-      "enum": [
-        "primary",
-        "technical",
-        "administrative",
-        "contracting_officer"
-      ],
+      "enum": ["primary", "technical", "administrative", "contracting_officer"],
       "x-graphql-enum": {
         "name": "ContactRole",
         "description": "Role classification for contract personnel",
@@ -70,13 +65,7 @@
     "contract_status": {
       "type": "string",
       "description": "Contract lifecycle status",
-      "enum": [
-        "draft",
-        "published",
-        "awarded",
-        "completed",
-        "cancelled"
-      ],
+      "enum": ["draft", "published", "awarded", "completed", "cancelled"],
       "x-graphql-enum": {
         "name": "ContractStatus",
         "description": "Current status in the contract lifecycle",
@@ -159,11 +148,7 @@
           "$ref": "#/$defs/data_quality"
         }
       },
-      "required": [
-        "system_name",
-        "record_id",
-        "processed_date"
-      ]
+      "required": ["system_name", "record_id", "processed_date"]
     },
     "system_metadata": {
       "type": "object",
@@ -204,11 +189,7 @@
           "x-graphql-required": true
         }
       },
-      "required": [
-        "primary_system",
-        "system_chain",
-        "global_record_id"
-      ]
+      "required": ["primary_system", "system_chain", "global_record_id"]
     },
     "contract_identification": {
       "type": "object",
@@ -242,9 +223,7 @@
           "description": "Detailed description of contract requirements"
         }
       },
-      "required": [
-        "piid"
-      ]
+      "required": ["piid"]
     },
     "agency_info": {
       "type": "object",
@@ -270,9 +249,7 @@
               "$ref": "#/$defs/agency_info"
             },
             {
-              "required": [
-                "code"
-              ]
+              "required": ["code"]
             }
           ],
           "description": "Contracting agency information"
@@ -290,9 +267,7 @@
           "description": "Funding department information"
         }
       },
-      "required": [
-        "contracting_agency"
-      ]
+      "required": ["contracting_agency"]
     },
     "vendor_info": {
       "type": "object",
@@ -613,10 +588,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "field_name",
-                "value"
-              ]
+              "required": ["field_name", "value"]
             }
           }
         ]
@@ -629,9 +601,7 @@
       "x-graphql-type": {
         "name": "Contract",
         "description": "Federal contract record with system metadata and lineage",
-        "implements": [
-          "Node"
-        ]
+        "implements": ["Node"]
       },
       "properties": {
         "id": {
@@ -692,10 +662,7 @@
           }
         }
       },
-      "required": [
-        "system_metadata",
-        "common_elements"
-      ]
+      "required": ["system_metadata", "common_elements"]
     }
   }
 }

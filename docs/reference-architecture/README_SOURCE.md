@@ -21,17 +21,17 @@ Schema Unification Forest provides canonical JSON Schema and GraphQL SDL for int
 
 📖 **Architecture Decisions:** [`docs/adr/README.md`](docs/adr/README.md)
 
-| ADR | Decision | Status |
-|-----|----------|--------|
-| [0001](docs/adr/0001-schema-driven-data-contract.md) | Schema-Driven Data Contract | ✅ Accepted |
-| [0002](docs/adr/0002-schema-tooling-automation.md) | Automated Schema Parity Toolchain | ✅ Accepted |
-| [0003](docs/adr/0003-visual-communication-layer.md) | Schema Viewers as Communication Layer | ✅ Accepted |
-| [0004](docs/adr/0004-graphql-gateway-selection.md) | GraphQL Gateway Selection (GraphQL Mesh) | ✅ Accepted |
-| [0005](docs/adr/0005-esm-first-module-system.md) | ESM-First Module System | ✅ Accepted |
+| ADR                                                        | Decision                                                  | Status      |
+| ---------------------------------------------------------- | --------------------------------------------------------- | ----------- |
+| [0001](docs/adr/0001-schema-driven-data-contract.md)       | Schema-Driven Data Contract                               | ✅ Accepted |
+| [0002](docs/adr/0002-schema-tooling-automation.md)         | Automated Schema Parity Toolchain                         | ✅ Accepted |
+| [0003](docs/adr/0003-visual-communication-layer.md)        | Schema Viewers as Communication Layer                     | ✅ Accepted |
+| [0004](docs/adr/0004-graphql-gateway-selection.md)         | GraphQL Gateway Selection (GraphQL Mesh)                  | ✅ Accepted |
+| [0005](docs/adr/0005-esm-first-module-system.md)           | ESM-First Module System                                   | ✅ Accepted |
 | [0006](docs/adr/0006-three-namespace-naming-convention.md) | Three-Namespace Naming (snake_case/camelCase/hyphen-case) | ✅ Accepted |
-| [0007](docs/adr/0007-multi-stage-docker-build.md) | Multi-Stage Docker Build | ✅ Accepted |
-| [0008](docs/adr/0008-python-validation-tooling.md) | Python Validation Tooling | ✅ Accepted |
-| [0009](docs/adr/0009-static-site-generation-nextjs.md) | Static Site Generation with Next.js | ✅ Accepted |
+| [0007](docs/adr/0007-multi-stage-docker-build.md)          | Multi-Stage Docker Build                                  | ✅ Accepted |
+| [0008](docs/adr/0008-python-validation-tooling.md)         | Python Validation Tooling                                 | ✅ Accepted |
+| [0009](docs/adr/0009-static-site-generation-nextjs.md)     | Static Site Generation with Next.js                       | ✅ Accepted |
 
 ## 🔗 Related Projects
 
@@ -44,11 +44,13 @@ Schema Unification Forest provides canonical JSON Schema and GraphQL SDL for int
 ## 📚 Documentation
 
 **Core Documentation:**
+
 - [`docs/`](docs/) — Schema architecture, pipeline guides, system mappings
 - [`docs/adr/`](docs/adr/) — Architecture decision records
 - [`scripts/README.md`](scripts/README.md) — Generator and validator scripts
 
 **Quick Links:**
+
 - [Schema Architecture Guide](docs/schema/schema-architecture.md)
 - [Schema Pipeline Guide](docs/schema/schema-pipeline-guide.md)
 - [x-graphql Hints Guide](docs/schema/x-graphql-hints-guide.md)
@@ -58,6 +60,7 @@ Schema Unification Forest provides canonical JSON Schema and GraphQL SDL for int
 - [Implementation Plan](IMPLEMENTATION-PLAN.md) (85% complete)
 
 **📊 Presentation Slides:**
+
 - [Download Latest PDF](https://github.com/GSA-TTS/enterprise-schema-unification/actions/workflows/generate-slides-pdf.yml) — Latest presentation slides (auto-generated from main branch)
 - [Slides CHEATSHEET](SLIDES-CHEATSHEET.md) — README, Customization options and export formats
 
@@ -72,7 +75,7 @@ Schema Unification Forest provides canonical JSON Schema and GraphQL SDL for int
 - ✅ Documentation updated: README, ADR 0001, root cause analysis
 - ✅ All 6 system schemas maintained: Legacy Procurement, EASi, Logistics Mgmt, Contract Data, USASpending, Schema Unification
 - 📋 Next: See [Project Board](https://github.com/orgs/GSA-TTS/projects/101)
-& [Documentation](docs/)
+  & [Documentation](docs/)
 
 ## Getting Started
 
@@ -131,6 +134,7 @@ pnpm run generate:schema:interop
 ```
 
 This single command runs:
+
 - **Field mapping:** Generates camelCase ↔ snake_case mappings
 - **Subgraphs:** Creates GraphQL SDL for each system (5 subgraphs)
 - **Supergraph:** Composes all subgraphs into unified schema
@@ -187,18 +191,19 @@ git commit -m "schema: update system schemas and regenerate artifacts"
 
 **Source of truth for data contracts, validation, and GraphQL generation**
 
-| File | Purpose | Lines | System |
-|------|---------|-------|--------|
-| [`src/data/legacy_procurement.schema.json`](src/data/legacy_procurement.schema.json) | Legacy Procurement system data model | ~300 | Legacy Procurement |
-| [`src/data/intake_process.schema.json`](src/data/intake_process.schema.json) | EASi system data model | ~250 | EASi |
-| [`src/data/logistics_mgmt.schema.json`](src/data/logistics_mgmt.schema.json) | Logistics Mgmt/PRISM system data model | ~2000 | Logistics Mgmt |
-| [`src/data/contract_data.schema.json`](src/data/contract_data.schema.json) | Contract Data canonical data model | ~720 | Contract Data |
-| [`src/data/public_spending.schema.json`](src/data/public_spending.schema.json) | USASpending/GDSM data model | ~600 | USASpending |
-| [`src/data/schema_unification.schema.json`](src/data/schema_unification.schema.json) | Unified supergraph model | ~850 | All Systems |
+| File                                                                                 | Purpose                                | Lines | System             |
+| ------------------------------------------------------------------------------------ | -------------------------------------- | ----- | ------------------ |
+| [`src/data/legacy_procurement.schema.json`](src/data/legacy_procurement.schema.json) | Legacy Procurement system data model   | ~300  | Legacy Procurement |
+| [`src/data/intake_process.schema.json`](src/data/intake_process.schema.json)         | EASi system data model                 | ~250  | EASi               |
+| [`src/data/logistics_mgmt.schema.json`](src/data/logistics_mgmt.schema.json)         | Logistics Mgmt/PRISM system data model | ~2000 | Logistics Mgmt     |
+| [`src/data/contract_data.schema.json`](src/data/contract_data.schema.json)           | Contract Data canonical data model     | ~720  | Contract Data      |
+| [`src/data/public_spending.schema.json`](src/data/public_spending.schema.json)       | USASpending/GDSM data model            | ~600  | USASpending        |
+| [`src/data/schema_unification.schema.json`](src/data/schema_unification.schema.json) | Unified supergraph model               | ~850  | All Systems        |
 
 **These JSON Schemas:**
+
 - Use snake_case naming convention
-- Include x-graphql-* extension metadata for SDL generation
+- Include x-graphql-\* extension metadata for SDL generation
 - Define validation rules, types, and data contracts
 - Are maintained by hand and version controlled
 
@@ -206,18 +211,19 @@ git commit -m "schema: update system schemas and regenerate artifacts"
 
 **Generated from JSON Schemas via `pnpm run generate:schema:interop`**
 
-| File | Source | Purpose | Lines |
-|------|--------|---------|-------|
-| [`generated-schemas/legacy_procurement.subgraph.graphql`](generated-schemas/legacy_procurement.subgraph.graphql) | `legacy_procurement.schema.json` | Legacy Procurement GraphQL subgraph | ~100 |
-| [`generated-schemas/intake_process.subgraph.graphql`](generated-schemas/intake_process.subgraph.graphql) | `intake_process.schema.json` | EASi GraphQL subgraph | ~80 |
-| [`generated-schemas/logistics_mgmt.subgraph.graphql`](generated-schemas/logistics_mgmt.subgraph.graphql) | `logistics_mgmt.schema.json` | Logistics Mgmt GraphQL subgraph | ~600 |
-| [`generated-schemas/contract_data.subgraph.graphql`](generated-schemas/contract_data.subgraph.graphql) | `contract_data.schema.json` | Contract Data GraphQL subgraph | ~300 |
-| [`generated-schemas/public_spending.subgraph.graphql`](generated-schemas/public_spending.subgraph.graphql) | `public_spending.schema.json` | USASpending GraphQL subgraph | ~290 |
-| [`generated-schemas/schema_unification.supergraph.graphql`](generated-schemas/schema_unification.supergraph.graphql) | All subgraphs | Composed federated schema | ~1900 |
-| [`generated-schemas/schema_unification.from-json.graphql`](generated-schemas/schema_unification.from-json.graphql) | `schema_unification.schema.json` | Supergraph SDL from JSON | ~800 |
-| [`generated-schemas/field-name-mapping.json`](generated-schemas/field-name-mapping.json) | All schemas | camelCase ↔ snake_case mappings | N/A |
+| File                                                                                                                 | Source                           | Purpose                             | Lines |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------------------------------- | ----- |
+| [`generated-schemas/legacy_procurement.subgraph.graphql`](generated-schemas/legacy_procurement.subgraph.graphql)     | `legacy_procurement.schema.json` | Legacy Procurement GraphQL subgraph | ~100  |
+| [`generated-schemas/intake_process.subgraph.graphql`](generated-schemas/intake_process.subgraph.graphql)             | `intake_process.schema.json`     | EASi GraphQL subgraph               | ~80   |
+| [`generated-schemas/logistics_mgmt.subgraph.graphql`](generated-schemas/logistics_mgmt.subgraph.graphql)             | `logistics_mgmt.schema.json`     | Logistics Mgmt GraphQL subgraph     | ~600  |
+| [`generated-schemas/contract_data.subgraph.graphql`](generated-schemas/contract_data.subgraph.graphql)               | `contract_data.schema.json`      | Contract Data GraphQL subgraph      | ~300  |
+| [`generated-schemas/public_spending.subgraph.graphql`](generated-schemas/public_spending.subgraph.graphql)           | `public_spending.schema.json`    | USASpending GraphQL subgraph        | ~290  |
+| [`generated-schemas/schema_unification.supergraph.graphql`](generated-schemas/schema_unification.supergraph.graphql) | All subgraphs                    | Composed federated schema           | ~1900 |
+| [`generated-schemas/schema_unification.from-json.graphql`](generated-schemas/schema_unification.from-json.graphql)   | `schema_unification.schema.json` | Supergraph SDL from JSON            | ~800  |
+| [`generated-schemas/field-name-mapping.json`](generated-schemas/field-name-mapping.json)                             | All schemas                      | camelCase ↔ snake_case mappings     | N/A   |
 
 **These GraphQL schemas:**
+
 - Use camelCase naming convention
 - Are regenerated on every schema change
 - Should NOT be edited manually
@@ -329,6 +335,7 @@ See the **[📋 Key Schemas](#-key-schemas)** section above for the complete lis
 ### Quick Workflow
 
 **1. Edit JSON Schemas** (source of truth):
+
 ```bash
 # System-specific schemas
 vim src/data/legacy_procurement.schema.json
@@ -342,22 +349,26 @@ vim src/data/schema_unification.schema.json
 ```
 
 **2. Validate changes:**
+
 ```bash
 pnpm run validate:all           # JSON Schema + GraphQL SDL + sync parity
 pnpm test                        # Run test suite (215 tests)
 ```
 
 **3. Regenerate GraphQL artifacts:**
+
 ```bash
 pnpm run generate:schema:interop  # Full pipeline: subgraphs → supergraph → interop
 ```
 
 **4. Preview locally:**
+
 ```bash
 pnpm dev                         # http://localhost:3000
 ```
 
 **5. Commit:**
+
 ```bash
 git add src/data/ generated-schemas/ src/data/generated/
 git commit -m "schema: update system schemas and regenerate artifacts"
@@ -405,15 +416,14 @@ node scripts/diff-sdl-schema.mjs
 # Output: generated-metadata/schema-diff.md
 ```
 
-
 ### 📊 Generated Artifacts
 
-| Location | Purpose | Auto-Updated | Served By Website |
-|----------|---------|--------------|-------------------|
-| `generated-schemas/` | Generator outputs (SDL ↔ JSON conversions) | ✅ Yes | No |
-| `src/data/generated/` | Next.js imports | ✅ Yes | ✅ Yes (via imports) |
-| `generated-metadata/` | CI reports, diffs | ✅ Yes | No |
-| `public/data/` | Static browser assets | Manual copy | ✅ Yes (via `/data/` route) |
+| Location              | Purpose                                    | Auto-Updated | Served By Website           |
+| --------------------- | ------------------------------------------ | ------------ | --------------------------- |
+| `generated-schemas/`  | Generator outputs (SDL ↔ JSON conversions) | ✅ Yes       | No                          |
+| `src/data/generated/` | Next.js imports                            | ✅ Yes       | ✅ Yes (via imports)        |
+| `generated-metadata/` | CI reports, diffs                          | ✅ Yes       | No                          |
+| `public/data/`        | Static browser assets                      | Manual copy  | ✅ Yes (via `/data/` route) |
 
 **Key Generated Files:**
 
@@ -486,7 +496,6 @@ This section documents the canonical inputs, the generator scripts that create t
 - Add a small `scripts/publish-generated.sh` helper to copy the approved generated files into `src/data/generated/` and `public/data/` and optionally run `pnpm run validate:all` first.
 - Add a rendered SVG export of the mermaid diagrams under `docs/diagrams/` for quick browsing in the repo.
 
-
 ### V2 GraphQL with x-graphql Hints ⭐ NEW
 
 The **enhanced converter** (`scripts/generate-graphql-enhanced.mjs`) supports advanced GraphQL features through **x-graphql-\* hints** added to JSON Schema. This enables V2 schema generation with:
@@ -517,10 +526,12 @@ node scripts/generate-graphql-enhanced.mjs \
     "properties": {
       "contractId": { "x-graphql-nullable": false },
       "obligatedAmount": {
-        "x-graphql-directives": [{
-          "name": "currency",
-          "args": { "code": "USD" }
-        }]
+        "x-graphql-directives": [
+          {
+            "name": "currency",
+            "args": { "code": "USD" }
+          }
+        ]
       }
     }
   },
@@ -558,7 +569,7 @@ erDiagram
         decimal completenessScore
         datetime lastValidated
     }
-    
+
     COMMON_ELEMENTS {
         string recordId PK "FK to NORMALIZED_SCHEMA"
         string contractTitle
@@ -571,7 +582,7 @@ erDiagram
         boolean isLatest
         boolean isFunded
     }
-    
+
     CONTRACT_IDENTIFICATION {
         string piid PK
         string originalAwardPiid
@@ -581,7 +592,7 @@ erDiagram
         string descriptionOfRequirement
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     ORGANIZATION_INFO {
         string orgId PK
         string contractingAgencyCode
@@ -594,14 +605,14 @@ erDiagram
         string fundingDepartmentName
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     VENDOR_INFO {
         string vendorId PK
         string vendorName
         string vendorUei
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     PLACE_OF_PERFORMANCE {
         string perfId PK
         string streetAddress
@@ -613,7 +624,7 @@ erDiagram
         string congressionalDistrict
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     FINANCIAL_INFO {
         string finId PK
         decimal totalContractValue
@@ -624,7 +635,7 @@ erDiagram
         string reportSubmittedFiscalYear
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     BUSINESS_CLASSIFICATION {
         string bizId PK
         string naicsCode
@@ -638,7 +649,7 @@ erDiagram
         string coSizeDetermination
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     CONTRACT_CHARACTERISTICS {
         string charId PK
         string emergencyAcquisition
@@ -648,7 +659,7 @@ erDiagram
         boolean recurringUtilities
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     CONTACTS {
         string contactId PK
         string name
@@ -658,7 +669,7 @@ erDiagram
         string role
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     STATUS_INFO {
         string statusId PK
         boolean isActive
@@ -671,14 +682,14 @@ erDiagram
         date lastCarDateSigned
         string recordId FK "to COMMON_ELEMENTS"
     }
-    
+
     SYSTEM_EXTENSIONS {
         string extensionId PK
         string systemType
         json extensionData
         string recordId FK "to NORMALIZED_SCHEMA"
     }
-    
+
     Contract Data_EXTENSIONS {
         string contract_dataId PK
         string programNumber
@@ -699,7 +710,7 @@ erDiagram
         json beneficiaryTypes
         string extensionId FK "to SYSTEM_EXTENSIONS"
     }
-    
+
     Legacy Procurement_EXTENSIONS {
         string legacy_procurementId PK
         string iaPiidOrUniqueId
@@ -714,7 +725,7 @@ erDiagram
         json officeAddress
         string extensionId FK "to SYSTEM_EXTENSIONS"
     }
-    
+
     Intake Process_EXTENSIONS {
         string intake_processId PK
         string businessOwner
@@ -729,7 +740,7 @@ erDiagram
         json clinData
         string extensionId FK "to SYSTEM_EXTENSIONS"
     }
-    
+
     NORMALIZED_SCHEMA ||--|| COMMON_ELEMENTS : contains
     NORMALIZED_SCHEMA ||--|| SYSTEM_EXTENSIONS : has
     COMMON_ELEMENTS ||--|| CONTRACT_IDENTIFICATION : includes

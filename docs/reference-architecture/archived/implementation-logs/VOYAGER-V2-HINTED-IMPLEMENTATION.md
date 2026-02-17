@@ -7,9 +7,11 @@ Created a new GraphQL Voyager visualization page showcasing the x-graphql hinted
 ## Files Created
 
 ### 1. Voyager Page
+
 **File**: `src/pages/voyager-v2-hinted.tsx`
 
 **Features**:
+
 - GraphQL Voyager visualization of `schema_unification-contract_data-hinted.graphql`
 - Custom purple gradient header (distinguishes from V1/V2)
 - Info bar showing:
@@ -21,6 +23,7 @@ Created a new GraphQL Voyager visualization page showcasing the x-graphql hinted
 - Error handling and loading states
 
 **Visual Design**:
+
 - Header gradient: Purple to violet (`#667eea` to `#764ba2`)
 - Info badges with code formatting
 - Professional, modern UI matching project style
@@ -28,13 +31,16 @@ Created a new GraphQL Voyager visualization page showcasing the x-graphql hinted
 ## Files Modified
 
 ### HeroSection.tsx
+
 **Changes**:
+
 - Added new button in V2 section: "V2 x-graphql Hinted Example"
 - Grape color scheme to distinguish from other V2 buttons
 - Links to `/voyager-v2-hinted`
 - Positioned below "V2 GraphQL Schema (Draft)" button
 
 **Button Hierarchy in V2 Section**:
+
 1. V2 Data Viewer (gradient violet/pink)
 2. V2 Schema Viewer (outline violet)
 3. V2 GraphQL Schema (Draft) (light violet)
@@ -43,6 +49,7 @@ Created a new GraphQL Voyager visualization page showcasing the x-graphql hinted
 ## Purpose & Benefits
 
 ### Educational Value
+
 The hinted voyager page serves as a **teaching tool** demonstrating:
 
 1. **Interface Inheritance**: Shows `Contract` interface implemented by `IDVContract` and `Order`
@@ -53,15 +60,15 @@ The hinted voyager page serves as a **teaching tool** demonstrating:
 
 ### Comparison Points
 
-| Aspect | V1 Auto-Generated | V2 Hand-Crafted | **V2 x-graphql Hinted** |
-|--------|-------------------|-----------------|-------------------------|
-| Types | 17 types | 30 types | 10 types (focused) |
-| Interfaces | None | Few | **Contract interface** ✨ |
-| Unions | None | Few | **ContractSearchResult** ✨ |
-| Custom Scalars | Basic | Some | **DateTime, JSON** ✨ |
-| Directives | None | Few | **@currency** ✨ |
-| Focus | Full schema | Complete V2 | **Contract Data example** |
-| Purpose | Production | Production draft | **Best practices demo** |
+| Aspect         | V1 Auto-Generated | V2 Hand-Crafted  | **V2 x-graphql Hinted**     |
+| -------------- | ----------------- | ---------------- | --------------------------- |
+| Types          | 17 types          | 30 types         | 10 types (focused)          |
+| Interfaces     | None              | Few              | **Contract interface** ✨   |
+| Unions         | None              | Few              | **ContractSearchResult** ✨ |
+| Custom Scalars | Basic             | Some             | **DateTime, JSON** ✨       |
+| Directives     | None              | Few              | **@currency** ✨            |
+| Focus          | Full schema       | Complete V2      | **Contract Data example**   |
+| Purpose        | Production        | Production draft | **Best practices demo**     |
 
 ### Use Cases
 
@@ -75,6 +82,7 @@ The hinted voyager page serves as a **teaching tool** demonstrating:
 ### Key Types Visualized
 
 **Interfaces**:
+
 ```graphql
 interface Contract {
   contractId: String!
@@ -86,11 +94,13 @@ interface Contract {
 ```
 
 **Unions**:
+
 ```graphql
 union ContractSearchResult = IDVContract | Order
 ```
 
 **Implementation**:
+
 ```graphql
 type IDVContract implements Contract {
   # Inherits Contract fields
@@ -106,15 +116,16 @@ type Order implements Contract {
 ```
 
 **Query with Arguments**:
+
 ```graphql
 type Query {
   contracts(
-    piid: String,
-    vendorDuns: String,
-    status: ContractStatus,
+    piid: String
+    vendorDuns: String
+    status: ContractStatus
     limit: Int = 100
   ): [ContractSearchResult!]
-  
+
   contract(id: ID!): ContractSearchResult
   vendor(duns: String!): Vendor
 }
@@ -144,6 +155,7 @@ type Query {
 ```
 
 ### URL Structure
+
 - V1: `/voyager-v1` - Auto-generated (17 types)
 - V2: `/voyager-v2` - Hand-crafted (30 types)
 - **V2 Hinted**: `/voyager-v2-hinted` - x-graphql hints example (10 types) ⭐
@@ -151,12 +163,14 @@ type Query {
 ## Documentation Integration
 
 ### Related Documentation
+
 - [x-graphql Hints Guide](http://localhost:3000/docs/x-graphql-hints-guide)
 - [x-graphql Quick Reference](http://localhost:3000/docs/x-graphql-quick-reference)
 - [X-GraphQL Implementation](http://localhost:3000/docs/X-GRAPHQL-IMPLEMENTATION)
 - [V2 Enhancement Summary](http://localhost:3000/docs/V2-GRAPHQL-ENHANCEMENT-SUMMARY)
 
 ### Source Files
+
 - Schema: `src/data/schema_unification-contract_data-hinted.schema.json`
 - GraphQL: `public/data/schema_unification-contract_data-hinted.graphql`
 - Generator: `scripts/generate-graphql-enhanced.mjs`
@@ -164,12 +178,14 @@ type Query {
 ## Technical Details
 
 ### Implementation
+
 - **Framework**: Next.js with TypeScript
 - **Visualization**: GraphQL Voyager library
 - **Schema**: Generated from JSON Schema with x-graphql hints
 - **Introspection**: Client-side using graphql.js
 
 ### Features
+
 - ✅ Interactive graph visualization
 - ✅ Type relationships and connections
 - ✅ Field-level details
@@ -180,6 +196,7 @@ type Query {
 - ✅ Loading states
 
 ### Performance
+
 - Lazy loading of GraphQL Voyager library
 - Client-side introspection
 - Efficient schema parsing
@@ -204,6 +221,7 @@ type Query {
    - Relationship viewer
 
 ### Mobile Responsive
+
 - Stack navigation vertically on mobile
 - Adjust info badges for mobile screens
 - Maintain functionality on all devices
@@ -211,6 +229,7 @@ type Query {
 ## Success Metrics
 
 ### Completed ✅
+
 - New voyager page created and functional
 - Button added to homepage V2 section
 - Documentation links integrated
@@ -219,6 +238,7 @@ type Query {
 - Error handling implemented
 
 ### Quality Assurance
+
 - ✅ Page loads successfully
 - ✅ GraphQL schema visualizes correctly
 - ✅ Navigation links work
@@ -245,6 +265,7 @@ type Query {
 ## Future Enhancements
 
 ### Potential Additions
+
 1. Side-by-side comparison mode (V1 vs Hinted vs V2)
 2. Hint annotation overlay (show which hints were used)
 3. "Generate Your Own" tutorial flow
@@ -252,6 +273,7 @@ type Query {
 5. Performance metrics display
 
 ### Documentation Expansion
+
 1. Video walkthrough of hint usage
 2. Interactive hint builder
 3. Before/after comparison tool

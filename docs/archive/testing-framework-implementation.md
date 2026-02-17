@@ -55,6 +55,7 @@ Phase 3B: Web UI Editor (Next)
 ### Prerequisites
 
 **Rust Environment**:
+
 ```bash
 # Install Rust (if not already installed)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -67,6 +68,7 @@ curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
 
 **Node.js Environment**:
+
 ```bash
 # Install Node.js 18+ (using nvm)
 nvm install 18
@@ -79,6 +81,7 @@ node --version  # Should be >= 18.0.0
 ### Install Dependencies
 
 **Rust Converter**:
+
 ```bash
 cd converters/rust
 
@@ -96,6 +99,7 @@ cargo test --test integration_tests
 ```
 
 **Node.js Converter**:
+
 ```bash
 cd converters/node
 
@@ -238,6 +242,7 @@ Test that both converters produce identical results:
 ### Current Test Suite
 
 **Rust Tests** (`converters/rust/tests/integration_tests.rs`):
+
 - ✅ Basic type conversion (Object, Enum, Interface, Union, Input)
 - ✅ Apollo Federation directives (@key, @external, @requires, @provides, @shareable, @authenticated)
 - ✅ Field arguments with defaults
@@ -248,6 +253,7 @@ Test that both converters produce identical results:
 - ✅ Conversion statistics
 
 **Node.js Tests** (`converters/node/tests/integration.test.ts`):
+
 - ✅ Basic type conversion (Object, Enum, Interface, Union, Input)
 - ✅ Apollo Federation directives (all v2.9 directives)
 - ✅ Field arguments with defaults
@@ -259,17 +265,18 @@ Test that both converters produce identical results:
 
 ### Coverage Goals
 
-| Component | Target | Current |
-|-----------|--------|---------|
-| Rust - Line Coverage | 80% | 🚧 TBD |
-| Rust - Function Coverage | 80% | 🚧 TBD |
-| Node.js - Line Coverage | 80% | 🚧 TBD |
-| Node.js - Function Coverage | 80% | 🚧 TBD |
-| Integration Tests | 100% | ✅ 100% |
+| Component                   | Target | Current |
+| --------------------------- | ------ | ------- |
+| Rust - Line Coverage        | 80%    | 🚧 TBD  |
+| Rust - Function Coverage    | 80%    | 🚧 TBD  |
+| Node.js - Line Coverage     | 80%    | 🚧 TBD  |
+| Node.js - Function Coverage | 80%    | 🚧 TBD  |
+| Integration Tests           | 100%   | ✅ 100% |
 
 ### Running Coverage Reports
 
 **Rust**:
+
 ```bash
 # Install tarpaulin for coverage
 cargo install cargo-tarpaulin
@@ -282,6 +289,7 @@ open coverage/index.html
 ```
 
 **Node.js**:
+
 ```bash
 # Generate coverage report
 npm run test:coverage
@@ -300,6 +308,7 @@ cat coverage/coverage-summary.json
 ### Included Test Schemas
 
 **1. User Service Schema** (`converters/test-data/user-service.{json,graphql}`):
+
 - Federated entity with @key
 - Multiple field types (ID, String, Int, custom scalars)
 - Federation directives (@shareable, @authenticated)
@@ -428,7 +437,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
       - name: Install dependencies
         run: |
           cd converters/node
@@ -590,7 +599,7 @@ const GraphQLPanel = ({ sdl, onChange }) => {
 
 ```typescript
 // Load WASM module
-import init, { convert_json_to_sdl } from './wasm/converter';
+import init, { convert_json_to_sdl } from "./wasm/converter";
 
 let wasmInitialized = false;
 
@@ -599,12 +608,12 @@ export async function convertWithWasm(jsonSchema: any) {
     await init();
     wasmInitialized = true;
   }
-  
+
   const result = convert_json_to_sdl(
     JSON.stringify(jsonSchema),
-    JSON.stringify({ validate: true, prettyPrint: true })
+    JSON.stringify({ validate: true, prettyPrint: true }),
   );
-  
+
   return JSON.parse(result);
 }
 ```
@@ -616,27 +625,27 @@ const ConverterToggle = ({ mode, onChange, onConvert }) => {
   return (
     <div className="converter-controls">
       <div className="toggle">
-        <button 
+        <button
           className={mode === 'node' ? 'active' : ''}
           onClick={() => onChange('node')}
         >
           Node.js
         </button>
-        <button 
+        <button
           className={mode === 'wasm' ? 'active' : ''}
           onClick={() => onChange('wasm')}
         >
           Rust/WASM
         </button>
       </div>
-      
-      <button 
+
+      <button
         className="convert-btn"
         onClick={onConvert}
       >
         Convert →
       </button>
-      
+
       <ConversionStats />
     </div>
   );
@@ -768,6 +777,7 @@ Once all tests pass and coverage goals are met, we'll proceed to Phase 3B: Web U
 ---
 
 **Next Steps**:
+
 1. Run all tests: `cargo test && npm test`
 2. Generate coverage reports
 3. Fix any failing tests

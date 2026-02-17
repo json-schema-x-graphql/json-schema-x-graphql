@@ -16,23 +16,23 @@ Based on stakeholder requirements analysis, **GraphQL Mesh** is the optimal solu
 
 ### Critical Requirements
 
-| Requirement | Answer | Impact |
-|-------------|--------|--------|
-| **Federation** | ✅ YES - Full federation required | Eliminates: Grafserv, PostGraphile |
-| **Timeline** | Development first, production eventually | Favors: Mesh (iteration) over gqlgen (performance) |
-| **REST APIs** | 4 now → 20 eventually | Strongly favors: Mesh (declarative) |
-| **Team Skills** | Go/Rust acceptable if performance critical | Opens: gqlgen as option |
-| **Cloud.gov** | 4GB memory, 2-3 instances | No constraints: Any solution works |
+| Requirement     | Answer                                     | Impact                                             |
+| --------------- | ------------------------------------------ | -------------------------------------------------- |
+| **Federation**  | ✅ YES - Full federation required          | Eliminates: Grafserv, PostGraphile                 |
+| **Timeline**    | Development first, production eventually   | Favors: Mesh (iteration) over gqlgen (performance) |
+| **REST APIs**   | 4 now → 20 eventually                      | Strongly favors: Mesh (declarative)                |
+| **Team Skills** | Go/Rust acceptable if performance critical | Opens: gqlgen as option                            |
+| **Cloud.gov**   | 4GB memory, 2-3 instances                  | No constraints: Any solution works                 |
 
 ### High Priority Requirements
 
-| Requirement | Answer | Impact |
-|-------------|--------|--------|
-| **Schema Changes** | Very frequent (daily) | Strongly favors: Mesh (hot reload) |
-| **Validation** | YES - Production requirement | Favors: Mesh (built-in) |
-| **Authentication** | Native or bolt-on (Keycloak) | Neutral: All solutions work |
-| **Observability** | OpenTelemetry ideal | Favors: Mesh (plugin available) |
-| **Mock Strategy** | Mock server (mockforge-style) | Favors: Mesh (built-in plugin) |
+| Requirement        | Answer                        | Impact                             |
+| ------------------ | ----------------------------- | ---------------------------------- |
+| **Schema Changes** | Very frequent (daily)         | Strongly favors: Mesh (hot reload) |
+| **Validation**     | YES - Production requirement  | Favors: Mesh (built-in)            |
+| **Authentication** | Native or bolt-on (Keycloak)  | Neutral: All solutions work        |
+| **Observability**  | OpenTelemetry ideal           | Favors: Mesh (plugin available)    |
+| **Mock Strategy**  | Mock server (mockforge-style) | Favors: Mesh (built-in plugin)     |
 
 ---
 
@@ -40,19 +40,19 @@ Based on stakeholder requirements analysis, **GraphQL Mesh** is the optimal solu
 
 ### Scoring Based on YOUR Requirements
 
-| Criterion | Weight | GraphQL Mesh | gqlgen | Apollo Server |
-|-----------|--------|--------------|--------|---------------|
-| **Federation (Required)** | 5 | 5 ✅ | 4 ✅ | 5 ✅ |
-| **REST Integration (4-20 APIs)** | 5 | 5 ✅ | 4 | 4 |
-| **Development Speed (Daily changes)** | 5 | 5 ✅ | 3 | 4 |
-| **Validation (Production req)** | 4 | 4 ✅ | 3 | 3 |
-| **Mock Data (mockforge-style)** | 4 | 5 ✅ | 3 | 4 |
-| **Cloud.gov Fit (4GB budget)** | 3 | 5 ✅ | 5 ✅ | 5 ✅ |
-| **Performance** | 3 | 3 | 5 ✅ | 3 |
-| **Operational Simplicity** | 3 | 2 | 4 | 4 |
-| **Community/Support** | 2 | 3 | 4 | 5 |
-| **Learning Curve** | 2 | 3 | 2 | 4 |
-| **WEIGHTED TOTAL** | **36** | **154** | **137** | **148** |
+| Criterion                             | Weight | GraphQL Mesh | gqlgen  | Apollo Server |
+| ------------------------------------- | ------ | ------------ | ------- | ------------- |
+| **Federation (Required)**             | 5      | 5 ✅         | 4 ✅    | 5 ✅          |
+| **REST Integration (4-20 APIs)**      | 5      | 5 ✅         | 4       | 4             |
+| **Development Speed (Daily changes)** | 5      | 5 ✅         | 3       | 4             |
+| **Validation (Production req)**       | 4      | 4 ✅         | 3       | 3             |
+| **Mock Data (mockforge-style)**       | 4      | 5 ✅         | 3       | 4             |
+| **Cloud.gov Fit (4GB budget)**        | 3      | 5 ✅         | 5 ✅    | 5 ✅          |
+| **Performance**                       | 3      | 3            | 5 ✅    | 3             |
+| **Operational Simplicity**            | 3      | 2            | 4       | 4             |
+| **Community/Support**                 | 2      | 3            | 4       | 5             |
+| **Learning Curve**                    | 2      | 3            | 2       | 4             |
+| **WEIGHTED TOTAL**                    | **36** | **154**      | **137** | **148**       |
 
 **Winner: GraphQL Mesh (154/180 = 85.6%)**
 
@@ -137,12 +137,14 @@ Despite Go being acceptable and excellent performance:
 ### ✅ When to Consider gqlgen
 
 **Triggers for Migration (6+ months out):**
+
 - Schema stabilizes (weekly/monthly changes, not daily)
 - Performance becomes bottleneck (>1000 req/sec needed)
 - Team acquires Go expertise
 - Memory budget tightens (<512MB)
 
 **Migration Effort: 2-3 weeks**
+
 - Schema is shared (no change)
 - Reimplement 20 resolvers in Go
 - Port validation logic
@@ -155,6 +157,7 @@ Despite Go being acceptable and excellent performance:
 ### Phase 1: GraphQL Mesh Setup (Week 1-2)
 
 **Week 1:**
+
 - ✅ POC already created in `/dev/pocs/graphql-mesh`
 - [ ] Install dependencies: `cd dev/pocs/graphql-mesh && pnpm install`
 - [ ] Configure 4 Databricks endpoints in `.meshrc.yaml`
@@ -162,12 +165,14 @@ Despite Go being acceptable and excellent performance:
 - [ ] Verify hot reload: Change schema, see immediate update
 
 **Week 2:**
+
 - [ ] Deploy to cloud.gov: `cf push -f manifest.yml`
 - [ ] Configure environment variables (DATABRICKS_TOKEN, etc.)
 - [ ] Test health checks and logging
 - [ ] Document developer workflow
 
 **Deliverables:**
+
 - ✅ GraphQL API serving federation schema
 - ✅ 4 REST endpoints mapped and validated
 - ✅ Mock data for development
@@ -178,18 +183,21 @@ Despite Go being acceptable and excellent performance:
 ### Phase 2: Development Iteration (Months 1-3)
 
 **Goals:**
+
 - Add 4 → 10 REST endpoints as available
 - Iterate on schema daily/weekly
 - Support frontend development with mocks
 - Monitor performance/memory
 
 **Activities:**
+
 - Add new REST endpoints: Edit `.meshrc.yaml` (5 minutes per endpoint)
 - Schema changes: Edit supergraph, see in <30 seconds
 - Mock data: Toggle `ENABLE_MOCKS` env var
 - Monitor: Check `cf logs` for memory usage
 
 **Success Metrics:**
+
 - ✅ Schema change → visible in <2 minutes
 - ✅ New REST endpoint added in <1 hour
 - ✅ <512MB memory usage (well under 4GB limit)
@@ -200,18 +208,21 @@ Despite Go being acceptable and excellent performance:
 ### Phase 3: Scale REST APIs (Months 3-6)
 
 **Goals:**
+
 - Add remaining endpoints (10 → 20)
 - Implement caching (24h TTL)
 - Add authentication (Keycloak proxy)
 - Production readiness validation
 
 **Activities:**
+
 - Add 10 more REST endpoints: Update `.meshrc.yaml`
 - Configure response caching: Per-field TTL settings
 - Test with API Umbrella / Keycloak in front
 - Run load tests: Validate >500 req/sec
 
 **Success Metrics:**
+
 - ✅ 20 REST endpoints integrated
 - ✅ 24-hour cache working
 - ✅ Authentication/authorization via proxy
@@ -224,12 +235,14 @@ Despite Go being acceptable and excellent performance:
 **Decision Point:** Evaluate if gqlgen migration needed
 
 **Evaluate:**
+
 - Is performance adequate? (If YES, stay on Mesh)
 - Is memory usage acceptable? (If YES, stay on Mesh)
 - Has schema stabilized? (If NO, stay on Mesh)
 - Is team comfortable with Go? (If NO, stay on Mesh)
 
 **If Migration Needed:**
+
 1. Set up gqlgen in parallel
 2. Implement 20 resolvers in Go
 3. Run both in production (canary deployment)
@@ -237,6 +250,7 @@ Despite Go being acceptable and excellent performance:
 5. Keep Mesh for development
 
 **If Staying on Mesh:**
+
 1. Optimize configuration
 2. Add caching layers (Redis if needed)
 3. Tune memory settings
@@ -310,6 +324,7 @@ plugins:
 ```
 
 Toggle mocks:
+
 ```bash
 # Development with mocks
 export ENABLE_MOCKS=true
@@ -402,6 +417,7 @@ cf logs schema_unification-mesh --recent
 **Likelihood:** Low (you have 4GB, Mesh uses ~300-400MB)  
 **Impact:** Medium  
 **Mitigation:**
+
 - Monitor with `cf app schema_unification-mesh`
 - Optimize bundle size if needed
 - Use production builds (smaller)
@@ -414,6 +430,7 @@ cf logs schema_unification-mesh --recent
 **Likelihood:** Medium (Mesh has many options)  
 **Impact:** Medium  
 **Mitigation:**
+
 - Start with simple config (4 endpoints)
 - Document patterns in `/dev/pocs/graphql-mesh/README.md`
 - Use templates for new endpoints
@@ -426,6 +443,7 @@ cf logs schema_unification-mesh --recent
 **Likelihood:** Low (may not be needed)  
 **Impact:** High (2-3 weeks effort)  
 **Mitigation:**
+
 - Keep schema source canonical (shared)
 - Document resolver patterns
 - Plan migration early if needed
@@ -436,24 +454,28 @@ cf logs schema_unification-mesh --recent
 ## Success Criteria
 
 ### Week 1-2 (Setup)
+
 - ✅ GraphQL API deployed to cloud.gov
 - ✅ 4 Databricks endpoints integrated
 - ✅ Mock data working for development
 - ✅ Schema changes visible in <2 minutes
 
 ### Month 1-3 (Development)
+
 - ✅ 10 REST endpoints integrated
 - ✅ Daily schema iteration working
 - ✅ Frontend development unblocked
 - ✅ Memory usage <512MB
 
 ### Month 3-6 (Scale)
+
 - ✅ 20 REST endpoints integrated
 - ✅ 24-hour caching operational
 - ✅ Authentication via Keycloak working
 - ✅ Production-ready performance
 
 ### Month 6+ (Production)
+
 - ✅ Handling production traffic
 - ✅ 99.9% uptime
 - ✅ <100ms p95 latency
@@ -465,8 +487,8 @@ cf logs schema_unification-mesh --recent
 
 **Decision:** Proceed with GraphQL Mesh for development phase
 
-**Approved By:** ___________________  
-**Date:** ___________________  
+**Approved By:** ********\_\_\_********  
+**Date:** ********\_\_\_********
 
 **Next Review:** After 3 months of usage (March 2025)
 

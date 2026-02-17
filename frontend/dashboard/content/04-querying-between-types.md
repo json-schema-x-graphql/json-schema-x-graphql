@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - How types reference each other
 - Object fields that reference other types
 - Following relationships through queries
@@ -12,9 +13,10 @@
 - The difference between local and remote types
 
 **Why it matters:**
-Real data is relational. A user has posts. A post has comments. A comment has an author. GraphQL's ability to query *across* types—following relationships—is what makes it powerful. You're not just querying fields, you're *traversing a graph* of connected data.
+Real data is relational. A user has posts. A post has comments. A comment has an author. GraphQL's ability to query _across_ types—following relationships—is what makes it powerful. You're not just querying fields, you're _traversing a graph_ of connected data.
 
 **Prerequisites:**
+
 - Completed: [Module 1: Introducing Types](/learning/01-introducing-types)
 - Completed: [Module 2: Scalars, Objects, Lists](/learning/02-scalars-objects-lists)
 - Completed: [Module 3: Nullability](/learning/03-nullability)
@@ -26,20 +28,20 @@ Real data is relational. A user has posts. A post has comments. A comment has an
 
 ### What Does "Between Types" Mean?
 
-When one type contains a field that is *another type*, you can query that nested type's fields:
+When one type contains a field that is _another type_, you can query that nested type's fields:
 
 ```graphql
 # User type references Post type
 type User {
   id: ID!
   name: String!
-  posts: [Post!]!    # <-- This is a different type!
+  posts: [Post!]! # <-- This is a different type!
 }
 
 type Post {
   id: ID!
   title: String!
-  author: User!      # <-- References back to User!
+  author: User! # <-- References back to User!
 }
 ```
 
@@ -77,6 +79,7 @@ query {
 ```
 
 **What you're doing:**
+
 1. Start at User (id "123")
 2. Follow to Posts (related via user.posts)
 3. Follow to Comments (related via post.comments)
@@ -99,7 +102,7 @@ type User {
 type Post {
   id: ID!
   title: String!
-  author: User!     # <-- References User type
+  author: User! # <-- References User type
 }
 
 type Query {
@@ -108,6 +111,7 @@ type Query {
 ```
 
 **Query example:**
+
 ```graphql
 query {
   post(id: "1") {
@@ -128,8 +132,8 @@ A type can reference multiple types:
 type Post {
   id: ID!
   title: String!
-  author: User!         # Relationship to User
-  category: Category!   # Relationship to Category
+  author: User! # Relationship to User
+  category: Category! # Relationship to Category
   comments: [Comment!]! # Relationship to Comment
 }
 
@@ -139,13 +143,20 @@ type Query {
 ```
 
 **Query:**
+
 ```graphql
 query {
   post(id: "1") {
     title
-    author { name }
-    category { name }
-    comments { text }
+    author {
+      name
+    }
+    category {
+      name
+    }
+    comments {
+      text
+    }
   }
 }
 ```
@@ -158,13 +169,13 @@ Types can reference each other (create circles):
 type User {
   id: ID!
   name: String!
-  posts: [Post!]!      # User → Post
+  posts: [Post!]! # User → Post
 }
 
 type Post {
   id: ID!
   title: String!
-  author: User!        # Post → User (circle!)
+  author: User! # Post → User (circle!)
 }
 ```
 
@@ -197,7 +208,7 @@ query {
   user(id: "1") {
     posts {
       author {
-        name  # Stop here, don't ask for author.posts
+        name # Stop here, don't ask for author.posts
       }
     }
   }
@@ -223,6 +234,7 @@ type Post {
 ```
 
 **Query:**
+
 ```graphql
 query {
   user(id: "1") {
@@ -268,6 +280,7 @@ JSON Schema uses `$ref` to reference other types (similar to pointers):
 ```
 
 **What `$ref` means:**
+
 - `#/$defs/User` - Look up the definition called "User" in the same schema
 - `#` - Same document
 - `/$defs/User` - Path to the User definition
@@ -333,6 +346,7 @@ JSON Schema uses `$ref` to reference other types (similar to pointers):
 ### Conversion: Type References
 
 **GraphQL:**
+
 ```graphql
 type User {
   posts: [Post!]!
@@ -344,6 +358,7 @@ type Post {
 ```
 
 **Converts to JSON Schema:**
+
 ```json
 {
   "title": "User",
@@ -364,6 +379,7 @@ type Post {
 ```
 
 **Conversion rules:**
+
 - GraphQL type reference → JSON Schema `$ref`
 - `Type!` → `{ "$ref": "#/$defs/Type" }`
 - `[Type!]!` → Array of `$ref`
@@ -389,8 +405,8 @@ const result = await converter.convert({
   graphql: graphqlSchema,
   options: {
     includeDescriptions: true,
-    inferIds: true
-  }
+    inferIds: true,
+  },
 });
 
 // Result includes $defs for User and Post
@@ -415,6 +431,7 @@ The converter handles circular references automatically:
 ### Example 1: Blog System
 
 **GraphQL:**
+
 ```graphql
 type Post {
   id: ID!
@@ -463,12 +480,22 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "$defs": {
     "Post": {
       "type": "object",
-      "required": ["id", "title", "content", "author", "category", "tags", "comments", "createdAt"],
+      "required": [
+        "id",
+        "title",
+        "content",
+        "author",
+        "category",
+        "tags",
+        "comments",
+        "createdAt"
+      ],
       "properties": {
         "id": { "type": "string" },
         "title": { "type": "string" },
@@ -544,6 +571,7 @@ type Query {
 ```
 
 **Sample query:**
+
 ```graphql
 query {
   post(id: "1") {
@@ -568,6 +596,7 @@ query {
 ### Example 2: E-Commerce System
 
 **GraphQL:**
+
 ```graphql
 type Product {
   id: ID!
@@ -610,6 +639,7 @@ type Inventory {
 ```
 
 **Sample query:**
+
 ```graphql
 query {
   product(id: "123") {
@@ -656,6 +686,7 @@ type Post {
 ```
 
 Query all posts for a user:
+
 ```graphql
 query {
   user(id: "1") {
@@ -682,6 +713,7 @@ type Tag {
 ```
 
 Query posts with specific tag:
+
 ```graphql
 query {
   tag(id: "trending") {
@@ -732,6 +764,7 @@ type User {
 ```
 
 Query:
+
 ```graphql
 query {
   user(id: "1") {
@@ -793,14 +826,14 @@ Reference fields should clearly indicate the relationship:
 # ✅ Clear
 type Post {
   author: User!
-  reviewer: User        # different relationship
+  reviewer: User # different relationship
   tags: [Tag!]!
 }
 
 # ❌ Ambiguous
 type Post {
-  user: User!          # which user?
-  users: [User!]!      # what do these users do?
+  user: User! # which user?
+  users: [User!]! # what do these users do?
 }
 ```
 
@@ -821,7 +854,7 @@ type Post {
   comments: [Comment!]!
   category: Category!
   tags: [Tag!]!
-  relatedPosts: [Post!]!  # Too related
+  relatedPosts: [Post!]! # Too related
 }
 ```
 
@@ -898,6 +931,7 @@ type Comment {
 ```
 
 Or as text:
+
 - User ← → Article (via author/articles)
 - User ← → Comment (via author)
 - Article ← → Category (via category/articles)
@@ -910,6 +944,7 @@ Or as text:
 ### Exercise 2: Write a Query
 
 Write a GraphQL query to get:
+
 - A user with ID "123"
 - All their articles
 - For each article, the category and comments
@@ -1045,8 +1080,8 @@ All types use `$ref` to reference each other, just like GraphQL references types
 
 ```graphql
 type Post {
-  author: User!          # ← This is a type reference
-  comments: [Comment!]!  # ← This is a type reference
+  author: User! # ← This is a type reference
+  comments: [Comment!]! # ← This is a type reference
 }
 ```
 
@@ -1069,8 +1104,12 @@ type Post {
 ```json
 {
   "$defs": {
-    "User": { /* User schema */ },
-    "Comment": { /* Comment schema */ }
+    "User": {
+      /* User schema */
+    },
+    "Comment": {
+      /* Comment schema */
+    }
   }
 }
 ```
@@ -1111,12 +1150,12 @@ type Post {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| Circular infinite queries | Query never returns | Set depth limits, client stops at some level |
-| Unused type references | Missing relationships | Add reverse references (bidirectional) |
-| Missing $ref in JSON Schema | Types appear duplicated | Use `$ref` to point to shared definitions |
-| Overly deep relationships | Complex queries, performance | Limit how deep queries can go |
+| Mistake                      | Problem                          | Fix                                          |
+| ---------------------------- | -------------------------------- | -------------------------------------------- |
+| Circular infinite queries    | Query never returns              | Set depth limits, client stops at some level |
+| Unused type references       | Missing relationships            | Add reverse references (bidirectional)       |
+| Missing $ref in JSON Schema  | Types appear duplicated          | Use `$ref` to point to shared definitions    |
+| Overly deep relationships    | Complex queries, performance     | Limit how deep queries can go                |
 | Breaking circular references | Types can't reference each other | GraphQL and JSON Schema both support circles |
 
 ---
@@ -1152,7 +1191,7 @@ type Post {
 ✅ **Use $ref in JSON Schema** - `$ref: "#/$defs/Type"` points to definitions  
 ✅ **Circular references are okay** - User ↔ Post ↔ Comment is fine  
 ✅ **Protect depth** - Set limits on how deep queries can go  
-✅ **Fragments reduce repetition** - Reuse field selections with fragments  
+✅ **Fragments reduce repetition** - Reuse field selections with fragments
 
 ---
 

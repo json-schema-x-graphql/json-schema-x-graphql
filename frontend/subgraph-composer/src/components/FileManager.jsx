@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   exportSchema,
   exportAllSchemas,
   importSchemaFile,
   exportSupergraph,
   inspectSchemaFile,
-} from '../lib/fileIO';
-import './FileManager.css';
+} from "../lib/fileIO";
+import "./FileManager.css";
 
 export default function FileManager({
   schemas,
@@ -22,7 +22,7 @@ export default function FileManager({
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragActive(e.type !== 'dragleave' && e.type !== 'dragend');
+    setDragActive(e.type !== "dragleave" && e.type !== "dragend");
   };
 
   const handleDrop = async (e) => {
@@ -54,16 +54,16 @@ export default function FileManager({
         const result = await importSchemaFile(file);
 
         if (result.success) {
-          if (result.type === 'bulk' && result.schemas) {
+          if (result.type === "bulk" && result.schemas) {
             onImportSchemas(result.schemas);
-          } else if (result.type === 'single' && result.schema) {
+          } else if (result.type === "single" && result.schema) {
             onImportSchemas([result.schema]);
           }
           setImportPreview(null);
         }
       }
     } catch (error) {
-      console.error('File processing error:', error);
+      console.error("File processing error:", error);
       setImportPreview({
         success: false,
         error: error instanceof Error ? error.message : String(error),
@@ -73,7 +73,7 @@ export default function FileManager({
 
   const handleExportActive = () => {
     if (!activeSchemaId) {
-      alert('No schema selected');
+      alert("No schema selected");
       return;
     }
 
@@ -85,7 +85,7 @@ export default function FileManager({
 
   const handleExportAll = () => {
     if (schemas.length === 0) {
-      alert('No schemas to export');
+      alert("No schemas to export");
       return;
     }
     exportAllSchemas(schemas);
@@ -93,7 +93,7 @@ export default function FileManager({
 
   const handleExportSupergraph = () => {
     if (!supergraphSDL) {
-      alert('No supergraph to export');
+      alert("No supergraph to export");
       return;
     }
     exportSupergraph(supergraphSDL);
@@ -105,7 +105,7 @@ export default function FileManager({
         <h4>📥 Import Schemas</h4>
 
         <div
-          className={`dropzone ${dragActive ? 'active' : ''}`}
+          className={`dropzone ${dragActive ? "active" : ""}`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
@@ -114,9 +114,7 @@ export default function FileManager({
           <div className="dropzone-content">
             <div className="dropzone-icon">📁</div>
             <p>Drag JSON schema files here</p>
-            <p className="dropzone-hint">
-              or click to browse
-            </p>
+            <p className="dropzone-hint">or click to browse</p>
           </div>
           <input
             ref={fileInputRef}
@@ -129,7 +127,7 @@ export default function FileManager({
 
         {importPreview && (
           <div
-            className={`import-preview ${importPreview.success ? 'success' : 'error'}`}
+            className={`import-preview ${importPreview.success ? "success" : "error"}`}
           >
             {importPreview.success ? (
               <>
@@ -141,7 +139,7 @@ export default function FileManager({
                     <strong>File:</strong> {importPreview.filename}
                   </p>
                   <p>
-                    <strong>Size:</strong>{' '}
+                    <strong>Size:</strong>{" "}
                     {(importPreview.size / 1024).toFixed(2)} KB
                   </p>
                   <p>

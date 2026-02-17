@@ -35,22 +35,24 @@ The top-level `manifest.json` documents entry points, commands, and packaging me
 
 ## Node / TypeScript Converter
 
-| Item            | Value                                                     |
-|-----------------|-----------------------------------------------------------|
-| Package name    | `@json-schema-x-graphql/core`                             |
-| Entry points    | `src/index.ts` → `dist/converter.js` (+ `converter.d.ts`) |
-| Build           | `npm run --prefix converters/node build`                  |
-| Tests           | `npm run --prefix converters/node test`                   |
-| Peer deps       | `graphql@^16.8.1`                                         |
-| Publishing      | `npm publish` (after `npm run build`)                     |
+| Item         | Value                                                     |
+| ------------ | --------------------------------------------------------- |
+| Package name | `@json-schema-x-graphql/core`                             |
+| Entry points | `src/index.ts` → `dist/converter.js` (+ `converter.d.ts`) |
+| Build        | `npm run --prefix converters/node build`                  |
+| Tests        | `npm run --prefix converters/node test`                   |
+| Peer deps    | `graphql@^16.8.1`                                         |
+| Publishing   | `npm publish` (after `npm run build`)                     |
 
 Key features:
+
 - Deep `$ref` traversal with circular reference protection.
 - Deterministic SDL generation (field-order preservation toggles, description control, federation metadata).
 - Reusable converter API exported via `src/index.ts`.
 - Jest test suite colocated under `src/` (excluded from `tsc` output).
 
 When extracting to a standalone repo:
+
 1. Copy `converters/node` into a new root.
 2. Bring over the shared `jest.config.js` or create a local equivalent.
 3. Reference the `manifest.json` entry to recreate scripts and entry points.
@@ -60,23 +62,25 @@ When extracting to a standalone repo:
 
 ## Rust Converter
 
-| Item            | Value                                                                  |
-|-----------------|------------------------------------------------------------------------|
-| Crate name      | `json-schema-graphql-converter`                                        |
-| Workspace entry | `converters/rust/Cargo.toml`                                           |
-| Build           | `cargo build --release`                                                |
-| Tests           | `cargo test` / `cargo test --features wasm`                            |
-| Linting         | `cargo clippy --all-targets --all-features`                            |
-| WASM build      | `wasm-pack build --target web --release` (outputs to `pkg/`)           |
-| npm wrapper     | `converters/rust/pkg/package.json` for publishing the WASM bundle      |
+| Item            | Value                                                             |
+| --------------- | ----------------------------------------------------------------- |
+| Crate name      | `json-schema-graphql-converter`                                   |
+| Workspace entry | `converters/rust/Cargo.toml`                                      |
+| Build           | `cargo build --release`                                           |
+| Tests           | `cargo test` / `cargo test --features wasm`                       |
+| Linting         | `cargo clippy --all-targets --all-features`                       |
+| WASM build      | `wasm-pack build --target web --release` (outputs to `pkg/`)      |
+| npm wrapper     | `converters/rust/pkg/package.json` for publishing the WASM bundle |
 
 Highlights:
+
 - Native Rust library with comprehensive `$ref` handling and validation.
 - Example binaries in `examples/` for CLI-style conversions.
 - `pkg/` contains the wasm-bindgen output consumed by the top-level JS package.
 - `deny.toml`, fuzzing harnesses, and coverage scripts included for hardening.
 
 To relocate this converter:
+
 1. Copy `converters/rust` into a new repository root.
 2. Preserve the existing crate name/version to keep compatibility with downstream users.
 3. If publishing the WASM bundle separately, keep `pkg/` under source control or rebuild via `wasm-pack`.

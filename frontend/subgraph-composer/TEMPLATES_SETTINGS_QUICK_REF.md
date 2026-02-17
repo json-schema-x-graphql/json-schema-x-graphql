@@ -8,6 +8,7 @@ Load templates directly in the UI:
 
 **Button Location:** "📋 Template" in Schema Manager sidebar  
 **Categories:**
+
 - Basic Types (2): Scalars, Custom Scalars
 - Enums (1): Constrained Values
 - Collections (1): Arrays & Lists
@@ -23,6 +24,7 @@ Load templates directly in the UI:
 **Persists:** Automatically to localStorage
 
 #### Converter Tab
+
 - Validate Schemas
 - Include Descriptions
 - Apollo Federation Support
@@ -30,11 +32,13 @@ Load templates directly in the UI:
 - Naming Convention
 
 #### UI & Display Tab
+
 - Font Size (slider)
 - Dark Mode (toggle)
 - Show Statistics (toggle)
 
 #### Features Tab
+
 - Auto-Compose on Generate
 - Auto-Format SDL
 - Show Advanced Options
@@ -43,43 +47,46 @@ Load templates directly in the UI:
 
 ## 📝 Key Files
 
-| File | Purpose | Lines |
-|------|---------|-------|
-| `src/lib/templates.js` | 15 curated templates | 850+ |
-| `src/hooks/useSettings.js` | Settings state management | 70 |
-| `src/components/SettingsPanel.jsx` | Settings UI | 200+ |
-| `src/components/SettingsPanel.css` | Settings styling | 280+ |
-| `src/App.jsx` | Integration | ±5 |
-| `src/App.css` | Modal styling | ±50 |
-| `src/hooks/useSubgraphGenerator.js` | Options support | ±5 |
+| File                                | Purpose                   | Lines |
+| ----------------------------------- | ------------------------- | ----- |
+| `src/lib/templates.js`              | 15 curated templates      | 850+  |
+| `src/hooks/useSettings.js`          | Settings state management | 70    |
+| `src/components/SettingsPanel.jsx`  | Settings UI               | 200+  |
+| `src/components/SettingsPanel.css`  | Settings styling          | 280+  |
+| `src/App.jsx`                       | Integration               | ±5    |
+| `src/App.css`                       | Modal styling             | ±50   |
+| `src/hooks/useSubgraphGenerator.js` | Options support           | ±5    |
 
 ---
 
 ## 🚀 How to Use
 
 ### Loading a Template
+
 ```javascript
 // UI: Click "📋 Template" button → Select template → Auto-loads with example content
 // The template provides complete JSON Schema with x-graphql extensions
 ```
 
 ### Configuring Settings
+
 ```javascript
 // UI: Click ⚙️ button → Configure options → Click Save
 // Settings apply immediately to new conversions
 ```
 
 ### Using Settings in Code
+
 ```javascript
 import { useSettings } from './hooks/useSettings';
 
 function MyComponent() {
   const { settings, getConverterOptions } = useSettings();
-  
+
   // Pass to converter
   const options = getConverterOptions();
   await generateSubgraph(schema, id, options);
-  
+
   // Converter respects: validate, descriptions, federation, naming
 }
 ```
@@ -89,33 +96,38 @@ function MyComponent() {
 ## 📊 Template Examples
 
 ### Basic Scalars
+
 Shows String, Int, Float, Boolean, ID with validation
 
 ### E-Commerce
+
 Complete product with:
+
 - Enums (status, currency)
 - Nested objects (stock, images)
 - Arrays (reviews, categories)
 - Scalars (price, dates)
 
 ### Federation Patterns
+
 Shows @key, @extends, @external, @shareable directives
 
 ### Pagination
+
 Demonstrates query arguments and result metadata
 
 ---
 
 ## 🔧 Settings Impact
 
-| Setting | Effect |
-|---------|--------|
-| `validate` | Validates schemas before conversion |
-| `descriptions` | Includes description fields in SDL |
-| `federation` | Enables @key, @extends, etc. |
-| `federationVersion` | Target Apollo Federation version |
-| `naming` | Field name transformation |
-| `autoCompose` | Auto-compose after generation |
+| Setting             | Effect                              |
+| ------------------- | ----------------------------------- |
+| `validate`          | Validates schemas before conversion |
+| `descriptions`      | Includes description fields in SDL  |
+| `federation`        | Enables @key, @extends, etc.        |
+| `federationVersion` | Target Apollo Federation version    |
+| `naming`            | Field name transformation           |
+| `autoCompose`       | Auto-compose after generation       |
 
 ---
 
@@ -126,6 +138,7 @@ Settings saved to: `localStorage['subgraph-composer-settings']`
 Format: JSON object with 8 keys
 
 Example:
+
 ```json
 {
   "validate": true,
@@ -151,7 +164,7 @@ Example:
 ✅ Smooth animations  
 ✅ No breaking changes  
 ✅ All 92 tests passing  
-✅ Production-ready code  
+✅ Production-ready code
 
 ---
 

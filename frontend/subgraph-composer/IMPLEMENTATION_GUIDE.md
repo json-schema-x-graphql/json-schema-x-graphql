@@ -76,20 +76,23 @@ Example: Add schema import from file
 
 ```jsx
 // In useSchemaManager.js
-const importSchemaFromFile = useCallback((file) => {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    try {
-      const content = e.target.result;
-      const schema = JSON.parse(content);
-      const newSchema = addSchema(JSON.stringify(schema, null, 2));
-      setActiveSchemaId(newSchema.id);
-    } catch (error) {
-      alert(`Failed to import: ${error.message}`);
-    }
-  };
-  reader.readAsText(file);
-}, [addSchema, setActiveSchemaId]);
+const importSchemaFromFile = useCallback(
+  (file) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target.result;
+        const schema = JSON.parse(content);
+        const newSchema = addSchema(JSON.stringify(schema, null, 2));
+        setActiveSchemaId(newSchema.id);
+      } catch (error) {
+        alert(`Failed to import: ${error.message}`);
+      }
+    };
+    reader.readAsText(file);
+  },
+  [addSchema, setActiveSchemaId],
+);
 ```
 
 ### Adding Converter Options
@@ -98,14 +101,14 @@ const importSchemaFromFile = useCallback((file) => {
 // In App.jsx - Add options panel
 const [converterOptions, setConverterOptions] = useState({
   includeDescriptions: true,
-  federationVersion: 'AUTO',
+  federationVersion: "AUTO",
 });
 
 // Pass to useSubgraphGenerator:
 const result = await generateSubgraph(
   JSON.parse(schema.content),
   schema.id,
-  converterOptions
+  converterOptions,
 );
 ```
 
@@ -116,6 +119,7 @@ const result = await generateSubgraph(
 ### Current Status: ✅ Specification & Foundation Complete
 
 The implementation provides:
+
 - ✅ Project structure with Vite + React
 - ✅ Schema management (add, edit, remove, rename)
 - ✅ Minimal CodeMirror editor (lazy-loaded)
@@ -130,14 +134,16 @@ The implementation provides:
 ### Next Steps
 
 1. **Integrate Real Converter Library**
+
    ```bash
    # Add to package.json
    npm install ../../../converters/node/dist
    ```
 
    Then in `src/lib/converter.js`:
+
    ```javascript
-   import { jsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+   import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
    ```
 
 2. **Enhance Composition Algorithm**
@@ -236,6 +242,7 @@ VITE_CONVERTER_ENDPOINT=http://localhost:3000/convert
 ## Troubleshooting
 
 ### "Module not found" Error
+
 ```bash
 # Reinstall dependencies
 rm -rf node_modules package-lock.json
@@ -243,6 +250,7 @@ npm install
 ```
 
 ### Editor not appearing
+
 - Check browser console for errors
 - Ensure CodeMirror dependencies are installed:
   ```bash
@@ -250,6 +258,7 @@ npm install
   ```
 
 ### Composition failing
+
 - Check JSON Schema validity: Use "Validate" button
 - Look for circular references in properties
 - Check converter logs in browser DevTools
@@ -326,6 +335,7 @@ CMD ["npm", "run", "preview"]
 ## Support & Feedback
 
 For issues or feature requests:
+
 1. Check existing issues in repository
 2. Create detailed bug report with reproduction steps
 3. Include browser version and console errors

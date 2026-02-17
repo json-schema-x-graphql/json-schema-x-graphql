@@ -14,6 +14,7 @@
 This guide documents the `x-graphql-*` extension properties used in the Enterprise Schema Unification Forest JSON Schema to preserve GraphQL-specific metadata and enable automated GraphQL SDL generation.
 
 **Purpose**: Bridge JSON Schema (canonical) and GraphQL SDL (generated) while maintaining:
+
 - Rich GraphQL type system features (unions, enums, interfaces)
 - API-specific operations (queries, mutations, subscriptions)
 - Relationships and resolvers
@@ -52,6 +53,7 @@ x-graphql-{concept}
 ```
 
 Examples:
+
 - `x-graphql-enum` - Enum type metadata
 - `x-graphql-union` - Union type definition
 - `x-graphql-required` - Override required status for GraphQL
@@ -72,10 +74,11 @@ Override the generated GraphQL type name or add type-level metadata.
 ```json
 {
   "x-graphql-type": {
-    "name": "string",           // GraphQL type name (optional)
-    "description": "string",    // Type description (optional)
-    "implements": ["string"],   // Interfaces implemented (optional)
-    "directives": [             // GraphQL directives (optional)
+    "name": "string", // GraphQL type name (optional)
+    "description": "string", // Type description (optional)
+    "implements": ["string"], // Interfaces implemented (optional)
+    "directives": [
+      // GraphQL directives (optional)
       {
         "name": "string",
         "args": {}
@@ -141,13 +144,14 @@ Define GraphQL enum with custom value names and descriptions.
 ```json
 {
   "x-graphql-enum": {
-    "name": "string",           // Enum type name (required)
-    "description": "string",    // Enum description (optional)
-    "values": {                 // Value mappings (required)
+    "name": "string", // Enum type name (required)
+    "description": "string", // Enum description (optional)
+    "values": {
+      // Value mappings (required)
       "json-value": {
         "name": "GRAPHQL_NAME", // GraphQL enum value (required)
         "description": "string", // Value description (optional)
-        "deprecated": "string"   // Deprecation reason (optional)
+        "deprecated": "string" // Deprecation reason (optional)
       }
     }
   }
@@ -201,17 +205,17 @@ enum ContactRole {
   Primary contact for the contract
   """
   PRIMARY
-  
+
   """
   Technical point of contact
   """
   TECHNICAL
-  
+
   """
   Administrative contact
   """
   ADMINISTRATIVE
-  
+
   """
   Government contracting officer
   """
@@ -232,10 +236,10 @@ Define GraphQL union types for polymorphic relationships.
 ```json
 {
   "x-graphql-union": {
-    "name": "string",           // Union type name (required)
-    "description": "string",    // Union description (optional)
-    "types": ["string"],        // Member types (required)
-    "discriminator": "string"   // JSON discriminator field (optional)
+    "name": "string", // Union type name (required)
+    "description": "string", // Union description (optional)
+    "types": ["string"], // Member types (required)
+    "discriminator": "string" // JSON discriminator field (optional)
   }
 }
 ```
@@ -250,7 +254,12 @@ Define GraphQL union types for polymorphic relationships.
       "x-graphql-union": {
         "name": "SystemExtension",
         "description": "Union of all system-specific extensions",
-        "types": ["Contract DataExtension", "AssistExtension", "EasiExtension", "Logistics MgmtExtension"],
+        "types": [
+          "Contract DataExtension",
+          "AssistExtension",
+          "EasiExtension",
+          "Logistics MgmtExtension"
+        ],
         "discriminator": "systemType"
       },
       "oneOf": [
@@ -285,7 +294,7 @@ Map JSON Schema format to GraphQL custom scalar.
 
 ```json
 {
-  "x-graphql-scalar": "string"  // GraphQL scalar name
+  "x-graphql-scalar": "string" // GraphQL scalar name
 }
 ```
 
@@ -378,17 +387,17 @@ type SystemMetadata {
   Last modification timestamp
   """
   lastModified: DateTime
-  
+
   """
   Effective date
   """
   effectiveDate: Date
-  
+
   """
   Dollar amount
   """
   amount: Decimal
-  
+
   """
   Arbitrary metadata
   """
@@ -454,17 +463,15 @@ type SystemMetadata {
   """
   Schema version
   """
-  schemaVersion: String!  # Required due to x-graphql-required
-  
+  schemaVersion: String! # Required due to x-graphql-required
   """
   Last modification timestamp
   """
-  lastModified: DateTime!  # Required due to x-graphql-required
-  
+  lastModified: DateTime! # Required due to x-graphql-required
   """
   Optional data quality metrics
   """
-  dataQuality: JSON  # Optional (no x-graphql-required)
+  dataQuality: JSON # Optional (no x-graphql-required)
 }
 ```
 
@@ -481,9 +488,10 @@ Define GraphQL interface implemented by types.
 ```json
 {
   "x-graphql-interface": {
-    "name": "string",           // Interface name (required)
-    "description": "string",    // Interface description (optional)
-    "fields": {                 // Interface fields (required)
+    "name": "string", // Interface name (required)
+    "description": "string", // Interface description (optional)
+    "fields": {
+      // Interface fields (required)
       "fieldName": {
         "type": "string",
         "description": "string"
@@ -563,18 +571,19 @@ Define custom field behavior, arguments, and resolver configuration.
 ```json
 {
   "x-graphql-field": {
-    "name": "string",           // Field name override (optional)
-    "type": "string",           // GraphQL type override (optional)
-    "description": "string",    // Field description (optional)
-    "args": {                   // Field arguments (optional)
+    "name": "string", // Field name override (optional)
+    "type": "string", // GraphQL type override (optional)
+    "description": "string", // Field description (optional)
+    "args": {
+      // Field arguments (optional)
       "argName": {
         "type": "string",
         "description": "string",
         "default": "any"
       }
     },
-    "resolver": "string",       // Resolver function name (optional)
-    "deprecated": "string"      // Deprecation reason (optional)
+    "resolver": "string", // Resolver function name (optional)
+    "deprecated": "string" // Deprecation reason (optional)
   }
 }
 ```
@@ -632,7 +641,7 @@ Define custom field behavior, arguments, and resolver configuration.
 type Contract {
   id: String
   referencedPiid: String
-  
+
   """
   Fetch related contracts
   """
@@ -641,13 +650,13 @@ type Contract {
     Number of contracts to return
     """
     first: Int = 10
-    
+
     """
     Cursor for pagination
     """
     after: String
   ): [Contract!]
-  
+
   """
   Old field
   """
@@ -811,7 +820,7 @@ type Query {
     """
     id: ID!
   ): Contract
-  
+
   """
   Paginated list of contracts with filtering
   """
@@ -820,23 +829,23 @@ type Query {
     Number of contracts to return
     """
     first: Int = 10
-    
+
     """
     Cursor for pagination
     """
     after: String
-    
+
     """
     Filter criteria
     """
     filter: ContractFilter
-    
+
     """
     Ordering criteria
     """
     orderBy: ContractOrderBy
   ): ContractConnection!
-  
+
   """
   Full-text search for contracts
   """
@@ -845,7 +854,7 @@ type Query {
     Search query
     """
     query: String!
-    
+
     limit: Int = 20
   ): [Contract!]!
 }
@@ -859,13 +868,13 @@ type Mutation {
     System to ingest from (Contract Data, Legacy Procurement, Intake Process, Logistics Mgmt)
     """
     system: SystemType!
-    
+
     """
     Whether to perform full refresh
     """
     fullRefresh: Boolean = false
   ): Boolean!
-  
+
   """
   Update contract metadata
   """
@@ -874,7 +883,7 @@ type Mutation {
     Contract ID
     """
     id: ID!
-    
+
     """
     Metadata updates
     """
@@ -1031,7 +1040,7 @@ input ContractMetadataInput {
   "$id": "https://github.com/GSA-TTS/enterprise-schema-unification/schemas/contract-v2",
   "title": "Enterprise Schema Unification Forest Contract Schema",
   "description": "Unified federal contract data schema",
-  
+
   "x-graphql-scalars": {
     "DateTime": {
       "description": "ISO 8601 date-time string"
@@ -1043,7 +1052,7 @@ input ContractMetadataInput {
       "description": "High-precision decimal"
     }
   },
-  
+
   "x-graphql-operations": {
     "queries": {
       "contract": {
@@ -1071,7 +1080,7 @@ input ContractMetadataInput {
       }
     }
   },
-  
+
   "definitions": {
     "ContactRole": {
       "type": "string",
@@ -1086,29 +1095,44 @@ input ContractMetadataInput {
         }
       }
     },
-    
+
     "SystemType": {
       "type": "string",
-      "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"],
+      "enum": [
+        "Contract Data",
+        "Legacy Procurement",
+        "Intake Process",
+        "Logistics Mgmt"
+      ],
       "x-graphql-enum": {
         "name": "SystemType",
         "values": {
-          "Contract Data": { "name": "Contract Data", "description": "Federal Procurement Data System" },
-          "Legacy Procurement": { "name": "Legacy Procurement", "description": "Award System for Streamlined IT Transactions" },
-          "Intake Process": { "name": "Intake Process", "description": "Enterprise Acquisition System for Infrastructure" },
-          "Logistics Mgmt": { "name": "Logistics Mgmt", "description": "Contract Award Lifecycle Management" }
+          "Contract Data": {
+            "name": "Contract Data",
+            "description": "Federal Procurement Data System"
+          },
+          "Legacy Procurement": {
+            "name": "Legacy Procurement",
+            "description": "Award System for Streamlined IT Transactions"
+          },
+          "Intake Process": {
+            "name": "Intake Process",
+            "description": "Enterprise Acquisition System for Infrastructure"
+          },
+          "Logistics Mgmt": {
+            "name": "Logistics Mgmt",
+            "description": "Contract Award Lifecycle Management"
+          }
         }
       }
     },
-    
+
     "Contract": {
       "type": "object",
       "description": "Federal contract record",
       "x-graphql-type": {
         "implements": ["Node"],
-        "directives": [
-          { "name": "cacheControl", "args": { "maxAge": 300 } }
-        ]
+        "directives": [{ "name": "cacheControl", "args": { "maxAge": 300 } }]
       },
       "properties": {
         "id": {
@@ -1126,7 +1150,7 @@ input ContractMetadataInput {
         }
       }
     },
-    
+
     "SystemMetadata": {
       "type": "object",
       "properties": {
@@ -1154,6 +1178,7 @@ input ContractMetadataInput {
 ### When to Use Extensions
 
 ✅ **DO use extensions for**:
+
 - Enum value naming (SCREAMING_SNAKE_CASE vs kebab-case)
 - Union types (JSON Schema uses oneOf)
 - GraphQL operations (Query/Mutation/Subscription)
@@ -1163,6 +1188,7 @@ input ContractMetadataInput {
 - Pagination patterns
 
 ❌ **DON'T use extensions for**:
+
 - Simple type mappings (string → String)
 - Descriptions (use JSON Schema description)
 - Basic required fields (use JSON Schema required array)
@@ -1171,6 +1197,7 @@ input ContractMetadataInput {
 ### Validation
 
 Always validate:
+
 1. JSON Schema is valid (ajv)
 2. Extensions follow schema
 3. Referenced types exist
@@ -1196,7 +1223,9 @@ Document extensions in schema:
       "description": "Role classification. Uses x-graphql-enum for SCREAMING_SNAKE_CASE values.",
       "x-graphql-enum": {
         "name": "ContactRole",
-        "values": { /* ... */ }
+        "values": {
+          /* ... */
+        }
       }
     }
   }
@@ -1206,6 +1235,7 @@ Document extensions in schema:
 ### Versioning
 
 When schema evolves:
+
 1. Add new extensions
 2. Deprecate old fields
 3. Maintain backward compatibility
@@ -1231,6 +1261,7 @@ When schema evolves:
 **Problem**: Extension ignored during generation
 
 **Solution**: Check:
+
 - Extension name spelling
 - Extension placement (root vs definition vs property)
 - Generator version supports extension
@@ -1241,6 +1272,7 @@ When schema evolves:
 **Problem**: Generated GraphQL doesn't match expectations
 
 **Solution**:
+
 - Review extension configuration
 - Check for conflicting extensions
 - Validate JSON Schema structure
@@ -1251,6 +1283,7 @@ When schema evolves:
 **Problem**: Types reference each other
 
 **Solution**:
+
 - Use $ref for circular types
 - Ensure all types are in definitions
 - Check for infinite recursion
@@ -1261,20 +1294,20 @@ When schema evolves:
 
 ### All Extensions
 
-| Extension | Level | Purpose |
-|-----------|-------|---------|
-| `x-graphql-type` | Definition | Type metadata and interfaces |
-| `x-graphql-enum` | Definition | Enum configuration |
-| `x-graphql-union` | Definition | Union type definition |
-| `x-graphql-interface` | Definition | Interface definition |
-| `x-graphql-scalar` | Property | Custom scalar mapping |
-| `x-graphql-required` | Property | Required override |
-| `x-graphql-field` | Property | Field configuration |
-| `x-graphql-input` | Definition | Input type mapping |
-| `x-graphql-operations` | Root | Query/Mutation/Subscription |
-| `x-graphql-scalars` | Root | Scalar definitions |
-| `x-graphql-pagination` | Root | Pagination configuration |
-| `x-graphql-relationships` | Definition | Type relationships |
+| Extension                 | Level      | Purpose                      |
+| ------------------------- | ---------- | ---------------------------- |
+| `x-graphql-type`          | Definition | Type metadata and interfaces |
+| `x-graphql-enum`          | Definition | Enum configuration           |
+| `x-graphql-union`         | Definition | Union type definition        |
+| `x-graphql-interface`     | Definition | Interface definition         |
+| `x-graphql-scalar`        | Property   | Custom scalar mapping        |
+| `x-graphql-required`      | Property   | Required override            |
+| `x-graphql-field`         | Property   | Field configuration          |
+| `x-graphql-input`         | Definition | Input type mapping           |
+| `x-graphql-operations`    | Root       | Query/Mutation/Subscription  |
+| `x-graphql-scalars`       | Root       | Scalar definitions           |
+| `x-graphql-pagination`    | Root       | Pagination configuration     |
+| `x-graphql-relationships` | Definition | Type relationships           |
 
 ### Generator Support
 

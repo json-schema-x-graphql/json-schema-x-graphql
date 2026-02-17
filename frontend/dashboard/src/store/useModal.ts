@@ -12,7 +12,7 @@ const initialStates: ModalState = modals.reduce((acc, modal) => {
   return acc;
 }, {} as ModalState);
 
-export const useModal = create<ModalState & ModalActions>()(set => ({
+export const useModal = create<ModalState & ModalActions>()((set) => ({
   ...initialStates,
   setVisible: (name, open) => {
     set({ [name]: open });

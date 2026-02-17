@@ -14,7 +14,6 @@ http://localhost:4180/oauth2/start?rd=http://localhost:8888/
 
 1. The request will redirect to the Keycloak login page for the `ttse` realm.
    Use the test user from the realm export:
-
    - Username: testuser
    - Password: password
 
@@ -23,6 +22,7 @@ http://localhost:4180/oauth2/start?rd=http://localhost:8888/
    (cookies stored in a cookie jar):
 
 ---
+
 # Authentication
 
 Manual demo login (quick test)
@@ -41,7 +41,6 @@ http://localhost:4180/oauth2/start?rd=http://localhost:8888/
 
 1. The request will redirect to the Keycloak login page for the `ttse` realm.
    Use the test user from the realm export:
-
    - Username: `testuser`
    - Password: `password`
 
@@ -245,11 +244,11 @@ urn:gov:gsa:openidconnect.profiles:sp:sso:agency_name:app_name
 ## How to use this with Keycloak + Login.gov (reference)
 
 1. In Keycloak, when you configure the Login.gov Identity Provider, set the
-   *Client ID* (or Issuer field shown in some Keycloak plugins) to the exact
+   _Client ID_ (or Issuer field shown in some Keycloak plugins) to the exact
    URN you will register with Login.gov.
 
-1. In Login.gov's client registration, use the same URN in the *Client ID /
-   Issuer* field. Login.gov expects the public certificate (x5c) for any
+1. In Login.gov's client registration, use the same URN in the _Client ID /
+   Issuer_ field. Login.gov expects the public certificate (x5c) for any
    Private Key JWT client authentication; extract the Keycloak realm certs
    (use the endpoint below and copy the first value of the `x5c` array):
 
@@ -278,4 +277,3 @@ https://{KEYCLOAK_HOST}/realms/{realm}/protocol/openid-connect/certs
 - For production, ensure TLS is enforced and the OIDC issuer is a trusted
   provider (Login.gov or a managed Keycloak instance configured with Login.gov
   as a federated IdP).
-

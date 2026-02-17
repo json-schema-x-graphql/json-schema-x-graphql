@@ -9,10 +9,11 @@ Accepted
 ## Context
 
 In Apollo Federation compositions with multiple subgraphs, there is a clear distinction between:
+
 - **The base entity subgraph** (owner): Defines the root type with @key directive
 - **Extending subgraphs**: Use @extends to add fields to the owner type
 
-To make this relationship explicit and enforceable at the schema metadata level, we needed a naming convention for the x-graphql-* extensions that differentiates between the owner and extending subgraphs.
+To make this relationship explicit and enforceable at the schema metadata level, we needed a naming convention for the x-graphql-\* extensions that differentiates between the owner and extending subgraphs.
 
 Previously, all subgraphs were using `x-graphql-supergraph-*` metadata, which made it impossible to distinguish roles and didn't enforce the constraint that only ONE subgraph should be the base entity.
 
@@ -21,13 +22,16 @@ Previously, all subgraphs were using `x-graphql-supergraph-*` metadata, which ma
 Establish a strict naming convention for federation metadata:
 
 ### Supergraph Namespace (Owner Only)
+
 **Used by exactly ONE subgraph** - the base entity owner subgraph:
+
 - `x-graphql-supergraph-name`: Unique subgraph identifier
 - `x-graphql-supergraph-type`: Must be `"base-entity"`
 - `x-graphql-supergraph-entity`: Entity name for federation (e.g., "User")
 - `x-graphql-supergraph-query-root`: Must be `true` for owner subgraphs
 
 Example:
+
 ```json
 {
   "x-graphql-supergraph-name": "users-service",
@@ -38,13 +42,16 @@ Example:
 ```
 
 ### Subgraph Namespace (Extending Only)
+
 **Used by ALL extending subgraphs** - those that use @extends:
+
 - `x-graphql-subgraph-name`: Unique subgraph identifier
 - `x-graphql-subgraph-type`: Must be `"entity-extending"` or `"utility"`
 - `x-graphql-subgraph-entity`: Entity name being extended (e.g., "User")
 - `x-graphql-subgraph-query-root`: Must be `false` (or omitted)
 
 Example:
+
 ```json
 {
   "x-graphql-subgraph-name": "user-status-service",
@@ -90,6 +97,7 @@ The `validateSubgraphNaming()` function enforces:
 ## Rationale
 
 This naming convention provides:
+
 1. **Clarity** - Immediately distinguishes owner from extending subgraphs
 2. **Validation** - Enables enforcing the "only 1 base entity" rule
 3. **Scalability** - Supports complex multi-subgraph compositions

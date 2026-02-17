@@ -3,7 +3,7 @@
 **Status:** Accepted  
 **Date:** 2024-12-01  
 **Authors:** Development Team  
-**Supersedes:** None  
+**Supersedes:** None
 
 ## Context
 
@@ -14,6 +14,7 @@ The Schema Unification Forest project integrates JSON Schema (database/validatio
 The project uses three distinct naming conventions across different contexts:
 
 1. **`snake_case`** - JSON Schema property names (database/validation domain)
+
    ```json
    {
      "properties": {
@@ -24,6 +25,7 @@ The project uses three distinct naming conventions across different contexts:
    ```
 
 2. **`camelCase`** - GraphQL SDL field names (API domain)
+
    ```graphql
    type User {
      userId: ID!
@@ -47,6 +49,7 @@ The project uses three distinct naming conventions across different contexts:
 ### Why Three Conventions?
 
 **snake_case for JSON Schema (Database Domain):**
+
 - Standard in PostgreSQL, MySQL, and most database systems
 - Common in Python, Ruby, and backend validation tooling
 - Used by government data standards (Contract Data, Unified Model, Databricks)
@@ -54,6 +57,7 @@ The project uses three distinct naming conventions across different contexts:
 - Canonical source schema is `src/data/schema_unification.schema.json` (snake_case)
 
 **camelCase for GraphQL SDL (API Domain):**
+
 - GraphQL community standard (Apollo, The Guild, GraphQL Foundation)
 - JavaScript/TypeScript frontend convention
 - Matches JSON response expectations in browsers
@@ -61,6 +65,7 @@ The project uses three distinct naming conventions across different contexts:
 - Generated SDL is `generated-schemas/schema_unification.from-json.graphql` (camelCase)
 
 **hyphen-case for Extension Metadata:**
+
 - JSON Schema extension specification uses hyphenated prefixes (`x-*`)
 - Avoids collision with standard JSON Schema keywords (no `xGraphql*`)
 - Clear visual distinction from domain fields
@@ -95,12 +100,14 @@ The project uses three distinct naming conventions across different contexts:
 **Convention:** `snake_case`
 
 **Rules:**
+
 - All object properties in JSON Schema use snake_case
 - Applies to: `src/data/schema_unification.schema.json`, `src/data/legacy_procurement.schema.json`, etc.
 - Required properties listed in `required` array use snake_case names
 - `$ref` pointers use snake_case: `"$ref": "#/$defs/contract_award"`
 
 **Example:**
+
 ```json
 {
   "type": "object",
@@ -128,24 +135,32 @@ The project uses three distinct naming conventions across different contexts:
 **Convention:** `camelCase`
 
 **Rules:**
+
 - All field names in GraphQL SDL use camelCase
 - Type names use PascalCase: `ContractAward`, `User`, `Organization`
 - Enum values use SCREAMING_SNAKE_CASE: `ACTIVE`, `INACTIVE`, `PENDING`
 - Generated files: `generated-schemas/*.graphql`, `src/data/generated/*.graphql`
 
 **Example:**
+
 ```graphql
 """
 Contract award record
 """
 type ContractAward {
-  """Unique contract identifier"""
+  """
+  Unique contract identifier
+  """
   contractId: String!
-  
-  """Date contract was awarded"""
+
+  """
+  Date contract was awarded
+  """
   awardDate: Date!
-  
-  """Total contract value in USD"""
+
+  """
+  Total contract value in USD
+  """
   totalAmount: Decimal
 }
 ```
@@ -155,12 +170,14 @@ type ContractAward {
 **Convention:** `x-graphql-*` with hyphen-case
 
 **Rules:**
+
 - All extension keys start with `x-graphql-` prefix
 - Sub-keys use hyphen-case: `x-graphql-field-name`, `x-graphql-type-kind`
 - Federation extensions: `x-graphql-federation-keys`, `x-graphql-federation-shareable`
 - Never use camelCase in extension keys (no `xGraphqlFieldName`)
 
 **Example:**
+
 ```json
 {
   "properties": {
@@ -184,6 +201,7 @@ type ContractAward {
 ### Conversion Tools
 
 **Automated Conversion Functions:**
+
 ```javascript
 // scripts/helpers/case-conversion.mjs
 
@@ -193,17 +211,18 @@ export function snakeToCamel(str) {
 
 export function snakeToPascal(str) {
   return str
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("");
 }
 
 export function camelToSnake(str) {
-  return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+  return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 }
 ```
 
 **Field Mapping Validation:**
+
 - Script: `scripts/generate-field-mapping.mjs`
 - Output: `generated-schemas/field-name-mapping.json`
 - Purpose: Validate snake_case ↔ camelCase conversion accuracy
@@ -212,16 +231,19 @@ export function camelToSnake(str) {
 ### Extension Metadata Specification
 
 **Core Fields (Always Required):**
+
 - `x-graphql-type-name` - Type name in PascalCase
 - `x-graphql-type-kind` - OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
 - `x-graphql-field-name` - Field name in camelCase
 - `x-graphql-field-type` - GraphQL type reference
 
 **Type Modifiers:**
+
 - `x-graphql-field-non-null` - Non-nullable field marker (`!`)
 - `x-graphql-field-list-item-non-null` - Non-nullable list items (`[Item!]`)
 
 **Apollo Federation (30 total extension fields):**
+
 - `x-graphql-federation-keys` - Entity resolution keys
 - `x-graphql-federation-shareable` - Shareable marker
 - `x-graphql-federation-external` - External field marker
@@ -240,7 +262,7 @@ export function camelToSnake(str) {
 - **Lossless Conversion:** x-graphql hints enable perfect JSON Schema ↔ GraphQL SDL round-trips
 - **Database Compatibility:** snake_case matches PostgreSQL, MySQL, and government data standards
 - **API Standards:** camelCase matches GraphQL/JavaScript community conventions
-- **Tooling Interoperability:** Standard x-* prefix works with JSON Schema validators
+- **Tooling Interoperability:** Standard x-\* prefix works with JSON Schema validators
 - **Federation Support:** All Apollo Federation v2.9 directives expressible via extensions
 - **Automated Validation:** Field mapping validator ensures conversion accuracy
 - **Developer Clarity:** Naming convention immediately identifies domain context
@@ -248,7 +270,7 @@ export function camelToSnake(str) {
 ### Negative
 
 - **Learning Curve:** New contributors must learn three conventions and when to use each
-- **Extension Verbosity:** x-graphql-* extensions add ~30% to JSON Schema file size
+- **Extension Verbosity:** x-graphql-\* extensions add ~30% to JSON Schema file size
 - **Manual Hints:** Developers must add x-graphql hints when GraphQL semantics differ from JSON Schema
 - **Pointer Resolution:** JSON Schema `$ref` pointers must use snake_case, requiring careful pointer updates
 - **Case Sensitivity:** Typos in extension keys (e.g., `x-graphql-fieldName` vs `x-graphql-field-name`) cause silent failures
@@ -267,6 +289,7 @@ export function camelToSnake(str) {
 **Approach:** Use snake_case everywhere (JSON Schema, GraphQL SDL, extensions)
 
 **Why Rejected:**
+
 - Violates GraphQL community standards (camelCase fields expected)
 - JavaScript/TypeScript frontends expect camelCase in JSON responses
 - Apollo Federation tooling assumes camelCase
@@ -278,6 +301,7 @@ export function camelToSnake(str) {
 **Approach:** Use camelCase everywhere (JSON Schema, GraphQL SDL, extensions)
 
 **Why Rejected:**
+
 - PostgreSQL databases use snake_case columns
 - Government data sources (Contract Data, Unified Model) return snake_case JSON
 - Python validation tooling expects snake_case
@@ -289,6 +313,7 @@ export function camelToSnake(str) {
 **Approach:** Infer GraphQL types from JSON Schema without hints
 
 **Why Rejected:**
+
 - Cannot express GraphQL interfaces, unions, or custom scalars
 - Apollo Federation directives require explicit hints
 - Type ambiguity: JSON "string" could be String, ID, DateTime, Date, Email, URI
@@ -301,6 +326,7 @@ export function camelToSnake(str) {
 **Approach:** Maintain JSON Schema and GraphQL SDL separately, sync manually
 
 **Why Rejected:**
+
 - High risk of drift between schemas (already documented in ADR 0002)
 - Manual sync error-prone (46 fields, 8 types, 1200+ lines)
 - No single source of truth
@@ -319,7 +345,7 @@ export function camelToSnake(str) {
 
 - ✅ Canonical schema: `src/data/schema_unification.schema.json` (snake_case)
 - ✅ Generated SDL: `generated-schemas/schema_unification.from-json.graphql` (camelCase)
-- ✅ Extension metadata: 30 x-graphql-* fields defined and documented
+- ✅ Extension metadata: 30 x-graphql-\* fields defined and documented
 - ✅ Case conversion helpers: `scripts/helpers/case-conversion.mjs`
 - ✅ Field mapping validator: `scripts/generate-field-mapping.mjs`
 - ✅ Sync validation: `scripts/validate-schema-sync.mjs`
@@ -334,10 +360,10 @@ export function camelToSnake(str) {
 - [ADR 0001: Schema-Driven Data Contract](./0001-schema-driven-data-contract.md) - Why single source of truth
 - [ADR 0002: Automated Schema Parity Toolchain](./0002-schema-tooling-automation.md) - Conversion scripts
 - [JSON Schema Draft 2020-12 Spec](https://json-schema.org/draft/2020-12/json-schema-core.html) - Extension prefix rules
-- [OpenAPI x-* Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions) - Extension precedent
+- [OpenAPI x-\* Extensions](https://spec.openapis.org/oas/v3.1.0#specification-extensions) - Extension precedent
 
 ## Review Schedule
 
 - **Q1 2025:** Audit all JSON Schema files for consistent snake_case usage
-- **Q2 2025:** Review x-graphql-* extension set, add new Federation v2.10 directives if released
+- **Q2 2025:** Review x-graphql-\* extension set, add new Federation v2.10 directives if released
 - **Q4 2025:** Evaluate tooling improvements for automatic hint generation

@@ -1,7 +1,7 @@
 ---
 theme: default
 title: Schema Unification Forest - Federal Procurement Data Fabric
-titleTemplate: '%s'
+titleTemplate: "%s"
 info: |
   ## Schema Unification Forest
   A unified core data model for federal contract systems
@@ -28,7 +28,7 @@ Federal acquisition data is managed via multiple legacy systems and frameworks:
 ## Current Landscape
 
 - **Contract Data** - Federal Procurement Data System
-- **Legacy Procurement** - Automated Source Selection & Seller Intelligence  
+- **Legacy Procurement** - Automated Source Selection & Seller Intelligence
 - **EASi** - Enterprise Architecture Service Integration
 - **Logistics Mgmt** - PRISM Contract Acquisition Management
 - **Public Spending** - Public contract reporting
@@ -48,7 +48,7 @@ Each system uses different data frameworks, naming conventions, and data structu
 ```mermaid
 graph TB
     A["Current State: Disparate Systems"] -->|Modernization| B["Future State: Data Fabric"]
-    
+
     subgraph current["Current Landscape"]
         C["Contract Data"]
         D["Entity Management.gov"]
@@ -56,17 +56,17 @@ graph TB
         F["eSRS/FSRS"]
         G["PRISM, Momentum, etc."]
     end
-    
+
     subgraph future["Data Fabric"]
         H["Unified Data Model"]
         I["Databricks Platform"]
         J["AI/Intelligence Layer"]
         K["Public & Agency Access"]
     end
-    
+
     A -.-> current
     B -.-> future
-    
+
     current -->|Integration| H
     H --> I
     I --> J
@@ -82,7 +82,7 @@ graph TB
 ```mermaid
 graph LR
     A["JSON Schema<br/>snake_case"] -->|x-graphql metadata| B["Generated GraphQL SDL<br/>camelCase"]
-    
+
     A -->|Validation| C["Database"]
     A -->|Python Tools| D["ETL Pipelines"]
     B -->|Type Safety| E["APIs"]
@@ -95,13 +95,13 @@ graph LR
 
 ## Advantages Over GraphQL SDL
 
-| Aspect | JSON Schema | GraphQL SDL |
-|--------|------------|------------|
-| **Validation** | Rich, native constraints | Limited validation |
-| **Python Support** | First-class citizen | GraphQL tooling centric |
-| **Database Alignment** | Direct column mapping | Indirect mapping |
-| **Metadata** | x-graphql-* extensions | Graph structure only |
-| **Constraints** | Min/max, patterns, enums | Type system only |
+| Aspect                 | JSON Schema              | GraphQL SDL             |
+| ---------------------- | ------------------------ | ----------------------- |
+| **Validation**         | Rich, native constraints | Limited validation      |
+| **Python Support**     | First-class citizen      | GraphQL tooling centric |
+| **Database Alignment** | Direct column mapping    | Indirect mapping        |
+| **Metadata**           | x-graphql-\* extensions  | Graph structure only    |
+| **Constraints**        | Min/max, patterns, enums | Type system only        |
 
 ---
 
@@ -112,13 +112,13 @@ graph LR
 ```mermaid
 graph TB
     A["Schema Unification Forest<br/>Unified Schema<br/>~850 lines"]
-    
+
     A -->|represents| B["Contract Data<br/>~720 lines"]
     A -->|represents| C["Public Spending<br/>~600 lines"]
     A -->|represents| D["Logistics Mgmt<br/>~2000 lines"]
     A -->|represents| E["Legacy Procurement<br/>~300 lines"]
     A -->|represents| F["EASi<br/>~250 lines"]
-    
+
     B --> G["Federal Procurement<br/>Data Fabric"]
     C --> G
     D --> G
@@ -137,7 +137,7 @@ graph LR
     A["src/data/<br/>*.schema.json"] -->|Generator Script| B["Validation"]
     B -->|Transform<br/>x-graphql metadata| C["generated-schemas/<br/>*.subgraph.graphql"]
     C -->|Apollo Composer| D["schema_unification.supergraph.graphql"]
-    
+
     A -->|Field Mappings| E["field-name-mapping.json"]
 ```
 
@@ -177,12 +177,12 @@ graph TB
     A["JSON Schema<br/>Source of Truth"]
     B["GraphQL SDL"]
     C["x-graphql-*<br/>Metadata"]
-    
+
     A -->|Generate| B
     B -->|Validate Against| A
     C -->|Enables| A
     C -->|Guides| B
-    
+
     D["Field Mapping"] -->|Snake ↔ Camel| B
     D -->|Explicit mappings| A
 ```
@@ -196,19 +196,19 @@ graph TB
 
 ---
 
-# x-graphql-* Metadata System
+# x-graphql-\* Metadata System
 
 ## Extension Hints for Generation
 
 ```mermaid
 graph LR
     A["JSON Schema<br/>Properties"]
-    
+
     A -->|x-graphql-<br/>field-name| B["Explicit field<br/>mapping"]
     A -->|x-graphql-<br/>field-type| C["Type<br/>conversions"]
     A -->|x-graphql-type-<br/>directives| D["Federation<br/>directives"]
     A -->|x-graphql-<br/>deprecated| E["Deprecation<br/>flags"]
-    
+
     B -->|line_1 to line| F["Handle<br/>truncation"]
     C -->|DateTime| G["Special<br/>types"]
     D -->|federation hints| H["Federation<br/>support"]
@@ -239,7 +239,7 @@ graph LR
 ```mermaid
 graph TB
     A["Single Data Concept<br/>Contract Award Information"]
-    
+
     A -->|Database| B["snake_case<br/>contract_award_id<br/>vendor_legal_name"]
     A -->|JSON Schema| B
     A -->|GraphQL API| C["camelCase<br/>contractAwardId<br/>vendorLegalName"]
@@ -255,11 +255,11 @@ graph TB
 ```mermaid
 graph TB
     A["Tests & Validation"]
-    
+
     A -->|Unit Tests| B["Field constraints<br/>Type validation"]
     A -->|Schema Tests| C["Parity checks<br/>Diff validation"]
     A -->|Integration Tests| D["Pipeline execution<br/>End-to-end flows"]
-    
+
     E["Coverage: 44.24%<br/>Tests: 215 passing"] -.-> A
 ```
 
@@ -274,12 +274,12 @@ graph TB
 ✅ **44.24% code coverage** - Growing test suite  
 ✅ **Full schema generation** - JSON → GraphQL pipeline operational  
 ✅ **Apollo Federation** - Multi-schema composition working  
-✅ **Documentation complete** - Auto-generated from schemas  
+✅ **Documentation complete** - Auto-generated from schemas
 
 ## Next Steps
 
 - Enhance diff tool with x-graphql-field-name recognition
-- Expand Logistics Mgmt schema (~2000 lines) 
+- Expand Logistics Mgmt schema (~2000 lines)
 - Full integration with Databricks Data Fabric
 - AI model training on unified data
 
@@ -296,7 +296,7 @@ graph TB
     C["Databricks<br/>Data Fabric"]
     D["AI Models<br/>GSAi/USAi"]
     E["Public APIs<br/>Entity Management.gov, Acquisition.gov"]
-    
+
     A -->|AJV Validation| B
     B -->|ETL Pipeline| C
     C -->|Training Data| D
@@ -316,12 +316,12 @@ graph TB
         C["IAE FAS Leadership"]
         D["FAS Tech Solutions"]
     end
-    
+
     A -->|Cloud & Databricks| E["Infrastructure"]
     B -->|AI Models & ATOs| F["Intelligence Layer"]
     C -->|Data Collection| G["Data Governance"]
     D -->|Modern Solutions| H["Applications"]
-    
+
     E --> I["Federal Procurement<br/>Data Fabric"]
     F --> I
     G --> I
@@ -338,13 +338,13 @@ graph TB
 graph LR
     A["Initial Datasets"] -->|Contract Data API| B["Sept-Oct"]
     A -->|USS, Logistics Mgmt, Legacy Procurement, OMS| B
-    
+
     B -->|Ongoing Ingestion| C["Nov-Dec"]
     C -->|Fleet, FSS, EASi| C
-    
+
     C -->|Partner Data| D["Jan-Feb"]
     D -->|DOT & Others| D
-    
+
     E["Data Quality"] -.->|Validation| A
     E -.->|Monitoring| B
     E -.->|Continuous| C
@@ -359,7 +359,7 @@ graph LR
 ```mermaid
 graph TB
     A["Federal Procurement Data Fabric"]
-    
+
     A -->|Use Case 1| B["Enhance Entity Management.gov<br/>Primary acquisition<br/>data source"]
     A -->|Use Case 2| C["Replace Contract Data<br/>Modern reporting<br/>mechanism"]
     A -->|Use Case 3| D["GSAi / USAi<br/>AI-powered insights<br/>and automation"]
@@ -381,25 +381,25 @@ graph TB
         E["Other Systems"]
         F["Treasury, SBA, DLA, DOD"]
     end
-    
+
     subgraph future["FUTURE STATE"]
         G["Unified<br/>Data Layer"]
         H["Databricks<br/>Platform"]
         I["AI/Analytics<br/>Layer"]
         J["Modern<br/>Applications"]
     end
-    
+
     A --> G
     B --> G
     C --> G
     D --> G
     E --> G
     F -->|External Data| H
-    
+
     G --> H
     H --> I
     I --> J
-    
+
     J -->|Data Products| K["Entity Management.gov 2.0"]
     J -->|Insights| L["AI Services"]
     J -->|Analytics| M["Public Dashboard"]
@@ -414,13 +414,13 @@ graph TB
 ```mermaid
 graph TB
     A["RFO Technology<br/>Acquisition Planning"]
-    
+
     A -->|Step 1| B["Regulatory Check<br/>FAR Requirements"]
     B -->|Step 2| C["Mandatory Sources<br/>AbilityOne, UNICOR"]
     C -->|Step 3| D["Category Management<br/>GSA Vehicles"]
     D -->|Step 4| E["Government Contracts<br/>Shared Services"]
     E -->|Step 5| F["Open Market<br/>Decision"]
-    
+
     G["Data Fabric"] -.->|Powers| A
     H["AI/RAG Models"] -.->|Intelligent| A
 ```
@@ -443,11 +443,11 @@ graph TB
     B["GSA FSS Contracts"]
     C["Agency CM Contracts"]
     D["Unstructured Data<br/>PDFs, Documents"]
-    
+
     A --> B
     A --> C
     A --> D
-    
+
     E["Semantic/Agentic RAG"] -->|Process| D
     E -->|Integrate| B
     E -->|Normalize| C
@@ -462,12 +462,12 @@ graph TB
 ```mermaid
 graph TB
     A["Schema Tools"]
-    
+
     A -->|Generators| B["schema-generator.mjs"]
     A -->|Validators| C["validate-schemas.py"]
     A -->|Diff Tool| D["diff-sdl-schema.mjs"]
     A -->|Linter| E["schema-linter.py"]
-    
+
     B -->|JSON → GraphQL| F["Generated Artifacts"]
     C -->|AJV Validation| G["Quality Assurance"]
     D -->|Parity Checking| G
@@ -495,14 +495,14 @@ graph TB
 ```mermaid
 graph TB
     A["Schema Unification Forest Stack"]
-    
+
     A -->|Data Layer| B["JSON Schema<br/>Draft 2020-12"]
     A -->|Validation| C["Python AJV<br/>Constraints"]
     A -->|API Layer| D["GraphQL SDL<br/>Apollo Federation"]
     A -->|Infrastructure| E["Databricks<br/>Data Fabric"]
     A -->|Intelligence| F["RAG/AI Models<br/>GSAi/USAi"]
     A -->|Repo| G["GitHub<br/>Version Control"]
-    
+
     C -->|Powers| H["ETL Pipelines"]
     D -->|Serves| I["Public APIs<br/>Agency Systems"]
     E -->|Enables| F
@@ -599,6 +599,7 @@ Data quality improvements enable advanced use cases:
 ### 1. Schema Exploration
 
 **Interactive Schema Viewer:**
+
 - Browse canonical data model: [https://schema-unification-project.site](placeholder)
 - Explore field definitions and relationships
 - View sample data for each system
@@ -607,6 +608,7 @@ Data quality improvements enable advanced use cases:
 ### 2. GraphQL API Access
 
 **Federation Gateway:**
+
 ```graphql
 {
   contracts(first: 10) {
@@ -614,8 +616,13 @@ Data quality improvements enable advanced use cases:
       node {
         id
         contractTitle
-        vendor { name uei }
-        financialInfo { totalValue }
+        vendor {
+          name
+          uei
+        }
+        financialInfo {
+          totalValue
+        }
       }
     }
   }
@@ -627,6 +634,7 @@ Data quality improvements enable advanced use cases:
 ### 3. Direct Data Access
 
 **Available Formats:**
+
 - JSON Schema (validation)
 - GraphQL SDL (API)
 - Parquet (analytics)
@@ -679,18 +687,21 @@ Data quality improvements enable advanced use cases:
 ## Available Resources
 
 ### Documentation
+
 - **[Schema Architecture Guide](docs/schema/schema-architecture.md)** — Data model overview
 - **[API Integration Guide](docs/APIs/graphql-api-integration.md)** — Getting API access
 - **[Python Validation Library](python/)** — Client-side validation
 - **[Sample Datasets](resources/)** — Test data and examples
 
 ### Support Channels
+
 - **Slack:** #schema-unification-project (GSA TTS workspace)
 - **Email:** schema-unification-project@gsa.gov
 - **GitHub:** [Issue Tracker](https://github.com/GSA-TTS/enterprise-schema-unification/issues)
 - **Office Hours:** Thursdays 10 AM–11 AM ET
 
 ### Dashboards & Tools
+
 - **Contract Dashboard:** [https://dashboards.example.gov/contracts](placeholder)
 - **Vendor Analytics:** [https://dashboards.example.gov/vendors](placeholder)
 - **Data Quality Report:** [https://dashboards.example.gov/quality](placeholder)
@@ -704,12 +715,14 @@ Data quality improvements enable advanced use cases:
 **Slides:** 2, 3, 4, 5, 6, 16, 18, 19, 20, 25, 26
 
 **Key Messages:**
+
 - **Problem:** Fragmented federal procurement data across systems
 - **Solution:** Unified canonical data model (Schema Unification Forest)
 - **Outcomes:** Data quality, analytics capability, ML readiness
 - **Timeline:** Operational January 2026
 
 **Visual Focus:**
+
 - Problem statement and impact metrics
 - Data fabric architecture
 - Business outcomes and use cases
@@ -724,6 +737,7 @@ Data quality improvements enable advanced use cases:
 **Slides:** 2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 20, 21, 22, 23
 
 **Key Topics:**
+
 - Federal procurement landscape and challenges
 - Schema-driven design principles
 - x-graphql hints for advanced features
@@ -732,6 +746,7 @@ Data quality improvements enable advanced use cases:
 - Implementation examples
 
 **Interactive Elements:**
+
 - Live schema viewer walkthrough
 - GraphQL query examples
 - Field mapping demonstration
@@ -746,12 +761,14 @@ Data quality improvements enable advanced use cases:
 **Slides:** 2, 6, 7, 8, 24, 25, 26, 27, 28
 
 **Learning Objectives:**
+
 - Understand Schema Unification Forest purpose and value
 - Know how to access data and documentation
 - Learn basic schema exploration
 - Find help and support resources
 
 **Hands-On Activities:**
+
 - Schema browser walkthrough
 - Execute sample query
 - Review data quality metrics
@@ -767,15 +784,15 @@ Data quality improvements enable advanced use cases:
 gantt
     title Schema Unification Forest Implementation Timeline
     dateFormat YYYY-MM-DD
-    
+
     section Foundation
     Schema Design :s1, 2025-12-01, 30d
     System Integration :s2, 2025-12-15, 45d
-    
+
     section Operations
     API Gateway Launch :op1, 2026-01-01, 30d
     Dashboard Rollout :op2, 2026-01-15, 20d
-    
+
     section Growth
     Advanced Analytics :gr1, 2026-02-01, 60d
     ML Pipeline Setup :gr2, 2026-03-01, 90d
@@ -786,18 +803,21 @@ gantt
 ## Next Steps
 
 ### For Data Teams
+
 1. Review schema documentation
 2. Request API access
 3. Begin data validation
 4. Schedule integration planning session
 
 ### For Leadership
+
 1. Attend executive briefing
 2. Identify strategic use cases
 3. Allocate resources for implementation
 4. Communicate vision to stakeholders
 
 ### For All
+
 1. Join Slack channel
 2. Attend office hours
 3. Ask questions

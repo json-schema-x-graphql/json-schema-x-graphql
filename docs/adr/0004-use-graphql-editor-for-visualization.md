@@ -24,13 +24,13 @@ This component will be integrated into the application to display the GraphQL sc
 
 ### Positive
 
-*   **Accelerated Development**: We gain a powerful schema visualization and editing tool without the high cost of building it ourselves, allowing us to focus on the core conversion logic.
-*   **Enhanced User Experience**: The graphical representation of the GraphQL schema is much more intuitive and user-friendly than raw SDL text. This makes the tool more accessible and intake_processer to use.
-*   **Rich Feature Set**: `graphql-editor` comes with many built-in features, such as real-time validation and a node-based graph interface, which would be complex to implement from scratch.
-*   **Stability**: By using a mature, widely-adopted library, we benefit from its stability and community support.
+- **Accelerated Development**: We gain a powerful schema visualization and editing tool without the high cost of building it ourselves, allowing us to focus on the core conversion logic.
+- **Enhanced User Experience**: The graphical representation of the GraphQL schema is much more intuitive and user-friendly than raw SDL text. This makes the tool more accessible and intake_processer to use.
+- **Rich Feature Set**: `graphql-editor` comes with many built-in features, such as real-time validation and a node-based graph interface, which would be complex to implement from scratch.
+- **Stability**: By using a mature, widely-adopted library, we benefit from its stability and community support.
 
 ### Negative
 
-*   **External Dependency**: We are adding a major JavaScript dependency to our front-end stack. This introduces a reliance on the `graphql-editor` project's maintenance and release cycle.
-*   **Integration Overhead**: Some effort will be required to integrate the component into our application, manage its state, and customize its appearance to match our UI.
-*   **Limited Customization**: While the library is configurable, our ability to customize its features and behavior is ultimately limited by the options it exposes. Any highly specific UI/UX requirements may be difficult or impossible to implement.
+- **External Dependency**: We are adding a major JavaScript dependency to our front-end stack. This introduces a reliance on the `graphql-editor` project's maintenance and release cycle.
+- **Integration Overhead**: Some effort will be required to integrate the component into our application, manage its state, and customize its appearance to match our UI.
+- **Limited Customization**: While the library is configurable, our ability to customize its features and behavior is ultimately limited by the options it exposes. Any highly specific UI/UX requirements may be difficult or impossible to implement.

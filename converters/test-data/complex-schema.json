@@ -275,9 +275,7 @@
   "required": ["id", "name", "email"],
   "additionalProperties": false,
   "x-graphql-federation": {
-    "keys": [
-      { "fields": "id" }
-    ],
+    "keys": [{ "fields": "id" }],
     "extends": false
   },
   "x-graphql-directives": [

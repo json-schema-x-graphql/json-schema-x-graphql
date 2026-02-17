@@ -1,0 +1,83 @@
+type SpecialKeysObject {
+  _123: Int
+  "Empty key"
+  _: String
+  "String 'null' as key"
+  null: String
+  undefined: String
+  true: Boolean
+  keyWithDashes: String
+  keyWithUnderscores: String
+  keyWithDots: String
+  keyWithSpaces: String
+  keyWithSpecialChars: String
+  emojiKey: String
+  newlineKey: String
+  tabKey: String
+}
+
+type UnusualTypes {
+  nullType: JSON
+  multiTypeSimple: JSON
+  multiTypeWithNull: JSON
+  anyType: String
+}
+
+type BoundaryValues {
+  maxInt: Int
+  minInt: Int
+  largeFloat: Float
+  smallFloat: Float
+}
+
+type Level3 {
+  level4: String
+}
+
+type Level2 {
+  level3: Level3
+}
+
+type Level1 {
+  level2: Level2
+}
+
+type DeeplyNestedInline {
+  level1: Level1
+}
+
+type CombinatorEdgeCases {
+  oneOfValid: JSON
+  anyOfSingle: JSON
+  allOfConflict: JSON
+}
+
+type ArrayEdgeCases {
+  tupleValidation: [String]
+  arrayWithAdditionalItems: [String]
+}
+
+type ReservedWordsCollision {
+  type: String
+  properties: String
+  items: String
+  required: String
+  enum: String
+  const: String
+  if: String
+  then: String
+  else: String
+}
+
+"""A schema designed to test edge cases, unusual characters, and potential parsing pitfalls."""
+type Fuzzedgecases {
+  emptyObjectDef: EmptyObjectDef!
+  emptyArrayDef: [String]
+  specialKeysObject: SpecialKeysObject
+  unusualTypes: UnusualTypes
+  boundaryValues: BoundaryValues
+  deeplyNestedInline: DeeplyNestedInline
+  combinatorEdgeCases: CombinatorEdgeCases
+  arrayEdgeCases: ArrayEdgeCases
+  reservedWordsCollision: ReservedWordsCollision
+}

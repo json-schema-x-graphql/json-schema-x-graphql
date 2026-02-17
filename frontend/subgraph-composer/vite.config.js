@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
@@ -9,19 +9,25 @@ export default defineConfig({
     open: true,
   },
   build: {
-    target: 'esnext',
-    minify: 'esbuild',
+    target: "esnext",
+    minify: "esbuild",
     sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
           // Lazy load heavy libraries
-          codemirror: ['@codemirror/lang-json', '@codemirror/view', '@codemirror/state'],
+          codemirror: [
+            "@codemirror/lang-json",
+            "@codemirror/view",
+            "@codemirror/state",
+          ],
         },
       },
     },
   },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "development",
+    ),
   },
 });

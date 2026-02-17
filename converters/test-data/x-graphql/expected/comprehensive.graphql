@@ -14,7 +14,7 @@ type User implements Node {
   "User's age (uses JSON Schema description as fallback)"
   age: Int
   bio: String
-  avatarUrl: URL
+  avatarUrl: URI
   roles: [String!]
   permissions: [String!]!
   tags: [String]
@@ -68,3 +68,7 @@ type Comment implements Node {
   createdAt: DateTime!
   editedAt: DateTime
 }
+
+# Implied Scalars
+scalar Email
+scalar URI

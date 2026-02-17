@@ -26,6 +26,7 @@ docker-compose up
 ```
 
 **Endpoints:**
+
 - **GraphQL Mesh** (Federation Gateway): http://localhost:5050/graphql ✅ Working
 - **Individual Services**: http://localhost:4001-4005/graphql ✅ All Working
 - **Hive Gateway**: http://localhost:5100/graphql ⚠️ Config issue (use Mesh instead)
@@ -69,17 +70,20 @@ Mock GraphQL API (http://localhost:5050/graphql)
 ### Key Files
 
 **Schema Sources (Canonical JSON):**
+
 - `src/data/contract_data.schema.json` - Contract Data procurement data schema
-- `src/data/public_spending.schema.json` - Public Spending procurement schema  
+- `src/data/public_spending.schema.json` - Public Spending procurement schema
 - `src/data/legacy_procurement.schema.json` - Legacy Procurement interagency agreement schema
 - `src/data/intake_process.schema.json` - Intake Process IT system schema
 - `src/data/logistics_mgmt.schema.json` - Logistics Mgmt shared types (library-only)
 
 **Generated Schemas:**
+
 - `generated-schemas/*.subgraph.graphql` - Individual subgraph SDL files
 - `generated-schemas/schema_unification.supergraph.graphql` - Composed supergraph
 
 **MockForge Configuration:**
+
 - `dev/pocs/mockforge/docker-compose.yml` - Service orchestration
 - `dev/pocs/mockforge/mock-server.js` - Mock service implementation
 - `dev/pocs/mockforge/mockforge.config.js` - Custom resolvers (faker.js)
@@ -87,6 +91,7 @@ Mock GraphQL API (http://localhost:5050/graphql)
 - `dev/pocs/mockforge/gateway.config.ts` - Hive Gateway config
 
 **Helper Scripts:**
+
 - `regenerate-schemas.sh` - Regenerate all schemas from JSON sources
 - `dev/pocs/mockforge/rebuild.sh` - Rebuild all Docker images
 - `dev/pocs/mockforge/test-queries.sh` - Test service health
@@ -126,11 +131,11 @@ If you're building behind a Zscaler proxy, you'll need to add the certificate:
    ```bash
    # Set BUILD_ENV to LOCAL
    export BUILD_ENV=LOCAL
-   
+
    # Build images (will trust Zscaler cert)
    cd dev/pocs/mockforge
    docker-compose build
-   
+
    # Or inline:
    BUILD_ENV=LOCAL docker-compose build
    ```
@@ -222,7 +227,7 @@ query CrossSystemQuery {
       currentContractValue
     }
   }
-  
+
   # Public Spending data
   public_spendingProcurements {
     piid
@@ -230,7 +235,7 @@ query CrossSystemQuery {
     awardeeOrRecipientLegal
     federalActionObligation
   }
-  
+
   # Legacy Procurement interagency agreements
   legacy_procurementRecords {
     iaPiidOrUniqueId
@@ -246,7 +251,7 @@ query CrossSystemQuery {
       }
     }
   }
-  
+
   # Intake Process IT systems
   intake_processRecords {
     businessOwner
@@ -349,8 +354,9 @@ export const fieldPatterns = {
 ### Seed Data
 
 CSV files in `seed-data/`:
+
 - `contract_data.csv` - 12 sample Contract Data records
-- `public_spending.csv` - 12 sample Public Spending records  
+- `public_spending.csv` - 12 sample Public Spending records
 - `legacy_procurement.csv` - 12 sample Legacy Procurement records
 - `intake_process.csv` - 12 sample Intake Process records
 - `logistics_mgmt.csv` - 12 sample Logistics Mgmt records
@@ -418,6 +424,7 @@ cat generated-schemas/contract_data.subgraph.graphql | grep "type Query" -A 10
 ```
 
 **Common issues:**
+
 - Field names are camelCase in GraphQL (e.g., `piid` not `PIID`, `iaPiidOrUniqueId` not `ia_piid_or_unique_id`)
 - Nested fields require selecting sub-fields (e.g., `agency { contractingAgencyName }` not `agency { name }`)
 - List queries return arrays, not single objects
@@ -513,4 +520,3 @@ The JSON schemas must have `x-graphql-operations.queries` section:
 - **[src/data/legacy_procurement.schema.json](../../../src/data/legacy_procurement.schema.json)** - Legacy Procurement schema
 - **[src/data/intake_process.schema.json](../../../src/data/intake_process.schema.json)** - Intake Process schema
 - **[src/data/logistics_mgmt.schema.json](../../../src/data/logistics_mgmt.schema.json)** - Logistics Mgmt library schema
-

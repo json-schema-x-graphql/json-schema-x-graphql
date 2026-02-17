@@ -2,174 +2,174 @@
 
 ```yaml
 - generic [active] [ref=e1]:
-  - generic [ref=e3]:
-    - banner [ref=e4]:
-      - heading "JSON Schema ⇋ GraphQL CRDT Demo" [level=1] [ref=e5]
-      - generic [ref=e6]:
-        - button "📝 Text" [ref=e7] [cursor=pointer]
-        - button "🌙" [ref=e8] [cursor=pointer]
-        - button "⚙️ Settings" [ref=e9] [cursor=pointer]
-        - button "Connect" [ref=e10] [cursor=pointer]
-    - main [ref=e11]:
-      - code [ref=e16]:
-        - generic [ref=e17]:
-          - textbox "Editor content" [ref=e18]
-          - textbox [ref=e19]
-          - generic [ref=e21]:
-            - generic [ref=e22]:
-              - generic [ref=e24] [cursor=pointer]: 
-              - generic [ref=e25]: "1"
-            - generic [ref=e27]: "2"
-            - generic [ref=e30]: "3"
-            - generic [ref=e32]: "4"
-            - generic [ref=e36]: "5"
-            - generic [ref=e38]: "6"
-            - generic [ref=e40]: "7"
-            - generic [ref=e41]:
-              - generic [ref=e42] [cursor=pointer]: 
-              - generic [ref=e43]: "8"
-            - generic [ref=e44]:
-              - generic [ref=e45] [cursor=pointer]: 
-              - generic [ref=e46]: "9"
-            - generic [ref=e48]: "10"
-            - generic [ref=e50]: "11"
-            - generic [ref=e52]: "12"
-            - generic [ref=e54]: "13"
-            - generic [ref=e55]:
-              - generic [ref=e56] [cursor=pointer]: 
-              - generic [ref=e57]: "14"
-            - generic [ref=e58]:
-              - generic [ref=e59] [cursor=pointer]: 
-              - generic [ref=e60]: "15"
-            - generic [ref=e62]: "16"
-            - generic [ref=e64]: "17"
-            - generic [ref=e66]: "18"
-            - generic [ref=e68]: "19"
-            - generic [ref=e70]: "20"
-            - generic [ref=e72]: "21"
-            - generic [ref=e73]:
-              - generic [ref=e74] [cursor=pointer]: 
-              - generic [ref=e75]: "22"
-            - generic [ref=e77]: "23"
-            - generic [ref=e79]: "24"
-            - generic [ref=e81]: "25"
-            - generic [ref=e83]: "26"
-            - generic [ref=e85]: "27"
-            - generic [ref=e87]: "28"
-            - generic [ref=e89]: "29"
-            - generic [ref=e91]: "30"
-          - generic [ref=e196]:
-            - generic [ref=e198]: "{"
-            - generic [ref=e200]: "\"$schema\": \"https://json-schema.org/draft/2020-12/"
-            - generic [ref=e202]: schema",
-            - generic [ref=e204]: "\"title\": \"User\","
-            - generic [ref=e206]: "\"description\": \"A comprehensive example schema"
-            - generic [ref=e208]: demonstrating JSON Schema to GraphQL conversion with
-            - generic [ref=e210]: Federation support",
-            - generic [ref=e212]: "\"type\": \"object\","
-            - generic [ref=e214]: "\"x-graphql-type-name\": \"User\","
-            - generic [ref=e216]: "\"x-graphql-type-kind\": \"OBJECT\","
-            - generic [ref=e218]: "\"x-graphql-federation-keys\": ["
-            - generic [ref=e220]: "{"
-            - generic [ref=e222]: "\"fields\": \"id\","
-            - generic [ref=e224]: "\"resolvable\": true"
-            - generic [ref=e226]: "}"
-            - generic [ref=e228]: "],"
-            - generic [ref=e230]: "\"properties\": {"
-            - generic [ref=e232]: "\"id\": {"
-            - generic [ref=e234]: "\"type\": \"string\","
-            - generic [ref=e236]: "\"description\": \"Unique identifier for the user\","
-            - generic [ref=e238]: "\"x-graphql-field-name\": \"id\","
-            - generic [ref=e240]: "\"x-graphql-field-type\": \"ID\","
-            - generic [ref=e242]: "\"x-graphql-field-non-null\": true"
-            - generic [ref=e244]: "},"
-            - generic [ref=e246]: "\"username\": {"
-            - generic [ref=e248]: "\"type\": \"string\","
-            - generic [ref=e250]: "\"minLength\": 3,"
-            - generic [ref=e252]: "\"maxLength\": 50,"
-            - generic [ref=e254]: "\"description\": \"User's unique username\","
-            - generic [ref=e256]: "\"x-graphql-field-name\": \"username\","
-            - generic [ref=e258]: "\"x-graphql-field-type\": \"String\","
-            - generic [ref=e260]: "\"x-graphql-field-non-null\": true,"
-            - generic [ref=e262]: "\"x-graphql-federation-shareable\": true"
-      - generic "Drag to resize" [ref=e269]:
-        - button "→" [disabled] [ref=e271]
-        - button "←" [disabled] [ref=e272]
-        - button "Sync Off" [ref=e274] [cursor=pointer]
-      - code [ref=e279]:
-        - generic [ref=e280]:
-          - textbox "Editor content" [ref=e281]
-          - textbox [ref=e282]
-          - generic [ref=e284]:
-            - generic [ref=e287]: "1"
-            - generic [ref=e289]: "2"
-            - generic [ref=e292]: "3"
-            - generic [ref=e294]: "4"
-            - generic [ref=e296]: "5"
-            - generic [ref=e298]: "6"
-            - generic [ref=e300]: "7"
-            - generic [ref=e302]: "8"
-            - generic [ref=e304]: "9"
-            - generic [ref=e305]:
-              - generic [ref=e306] [cursor=pointer]: 
-              - generic [ref=e307]: "10"
-            - generic [ref=e309]: "11"
-            - generic [ref=e311]: "12"
-            - generic [ref=e312]:
-              - generic [ref=e313] [cursor=pointer]: 
-              - generic [ref=e314]: "13"
-            - generic [ref=e316]: "14"
-            - generic [ref=e318]: "15"
-            - generic [ref=e320]: "16"
-            - generic [ref=e322]: "17"
-            - generic [ref=e324]: "18"
-            - generic [ref=e326]: "19"
-            - generic [ref=e328]: "20"
-            - generic [ref=e331]: "21"
-            - generic [ref=e334]: "22"
-            - generic [ref=e337]: "23"
-            - generic [ref=e339]: "24"
-            - generic [ref=e341]: "25"
-            - generic [ref=e345]: "26"
-            - generic [ref=e347]: "27"
-          - generic [ref=e408]:
-            - generic [ref=e410]: "# Common Core GraphQL Schema"
-            - generic [ref=e412]: "# Version 2.0 - Federal Procurement Data Fabric"
-            - generic [ref=e414]: (FPDF) by Schema Unification Forest Project
-            - generic [ref=e417]: scalar DateTime
-            - generic [ref=e419]: scalar Date
-            - generic [ref=e421]: scalar JSON
-            - generic [ref=e423]: scalar Decimal
-            - generic [ref=e426]: "# Root Query Type"
-            - generic [ref=e428]: "type Query {"
-            - generic [ref=e430]: "# Contract Queries"
-            - generic [ref=e432]: "contract(id: ID!): Contract"
-            - generic [ref=e434]: contracts(
-            - generic [ref=e436]: "filter: ContractFilter"
-            - generic [ref=e438]: "pagination: PaginationInput"
-            - generic [ref=e440]: "sort: [ContractSortInput!]"
-            - generic [ref=e442]: "): ContractConnection!"
-            - generic [ref=e445]: "# System-Specific Queries"
-            - generic [ref=e447]: "contract_dataPrograms(filter: Contract"
-            - generic [ref=e449]: "DataFilter): [Contract DataProgram!]!"
-            - generic [ref=e451]: "legacy_procurementContracts(filter:"
-            - generic [ref=e453]: "AssistFilter): [AssistContract!]!"
-            - generic [ref=e455]: "intake_processContracts(filter: EasiFilter):"
-            - generic [ref=e457]: "[EasiContract!]!"
-            - generic [ref=e460]: "# Analytics and Reporting"
-            - generic [ref=e462]: "contractAnalytics(timeRange: TimeRangeInput!,"
-            - generic [ref=e464]: "groupBy: [AnalyticsGroupBy!]!):"
-            - generic [ref=e466]: "[AnalyticsResult!]!"
-            - generic [ref=e469]: "# Data Quality and Monitoring"
-    - contentinfo [ref=e476]:
-      - generic [ref=e477]:
-        - generic [ref=e478]: "Status: disconnected"
-        - generic [ref=e479]: "Users: 0"
-      - generic [ref=e480]:
-        - generic [ref=e481]: Settings Ctrl+K
-        - generic [ref=e482]: Convert Ctrl+⏎
-        - generic [ref=e483]: Theme Ctrl+T
-  - generic [ref=e484]:
-    - alert
-    - alert
+    - generic [ref=e3]:
+        - banner [ref=e4]:
+            - heading "JSON Schema ⇋ GraphQL CRDT Demo" [level=1] [ref=e5]
+            - generic [ref=e6]:
+                - button "📝 Text" [ref=e7] [cursor=pointer]
+                - button "🌙" [ref=e8] [cursor=pointer]
+                - button "⚙️ Settings" [ref=e9] [cursor=pointer]
+                - button "Connect" [ref=e10] [cursor=pointer]
+        - main [ref=e11]:
+            - code [ref=e16]:
+                - generic [ref=e17]:
+                    - textbox "Editor content" [ref=e18]
+                    - textbox [ref=e19]
+                    - generic [ref=e21]:
+                        - generic [ref=e22]:
+                            - generic [ref=e24] [cursor=pointer]: 
+                            - generic [ref=e25]: "1"
+                        - generic [ref=e27]: "2"
+                        - generic [ref=e30]: "3"
+                        - generic [ref=e32]: "4"
+                        - generic [ref=e36]: "5"
+                        - generic [ref=e38]: "6"
+                        - generic [ref=e40]: "7"
+                        - generic [ref=e41]:
+                            - generic [ref=e42] [cursor=pointer]: 
+                            - generic [ref=e43]: "8"
+                        - generic [ref=e44]:
+                            - generic [ref=e45] [cursor=pointer]: 
+                            - generic [ref=e46]: "9"
+                        - generic [ref=e48]: "10"
+                        - generic [ref=e50]: "11"
+                        - generic [ref=e52]: "12"
+                        - generic [ref=e54]: "13"
+                        - generic [ref=e55]:
+                            - generic [ref=e56] [cursor=pointer]: 
+                            - generic [ref=e57]: "14"
+                        - generic [ref=e58]:
+                            - generic [ref=e59] [cursor=pointer]: 
+                            - generic [ref=e60]: "15"
+                        - generic [ref=e62]: "16"
+                        - generic [ref=e64]: "17"
+                        - generic [ref=e66]: "18"
+                        - generic [ref=e68]: "19"
+                        - generic [ref=e70]: "20"
+                        - generic [ref=e72]: "21"
+                        - generic [ref=e73]:
+                            - generic [ref=e74] [cursor=pointer]: 
+                            - generic [ref=e75]: "22"
+                        - generic [ref=e77]: "23"
+                        - generic [ref=e79]: "24"
+                        - generic [ref=e81]: "25"
+                        - generic [ref=e83]: "26"
+                        - generic [ref=e85]: "27"
+                        - generic [ref=e87]: "28"
+                        - generic [ref=e89]: "29"
+                        - generic [ref=e91]: "30"
+                    - generic [ref=e196]:
+                        - generic [ref=e198]: "{"
+                        - generic [ref=e200]: '"$schema": "https://json-schema.org/draft/2020-12/'
+                        - generic [ref=e202]: schema",
+                        - generic [ref=e204]: '"title": "User",'
+                        - generic [ref=e206]: '"description": "A comprehensive example schema'
+                        - generic [ref=e208]: demonstrating JSON Schema to GraphQL conversion with
+                        - generic [ref=e210]: Federation support",
+                        - generic [ref=e212]: '"type": "object",'
+                        - generic [ref=e214]: '"x-graphql-type-name": "User",'
+                        - generic [ref=e216]: '"x-graphql-type-kind": "OBJECT",'
+                        - generic [ref=e218]: '"x-graphql-federation-keys": ['
+                        - generic [ref=e220]: "{"
+                        - generic [ref=e222]: '"fields": "id",'
+                        - generic [ref=e224]: '"resolvable": true'
+                        - generic [ref=e226]: "}"
+                        - generic [ref=e228]: "],"
+                        - generic [ref=e230]: '"properties": {'
+                        - generic [ref=e232]: '"id": {'
+                        - generic [ref=e234]: '"type": "string",'
+                        - generic [ref=e236]: '"description": "Unique identifier for the user",'
+                        - generic [ref=e238]: '"x-graphql-field-name": "id",'
+                        - generic [ref=e240]: '"x-graphql-field-type": "ID",'
+                        - generic [ref=e242]: '"x-graphql-field-non-null": true'
+                        - generic [ref=e244]: "},"
+                        - generic [ref=e246]: '"username": {'
+                        - generic [ref=e248]: '"type": "string",'
+                        - generic [ref=e250]: '"minLength": 3,'
+                        - generic [ref=e252]: '"maxLength": 50,'
+                        - generic [ref=e254]: '"description": "User''s unique username",'
+                        - generic [ref=e256]: '"x-graphql-field-name": "username",'
+                        - generic [ref=e258]: '"x-graphql-field-type": "String",'
+                        - generic [ref=e260]: '"x-graphql-field-non-null": true,'
+                        - generic [ref=e262]: '"x-graphql-federation-shareable": true'
+            - generic "Drag to resize" [ref=e269]:
+                - button "→" [disabled] [ref=e271]
+                - button "←" [disabled] [ref=e272]
+                - button "Sync Off" [ref=e274] [cursor=pointer]
+            - code [ref=e279]:
+                - generic [ref=e280]:
+                    - textbox "Editor content" [ref=e281]
+                    - textbox [ref=e282]
+                    - generic [ref=e284]:
+                        - generic [ref=e287]: "1"
+                        - generic [ref=e289]: "2"
+                        - generic [ref=e292]: "3"
+                        - generic [ref=e294]: "4"
+                        - generic [ref=e296]: "5"
+                        - generic [ref=e298]: "6"
+                        - generic [ref=e300]: "7"
+                        - generic [ref=e302]: "8"
+                        - generic [ref=e304]: "9"
+                        - generic [ref=e305]:
+                            - generic [ref=e306] [cursor=pointer]: 
+                            - generic [ref=e307]: "10"
+                        - generic [ref=e309]: "11"
+                        - generic [ref=e311]: "12"
+                        - generic [ref=e312]:
+                            - generic [ref=e313] [cursor=pointer]: 
+                            - generic [ref=e314]: "13"
+                        - generic [ref=e316]: "14"
+                        - generic [ref=e318]: "15"
+                        - generic [ref=e320]: "16"
+                        - generic [ref=e322]: "17"
+                        - generic [ref=e324]: "18"
+                        - generic [ref=e326]: "19"
+                        - generic [ref=e328]: "20"
+                        - generic [ref=e331]: "21"
+                        - generic [ref=e334]: "22"
+                        - generic [ref=e337]: "23"
+                        - generic [ref=e339]: "24"
+                        - generic [ref=e341]: "25"
+                        - generic [ref=e345]: "26"
+                        - generic [ref=e347]: "27"
+                    - generic [ref=e408]:
+                        - generic [ref=e410]: "# Common Core GraphQL Schema"
+                        - generic [ref=e412]: "# Version 2.0 - Federal Procurement Data Fabric"
+                        - generic [ref=e414]: (FPDF) by Schema Unification Forest Project
+                        - generic [ref=e417]: scalar DateTime
+                        - generic [ref=e419]: scalar Date
+                        - generic [ref=e421]: scalar JSON
+                        - generic [ref=e423]: scalar Decimal
+                        - generic [ref=e426]: "# Root Query Type"
+                        - generic [ref=e428]: "type Query {"
+                        - generic [ref=e430]: "# Contract Queries"
+                        - generic [ref=e432]: "contract(id: ID!): Contract"
+                        - generic [ref=e434]: contracts(
+                        - generic [ref=e436]: "filter: ContractFilter"
+                        - generic [ref=e438]: "pagination: PaginationInput"
+                        - generic [ref=e440]: "sort: [ContractSortInput!]"
+                        - generic [ref=e442]: "): ContractConnection!"
+                        - generic [ref=e445]: "# System-Specific Queries"
+                        - generic [ref=e447]: "contract_dataPrograms(filter: Contract"
+                        - generic [ref=e449]: "DataFilter): [Contract DataProgram!]!"
+                        - generic [ref=e451]: "legacy_procurementContracts(filter:"
+                        - generic [ref=e453]: "AssistFilter): [AssistContract!]!"
+                        - generic [ref=e455]: "intake_processContracts(filter: EasiFilter):"
+                        - generic [ref=e457]: "[EasiContract!]!"
+                        - generic [ref=e460]: "# Analytics and Reporting"
+                        - generic [ref=e462]: "contractAnalytics(timeRange: TimeRangeInput!,"
+                        - generic [ref=e464]: "groupBy: [AnalyticsGroupBy!]!):"
+                        - generic [ref=e466]: "[AnalyticsResult!]!"
+                        - generic [ref=e469]: "# Data Quality and Monitoring"
+        - contentinfo [ref=e476]:
+            - generic [ref=e477]:
+                - generic [ref=e478]: "Status: disconnected"
+                - generic [ref=e479]: "Users: 0"
+            - generic [ref=e480]:
+                - generic [ref=e481]: Settings Ctrl+K
+                - generic [ref=e482]: Convert Ctrl+⏎
+                - generic [ref=e483]: Theme Ctrl+T
+    - generic [ref=e484]:
+        - alert
+        - alert
 ```

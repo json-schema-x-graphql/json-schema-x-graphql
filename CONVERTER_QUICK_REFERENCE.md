@@ -2,33 +2,39 @@
 
 ## 📊 Conversion Summary
 
-| Metric | Result |
-|--------|--------|
-| JSON Schema Input | `graphql-spec-schema.json` (16K) |
+| Metric             | Result                                           |
+| ------------------ | ------------------------------------------------ |
+| JSON Schema Input  | `graphql-spec-schema.json` (16K)                 |
 | GraphQL SDL Output | `output/graphql-spec-definitions.graphql` (4.2K) |
-| Node.js Converter | ✅ SUCCESS |
-| Rust Converter | ⚠️ Input format issue (expected) |
-| Processing Time | 2ms |
-| Lines Generated | 146 lines of valid GraphQL |
+| Node.js Converter  | ✅ SUCCESS                                       |
+| Rust Converter     | ⚠️ Input format issue (expected)                 |
+| Processing Time    | 2ms                                              |
+| Lines Generated    | 146 lines of valid GraphQL                       |
 
 ## 📁 Generated Files
 
 ### 1. **graphql-spec-schema.json** (16K)
+
 Input JSON Schema defining the GraphQL specification type system
+
 - Represents introspection types from GraphQL spec Appendix D
 - Includes all 5 built-in scalars, 5 directives, 6 introspection types, 2 enums
 - Uses `x-graphql` extensions for converter hints
 - Root Query type with `introspectionQuery` field
 
 ### 2. **output/graphql-spec-definitions.graphql** (4.2K)
+
 Generated GraphQL SDL from the JSON Schema
+
 - **Types**: IntrospectionQuery, Schema, Type, Field, InputValue, EnumValue, Directive
 - **Enums**: TypeKind (8 values), DirectiveLocation (19 values)
 - Full field descriptions preserved from spec
 - Proper nullability annotations and type references
 
 ### 3. **CONVERTER_OUTPUT_REPORT.md** (7.1K)
+
 Detailed report of conversion results
+
 - Conversion status for both Node and Rust converters
 - Generated schema features breakdown
 - Sample SDL output
@@ -36,18 +42,21 @@ Detailed report of conversion results
 - Next steps and integration options
 
 ### 4. **GRAPHQL_SPEC_SCHEMA_GUIDE.md** (11K)
+
 Comprehensive documentation guide
+
 - Overview of JSON Schema structure
 - Built-in scalars (String, Int, Float, Boolean, ID)
 - Built-in directives (@include, @skip, @deprecated, @specifiedBy, @oneOf)
 - Introspection system walkthrough
-- Type system enums (__TypeKind, __DirectiveLocation)
+- Type system enums (**TypeKind, **DirectiveLocation)
 - JSON Schema definition reference with examples
 - Integration recommendations
 
 ## 🚀 Quick Usage
 
 ### Generate GraphQL SDL from JSON Schema
+
 ```bash
 cd /home/john/json-schema-x-graphql
 
@@ -68,11 +77,13 @@ const schema = JSON.parse(fs.readFileSync('./graphql-spec-schema.json'));
 ```
 
 ### Compare Both Converters
+
 ```bash
 node scripts/test-both-converters.js graphql-spec-schema.json
 ```
 
 ### View Generated GraphQL
+
 ```bash
 cat output/graphql-spec-definitions.graphql
 ```
@@ -155,21 +166,25 @@ enum DirectiveLocation {
 ## ✨ Key Features
 
 ✅ **Complete GraphQL Spec Representation**
+
 - All introspection types from Appendix D
 - All built-in scalars and directives
 - All directive locations and type kinds
 
 ✅ **Converter Compatibility**
+
 - Tested with Node.js JSON Schema to GraphQL converter
 - Proper x-graphql extension annotations
 - Valid, parseable GraphQL SDL output
 
 ✅ **Well-Documented**
+
 - Field descriptions preserved
 - Multi-line descriptions for complex types
 - Comprehensive schema guide
 
 ✅ **Maintainable**
+
 - Clear schema structure
 - Reusable definitions
 - Easy to extend with custom types
@@ -177,12 +192,14 @@ enum DirectiveLocation {
 ## 🔧 Converter Details
 
 ### Node.js Converter
+
 - **Status**: ✅ Full support
 - **Input**: JSON Schema with x-graphql extensions
 - **Output**: Valid GraphQL SDL
 - **Command**: `npm run --prefix converters/node build && npm test`
 
 ### Rust Converter
+
 - **Status**: ⚠️ Requires SDL input, not JSON Schema
 - **Use Case**: For transforming existing GraphQL SDL
 - **Build**: `cargo build --release` in `converters/rust/`

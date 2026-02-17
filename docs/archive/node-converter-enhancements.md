@@ -21,18 +21,20 @@ Successfully implemented all three critical improvements to the Node.js converte
 **Solution:** Added `building` set to track types currently being converted, preventing infinite recursion.
 
 **Implementation:**
+
 - Added `building: Set<string>` to `ConversionContext`
 - Check if type is already being built before processing
 - Use try/finally to ensure cleanup even on errors
 - Throw `ConversionError` with code `CIRCULAR_REF` when detected
 
 **Code Changes:**
+
 ```typescript
 interface ConversionContext {
   schema: JsonSchema;
   processedTypes: Set<string>;
-  building: Set<string>;  // NEW
-  processedTypeNames: Set<string>;  // NEW (prevents duplicates)
+  building: Set<string>; // NEW
+  processedTypeNames: Set<string>; // NEW (prevents duplicates)
 }
 
 // In convertTypeDefinition:
@@ -40,7 +42,7 @@ if (context.building.has(typeName)) {
   throw new ConversionError(
     `Circular reference detected while building type: ${typeName}`,
     undefined,
-    'CIRCULAR_REF'
+    "CIRCULAR_REF",
   );
 }
 
@@ -53,6 +55,7 @@ try {
 ```
 
 **Tests Added:**
+
 - Self-referencing types (valid in GraphQL)
 - Mutual references between types
 - Circular $ref chains during resolution
@@ -67,6 +70,7 @@ try {
 **Solution:** Implemented full recursive $ref resolution with case conversion fallbacks.
 
 **Features:**
+
 - ✅ Recursive $ref following (refs within refs)
 - ✅ Case conversion fallbacks (camelCase ↔ snake_case ↔ PascalCase)
 - ✅ Root reference support (`#`)
@@ -75,6 +79,7 @@ try {
 - ✅ External ref handling (returns null, falls back to String)
 
 **Implementation:**
+
 ```typescript
 private resolveRef(
   schema: JsonSchema,
@@ -119,6 +124,7 @@ private tryGetProperty(obj: any, key: string): any {
 ```
 
 **Tests Added:**
+
 - Simple internal $ref
 - Nested $refs (A → B → C)
 - $ref to root (#)
@@ -136,6 +142,7 @@ private tryGetProperty(obj: any, key: string): any {
 **Solution:** Iterate through `$defs`/`definitions` and convert all types with `x-graphql-type-name`.
 
 **Features:**
+
 - ✅ Process `$defs` before root type
 - ✅ Support both `$defs` and `definitions` (old JSON Schema draft)
 - ✅ Skip entries without `x-graphql-type-name`
@@ -143,6 +150,7 @@ private tryGetProperty(obj: any, key: string): any {
 - ✅ Prevent duplicate types (if root and $defs have same name)
 
 **Implementation:**
+
 ```typescript
 public convert(schema: JsonSchema): string {
   const context: ConversionContext = { /* ... */ };
@@ -152,7 +160,7 @@ public convert(schema: JsonSchema): string {
   if (defs && typeof defs === 'object') {
     for (const [, defSchema] of Object.entries(defs)) {
       const typeName = this.getTypeName(defSchema);
-      if (typeName && !this.shouldExcludeType(typeName) 
+      if (typeName && !this.shouldExcludeType(typeName)
           && !context.processedTypeNames.has(typeName)) {
         const typeDef = this.convertTypeDefinition(defSchema, typeName, context);
         lines.push(typeDef);
@@ -172,6 +180,7 @@ public convert(schema: JsonSchema): string {
 ```
 
 **Tests Added:**
+
 - Extract all types from $defs
 - Support both $defs and definitions
 - Process $defs before root
@@ -188,6 +197,7 @@ public convert(schema: JsonSchema): string {
 **Total:** 23 tests, all passing ✅
 
 **Test Coverage:**
+
 - Circular Reference Protection: 4 tests
 - $ref Resolution: 7 tests
 - $defs Extraction: 5 tests
@@ -196,6 +206,7 @@ public convert(schema: JsonSchema): string {
 - Integration Tests: 3 tests
 
 **All Existing Tests:** Still passing ✅
+
 - `basic.test.ts`: 14/14 passing
 
 ---
@@ -205,16 +216,19 @@ public convert(schema: JsonSchema): string {
 ### Test with `schema/test.json`
 
 **Before:**
+
 - Generated: 1 type (Contract only)
 - Refs: All shown as `String`
 - $defs: Completely ignored
 
 **After:**
+
 - Generated: 2 types (SystemMetadata, Contract)
 - Refs: Properly resolved to type names
 - $defs: Fully extracted and converted
 
 **Sample Output:**
+
 ```graphql
 # Generated from JSON Schema by json-schema-x-graphql
 
@@ -241,6 +255,7 @@ type Contract implements Node {
 ## 🔧 Files Modified
 
 ### Core Implementation
+
 1. **`src/json-to-graphql.ts`** (major changes)
    - Added `ConversionContext` interface
    - Added circular reference protection
@@ -256,6 +271,7 @@ type Contract implements Node {
    - `ConversionError` already existed
 
 ### Tests
+
 3. **`tests/improvements.test.ts`** (new file - 512 lines)
    - Comprehensive test suite for all improvements
    - 23 tests covering edge cases
@@ -290,12 +306,14 @@ All original success criteria have been achieved:
 ## 🚀 Impact
 
 ### Before Improvements
+
 - ❌ Crashed on circular types
 - ❌ No $ref resolution (all String)
 - ❌ Only root type converted
 - ❌ Limited to simple, flat schemas
 
 ### After Improvements
+
 - ✅ Handles circular types gracefully
 - ✅ Full recursive $ref resolution
 - ✅ Extracts all types from $defs
@@ -321,26 +339,26 @@ From production scripts analysis:
 ## 📝 Example Usage
 
 ```typescript
-import { jsonSchemaToGraphQL } from '@json-schema-x-graphql/node-converter';
+import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/node-converter";
 
 const schema = {
   $defs: {
     Address: {
-      type: 'object',
-      'x-graphql-type-name': 'Address',
+      type: "object",
+      "x-graphql-type-name": "Address",
       properties: {
-        street: { type: 'string' }
-      }
+        street: { type: "string" },
+      },
     },
     User: {
-      type: 'object',
-      'x-graphql-type-name': 'User',
+      type: "object",
+      "x-graphql-type-name": "User",
       properties: {
-        id: { type: 'string' },
-        address: { $ref: '#/$defs/Address' }  // ← Resolved!
-      }
-    }
-  }
+        id: { type: "string" },
+        address: { $ref: "#/$defs/Address" }, // ← Resolved!
+      },
+    },
+  },
 };
 
 const graphql = jsonSchemaToGraphQL(schema);
@@ -379,15 +397,15 @@ The converter is now production-ready without these enhancements. They would imp
 
 ## 🤝 Comparison with Rust Converter
 
-| Feature | Node (Before) | Node (After) | Rust |
-|---------|--------------|--------------|------|
-| Circular ref protection | ❌ | ✅ | ✅ |
-| $ref resolution | ❌ | ✅ | ✅ |
-| Recursive $refs | ❌ | ✅ | ✅ |
-| Case conversion | ❌ | ✅ | ⚠️ |
-| $defs extraction | ❌ | ✅ | ✅ |
-| Type filtering | ❌ | ⚠️ Basic | ❌ |
-| Complex schemas | ❌ | ✅ | ✅ |
+| Feature                 | Node (Before) | Node (After) | Rust |
+| ----------------------- | ------------- | ------------ | ---- |
+| Circular ref protection | ❌            | ✅           | ✅   |
+| $ref resolution         | ❌            | ✅           | ✅   |
+| Recursive $refs         | ❌            | ✅           | ✅   |
+| Case conversion         | ❌            | ✅           | ⚠️   |
+| $defs extraction        | ❌            | ✅           | ✅   |
+| Type filtering          | ❌            | ⚠️ Basic     | ❌   |
+| Complex schemas         | ❌            | ✅           | ✅   |
 
 **Status:** Feature parity achieved! 🎉
 

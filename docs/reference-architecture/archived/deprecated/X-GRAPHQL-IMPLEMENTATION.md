@@ -11,6 +11,7 @@ This document tracks the completion of the x-graphql hints system enhancement fo
 **File**: `docs/x-graphql-hints-guide.md` (400+ lines)
 
 Complete documentation covering:
+
 - **9 hint types**: type, type-name, field-name, description, nullable, implements, union-types, directives, skip, args
 - **Core concepts**: Extension prefix, scope, priority order
 - **Decision tree**: When to use hints vs type inference
@@ -24,8 +25,9 @@ Complete documentation covering:
 Full x-graphql hint support:
 
 #### Supported Hints
+
 - ✅ `x-graphql-type-name`: Override generated type names
-- ✅ `x-graphql-field-name`: Override field names  
+- ✅ `x-graphql-field-name`: Override field names
 - ✅ `x-graphql-type`: Specify GraphQL type (interface, union, enum, scalar)
 - ✅ `x-graphql-implements`: Interface implementation
 - ✅ `x-graphql-description`: GraphQL-specific descriptions
@@ -36,6 +38,7 @@ Full x-graphql hint support:
 - ✅ `x-graphql-args`: Field arguments with defaults
 
 #### Features
+
 - **4-phase generation**: Interfaces → Unions → Enums → Object Types
 - **Smart type inference**: DateTime from format, ID from patterns
 - **Directive support**: @currency, @deprecated, custom directives
@@ -50,6 +53,7 @@ Full x-graphql hint support:
 Real-world Contract Data mapping example demonstrating:
 
 #### Interface Implementation
+
 ```json
 {
   "Contract": {
@@ -58,10 +62,12 @@ Real-world Contract Data mapping example demonstrating:
     "properties": {
       "contractId": { "x-graphql-nullable": false },
       "obligatedAmount": {
-        "x-graphql-directives": [{
-          "name": "currency",
-          "args": { "code": "USD" }
-        }]
+        "x-graphql-directives": [
+          {
+            "name": "currency",
+            "args": { "code": "USD" }
+          }
+        ]
       }
     }
   },
@@ -72,6 +78,7 @@ Real-world Contract Data mapping example demonstrating:
 ```
 
 #### Union Types
+
 ```json
 {
   "ContractSearchResult": {
@@ -82,6 +89,7 @@ Real-world Contract Data mapping example demonstrating:
 ```
 
 #### Field Renaming
+
 ```json
 {
   "piid": {
@@ -94,6 +102,7 @@ Real-world Contract Data mapping example demonstrating:
 ```
 
 #### Query Arguments
+
 ```json
 {
   "contracts": {
@@ -118,6 +127,7 @@ Real-world Contract Data mapping example demonstrating:
 **Output**: `public/data/schema_unification-contract_data-hinted.graphql` (179 lines)
 
 #### Generated Statistics
+
 - 7 Object types (IDVContract, Order, Vendor, Address, BusinessType, ContractAction, Query)
 - 1 Interface (Contract)
 - 1 Union (ContractSearchResult)
@@ -127,6 +137,7 @@ Real-world Contract Data mapping example demonstrating:
 #### Validation Results
 
 **✅ Interface Implementation**:
+
 ```graphql
 interface Contract {
   contractId: String!
@@ -142,11 +153,13 @@ type IDVContract implements Contract {
 ```
 
 **✅ Union Types**:
+
 ```graphql
 union ContractSearchResult = IDVContract | Order
 ```
 
 **✅ Field Renaming**:
+
 ```graphql
 # piid → procurementInstrumentId
 procurementInstrumentId: String!
@@ -159,21 +172,23 @@ postalCode: String
 ```
 
 **✅ Query Arguments**:
+
 ```graphql
 type Query {
   contracts(
-    piid: String,
-    vendorDuns: String,
-    status: ContractStatus,
+    piid: String
+    vendorDuns: String
+    status: ContractStatus
     limit: Int = 100
   ): [ContractSearchResult!]
-  
+
   contract(id: ID!): ContractSearchResult
   vendor(duns: String!): Vendor
 }
 ```
 
 **✅ Custom Scalars**:
+
 ```graphql
 scalar DateTime
 scalar JSON
@@ -184,11 +199,13 @@ actionDate: DateTime!
 ```
 
 **✅ Directives**:
+
 ```graphql
 obligatedAmount: Float @currency(code: "USD")
 ```
 
 **✅ Descriptions**:
+
 ```graphql
 """
 Base contract interface implemented by all contract types
@@ -234,11 +251,13 @@ Is the JSON Schema sufficient?
 #### Contributor Guidelines
 
 **Minimal Hints Principle**:
+
 - Only use hints when type inference fails
 - Prefer JSON Schema standard features
 - Document why hints are needed
 
 **Type Inference First**:
+
 ```json
 // ✅ GOOD: Let inference handle it
 { "type": "string", "format": "date-time" }
@@ -249,6 +268,7 @@ Is the JSON Schema sufficient?
 ```
 
 **Consistency**:
+
 ```json
 // ✅ GOOD: Consistent naming
 {
@@ -268,10 +288,12 @@ Is the JSON Schema sufficient?
 ### Benchmark Comparison
 
 **Original converter** (generate-graphql-custom.mjs):
+
 - Speed: 3,134 ops/sec (0.32ms)
 - Features: Partial hint support (scalars, enums, unions)
 
 **Enhanced converter** (generate-graphql-enhanced.mjs):
+
 - Speed: Similar (not yet benchmarked)
 - Features: Full hint support (all 9 hint types)
 - Output: 179 lines for Contract Data example
@@ -279,6 +301,7 @@ Is the JSON Schema sufficient?
 ### V1 vs V2 Comparison
 
 **Without hints** (V1):
+
 - Manual GraphQL crafting required
 - Type names from JSON keys
 - No interface inheritance
@@ -286,6 +309,7 @@ Is the JSON Schema sufficient?
 - Basic descriptions
 
 **With hints** (V2):
+
 - Automatic GraphQL generation
 - Clean type names (procurementInstrumentId vs piid)
 - Interface inheritance (Contract interface)
@@ -306,6 +330,7 @@ node scripts/generate-graphql-enhanced.mjs \
 ### NPM Scripts
 
 Add to `package.json`:
+
 ```json
 {
   "scripts": {
@@ -392,6 +417,7 @@ public/data/
 ### Contributing
 
 See `docs/x-graphql-hints-guide.md` for:
+
 - When to use each hint type
 - Decision tree for contributors
 - Best practices and patterns
@@ -400,6 +426,7 @@ See `docs/x-graphql-hints-guide.md` for:
 ## Summary
 
 ✅ **All TODO items completed**:
+
 1. ✅ Document x-graphql hint system → `docs/x-graphql-hints-guide.md`
 2. ✅ Enhance converter to support hints → `scripts/generate-graphql-enhanced.mjs`
 3. ✅ Add example annotations to V1 schema → `src/data/schema_unification-contract_data-hinted.schema.json`

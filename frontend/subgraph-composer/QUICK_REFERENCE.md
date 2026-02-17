@@ -25,69 +25,76 @@ npm run clean           # Reset everything
 ## File Locations
 
 ### User-Facing
-| File | Purpose |
-|------|---------|
-| `src/components/SchemaManager.jsx` | Schema list & templates |
-| `src/components/SchemaEditor.jsx` | JSON editor & generate button |
-| `src/components/FileManager.jsx` | Import/export UI |
-| `src/components/SupergraphPreview.jsx` | GraphQL preview |
+
+| File                                   | Purpose                       |
+| -------------------------------------- | ----------------------------- |
+| `src/components/SchemaManager.jsx`     | Schema list & templates       |
+| `src/components/SchemaEditor.jsx`      | JSON editor & generate button |
+| `src/components/FileManager.jsx`       | Import/export UI              |
+| `src/components/SupergraphPreview.jsx` | GraphQL preview               |
 
 ### Business Logic
-| File | Purpose |
-|------|---------|
-| `src/lib/converter.js` | JSON → GraphQL conversion |
-| `src/lib/composer.js` | Subgraph composition |
-| `src/lib/templates.js` | Schema templates |
-| `src/lib/fileIO.js` | File import/export |
-| `src/lib/schemaDiff.js` | Schema comparison |
-| `src/lib/federationMetadata.js` | Federation analysis |
+
+| File                            | Purpose                   |
+| ------------------------------- | ------------------------- |
+| `src/lib/converter.js`          | JSON → GraphQL conversion |
+| `src/lib/composer.js`           | Subgraph composition      |
+| `src/lib/templates.js`          | Schema templates          |
+| `src/lib/fileIO.js`             | File import/export        |
+| `src/lib/schemaDiff.js`         | Schema comparison         |
+| `src/lib/federationMetadata.js` | Federation analysis       |
 
 ### React Hooks
-| File | Purpose |
-|------|---------|
-| `src/hooks/useSchemaManager.js` | Schema CRUD + persistence |
+
+| File                                | Purpose                    |
+| ----------------------------------- | -------------------------- |
+| `src/hooks/useSchemaManager.js`     | Schema CRUD + persistence  |
 | `src/hooks/useSubgraphGenerator.js` | Convert schemas to GraphQL |
-| `src/hooks/useComposition.js` | Compose subgraphs |
+| `src/hooks/useComposition.js`       | Compose subgraphs          |
 
 ### Tests
-| File | Coverage |
-|------|----------|
+
+| File                              | Coverage                   |
+| --------------------------------- | -------------------------- |
 | `src/__tests__/converter.test.js` | Unit (converter functions) |
-| `src/__tests__/hooks.test.js` | Integration (React hooks) |
-| `src/__tests__/e2e.test.js` | E2E (complete workflows) |
+| `src/__tests__/hooks.test.js`     | Integration (React hooks)  |
+| `src/__tests__/e2e.test.js`       | E2E (complete workflows)   |
 
 ## Key Features
 
 ### 1. Schema Management
+
 ```jsx
 // Add schema (blank)
 const schema = addSchema();
 
 // Add from template
-const schema = addSchema('User', templateContent);
+const schema = addSchema("User", templateContent);
 
 // Update content
 updateSchema(schemaId, newContent);
 
 // Rename
-renameSchema(schemaId, 'New Name');
+renameSchema(schemaId, "New Name");
 
 // Remove
 removeSchema(schemaId);
 ```
 
 ### 2. Conversion
+
 ```js
 // Convert JSON schema to GraphQL SDL
 const result = convertSchema(jsonSchema, {
   federation: true,
   descriptions: true,
-  validate: true
+  validate: true,
 });
 // result.sdl = GraphQL schema
 ```
 
 ### 3. File Operations
+
 ```js
 // Export single schema
 exportSchema(schema);
@@ -103,15 +110,17 @@ exportSupergraph(sdl);
 ```
 
 ### 4. Schema Comparison
+
 ```js
 // Compare two schemas
 const diff = new SchemaDiff(schema1, schema2);
-diff.getFormatted();      // Display data
-diff.getSummary();        // Stats
-diff.toTextReport();      // Human-readable
+diff.getFormatted(); // Display data
+diff.getSummary(); // Stats
+diff.toTextReport(); // Human-readable
 ```
 
 ### 5. Federation Analysis
+
 ```js
 // Extract federation metadata
 const metadata = extractFederationMetadata(sdl);
@@ -125,6 +134,7 @@ const analysis = analyzeFederationRequirements(subgraphs);
 ## User Workflows
 
 ### Workflow: Template → Convert → Compose
+
 1. App loads → Click "📋 Template"
 2. Select "User Service"
 3. Schema auto-populates
@@ -134,6 +144,7 @@ const analysis = analyzeFederationRequirements(subgraphs);
 7. All compose into supergraph
 
 ### Workflow: Import Existing Schemas
+
 1. Click dropzone
 2. Drag JSON file
 3. Preview shows count
@@ -141,6 +152,7 @@ const analysis = analyzeFederationRequirements(subgraphs);
 5. Schemas loaded
 
 ### Workflow: Export & Backup
+
 1. Click "💾 Export Active"
 2. JSON file downloaded
 3. Or click "💾 Export All"
@@ -202,13 +214,13 @@ npm test -- --inspect-brk
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Port 5175 in use | Kill process or use different port |
-| Node modules broken | `npm install` or `npm run clean` |
-| Tests fail | Check localStorage mock in setup.js |
-| Build error | Clear `.vite` folder, reinstall |
-| Import errors | Ensure file extensions (.js/.jsx) |
+| Issue               | Solution                            |
+| ------------------- | ----------------------------------- |
+| Port 5175 in use    | Kill process or use different port  |
+| Node modules broken | `npm install` or `npm run clean`    |
+| Tests fail          | Check localStorage mock in setup.js |
+| Build error         | Clear `.vite` folder, reinstall     |
+| Import errors       | Ensure file extensions (.js/.jsx)   |
 
 ## Performance Tips
 
@@ -223,6 +235,7 @@ npm test -- --inspect-brk
 Not required - app is fully client-side.
 
 Optional future envs:
+
 - `VITE_API_URL` - Backend API endpoint
 - `VITE_FEDERATION_VERSION` - Force Fed v1/v2
 
@@ -246,6 +259,7 @@ Total: 149.6 KB (gzipped)
 ## Production Checklist
 
 Before deploying:
+
 - [ ] `npm test` passes
 - [ ] `npm run build` succeeds
 - [ ] No console errors
@@ -257,6 +271,7 @@ Before deploying:
 ## For Phase 5
 
 Next phase adds:
+
 - GraphQL Editor visual preview
 - Federation dependency graph
 - Real-time composition visualization
@@ -264,17 +279,18 @@ Next phase adds:
 
 ## Documentation Files
 
-| Doc | Content |
-|-----|---------|
-| COMPLETE_IMPLEMENTATION_SUMMARY.md | Overview of all phases |
-| PHASE_3_COMPLETION.md | Phase 3a/b (converter + templates) |
-| PHASE_3C_4_COMPLETION.md | Phase 3c/4 (enhanced + tests) |
-| README.md | Project description |
-| This file | Quick reference |
+| Doc                                | Content                            |
+| ---------------------------------- | ---------------------------------- |
+| COMPLETE_IMPLEMENTATION_SUMMARY.md | Overview of all phases             |
+| PHASE_3_COMPLETION.md              | Phase 3a/b (converter + templates) |
+| PHASE_3C_4_COMPLETION.md           | Phase 3c/4 (enhanced + tests)      |
+| README.md                          | Project description                |
+| This file                          | Quick reference                    |
 
 ## Contact & Support
 
 For issues:
+
 1. Check tests: `npm test`
 2. Review relevant .md file
 3. Check browser console for errors

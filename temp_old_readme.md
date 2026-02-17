@@ -16,11 +16,13 @@ This project establishes a **canonical pattern** for maintaining JSON Schema as 
 ### The Problem
 
 Current GraphQL tooling forces you to choose:
+
 - **Schema-first (SDL)** → Lose robust data validation capabilities
 - **Code-first** → Lose declarative schema benefits and git-friendly diffs
 - **Introspection JSON** → Lose all directives and custom metadata
 
 Existing converters like `jsonschema2graphql` lose critical information:
+
 - ❌ All directive applications (`@deprecated`, `@key`, `@requires`, etc.)
 - ❌ Field arguments and default values
 - ❌ Apollo Federation metadata
@@ -30,6 +32,7 @@ Existing converters like `jsonschema2graphql` lose critical information:
 ### The Solution
 
 **JSON Schema with `x-graphql-*` extensions** provides:
+
 - ✅ **Validation-first workflow**: Validate data before it hits your database
 - ✅ **Lossless round-tripping**: SDL → JSON Schema → SDL preserves 100% of metadata
 - ✅ **Full Federation support**: All Apollo Federation v2.9 directives
@@ -44,6 +47,7 @@ Existing converters like `jsonschema2graphql` lose critical information:
 ### Example: User Entity with Federation
 
 **JSON Schema** (`user.schema.json`):
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -91,8 +95,11 @@ Existing converters like `jsonschema2graphql` lose critical information:
 ```
 
 **Generated GraphQL SDL**:
+
 ```graphql
-"""A user in the system"""
+"""
+A user in the system
+"""
 type User @key(fields: "id") {
   id: ID!
   username: String! @shareable
@@ -118,7 +125,7 @@ cargo add json-schema-x-graphql
 #### JavaScript/TypeScript
 
 ```typescript
-import { convertSdlToJson, convertJsonToSdl } from 'json-schema-x-graphql';
+import { convertSdlToJson, convertJsonToSdl } from "json-schema-x-graphql";
 
 // SDL → JSON Schema
 const jsonSchema = await convertSdlToJson(`
@@ -166,23 +173,27 @@ let sdl = JsonSchemaToSdl::convert(&json_schema)?;
 All Federation v2.9 directives are supported:
 
 **Entity Directives**:
+
 - `@key(fields: "id", resolvable: true)` → `x-graphql-federation-keys`
 - `@shareable` → `x-graphql-federation-shareable`
 - `@inaccessible` → `x-graphql-federation-inaccessible`
 - `@interfaceObject` → `x-graphql-federation-interface-object`
 
 **Field-Level Directives**:
+
 - `@external` → `x-graphql-federation-external`
 - `@requires(fields: "category")` → `x-graphql-federation-requires`
 - `@provides(fields: "name")` → `x-graphql-federation-provides`
 - `@override(from: "old-service", label: "percent(50)")` → `x-graphql-federation-override-from`
 
 **Authorization Directives** (v2.5+):
+
 - `@authenticated` → `x-graphql-federation-authenticated`
 - `@requiresScopes` → `x-graphql-federation-requires-scopes`
 - `@policy` → `x-graphql-federation-policy`
 
 **Demand Control** (v2.9+):
+
 - `@cost(weight: 5)` → `x-graphql-federation-cost-weight`
 - `@listSize(assumedSize: 50)` → `x-graphql-federation-list-size-assumed-size`
 
@@ -195,11 +206,13 @@ All Federation v2.9 directives are supported:
 The system uses three distinct naming conventions for semantic isolation:
 
 1. **`snake_case`** - JSON Schema properties (database/validation domain)
+
    ```json
    { "user_id": "123", "created_at": "2024-01-01" }
    ```
 
 2. **`camelCase`** - GraphQL SDL fields (API domain)
+
    ```graphql
    { userId: "123", createdAt: "2024-01-01" }
    ```
@@ -214,17 +227,20 @@ The system uses three distinct naming conventions for semantic isolation:
 Only **15 core fields** are required for lossless round-tripping:
 
 **Always Required**:
+
 - `x-graphql-type-name` - Type name (PascalCase)
 - `x-graphql-type-kind` - OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
 - `x-graphql-field-name` - Field name (camelCase)
 - `x-graphql-field-type` - GraphQL type reference
 
 **Required When Applicable**:
+
 - `x-graphql-field-non-null` - Non-nullable field (`!`)
 - `x-graphql-field-list-item-non-null` - Non-nullable list items (`[Item!]`)
 - `x-graphql-argument-default-value` - Argument defaults
 
 **Federation Required**:
+
 - `x-graphql-federation-keys` - Entity keys
 - `x-graphql-federation-requires` - Required field sets
 - `x-graphql-federation-provides` - Provided field sets
@@ -233,6 +249,7 @@ Only **15 core fields** are required for lossless round-tripping:
 - `x-graphql-federation-override-from` - Migration source
 
 **Optional Arrays**:
+
 - `x-graphql-type-directives` - Type-level directives
 - `x-graphql-field-directives` - Field-level directives
 - `x-graphql-field-arguments` - Field arguments
@@ -251,6 +268,7 @@ Incoming Data → JSON Schema Validation → Database
 ```
 
 **Benefits**:
+
 - Validate data before persistence
 - Single source of truth for structure
 - Automatic API generation with type safety
@@ -265,6 +283,7 @@ Apollo Router (federated GraphQL)
 ```
 
 **Benefits**:
+
 - Each service validates its own data
 - Federation directives preserved
 - Consistent entity resolution
@@ -278,6 +297,7 @@ v1.schema.json → Git → v2.schema.json
 ```
 
 **Benefits**:
+
 - Track schema changes in version control
 - Automated SDL generation from JSON
 - Clear migration paths with diffs
@@ -288,12 +308,12 @@ v1.schema.json → Git → v2.schema.json
 
 Optimized for real-time editing and CI/CD pipelines:
 
-| Operation | Performance | Method |
-|-----------|-------------|--------|
-| SDL → JSON | < 5ms | WASM with LRU cache |
-| JSON → SDL | < 5ms | WASM with LRU cache |
-| Validation | < 1ms | Standard JSON Schema validators |
-| WASM Binary | < 150KB gzipped | Rust optimization flags |
+| Operation   | Performance     | Method                          |
+| ----------- | --------------- | ------------------------------- |
+| SDL → JSON  | < 5ms           | WASM with LRU cache             |
+| JSON → SDL  | < 5ms           | WASM with LRU cache             |
+| Validation  | < 1ms           | Standard JSON Schema validators |
+| WASM Binary | < 150KB gzipped | Rust optimization flags         |
 
 ---
 
@@ -309,15 +329,15 @@ Optimized for real-time editing and CI/CD pipelines:
 
 ## Comparison with Alternatives
 
-| Feature | This Project | jsonschema2graphql | GraphQL Introspection | Code-First |
-|---------|--------------|-------------------|---------------------|-----------|
-| Directives | ✅ Full support | ❌ None | ❌ Lost | ⚠️ Language-specific |
-| Federation | ✅ v2.9 | ❌ None | ❌ Lost | ⚠️ Partial |
-| Bidirectional | ✅ Lossless | ❌ One-way | ⚠️ Lossy | ❌ One-way |
-| Field Arguments | ✅ With defaults | ❌ None | ✅ Yes | ✅ Yes |
-| Data Validation | ✅ JSON Schema | ⚠️ Manual | ⚠️ Manual | ⚠️ Manual |
-| Git-Friendly | ✅ Yes | ✅ Yes | ❌ Verbose | ⚠️ Language files |
-| Standards-Based | ✅ 100% | ⚠️ Partial | ✅ Yes | ❌ No |
+| Feature         | This Project     | jsonschema2graphql | GraphQL Introspection | Code-First           |
+| --------------- | ---------------- | ------------------ | --------------------- | -------------------- |
+| Directives      | ✅ Full support  | ❌ None            | ❌ Lost               | ⚠️ Language-specific |
+| Federation      | ✅ v2.9          | ❌ None            | ❌ Lost               | ⚠️ Partial           |
+| Bidirectional   | ✅ Lossless      | ❌ One-way         | ⚠️ Lossy              | ❌ One-way           |
+| Field Arguments | ✅ With defaults | ❌ None            | ✅ Yes                | ✅ Yes               |
+| Data Validation | ✅ JSON Schema   | ⚠️ Manual          | ⚠️ Manual             | ⚠️ Manual            |
+| Git-Friendly    | ✅ Yes           | ✅ Yes             | ❌ Verbose            | ⚠️ Language files    |
+| Standards-Based | ✅ 100%          | ⚠️ Partial         | ✅ Yes                | ❌ No                |
 
 ---
 
@@ -327,6 +347,7 @@ Optimized for real-time editing and CI/CD pipelines:
 **Current Phase**: 3A - Local Testing Infrastructure
 
 ### Completed ✅
+
 - ✅ Meta-schema definition (JSON Schema 2020-12)
 - ✅ Comprehensive example schemas
 - ✅ Architecture documentation
@@ -343,11 +364,13 @@ Optimized for real-time editing and CI/CD pipelines:
   - ✅ Parity validation script
 
 ### In Progress 🚧
+
 - 🚧 Running comprehensive test suite
 - 🚧 Achieving 80%+ code coverage
 - 🚧 Validating converter parity
 
 ### Next: Phase 3B 📋
+
 - 📋 Web UI Editor with three-panel layout
 - 📋 GraphQL Editor integration ([graphql-editor](https://github.com/graphql-editor/graphql-editor))
 - 📋 Node.js/WASM converter toggle
@@ -355,11 +378,13 @@ Optimized for real-time editing and CI/CD pipelines:
 - 📋 Sample schemas and import/export
 
 ### Future Roadmap
+
 - 📋 npm/crates.io publication
 - 📋 Video tutorials and examples
 - 📋 Community contributions and feedback
 
-----
+---
+
 ## Diagrams
 
 ## Overview
@@ -379,7 +404,7 @@ graph LR
     subgraph "JSON Schema"
         VAL[Schema Validator]
         TRANSFORM[ETL Transform]
-        
+
         subgraph "Schemas"
             JS1[System 1 Schema]
             JS2[System 2 Schema]
@@ -400,9 +425,9 @@ graph LR
             SG2[System 2<br/>Subgraph]
             SG3[System 3<br/>Subgraph]
         end
-        
+
         GATEWAY[Supergraph / API gateway]
-        
+
         subgraph "Clients"
             WEB[GraphQL API]
             MOBILE[REST API]
@@ -416,26 +441,26 @@ graph LR
     REST2 -->|JSON| VAL
     KAFKA -->|Stream| VAL
     S3 -->|Batch| VAL
-    
+
     VAL -->|Validate| JS1
     VAL -->|Validate| JS2
     VAL -->|Validate| JS3
-    
+
     JS1 -->|Transform| TRANSFORM
     JS2 -->|Transform| TRANSFORM
     JS3 -->|Transform| TRANSFORM
-    
+
     TRANSFORM -->|Enhanced Schema| CONV
     CONV -->|Infer Types| INFER
-    
+
     INFER -->|Generate SDL| SG1
     INFER -->|Generate SDL| SG2
     INFER -->|Generate SDL| SG3
-    
+
     SG1 -->|Compose| GATEWAY
     SG2 -->|Compose| GATEWAY
     SG3 -->|Compose| GATEWAY
-    
+
     GATEWAY -->|GraphQL| WEB
     GATEWAY -->|GraphQL| MOBILE
     GATEWAY -->|GraphQL| API
@@ -447,7 +472,7 @@ graph LR
     classDef subgraphNode fill:#3498db,stroke:#2980b9,color:#fff
     classDef gateway fill:#9b59b6,stroke:#8e44ad,color:#fff
     classDef client fill:#1abc9c,stroke:#16a085,color:#fff
-    
+
     class DB,REST1,REST2,KAFKA,S3 datasource
     class VAL,TRANSFORM,JS1,JS2,JS3 validation
     class CONV,INFER converter
@@ -473,7 +498,7 @@ graph TB
         JSD --> TD[Type Definitions]
         TD --> FD[Field Definitions]
     end
-    
+
     subgraph "GraphQL SDL"
         GS[GraphQL Schema]
         GS --> ST[Schema Types]
@@ -481,13 +506,13 @@ graph TB
         ST --> GT[GraphQL Types]
         GT --> GF[GraphQL Fields]
     end
-    
+
     JS -.->|Transform| GS
     XGS -.->|Maps to| ST
     XGL -.->|Maps to| LI
     TD -.->|Maps to| GT
     FD -.->|Maps to| GF
-    
+
     style JS fill:#f9f,stroke:#333,stroke-width:2px
     style GS fill:#9ff,stroke:#333,stroke-width:2px
 ```
@@ -506,7 +531,7 @@ graph LR
         JSE[enum]
         JSU[oneOf]
     end
-    
+
     subgraph "GraphQL Types"
         GO[Object Type]
         GS[String]
@@ -519,7 +544,7 @@ graph LR
         GIN[Input Object]
         GIF[Interface]
     end
-    
+
     JSO -->|x-graphql-type-kind: OBJECT| GO
     JSO -->|x-graphql-type-kind: INPUT_OBJECT| GIN
     JSO -->|x-graphql-type-kind: INTERFACE| GIF
@@ -546,7 +571,7 @@ graph TD
         TL --> RS[x-graphql-federation-requires-scopes]
         TL --> P[x-graphql-federation-policy]
     end
-    
+
     subgraph "GraphQL Federation Directives"
         K --> GK["@key"]
         S --> GSH["@shareable"]
@@ -556,14 +581,14 @@ graph TD
         RS --> GRS["@requiresScopes"]
         P --> GP["@policy"]
     end
-    
+
     subgraph "Field Level Federation"
         FL[Field Definition]
         FL --> FE[x-graphql-federation-external]
         FL --> FR[x-graphql-federation-requires]
         FL --> FP[x-graphql-federation-provides]
         FL --> FO[x-graphql-federation-override-from]
-        
+
         FE --> GFE["@external"]
         FR --> GFR["@requires"]
         FP --> GFP["@provides"]
@@ -582,20 +607,20 @@ graph TB
         SC --> ST["subscription-type: Subscription"]
         SC --> FV["federation-version: v2.9"]
     end
-    
+
     subgraph "GraphQL Schema Definition"
         GSD[schema]
         GSD --> GQ["query: Query"]
         GSD --> GM["mutation: Mutation"]
         GSD --> GS["subscription: Subscription"]
     end
-    
+
     subgraph "Link Imports"
         LI[x-graphql-link-imports]
         LI --> L1["@link url: federation/v2.9"]
         LI --> L2["@link import: @key, @requires"]
     end
-    
+
     SC -.->|Generates| GSD
     LI -.->|Generates| L1
     QT -.->|Maps to| GQ
@@ -613,22 +638,22 @@ graph LR
         JF --> FD[x-graphql-field-directives]
         JF --> FT[x-graphql-field-type]
         JF --> FN[x-graphql-field-non-null]
-        
+
         FA --> ARG1["name: id\ntype: ID!"]
         FD --> DIR1["name: deprecated\nargs: reason: ..."]
     end
-    
+
     subgraph "GraphQL Field"
         GF[field]
         GF --> GA[Arguments]
         GF --> GD[Directives]
         GF --> GT[Type]
-        
+
         GA --> GARG["id: ID!"]
         GD --> GDIR["@deprecated reason: ..."]
         GT --> GTYPE["User!"]
     end
-    
+
     JF -.->|Transform| GF
     FA -.->|Maps to| GA
     FD -.->|Maps to| GD
@@ -644,19 +669,19 @@ graph TB
         JU --> UP[properties:<br/>id, name, email]
         JU --> UK[x-graphql-federation-keys:<br/>fields: 'id']
         JU --> UT[x-graphql-type-kind:<br/>OBJECT]
-        
+
         UP --> UID[id:<br/>type: string<br/>x-graphql-field-type: ID<br/>x-graphql-field-non-null: true]
         UP --> UNAME[name:<br/>type: string<br/>x-graphql-field-type: String]
         UP --> UEMAIL[email:<br/>type: string<br/>x-graphql-field-shareable: true]
     end
-    
+
     subgraph "GraphQL User Type"
         GU[type User @key fields: 'id']
         GU --> GUID[id: ID!]
         GU --> GUNAME[name: String]
         GU --> GUEMAIL[email: String @shareable]
     end
-    
+
     JU -.->|Transform| GU
     UID -.->|Maps to| GUID
     UNAME -.->|Maps to| GUNAME
@@ -675,18 +700,18 @@ graph TD
         RC --> RMA["x-graphql-resolver-cache-max-age: 300"]
         RC --> RRL["x-graphql-resolver-rate-limit-max: 100"]
     end
-    
+
     subgraph "Subscription Configuration"
         SC[Field Definition]
         SC --> ST["x-graphql-subscription-transport: websocket"]
         SC --> STO["x-graphql-subscription-topic: user.id.updated"]
         SC --> SF["x-graphql-subscription-filter: status == active"]
     end
-    
+
     subgraph "Generated Metadata"
         RC -.->|Informs| RM[Resolver Metadata]
         SC -.->|Informs| SM[Subscription Metadata]
-        
+
         RM --> RMD["Service routing\nCaching config\nRate limiting"]
         SM --> SMD["Transport protocol\nTopic mapping\nFiltering rules"]
     end
@@ -773,4 +798,4 @@ If you use this project in research or production, please cite:
 
 **Built with ❤️ by the community**
 
-*Questions? Open an [issue](https://github.com/JJediny/json-schema-x-graphql/issues) or start a [discussion](https://github.com/JJediny/json-schema-x-graphql/discussions).*
+_Questions? Open an [issue](https://github.com/JJediny/json-schema-x-graphql/issues) or start a [discussion](https://github.com/JJediny/json-schema-x-graphql/discussions)._

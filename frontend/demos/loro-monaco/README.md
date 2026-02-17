@@ -78,15 +78,15 @@ npm run preview
 ### 1. Loro Document Structure
 
 ```typescript
-import { Loro } from 'loro-crdt';
+import { Loro } from "loro-crdt";
 
 // Create a new Loro document
 const doc = new Loro();
 doc.setPeerId(BigInt(Date.now()));
 
 // Get text containers
-const jsonText = doc.getText('jsonSchema');
-const graphqlText = doc.getText('graphqlSdl');
+const jsonText = doc.getText("jsonSchema");
+const graphqlText = doc.getText("graphqlSdl");
 ```
 
 Two shared text types store the JSON Schema and GraphQL SDL content.
@@ -149,6 +149,7 @@ import { GraphQLEditor } from 'graphql-editor';
 ```
 
 Provides interactive graph visualization of GraphQL schemas with:
+
 - Node-based type visualization
 - Relationship mapping
 - Real-time collaborative editing
@@ -159,6 +160,7 @@ Provides interactive graph visualization of GraphQL schemas with:
 The demo includes `graphql-editor` for visual schema representation:
 
 ### Benefits
+
 - **Interactive Graph**: See your schema as a connected graph
 - **Type Relationships**: Visualize connections between types
 - **Live Updates**: Graph updates in real-time as you edit
@@ -166,6 +168,7 @@ The demo includes `graphql-editor` for visual schema representation:
 - **Multi-View**: Switch between code, visual, and split views
 
 ### Three-Panel Layout
+
 1. **Left Panel**: JSON Schema editor (Monaco)
 2. **Center Panel**: GraphQL SDL code editor (Monaco)
 3. **Right Panel**: GraphQL SDL visual editor (graphql-editor)
@@ -197,20 +200,20 @@ All three panels sync in real-time via Loro!
 
 ## Comparison: Loro vs Yjs
 
-| Feature | Loro | Yjs |
-|---------|------|-----|
-| **Maturity** | Newer (2023+) | Very mature (2015+) |
-| **Performance** | Excellent (Rust/WASM) | Excellent (JavaScript) |
-| **Bundle Size** | ~150KB (WASM) | ~60KB (gzipped) |
-| **Language** | Rust → WASM | JavaScript |
-| **Time Travel** | Built-in, first-class | Via snapshots |
-| **Rich Types** | Text, List, Map, Tree, Movable | Text, Array, Map, XML |
-| **Bindings** | Growing | Many (Monaco, Quill, etc.) |
-| **Memory Usage** | Very efficient | Efficient |
-| **Community** | Growing | Large |
-| **Network** | DIY | y-websocket, y-webrtc |
-| **Persistence** | Snapshot-based | Provider-based |
-| **Visual Editor** | ✅ graphql-editor | ✅ graphql-editor |
+| Feature           | Loro                           | Yjs                        |
+| ----------------- | ------------------------------ | -------------------------- |
+| **Maturity**      | Newer (2023+)                  | Very mature (2015+)        |
+| **Performance**   | Excellent (Rust/WASM)          | Excellent (JavaScript)     |
+| **Bundle Size**   | ~150KB (WASM)                  | ~60KB (gzipped)            |
+| **Language**      | Rust → WASM                    | JavaScript                 |
+| **Time Travel**   | Built-in, first-class          | Via snapshots              |
+| **Rich Types**    | Text, List, Map, Tree, Movable | Text, Array, Map, XML      |
+| **Bindings**      | Growing                        | Many (Monaco, Quill, etc.) |
+| **Memory Usage**  | Very efficient                 | Efficient                  |
+| **Community**     | Growing                        | Large                      |
+| **Network**       | DIY                            | y-websocket, y-webrtc      |
+| **Persistence**   | Snapshot-based                 | Provider-based             |
+| **Visual Editor** | ✅ graphql-editor              | ✅ graphql-editor          |
 
 ## Use Cases
 
@@ -254,7 +257,7 @@ dataChannel.onmessage = (event) => {
 ws.send(loroDoc.exportFrom(lastVersion));
 
 // Server: Broadcast to all clients
-server.on('message', (updates) => {
+server.on("message", (updates) => {
   server.broadcast(updates);
 });
 
@@ -289,7 +292,7 @@ loroDoc.checkoutToLatest();
 loroDoc.checkout(oldVersion);
 
 // Make changes (creates new branch)
-loroDoc.getText('content').insert(0, 'New content');
+loroDoc.getText("content").insert(0, "New content");
 ```
 
 ## Export/Import
@@ -320,8 +323,8 @@ const updates = loroDoc.exportFrom(lastSyncVersion);
 
 ```typescript
 loroDoc.transact(() => {
-  text.insert(0, 'Multiple');
-  text.insert(8, ' changes');
+  text.insert(0, "Multiple");
+  text.insert(8, " changes");
   text.delete(0, 5);
 });
 ```
@@ -331,7 +334,7 @@ loroDoc.transact(() => {
 ```typescript
 // Subscribe to specific containers
 const unsubscribe = loroDoc.subscribe((event) => {
-  if (event.target === 'jsonSchema') {
+  if (event.target === "jsonSchema") {
     // Only handle JSON schema changes
   }
 });
@@ -359,20 +362,20 @@ Since Loro doesn't provide a built-in sync server, you can:
 ### Example Sync Server (Node.js + WebSocket)
 
 ```javascript
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 const wss = new WebSocket.Server({ port: 8080 });
 
 const rooms = new Map();
 
-wss.on('connection', (ws, req) => {
-  const roomId = new URL(req.url, 'http://localhost').searchParams.get('room');
-  
+wss.on("connection", (ws, req) => {
+  const roomId = new URL(req.url, "http://localhost").searchParams.get("room");
+
   if (!rooms.has(roomId)) {
     rooms.set(roomId, new Set());
   }
   rooms.get(roomId).add(ws);
 
-  ws.on('message', (data) => {
+  ws.on("message", (data) => {
     // Broadcast to all peers in room
     rooms.get(roomId).forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -381,7 +384,7 @@ wss.on('connection', (ws, req) => {
     });
   });
 
-  ws.on('close', () => {
+  ws.on("close", () => {
     rooms.get(roomId).delete(ws);
   });
 });
@@ -395,8 +398,8 @@ Ensure your build tool supports WASM:
 
 ```javascript
 // vite.config.ts
-import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
+import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 export default {
   plugins: [wasm(), topLevelAwait()],
@@ -429,16 +432,16 @@ unsubscribe();
 ### Movable Lists
 
 ```typescript
-const list = loroDoc.getMovableList('tasks');
-list.push('Task 1');
-list.push('Task 2');
+const list = loroDoc.getMovableList("tasks");
+list.push("Task 1");
+list.push("Task 2");
 list.move(0, 1); // Move first item to second position
 ```
 
 ### Tree Structures
 
 ```typescript
-const tree = loroDoc.getTree('outline');
+const tree = loroDoc.getTree("outline");
 const root = tree.createNode();
 const child = root.createNode();
 ```
@@ -446,9 +449,9 @@ const child = root.createNode();
 ### Rich Text
 
 ```typescript
-const text = loroDoc.getText('richText');
-text.insert(0, 'Hello');
-text.mark(0, 5, 'bold', true);
+const text = loroDoc.getText("richText");
+text.insert(0, "Hello");
+text.mark(0, 5, "bold", true);
 ```
 
 ## Learn More

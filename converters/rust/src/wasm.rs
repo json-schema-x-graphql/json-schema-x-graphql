@@ -5,8 +5,8 @@ use crate::api_types::{
     NamingConvention,
 };
 use crate::types::{
-    IdInferenceStrategy as InternalIdInferenceStrategy, NamingConvention as InternalNamingConvention,
-    OutputFormat as InternalOutputFormat,
+    IdInferenceStrategy as InternalIdInferenceStrategy,
+    NamingConvention as InternalNamingConvention, OutputFormat as InternalOutputFormat,
 };
 use crate::{ConversionDirection, ConversionOptions, Converter};
 use serde::{Deserialize, Serialize};
@@ -93,6 +93,7 @@ impl WasmConversionOptions {
     }
 
     /// Convert to internal options type
+    #[allow(clippy::field_reassign_with_default)]
     fn to_internal(&self) -> ConversionOptions {
         let mut options = ConversionOptions::default();
 
@@ -247,6 +248,7 @@ pub fn get_version() -> String {
 
 /// Standardized API conversion function
 #[wasm_bindgen(js_name = convert)]
+#[allow(clippy::field_reassign_with_default)]
 pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
     let input: ConvertInput = serde_wasm_bindgen::from_value(input)?;
 
@@ -269,8 +271,10 @@ pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
         crate::api_types::IdInferenceStrategy::None => InternalIdInferenceStrategy::None,
         crate::api_types::IdInferenceStrategy::CommonPatterns => {
             InternalIdInferenceStrategy::CommonPatterns
-        },
-        crate::api_types::IdInferenceStrategy::AllStrings => InternalIdInferenceStrategy::AllStrings,
+        }
+        crate::api_types::IdInferenceStrategy::AllStrings => {
+            InternalIdInferenceStrategy::AllStrings
+        }
     };
     internal_options.naming_convention = match options.naming_convention {
         NamingConvention::Preserve => InternalNamingConvention::Preserve,
@@ -280,7 +284,7 @@ pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
         crate::api_types::OutputFormat::Sdl => InternalOutputFormat::Sdl,
         crate::api_types::OutputFormat::SdlWithFederationMetadata => {
             InternalOutputFormat::SdlWithFederationMetadata
-        },
+        }
         crate::api_types::OutputFormat::AstJson => InternalOutputFormat::AstJson,
     };
     internal_options.fail_on_warning = options.fail_on_warning;
@@ -323,10 +327,10 @@ mod tests {
     #[test]
     fn test_wasm_options() {
         let mut options = WasmConversionOptions::new();
-        assert_eq!(options.validate(), true);
+        assert!(options.validate());
 
         options.set_validate(false);
-        assert_eq!(options.validate(), false);
+        assert!(!options.validate());
 
         options.set_federation_version(1);
         assert_eq!(options.federation_version(), 1);

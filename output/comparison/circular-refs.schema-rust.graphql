@@ -1,0 +1,27 @@
+"A node with a self-referencing next pointer"
+type Node {
+  id: ID!
+  value: String
+  next: Node
+}
+
+"A person with a company reference"
+type Person {
+  id: ID!
+  name: String!
+  company: Company
+}
+
+"A company with employees (mutual reference with Person)"
+type Company {
+  id: ID!
+  name: String!
+  employees: [Person]
+}
+
+"A tree node with children"
+type Tree {
+  value: String
+  children: [Tree]
+}
+

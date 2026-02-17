@@ -3,7 +3,7 @@
 **Status:** Accepted  
 **Date:** 2024-12-01  
 **Authors:** Development Team  
-**Supersedes:** None  
+**Supersedes:** None
 
 ## Context
 
@@ -14,12 +14,14 @@ The Schema Unification Forest project requires containerized deployment for clou
 The project uses a multi-stage Dockerfile with three distinct stages:
 
 **Stage 1: Base Image**
+
 ```dockerfile
 FROM node:lts-alpine AS base
 RUN corepack enable pnpm
 ```
 
 **Stage 2: Dependencies**
+
 ```dockerfile
 FROM base AS deps
 WORKDIR /app
@@ -28,6 +30,7 @@ RUN pnpm install --frozen-lockfile --prefer-offline
 ```
 
 **Stage 3: Builder**
+
 ```dockerfile
 FROM base AS builder
 WORKDIR /app
@@ -37,6 +40,7 @@ RUN pnpm run build
 ```
 
 **Stage 4: Production**
+
 ```dockerfile
 FROM nginxinc/nginx-unprivileged:stable AS production
 WORKDIR /app
@@ -66,6 +70,7 @@ EXPOSE 8080
 ### Image Size Analysis
 
 **Without Multi-Stage Build (Single Node Image):**
+
 - Base: `node:lts` (~1.1GB)
 - Dependencies: `node_modules/` (~500MB)
 - Source: `src/`, `scripts/`, `docs/` (~100MB)
@@ -73,6 +78,7 @@ EXPOSE 8080
 - **Total: ~1.75GB**
 
 **With Multi-Stage Build (nginx Production):**
+
 - Base: `nginxinc/nginx-unprivileged:stable` (~150MB)
 - Static files: `out/` (~50MB)
 - nginx config: `nginx.conf` (~1KB)
@@ -96,6 +102,7 @@ RUN corepack enable pnpm
 ```
 
 **Why:**
+
 - Alpine Linux reduces base image size (vs Debian-based node:lts)
 - Corepack enables pnpm without npm install step
 - Shared by `deps` and `builder` stages (caching efficiency)
@@ -112,6 +119,7 @@ RUN pnpm install --frozen-lockfile --prefer-offline
 ```
 
 **Why:**
+
 - `--frozen-lockfile`: Ensures reproducible builds (fails if lockfile out of sync)
 - `--prefer-offline`: Speeds up builds using Docker layer cache
 - Separate stage: Caches dependencies independently of source code changes
@@ -132,6 +140,7 @@ RUN pnpm run build
 ```
 
 **Why:**
+
 - Copies dependencies from `deps` stage (not re-installed)
 - `COPY . .`: Includes source, scripts, schemas, docs
 - `pnpm run build`: Runs `NODE_OPTIONS='--max-old-space-size=4096' next build`
@@ -150,6 +159,7 @@ EXPOSE 8080
 ```
 
 **Why:**
+
 - `nginxinc/nginx-unprivileged`: Non-root user (security compliance)
 - Port 8080: Unprivileged port (cloud.gov compatible)
 - Only copies `out/` directory: 87.5% smaller than Node image
@@ -158,6 +168,7 @@ EXPOSE 8080
 ### nginx Configuration
 
 **Key Features:**
+
 ```nginx
 server {
     listen 8080;
@@ -190,18 +201,21 @@ server {
 ### Build Commands
 
 **Local Development:**
+
 ```bash
 docker build -t schema-unification-project:local .
 docker run -p 8080:8080 schema-unification-project:local
 ```
 
 **Production Build (Cloud.gov):**
+
 ```bash
 docker build --target production -t schema-unification-project:prod .
 cf push schema-unification-project -o schema-unification-project:prod
 ```
 
 **Cloud Native Buildpack (Alternative):**
+
 ```bash
 pack build schema-unification-project --builder gcr.io/buildpacks/builder:v1
 ```
@@ -241,6 +255,7 @@ pack build schema-unification-project --builder gcr.io/buildpacks/builder:v1
 **Approach:** One Dockerfile stage, serve with `next start`
 
 **Why Rejected:**
+
 - Image size: 1.75GB (vs 200MB multi-stage)
 - Node.js process overhead in production (unnecessary)
 - Higher memory usage (Node.js runtime + static files)
@@ -252,6 +267,7 @@ pack build schema-unification-project --builder gcr.io/buildpacks/builder:v1
 **Approach:** Use docker-compose.yml for production deployment
 
 **Why Rejected:**
+
 - Cloud.gov requires single container image (no Compose support)
 - Adds orchestration complexity for simple static site
 - docker-compose intended for multi-service development, not single-service production
@@ -262,6 +278,7 @@ pack build schema-unification-project --builder gcr.io/buildpacks/builder:v1
 **Approach:** Use CNB exclusively, no Dockerfile
 
 **Why Rejected:**
+
 - Less explicit control over build stages (opaque buildpack process)
 - Harder to customize nginx configuration
 - Slower iteration (buildpack detection overhead)
@@ -273,6 +290,7 @@ pack build schema-unification-project --builder gcr.io/buildpacks/builder:v1
 **Approach:** Build locally, push static files to S3, serve via CloudFront
 
 **Why Rejected:**
+
 - Requires separate S3 bucket and CloudFront setup (infrastructure complexity)
 - Cloud.gov provides container hosting (already paid for)
 - Harder to integrate with Cloud Foundry blue-green deploys

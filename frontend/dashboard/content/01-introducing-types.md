@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What GraphQL types are and why they matter
 - The difference between object types and scalar types
 - How the Query type serves as your API gateway
@@ -13,6 +14,7 @@
 Types are the foundation of GraphQL schemas. They define what data is available, what format it's in, and how you can interact with it. Understanding types is the key to building and consuming GraphQL APIs effectively.
 
 **Prerequisites:**
+
 - Basic understanding of APIs
 - Familiarity with JSON
 - No prior GraphQL knowledge required
@@ -22,12 +24,15 @@ Types are the foundation of GraphQL schemas. They define what data is available,
 ## Key Concepts
 
 ### Object Types: Containers for Related Data
+
 An **object type** represents something concrete with properties—like a `Fruit`, `User`, or `Product`. Each property is called a **field**, and each field has a specific data type.
 
 **Real-world analogy**: Think of an object type as a form. The form itself is the type (e.g., "Contact Form"), and the fields are the individual inputs (name, email, phone).
 
 ### Scalar Types: Primitive Values
+
 A **scalar type** represents a single, indivisible value. GraphQL provides five built-in scalars:
+
 - `String`: Text (e.g., "banana", "hello world")
 - `Int`: Whole numbers (e.g., 5, -42, 0)
 - `Float`: Decimal numbers (e.g., 3.14, 0.5)
@@ -37,6 +42,7 @@ A **scalar type** represents a single, indivisible value. GraphQL provides five 
 **Real-world analogy**: Scalar types are like data types in a spreadsheet—each cell contains a single type of value.
 
 ### The Query Type: Your API Gateway
+
 The `Query` type is the entry point to your GraphQL API. It defines all the possible requests you can make. Without it, there's no way to retrieve data—it's like the front door of a building.
 
 **Real-world analogy**: If your data is a library, the Query type is the card catalog that tells you where to find books.
@@ -59,6 +65,7 @@ type Fruit {
 ```
 
 **What this means:**
+
 - We're defining a type called `Fruit`
 - It has 6 fields with specific types
 - Any data representing a fruit must have these fields
@@ -66,6 +73,7 @@ type Fruit {
 ### Defining Scalar Fields
 
 In the example above:
+
 - `id: ID` — A unique identifier (string format)
 - `name: String` — Text describing the fruit
 - `quantity: Int` — Number of items in stock
@@ -83,6 +91,7 @@ type Query {
 ```
 
 **What this means:**
+
 - `mostPopularFruit` returns a single `Fruit` object
 - `fruits` returns a list of `Fruit` objects
 - These are the only ways to access fruit data in this API
@@ -99,9 +108,11 @@ query GetFruit {
 ```
 
 **What happens:**
+
 1. We ask for `mostPopularFruit` from the Query type
 2. We specify which fields we want: `name` and `price`
 3. The server returns a response like:
+
 ```json
 {
   "data": {
@@ -136,6 +147,7 @@ query GetFruit {
 ```
 
 **Key differences from GraphQL:**
+
 - JSON Schema uses `properties` instead of fields
 - Types are lowercase (`string`, `integer`, `number`, `boolean`)
 - Structure is JSON-based rather than SDL (Schema Definition Language)
@@ -172,19 +184,20 @@ query GetFruit {
 ```
 
 **Key features:**
+
 - `$defs` contains reusable type definitions
 - `$ref` references other types
 - `array` with `items` is how you represent lists
 
 ### Scalar Type Mapping
 
-| GraphQL | JSON Schema | Example |
-|---------|-------------|---------|
-| `String` | `"type": "string"` | "banana" |
-| `Int` | `"type": "integer"` | 5 |
-| `Float` | `"type": "number"` | 3.14 |
-| `Boolean` | `"type": "boolean"` | true |
-| `ID` | `"type": "string"` | "f123" |
+| GraphQL   | JSON Schema         | Example  |
+| --------- | ------------------- | -------- |
+| `String`  | `"type": "string"`  | "banana" |
+| `Int`     | `"type": "integer"` | 5        |
+| `Float`   | `"type": "number"`  | 3.14     |
+| `Boolean` | `"type": "boolean"` | true     |
+| `ID`      | `"type": "string"`  | "f123"   |
 
 ---
 
@@ -195,6 +208,7 @@ query GetFruit {
 The converter translates between these two formats:
 
 **GraphQL → JSON Schema:**
+
 ```
 Object Type → JSON object in $defs
 Field → JSON property
@@ -203,6 +217,7 @@ List Type → array with items
 ```
 
 **JSON Schema → GraphQL:**
+
 ```
 $defs objects → GraphQL type definitions
 properties → Fields
@@ -217,16 +232,17 @@ const converter = new Converter();
 const result = await converter.convert({
   jsonSchema: schema,
   options: {
-    includeDescriptions: true,  // Preserve field docs
-    preserveFieldOrder: true,   // Maintain field order
-    inferIds: true              // Auto-detect ID fields
-  }
+    includeDescriptions: true, // Preserve field docs
+    preserveFieldOrder: true, // Maintain field order
+    inferIds: true, // Auto-detect ID fields
+  },
 });
 ```
 
 ### Practical Example
 
 **Input: JSON Schema**
+
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -248,6 +264,7 @@ const result = await converter.convert({
 ```
 
 **Output: GraphQL SDL**
+
 ```graphql
 type Query {
   greeting: String
@@ -261,16 +278,19 @@ type Greeting {
 ### Special Considerations
 
 **1. Type Names**
+
 - GraphQL requires PascalCase: `MyType`, `UserProfile`
 - JSON Schema titles become type names
 - The converter automatically capitalizes
 
 **2. Lists vs Single Values**
+
 - JSON Schema: Use `"type": "array"` with `items`
 - GraphQL: Use square brackets `[Type]`
 - Converter: Detects arrays and converts to list types
 
 **3. Descriptions and Documentation**
+
 - JSON Schema: Use `"description"` fields
 - GraphQL: Use `"""` block comments
 - Converter: Preserves descriptions when enabled
@@ -282,6 +302,7 @@ type Greeting {
 ### Example 1: E-Commerce Product Type
 
 **GraphQL:**
+
 ```graphql
 type Product {
   id: ID
@@ -299,6 +320,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "type": "object",
@@ -338,6 +360,7 @@ type Query {
 ### Example 2: User Management
 
 **GraphQL:**
+
 ```graphql
 type User {
   id: ID
@@ -355,6 +378,7 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "type": "object",
@@ -393,11 +417,12 @@ type Query {
 ## Common Patterns
 
 ### Pattern 1: The ID Field
+
 Every type usually has an `id` field to uniquely identify instances:
 
 ```graphql
 type User {
-  id: ID           # Always required
+  id: ID # Always required
   email: String
   name: String
 }
@@ -406,21 +431,23 @@ type User {
 **Why**: You need a way to request a specific resource and distinguish between similar objects.
 
 ### Pattern 2: List of Items
+
 Return multiple objects of the same type:
 
 ```graphql
 type Query {
-  fruits: [Fruit]  # Returns 0 or more fruits
+  fruits: [Fruit] # Returns 0 or more fruits
 }
 ```
 
 ### Pattern 3: Single vs. Multiple
+
 Offer both specific and bulk retrieval:
 
 ```graphql
 type Query {
-  user(id: ID): User           # Get one
-  users: [User]                # Get all
+  user(id: ID): User # Get one
+  users: [User] # Get all
 }
 ```
 
@@ -441,6 +468,7 @@ type Query {
    - Use the mapping table above
 
 **Quick checklist:**
+
 - [ ] Root schema has `title: "Query"`
 - [ ] All custom types in `$defs`
 - [ ] Types use `$ref` for references
@@ -458,6 +486,7 @@ type Query {
 5. **Capitalize type names** (PascalCase)
 
 **Quick checklist:**
+
 - [ ] Root becomes `type Query`
 - [ ] All types PascalCase
 - [ ] Arrays use `[Type]` syntax
@@ -468,7 +497,9 @@ type Query {
 ## Practice Exercises
 
 ### Exercise 1: Identify Type Components
+
 Given this GraphQL schema, identify:
+
 1. Which is the object type?
 2. Which are scalar types?
 3. What is the Query type's entry point?
@@ -495,6 +526,7 @@ type Query {
 </details>
 
 ### Exercise 2: Create a JSON Schema
+
 Create a JSON Schema that represents this GraphQL type:
 
 ```graphql
@@ -541,6 +573,7 @@ type Query {
 </details>
 
 ### Exercise 3: Identify Missing Information
+
 This GraphQL schema is incomplete. What's missing?
 
 ```graphql
@@ -581,7 +614,7 @@ type Query {
    - Handle optional data
    - Ensure data integrity
 
-3. **For exploration**: 
+3. **For exploration**:
    - Try the [Type Visualizer](/tools/type-visualizer) tool
    - Use the [Schema Converter](/tools/schema-converter) tool
    - Explore [Code Examples](/examples/types)
@@ -594,7 +627,7 @@ type Query {
 ✅ **Object types** are collections of fields; **scalar types** are primitive values  
 ✅ **The Query type** is your gateway to accessing data  
 ✅ **JSON Schema** and **GraphQL** represent types differently but contain the same information  
-✅ **json-schema-x-graphql** bridges the gap, converting between both formats  
+✅ **json-schema-x-graphql** bridges the gap, converting between both formats
 
 ---
 

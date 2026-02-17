@@ -84,14 +84,14 @@ theme={{
 export const GraphQLVisualEditor: React.FC<Props> = ({
   value,
   onChange,
-  ydoc,      // Yjs document (Yjs demo)
-  loroDoc,   // Loro document (Loro demo)
+  ydoc, // Yjs document (Yjs demo)
+  loroDoc, // Loro document (Loro demo)
   textKey,
   readOnly,
 }) => {
   // Sync with CRDT
   // Render GraphQLEditor
-}
+};
 ```
 
 ### Synchronization Flow
@@ -102,7 +102,7 @@ export const GraphQLVisualEditor: React.FC<Props> = ({
 // Subscribe to Yjs changes
 ytext.observe(() => {
   const yjsContent = ytext.toString();
-  setSchema({ code: yjsContent, libraries: '' });
+  setSchema({ code: yjsContent, libraries: "" });
 });
 
 // Update Yjs on editor changes
@@ -120,7 +120,7 @@ const handleSchemaChange = (newSchema) => {
 // Subscribe to Loro changes
 loroDoc.subscribe((event) => {
   const loroContent = loroText.toString();
-  setSchema({ code: loroContent, libraries: '' });
+  setSchema({ code: loroContent, libraries: "" });
 });
 
 // Update Loro on editor changes
@@ -155,6 +155,7 @@ Connections show relationships:
 ### 3. Interactive Editing
 
 Click any node to:
+
 - Edit field names
 - Change field types
 - Add/remove fields
@@ -163,6 +164,7 @@ Click any node to:
 ### 4. Schema Validation
 
 Errors appear with visual indicators:
+
 - ❌ Red outline on invalid nodes
 - ⚠️ Warning icons for issues
 - Hover for error details
@@ -199,6 +201,7 @@ type Post {
 ```
 
 Visual editor shows:
+
 - Two nodes (User, Post)
 - Connection from User.posts → Post
 - Connection from Post.author → User
@@ -221,6 +224,7 @@ extend type Query {
 ```
 
 Visual editor shows:
+
 - Product node with @key directive indicator
 - Query node with product field
 - Connection showing relationship
@@ -250,6 +254,7 @@ union SearchResult = User | Product
 ```
 
 Visual editor shows:
+
 - Interface node (Node)
 - Type node (User) with dashed line to Node
 - Enum node (Role)
@@ -347,9 +352,7 @@ Adding graphql-editor increases bundle size:
 1. **Code Splitting**: Lazy load visual editor
 
 ```typescript
-const GraphQLVisualEditor = lazy(() => 
-  import('./GraphQLVisualEditor')
-);
+const GraphQLVisualEditor = lazy(() => import("./GraphQLVisualEditor"));
 ```
 
 2. **Conditional Loading**: Only load when needed
@@ -365,10 +368,7 @@ const GraphQLVisualEditor = lazy(() =>
 3. **Debounce Updates**: Reduce sync frequency
 
 ```typescript
-const debouncedUpdate = useMemo(
-  () => debounce(handleUpdate, 300),
-  []
-);
+const debouncedUpdate = useMemo(() => debounce(handleUpdate, 300), []);
 ```
 
 ---
@@ -383,7 +383,7 @@ const debouncedUpdate = useMemo(
 
 ```typescript
 if (!ydoc || !loroDoc) {
-  console.log('CRDT not initialized');
+  console.log("CRDT not initialized");
 }
 ```
 
@@ -397,7 +397,8 @@ if (!ydoc || !loroDoc) {
 
 **Cause**: Too many nodes rendering
 
-**Solution**: 
+**Solution**:
+
 - Enable virtualization
 - Limit visible nodes
 - Use code view for large schemas
@@ -481,9 +482,9 @@ Add screenshot capability:
 ```typescript
 const exportGraph = () => {
   // Use html-to-image or similar
-  html2canvas(graphElement).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'schema-graph.png';
+  html2canvas(graphElement).then((canvas) => {
+    const link = document.createElement("a");
+    link.download = "schema-graph.png";
     link.href = canvas.toDataURL();
     link.click();
   });
@@ -505,16 +506,16 @@ const loadSchemaVersion = async (version) => {
 
 ## Comparison: Code vs Visual
 
-| Aspect | Code Editor | Visual Editor |
-|--------|-------------|---------------|
-| **Precision** | High - exact syntax | Medium - abstracted |
-| **Speed** | Fast for experts | Fast for exploration |
-| **Learning Curve** | Steep | Gentle |
-| **Error Detection** | Syntax-based | Structure-based |
-| **Refactoring** | Manual | Visual guidance |
-| **Documentation** | Written | Self-documenting |
-| **Accessibility** | Technical users | All users |
-| **Collaboration** | PR-based | Real-time visual |
+| Aspect              | Code Editor         | Visual Editor        |
+| ------------------- | ------------------- | -------------------- |
+| **Precision**       | High - exact syntax | Medium - abstracted  |
+| **Speed**           | Fast for experts    | Fast for exploration |
+| **Learning Curve**  | Steep               | Gentle               |
+| **Error Detection** | Syntax-based        | Structure-based      |
+| **Refactoring**     | Manual              | Visual guidance      |
+| **Documentation**   | Written             | Self-documenting     |
+| **Accessibility**   | Technical users     | All users            |
+| **Collaboration**   | PR-based            | Real-time visual     |
 
 ---
 
@@ -571,4 +572,4 @@ Combined with real-time CRDT synchronization, it creates a powerful collaborativ
 
 ---
 
-*For support with the visual editor, refer to the main demo READMEs or open an issue on GitHub.*
+_For support with the visual editor, refer to the main demo READMEs or open an issue on GitHub._

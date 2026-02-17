@@ -33,6 +33,7 @@ npm run dev        # Start dev server on port 3002
 ### Step 1: Install Node.js
 
 **macOS:**
+
 ```bash
 # Using Homebrew
 brew install node
@@ -41,6 +42,7 @@ brew install node
 ```
 
 **Linux:**
+
 ```bash
 # Ubuntu/Debian
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -51,10 +53,12 @@ sudo dnf install nodejs
 ```
 
 **Windows:**
+
 - Download installer from [nodejs.org](https://nodejs.org/)
 - Run installer and follow prompts
 
 **Verify Installation:**
+
 ```bash
 node --version  # Should be v18.0.0 or higher
 npm --version   # Should be 9.0.0 or higher
@@ -95,6 +99,7 @@ npm install
 **Expected Install Time:** 1-2 minutes
 
 **Dependencies Installed:**
+
 - React 18
 - TypeScript 5
 - Vite 5
@@ -116,17 +121,20 @@ EOF
 ### 4. Start WebSocket Server
 
 **Option A: Using npx (Recommended for testing)**
+
 ```bash
 npx y-websocket
 ```
 
 **Option B: Install globally**
+
 ```bash
 npm install -g y-websocket-server
 y-websocket-server --port 1234
 ```
 
 **Option C: Custom server with persistence**
+
 ```bash
 # Install dependencies
 npm install ws y-leveldb
@@ -156,6 +164,7 @@ node server.js
 ```
 
 **Verify Server is Running:**
+
 ```bash
 curl http://localhost:1234
 # Should return WebSocket server info
@@ -171,6 +180,7 @@ npm run dev
 ```
 
 **Expected Output:**
+
 ```
   VITE v5.3.1  ready in 450 ms
 
@@ -207,6 +217,7 @@ npm install
 **Expected Install Time:** 1-2 minutes
 
 **Dependencies Installed:**
+
 - React 18
 - TypeScript 5
 - Vite 5
@@ -221,8 +232,8 @@ npm install
 The `vite.config.ts` is already configured with WASM support:
 
 ```typescript
-import wasm from 'vite-plugin-wasm';
-import topLevelAwait from 'vite-plugin-top-level-await';
+import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 export default defineConfig({
   plugins: [react(), wasm(), topLevelAwait()],
@@ -237,6 +248,7 @@ npm run dev
 ```
 
 **Expected Output:**
+
 ```
   VITE v5.3.1  ready in 650 ms
 
@@ -272,6 +284,7 @@ npm run build
 **Output:** `dist/` directory with optimized files
 
 **Preview:**
+
 ```bash
 npm run preview
 ```
@@ -286,6 +299,7 @@ npm run build
 **Output:** `dist/` directory with optimized files
 
 **Preview:**
+
 ```bash
 npm run preview
 ```
@@ -297,12 +311,14 @@ npm run preview
 ### Deploy to Vercel
 
 **Yjs Demo:**
+
 ```bash
 cd frontend/demos/yjs-monaco
 vercel
 ```
 
 **Loro Demo:**
+
 ```bash
 cd frontend/demos/loro-monaco
 vercel
@@ -311,12 +327,14 @@ vercel
 ### Deploy to Netlify
 
 **Yjs Demo:**
+
 ```bash
 cd frontend/demos/yjs-monaco
 netlify deploy --prod
 ```
 
 **Loro Demo:**
+
 ```bash
 cd frontend/demos/loro-monaco
 netlify deploy --prod
@@ -325,6 +343,7 @@ netlify deploy --prod
 ### Deploy with Docker
 
 **Yjs Demo:**
+
 ```dockerfile
 FROM node:18-alpine AS builder
 WORKDIR /app
@@ -345,6 +364,7 @@ docker run -p 3001:80 yjs-demo
 ```
 
 **Loro Demo:**
+
 ```dockerfile
 FROM node:18-alpine AS builder
 WORKDIR /app
@@ -371,6 +391,7 @@ docker run -p 3002:80 loro-demo
 ### Issue: `npm install` fails
 
 **Solution:**
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -387,18 +408,22 @@ npm install
 **Symptoms:** "Disconnected" status in header
 
 **Solutions:**
+
 1. Ensure WebSocket server is running:
+
    ```bash
    npx y-websocket
    ```
 
 2. Check port availability:
+
    ```bash
    lsof -i :1234  # macOS/Linux
    netstat -ano | findstr :1234  # Windows
    ```
 
 3. Verify `.env` file:
+
    ```bash
    cat .env
    # Should show: VITE_WS_URL=ws://localhost:1234
@@ -411,7 +436,9 @@ npm install
 **Symptoms:** Console error about WASM module
 
 **Solutions:**
+
 1. Verify Vite plugins are installed:
+
    ```bash
    npm list vite-plugin-wasm vite-plugin-top-level-await
    ```
@@ -419,6 +446,7 @@ npm install
 2. Check `vite.config.ts` has plugins configured
 
 3. Clear Vite cache:
+
    ```bash
    rm -rf node_modules/.vite
    npm run dev
@@ -433,6 +461,7 @@ npm install
 **Solutions:**
 
 **macOS/Linux:**
+
 ```bash
 # Find process using port
 lsof -i :3001
@@ -442,6 +471,7 @@ kill -9 <PID>
 ```
 
 **Windows:**
+
 ```powershell
 # Find process
 netstat -ano | findstr :3001
@@ -451,11 +481,12 @@ taskkill /PID <PID> /F
 ```
 
 **Or change port:**
+
 ```javascript
 // vite.config.ts
 export default defineConfig({
   server: {
-    port: 3003,  // Use different port
+    port: 3003, // Use different port
   },
 });
 ```
@@ -463,6 +494,7 @@ export default defineConfig({
 ### Issue: Changes not syncing (Yjs)
 
 **Solutions:**
+
 1. Ensure all clients are in the same room
 2. Check WebSocket connection status
 3. Open browser DevTools → Network → WS tab
@@ -473,12 +505,14 @@ export default defineConfig({
 **Solutions:**
 
 **Yjs:**
+
 ```typescript
 // Enable garbage collection
 ydoc.gc = true;
 ```
 
 **Loro:**
+
 ```typescript
 // Periodically compact document
 loroDoc.compact();
@@ -487,6 +521,7 @@ loroDoc.compact();
 ### Issue: TypeScript errors
 
 **Solution:**
+
 ```bash
 # Regenerate TypeScript declarations
 npm run build
@@ -503,16 +538,18 @@ Both demos support HMR. Changes to source files will update instantly without fu
 ### Browser DevTools
 
 **Yjs:**
+
 ```javascript
 // Access Yjs doc in console
-window.ydoc
-window.provider
+window.ydoc;
+window.provider;
 ```
 
 **Loro:**
+
 ```javascript
 // Access Loro doc in console
-window.loroDoc
+window.loroDoc;
 ```
 
 ### Debugging
@@ -520,32 +557,36 @@ window.loroDoc
 **Enable verbose logging:**
 
 **Yjs:**
+
 ```typescript
-provider.on('status', (event) => {
-  console.log('Status:', event);
+provider.on("status", (event) => {
+  console.log("Status:", event);
 });
 
-provider.on('sync', (isSynced) => {
-  console.log('Synced:', isSynced);
+provider.on("sync", (isSynced) => {
+  console.log("Synced:", isSynced);
 });
 ```
 
 **Loro:**
+
 ```typescript
 loroDoc.subscribe((event) => {
-  console.log('Loro event:', event);
+  console.log("Loro event:", event);
 });
 ```
 
 ### Performance Profiling
 
 **React DevTools:**
+
 1. Install React DevTools extension
 2. Open DevTools → Components/Profiler
 3. Record interactions
 4. Analyze render times
 
 **Chrome Performance:**
+
 1. Open DevTools → Performance
 2. Start recording
 3. Perform actions
@@ -558,6 +599,7 @@ loroDoc.subscribe((event) => {
 ### Yjs Demo
 
 `.env` file:
+
 ```bash
 # WebSocket server URL
 VITE_WS_URL=ws://localhost:1234
@@ -569,6 +611,7 @@ VITE_WS_URL_PROD=wss://your-server.com
 ### Loro Demo
 
 `.env` file (optional):
+
 ```bash
 # Optional sync server URL
 VITE_SYNC_URL=https://your-sync-server.com
@@ -598,15 +641,18 @@ After setup:
 ## Getting Help
 
 ### Documentation
+
 - [Yjs Demo README](./demos/yjs-monaco/README.md)
 - [Loro Demo README](./demos/loro-monaco/README.md)
 - [Comparison Guide](./COMPARISON.md)
 
 ### Community
+
 - **Yjs**: [Discord](https://discord.gg/yjs) | [Discussions](https://discuss.yjs.dev/)
 - **Loro**: [Discord](https://discord.gg/loro-dev) | [GitHub Issues](https://github.com/loro-dev/loro/issues)
 
 ### Issues
+
 - Project issues: [GitHub Issues](https://github.com/JJediny/json-schema-x-graphql/issues)
 
 ---

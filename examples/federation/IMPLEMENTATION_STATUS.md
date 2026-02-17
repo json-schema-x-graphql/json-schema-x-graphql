@@ -22,22 +22,26 @@ This document tracks the implementation of Apollo Federation examples using X-Gr
 ### Phase 1: Reference SDL Files
 
 **Apollo Classic Example (Users, Reviews, Products)**
+
 - ✅ `sdl/apollo-classic/users-service.graphql` - Users service with `@key(fields: "email")`
 - ✅ `sdl/apollo-classic/products-service.graphql` - Products service with `@key(fields: "upc")`
 - ✅ `sdl/apollo-classic/reviews-service.graphql` - Reviews service with entity extensions, `@provides`, `@external`
 
 **Strawberry GraphQL Example (Books, Reviews)**
+
 - ✅ `sdl/strawberry/books-service.graphql` - Books service with `@key(fields: "id")`
 - ✅ `sdl/strawberry/reviews-service.graphql` - Reviews service extending Book entity
 
 ### Phase 2: JSON Schema Implementations
 
 **Apollo Classic Example**
+
 - ✅ `json-schemas/apollo-classic/users-service.json` - Complete User entity with federation keys
 - ✅ `json-schemas/apollo-classic/products-service.json` - Complete Product entity
 - ✅ `json-schemas/apollo-classic/reviews-service.json` - Review entity with extensions
 
 **Strawberry Example**
+
 - ✅ `json-schemas/strawberry/books-service.json` - Book entity
 - ✅ `json-schemas/strawberry/reviews-service.json` - Review entity with Book extension
 
@@ -49,15 +53,15 @@ This document tracks the implementation of Apollo Federation examples using X-Gr
 
 ## X-GraphQL Federation Mappings Implemented
 
-| Federation Directive | X-GraphQL Extension | Status |
-|---------------------|---------------------|--------|
-| `@key(fields: "...")` | `"x-graphql-federation": { "keys": [...] }` | ✅ Implemented |
-| `@external` | `"x-graphql-federation": { "external": true }` | ✅ Implemented |
-| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "..." }` | ✅ Implemented |
-| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "..." }` | ✅ Implemented |
-| `@extends` / `extend type` | `"x-graphql-federation": { "extends": true }` | ✅ Implemented |
-| `@shareable` | `"x-graphql-federation": { "shareable": true }` | ✅ Documented |
-| `@override(from: "...")` | `"x-graphql-federation": { "override": { "from": "..." } }` | ✅ Documented |
+| Federation Directive       | X-GraphQL Extension                                         | Status         |
+| -------------------------- | ----------------------------------------------------------- | -------------- |
+| `@key(fields: "...")`      | `"x-graphql-federation": { "keys": [...] }`                 | ✅ Implemented |
+| `@external`                | `"x-graphql-federation": { "external": true }`              | ✅ Implemented |
+| `@provides(fields: "...")` | `"x-graphql-federation": { "provides": "..." }`             | ✅ Implemented |
+| `@requires(fields: "...")` | `"x-graphql-federation": { "requires": "..." }`             | ✅ Implemented |
+| `@extends` / `extend type` | `"x-graphql-federation": { "extends": true }`               | ✅ Implemented |
+| `@shareable`               | `"x-graphql-federation": { "shareable": true }`             | ✅ Documented  |
+| `@override(from: "...")`   | `"x-graphql-federation": { "override": { "from": "..." } }` | ✅ Documented  |
 
 ## Completed Action Items ✅
 
@@ -68,6 +72,7 @@ This document tracks the implementation of Apollo Federation examples using X-Gr
 **Issue:** Reviews service declared entity references but didn't provide foreign key fields needed for gateway query resolution.
 
 **Solution Implemented:**
+
 - ✅ Added `product_upc` field to Review entity (for Product reference)
 - ✅ Added `author_email` field to Review entity (for User reference)
 - ✅ Added `book_isbn` field to Review entity in strawberry example
@@ -75,12 +80,14 @@ This document tracks the implementation of Apollo Federation examples using X-Gr
 - ✅ Updated both apollo-classic and strawberry JSON schemas
 
 **Files Updated:**
+
 ```bash
 examples/federation/json-schemas/apollo-classic/reviews-service.json
 examples/federation/json-schemas/strawberry/reviews-service.json
 ```
 
 **Validation Results:**
+
 ```bash
 ✓ Composition successful!
 ✓ Supergraph schema written: output/federation/supergraph/apollo-classic-supergraph.graphql
@@ -100,17 +107,20 @@ Examples tested: 2
 **Issue:** Generated SDL was missing `extend schema @link(...)` directive.
 
 **Solution Implemented:**
+
 - ✅ Added `--include-schema-link` CLI flag to Node.js converter
 - ✅ Auto-generates Federation v2.3 @link directive with proper imports
 - ✅ Only adds when both `--include-schema-link` and `--include-federation-directives` are enabled
 - ✅ Prepends directive to SDL output automatically
 
 **Files Updated:**
+
 ```bash
 converters/node/src/cli.ts - Added new CLI option and prepending logic
 ```
 
 **Usage:**
+
 ```bash
 node converters/node/dist/cli.js \
   --input schema.json \
@@ -121,9 +131,20 @@ node converters/node/dist/cli.js \
 ```
 
 **Generated Output:**
+
 ```graphql
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@extends"])
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: [
+      "@key"
+      "@shareable"
+      "@external"
+      "@provides"
+      "@requires"
+      "@extends"
+    ]
+  )
 
 type User @key(fields: "email") {
   email: ID!
@@ -142,6 +163,7 @@ type User @key(fields: "email") {
 **Created:** `examples/federation/PATTERNS.md` (868 lines)
 
 **Content Included:**
+
 - ✅ **Entity Resolution Patterns** - Overview and key concepts
 - ✅ **Foreign Key Pattern** (Recommended)
   - Complete JSON Schema examples
@@ -161,7 +183,7 @@ type User @key(fields: "email") {
   - Using @external and @requires
   - Using @provides
 - ✅ **Resolver Implementation**
-  - __resolveReference method examples
+  - \_\_resolveReference method examples
   - DataLoader pattern (recommended)
   - Foreign key resolvers
   - Extension resolvers
@@ -169,7 +191,7 @@ type User @key(fields: "email") {
   - Missing foreign keys (with fix)
   - Incorrect @external usage (with fix)
   - Circular dependencies
-  - Missing __resolveReference
+  - Missing \_\_resolveReference
   - Mismatched key types
 - ✅ **Testing & Validation**
   - Composition validation usage
@@ -187,7 +209,7 @@ type User @key(fields: "email") {
 ### Phase 3: Testing & Validation ✅ COMPLETE
 
 - ✅ **Test Node.js Converter** - Working, all schemas convert successfully
-- ✅ **Test Rust Converter** - Working, all schemas convert successfully  
+- ✅ **Test Rust Converter** - Working, all schemas convert successfully
 - ✅ **Compare Generated vs Reference SDL** - Done, documented differences are cosmetic only
 - ✅ **Automated Test Script** - `scripts/test-federation-examples.sh` created and working
 - ✅ **Composition Validation Tool** - `scripts/validate-federation-composition.js` created
@@ -240,12 +262,12 @@ mkdir -p output/federation
 # Convert all services
 for service in users products reviews; do
   echo "Converting ${service}-service..."
-  
+
   # Node
   node converters/node/dist/cli.js \
     --input examples/federation/json-schemas/apollo-classic/${service}-service.json \
     --output output/federation/${service}-node.graphql
-  
+
   # Rust
   ./converters/rust/target/release/jxql \
     --input examples/federation/json-schemas/apollo-classic/${service}-service.json \
@@ -280,6 +302,7 @@ done
 **Solution**: We use a separate definition (e.g., `UserExtension`) with `"extends": true` in the federation metadata.
 
 **Example**:
+
 ```json
 {
   "UserExtension": {
@@ -297,6 +320,7 @@ done
 **Challenge**: External fields need special handling in both the schema and converters.
 
 **Solution**: Field-level `"external": true` within the federation metadata:
+
 ```json
 {
   "email": {
@@ -322,6 +346,7 @@ done
 ## Success Criteria
 
 ### Minimum Viable Product (MVP)
+
 - ✅ Reference SDL files documented
 - ✅ JSON schemas create basic entities with `@key`
 - ✅ Entity extensions work with `@external`
@@ -329,6 +354,7 @@ done
 - [ ] Round-trip conversion works (JSON → SDL → matches reference)
 
 ### Full Feature Parity
+
 - [ ] All Federation 2.x directives supported
 - [ ] Composite keys working
 - [ ] Multiple keys per entity
@@ -337,6 +363,7 @@ done
 - [ ] Custom directives with `@composeDirective`
 
 ### Production Ready
+
 - [ ] Validated with Apollo Rover
 - [ ] Tested with Apollo Gateway
 - [ ] Tested with Apollo Router
@@ -349,6 +376,7 @@ done
 ### Apollo Classic: Users Service
 
 **Reference SDL** (`sdl/apollo-classic/users-service.graphql`):
+
 ```graphql
 type User @key(fields: "email") {
   email: ID!
@@ -359,6 +387,7 @@ type User @key(fields: "email") {
 ```
 
 **JSON Schema** (`json-schemas/apollo-classic/users-service.json`):
+
 ```json
 {
   "User": {
@@ -383,50 +412,58 @@ type User @key(fields: "email") {
 ### Optional Improvements (Not Blocking)
 
 #### 1. **Rust Converter Schema Link Support** (FUTURE - 2-3 hours)
-   - [ ] Port `--include-schema-link` flag to Rust CLI
-   - [ ] Implement same prepending logic
-   - [ ] Ensure parity with Node.js implementation
+
+- [ ] Port `--include-schema-link` flag to Rust CLI
+- [ ] Implement same prepending logic
+- [ ] Ensure parity with Node.js implementation
 
 #### 2. **Auto-Detect Schema Link** (FUTURE - 1-2 hours)
-   - [ ] Automatically add @link when federation directives detected
-   - [ ] Make `--include-schema-link` default when `--include-federation-directives` is true
-   - [ ] Add `--no-schema-link` to opt out
+
+- [ ] Automatically add @link when federation directives detected
+- [ ] Make `--include-schema-link` default when `--include-federation-directives` is true
+- [ ] Add `--no-schema-link` to opt out
 
 #### 3. **Advanced Patterns** (FUTURE - 1-2 weeks)
-   - [ ] Create Semantic Objects example (Planet entity)
-   - [ ] Add composite key examples
-   - [ ] Add non-resolvable key examples
-   - [ ] Add `@interfaceObject` example (Federation 2.x)
-   - [ ] Add `@authenticated` / `@requiresScopes` examples (authorization)
-   - [ ] Add `@composeDirective` example (custom directives)
+
+- [ ] Create Semantic Objects example (Planet entity)
+- [ ] Add composite key examples
+- [ ] Add non-resolvable key examples
+- [ ] Add `@interfaceObject` example (Federation 2.x)
+- [ ] Add `@authenticated` / `@requiresScopes` examples (authorization)
+- [ ] Add `@composeDirective` example (custom directives)
 
 #### 4. **Integration & Demo** (FUTURE - 1-2 weeks)
-   - [ ] Create Docker Compose setup with Apollo Gateway/Router
-   - [ ] Create example resolvers for each service
-   - [ ] Test end-to-end queries across services
-   - [ ] Add CI/CD workflow for automated testing
-   - [ ] Create video tutorial or interactive demo
+
+- [ ] Create Docker Compose setup with Apollo Gateway/Router
+- [ ] Create example resolvers for each service
+- [ ] Test end-to-end queries across services
+- [ ] Add CI/CD workflow for automated testing
+- [ ] Create video tutorial or interactive demo
 
 #### 5. **Production Readiness** (FUTURE - 1+ month)
-   - [ ] Real-world production examples
-   - [ ] Performance benchmarks
-   - [ ] Integration with schema registries (Apollo Studio)
-   - [ ] Visual schema designer
-   - [ ] Migration guide for existing schemas
+
+- [ ] Real-world production examples
+- [ ] Performance benchmarks
+- [ ] Integration with schema registries (Apollo Studio)
+- [ ] Visual schema designer
+- [ ] Migration guide for existing schemas
 
 ## Resources
 
 ### Official Documentation
+
 - [Apollo Federation Docs](https://www.apollographql.com/docs/federation/)
 - [Federation Spec](https://www.apollographql.com/docs/federation/federation-spec/)
 - [Rover CLI](https://www.apollographql.com/docs/rover/)
 
 ### Example Implementations
+
 - [Apollo Server Examples](https://github.com/apollographql/apollo-server/tree/main/examples)
 - [Strawberry Federation](https://strawberry.rocks/docs/guides/federation)
 - [Hot Chocolate Federation](https://chillicream.com/docs/hotchocolate/v13/distributed-schema/apollo-federation)
 
 ### Tools
+
 - [Apollo Sandbox](https://studio.apollographql.com/sandbox) - Test queries
 - [Apollo Studio](https://studio.apollographql.com/) - Schema registry
 - [GraphQL Inspector](https://graphql-inspector.com/) - Schema comparison
@@ -434,6 +471,7 @@ type User @key(fields: "email") {
 ## Contact & Support
 
 For questions or issues:
+
 - Review the main [README.md](README.md)
 - Check [FEDERATION_EXAMPLES_PLAN.md](../../docs/FEDERATION_EXAMPLES_PLAN.md)
 - Refer to existing test data in `converters/test-data/x-graphql/`
@@ -466,6 +504,7 @@ For questions or issues:
 ### Current Status: PASSING - All Schemas Compose Successfully
 
 **Apollo Classic Example:**
+
 ```
 ✓ Composition successful!
 ✓ Supergraph schema written to: output/federation/supergraph/apollo-classic-supergraph.graphql
@@ -473,6 +512,7 @@ For questions or issues:
 ```
 
 **Strawberry Example:**
+
 ```
 ✓ Composition successful!
 ✓ Supergraph schema written to: output/federation/supergraph/strawberry-supergraph.graphql
@@ -480,6 +520,7 @@ For questions or issues:
 ```
 
 **Validation Summary:**
+
 ```
 Examples tested: 2
 ✓ Successful: 2

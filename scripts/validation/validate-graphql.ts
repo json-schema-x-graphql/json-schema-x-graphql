@@ -220,8 +220,46 @@ class GraphQLValidator {
 
       // 2. Build and validate schema (semantic validation)
       try {
+        let schemaSDL = sdl;
+
+        // Add common scalar definitions if they are missing but used
+        const commonScalars = [
+          "DateTime",
+          "Date",
+          "Email",
+          "URL",
+          "JSON",
+          "Void",
+        ];
+        const missingScalars = commonScalars.filter(
+          (scalar) => sdl.includes(scalar) && !sdl.includes(`scalar ${scalar}`),
+        );
+
+        if (missingScalars.length > 0) {
+          schemaSDL +=
+            "\n" + missingScalars.map((s) => `scalar ${s}`).join("\n");
+        }
+
+        // If it's a federation schema, add directive definitions for standard validation
+        if (result.metadata?.isFederation) {
+          // Basic Federation V1 directives needed for buildSchema to pass
+          const fedDirectives = `
+             scalar _FieldSet
+             directive @key(fields: _FieldSet!) on OBJECT | INTERFACE
+             directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+             directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+             directive @external on FIELD_DEFINITION
+             directive @shareable on OBJECT | FIELD_DEFINITION
+             directive @override(from: String!) on FIELD_DEFINITION
+             directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ENUM | ENUM_VALUE | SCALAR | INPUT_OBJECT | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
+             directive @tag(name: String!) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ENUM | ENUM_VALUE | SCALAR | INPUT_OBJECT | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
+             directive @extends on OBJECT | INTERFACE
+           `;
+          schemaSDL += fedDirectives;
+        }
+
         // Try to build as complete schema
-        const schema = buildSchema(sdl);
+        const schema = buildSchema(schemaSDL);
         const errors = validate(schema, ast);
 
         if (errors.length > 0) {

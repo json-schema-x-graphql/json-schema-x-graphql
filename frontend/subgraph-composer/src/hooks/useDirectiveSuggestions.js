@@ -1,18 +1,18 @@
 /**
  * useDirectiveSuggestions.js
- * 
+ *
  * Custom React hook for managing federation directive suggestions
  * Handles generation, filtering, application, and persistence
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 import {
   generateDirectiveSuggestions,
   applySuggestionsToSdl,
   filterSuggestions,
   rankSuggestions,
-  validateSuggestion
-} from '../lib/federationDirectiveGenerator';
+  validateSuggestion,
+} from "../lib/federationDirectiveGenerator";
 
 export function useDirectiveSuggestions() {
   const [suggestions, setSuggestions] = useState([]);
@@ -25,92 +25,109 @@ export function useDirectiveSuggestions() {
   /**
    * Generate suggestions from subgraphs
    */
-  const generateSuggestions = useCallback(async (subgraphs, supergraphSdl) => {
-    setIsLoading(true);
-    setError(null);
+  const generateSuggestions = useCallback(
+    async (subgraphs, supergraphSdl) => {
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      // Run generation in a timeout to avoid blocking
-      const sugs = await new Promise((resolve) => {
-        setTimeout(() => {
-          const results = generateDirectiveSuggestions(subgraphs, supergraphSdl);
-          resolve(results);
-        }, 0);
-      });
+      try {
+        // Run generation in a timeout to avoid blocking
+        const sugs = await new Promise((resolve) => {
+          setTimeout(() => {
+            const results = generateDirectiveSuggestions(
+              subgraphs,
+              supergraphSdl,
+            );
+            resolve(results);
+          }, 0);
+        });
 
-      // Filter out dismissed suggestions
-      const activeSuggestions = sugs.filter((_, i) => !dismissedSuggestions.has(i));
-      
-      // Rank by importance
-      const rankedSuggestions = rankSuggestions(activeSuggestions);
-      
-      setSuggestions(rankedSuggestions);
-      setShowSuggestions(rankedSuggestions.length > 0);
+        // Filter out dismissed suggestions
+        const activeSuggestions = sugs.filter(
+          (_, i) => !dismissedSuggestions.has(i),
+        );
 
-      return rankedSuggestions;
-    } catch (err) {
-      setError(err.message);
-      console.error('Error generating suggestions:', err);
-      return [];
-    } finally {
-      setIsLoading(false);
-    }
-  }, [dismissedSuggestions]);
+        // Rank by importance
+        const rankedSuggestions = rankSuggestions(activeSuggestions);
+
+        setSuggestions(rankedSuggestions);
+        setShowSuggestions(rankedSuggestions.length > 0);
+
+        return rankedSuggestions;
+      } catch (err) {
+        setError(err.message);
+        console.error("Error generating suggestions:", err);
+        return [];
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [dismissedSuggestions],
+  );
 
   /**
    * Apply selected suggestions to SDL
    */
-  const applySuggestions = useCallback((selectedSuggestions, newSdl) => {
-    try {
-      // Validate all suggestions before applying
-      const validSuggestions = selectedSuggestions.filter((sug) => {
-        const validation = validateSuggestion(sug, newSdl);
-        if (!validation.valid) {
-          console.warn(`Invalid suggestion for ${sug.typeName}:`, validation.errors);
+  const applySuggestions = useCallback(
+    (selectedSuggestions, newSdl) => {
+      try {
+        // Validate all suggestions before applying
+        const validSuggestions = selectedSuggestions.filter((sug) => {
+          const validation = validateSuggestion(sug, newSdl);
+          if (!validation.valid) {
+            console.warn(
+              `Invalid suggestion for ${sug.typeName}:`,
+              validation.errors,
+            );
+          }
+          return validation.valid;
+        });
+
+        // Apply all valid suggestions
+        let appliedSdl = newSdl;
+        for (const suggestion of validSuggestions) {
+          appliedSdl = applySuggestionsToSdl(appliedSdl, [suggestion]);
         }
-        return validation.valid;
-      });
 
-      // Apply all valid suggestions
-      let appliedSdl = newSdl;
-      for (const suggestion of validSuggestions) {
-        appliedSdl = applySuggestionsToSdl(appliedSdl, [suggestion]);
+        // Track applied directives
+        setAppliedDirectives((prev) => [...prev, ...validSuggestions]);
+
+        // Remove applied suggestions from list
+        const appliedIndices = selectedSuggestions.map((sug) =>
+          suggestions.indexOf(sug),
+        );
+        const remainingSuggestions = suggestions.filter(
+          (_, i) => !appliedIndices.includes(i),
+        );
+
+        setSuggestions(remainingSuggestions);
+        setShowSuggestions(remainingSuggestions.length > 0);
+
+        return appliedSdl;
+      } catch (err) {
+        setError(err.message);
+        console.error("Error applying suggestions:", err);
+        return newSdl;
       }
-
-      // Track applied directives
-      setAppliedDirectives((prev) => [...prev, ...validSuggestions]);
-
-      // Remove applied suggestions from list
-      const appliedIndices = selectedSuggestions.map((sug) =>
-        suggestions.indexOf(sug)
-      );
-      const remainingSuggestions = suggestions.filter(
-        (_, i) => !appliedIndices.includes(i)
-      );
-
-      setSuggestions(remainingSuggestions);
-      setShowSuggestions(remainingSuggestions.length > 0);
-
-      return appliedSdl;
-    } catch (err) {
-      setError(err.message);
-      console.error('Error applying suggestions:', err);
-      return newSdl;
-    }
-  }, [suggestions]);
+    },
+    [suggestions],
+  );
 
   /**
    * Dismiss a suggestion without applying
    */
-  const dismissSuggestion = useCallback((index) => {
-    const newDismissed = new Set(dismissedSuggestions);
-    newDismissed.add(index);
-    setDismissedSuggestions(newDismissed);
+  const dismissSuggestion = useCallback(
+    (index) => {
+      const newDismissed = new Set(dismissedSuggestions);
+      newDismissed.add(index);
+      setDismissedSuggestions(newDismissed);
 
-    const newSuggestions = suggestions.filter((_, i) => i !== index);
-    setSuggestions(newSuggestions);
-    setShowSuggestions(newSuggestions.length > 0);
-  }, [dismissedSuggestions, suggestions]);
+      const newSuggestions = suggestions.filter((_, i) => i !== index);
+      setSuggestions(newSuggestions);
+      setShowSuggestions(newSuggestions.length > 0);
+    },
+    [dismissedSuggestions, suggestions],
+  );
 
   /**
    * Dismiss all suggestions
@@ -135,9 +152,12 @@ export function useDirectiveSuggestions() {
   /**
    * Filter suggestions by type and severity
    */
-  const filterSuggestionsBy = useCallback((filters) => {
-    return filterSuggestions(suggestions, filters);
-  }, [suggestions]);
+  const filterSuggestionsBy = useCallback(
+    (filters) => {
+      return filterSuggestions(suggestions, filters);
+    },
+    [suggestions],
+  );
 
   /**
    * Get statistics about suggestions
@@ -163,7 +183,7 @@ export function useDirectiveSuggestions() {
       typeCount: totalTypes.size,
       fieldCount: totalFields,
       appliedCount: appliedDirectives.length,
-      dismissedCount: dismissedSuggestions.size
+      dismissedCount: dismissedSuggestions.size,
     };
   }, [suggestions, appliedDirectives, dismissedSuggestions]);
 
@@ -188,7 +208,7 @@ export function useDirectiveSuggestions() {
     error,
     showSuggestions,
     dismissedSuggestions,
-    
+
     // Actions
     generateSuggestions,
     applySuggestions,
@@ -197,12 +217,12 @@ export function useDirectiveSuggestions() {
     reset,
     filterSuggestionsBy,
     undoLastApplied,
-    
+
     // Utilities
     getStats,
-    
+
     // State setters
-    setShowSuggestions
+    setShowSuggestions,
   };
 }
 

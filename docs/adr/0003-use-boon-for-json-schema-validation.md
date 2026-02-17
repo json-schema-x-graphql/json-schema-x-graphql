@@ -25,12 +25,12 @@ We will use the `boon` crate for all JSON Schema validation within the Rust conv
 
 ### Positive
 
-*   **Multi-Version Compatibility**: `Boon`'s primary strength is its support for multiple JSON Schema drafts. This eliminates the need for us to write complex, version-aware validation logic and ensures broad compatibility for our users.
-*   **Performance**: Being a native Rust crate, `boon` offers excellent performance suitable for real-time validation within the WASM environment.
-*   **Correctness**: The crate is well-tested and focuses on correctly implementing the JSON Schema specification, incrintake_processng the reliability of our conversion tool.
-*   **Simplified Logic**: By offloading the complexity of validation, our core converter logic can focus solely on the transformation from a valid schema to GraphQL SDL.
+- **Multi-Version Compatibility**: `Boon`'s primary strength is its support for multiple JSON Schema drafts. This eliminates the need for us to write complex, version-aware validation logic and ensures broad compatibility for our users.
+- **Performance**: Being a native Rust crate, `boon` offers excellent performance suitable for real-time validation within the WASM environment.
+- **Correctness**: The crate is well-tested and focuses on correctly implementing the JSON Schema specification, incrintake_processng the reliability of our conversion tool.
+- **Simplified Logic**: By offloading the complexity of validation, our core converter logic can focus solely on the transformation from a valid schema to GraphQL SDL.
 
 ### Negative
 
-*   **New Dependency**: We are introducing another external dependency into the project, which we will need to manage and keep updated.
-*   **API Specificity**: The development team will need to learn the specific API and error-reporting mechanisms of `boon` to integrate it effectively.
+- **New Dependency**: We are introducing another external dependency into the project, which we will need to manage and keep updated.
+- **API Specificity**: The development team will need to learn the specific API and error-reporting mechanisms of `boon` to integrate it effectively.

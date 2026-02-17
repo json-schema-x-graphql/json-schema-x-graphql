@@ -7,6 +7,7 @@
 ## 🎯 Problem Solved
 
 Previously, debugging required:
+
 - ❌ Manual copy/paste of console logs
 - ❌ Guessing what's happening in the browser
 - ❌ Missing network errors
@@ -14,6 +15,7 @@ Previously, debugging required:
 - ❌ Incomplete error information
 
 **Now you have:**
+
 - ✅ Automated capture of ALL console output
 - ✅ Complete network request/response logging
 - ✅ Screenshots at key moments
@@ -37,11 +39,13 @@ This installs Playwright (~170MB) and Chromium browser.
 ### 2. Run Debug Session
 
 **Terminal 1** - Start the app:
+
 ```bash
 pnpm run dev:full
 ```
 
 **Terminal 2** - Run debug tool:
+
 ```bash
 pnpm run debug:browser
 ```
@@ -113,6 +117,7 @@ RECOMMENDATIONS
 ### Detailed JSON Report (`debug-report.json`)
 
 Complete structured data including:
+
 - Every console message with timestamp, type, location
 - Every network request with headers, body, response
 - All JavaScript errors with stack traces
@@ -146,6 +151,7 @@ cat debug-output/debug-summary.txt
 ```
 
 Instantly see:
+
 - All errors with full context
 - All network failures
 - API response bodies
@@ -164,6 +170,7 @@ grep "api/convert" debug-output/debug-summary.txt
 ```
 
 Shows:
+
 - If API calls are happening
 - What status codes returned
 - Request/response bodies
@@ -177,6 +184,7 @@ grep -i "monaco" debug-output/debug-report.json
 ```
 
 Shows:
+
 - Monaco initialization messages
 - Editor mount events
 - Worker loading status
@@ -190,6 +198,7 @@ jq '.consoleMessages[] | select(.type == "error")' debug-output/debug-report.jso
 ```
 
 Shows every error with:
+
 - Exact timestamp
 - Error message
 - Stack trace
@@ -271,8 +280,8 @@ Edit `debug-browser.ts`:
 
 ```typescript
 browser = await chromium.launch({
-  headless: false,  // ← Change to false
-  slowMo: 1000,     // ← Slow down by 1 second per action
+  headless: false, // ← Change to false
+  slowMo: 1000, // ← Slow down by 1 second per action
 });
 ```
 
@@ -286,12 +295,12 @@ Add your own test scenarios to `debug-browser.ts`:
 // Test template selection
 await page.click('[data-testid="template-button"]');
 await page.waitForTimeout(500);
-await page.screenshot({ path: 'debug-output/template-modal.png' });
+await page.screenshot({ path: "debug-output/template-modal.png" });
 
 // Test settings
 await page.click('[data-testid="settings-button"]');
 await page.waitForTimeout(500);
-await page.screenshot({ path: 'debug-output/settings.png' });
+await page.screenshot({ path: "debug-output/settings.png" });
 ```
 
 ### Continuous Monitoring
@@ -342,7 +351,7 @@ Add to `.github/workflows/test.yml`:
     pnpm run dev:full &
     sleep 5
     pnpm run debug:browser
-    
+
 - name: Upload Debug Artifacts
   if: always()
   uses: actions/upload-artifact@v3
@@ -358,35 +367,42 @@ Add to `.github/workflows/test.yml`:
 ### Debug Tool Issues
 
 **Issue**: `playwright: command not found`
+
 ```bash
 pnpm run debug:install
 ```
 
 **Issue**: `Error: browserType.launch: Executable doesn't exist`
+
 ```bash
 pnpm exec playwright install chromium
 ```
 
 **Issue**: `Navigation timeout`
+
 - App not running
 - Solution: `pnpm run dev:full` first
 
 **Issue**: `Connection refused on localhost:3003`
+
 - Wrong port or app not started
 - Solution: Check `pnpm run dev:full` output
 
 ### Application Issues
 
 **Issue**: High error count in summary
+
 - Review `CONSOLE ERRORS` section
 - Check `debug-report.json` for details
 - Look at screenshots for visual state
 
 **Issue**: API failures detected
+
 - API server not running
 - Solution: `pnpm run dev:full` (not just `pnpm run dev`)
 
 **Issue**: WASM initialization warnings
+
 - Normal if WASM not built
 - App falls back to Node converter
 - Optional: `pnpm run build:wasm`
@@ -404,15 +420,15 @@ pnpm exec playwright install chromium
 
 ## 🎉 Benefits Summary
 
-| Before | After |
-|--------|-------|
-| Manual log collection | Automated capture |
-| Incomplete information | Complete visibility |
-| Time-consuming | Instant results |
-| Hard to share | JSON + screenshots |
+| Before                 | After                 |
+| ---------------------- | --------------------- |
+| Manual log collection  | Automated capture     |
+| Incomplete information | Complete visibility   |
+| Time-consuming         | Instant results       |
+| Hard to share          | JSON + screenshots    |
 | Difficult to reproduce | Consistent every time |
-| No historical data | Save all reports |
-| CI/CD unfriendly | CI/CD ready |
+| No historical data     | Save all reports      |
+| CI/CD unfriendly       | CI/CD ready           |
 
 ---
 

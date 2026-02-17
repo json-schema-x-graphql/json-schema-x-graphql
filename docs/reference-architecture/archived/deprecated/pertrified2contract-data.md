@@ -1,6 +1,7 @@
 # Comprehensive Guide: Contract Data to Common Core Schema Transformation
 
 ## Table of Contents
+
 1. [Overview and Architecture](#overview)
 2. [Schema Mapping Framework](#mapping-framework)
 3. [Data Type Transformations](#data-types)
@@ -13,9 +14,11 @@
 ## 1. Overview and Architecture {#overview}
 
 ### 1.1 Contract Data System Context
+
 The Federal Procurement Data System (Contract Data) serves as the central repository for federal legacy_procurementance program data, managing complex hierarchical program structures, eligibility criteria, and multi-year financial obligations. Unlike procurement-focused systems (Legacy Procurement/EASi), Contract Data emphasizes program lifecycle management and beneficiary tracking.
 
 ### 1.2 Transformation Objectives
+
 - **Normalize** Contract Data's complex nested structures into the common core schema
 - **Preserve** rich program metadata while ensuring interoperability
 - **Standardize** data types and formats across system boundaries
@@ -23,13 +26,14 @@ The Federal Procurement Data System (Contract Data) serves as the central reposi
 - **Enable** seamless integration with Legacy Procurement and EASi systems
 
 ### 1.3 Architecture Overview
+
 ```mermaid
 flowchart TD
     A[Contract Data Source Data] --> B[Data Extraction Layer]
     B --> C[Transformation Engine]
     C --> D[Validation Layer]
     D --> E[Common Core Schema]
-    
+
     F[Business Rules Engine] --> C
     G[Data Quality Engine] --> D
     H[Lineage Tracker] --> E
@@ -42,6 +46,7 @@ flowchart TD
 The transformation follows a **hierarchical flattening** approach, where Contract Data's deeply nested JSON structures are mapped to the normalized schema's more accessible field structure.
 
 #### Primary Mapping Categories:
+
 - **Direct Mappings**: 1:1 field correspondence
 - **Derived Mappings**: Calculated or transformed values
 - **Hierarchical Flattening**: Complex objects to simple fields
@@ -50,20 +55,20 @@ The transformation follows a **hierarchical flattening** approach, where Contrac
 
 ### 2.2 Mapping Table: Contract Data to Common Core
 
-| Common Core Field | Contract Data Source Path | Transformation Type | Business Rules |
-|------------------|------------------|-------------------|----------------|
-| `systemMetadata.primarySystem` | Static value | Direct | Always "Contract Data" |
-| `systemMetadata.globalRecordId` | `programNumber` | Prefixed | "Contract Data-" + programNumber |
-| `contractIdentification.piid` | `data.programNumber` | Direct | Must be unique across systems |
-| `contractIdentification.contractTitle` | `data.title` | Direct | Trim and clean whitespace |
-| `contractIdentification.contractType` | `legacy_procurementanceTypes.hierarchy[0].value` | Hierarchical | Extract top-level legacy_procurementance type |
-| `contractIdentification.descriptionOfRequirement` | `data.objective` | Direct | Full program objective text |
-| `organizationInfo.contractingAgency.code` | `organizationHierarchy[0].organizationId` | Hierarchical | Root organization ID |
-| `organizationInfo.contractingAgency.name` | `organizationHierarchy[0].name` | Hierarchical | Root organization name |
-| `vendorInfo.vendorName` | `contacts.headquarters[0].fullName` | Contact Extraction | Primary headquarters contact |
-| `placeOfPerformance.city` | `contacts.headquarters[0].address.city` | Contact Address | Primary headquarters address |
-| `financialInfo.totalContractValue` | `financial.obligations[].values.actual` | Aggregation | Sum all actual obligation values |
-| `businessClassification.naicsCode` | `legacy_procurementanceTypes.hierarchy[].code` | Complex Derivation | Map legacy_procurementance type to NAICS equivalent |
+| Common Core Field                                 | Contract Data Source Path                        | Transformation Type | Business Rules                                      |
+| ------------------------------------------------- | ------------------------------------------------ | ------------------- | --------------------------------------------------- |
+| `systemMetadata.primarySystem`                    | Static value                                     | Direct              | Always "Contract Data"                              |
+| `systemMetadata.globalRecordId`                   | `programNumber`                                  | Prefixed            | "Contract Data-" + programNumber                    |
+| `contractIdentification.piid`                     | `data.programNumber`                             | Direct              | Must be unique across systems                       |
+| `contractIdentification.contractTitle`            | `data.title`                                     | Direct              | Trim and clean whitespace                           |
+| `contractIdentification.contractType`             | `legacy_procurementanceTypes.hierarchy[0].value` | Hierarchical        | Extract top-level legacy_procurementance type       |
+| `contractIdentification.descriptionOfRequirement` | `data.objective`                                 | Direct              | Full program objective text                         |
+| `organizationInfo.contractingAgency.code`         | `organizationHierarchy[0].organizationId`        | Hierarchical        | Root organization ID                                |
+| `organizationInfo.contractingAgency.name`         | `organizationHierarchy[0].name`                  | Hierarchical        | Root organization name                              |
+| `vendorInfo.vendorName`                           | `contacts.headquarters[0].fullName`              | Contact Extraction  | Primary headquarters contact                        |
+| `placeOfPerformance.city`                         | `contacts.headquarters[0].address.city`          | Contact Address     | Primary headquarters address                        |
+| `financialInfo.totalContractValue`                | `financial.obligations[].values.actual`          | Aggregation         | Sum all actual obligation values                    |
+| `businessClassification.naicsCode`                | `legacy_procurementanceTypes.hierarchy[].code`   | Complex Derivation  | Map legacy_procurementance type to NAICS equivalent |
 
 ### 2.3 Dot Notation Field References
 
@@ -115,18 +120,19 @@ Contract Data uses complex nested structures that require careful dot notation h
 
 ### 3.1 Primitive Type Mappings
 
-| Contract Data Data Type | Common Core Type | Transformation Rule | Example |
-|----------------|------------------|-------------------|---------|
-| `string` | `string` | Direct copy with trimming | `"10.001"` → `"10.001"` |
-| `number` | `decimal` | Precision standardization | `1500000.00` → `1500000.00` |
-| `boolean` | `boolean` | Direct mapping | `true` → `true` |
-| `date` | `string (date-time)` | ISO 8601 conversion | `"2024-01-15"` → `"2024-01-15T00:00:00Z"` |
-| `array` | `json` or flattened | Context-dependent | See complex handling below |
-| `object` | `json` or decomposed | Structure-dependent | See hierarchical handling |
+| Contract Data Data Type | Common Core Type     | Transformation Rule       | Example                                   |
+| ----------------------- | -------------------- | ------------------------- | ----------------------------------------- |
+| `string`                | `string`             | Direct copy with trimming | `"10.001"` → `"10.001"`                   |
+| `number`                | `decimal`            | Precision standardization | `1500000.00` → `1500000.00`               |
+| `boolean`               | `boolean`            | Direct mapping            | `true` → `true`                           |
+| `date`                  | `string (date-time)` | ISO 8601 conversion       | `"2024-01-15"` → `"2024-01-15T00:00:00Z"` |
+| `array`                 | `json` or flattened  | Context-dependent         | See complex handling below                |
+| `object`                | `json` or decomposed | Structure-dependent       | See hierarchical handling                 |
 
 ### 3.2 Complex Type Handling
 
 #### 3.2.1 Financial Obligations Array
+
 ```json
 // Contract Data Source
 {
@@ -155,6 +161,7 @@ Contract Data uses complex nested structures that require careful dot notation h
 ```
 
 #### 3.2.2 Assistance Types Hierarchy
+
 ```json
 // Contract Data Source
 {
@@ -202,21 +209,24 @@ Contract Data uses complex nested structures that require careful dot notation h
 ### 3.3 Enumeration and Code Mappings
 
 #### 3.3.1 Status Code Transformations
+
 ```yaml
 contract_data_status_mapping:
   published: "awarded"
-  draft: "draft" 
+  draft: "draft"
   archived: "completed"
   suspended: "cancelled"
-  
-common_core_status_enum: ["draft", "published", "awarded", "completed", "cancelled"]
+
+common_core_status_enum:
+  ["draft", "published", "awarded", "completed", "cancelled"]
 ```
 
 #### 3.3.2 Contact Role Standardization
+
 ```yaml
 contract_data_contact_roles:
   "Program Officer": "primary"
-  "Technical Contact": "technical" 
+  "Technical Contact": "technical"
   "Administrative Contact": "administrative"
   "Grants Management Officer": "contracting_officer"
 ```
@@ -235,7 +245,7 @@ contract_data_contact_roles:
         "processedDate": "2024-01-18T10:45:00Z",
         "transformationRules": [
           "contract_data_program_ingestion",
-          "federal_legacy_procurementance_validation", 
+          "federal_legacy_procurementance_validation",
           "hierarchy_processing"
         ],
         "dataQuality": {
@@ -267,7 +277,7 @@ Each transformed field maintains lineage information:
       }
     },
     "financialInfo.totalContractValue": {
-      "sourceSystem": "Contract Data", 
+      "sourceSystem": "Contract Data",
       "sourcePath": "financial.obligations[*].values.actual",
       "transformationApplied": "aggregation_sum",
       "transformationDate": "2024-01-18T10:45:00Z",
@@ -288,14 +298,14 @@ Quality scores flow through transformations:
 
 ```yaml
 quality_inheritance_rules:
-  direct_mapping: 
+  direct_mapping:
     inherit_score: true
     minimum_confidence: 0.9
-  
+
   aggregation_mapping:
     inherit_score: false
     calculated_confidence: "min(source_scores) * 0.95"
-  
+
   derived_mapping:
     inherit_score: false
     business_rule_confidence: 0.85
@@ -308,6 +318,7 @@ quality_inheritance_rules:
 Contract Data maintains complex multi-level organizational hierarchies that must be flattened for the common core schema:
 
 #### Source Structure Analysis
+
 ```json
 {
   "organizationHierarchy": [
@@ -318,7 +329,7 @@ Contract Data maintains complex multi-level organizational hierarchies that must
       "status": "active",
       "children": [
         {
-          "organizationId": "073-01", 
+          "organizationId": "073-01",
           "name": "Office of Business Development",
           "level": 2,
           "status": "active",
@@ -338,15 +349,16 @@ Contract Data maintains complex multi-level organizational hierarchies that must
 ```
 
 #### Transformation Strategy
+
 ```javascript
 // Hierarchy Flattening Algorithm
 function flattenOrganizationHierarchy(hierarchy) {
   const result = {
     contractingAgency: extractLevel(hierarchy, 1),
-    contractingDepartment: extractLevel(hierarchy, 2), 
-    contractingOffice: extractLevel(hierarchy, 3)
+    contractingDepartment: extractLevel(hierarchy, 2),
+    contractingOffice: extractLevel(hierarchy, 3),
   };
-  
+
   // Preserve full hierarchy in extensions
   result.fullHierarchy = hierarchy;
   return result;
@@ -358,7 +370,7 @@ function extractLevel(hierarchy, targetLevel) {
       return {
         code: node.organizationId,
         name: node.name,
-        status: node.status
+        status: node.status,
       };
     }
     if (node.children) {
@@ -369,7 +381,7 @@ function extractLevel(hierarchy, targetLevel) {
     }
     return null;
   }
-  
+
   return traverse(hierarchy[0]);
 }
 ```
@@ -379,24 +391,25 @@ function extractLevel(hierarchy, targetLevel) {
 Contract Data eligibility structures contain complex nested criteria that must be normalized:
 
 #### Source Structure
+
 ```json
 {
   "eligibility": {
     "applicant": {
       "types": [
-        {"code": "25", "value": "Small businesses"},
-        {"code": "21", "value": "Socially disadvantaged"}
+        { "code": "25", "value": "Small businesses" },
+        { "code": "21", "value": "Socially disadvantaged" }
       ],
       "legacy_procurementanceUsageTypes": [
-        {"code": "BUS", "value": "Business development"},
-        {"code": "TRN", "value": "Training programs"}
+        { "code": "BUS", "value": "Business development" },
+        { "code": "TRN", "value": "Training programs" }
       ],
       "additionalInfo": "Must meet SBA size standards and demonstrate social/economic disadvantage"
     },
     "beneficiary": {
       "types": [
-        {"code": "10", "value": "Small Business Person"},
-        {"code": "11", "value": "Minority group"}
+        { "code": "10", "value": "Small Business Person" },
+        { "code": "11", "value": "Minority group" }
       ],
       "additionalInfo": "Direct benefit to disadvantaged business owners"
     }
@@ -405,22 +418,23 @@ Contract Data eligibility structures contain complex nested criteria that must b
 ```
 
 #### Transformation Approach
+
 ```javascript
 // Eligibility Normalization
 function normalizeEligibility(eligibility) {
   return {
     // Extract primary classification for common core
     setAsideType: eligibility.applicant.types[0]?.value || "Open Competition",
-    
+
     // Preserve detailed eligibility in extensions
     fullEligibilityStructure: eligibility,
-    
+
     // Create searchable eligibility summary
     eligibilitySummary: {
       primaryApplicantType: eligibility.applicant.types[0]?.value,
       primaryBeneficiaryType: eligibility.beneficiary.types[0]?.value,
-      additionalRequirements: eligibility.applicant.additionalInfo
-    }
+      additionalRequirements: eligibility.applicant.additionalInfo,
+    },
   };
 }
 ```
@@ -430,6 +444,7 @@ function normalizeEligibility(eligibility) {
 Contract Data maintains multi-year financial data with complex obligation structures:
 
 #### Source Complexity
+
 ```json
 {
   "financial": {
@@ -448,8 +463,9 @@ Contract Data maintains multi-year financial data with complex obligation struct
         }
       },
       {
-        "obligationId": "OBL-2025-001", 
+        "obligationId": "OBL-2025-001",
         "fiscalYear": "2025",
         "values": {
           "actual": 0.00,
           "estimate":
+```

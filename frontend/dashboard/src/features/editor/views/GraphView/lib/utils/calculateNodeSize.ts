@@ -17,7 +17,9 @@ const calculateLines = (text: Text): string => {
   if (typeof text === "string") {
     return text;
   } else {
-    return text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
+    return text
+      .map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`)
+      .join("\n");
   }
 };
 
@@ -39,7 +41,9 @@ const calculateWidthAndHeight = (str: string, single = false) => {
 
   const width = clientRect.width + 4;
   // Use parent height for single line nodes that are parents
-  const height = single ? NODE_DIMENSIONS.PARENT_HEIGHT : lines * NODE_DIMENSIONS.ROW_HEIGHT;
+  const height = single
+    ? NODE_DIMENSIONS.PARENT_HEIGHT
+    : lines * NODE_DIMENSIONS.ROW_HEIGHT;
 
   document.body.removeChild(dummyElement);
   return { width, height };

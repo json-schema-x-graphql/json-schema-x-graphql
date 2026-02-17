@@ -9,7 +9,12 @@ type Props = {
   type?: NodeType;
 };
 
-export const addNodeToGraph = ({ graph, text, type = "null", isEmpty = false }: Props) => {
+export const addNodeToGraph = ({
+  graph,
+  text,
+  type = "null",
+  isEmpty = false,
+}: Props) => {
   const id = String(graph.nodes.length + 1);
   const isParent = type === "array" || type === "object";
   const { width, height } = calculateNodeSize(text, isParent);

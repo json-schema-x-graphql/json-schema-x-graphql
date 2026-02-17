@@ -11,14 +11,16 @@ Accepted
 The Rust-based converter (`json-schema-x-graphql/converters/rust`) is responsible for bidirectionally converting between JSON Schema and GraphQL Schema Definition Language (SDL). A core component of this converter is the GraphQL parser, which is necessary for the GraphQL-to-JSON-Schema conversion direction.
 
 The key requirements for the parser are:
+
 1.  **Correctness**: It must accurately parse compliant GraphQL SDL.
 2.  **Performance**: It should be fast to avoid becoming a bottleneck.
 3.  **Apollo Federation Support**: This is a critical feature for the project, as the converter must be able to understand and process Federation-specific directives and schema constructs (e.g., `@key`, `@requires`, `@provides`).
 
 Several mature GraphQL parsing libraries exist in the Rust ecosystem. To make an informed decision, we conducted a performance benchmark comparing the following popular options:
-*   `apollo-parser`
-*   `graphql-parser`
-*   `async-graphql`
+
+- `apollo-parser`
+- `graphql-parser`
+- `async-graphql`
 
 ## Decision
 
@@ -30,17 +32,17 @@ While `apollo-parser` was the incumbent parser, the decision was made to switch 
 
 ### Positive
 
-*   **First-Class Federation Support**: `async-graphql` is the only parser among the candidates that provides explicit, built-in support for Apollo Federation. This is the most significant factor in this decision and directly aligns with the project's core requirements.
-*   **Active Maintenance & Strong Community**: The library is actively developed and has a large user base, ensuring good support and continued updates.
-*   **Comprehensive Feature Set**: Beyond just parsing, `async-graphql` is a full-featured GraphQL server implementation, which could be beneficial for future testing or expansion of the project's scope.
+- **First-Class Federation Support**: `async-graphql` is the only parser among the candidates that provides explicit, built-in support for Apollo Federation. This is the most significant factor in this decision and directly aligns with the project's core requirements.
+- **Active Maintenance & Strong Community**: The library is actively developed and has a large user base, ensuring good support and continued updates.
+- **Comprehensive Feature Set**: Beyond just parsing, `async-graphql` is a full-featured GraphQL server implementation, which could be beneficial for future testing or expansion of the project's scope.
 
 ### Negative
 
-*   **Performance Trade-off**: The benchmark results indicated that `async-graphql` is slower than the alternatives for raw parsing speed on our test schema:
-    *   `graphql-parser`: ~63 µs
-    *   `apollo-parser`: ~75 µs
-    *   `async-graphql`: ~125 µs
-*   **Conclusion on Performance**: The performance difference is measured in microseconds (µs) and is not considered significant enough to be a bottleneck for the converter's typical use cases. The substantial benefit of native Federation support far outweighs this minor performance trade-off.
+- **Performance Trade-off**: The benchmark results indicated that `async-graphql` is slower than the alternatives for raw parsing speed on our test schema:
+  - `graphql-parser`: ~63 µs
+  - `apollo-parser`: ~75 µs
+  - `async-graphql`: ~125 µs
+- **Conclusion on Performance**: The performance difference is measured in microseconds (µs) and is not considered significant enough to be a bottleneck for the converter's typical use cases. The substantial benefit of native Federation support far outweighs this minor performance trade-off.
 
 ### Summary
 

@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What a schema is and why it matters
 - The Query type as the entry point
 - Building a complete, cohesive schema
@@ -13,9 +14,10 @@
 - Versioning schemas
 
 **Why it matters:**
-A schema is the contract between your API and its clients. It defines *everything* - what types exist, what fields they have, what queries are possible. A well-designed schema is clear, consistent, and discoverable. It's the most important part of your API because without it, developers can't use your API effectively.
+A schema is the contract between your API and its clients. It defines _everything_ - what types exist, what fields they have, what queries are possible. A well-designed schema is clear, consistent, and discoverable. It's the most important part of your API because without it, developers can't use your API effectively.
 
 **Prerequisites:**
+
 - Completed: [Module 1: Introducing Types](/learning/01-introducing-types)
 - Completed: [Module 2: Scalars, Objects, Lists](/learning/02-scalars-objects-lists)
 - Completed: [Module 3: Nullability](/learning/03-nullability)
@@ -37,6 +39,7 @@ A **schema** is a complete, formally defined structure of your API. It's like a 
 - How types relate to each other
 
 **Example:**
+
 ```graphql
 # A complete minimal schema
 type Query {
@@ -136,7 +139,7 @@ type Query {
 
 ### Adding Mutations
 
-Mutations let clients *modify* data (not just read):
+Mutations let clients _modify_ data (not just read):
 
 ```graphql
 type Query {
@@ -162,22 +165,34 @@ type Mutation {
 User in the system
 """
 type User {
-  """User's unique identifier"""
+  """
+  User's unique identifier
+  """
   id: ID!
 
-  """User's display name"""
+  """
+  User's display name
+  """
   name: String!
 
-  """User's email address"""
+  """
+  User's email address
+  """
   email: String!
 
-  """User's bio (optional)"""
+  """
+  User's bio (optional)
+  """
   bio: String
 
-  """When account was created"""
+  """
+  When account was created
+  """
   createdAt: String!
 
-  """All posts by this user"""
+  """
+  All posts by this user
+  """
   posts: [Post!]!
 }
 
@@ -185,25 +200,39 @@ type User {
 Blog post
 """
 type Post {
-  """Post's unique identifier"""
+  """
+  Post's unique identifier
+  """
   id: ID!
 
-  """Post title"""
+  """
+  Post title
+  """
   title: String!
 
-  """Post content"""
+  """
+  Post content
+  """
   content: String!
 
-  """Who wrote this post"""
+  """
+  Who wrote this post
+  """
   author: User!
 
-  """When post was published"""
+  """
+  When post was published
+  """
   createdAt: String!
 
-  """When post was last updated"""
+  """
+  When post was last updated
+  """
   updatedAt: String!
 
-  """Comments on this post"""
+  """
+  Comments on this post
+  """
   comments: [Comment!]!
 }
 
@@ -211,19 +240,29 @@ type Post {
 Comment on a post
 """
 type Comment {
-  """Comment's unique identifier"""
+  """
+  Comment's unique identifier
+  """
   id: ID!
 
-  """Comment text"""
+  """
+  Comment text
+  """
   text: String!
 
-  """Who wrote this comment"""
+  """
+  Who wrote this comment
+  """
   author: User!
 
-  """Which post this is on"""
+  """
+  Which post this is on
+  """
   post: Post!
 
-  """When comment was posted"""
+  """
+  When comment was posted
+  """
   createdAt: String!
 }
 
@@ -231,19 +270,29 @@ type Comment {
 Root query type - entry point to the API
 """
 type Query {
-  """Get a specific user by ID"""
+  """
+  Get a specific user by ID
+  """
   user(id: ID!): User
 
-  """Get all users"""
+  """
+  Get all users
+  """
   users(limit: Int, offset: Int): [User!]!
 
-  """Get a specific post by ID"""
+  """
+  Get a specific post by ID
+  """
   post(id: ID!): Post
 
-  """Get all posts"""
+  """
+  Get all posts
+  """
   posts(limit: Int, offset: Int): [Post!]!
 
-  """Search posts by title or content"""
+  """
+  Search posts by title or content
+  """
   search(query: String!): [Post!]!
 }
 
@@ -251,25 +300,39 @@ type Query {
 Root mutation type - entry point for modifications
 """
 type Mutation {
-  """Create a new user"""
+  """
+  Create a new user
+  """
   createUser(name: String!, email: String!): User!
 
-  """Update user info"""
+  """
+  Update user info
+  """
   updateUser(id: ID!, name: String, email: String): User
 
-  """Delete a user"""
+  """
+  Delete a user
+  """
   deleteUser(id: ID!): Boolean!
 
-  """Create a new post"""
+  """
+  Create a new post
+  """
   createPost(title: String!, content: String!): Post!
 
-  """Update a post"""
+  """
+  Update a post
+  """
   updatePost(id: ID!, title: String, content: String): Post
 
-  """Delete a post"""
+  """
+  Delete a post
+  """
   deletePost(id: ID!): Boolean!
 
-  """Post a comment on a post"""
+  """
+  Post a comment on a post
+  """
   postComment(postId: ID!, text: String!): Comment!
 }
 ```
@@ -308,10 +371,10 @@ Then load it in your API server:
 
 ```javascript
 // Node.js example
-const fs = require('fs');
-const { buildSchema } = require('graphql');
+const fs = require("fs");
+const { buildSchema } = require("graphql");
 
-const schema = buildSchema(fs.readFileSync('schema.graphql', 'utf8'));
+const schema = buildSchema(fs.readFileSync("schema.graphql", "utf8"));
 ```
 
 ---
@@ -320,7 +383,7 @@ const schema = buildSchema(fs.readFileSync('schema.graphql', 'utf8'));
 
 ### What JSON Schema Represents
 
-JSON Schema represents the *structure* of data, while GraphQL schema represents both structure *and* operations:
+JSON Schema represents the _structure_ of data, while GraphQL schema represents both structure _and_ operations:
 
 ```json
 // JSON Schema - describes data shape
@@ -386,7 +449,15 @@ JSON Schema represents the *structure* of data, while GraphQL schema represents 
       "type": "object",
       "title": "Post",
       "description": "A blog post",
-      "required": ["id", "title", "content", "author", "createdAt", "updatedAt", "comments"],
+      "required": [
+        "id",
+        "title",
+        "content",
+        "author",
+        "createdAt",
+        "updatedAt",
+        "comments"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -437,14 +508,14 @@ JSON Schema represents the *structure* of data, while GraphQL schema represents 
 
 ### Key Differences
 
-| Aspect | GraphQL Schema | JSON Schema |
-|--------|---|---|
-| **Purpose** | Defines API operations | Defines data structure |
-| **Query/Mutation** | Has Query, Mutation types | Only describes data |
-| **Arguments** | Supports field arguments | No arguments |
-| **Required** | Uses `!` marker | `required` array |
-| **Types** | Scalar, Object, List, Enum, Interface, Union | Limited type system |
-| **Validation** | Runtime by server | Used to validate JSON |
+| Aspect             | GraphQL Schema                               | JSON Schema            |
+| ------------------ | -------------------------------------------- | ---------------------- |
+| **Purpose**        | Defines API operations                       | Defines data structure |
+| **Query/Mutation** | Has Query, Mutation types                    | Only describes data    |
+| **Arguments**      | Supports field arguments                     | No arguments           |
+| **Required**       | Uses `!` marker                              | `required` array       |
+| **Types**          | Scalar, Object, List, Enum, Interface, Union | Limited type system    |
+| **Validation**     | Runtime by server                            | Used to validate JSON  |
 
 ---
 
@@ -480,8 +551,8 @@ const graphqlSchema = `
 const result = await converter.convert({
   graphql: graphqlSchema,
   options: {
-    includeDescriptions: true
-  }
+    includeDescriptions: true,
+  },
 });
 
 console.log(result.jsonSchema);
@@ -491,6 +562,7 @@ console.log(result.jsonSchema);
 ### What Gets Converted?
 
 ✅ **Converted:**
+
 - All custom types → definitions in `$defs`
 - Type fields → properties
 - Non-null markers → `required` array
@@ -499,12 +571,13 @@ console.log(result.jsonSchema);
 - Descriptions → description fields
 
 ❌ **Not Converted:**
+
 - Query type arguments (Query type is operation, not data)
 - Mutation type (GraphQL operation, not data structure)
 - Subscription type (GraphQL operation, not data structure)
 - Field arguments (operation-specific)
 
-**Reason**: JSON Schema describes *data*, not *operations*. Query/Mutation are operations, not data types.
+**Reason**: JSON Schema describes _data_, not _operations_. Query/Mutation are operations, not data types.
 
 ### Converter Usage for Complete Schema
 
@@ -525,8 +598,8 @@ const result = await converter.convert({
   graphql: graphqlSchema,
   options: {
     includeDescriptions: true,
-    extractInputTypes: true  // For mutation inputs
-  }
+    extractInputTypes: true, // For mutation inputs
+  },
 });
 
 // Result has:
@@ -542,6 +615,7 @@ const result = await converter.convert({
 ### Example 1: Social Media API
 
 **GraphQL Schema:**
+
 ```graphql
 type User {
   id: ID!
@@ -593,6 +667,7 @@ type Mutation {
 ### Example 2: E-Commerce API
 
 **GraphQL Schema:**
+
 ```graphql
 type Product {
   id: ID!
@@ -734,11 +809,7 @@ Provide standard pagination options:
 
 ```graphql
 type Query {
-  posts(
-    limit: Int = 10
-    offset: Int = 0
-    published: Boolean
-  ): PostConnection!
+  posts(limit: Int = 10, offset: Int = 0, published: Boolean): PostConnection!
 }
 
 type PostConnection {
@@ -830,11 +901,7 @@ input CreatePostInput {
 
 # ❌ Verbose
 type Mutation {
-  createPost(
-    title: String!
-    content: String!
-    tags: [String!]
-  ): Post!
+  createPost(title: String!, content: String!, tags: [String!]): Post!
 }
 ```
 
@@ -848,13 +915,19 @@ A user in the system. Includes all public profile information
 and relationships to posts and comments.
 """
 type User {
-  """Unique identifier"""
+  """
+  Unique identifier
+  """
   id: ID!
 
-  """User's display name (1-100 characters)"""
+  """
+  User's display name (1-100 characters)
+  """
   name: String!
 
-  """User's email (must be unique)"""
+  """
+  User's email (must be unique)
+  """
   email: String!
 }
 ```
@@ -869,7 +942,7 @@ type User {
   id: ID!
   name: String!
   email: String!
-  bio: String  # New optional field, backwards compatible
+  bio: String # New optional field, backwards compatible
 }
 
 # ⚠️ Breaking - remove field
@@ -895,6 +968,7 @@ type User {
 ### Exercise 1: Design a Schema
 
 Design a GraphQL schema for a **task management app** with:
+
 - Users
 - Projects (owned by users)
 - Tasks (in projects)
@@ -1115,6 +1189,7 @@ type Comment {
 When adding new functionality, follow these patterns:
 
 **Adding a new type:**
+
 1. Define the type
 2. Add references from related types
 3. Add Query fields to access it
@@ -1147,6 +1222,7 @@ type Query {
 ```
 
 **Adding mutations:**
+
 1. Define input types
 2. Add mutation fields
 3. Document return types
@@ -1172,13 +1248,13 @@ input UpdateTagInput {
 
 ## Common Mistakes
 
-| Mistake | Problem | Solution |
-|---------|---------|----------|
-| Circular infinite mutations | Mutation changes data forever | Return only necessary data |
-| Query returns everything | Overfetch, performance issues | Let clients request what they need |
-| No Query root | Invalid schema | Always define Query type |
-| Unclear naming | Confusing API | Use clear, consistent names |
-| Mutable root fields | Complex to cache | Keep Query pure (read-only) |
+| Mistake                     | Problem                       | Solution                           |
+| --------------------------- | ----------------------------- | ---------------------------------- |
+| Circular infinite mutations | Mutation changes data forever | Return only necessary data         |
+| Query returns everything    | Overfetch, performance issues | Let clients request what they need |
+| No Query root               | Invalid schema                | Always define Query type           |
+| Unclear naming              | Confusing API                 | Use clear, consistent names        |
+| Mutable root fields         | Complex to cache              | Keep Query pure (read-only)        |
 
 ---
 
@@ -1213,7 +1289,7 @@ input UpdateTagInput {
 ✅ **Documentation matters** - Write descriptions for everything  
 ✅ **Avoid breaking changes** - Add new fields, don't remove old ones  
 ✅ **Keep it organized** - Logical grouping of types and operations  
-✅ **JSON Schema describes data** - GraphQL schema describes operations + data  
+✅ **JSON Schema describes data** - GraphQL schema describes operations + data
 
 ---
 

@@ -7,6 +7,7 @@ Successfully ran the converters on `graphql-spec-schema.json` (a JSON Schema rep
 ## Conversion Results
 
 ### Node.js Converter ✅
+
 - **Status**: SUCCESS
 - **Processing Time**: 2ms
 - **Output Size**: 4,227 bytes
@@ -14,6 +15,7 @@ Successfully ran the converters on `graphql-spec-schema.json` (a JSON Schema rep
 - **Lines of Code**: 146 lines of GraphQL SDL
 
 ### Rust Converter ⚠️
+
 - **Status**: FAILED - Expected behavior for raw JSON input
 - **Issue**: The Rust converter expects the input to be already in SDL format, not raw JSON Schema input
 - **Note**: This is a configuration issue, not a converter error
@@ -23,24 +25,28 @@ Successfully ran the converters on `graphql-spec-schema.json` (a JSON Schema rep
 The converter successfully generated a complete GraphQL schema from the JSON Schema with:
 
 ### ✅ All Introspection Types
-- `IntrospectionQuery` - Root query type for schema introspection  
-- `Schema` (__Schema) - GraphQL schema representation
-- `Type` (__Type) - Representation of GraphQL types
-- `Field` (__Field) - Field definition within types
-- `InputValue` (__InputValue) - Argument and input field definitions
-- `EnumValue` (__EnumValue) - Enumeration values
-- `Directive` (__Directive) - Directive definition
+
+- `IntrospectionQuery` - Root query type for schema introspection
+- `Schema` (\_\_Schema) - GraphQL schema representation
+- `Type` (\_\_Type) - Representation of GraphQL types
+- `Field` (\_\_Field) - Field definition within types
+- `InputValue` (\_\_InputValue) - Argument and input field definitions
+- `EnumValue` (\_\_EnumValue) - Enumeration values
+- `Directive` (\_\_Directive) - Directive definition
 
 ### ✅ All Introspection Enums
-- `TypeKind` (__TypeKind) - SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
-- `DirectiveLocation` (__DirectiveLocation) - 19 directive location types
+
+- `TypeKind` (\_\_TypeKind) - SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
+- `DirectiveLocation` (\_\_DirectiveLocation) - 19 directive location types
 
 ### ✅ All Field Descriptions
+
 - Every field includes its documentation from the GraphQL specification
 - Multi-line descriptions for complex types
 - Proper nullability annotations
 
 ### ✅ Proper Type References
+
 - All references from fields to their types are correctly resolved
 - Array types properly annotated (e.g., `[Type]!`, `[String]!`)
 - Recursive references handled (e.g., `ofType: Type`)
@@ -48,8 +54,10 @@ The converter successfully generated a complete GraphQL schema from the JSON Sch
 ## Sample Output
 
 ```graphql
-"""A GraphQL Schema is in essence a grouping of type definitions and 
-the types that serve as the roots of each type of operation."""
+"""
+A GraphQL Schema is in essence a grouping of type definitions and
+the types that serve as the roots of each type of operation.
+"""
 type Schema {
   "The description of the schema"
   description: String
@@ -65,8 +73,10 @@ type Schema {
   directives: [Directive]!
 }
 
-"""The fundamental unit of any GraphQL Schema is the type. There are 
-many kinds of types in GraphQL as represented by the __TypeKind enum."""
+"""
+The fundamental unit of any GraphQL Schema is the type. There are
+many kinds of types in GraphQL as represented by the __TypeKind enum.
+"""
 type Type {
   "The kind of type this is"
   kind: String!
@@ -93,55 +103,66 @@ type Type {
 
 ## Amendments Made
 
-### 1. Schema Structure  ✅
+### 1. Schema Structure ✅
+
 - Restructured from a meta-schema to a proper JSON Schema for converter ingestion
 - Moved from `properties` describing scalars/directives directly to a root Query type approach
 - Used `$defs` (JSON Schema definitions) to define all types
 
-### 2. Type Naming  ✅
+### 2. Type Naming ✅
+
 - Added explicit `x-graphql.typeName` hints for all type definitions
 - Ensures proper GraphQL type names in generated SDL
 - Examples: `__Schema`, `__Type`, `__Field`, `__InputValue`, `__EnumValue`
 
 ### 3. Field Types ✅
+
 - Changed all field definitions from `["string", "null"]` union types to simple `"string"` type
 - Added proper `x-graphql.type` annotations to specify exact GraphQL types
 - Examples: `type: "String!"`, `type: "[__Type!]!"`, `type: "[__DirectiveLocation!]!"`
 
 ### 4. Enum Definitions ✅
+
 - Properly defined `TypeKind` enum with all 8 values (SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL)
 - Properly defined `DirectiveLocation` enum with all 19 location values
 - Marked as enums with `x-graphql.type: "enum"`
 
 ### 5. Field Arguments ✅
+
 - Added proper argument definitions in `x-graphql.args` sections
 - Example: `__type` field accepts a `name: String!` argument
 - Field-level arguments include `includeDeprecated: Boolean!` for `fields` and `enumValues`
 
 ## File Artifacts
 
-| File | Purpose | Status |
-|------|---------|--------|
-| `graphql-spec-schema.json` | Input JSON Schema definition | ✅ Ready |
-| `graphql-spec-definitions.graphql` | Generated GraphQL SDL | ✅ Complete |
-| `GRAPHQL_SPEC_SCHEMA_GUIDE.md` | Documentation | ✅ Available |
-| `output/comparison/graphql-spec-schema-node.graphql` | Node converter output | ✅ Generated |
+| File                                                 | Purpose                      | Status       |
+| ---------------------------------------------------- | ---------------------------- | ------------ |
+| `graphql-spec-schema.json`                           | Input JSON Schema definition | ✅ Ready     |
+| `graphql-spec-definitions.graphql`                   | Generated GraphQL SDL        | ✅ Complete  |
+| `GRAPHQL_SPEC_SCHEMA_GUIDE.md`                       | Documentation                | ✅ Available |
+| `output/comparison/graphql-spec-schema-node.graphql` | Node converter output        | ✅ Generated |
 
 ## Next Steps
 
 ### Option 1: Fix Type Naming
+
 If you want the generated GraphQL types to have proper casing like `IntrospectionQuery` instead of `Introspectionquery`, you can:
+
 - Use property names that automatically convert to the desired casing
 - Or post-process the generated GraphQL with a naming formatter
 
 ### Option 2: Use Rust Converter
+
 To use the Rust converter:
+
 1. Compile it: `cargo build --release` in `converters/rust/`
 2. Use the generated GraphQL as input instead of the JSON Schema
 3. Or adjust the JSON Schema for Rust-specific handling
 
 ### Option 3: Integration
+
 The generated GraphQL SDL can be used for:
+
 - Type definitions in GraphQL federation
 - Schema composition and unification
 - Code generation and SDK creation
@@ -151,6 +172,7 @@ The generated GraphQL SDL can be used for:
 ## Validation
 
 The generated GraphQL SDL has been:
+
 - ✅ Successfully parsed by the Node.js converter (no errors)
 - ✅ All type references properly resolved
 - ✅ All field descriptions preserved
@@ -160,6 +182,7 @@ The generated GraphQL SDL has been:
 ## Command Reference
 
 ### To regenerate the GraphQL SDL:
+
 ```bash
 cd /home/john/json-schema-x-graphql
 
@@ -188,6 +211,7 @@ node scripts/test-both-converters.js graphql-spec-schema.json
 ✅ **The converters successfully process the GraphQL specification JSON Schema and generate valid, well-documented GraphQL SDL representing all introspection types, fields, arguments, and enums from the GraphQL specification.**
 
 The generated schema can be used as a foundation for:
+
 - GraphQL federation and composition
 - Type system documentation
 - Code generation

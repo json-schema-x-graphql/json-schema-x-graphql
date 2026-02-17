@@ -56,6 +56,7 @@ This plan addresses the need for comprehensive, consolidated documentation of th
 ```
 
 **Content Analysis**:
+
 - **52+ documented attributes** across 14 categories
 - Federation-specific attributes (6)
 - Type definition attributes (7)
@@ -74,6 +75,7 @@ json-schema-x-graphql/
 ```
 
 **Content Analysis**:
+
 - **15 core attributes** documented in CONTEXT.md
 - Meta-schema defines structure and validation
 - Focus on minimal required fields for round-trip fidelity
@@ -83,25 +85,26 @@ json-schema-x-graphql/
 
 **Objective**: Create unified attribute catalog
 
-| Attribute | TTSE | This Project | Status | Priority |
-|-----------|------|--------------|--------|----------|
-| `x-graphql-type-name` | ✅ | ✅ | ✅ Aligned | P0 |
-| `x-graphql-type-kind` | ✅ | ✅ | ✅ Aligned | P0 |
-| `x-graphql-field-name` | ✅ | ✅ | ✅ Aligned | P0 |
-| `x-graphql-field-type` | ✅ | ✅ | ✅ Aligned | P0 |
-| `x-graphql-field-non-null` | ✅ | ✅ | ✅ Aligned | P0 |
-| `x-graphql-field-list-item-non-null` | ❌ | ✅ | ⚠️ Document | P1 |
-| `x-graphql-federation-*` | ✅ | ✅ | ⚠️ Review | P1 |
-| `x-graphql-implements` | ✅ | ⚠️ | ⚠️ Verify | P1 |
-| `x-graphql-union-types` | ✅ | ⚠️ | ⚠️ Verify | P1 |
-| `x-graphql-directives` | ✅ | ✅ | ⚠️ Review | P2 |
-| `x-graphql-description` | ✅ | ❌ | 🔴 Missing | P2 |
-| `x-graphql-nullable` | ✅ | ❌ | 🔴 Missing | P2 |
-| `x-graphql-skip` | ✅ | ❌ | 🔴 Missing | P2 |
-| `x-graphql-args` | ✅ | ⚠️ | ⚠️ Verify | P2 |
-| `x-graphql-scalar` | ✅ | ⚠️ | ⚠️ Verify | P2 |
+| Attribute                            | TTSE | This Project | Status      | Priority |
+| ------------------------------------ | ---- | ------------ | ----------- | -------- |
+| `x-graphql-type-name`                | ✅   | ✅           | ✅ Aligned  | P0       |
+| `x-graphql-type-kind`                | ✅   | ✅           | ✅ Aligned  | P0       |
+| `x-graphql-field-name`               | ✅   | ✅           | ✅ Aligned  | P0       |
+| `x-graphql-field-type`               | ✅   | ✅           | ✅ Aligned  | P0       |
+| `x-graphql-field-non-null`           | ✅   | ✅           | ✅ Aligned  | P0       |
+| `x-graphql-field-list-item-non-null` | ❌   | ✅           | ⚠️ Document | P1       |
+| `x-graphql-federation-*`             | ✅   | ✅           | ⚠️ Review   | P1       |
+| `x-graphql-implements`               | ✅   | ⚠️           | ⚠️ Verify   | P1       |
+| `x-graphql-union-types`              | ✅   | ⚠️           | ⚠️ Verify   | P1       |
+| `x-graphql-directives`               | ✅   | ✅           | ⚠️ Review   | P2       |
+| `x-graphql-description`              | ✅   | ❌           | 🔴 Missing  | P2       |
+| `x-graphql-nullable`                 | ✅   | ❌           | 🔴 Missing  | P2       |
+| `x-graphql-skip`                     | ✅   | ❌           | 🔴 Missing  | P2       |
+| `x-graphql-args`                     | ✅   | ⚠️           | ⚠️ Verify   | P2       |
+| `x-graphql-scalar`                   | ✅   | ⚠️           | ⚠️ Verify   | P2       |
 
 **Action Items**:
+
 1. ✅ Verify attribute support in both converters
 2. ✅ Document usage patterns for each attribute
 3. ✅ Update meta-schema to include missing attributes
@@ -134,6 +137,7 @@ docs/
 ```
 
 **Design Principles**:
+
 - **Progressive Disclosure**: Quick start → Common patterns → Advanced features
 - **Example-Driven**: Every concept includes working examples
 - **Cross-Referenced**: Easy navigation between related topics
@@ -141,16 +145,16 @@ docs/
 
 ### 1.4 Migration Tasks
 
-| Task | Source | Destination | Priority | Effort |
-|------|--------|-------------|----------|--------|
-| Migrate quick reference | TTSE quick-reference.md | QUICK_START.md | P0 | 2h |
-| Migrate attribute registry | TTSE ATTRIBUTE_REGISTRY.md | ATTRIBUTE_REFERENCE.md | P0 | 4h |
-| Migrate naming conventions | TTSE naming-conventions.md | NAMING_CONVENTIONS.md | P0 | 2h |
-| Adapt hints guide | TTSE hints-guide.md | COMMON_PATTERNS.md | P1 | 3h |
-| Extract validation rules | TTSE validation-rules.md | VALIDATION_GUIDE.md | P1 | 2h |
-| Consolidate troubleshooting | TTSE common-violations.md | TROUBLESHOOTING.md | P1 | 2h |
-| Create hub page | N/A | README.md | P0 | 2h |
-| Create migration guide | N/A | MIGRATION_GUIDE.md | P2 | 3h |
+| Task                        | Source                     | Destination            | Priority | Effort |
+| --------------------------- | -------------------------- | ---------------------- | -------- | ------ |
+| Migrate quick reference     | TTSE quick-reference.md    | QUICK_START.md         | P0       | 2h     |
+| Migrate attribute registry  | TTSE ATTRIBUTE_REGISTRY.md | ATTRIBUTE_REFERENCE.md | P0       | 4h     |
+| Migrate naming conventions  | TTSE naming-conventions.md | NAMING_CONVENTIONS.md  | P0       | 2h     |
+| Adapt hints guide           | TTSE hints-guide.md        | COMMON_PATTERNS.md     | P1       | 3h     |
+| Extract validation rules    | TTSE validation-rules.md   | VALIDATION_GUIDE.md    | P1       | 2h     |
+| Consolidate troubleshooting | TTSE common-violations.md  | TROUBLESHOOTING.md     | P1       | 2h     |
+| Create hub page             | N/A                        | README.md              | P0       | 2h     |
+| Create migration guide      | N/A                        | MIGRATION_GUIDE.md     | P2       | 3h     |
 
 **Total Estimated Effort**: 20 hours
 
@@ -172,56 +176,50 @@ docs/
 // File: converters/node/src/json-to-graphql.ts
 interface SupportMatrix {
   typeMapping: {
-    'x-graphql-type-name': 'FULL',           // ✅ Complete
-    'x-graphql-type-kind': 'FULL',           // ✅ Complete
-    'x-graphql-implements': 'PARTIAL',       // ⚠️ Basic support
-    'x-graphql-union-types': 'PARTIAL',      // ⚠️ Basic support
-  },
+    "x-graphql-type-name": "FULL"; // ✅ Complete
+    "x-graphql-type-kind": "FULL"; // ✅ Complete
+    "x-graphql-implements": "PARTIAL"; // ⚠️ Basic support
+    "x-graphql-union-types": "PARTIAL"; // ⚠️ Basic support
+  };
   fieldMapping: {
-    'x-graphql-field-name': 'FULL',          // ✅ Complete
-    'x-graphql-field-type': 'FULL',          // ✅ Complete
-    'x-graphql-field-non-null': 'FULL',      // ✅ Complete
-    'x-graphql-field-list-item-non-null': 'FULL', // ✅ Complete
-    'x-graphql-nullable': 'NONE',            // 🔴 Missing
-    'x-graphql-skip': 'NONE',                // 🔴 Missing
-  },
+    "x-graphql-field-name": "FULL"; // ✅ Complete
+    "x-graphql-field-type": "FULL"; // ✅ Complete
+    "x-graphql-field-non-null": "FULL"; // ✅ Complete
+    "x-graphql-field-list-item-non-null": "FULL"; // ✅ Complete
+    "x-graphql-nullable": "NONE"; // 🔴 Missing
+    "x-graphql-skip": "NONE"; // 🔴 Missing
+  };
   federation: {
-    'x-graphql-federation-keys': 'FULL',     // ✅ Complete
-    'x-graphql-federation-shareable': 'FULL', // ✅ Complete
-    'x-graphql-federation-requires': 'PARTIAL', // ⚠️ Limited
-    'x-graphql-federation-provides': 'PARTIAL', // ⚠️ Limited
-    'x-graphql-federation-external': 'NONE', // 🔴 Missing
-    'x-graphql-federation-override-from': 'NONE', // 🔴 Missing
-  },
+    "x-graphql-federation-keys": "FULL"; // ✅ Complete
+    "x-graphql-federation-shareable": "FULL"; // ✅ Complete
+    "x-graphql-federation-requires": "PARTIAL"; // ⚠️ Limited
+    "x-graphql-federation-provides": "PARTIAL"; // ⚠️ Limited
+    "x-graphql-federation-external": "NONE"; // 🔴 Missing
+    "x-graphql-federation-override-from": "NONE"; // 🔴 Missing
+  };
   directives: {
-    'x-graphql-type-directives': 'PARTIAL',  // ⚠️ Basic parsing
-    'x-graphql-field-directives': 'PARTIAL', // ⚠️ Basic parsing
-    'x-graphql-field-arguments': 'PARTIAL',  // ⚠️ Limited support
-  },
+    "x-graphql-type-directives": "PARTIAL"; // ⚠️ Basic parsing
+    "x-graphql-field-directives": "PARTIAL"; // ⚠️ Basic parsing
+    "x-graphql-field-arguments": "PARTIAL"; // ⚠️ Limited support
+  };
   metadata: {
-    'x-graphql-description': 'NONE',         // 🔴 Missing
-    'x-graphql-scalar': 'PARTIAL',           // ⚠️ Some scalars
-  }
+    "x-graphql-description": "NONE"; // 🔴 Missing
+    "x-graphql-scalar": "PARTIAL"; // ⚠️ Some scalars
+  };
 }
 ```
 
 #### Implementation Gaps
 
 **P0 - Critical Missing Features**:
+
 1. `x-graphql-skip` - Field/type exclusion from SDL
 2. `x-graphql-nullable` - Explicit nullability override
 3. `x-graphql-description` - GraphQL-specific descriptions
 
-**P1 - Important Partial Features**:
-4. `x-graphql-implements` - Full interface implementation support
-5. `x-graphql-union-types` - Complete union type generation
-6. `x-graphql-federation-requires` - Complete federation support
-7. `x-graphql-federation-provides` - Complete federation support
+**P1 - Important Partial Features**: 4. `x-graphql-implements` - Full interface implementation support 5. `x-graphql-union-types` - Complete union type generation 6. `x-graphql-federation-requires` - Complete federation support 7. `x-graphql-federation-provides` - Complete federation support
 
-**P2 - Nice-to-Have**:
-8. `x-graphql-federation-external` - Advanced federation
-9. `x-graphql-federation-override-from` - Field migration
-10. Enhanced directive parsing and validation
+**P2 - Nice-to-Have**: 8. `x-graphql-federation-external` - Advanced federation 9. `x-graphql-federation-override-from` - Field migration 10. Enhanced directive parsing and validation
 
 #### Implementation Strategy
 
@@ -231,11 +229,17 @@ interface SupportMatrix {
 export interface XGraphQLExtensions {
   // Type-level
   typeName?: string;
-  typeKind?: 'OBJECT' | 'INTERFACE' | 'UNION' | 'ENUM' | 'INPUT_OBJECT' | 'SCALAR';
+  typeKind?:
+    | "OBJECT"
+    | "INTERFACE"
+    | "UNION"
+    | "ENUM"
+    | "INPUT_OBJECT"
+    | "SCALAR";
   implements?: string[];
   unionTypes?: string[];
   typeDirectives?: string[];
-  
+
   // Field-level
   fieldName?: string;
   fieldType?: string;
@@ -245,7 +249,7 @@ export interface XGraphQLExtensions {
   skip?: boolean;
   fieldDirectives?: string[];
   fieldArguments?: Record<string, FieldArgument>;
-  
+
   // Federation
   federationKeys?: string[];
   federationShareable?: boolean;
@@ -253,7 +257,7 @@ export interface XGraphQLExtensions {
   federationProvides?: string[];
   federationExternal?: boolean;
   federationOverrideFrom?: string;
-  
+
   // Metadata
   description?: string;
   scalar?: string;
@@ -263,17 +267,17 @@ export class XGraphQLHandler {
   // Extract all x-graphql-* extensions from schema object
   static extract(schema: JSONSchema): XGraphQLExtensions {
     const extensions: XGraphQLExtensions = {};
-    
+
     for (const [key, value] of Object.entries(schema)) {
-      if (key.startsWith('x-graphql-')) {
+      if (key.startsWith("x-graphql-")) {
         const prop = this.parseExtensionKey(key);
         extensions[prop] = value;
       }
     }
-    
+
     return extensions;
   }
-  
+
   // Apply extensions during SDL generation
   static apply(type: GraphQLType, extensions: XGraphQLExtensions): GraphQLType {
     if (extensions.skip) return null;
@@ -331,15 +335,12 @@ pub enum XGraphQLSupport {
 #### Implementation Gaps (Same as Node.js)
 
 **P0 - Critical Missing Features**:
+
 1. `x-graphql-skip` - Field/type exclusion from SDL
 2. `x-graphql-nullable` - Explicit nullability override
 3. `x-graphql-description` - GraphQL-specific descriptions
 
-**P1 - Important Partial Features**:
-4. `x-graphql-implements` - Full interface implementation support
-5. `x-graphql-union-types` - Complete union type generation
-6. `x-graphql-federation-requires` - Complete federation support
-7. `x-graphql-federation-provides` - Complete federation support
+**P1 - Important Partial Features**: 4. `x-graphql-implements` - Full interface implementation support 5. `x-graphql-union-types` - Complete union type generation 6. `x-graphql-federation-requires` - Complete federation support 7. `x-graphql-federation-provides` - Complete federation support
 
 #### Implementation Strategy
 
@@ -361,7 +362,7 @@ pub struct XGraphQLExtensions {
     pub implements: Option<Vec<String>>,
     #[serde(rename = "x-graphql-union-types")]
     pub union_types: Option<Vec<String>>,
-    
+
     // Field-level
     #[serde(rename = "x-graphql-field-name")]
     pub field_name: Option<String>,
@@ -373,7 +374,7 @@ pub struct XGraphQLExtensions {
     pub nullable: Option<bool>,
     #[serde(rename = "x-graphql-skip")]
     pub skip: Option<bool>,
-    
+
     // Federation
     #[serde(rename = "x-graphql-federation-keys")]
     pub federation_keys: Option<Vec<String>>,
@@ -385,7 +386,7 @@ pub struct XGraphQLExtensions {
     pub federation_provides: Option<Vec<String>>,
     #[serde(rename = "x-graphql-federation-external")]
     pub federation_external: Option<bool>,
-    
+
     // Metadata
     #[serde(rename = "x-graphql-description")]
     pub description: Option<String>,
@@ -399,17 +400,17 @@ impl XGraphQLExtensions {
         serde_json::from_value(schema.clone())
             .map_err(|e| ConversionError::InvalidExtensions(e.to_string()))
     }
-    
+
     /// Check if field/type should be skipped
     pub fn should_skip(&self) -> bool {
         self.skip.unwrap_or(false)
     }
-    
+
     /// Get effective description (x-graphql-description or description)
     pub fn get_description(&self, fallback: Option<&str>) -> Option<String> {
         self.description.clone().or_else(|| fallback.map(String::from))
     }
-    
+
     /// Apply extensions to GraphQL type definition
     pub fn apply_to_type(&self, type_def: &mut TypeDefinition) {
         if let Some(name) = &self.type_name {
@@ -425,24 +426,25 @@ impl XGraphQLExtensions {
 
 ### 2.3 Feature Parity Matrix
 
-| Feature | Node.js | Rust | Priority | Blocker |
-|---------|---------|------|----------|---------|
-| Type name mapping | ✅ | ✅ | P0 | No |
-| Type kind specification | ✅ | ✅ | P0 | No |
-| Field name mapping | ✅ | ✅ | P0 | No |
-| Field type override | ✅ | ✅ | P0 | No |
-| Non-null fields | ✅ | ✅ | P0 | No |
-| Skip field/type | 🔴 | 🔴 | P0 | Yes |
-| Nullable override | 🔴 | 🔴 | P0 | Yes |
-| GraphQL description | 🔴 | 🔴 | P0 | Yes |
-| Interface implementation | ⚠️ | ⚠️ | P1 | No |
-| Union types | ⚠️ | ⚠️ | P1 | No |
-| Federation requires | ⚠️ | ⚠️ | P1 | No |
-| Federation provides | ⚠️ | ⚠️ | P1 | No |
-| Field arguments | ⚠️ | ⚠️ | P2 | No |
-| Custom directives | ⚠️ | ⚠️ | P2 | No |
+| Feature                  | Node.js | Rust | Priority | Blocker |
+| ------------------------ | ------- | ---- | -------- | ------- |
+| Type name mapping        | ✅      | ✅   | P0       | No      |
+| Type kind specification  | ✅      | ✅   | P0       | No      |
+| Field name mapping       | ✅      | ✅   | P0       | No      |
+| Field type override      | ✅      | ✅   | P0       | No      |
+| Non-null fields          | ✅      | ✅   | P0       | No      |
+| Skip field/type          | 🔴      | 🔴   | P0       | Yes     |
+| Nullable override        | 🔴      | 🔴   | P0       | Yes     |
+| GraphQL description      | 🔴      | 🔴   | P0       | Yes     |
+| Interface implementation | ⚠️      | ⚠️   | P1       | No      |
+| Union types              | ⚠️      | ⚠️   | P1       | No      |
+| Federation requires      | ⚠️      | ⚠️   | P1       | No      |
+| Federation provides      | ⚠️      | ⚠️   | P1       | No      |
+| Field arguments          | ⚠️      | ⚠️   | P2       | No      |
+| Custom directives        | ⚠️      | ⚠️   | P2       | No      |
 
 **Implementation Priority**:
+
 1. **Phase 2A** (Week 1): P0 missing features (skip, nullable, description)
 2. **Phase 2B** (Week 2): P1 partial features (interfaces, unions, federation)
 3. **Phase 2C** (Week 3): P2 enhancements (arguments, directives)
@@ -542,105 +544,105 @@ type User {
 ```typescript
 // converters/node/src/__tests__/x-graphql-extensions.test.ts
 
-describe('x-graphql Extensions', () => {
-  describe('Type Mapping', () => {
-    it('should use x-graphql-type-name', () => {
-      const schema = loadSchema('01-basic-types.json');
+describe("x-graphql Extensions", () => {
+  describe("Type Mapping", () => {
+    it("should use x-graphql-type-name", () => {
+      const schema = loadSchema("01-basic-types.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('type User');
+      expect(result).toContain("type User");
     });
-    
-    it('should respect x-graphql-type-kind', () => {
-      const schema = loadSchema('03-interfaces.json');
+
+    it("should respect x-graphql-type-kind", () => {
+      const schema = loadSchema("03-interfaces.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('interface Node');
-    });
-  });
-  
-  describe('Field Mapping', () => {
-    it('should use x-graphql-field-name', () => {
-      const schema = loadSchema('01-basic-types.json');
-      const result = jsonToGraphQL(schema);
-      expect(result).toContain('id: ID!');
-      expect(result).not.toContain('user_id');
-    });
-    
-    it('should respect x-graphql-field-non-null', () => {
-      const schema = loadSchema('02-nullability.json');
-      const result = jsonToGraphQL(schema);
-      expect(result).toContain('requiredField: String!');
-    });
-    
-    it('should respect x-graphql-nullable override', () => {
-      const schema = loadSchema('02-nullability.json');
-      const result = jsonToGraphQL(schema);
-      expect(result).toContain('optionalField: String');
-    });
-    
-    it('should skip fields with x-graphql-skip', () => {
-      const schema = loadSchema('12-skip-fields.json');
-      const result = jsonToGraphQL(schema);
-      expect(result).not.toContain('_internalField');
+      expect(result).toContain("interface Node");
     });
   });
-  
-  describe('Interfaces', () => {
-    it('should generate interface definitions', () => {
-      const schema = loadSchema('03-interfaces.json');
+
+  describe("Field Mapping", () => {
+    it("should use x-graphql-field-name", () => {
+      const schema = loadSchema("01-basic-types.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('interface Node');
+      expect(result).toContain("id: ID!");
+      expect(result).not.toContain("user_id");
     });
-    
-    it('should implement interfaces', () => {
-      const schema = loadSchema('03-interfaces.json');
+
+    it("should respect x-graphql-field-non-null", () => {
+      const schema = loadSchema("02-nullability.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('type User implements Node');
+      expect(result).toContain("requiredField: String!");
+    });
+
+    it("should respect x-graphql-nullable override", () => {
+      const schema = loadSchema("02-nullability.json");
+      const result = jsonToGraphQL(schema);
+      expect(result).toContain("optionalField: String");
+    });
+
+    it("should skip fields with x-graphql-skip", () => {
+      const schema = loadSchema("12-skip-fields.json");
+      const result = jsonToGraphQL(schema);
+      expect(result).not.toContain("_internalField");
     });
   });
-  
-  describe('Unions', () => {
-    it('should generate union types', () => {
-      const schema = loadSchema('04-unions.json');
+
+  describe("Interfaces", () => {
+    it("should generate interface definitions", () => {
+      const schema = loadSchema("03-interfaces.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('union SearchResult = User | Post | Comment');
+      expect(result).toContain("interface Node");
+    });
+
+    it("should implement interfaces", () => {
+      const schema = loadSchema("03-interfaces.json");
+      const result = jsonToGraphQL(schema);
+      expect(result).toContain("type User implements Node");
     });
   });
-  
-  describe('Federation', () => {
-    it('should add @key directive', () => {
-      const schema = loadSchema('07-federation.json');
+
+  describe("Unions", () => {
+    it("should generate union types", () => {
+      const schema = loadSchema("04-unions.json");
+      const result = jsonToGraphQL(schema);
+      expect(result).toContain("union SearchResult = User | Post | Comment");
+    });
+  });
+
+  describe("Federation", () => {
+    it("should add @key directive", () => {
+      const schema = loadSchema("07-federation.json");
       const result = jsonToGraphQL(schema);
       expect(result).toContain('type User @key(fields: "id")');
     });
-    
-    it('should mark fields as @shareable', () => {
-      const schema = loadSchema('07-federation.json');
+
+    it("should mark fields as @shareable", () => {
+      const schema = loadSchema("07-federation.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('@shareable');
+      expect(result).toContain("@shareable");
     });
-    
-    it('should add @requires directive', () => {
-      const schema = loadSchema('08-advanced-federation.json');
+
+    it("should add @requires directive", () => {
+      const schema = loadSchema("08-advanced-federation.json");
       const result = jsonToGraphQL(schema);
       expect(result).toContain('@requires(fields: "email")');
     });
   });
-  
-  describe('Descriptions', () => {
-    it('should use x-graphql-description when present', () => {
-      const schema = loadSchema('11-descriptions.json');
+
+  describe("Descriptions", () => {
+    it("should use x-graphql-description when present", () => {
+      const schema = loadSchema("11-descriptions.json");
       const result = jsonToGraphQL(schema);
-      expect(result).toContain('GraphQL-specific description');
-      expect(result).not.toContain('JSON Schema validation description');
+      expect(result).toContain("GraphQL-specific description");
+      expect(result).not.toContain("JSON Schema validation description");
     });
   });
-  
-  describe('Round-trip Conversion', () => {
-    it('should preserve all x-graphql extensions', () => {
-      const schema = loadSchema('14-real-world-api.json');
+
+  describe("Round-trip Conversion", () => {
+    it("should preserve all x-graphql extensions", () => {
+      const schema = loadSchema("14-real-world-api.json");
       const sdl = jsonToGraphQL(schema);
       const backToJson = graphQLToJSON(sdl);
-      
+
       expect(backToJson).toEqual(schema);
     });
   });
@@ -656,14 +658,14 @@ describe('x-graphql Extensions', () => {
 mod tests {
     use super::*;
     use serde_json::json;
-    
+
     #[test]
     fn test_type_name_mapping() {
         let schema = load_test_schema("01-basic-types.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(result.contains("type User"));
     }
-    
+
     #[test]
     fn test_field_name_mapping() {
         let schema = load_test_schema("01-basic-types.json");
@@ -671,21 +673,21 @@ mod tests {
         assert!(result.contains("id: ID!"));
         assert!(!result.contains("user_id"));
     }
-    
+
     #[test]
     fn test_skip_field() {
         let schema = load_test_schema("12-skip-fields.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(!result.contains("_internalField"));
     }
-    
+
     #[test]
     fn test_nullable_override() {
         let schema = load_test_schema("02-nullability.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(result.contains("optionalField: String"));
     }
-    
+
     #[test]
     fn test_interface_generation() {
         let schema = load_test_schema("03-interfaces.json");
@@ -693,34 +695,34 @@ mod tests {
         assert!(result.contains("interface Node"));
         assert!(result.contains("type User implements Node"));
     }
-    
+
     #[test]
     fn test_union_generation() {
         let schema = load_test_schema("04-unions.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(result.contains("union SearchResult = User | Post | Comment"));
     }
-    
+
     #[test]
     fn test_federation_keys() {
         let schema = load_test_schema("07-federation.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(result.contains(r#"@key(fields: "id")"#));
     }
-    
+
     #[test]
     fn test_graphql_description_override() {
         let schema = load_test_schema("11-descriptions.json");
         let result = convert(&schema, &ConversionOptions::default()).unwrap();
         assert!(result.contains("GraphQL-specific description"));
     }
-    
+
     #[test]
     fn test_round_trip_fidelity() {
         let schema = load_test_schema("14-real-world-api.json");
         let sdl = json_to_graphql(&schema).unwrap();
         let back_to_json = graphql_to_json(&sdl).unwrap();
-        
+
         // All x-graphql extensions should be preserved
         assert_json_eq!(schema, back_to_json);
     }
@@ -729,18 +731,19 @@ mod tests {
 
 ### 3.3 Coverage Targets
 
-| Component | Current Coverage | Target Coverage | Gap |
-|-----------|------------------|-----------------|-----|
-| Node.js Type Mapping | 65% | 95% | +30% |
-| Node.js Field Mapping | 70% | 95% | +25% |
-| Node.js Federation | 40% | 90% | +50% |
-| Node.js Round-trip | 50% | 95% | +45% |
-| Rust Type Mapping | 60% | 95% | +35% |
-| Rust Field Mapping | 65% | 95% | +30% |
-| Rust Federation | 35% | 90% | +55% |
-| Rust Round-trip | 45% | 95% | +50% |
+| Component             | Current Coverage | Target Coverage | Gap  |
+| --------------------- | ---------------- | --------------- | ---- |
+| Node.js Type Mapping  | 65%              | 95%             | +30% |
+| Node.js Field Mapping | 70%              | 95%             | +25% |
+| Node.js Federation    | 40%              | 90%             | +50% |
+| Node.js Round-trip    | 50%              | 95%             | +45% |
+| Rust Type Mapping     | 60%              | 95%             | +35% |
+| Rust Field Mapping    | 65%              | 95%             | +30% |
+| Rust Federation       | 35%              | 90%             | +55% |
+| Rust Round-trip       | 45%              | 95%             | +50% |
 
 **Coverage Measurement**:
+
 ```bash
 # Node.js
 cd converters/node
@@ -764,6 +767,7 @@ cargo tarpaulin --out Html --output-dir coverage
 **File**: `docs/x-graphql/QUICK_START.md`
 
 **Structure**:
+
 1. **5-Minute Getting Started**
    - Install converters
    - Basic schema with x-graphql attributes
@@ -791,37 +795,45 @@ cargo tarpaulin --out Html --output-dir coverage
 **File**: `docs/x-graphql/ATTRIBUTE_REFERENCE.md`
 
 **Structure**:
-```markdown
+
+````markdown
 # X-GraphQL Attribute Reference
 
 ## Type-Level Attributes
 
 ### x-graphql-type-name
+
 - **Type**: String
 - **Purpose**: Override GraphQL type name
-- **Example**: 
+- **Example**:
   ```json
   {
     "x-graphql-type-name": "User"
   }
   ```
+````
+
 - **Output**: `type User { ... }`
 - **Related**: x-graphql-type-kind
 - **Supported**: ✅ Node.js, ✅ Rust
 
 ### x-graphql-type-kind
+
 ...
 
 ## Field-Level Attributes
 
 ### x-graphql-field-name
+
 ...
 
 ## Federation Attributes
 
 ### x-graphql-federation-keys
+
 ...
-```
+
+````
 
 ### 4.3 Common Patterns Guide
 
@@ -831,7 +843,7 @@ cargo tarpaulin --out Html --output-dir coverage
 1. **Basic Type Mapping**
    - Snake_case → camelCase conversion
    - Type name customization
-   
+
 2. **Interface Inheritance**
    - Define interfaces
    - Implement interfaces
@@ -840,7 +852,7 @@ cargo tarpaulin --out Html --output-dir coverage
 3. **Union Types**
    - Define union types
    - Use in queries
-   
+
 4. **Federation Setup**
    - Entity definition
    - Shareable types
@@ -940,8 +952,8 @@ cargo tarpaulin --out Html --output-dir coverage
 
 ## Phase 5: Validation & Tooling
 
-**Duration**: 3-4 days  
-**Priority**: Medium  
+**Duration**: 3-4 days
+**Priority**: Medium
 **Owner**: DevOps + Core Engineering
 
 ### 5.1 Validation Schema Enhancement
@@ -956,7 +968,7 @@ cargo tarpaulin --out Html --output-dir coverage
   "$id": "https://json-schema-x-graphql.org/meta/x-graphql-extensions",
   "title": "X-GraphQL Extensions Meta-Schema",
   "description": "JSON Schema meta-schema for x-graphql-* extensions",
-  
+
   "definitions": {
     "typeExtensions": {
       "type": "object",
@@ -997,7 +1009,7 @@ cargo tarpaulin --out Html --output-dir coverage
         }
       }
     },
-    
+
     "fieldExtensions": {
       "type": "object",
       "properties": {
@@ -1028,7 +1040,7 @@ cargo tarpaulin --out Html --output-dir coverage
         }
       }
     },
-    
+
     "federationExtensions": {
       "type": "object",
       "properties": {
@@ -1054,7 +1066,7 @@ cargo tarpaulin --out Html --output-dir coverage
     }
   }
 }
-```
+````
 
 ### 5.2 Validation CLI Tool
 
@@ -1064,9 +1076,9 @@ cargo tarpaulin --out Html --output-dir coverage
 #!/usr/bin/env node
 // bin/validate-x-graphql.ts
 
-import Ajv from 'ajv';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import Ajv from "ajv";
+import { readFileSync } from "fs";
+import { resolve } from "path";
 
 interface ValidationOptions {
   schema: string;
@@ -1077,126 +1089,137 @@ interface ValidationOptions {
 class XGraphQLValidator {
   private ajv: Ajv;
   private metaSchema: any;
-  
+
   constructor() {
     this.ajv = new Ajv({ allErrors: true, strict: true });
     this.metaSchema = JSON.parse(
-      readFileSync(resolve(__dirname, '../schema/x-graphql-extensions.schema.json'), 'utf-8')
+      readFileSync(
+        resolve(__dirname, "../schema/x-graphql-extensions.schema.json"),
+        "utf-8",
+      ),
     );
     this.ajv.addMetaSchema(this.metaSchema);
   }
-  
-  validate(schemaPath: string, options: ValidationOptions = {}): ValidationResult {
-    const schema = JSON.parse(readFileSync(schemaPath, 'utf-8'));
+
+  validate(
+    schemaPath: string,
+    options: ValidationOptions = {},
+  ): ValidationResult {
+    const schema = JSON.parse(readFileSync(schemaPath, "utf-8"));
     const errors: ValidationError[] = [];
-    
+
     // 1. Validate x-graphql structure against meta-schema
     const structureValid = this.validateStructure(schema);
     if (!structureValid) {
-      errors.push(...this.ajv.errors.map(e => ({
-        path: e.instancePath,
-        message: e.message,
-        severity: 'error'
-      })));
+      errors.push(
+        ...this.ajv.errors.map((e) => ({
+          path: e.instancePath,
+          message: e.message,
+          severity: "error",
+        })),
+      );
     }
-    
+
     // 2. Validate naming conventions
     const namingErrors = this.validateNaming(schema);
     errors.push(...namingErrors);
-    
+
     // 3. Validate attribute consistency
     const consistencyErrors = this.validateConsistency(schema);
     errors.push(...consistencyErrors);
-    
+
     // 4. Validate federation requirements
     if (this.hasFederationAttributes(schema)) {
       const fedErrors = this.validateFederation(schema);
       errors.push(...fedErrors);
     }
-    
+
     return {
-      valid: errors.filter(e => e.severity === 'error').length === 0,
+      valid: errors.filter((e) => e.severity === "error").length === 0,
       errors,
-      warnings: errors.filter(e => e.severity === 'warning')
+      warnings: errors.filter((e) => e.severity === "warning"),
     };
   }
-  
+
   private validateNaming(schema: any): ValidationError[] {
     const errors: ValidationError[] = [];
-    
+
     // Check for plural attribute names (should be singular)
     const pluralPatterns = [
-      'x-graphql-scalars',
-      'x-graphql-enums',
-      'x-graphql-types',
-      'x-graphql-fields'
+      "x-graphql-scalars",
+      "x-graphql-enums",
+      "x-graphql-types",
+      "x-graphql-fields",
     ];
-    
+
     this.traverseSchema(schema, (path, obj) => {
       for (const plural of pluralPatterns) {
         if (obj.hasOwnProperty(plural)) {
           errors.push({
             path,
             message: `Use singular form '${plural.slice(0, -1)}' instead of '${plural}'`,
-            severity: 'error',
-            rule: 'NO_PLURAL_ATTRIBUTES'
+            severity: "error",
+            rule: "NO_PLURAL_ATTRIBUTES",
           });
         }
       }
     });
-    
+
     return errors;
   }
-  
+
   private validateConsistency(schema: any): ValidationError[] {
     const errors: ValidationError[] = [];
-    
+
     // Check for conflicting attributes
     this.traverseSchema(schema, (path, obj) => {
       // nullable and field-non-null conflict
-      if (obj['x-graphql-nullable'] && obj['x-graphql-field-non-null']) {
+      if (obj["x-graphql-nullable"] && obj["x-graphql-field-non-null"]) {
         errors.push({
           path,
-          message: 'Cannot have both nullable:true and field-non-null:true',
-          severity: 'error',
-          rule: 'NO_CONFLICTING_ATTRIBUTES'
+          message: "Cannot have both nullable:true and field-non-null:true",
+          severity: "error",
+          rule: "NO_CONFLICTING_ATTRIBUTES",
         });
       }
-      
+
       // union-types requires type-kind: UNION
-      if (obj['x-graphql-union-types'] && obj['x-graphql-type-kind'] !== 'UNION') {
+      if (
+        obj["x-graphql-union-types"] &&
+        obj["x-graphql-type-kind"] !== "UNION"
+      ) {
         errors.push({
           path,
           message: 'union-types requires type-kind: "UNION"',
-          severity: 'error',
-          rule: 'UNION_TYPES_REQUIRES_UNION_KIND'
+          severity: "error",
+          rule: "UNION_TYPES_REQUIRES_UNION_KIND",
         });
       }
     });
-    
+
     return errors;
   }
-  
+
   private validateFederation(schema: any): ValidationError[] {
     const errors: ValidationError[] = [];
-    
+
     // Federation keys must reference actual fields
     this.traverseSchema(schema, (path, obj) => {
-      const keys = obj['x-graphql-federation-keys'];
+      const keys = obj["x-graphql-federation-keys"];
       if (keys && obj.properties) {
         for (const key of keys) {
           if (!obj.properties[key]) {
             errors.push({
               path: `${path}/x-graphql-federation-keys`,
               message: `Key '${key}' not found in properties`,
-              severity: 'error',
-              rule: 'FEDERATION_KEY_MUST_EXIST'
+              severity: "error",
+              rule: "FEDERATION_KEY_MUST_EXIST",
             });
           }
         }
       }
     });
-    
+
     return errors;
   }
 }
@@ -1206,12 +1229,14 @@ const validator = new XGraphQLValidator();
 const result = validator.validate(process.argv[2]);
 
 if (result.valid) {
-  console.log('✅ Schema is valid');
+  console.log("✅ Schema is valid");
   process.exit(0);
 } else {
-  console.error('❌ Validation failed:');
-  result.errors.forEach(err => {
-    console.error(`  ${err.severity.toUpperCase()}: ${err.path} - ${err.message}`);
+  console.error("❌ Validation failed:");
+  result.errors.forEach((err) => {
+    console.error(
+      `  ${err.severity.toUpperCase()}: ${err.path} - ${err.message}`,
+    );
   });
   process.exit(1);
 }
@@ -1229,7 +1254,7 @@ if (result.valid) {
 git diff --cached --name-only --diff-filter=ACM | grep '\.schema\.json$' | while read file; do
   echo "Validating x-graphql attributes in $file..."
   node bin/validate-x-graphql "$file"
-  
+
   if [ $? -ne 0 ]; then
     echo "❌ x-graphql validation failed for $file"
     echo "Run 'node bin/validate-x-graphql $file' for details"
@@ -1254,10 +1279,7 @@ echo "✅ All x-graphql attributes validated"
     "vscode": "^1.75.0"
   },
   "categories": ["Linters"],
-  "activationEvents": [
-    "onLanguage:json",
-    "onLanguage:jsonc"
-  ],
+  "activationEvents": ["onLanguage:json", "onLanguage:jsonc"],
   "main": "./out/extension.js",
   "contributes": {
     "configuration": {
@@ -1294,25 +1316,27 @@ echo "✅ All x-graphql attributes validated"
 #### Test Scenarios
 
 1. **Schema → SDL → Schema Round-trip**
+
    ```typescript
-   test('preserves all x-graphql attributes in round-trip', () => {
-     const originalSchema = loadSchema('complex-api.json');
+   test("preserves all x-graphql attributes in round-trip", () => {
+     const originalSchema = loadSchema("complex-api.json");
      const sdl = jsonToGraphQL(originalSchema);
      const reconstructed = graphQLToJSON(sdl);
-     
+
      expect(reconstructed).toEqual(originalSchema);
    });
    ```
 
 2. **Multi-schema Composition**
+
    ```typescript
-   test('composes multiple schemas with federation', () => {
-     const userSchema = loadSchema('users.json');
-     const orderSchema = loadSchema('orders.json');
-     
+   test("composes multiple schemas with federation", () => {
+     const userSchema = loadSchema("users.json");
+     const orderSchema = loadSchema("orders.json");
+
      const userSDL = jsonToGraphQL(userSchema);
      const orderSDL = jsonToGraphQL(orderSchema);
-     
+
      const composed = composeSubgraphs([userSDL, orderSDL]);
      expect(composed).toBeValid();
    });
@@ -1320,13 +1344,9 @@ echo "✅ All x-graphql attributes validated"
 
 3. **Real-world API Conversion**
    ```typescript
-   test('converts real-world API schemas', () => {
-     const schemas = [
-       'github-api.json',
-       'stripe-api.json',
-       'shopify-api.json'
-     ];
-     
+   test("converts real-world API schemas", () => {
+     const schemas = ["github-api.json", "stripe-api.json", "shopify-api.json"];
+
      for (const schemaFile of schemas) {
        const schema = loadSchema(schemaFile);
        const sdl = jsonToGraphQL(schema);
@@ -1342,43 +1362,44 @@ echo "✅ All x-graphql attributes validated"
 ```typescript
 // benchmarks/x-graphql-conversion.bench.ts
 
-import { Suite } from 'benchmark';
-import { jsonToGraphQL, graphQLToJSON } from '../converters/node';
+import { Suite } from "benchmark";
+import { jsonToGraphQL, graphQLToJSON } from "../converters/node";
 
 const suite = new Suite();
 
 // Benchmark data
 const schemas = {
-  small: loadSchema('small-api.json'),      // 10 types, 50 fields
-  medium: loadSchema('medium-api.json'),    // 100 types, 500 fields
-  large: loadSchema('large-api.json'),      // 1000 types, 5000 fields
+  small: loadSchema("small-api.json"), // 10 types, 50 fields
+  medium: loadSchema("medium-api.json"), // 100 types, 500 fields
+  large: loadSchema("large-api.json"), // 1000 types, 5000 fields
 };
 
 suite
-  .add('JSON→GraphQL (small schema)', () => {
+  .add("JSON→GraphQL (small schema)", () => {
     jsonToGraphQL(schemas.small);
   })
-  .add('JSON→GraphQL (medium schema)', () => {
+  .add("JSON→GraphQL (medium schema)", () => {
     jsonToGraphQL(schemas.medium);
   })
-  .add('JSON→GraphQL (large schema)', () => {
+  .add("JSON→GraphQL (large schema)", () => {
     jsonToGraphQL(schemas.large);
   })
-  .add('GraphQL→JSON (small schema)', () => {
+  .add("GraphQL→JSON (small schema)", () => {
     const sdl = jsonToGraphQL(schemas.small);
     graphQLToJSON(sdl);
   })
-  .add('Round-trip (medium schema)', () => {
+  .add("Round-trip (medium schema)", () => {
     const sdl = jsonToGraphQL(schemas.medium);
     graphQLToJSON(sdl);
   })
-  .on('cycle', (event: any) => {
+  .on("cycle", (event: any) => {
     console.log(String(event.target));
   })
   .run();
 ```
 
 **Performance Targets**:
+
 - Small schema (<50 fields): <10ms per conversion
 - Medium schema (500 fields): <100ms per conversion
 - Large schema (5000 fields): <1s per conversion
@@ -1391,43 +1412,43 @@ suite
 ```typescript
 // tests/integration/compatibility.test.ts
 
-describe('GraphQL Tool Compatibility', () => {
-  test('works with Apollo Server', async () => {
-    const schema = loadSchema('apollo-example.json');
+describe("GraphQL Tool Compatibility", () => {
+  test("works with Apollo Server", async () => {
+    const schema = loadSchema("apollo-example.json");
     const sdl = jsonToGraphQL(schema);
-    
+
     const server = new ApolloServer({ typeDefs: sdl });
     expect(server).toBeDefined();
-    
+
     const { schema: apolloSchema } = server;
     expect(validateSchema(apolloSchema)).toHaveLength(0);
   });
-  
-  test('works with GraphQL.js', () => {
-    const schema = loadSchema('graphql-js-example.json');
+
+  test("works with GraphQL.js", () => {
+    const schema = loadSchema("graphql-js-example.json");
     const sdl = jsonToGraphQL(schema);
-    
+
     const graphqlSchema = buildSchema(sdl);
     expect(graphqlSchema).toBeDefined();
-    
+
     const errors = validateSchema(graphqlSchema);
     expect(errors).toHaveLength(0);
   });
-  
-  test('works with Apollo Federation', () => {
-    const userSchema = loadSchema('users-subgraph.json');
-    const orderSchema = loadSchema('orders-subgraph.json');
-    
+
+  test("works with Apollo Federation", () => {
+    const userSchema = loadSchema("users-subgraph.json");
+    const orderSchema = loadSchema("orders-subgraph.json");
+
     const userSDL = jsonToGraphQL(userSchema);
     const orderSDL = jsonToGraphQL(orderSchema);
-    
+
     const gateway = new ApolloGateway({
       serviceList: [
-        { name: 'users', url: 'http://users', typeDefs: userSDL },
-        { name: 'orders', url: 'http://orders', typeDefs: orderSDL }
-      ]
+        { name: "users", url: "http://users", typeDefs: userSDL },
+        { name: "orders", url: "http://orders", typeDefs: orderSDL },
+      ],
     });
-    
+
     await gateway.load();
     expect(gateway.schema).toBeDefined();
   });
@@ -1458,6 +1479,7 @@ docs/x-graphql/
 ```
 
 **Deployment**:
+
 ```bash
 # Build documentation site
 pnpm run docs:build
@@ -1484,11 +1506,7 @@ pnpm run docs:deploy
     "x-graphql",
     "federation"
   ],
-  "files": [
-    "dist/",
-    "schema/x-graphql-extensions.schema.json",
-    "README.md"
-  ]
+  "files": ["dist/", "schema/x-graphql-extensions.schema.json", "README.md"]
 }
 ```
 
@@ -1514,7 +1532,7 @@ advanced = []
 
 **File**: `docs/x-graphql/MIGRATION_FROM_V1.md`
 
-```markdown
+````markdown
 # Migration Guide: v1.x → v2.0
 
 ## Breaking Changes
@@ -1522,13 +1540,16 @@ advanced = []
 ### 1. Naming Convention Changes
 
 **Before (v1.x)**:
+
 ```json
 {
   "x-graphql-scalars": "DateTime"
 }
 ```
+````
 
 **After (v2.0)**:
+
 ```json
 {
   "x-graphql-scalar": "DateTime"
@@ -1538,6 +1559,7 @@ advanced = []
 ### 2. Federation Namespace
 
 **Before (v1.x)**:
+
 ```json
 {
   "x-graphql-shareable": true,
@@ -1546,6 +1568,7 @@ advanced = []
 ```
 
 **After (v2.0)**:
+
 ```json
 {
   "x-graphql-federation-shareable": true,
@@ -1582,14 +1605,15 @@ npx @json-schema-x-graphql/migrate-v2 path/to/schemas/
 - [ ] Test round-trip conversion
 - [ ] Update validation rules
 - [ ] Run full test suite
-```
+
+````
 
 ---
 
 ## Phase 8: Monitoring & Metrics
 
-**Duration**: 2-3 days  
-**Priority**: Low  
+**Duration**: 2-3 days
+**Priority**: Low
 **Owner**: DevOps
 
 ### 8.1 Usage Metrics
@@ -1601,7 +1625,7 @@ npx @json-schema-x-graphql/migrate-v2 path/to/schemas/
 
 export class XGraphQLMetrics {
   private metrics: Map<string, number> = new Map();
-  
+
   trackAttributeUsage(schema: JSONSchema) {
     this.traverseSchema(schema, (path, obj) => {
       for (const key of Object.keys(obj)) {
@@ -1611,13 +1635,13 @@ export class XGraphQLMetrics {
       }
     });
   }
-  
+
   getTopAttributes(limit: number = 10): Array<[string, number]> {
     return Array.from(this.metrics.entries())
       .sort((a, b) => b[1] - a[1])
       .slice(0, limit);
   }
-  
+
   generateReport(): UsageReport {
     return {
       totalSchemas: this.schemaCount,
@@ -1628,7 +1652,7 @@ export class XGraphQLMetrics {
     };
   }
 }
-```
+````
 
 ### 8.2 Quality Metrics
 
@@ -1638,10 +1662,10 @@ export class XGraphQLMetrics {
 // metrics/quality.ts
 
 export interface QualityMetrics {
-  roundTripFidelity: number;      // % of schemas that round-trip perfectly
-  validationErrors: number;        // Count of validation errors
-  attributeCoverage: number;       // % of attributes used
-  performanceScore: number;        // Conversion performance
+  roundTripFidelity: number; // % of schemas that round-trip perfectly
+  validationErrors: number; // Count of validation errors
+  attributeCoverage: number; // % of attributes used
+  performanceScore: number; // Conversion performance
 }
 
 export function calculateQualityScore(metrics: QualityMetrics): number {
@@ -1660,45 +1684,45 @@ export function calculateQualityScore(metrics: QualityMetrics): number {
 
 ### Documentation Metrics
 
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Documentation pages | 5 | 12 | 🔴 |
-| Code examples | 8 | 30 | 🟡 |
-| Attribute docs | 60% | 100% | 🟡 |
-| User feedback score | - | 4.5/5 | - |
+| Metric              | Current | Target | Status |
+| ------------------- | ------- | ------ | ------ |
+| Documentation pages | 5       | 12     | 🔴     |
+| Code examples       | 8       | 30     | 🟡     |
+| Attribute docs      | 60%     | 100%   | 🟡     |
+| User feedback score | -       | 4.5/5  | -      |
 
 ### Converter Metrics
 
-| Metric | Node.js | Rust | Target | Status |
-|--------|---------|------|--------|--------|
-| Attribute support | 65% | 60% | 100% | 🔴 |
-| Test coverage | 70% | 65% | 95% | 🟡 |
-| Round-trip fidelity | 85% | 80% | 99% | 🟡 |
-| Performance (1k types) | 150ms | 50ms | <100ms | 🟢 |
+| Metric                 | Node.js | Rust | Target | Status |
+| ---------------------- | ------- | ---- | ------ | ------ |
+| Attribute support      | 65%     | 60%  | 100%   | 🔴     |
+| Test coverage          | 70%     | 65%  | 95%    | 🟡     |
+| Round-trip fidelity    | 85%     | 80%  | 99%    | 🟡     |
+| Performance (1k types) | 150ms   | 50ms | <100ms | 🟢     |
 
 ### Quality Metrics
 
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| Validation errors | 12 | 0 | 🔴 |
-| Breaking changes | - | 0 | - |
-| User issues | - | <5/month | - |
-| Adoption rate | - | 80% | - |
+| Metric            | Current | Target   | Status |
+| ----------------- | ------- | -------- | ------ |
+| Validation errors | 12      | 0        | 🔴     |
+| Breaking changes  | -       | 0        | -      |
+| User issues       | -       | <5/month | -      |
+| Adoption rate     | -       | 80%      | -      |
 
 ---
 
 ## Timeline Summary
 
-| Phase | Duration | Dependencies | Start | End |
-|-------|----------|--------------|-------|-----|
-| Phase 1: Documentation Audit | 3-4 days | None | Week 1 | Week 1 |
-| Phase 2: Converter Implementation | 3-5 days | Phase 1 | Week 1 | Week 2 |
-| Phase 3: Test Coverage | 4-6 days | Phase 2 | Week 2 | Week 3 |
-| Phase 4: Documentation Enhancement | 4-5 days | Phase 1 | Week 2 | Week 3 |
-| Phase 5: Validation & Tooling | 3-4 days | Phase 2 | Week 3 | Week 4 |
-| Phase 6: Integration Testing | 3-4 days | Phase 3 | Week 3 | Week 4 |
-| Phase 7: Deployment | 2-3 days | Phase 4,6 | Week 4 | Week 4 |
-| Phase 8: Monitoring | 2-3 days | Phase 7 | Week 4 | Week 4 |
+| Phase                              | Duration | Dependencies | Start  | End    |
+| ---------------------------------- | -------- | ------------ | ------ | ------ |
+| Phase 1: Documentation Audit       | 3-4 days | None         | Week 1 | Week 1 |
+| Phase 2: Converter Implementation  | 3-5 days | Phase 1      | Week 1 | Week 2 |
+| Phase 3: Test Coverage             | 4-6 days | Phase 2      | Week 2 | Week 3 |
+| Phase 4: Documentation Enhancement | 4-5 days | Phase 1      | Week 2 | Week 3 |
+| Phase 5: Validation & Tooling      | 3-4 days | Phase 2      | Week 3 | Week 4 |
+| Phase 6: Integration Testing       | 3-4 days | Phase 3      | Week 3 | Week 4 |
+| Phase 7: Deployment                | 2-3 days | Phase 4,6    | Week 4 | Week 4 |
+| Phase 8: Monitoring                | 2-3 days | Phase 7      | Week 4 | Week 4 |
 
 **Total Duration**: 4 weeks  
 **Total Effort**: ~150-180 hours
@@ -1732,7 +1756,7 @@ impl ComprehensiveValidator {
     pub fn validate(schema: &Value, schema_path: &str) -> ValidationReport {
         let jsonschema_errors = JsonSchemaValidator::validate(schema);
         let boon_errors = BoonValidator::validate(schema);
-        
+
         ValidationReport {
             schema_path: schema_path.to_string(),
             jsonschema_valid: jsonschema_errors.is_empty(),
@@ -1745,6 +1769,7 @@ impl ComprehensiveValidator {
 ```
 
 **Features**:
+
 - ✅ Dual validation (jsonschema + boon)
 - ✅ Comprehensive error reporting
 - ✅ Batch file validation
@@ -1752,6 +1777,7 @@ impl ComprehensiveValidator {
 - ✅ Validation reports with detailed diagnostics
 
 **Cargo Dependencies**:
+
 ```toml
 [dev-dependencies]
 jsonschema = "0.18"  # Official JSON Schema validator
@@ -1760,13 +1786,14 @@ boon = "0.6"          # Alternative validator for comprehensive coverage
 
 #### Validation Coverage
 
-| Schema Draft | jsonschema | boon | Status |
-|--------------|------------|------|--------|
-| Draft-07 | ✅ | ✅ | Full Support |
-| 2019-09 | ✅ | ✅ | Full Support |
-| 2020-12 | ✅ | ⚠️ | Partial Support |
+| Schema Draft | jsonschema | boon | Status          |
+| ------------ | ---------- | ---- | --------------- |
+| Draft-07     | ✅         | ✅   | Full Support    |
+| 2019-09      | ✅         | ✅   | Full Support    |
+| 2020-12      | ✅         | ⚠️   | Partial Support |
 
 **Test Schema Validation**:
+
 - All 7 test schemas in `converters/test-data/x-graphql/`
 - Validates schema structure before conversion
 - Catches malformed JSON Schema early
@@ -1786,26 +1813,28 @@ pub struct ApolloParserValidator;
 impl ApolloParserValidator {
     pub fn validate(sdl: &str) -> ValidationResult<Vec<String>> {
         use apollo_parser::Parser;
-        
+
         let parser = Parser::new(sdl);
         let ast = parser.parse();
-        
+
         let errors: Vec<String> = ast.errors()
             .map(|error| format!("{}", error))
             .collect();
-        
+
         Ok(errors)
     }
 }
 ```
 
 **Features**:
+
 - High-performance GraphQL parsing
 - Detailed syntax error reporting
 - AST generation for further analysis
 - Spec-compliant parsing
 
 **Cargo Dependency**:
+
 ```toml
 [dev-dependencies]
 apollo-parser = "0.8"  # Fast, spec-compliant GraphQL parser
@@ -1821,14 +1850,14 @@ pub struct ApolloCompilerValidator;
 impl ApolloCompilerValidator {
     pub fn validate_with_federation(sdl: &str) -> ValidationResult<Vec<String>> {
         use apollo_compiler::{ApolloCompiler, InputDatabase};
-        
+
         let mut compiler = ApolloCompiler::new();
-        
+
         // Add federation directives
         let federation_sdl = format!(
             r#"
             {}
-            
+
             directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
             directive @requires(fields: String!) on FIELD_DEFINITION
             directive @provides(fields: String!) on FIELD_DEFINITION
@@ -1838,24 +1867,26 @@ impl ApolloCompilerValidator {
             "#,
             sdl
         );
-        
+
         compiler.add_type_system(&federation_sdl, "schema.graphql");
-        
+
         let db = compiler.db.snapshot();
         let diagnostics = db.all_diagnostics();
-        
+
         Ok(diagnostics.iter().map(|d| format!("{}", d)).collect())
     }
 }
 ```
 
 **Features**:
+
 - Complete GraphQL schema validation
 - Federation directive support
 - Type system validation
 - Diagnostic reporting with locations
 
 **Cargo Dependencies**:
+
 ```toml
 [dev-dependencies]
 apollo-encoder = "0.8"   # Encode GraphQL AST back to SDL
@@ -1872,7 +1903,7 @@ pub struct SpecValidator;
 impl SpecValidator {
     pub fn validate(sdl: &str) -> ValidationResult<Vec<String>> {
         use graphql_schema_validation::validate_schema;
-        
+
         match validate_schema(sdl) {
             Ok(_) => Ok(Vec::new()),
             Err(errors) => Ok(errors.iter().map(|e| format!("{}", e)).collect()),
@@ -1882,6 +1913,7 @@ impl SpecValidator {
 ```
 
 **Validation Rules**:
+
 - Type system correctness
 - Directive usage validation
 - Field and argument validation
@@ -1890,6 +1922,7 @@ impl SpecValidator {
 - Enum value validation
 
 **Cargo Dependency**:
+
 ```toml
 [dev-dependencies]
 graphql-schema-validation = "0.1"  # Official spec validation
@@ -1905,13 +1938,13 @@ pub struct FederationCompositionValidator;
 impl FederationCompositionValidator {
     pub fn validate(subgraphs: Vec<(&str, &str)>) -> ValidationResult<Vec<String>> {
         use graphql_composition::{compose, ComposeOptions};
-        
+
         let schemas: Vec<_> = subgraphs.iter()
             .map(|(name, sdl)| (name.to_string(), sdl.to_string()))
             .collect();
-        
+
         let options = ComposeOptions::default();
-        
+
         match compose(&schemas, options) {
             Ok(_supergraph) => Ok(Vec::new()),
             Err(errors) => Ok(errors.iter().map(|e| format!("{}", e)).collect()),
@@ -1921,6 +1954,7 @@ impl FederationCompositionValidator {
 ```
 
 **Federation Validations**:
+
 - @key directive validation
 - @requires field validation
 - @provides field validation
@@ -1929,6 +1963,7 @@ impl FederationCompositionValidator {
 - Supergraph generation
 
 **Cargo Dependency**:
+
 ```toml
 [dev-dependencies]
 graphql-composition = "0.1"  # Federation composition and validation
@@ -1946,18 +1981,18 @@ impl ComprehensiveGraphQLValidator {
         // Apollo Parser validation
         let apollo_parser_errors = ApolloParserValidator::validate(sdl)
             .unwrap_or_else(|e| vec![e.to_string()]);
-        
+
         // Apollo Compiler validation (with federation if applicable)
         let apollo_compiler_errors = if has_federation_directives(sdl) {
             ApolloCompilerValidator::validate_with_federation(sdl)
         } else {
             ApolloCompilerValidator::validate(sdl)
         }.unwrap_or_else(|e| vec![e.to_string()]);
-        
+
         // Spec validation
         let spec_errors = SpecValidator::validate(sdl)
             .unwrap_or_else(|e| vec![e.to_string()]);
-        
+
         // Federation validation (if applicable)
         let federation_errors = if has_federation_directives(sdl) {
             FederationCompositionValidator::validate(vec![("subgraph", sdl)])
@@ -1965,7 +2000,7 @@ impl ComprehensiveGraphQLValidator {
         } else {
             Vec::new()
         };
-        
+
         GraphQLValidationReport {
             sdl_path: sdl_path.to_string(),
             apollo_parser_valid: apollo_parser_errors.is_empty(),
@@ -1980,6 +2015,7 @@ impl ComprehensiveGraphQLValidator {
 ```
 
 **Validation Report**:
+
 ```rust
 pub struct GraphQLValidationReport {
     pub sdl_path: String,
@@ -2013,6 +2049,7 @@ converters/rust/tests/
 #### Test Coverage
 
 **JSON Schema Tests**:
+
 - Valid schemas pass both validators
 - Invalid schemas are caught by both validators
 - x-graphql extensions are validated
@@ -2020,6 +2057,7 @@ converters/rust/tests/
 - Edge cases (empty schemas, malformed JSON)
 
 **GraphQL SDL Tests**:
+
 - Valid SDL passes all validators
 - Syntax errors are caught
 - Type system errors are caught
@@ -2027,6 +2065,7 @@ converters/rust/tests/
 - Spec compliance validation
 
 **Integration Tests**:
+
 - JSON Schema → GraphQL SDL validation
 - Round-trip validation (JSON → SDL → JSON)
 - Federation subgraph validation
@@ -2073,8 +2112,8 @@ name: Validate Schemas
 on:
   pull_request:
     paths:
-      - '**.json'
-      - '**.graphql'
+      - "**.json"
+      - "**.graphql"
   push:
     branches: [main, develop]
 
@@ -2088,7 +2127,7 @@ jobs:
           toolchain: stable
       - name: Run JSON Schema validation
         run: cargo test --test schema_validation_tests
-      
+
   validate-graphql-sdl:
     runs-on: ubuntu-latest
     steps:
@@ -2098,7 +2137,7 @@ jobs:
           toolchain: stable
       - name: Run GraphQL validation
         run: cargo test --test graphql_validation_tests
-      
+
   validate-federation:
     runs-on: ubuntu-latest
     steps:
@@ -2128,6 +2167,7 @@ git diff --cached --name-only --diff-filter=ACM | grep '\.graphql$' | \
 ### 5.6 Deliverables
 
 **Code**:
+
 - ✅ `src/test_utils/schema_validation.rs` (338 lines)
 - ✅ `src/test_utils/graphql_validation.rs` (531 lines)
 - ✅ `src/test_utils/mod.rs` (57 lines)
@@ -2136,6 +2176,7 @@ git diff --cached --name-only --diff-filter=ACM | grep '\.graphql$' | \
 - 📋 CI/CD workflow files
 
 **Documentation**:
+
 - ✅ Inline documentation in validation modules
 - 📋 Validation guide (user-facing)
 - 📋 CI/CD setup instructions
@@ -2164,24 +2205,24 @@ pub struct ValidationBenchmarker;
 impl ValidationBenchmarker {
     pub fn benchmark(sdl: &str) -> ValidationBenchmark {
         use std::time::Instant;
-        
+
         let total_start = Instant::now();
-        
+
         // Apollo Parser
         let parser_start = Instant::now();
         let _ = ApolloParserValidator::validate(sdl);
         let apollo_parser_duration_us = parser_start.elapsed().as_micros() as u64;
-        
+
         // Apollo Compiler
         let compiler_start = Instant::now();
         let _ = ApolloCompilerValidator::validate(sdl);
         let apollo_compiler_duration_us = compiler_start.elapsed().as_micros() as u64;
-        
+
         // Spec Validation
         let spec_start = Instant::now();
         let _ = SpecValidator::validate(sdl);
         let spec_validation_duration_us = spec_start.elapsed().as_micros() as u64;
-        
+
         // Federation (if applicable)
         let federation_duration_us = if has_federation_directives(sdl) {
             let federation_start = Instant::now();
@@ -2190,9 +2231,9 @@ impl ValidationBenchmarker {
         } else {
             None
         };
-        
+
         let total_duration_us = total_start.elapsed().as_micros() as u64;
-        
+
         ValidationBenchmark {
             apollo_parser_duration_us,
             apollo_compiler_duration_us,
@@ -2205,6 +2246,7 @@ impl ValidationBenchmarker {
 ```
 
 **Benchmark Results Format**:
+
 ```
 Validation Benchmark Results:
   Apollo Parser:      1,234 μs
@@ -2224,15 +2266,15 @@ fn benchmark_validation(c: &mut Criterion) {
     let simple_sdl = load_test_sdl("simple.graphql");
     let complex_sdl = load_test_sdl("complex.graphql");
     let federation_sdl = load_test_sdl("federation.graphql");
-    
+
     c.bench_function("validate_simple_sdl", |b| {
         b.iter(|| ComprehensiveGraphQLValidator::validate(black_box(&simple_sdl), "simple"))
     });
-    
+
     c.bench_function("validate_complex_sdl", |b| {
         b.iter(|| ComprehensiveGraphQLValidator::validate(black_box(&complex_sdl), "complex"))
     });
-    
+
     c.bench_function("validate_federation_sdl", |b| {
         b.iter(|| ComprehensiveGraphQLValidator::validate(black_box(&federation_sdl), "federation"))
     });
@@ -2243,6 +2285,7 @@ criterion_main!(benches);
 ```
 
 **Benchmark Categories**:
+
 - Simple schemas (< 10 types)
 - Complex schemas (50+ types)
 - Federation schemas (multiple subgraphs)
@@ -2255,6 +2298,7 @@ criterion_main!(benches);
 #### Benchmark Scenarios
 
 **JSON Schema → GraphQL SDL**:
+
 - Small schema (1-5 types)
 - Medium schema (10-50 types)
 - Large schema (100+ types)
@@ -2262,6 +2306,7 @@ criterion_main!(benches);
 - Deeply nested schemas (10+ levels)
 
 **GraphQL SDL → JSON Schema**:
+
 - Small SDL (1-5 types)
 - Medium SDL (10-50 types)
 - Large SDL (100+ types)
@@ -2269,29 +2314,32 @@ criterion_main!(benches);
 - Complex type relationships
 
 **Round-Trip Conversion**:
+
 - JSON → SDL → JSON fidelity
 - SDL → JSON → SDL fidelity
 - Performance degradation analysis
 
 #### Performance Targets
 
-| Schema Size | Conversion Time (JSON→SDL) | Conversion Time (SDL→JSON) |
-|-------------|---------------------------|----------------------------|
-| Small (< 5 types) | < 1ms | < 1ms |
-| Medium (10-50 types) | < 10ms | < 10ms |
-| Large (100+ types) | < 100ms | < 100ms |
-| XLarge (500+ types) | < 500ms | < 500ms |
+| Schema Size          | Conversion Time (JSON→SDL) | Conversion Time (SDL→JSON) |
+| -------------------- | -------------------------- | -------------------------- |
+| Small (< 5 types)    | < 1ms                      | < 1ms                      |
+| Medium (10-50 types) | < 10ms                     | < 10ms                     |
+| Large (100+ types)   | < 100ms                    | < 100ms                    |
+| XLarge (500+ types)  | < 500ms                    | < 500ms                    |
 
 ### 6.3 Memory Profiling
 
 **Objective**: Profile memory usage and identify optimization opportunities
 
 **Tools**:
+
 - `cargo-flamegraph` - CPU flamegraphs
 - `valgrind` / `heaptrack` - Memory profiling
 - `perf` - Linux performance analysis
 
 **Profiling Scenarios**:
+
 - Peak memory usage during validation
 - Memory allocation patterns
 - Memory leaks detection
@@ -2300,6 +2348,7 @@ criterion_main!(benches);
 ### 6.4 Optimization Opportunities
 
 **Identified Optimizations**:
+
 1. **Validation Caching**: Cache validation results for unchanged schemas
 2. **Parallel Validation**: Run multiple validators concurrently
 3. **Lazy Loading**: Load meta-schemas on demand
@@ -2307,6 +2356,7 @@ criterion_main!(benches);
 5. **String Interning**: Reduce string allocation overhead
 
 **Implementation Priority**:
+
 - P0: Validation caching (biggest impact)
 - P1: Parallel validation
 - P2: AST reuse
@@ -2339,11 +2389,12 @@ jobs:
       - name: Store benchmark results
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          tool: 'cargo'
+          tool: "cargo"
           output-file-path: target/criterion/output.json
 ```
 
 **Benchmark Dashboard**:
+
 - Historical performance trends
 - Regression detection
 - Comparison across commits
@@ -2352,17 +2403,20 @@ jobs:
 ### 6.6 Deliverables
 
 **Code**:
+
 - 📋 Validation benchmark suite
 - 📋 Conversion benchmark suite
 - 📋 Memory profiling scripts
 - 📋 Performance optimization implementations
 
 **Documentation**:
+
 - 📋 Benchmark results documentation
 - 📋 Performance optimization guide
 - 📋 Profiling guide for contributors
 
 **Reports**:
+
 - 📋 Baseline performance report
 - 📋 Optimization impact analysis
 - 📋 Performance comparison (Node.js vs Rust)
@@ -2375,14 +2429,14 @@ jobs:
 
 ### Updated Timeline
 
-| Phase | Duration | Status | Completion |
-|-------|----------|--------|------------|
-| Phase 1: Documentation Audit | 3-4 days | ✅ Complete | 100% |
-| Phase 2: Converter Implementation | 3-5 days | ✅ Complete (Node.js) | 70% |
-| Phase 3: Test Coverage | 4-6 days | ✅ Complete (Node.js) | 80% |
-| Phase 4: Validation & Tooling | 3-4 days | ✅ Complete (Node.js) | 90% |
-| **Phase 5: Validation Infrastructure** | 5-7 days | 🔄 In Progress | 40% |
-| **Phase 6: Performance Benchmarking** | 3-5 days | 📋 Planned | 0% |
+| Phase                                  | Duration | Status                | Completion |
+| -------------------------------------- | -------- | --------------------- | ---------- |
+| Phase 1: Documentation Audit           | 3-4 days | ✅ Complete           | 100%       |
+| Phase 2: Converter Implementation      | 3-5 days | ✅ Complete (Node.js) | 70%        |
+| Phase 3: Test Coverage                 | 4-6 days | ✅ Complete (Node.js) | 80%        |
+| Phase 4: Validation & Tooling          | 3-4 days | ✅ Complete (Node.js) | 90%        |
+| **Phase 5: Validation Infrastructure** | 5-7 days | 🔄 In Progress        | 40%        |
+| **Phase 6: Performance Benchmarking**  | 3-5 days | 📋 Planned            | 0%         |
 
 **Total Estimated Duration**: 21-31 days (4-6 weeks)
 
@@ -2391,12 +2445,14 @@ jobs:
 ### Week-by-Week Breakdown
 
 **Weeks 1-2**: ✅ Phases 1-4 Complete
+
 - Documentation consolidated
 - Node.js P0 features implemented
 - Test data created
 - Validation CLI built
 
 **Week 3**: 🔄 Phase 5 In Progress
+
 - Rust validation utilities (40% complete)
 - JSON Schema dual validation implemented
 - GraphQL SDL validation implemented
@@ -2404,12 +2460,14 @@ jobs:
 - Integration tests in progress
 
 **Week 4**: 📋 Phase 5 Completion + Phase 6 Start
+
 - Complete Rust validation test suite
 - CI/CD integration
 - Begin performance benchmarking
 - Baseline measurements
 
 **Week 5-6**: 📋 Phase 6 + Final Polish
+
 - Optimization implementations
 - Rust converter parity
 - Documentation completion
@@ -2422,6 +2480,7 @@ jobs:
 ### Build Dependencies (Updated)
 
 **Rust**:
+
 ```toml
 [dev-dependencies]
 # JSON Schema Validation
@@ -2441,6 +2500,7 @@ criterion = "0.5"
 ```
 
 **Node.js**:
+
 ```json
 {
   "devDependencies": {
@@ -2473,6 +2533,7 @@ criterion = "0.5"
 - 📋 Pre-commit hooks (0% complete)
 
 **Validation Coverage**:
+
 - JSON Schema: 100% of test schemas validated
 - GraphQL SDL: 100% of generated SDL validated
 - Federation: 100% of federation directives validated
@@ -2485,20 +2546,20 @@ criterion = "0.5"
 - 📋 Performance regression detection (0%)
 
 **Performance Targets**:
+
 - Validation: < 10ms for medium schemas
 - Conversion: < 100ms for large schemas
 - Memory: < 50MB peak usage for typical workloads
 
 ---
 
-
 ## Risk Assessment
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| Breaking changes in converters | Medium | High | Comprehensive testing, migration guide |
-| Documentation incomplete | Low | Medium | Prioritize P0/P1 docs first |
-| Performance regression | Low | Medium | Benchmark tests, performance budgets |
-| Federation compatibility issues | Medium | High | Test with Apollo Federation |
-| Attribute name conflicts | Low | Low | Validation tooling, strict naming |
-| User adoption resistance | Medium | Medium
+| Risk                            | Probability | Impact | Mitigation                             |
+| ------------------------------- | ----------- | ------ | -------------------------------------- |
+| Breaking changes in converters  | Medium      | High   | Comprehensive testing, migration guide |
+| Documentation incomplete        | Low         | Medium | Prioritize P0/P1 docs first            |
+| Performance regression          | Low         | Medium | Benchmark tests, performance budgets   |
+| Federation compatibility issues | Medium      | High   | Test with Apollo Federation            |
+| Attribute name conflicts        | Low         | Low    | Validation tooling, strict naming      |
+| User adoption resistance        | Medium      | Medium |

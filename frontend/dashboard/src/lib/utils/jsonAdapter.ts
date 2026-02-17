@@ -1,7 +1,10 @@
 import type { ParseError } from "jsonc-parser";
 import { FileFormat } from "../../enums/file.enum";
 
-export const contentToJson = (value: string, format = FileFormat.JSON): Promise<object> => {
+export const contentToJson = (
+  value: string,
+  format = FileFormat.JSON,
+): Promise<object> => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!value) return resolve({});
@@ -45,14 +48,18 @@ export const contentToJson = (value: string, format = FileFormat.JSON): Promise<
 
       return resolve({});
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Failed to parse content";
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to parse content";
       return reject(errorMessage);
     }
   });
 };
 
-export const jsonToContent = async (json: string, format: FileFormat): Promise<string> => {
-  return new Promise(async resolve => {
+export const jsonToContent = async (
+  json: string,
+  format: FileFormat,
+): Promise<string> => {
+  return new Promise(async (resolve) => {
     try {
       if (!json) return resolve("");
 
@@ -91,7 +98,7 @@ export const jsonToContent = async (json: string, format: FileFormat): Promise<s
             wrapBooleans: true,
             trimFieldValues: true,
             trimHeaderFields: true,
-          })
+          }),
         );
       }
 

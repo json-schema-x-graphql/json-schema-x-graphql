@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What arguments are and how they work
 - Field arguments vs type arguments
 - Input types for complex arguments
@@ -16,6 +17,7 @@
 Arguments let you make queries dynamic. Instead of hardcoding queries for every case, you pass parameters—like searching, filtering, sorting, and paginating. They're the knobs and dials of your API, letting clients customize exactly what they ask for. Well-designed arguments make your API powerful and flexible.
 
 **Prerequisites:**
+
 - Completed: [Module 1-5 (Core Concepts)](/learning/01-introducing-types)
 - Completed: [Module 6: Enums](/learning/06-enums)
 - Completed: [Module 7: Interfaces & Unions](/learning/07-interfaces-unions)
@@ -39,7 +41,8 @@ query {
 
 # With argument - get specific user
 query {
-  user(id: "123") {      # ← id is an argument
+  user(id: "123") {
+    # ← id is an argument
     name
   }
 }
@@ -51,12 +54,13 @@ query {
 
 ```graphql
 type Query {
-  user(id: ID!): User        # Argument on user field
+  user(id: ID!): User # Argument on user field
   users(limit: Int): [User!]! # Argument on users field
 }
 ```
 
 **Type arguments**: Not possible in GraphQL
+
 ```graphql
 # This is NOT valid GraphQL
 type User<T> {  # Can't do this
@@ -79,9 +83,15 @@ type Query {
 
 # Queries
 query {
-  user(id: "123") { name }
-  post(id: "456") { title }
-  search(query: "graphql") { title }
+  user(id: "123") {
+    name
+  }
+  post(id: "456") {
+    title
+  }
+  search(query: "graphql") {
+    title
+  }
 }
 ```
 
@@ -89,11 +99,7 @@ query {
 
 ```graphql
 type Query {
-  users(
-    limit: Int
-    offset: Int
-    role: UserRole
-  ): [User!]!
+  users(limit: Int, offset: Int, role: UserRole): [User!]!
 }
 
 query {
@@ -112,21 +118,23 @@ Provide defaults to make arguments optional:
 ```graphql
 type Query {
   users(
-    limit: Int = 10          # Default: 10
-    offset: Int = 0          # Default: 0
-    role: UserRole = USER    # Default: USER
+    limit: Int = 10 # Default: 10
+    offset: Int = 0 # Default: 0
+    role: UserRole = USER # Default: USER
   ): [User!]!
 }
 
 query {
-  users {           # Uses defaults
+  users {
+    # Uses defaults
     id
     name
   }
 }
 
 query {
-  users(limit: 5) {  # Override limit only
+  users(limit: 5) {
+    # Override limit only
     id
     name
   }
@@ -175,19 +183,15 @@ type Query {
 }
 
 query {
-  posts(filter: {
-    userId: "123"
-    status: PUBLISHED
-    dateRange: {
-      start: "2025-01-01"
-      end: "2025-12-31"
+  posts(
+    filter: {
+      userId: "123"
+      status: PUBLISHED
+      dateRange: { start: "2025-01-01", end: "2025-12-31" }
+      tags: ["graphql", "api"]
+      sort: { field: "createdAt", order: DESC }
     }
-    tags: ["graphql", "api"]
-    sort: {
-      field: "createdAt"
-      order: DESC
-    }
-  }) {
+  ) {
     id
     title
   }
@@ -223,6 +227,7 @@ query GetUser($userId: ID!) {
 ```
 
 **Why variables matter:**
+
 - Reuse same query with different values
 - Prevent injection attacks
 - Better performance (query cached, only variables change)
@@ -262,11 +267,11 @@ query SearchPosts(
 
 ```graphql
 type Query {
-  user(id: ID!): User        # Required argument
+  user(id: ID!): User # Required argument
   users(limit: Int): [User!]! # Optional argument
   search(
-    query: String!           # Required
-    limit: Int = 10          # Optional with default
+    query: String! # Required
+    limit: Int = 10 # Optional with default
   ): [Post!]!
 }
 ```
@@ -367,13 +372,10 @@ JSON Schema can express argument constraints:
 ### Converting Arguments to JSON Schema
 
 **GraphQL:**
+
 ```graphql
 type Query {
-  posts(
-    limit: Int = 10
-    offset: Int = 0
-    status: PostStatus
-  ): [Post!]!
+  posts(limit: Int = 10, offset: Int = 0, status: PostStatus): [Post!]!
 }
 
 enum PostStatus {
@@ -383,6 +385,7 @@ enum PostStatus {
 ```
 
 **Converts to JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -410,6 +413,7 @@ enum PostStatus {
 ### Converter Handling
 
 The converter:
+
 - ✅ Extracts arguments from fields
 - ✅ Maps scalar arguments to JSON Schema types
 - ✅ Handles default values
@@ -425,6 +429,7 @@ The converter:
 ### Example 1: Blog Query with Pagination and Filtering
 
 **GraphQL:**
+
 ```graphql
 enum SortOrder {
   ASC
@@ -463,28 +468,21 @@ type PostConnection {
 ```
 
 **Query example:**
+
 ```graphql
-query GetPublishedPosts(
-  $authorId: ID
-  $limit: Int = 20
-  $offset: Int = 0
-) {
+query GetPublishedPosts($authorId: ID, $limit: Int = 20, $offset: Int = 0) {
   posts(
-    filter: {
-      status: PUBLISHED
-      authorId: $authorId
-    }
-    sort: {
-      field: "createdAt"
-      order: DESC
-    }
+    filter: { status: PUBLISHED, authorId: $authorId }
+    sort: { field: "createdAt", order: DESC }
     limit: $limit
     offset: $offset
   ) {
     nodes {
       id
       title
-      author { name }
+      author {
+        name
+      }
       createdAt
     }
     total
@@ -497,6 +495,7 @@ query GetPublishedPosts(
 ### Example 2: Search with Multiple Options
 
 **GraphQL:**
+
 ```graphql
 input SearchInput {
   query: String!
@@ -539,6 +538,7 @@ type Comment {
 ```
 
 **Query with variables:**
+
 ```graphql
 query Search($searchInput: SearchInput!) {
   search(input: $searchInput) {
@@ -575,10 +575,7 @@ query Search($searchInput: SearchInput!) {
 
 ```graphql
 type Query {
-  users(
-    limit: Int = 10
-    offset: Int = 0
-  ): UserConnection!
+  users(limit: Int = 10, offset: Int = 0): UserConnection!
 }
 
 type UserConnection {
@@ -624,11 +621,7 @@ type Query {
 
 ```graphql
 type Query {
-  search(
-    query: String!
-    type: SearchType
-    limit: Int = 10
-  ): [SearchResult!]!
+  search(query: String!, type: SearchType, limit: Int = 10): [SearchResult!]!
 }
 ```
 
@@ -651,10 +644,7 @@ type Query {
 
 # ❌ Messy
 type Query {
-  users(
-    role: UserRole
-    status: AccountStatus
-  ): [User!]!
+  users(role: UserRole, status: AccountStatus): [User!]!
 }
 ```
 
@@ -664,17 +654,14 @@ type Query {
 # ✅ Good defaults
 type Query {
   posts(
-    limit: Int = 20        # Not too much, not too little
+    limit: Int = 20 # Not too much, not too little
     offset: Int = 0
   ): [Post!]!
 }
 
 # ❌ No defaults forces client complexity
 type Query {
-  posts(
-    limit: Int!
-    offset: Int!
-  ): [Post!]!
+  posts(limit: Int!, offset: Int!): [Post!]!
 }
 ```
 
@@ -683,12 +670,16 @@ type Query {
 ```graphql
 # ✅ Recommended - reusable and safe
 query GetUser($id: ID!) {
-  user(id: $id) { name }
+  user(id: $id) {
+    name
+  }
 }
 
 # ❌ Not reusable - hardcoded
 query {
-  user(id: "123") { name }
+  user(id: "123") {
+    name
+  }
 }
 ```
 
@@ -698,17 +689,13 @@ query {
 type Query {
   """
   Get posts with optional filtering.
-  
+
   Arguments:
   - filter: Optional filter criteria
   - limit: Results per page (1-100, default: 20)
   - offset: Pagination offset (default: 0)
   """
-  posts(
-    filter: PostFilter
-    limit: Int = 20
-    offset: Int = 0
-  ): [Post!]!
+  posts(filter: PostFilter, limit: Int = 20, offset: Int = 0): [Post!]!
 }
 ```
 
@@ -760,11 +747,7 @@ enum PostStatus {
 
 ```graphql
 type Query {
-  posts(
-    limit: Int = 20
-    offset: Int = 0
-    status: PostStatus
-  ): PostConnection!
+  posts(limit: Int = 20, offset: Int = 0, status: PostStatus): PostConnection!
 }
 
 type PostConnection {
@@ -788,7 +771,10 @@ enum PostStatus {
 # Example query
 query GetPublishedPosts($limit: Int, $offset: Int) {
   posts(limit: $limit, offset: $offset, status: PUBLISHED) {
-    nodes { id title }
+    nodes {
+      id
+      title
+    }
     total
     hasMore
   }
@@ -829,21 +815,13 @@ enum AccountStatus {
 }
 
 type Query {
-  users(
-    filter: UserFilter
-    limit: Int = 20
-    offset: Int = 0
-  ): [User!]!
+  users(filter: UserFilter, limit: Int = 20, offset: Int = 0): [User!]!
 }
 
 # Query
 query {
   users(
-    filter: {
-      role: ADMIN
-      status: ACTIVE
-      createdAfter: "2025-01-01"
-    }
+    filter: { role: ADMIN, status: ACTIVE, createdAfter: "2025-01-01" }
     limit: 10
   ) {
     id
@@ -867,7 +845,9 @@ query {
   posts(limit: 10, offset: 20, status: PUBLISHED) {
     id
     title
-    author { name }
+    author {
+      name
+    }
   }
 }
 ```
@@ -908,6 +888,7 @@ query GetPosts(
 ### Adding Arguments to Existing Fields
 
 **Before:**
+
 ```graphql
 type Query {
   posts: [Post!]!
@@ -915,16 +896,15 @@ type Query {
 ```
 
 **Step 1**: Add arguments
+
 ```graphql
 type Query {
-  posts(
-    limit: Int = 20
-    offset: Int = 0
-  ): [Post!]!
+  posts(limit: Int = 20, offset: Int = 0): [Post!]!
 }
 ```
 
 **Step 2**: If many arguments, use input type
+
 ```graphql
 input PostFilter {
   status: PostStatus
@@ -932,11 +912,7 @@ input PostFilter {
 }
 
 type Query {
-  posts(
-    filter: PostFilter
-    limit: Int = 20
-    offset: Int = 0
-  ): PostConnection!
+  posts(filter: PostFilter, limit: Int = 20, offset: Int = 0): PostConnection!
 }
 ```
 
@@ -946,13 +922,13 @@ type Query {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| All arguments required | Clients must specify everything | Use defaults and optional args |
-| No input types | Query signature too long | Group related args in input types |
-| Hardcoded values in queries | Not reusable | Use variables with $ |
-| No validation | Invalid requests processed | Validate on server |
-| Inconsistent pagination | Different endpoints work differently | Use standard limit/offset pattern |
+| Mistake                     | Problem                              | Fix                               |
+| --------------------------- | ------------------------------------ | --------------------------------- |
+| All arguments required      | Clients must specify everything      | Use defaults and optional args    |
+| No input types              | Query signature too long             | Group related args in input types |
+| Hardcoded values in queries | Not reusable                         | Use variables with $              |
+| No validation               | Invalid requests processed           | Validate on server                |
+| Inconsistent pagination     | Different endpoints work differently | Use standard limit/offset pattern |
 
 ---
 
@@ -982,7 +958,7 @@ type Query {
 ✅ **Validate constraints** - Even though GraphQL type checks, validate business logic  
 ✅ **Documentation matters** - Explain what each argument does  
 ✅ **Pagination is standard** - limit/offset or cursor pattern  
-✅ **Keep arguments focused** - Don't make fields with 20 arguments  
+✅ **Keep arguments focused** - Don't make fields with 20 arguments
 
 ---
 

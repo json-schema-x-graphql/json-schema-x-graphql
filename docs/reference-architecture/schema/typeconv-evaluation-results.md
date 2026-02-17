@@ -7,6 +7,7 @@
 ### Typeconv Command Format
 
 The correct abbreviations for typeconv are:
+
 - **JSON Schema**: `jsc` (not `json-schema`)
 - **GraphQL**: `gql` (not `graphql`)
 
@@ -60,15 +61,15 @@ But your schema is structured like:
 The `core-types` library has the correct function names:
 
 ```javascript
-import { 
+import {
   convertJsonSchemaToCoreTypes,
-  convertCoreTypesToJsonSchema 
-} from 'core-types-json-schema';
+  convertCoreTypesToJsonSchema,
+} from "core-types-json-schema";
 
-import { 
+import {
   convertCoreTypesToGraphQL,
-  convertGraphQLToCoreTypes 
-} from 'core-types-graphql';
+  convertGraphQLToCoreTypes,
+} from "core-types-graphql";
 ```
 
 **However**, it will face the same challenge - it expects named type definitions.
@@ -103,12 +104,14 @@ Refactor `schema_unification.schema.json` to use `definitions`:
 ```
 
 **Pros**:
+
 - Enables use of standard tools (typeconv, core-types)
 - Better for TypeScript code generation
 - Industry best practice
 - Reduces custom code from 1,500 lines to ~200 lines
 
 **Cons**:
+
 - Requires schema refactoring (~2-4 hours)
 - Breaking change if consumers rely on current structure
 - Need to update validation logic
@@ -120,11 +123,13 @@ Refactor `schema_unification.schema.json` to use `definitions`:
 Maintain your current `generate-graphql-from-json-schema.mjs` and `generate-graphql-json-schema.mjs`.
 
 **Pros**:
+
 - No migration risk
 - Full control
 - Already working
 
 **Cons**:
+
 - 1,558 lines of custom code to maintain
 - High onboarding barrier
 - Potential bugs in custom logic
@@ -139,8 +144,8 @@ Maintain your current `generate-graphql-from-json-schema.mjs` and `generate-grap
 **Example** using existing `@graphql-tools`:
 
 ```javascript
-import { buildSchema, printSchema } from 'graphql';
-import { makeExecutableSchema } from '@graphql-tools/schema';
+import { buildSchema, printSchema } from "graphql";
+import { makeExecutableSchema } from "@graphql-tools/schema";
 
 // GraphQL → Introspection → JSON
 const schema = buildSchema(graphqlSDL);
@@ -148,11 +153,13 @@ const schema = buildSchema(graphqlSDL);
 ```
 
 **Pros**:
+
 - Reduces maintenance by ~50%
 - No breaking schema changes
 - Uses battle-tested libraries where possible
 
 **Cons**:
+
 - Still have some custom code
 - Mixed approach may confuse contributors
 
@@ -174,6 +181,7 @@ I need to update the documentation I created with these findings:
 ## Immediate Action Items
 
 1. **Test current workflow**:
+
    ```bash
    pnpm run generate:schema:interop
    pnpm run validate:all
@@ -199,13 +207,15 @@ I need to update the documentation I created with these findings:
 ## Conclusion
 
 The **standard tools don't work** with your schema structure because:
+
 - Your JSON Schema is **document-oriented** (single root object)
 - Tools expect **definition-oriented** schemas (named types in `definitions`)
 - Your custom scripts use JSON Pointers to navigate the document structure
 
-**Recommendation**: 
+**Recommendation**:
 
 If you control the schema format, **restructure to use `definitions`**. This is a one-time 2-4 hour effort that will:
+
 - Enable standard tooling
 - Reduce custom code by 70-80%
 - Save 40+ hours annually

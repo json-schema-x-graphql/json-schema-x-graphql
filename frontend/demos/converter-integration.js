@@ -16,20 +16,23 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
     const schema = JSON.parse(jsonSchemaStr);
 
     // Extract configuration
-    const typeName = schema['x-graphql-type']?.name ||
-                     schema['x-graphql-type-name'] ||
-                     schema.title?.replace(/[^a-zA-Z0-9]/g, '') ||
-                     'GeneratedType';
+    const typeName =
+      schema["x-graphql-type"]?.name ||
+      schema["x-graphql-type-name"] ||
+      schema.title?.replace(/[^a-zA-Z0-9]/g, "") ||
+      "GeneratedType";
 
     const description = schema.description;
 
     // Start building GraphQL SDL
-    let sdl = '';
+    let sdl = "";
 
     // Add custom scalars if defined
-    if (schema['x-graphql-scalars']) {
-      sdl += '# Custom Scalars\n';
-      for (const [scalarName, scalarDef] of Object.entries(schema['x-graphql-scalars'])) {
+    if (schema["x-graphql-scalars"]) {
+      sdl += "# Custom Scalars\n";
+      for (const [scalarName, scalarDef] of Object.entries(
+        schema["x-graphql-scalars"],
+      )) {
         if (scalarDef.description) {
           sdl += `"${scalarDef.description}"\n`;
         }
@@ -40,7 +43,7 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
     // Add enums from definitions
     if (schema.$defs) {
       for (const [defName, defSchema] of Object.entries(schema.$defs)) {
-        if (defSchema['x-graphql-enum']) {
+        if (defSchema["x-graphql-enum"]) {
           sdl += convertEnum(defSchema);
         }
       }
@@ -59,53 +62,63 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
       }
     }
 
-    sdl += '}\n\n';
+    sdl += "}\n\n";
 
     // Add queries if defined
-    if (schema['x-graphql-operations']?.queries) {
-      sdl += 'type Query {\n';
-      for (const [queryName, queryDef] of Object.entries(schema['x-graphql-operations'].queries)) {
+    if (schema["x-graphql-operations"]?.queries) {
+      sdl += "type Query {\n";
+      for (const [queryName, queryDef] of Object.entries(
+        schema["x-graphql-operations"].queries,
+      )) {
         if (queryDef.description) {
           sdl += `  "${queryDef.description}"\n`;
         }
 
-        let args = '';
+        let args = "";
         if (queryDef.args) {
-          const argsList = Object.entries(queryDef.args).map(([argName, argDef]) => {
-            return `${argName}: ${argDef.type}`;
-          });
-          args = `(${argsList.join(', ')})`;
+          const argsList = Object.entries(queryDef.args).map(
+            ([argName, argDef]) => {
+              return `${argName}: ${argDef.type}`;
+            },
+          );
+          args = `(${argsList.join(", ")})`;
         }
 
         sdl += `  ${queryName}${args}: ${queryDef.type}\n`;
       }
-      sdl += '}\n\n';
+      sdl += "}\n\n";
     }
 
     // Add mutations if defined
-    if (schema['x-graphql-operations']?.mutations) {
-      sdl += 'type Mutation {\n';
-      for (const [mutationName, mutationDef] of Object.entries(schema['x-graphql-operations'].mutations)) {
+    if (schema["x-graphql-operations"]?.mutations) {
+      sdl += "type Mutation {\n";
+      for (const [mutationName, mutationDef] of Object.entries(
+        schema["x-graphql-operations"].mutations,
+      )) {
         if (mutationDef.description) {
           sdl += `  "${mutationDef.description}"\n`;
         }
 
-        let args = '';
+        let args = "";
         if (mutationDef.args) {
-          const argsList = Object.entries(mutationDef.args).map(([argName, argDef]) => {
-            return `${argName}: ${argDef.type}`;
-          });
-          args = `(${argsList.join(', ')})`;
+          const argsList = Object.entries(mutationDef.args).map(
+            ([argName, argDef]) => {
+              return `${argName}: ${argDef.type}`;
+            },
+          );
+          args = `(${argsList.join(", ")})`;
         }
 
         sdl += `  ${mutationName}${args}: ${mutationDef.type}\n`;
       }
-      sdl += '}\n\n';
+      sdl += "}\n\n";
     }
 
     return sdl.trim();
   } catch (error) {
-    throw new Error(`Failed to convert JSON Schema to GraphQL: ${error.message}`);
+    throw new Error(
+      `Failed to convert JSON Schema to GraphQL: ${error.message}`,
+    );
   }
 }
 
@@ -121,20 +134,20 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       type: "object",
       properties: {},
-      required: []
+      required: [],
     };
 
     // Parse SDL (simplified parser)
-    const lines = graphqlSdl.split('\n');
+    const lines = graphqlSdl.split("\n");
     let currentType = null;
     let inType = false;
-    let description = '';
+    let description = "";
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
 
       // Skip comments and empty lines
-      if (line.startsWith('#') || !line) {
+      if (line.startsWith("#") || !line) {
         continue;
       }
 
@@ -145,14 +158,18 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
       }
 
       // Parse type definition
-      if (line.startsWith('type ') && !line.includes('Query') && !line.includes('Mutation')) {
+      if (
+        line.startsWith("type ") &&
+        !line.includes("Query") &&
+        !line.includes("Mutation")
+      ) {
         const match = line.match(/type\s+(\w+)/);
         if (match) {
           currentType = match[1];
           if (description) {
             schema.description = description;
-            schema['x-graphql-type-name'] = currentType;
-            description = '';
+            schema["x-graphql-type-name"] = currentType;
+            description = "";
           }
           inType = true;
           continue;
@@ -160,23 +177,23 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
       }
 
       // Parse scalar
-      if (line.startsWith('scalar ')) {
+      if (line.startsWith("scalar ")) {
         const match = line.match(/scalar\s+(\w+)/);
         if (match) {
-          if (!schema['x-graphql-scalars']) {
-            schema['x-graphql-scalars'] = {};
+          if (!schema["x-graphql-scalars"]) {
+            schema["x-graphql-scalars"] = {};
           }
-          schema['x-graphql-scalars'][match[1].toLowerCase()] = {
+          schema["x-graphql-scalars"][match[1].toLowerCase()] = {
             description: description || `Custom scalar ${match[1]}`,
-            serialize: 'String'
+            serialize: "String",
           };
-          description = '';
+          description = "";
         }
         continue;
       }
 
       // Parse enum
-      if (line.startsWith('enum ')) {
+      if (line.startsWith("enum ")) {
         const match = line.match(/enum\s+(\w+)/);
         if (match) {
           if (!schema.$defs) {
@@ -186,19 +203,19 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
           schema.$defs[toSnakeCase(enumName)] = {
             type: "string",
             enum: [],
-            'x-graphql-enum': {
+            "x-graphql-enum": {
               name: enumName,
               description: description || `${enumName} enumeration`,
-              values: []
-            }
+              values: [],
+            },
           };
-          description = '';
+          description = "";
         }
         continue;
       }
 
       // Parse field
-      if (inType && line.includes(':')) {
+      if (inType && line.includes(":")) {
         const fieldMatch = line.match(/(\w+)(?:\([^)]*\))?\s*:\s*([^\s{]+)/);
         if (fieldMatch) {
           const [, fieldName, graphqlType] = fieldMatch;
@@ -208,11 +225,11 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
 
           if (description) {
             schema.properties[fieldName].description = description;
-            description = '';
+            description = "";
           }
 
           // Check if required
-          if (graphqlType.includes('!')) {
+          if (graphqlType.includes("!")) {
             if (!schema.required.includes(fieldName)) {
               schema.required.push(fieldName);
             }
@@ -221,7 +238,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
       }
 
       // End of type
-      if (line === '}') {
+      if (line === "}") {
         inType = false;
         currentType = null;
       }
@@ -229,14 +246,16 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
 
     return JSON.stringify(schema, null, 2);
   } catch (error) {
-    throw new Error(`Failed to convert GraphQL to JSON Schema: ${error.message}`);
+    throw new Error(
+      `Failed to convert GraphQL to JSON Schema: ${error.message}`,
+    );
   }
 }
 
 // Helper functions
 
 function convertProperty(propName, propSchema, required = []) {
-  let sdl = '  ';
+  let sdl = "  ";
 
   // Add description
   if (propSchema.description) {
@@ -244,22 +263,24 @@ function convertProperty(propName, propSchema, required = []) {
   }
 
   // Add field name
-  const fieldName = propSchema['x-graphql-field']?.name ||
-                   propSchema['x-graphql-field-name'] ||
-                   propName;
+  const fieldName =
+    propSchema["x-graphql-field"]?.name ||
+    propSchema["x-graphql-field-name"] ||
+    propName;
   sdl += fieldName;
 
   // Add type
-  let graphqlType = propSchema['x-graphql-type'] ||
-                    propSchema['x-graphql-field']?.type ||
-                    jsonTypeToGraphQLType(propSchema);
+  let graphqlType =
+    propSchema["x-graphql-type"] ||
+    propSchema["x-graphql-field"]?.type ||
+    jsonTypeToGraphQLType(propSchema);
 
   // Check if required
-  const isRequired = required?.includes(propName) ||
-                     propSchema['x-graphql-required'] === true;
+  const isRequired =
+    required?.includes(propName) || propSchema["x-graphql-required"] === true;
 
-  if (isRequired && !graphqlType.endsWith('!')) {
-    graphqlType += '!';
+  if (isRequired && !graphqlType.endsWith("!")) {
+    graphqlType += "!";
   }
 
   sdl += `: ${graphqlType}\n`;
@@ -268,8 +289,8 @@ function convertProperty(propName, propSchema, required = []) {
 }
 
 function convertEnum(enumSchema) {
-  const enumDef = enumSchema['x-graphql-enum'];
-  let sdl = '';
+  const enumDef = enumSchema["x-graphql-enum"];
+  let sdl = "";
 
   if (enumDef.description) {
     sdl += `"${enumDef.description}"\n`;
@@ -290,70 +311,72 @@ function convertEnum(enumSchema) {
     }
   }
 
-  sdl += '}\n\n';
+  sdl += "}\n\n";
 
   return sdl;
 }
 
 function jsonTypeToGraphQLType(propSchema) {
   // Check for explicit GraphQL type
-  if (propSchema['x-graphql-type']) {
-    return propSchema['x-graphql-type'];
+  if (propSchema["x-graphql-type"]) {
+    return propSchema["x-graphql-type"];
   }
 
   // Check for scalar
-  if (propSchema['x-graphql-scalar']) {
-    return toPascalCase(propSchema['x-graphql-scalar']);
+  if (propSchema["x-graphql-scalar"]) {
+    return toPascalCase(propSchema["x-graphql-scalar"]);
   }
 
   // Check for reference
   if (propSchema.$ref) {
-    const refName = propSchema.$ref.split('/').pop();
+    const refName = propSchema.$ref.split("/").pop();
     return toPascalCase(refName);
   }
 
   // Convert JSON type to GraphQL type
   const type = propSchema.type;
 
-  if (type === 'string') {
-    if (propSchema.format === 'date-time') return 'DateTime';
-    if (propSchema.format === 'date') return 'Date';
-    if (propSchema.format === 'email') return 'Email';
-    if (propSchema.format === 'uri') return 'URI';
-    return 'String';
+  if (type === "string") {
+    if (propSchema.format === "date-time") return "DateTime";
+    if (propSchema.format === "date") return "Date";
+    if (propSchema.format === "email") return "Email";
+    if (propSchema.format === "uri") return "URI";
+    return "String";
   }
 
-  if (type === 'number' || type === 'integer') {
-    return propSchema.format === 'float' ? 'Float' : 'Int';
+  if (type === "number" || type === "integer") {
+    return propSchema.format === "float" ? "Float" : "Int";
   }
 
-  if (type === 'boolean') {
-    return 'Boolean';
+  if (type === "boolean") {
+    return "Boolean";
   }
 
-  if (type === 'array') {
-    const itemType = propSchema.items ? jsonTypeToGraphQLType(propSchema.items) : 'String';
+  if (type === "array") {
+    const itemType = propSchema.items
+      ? jsonTypeToGraphQLType(propSchema.items)
+      : "String";
     return `[${itemType}]`;
   }
 
-  if (type === 'object') {
-    return 'JSON';
+  if (type === "object") {
+    return "JSON";
   }
 
-  return 'String';
+  return "String";
 }
 
 function convertGraphQLTypeToJSON(graphqlType) {
   // Remove non-null marker
-  const isRequired = graphqlType.endsWith('!');
-  const cleanType = graphqlType.replace(/!/g, '');
+  const isRequired = graphqlType.endsWith("!");
+  const cleanType = graphqlType.replace(/!/g, "");
 
   // Handle arrays
-  if (cleanType.startsWith('[') && cleanType.endsWith(']')) {
+  if (cleanType.startsWith("[") && cleanType.endsWith("]")) {
     const itemType = cleanType.slice(1, -1);
     return {
-      type: 'array',
-      items: convertGraphQLTypeToJSON(itemType)
+      type: "array",
+      items: convertGraphQLTypeToJSON(itemType),
     };
   }
 
@@ -361,38 +384,38 @@ function convertGraphQLTypeToJSON(graphqlType) {
   const jsonField = {};
 
   switch (cleanType) {
-    case 'String':
-      jsonField.type = 'string';
+    case "String":
+      jsonField.type = "string";
       break;
-    case 'Int':
-    case 'Float':
-      jsonField.type = 'number';
+    case "Int":
+    case "Float":
+      jsonField.type = "number";
       break;
-    case 'Boolean':
-      jsonField.type = 'boolean';
+    case "Boolean":
+      jsonField.type = "boolean";
       break;
-    case 'ID':
-      jsonField.type = 'string';
-      jsonField['x-graphql-type'] = 'ID';
+    case "ID":
+      jsonField.type = "string";
+      jsonField["x-graphql-type"] = "ID";
       break;
-    case 'DateTime':
-      jsonField.type = 'string';
-      jsonField.format = 'date-time';
-      jsonField['x-graphql-scalar'] = 'DateTime';
+    case "DateTime":
+      jsonField.type = "string";
+      jsonField.format = "date-time";
+      jsonField["x-graphql-scalar"] = "DateTime";
       break;
-    case 'Date':
-      jsonField.type = 'string';
-      jsonField.format = 'date';
-      jsonField['x-graphql-scalar'] = 'Date';
+    case "Date":
+      jsonField.type = "string";
+      jsonField.format = "date";
+      jsonField["x-graphql-scalar"] = "Date";
       break;
-    case 'JSON':
-      jsonField.type = 'object';
-      jsonField['x-graphql-scalar'] = 'JSON';
+    case "JSON":
+      jsonField.type = "object";
+      jsonField["x-graphql-scalar"] = "JSON";
       break;
     default:
       // Assume it's a custom type/reference
       jsonField.$ref = `#/$defs/${toSnakeCase(cleanType)}`;
-      jsonField['x-graphql-type'] = cleanType;
+      jsonField["x-graphql-type"] = cleanType;
   }
 
   return jsonField;
@@ -401,13 +424,13 @@ function convertGraphQLTypeToJSON(graphqlType) {
 function toPascalCase(str) {
   return str
     .split(/[_-]/)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join('');
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join("");
 }
 
 function toSnakeCase(str) {
   return str
-    .replace(/([A-Z])/g, '_$1')
+    .replace(/([A-Z])/g, "_$1")
     .toLowerCase()
-    .replace(/^_/, '');
+    .replace(/^_/, "");
 }

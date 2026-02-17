@@ -2,7 +2,10 @@
   "title": "ExternalRefTarget",
   "type": "object",
   "properties": {
-    "commonField": { "type": "string", "description": "A field in the external document root" }
+    "commonField": {
+      "type": "string",
+      "description": "A field in the external document root"
+    }
   },
   "definitions": {
     "Address": {

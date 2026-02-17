@@ -29,7 +29,7 @@ union MediaItem = Image | Video | Audio
 "An image file"
 type Image {
   id: ID!
-  url: URL!
+  url: URI!
   width: Int!
   height: Int!
   altText: String
@@ -38,16 +38,16 @@ type Image {
 "A video file"
 type Video {
   id: ID!
-  url: URL!
+  url: URI!
   "Duration in seconds"
   duration: Int!
-  thumbnail: URL
+  thumbnail: URI
 }
 
 "An audio file"
 type Audio {
   id: ID!
-  url: URL!
+  url: URI!
   "Duration in seconds"
   duration: Int!
   "Audio bitrate in kbps"
@@ -90,3 +90,7 @@ type DigitalWallet {
   provider: String!
   email: Email
 }
+
+# Implied Scalars
+scalar Email
+scalar URI

@@ -1,6 +1,7 @@
 # Docs Index
 
 This repository's documentation is file-driven under the `docs/` folder. Generate a `docs-index.json` with `node scripts/generate-docs-index.mjs`.
+
 # Documentation System
 
 This directory contains all documentation files for the Schema Unification Forest project. All markdown files (`.md`) in this directory and its subdirectories are automatically converted to static pages accessible via the `/docs/` URL path.
@@ -64,6 +65,7 @@ The markdown is rendered with custom styling that includes:
 ## File Organization
 
 Active documentation structure (archived items excluded):
+
 > NOTE: Historical and superseded documents have been moved under `docs/archived/`. Refer to `docs/archived/README.md` for the archive index. The tree below lists only active guides and references.
 
 ```text

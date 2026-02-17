@@ -1,6 +1,6 @@
-import React from 'react';
-import { getTemplateNames, getTemplate } from '../lib/templates';
-import './SchemaManager.css';
+import React from "react";
+import { getTemplateNames, getTemplate } from "../lib/templates";
+import "./SchemaManager.css";
 
 export default function SchemaManager({
   schemas,
@@ -15,7 +15,7 @@ export default function SchemaManager({
   onToggleSchema,
 }) {
   const [renamingId, setRenamingId] = React.useState(null);
-  const [renamingValue, setRenamingValue] = React.useState('');
+  const [renamingValue, setRenamingValue] = React.useState("");
   const [showTemplates, setShowTemplates] = React.useState(false);
 
   const handleRenameStart = (schema) => {
@@ -82,7 +82,9 @@ export default function SchemaManager({
                 disabled={schemas.length >= 10}
               >
                 <div className="template-name">{template.name}</div>
-                <div className="template-description">{template.description}</div>
+                <div className="template-description">
+                  {template.description}
+                </div>
               </button>
             ))}
           </div>
@@ -100,7 +102,7 @@ export default function SchemaManager({
             <div
               key={schema.id}
               className={`schema-item ${
-                activeSchemaId === schema.id ? 'active' : ''
+                activeSchemaId === schema.id ? "active" : ""
               }`}
               onClick={() => onSelect(schema.id)}
             >
@@ -125,8 +127,8 @@ export default function SchemaManager({
                     onChange={(e) => setRenamingValue(e.target.value)}
                     onBlur={handleRenameSave}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleRenameSave();
-                      if (e.key === 'Escape') setRenamingId(null);
+                      if (e.key === "Enter") handleRenameSave();
+                      if (e.key === "Escape") setRenamingId(null);
                     }}
                     className="schema-name-input"
                     onClick={(e) => e.stopPropagation()}
@@ -140,8 +142,8 @@ export default function SchemaManager({
                   {schema.lastModified && (
                     <span className="schema-time">
                       {new Date(schema.lastModified).toLocaleTimeString(
-                        'en-US',
-                        { hour: '2-digit', minute: '2-digit' }
+                        "en-US",
+                        { hour: "2-digit", minute: "2-digit" },
                       )}
                     </span>
                   )}
@@ -177,10 +179,7 @@ export default function SchemaManager({
 
       {schemas.length > 0 && (
         <div className="manager-footer">
-          <button
-            onClick={onClear}
-            className="btn btn-secondary btn-small"
-          >
+          <button onClick={onClear} className="btn btn-secondary btn-small">
             Clear All
           </button>
         </div>

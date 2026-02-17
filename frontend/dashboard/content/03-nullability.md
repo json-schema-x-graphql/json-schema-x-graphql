@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What null means in data and why it matters
 - The non-null type marker (`!`) and how to use it
 - Required vs optional fields
@@ -15,6 +16,7 @@
 Nullability is one of the most powerful features of GraphQL's type system. By marking fields as non-null (`!`), you guarantee to clients that they'll always get a value—no surprises. This prevents bugs, improves user experience, and reduces error handling code.
 
 **Prerequisites:**
+
 - Completed: [Module 1: Introducing Types](/learning/01-introducing-types)
 - Completed: [Module 2: Scalars, Objects, Lists](/learning/02-scalars-objects-lists)
 - Understand object types, scalar types, and list syntax
@@ -42,13 +44,14 @@ By default, **any field can return null**:
 
 ```graphql
 type User {
-  name: String           # Could be "John" or null
-  email: String          # Could be "john@example.com" or null
-  age: Int               # Could be 25 or null
+  name: String # Could be "John" or null
+  email: String # Could be "john@example.com" or null
+  age: Int # Could be 25 or null
 }
 ```
 
 **Why allow null?**
+
 - Not all data might be available
 - Users might not fill in optional fields
 - Data could be deleted
@@ -60,10 +63,10 @@ Add an exclamation mark (`!`) to guarantee a value is always present:
 
 ```graphql
 type User {
-  id: ID!                # Always has a value (never null)
-  name: String!          # Always has a value (never null)
-  email: String          # Can be null (optional)
-  age: Int               # Can be null (optional)
+  id: ID! # Always has a value (never null)
+  name: String! # Always has a value (never null)
+  email: String # Can be null (optional)
+  age: Int # Can be null (optional)
 }
 ```
 
@@ -80,7 +83,7 @@ This changes how clients write code. Without the guarantee:
 ```javascript
 // Without guarantee (nullable)
 if (user.name != null) {
-  console.log(user.name.toUpperCase());  // Need to check first
+  console.log(user.name.toUpperCase()); // Need to check first
 }
 ```
 
@@ -88,7 +91,7 @@ With the guarantee:
 
 ```javascript
 // With guarantee (non-null)
-console.log(user.name.toUpperCase());  // Safe to use directly!
+console.log(user.name.toUpperCase()); // Safe to use directly!
 ```
 
 ---
@@ -127,31 +130,31 @@ tags: [String!]!     # Non-null list of non-null strings
 
 ```graphql
 type User {
-  id: ID!                      # Always has an ID
-  email: String!               # Email required
-  phone: String                # Phone optional
-  createdAt: String!           # Always tracked
+  id: ID! # Always has an ID
+  email: String! # Email required
+  phone: String # Phone optional
+  createdAt: String! # Always tracked
 }
 
 type Post {
-  id: ID!                       # Post always has ID
-  title: String!               # Title required
-  content: String!             # Content required
-  tags: [String!]!             # Non-empty list of tags
-  comments: [Comment!]!        # Non-empty list of comments
-  author: User!                # Author always present
+  id: ID! # Post always has ID
+  title: String! # Title required
+  content: String! # Content required
+  tags: [String!]! # Non-empty list of tags
+  comments: [Comment!]! # Non-empty list of comments
+  author: User! # Author always present
 }
 
 type Comment {
   id: ID!
   text: String!
-  author: User                 # Author optional (anonymous comments)
+  author: User # Author optional (anonymous comments)
   createdAt: String!
 }
 
 type Query {
-  user(id: ID!): User          # ID required, returns nullable User
-  users: [User!]!              # Returns non-empty list of users
+  user(id: ID!): User # ID required, returns nullable User
+  users: [User!]! # Returns non-empty list of users
 }
 ```
 
@@ -176,6 +179,7 @@ In JSON Schema, required fields are specified in a `required` array:
 ```
 
 **Meaning:**
+
 - `id` is required (non-null equivalent)
 - `name` is required (non-null equivalent)
 - `email` is optional (nullable equivalent)
@@ -261,6 +265,7 @@ For arrays, you control whether the list itself can be null:
 ### Conversion Rules
 
 **GraphQL → JSON Schema:**
+
 ```
 Field!    →  Add to required array
 Field     →  Not in required array
@@ -271,6 +276,7 @@ Field     →  Not in required array
 ```
 
 **JSON Schema → GraphQL:**
+
 ```
 In required array     →  Add !
 Not in required       →  No ! (nullable)
@@ -288,12 +294,13 @@ const result = await converter.convert({
     includeDescriptions: true,
     preserveFieldOrder: true,
     validate: false,
-    inferIds: true
-  }
+    inferIds: true,
+  },
 });
 ```
 
 The converter:
+
 - ✅ Detects `required` arrays
 - ✅ Converts to `!` syntax in GraphQL
 - ✅ Handles list nullability
@@ -306,33 +313,45 @@ The converter:
 ### Example 1: E-Commerce Product
 
 **GraphQL:**
+
 ```graphql
 type Product {
-  id: ID!                      # Always present
-  name: String!                # Required
-  description: String          # Optional
-  price: Int!                  # Required in cents
-  discountedPrice: Int         # Optional (if on sale)
-  inStock: Boolean!            # Always tracked
-  inventory: Int!              # Must know stock
-  tags: [String!]!             # Non-empty required tags
-  images: [String!]!           # Must have at least cover
-  reviews: [Review!]!          # Reviews if product exists
-  seller: User!                # Always has seller
+  id: ID! # Always present
+  name: String! # Required
+  description: String # Optional
+  price: Int! # Required in cents
+  discountedPrice: Int # Optional (if on sale)
+  inStock: Boolean! # Always tracked
+  inventory: Int! # Must know stock
+  tags: [String!]! # Non-empty required tags
+  images: [String!]! # Must have at least cover
+  reviews: [Review!]! # Reviews if product exists
+  seller: User! # Always has seller
 }
 
 type Query {
-  product(id: ID!): Product    # ID required, product could be null
-  products: [Product!]!        # Always returns list of products
+  product(id: ID!): Product # ID required, product could be null
+  products: [Product!]! # Always returns list of products
 }
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "type": "object",
   "title": "Product",
-  "required": ["id", "name", "price", "inStock", "inventory", "tags", "images", "reviews", "seller"],
+  "required": [
+    "id",
+    "name",
+    "price",
+    "inStock",
+    "inventory",
+    "tags",
+    "images",
+    "reviews",
+    "seller"
+  ],
   "properties": {
     "id": { "type": "string" },
     "name": { "type": "string" },
@@ -364,32 +383,33 @@ type Query {
 ### Example 2: Blog System
 
 **GraphQL:**
+
 ```graphql
 type Post {
-  id: ID!                       # Always has ID
-  title: String!                # Title required
-  slug: String!                 # URL slug required
-  content: String!              # Content required
-  excerpt: String               # Optional summary
-  author: User!                 # Always has author
-  createdAt: String!            # Always tracked
-  updatedAt: String!            # Always tracked
-  publishedAt: String           # Optional (draft vs published)
-  tags: [String!]!              # Always has tags
-  comments: [Comment!]!         # Always has comments list
+  id: ID! # Always has ID
+  title: String! # Title required
+  slug: String! # URL slug required
+  content: String! # Content required
+  excerpt: String # Optional summary
+  author: User! # Always has author
+  createdAt: String! # Always tracked
+  updatedAt: String! # Always tracked
+  publishedAt: String # Optional (draft vs published)
+  tags: [String!]! # Always has tags
+  comments: [Comment!]! # Always has comments list
 }
 
 type Comment {
   id: ID!
   text: String!
-  author: User                  # Anonymous OK (optional author)
+  author: User # Anonymous OK (optional author)
   createdAt: String!
-  approved: Boolean!            # Always tracked
+  approved: Boolean! # Always tracked
 }
 
 type Query {
-  post(id: ID!): Post           # Post might not exist
-  posts(published: Boolean!): [Post!]!  # Query requires boolean
+  post(id: ID!): Post # Post might not exist
+  posts(published: Boolean!): [Post!]! # Query requires boolean
 }
 ```
 
@@ -404,13 +424,13 @@ Every entity should have a required ID:
 ```graphql
 # ✅ Good
 type User {
-  id: ID!           # Always non-null
+  id: ID! # Always non-null
   name: String!
 }
 
 # ❌ Wrong
 type User {
-  id: ID            # ID should be required!
+  id: ID # ID should be required!
   name: String
 }
 ```
@@ -424,11 +444,11 @@ Essential properties that define the entity should be non-null:
 ```graphql
 # ✅ Good
 type User {
-  id: ID!           # Core
-  email: String!    # Core
-  name: String!     # Core
-  bio: String       # Optional
-  avatar: String    # Optional
+  id: ID! # Core
+  email: String! # Core
+  name: String! # Core
+  bio: String # Optional
+  avatar: String # Optional
 }
 
 # Reasoning:
@@ -443,12 +463,12 @@ Return null when the relationship doesn't exist:
 ```graphql
 # User has 0 or more posts
 type User {
-  posts: [Post!]!   # Empty array or list of posts
+  posts: [Post!]! # Empty array or list of posts
 }
 
 # Author is required for a post
 type Post {
-  author: User!     # Always has author
+  author: User! # Always has author
 }
 ```
 
@@ -459,10 +479,10 @@ Track when things happen:
 ```graphql
 type Post {
   id: ID!
-  createdAt: String!      # Always tracked
-  updatedAt: String!      # Always tracked
-  publishedAt: String     # Optional (only if published)
-  deletedAt: String       # Optional (only if deleted)
+  createdAt: String! # Always tracked
+  updatedAt: String! # Always tracked
+  publishedAt: String # Optional (only if published)
+  deletedAt: String # Optional (only if deleted)
 }
 ```
 
@@ -480,7 +500,7 @@ type User {
   id: ID!
   email: String!
   name: String!
-  bio: String        # Intentionally optional
+  bio: String # Intentionally optional
 }
 
 # ❌ Risky
@@ -505,7 +525,7 @@ type Post {
 }
 
 type Query {
-  posts: [Post!]!   # List contains non-null items
+  posts: [Post!]! # List contains non-null items
 }
 
 # If any post's title becomes null,
@@ -520,12 +540,12 @@ Return empty list instead of null:
 ```graphql
 # ✅ Good
 type User {
-  posts: [Post!]!   # Empty list if no posts, never null
+  posts: [Post!]! # Empty list if no posts, never null
 }
 
 # ❌ Less ideal
 type User {
-  posts: [Post!]    # Null or list - inconsistent
+  posts: [Post!] # Null or list - inconsistent
 }
 ```
 
@@ -533,14 +553,14 @@ type User {
 
 ```graphql
 type Query {
-  user(id: ID!): User              # Null if not found
-  post(slug: String!): Post        # Null if not found
+  user(id: ID!): User # Null if not found
+  post(slug: String!): Post # Null if not found
 }
 
 type User {
-  email: String!                   # Always has email
-  phone: String                    # May not have provided
-  premiumUntil: String             # Null if not premium
+  email: String! # Always has email
+  phone: String # May not have provided
+  premiumUntil: String # Null if not premium
 }
 ```
 
@@ -550,11 +570,11 @@ Always explain why something is nullable:
 
 ```graphql
 type User {
-  id: ID!                          # Unique identifier, always present
-  email: String!                   # Required for account
-  phone: String                    # Optional, user may not provide
-  bio: String                      # Optional, can be empty profile
-  deletedAt: String                # Present only if user deleted
+  id: ID! # Unique identifier, always present
+  email: String! # Required for account
+  phone: String # Optional, user may not provide
+  bio: String # Optional, can be empty profile
+  deletedAt: String # Present only if user deleted
 }
 ```
 
@@ -670,6 +690,7 @@ type Article {
 ```
 
 Key differences:
+
 - Required fields go in `required` array: id, title, content, published, tags, author
 - Optional fields (excerpt) are NOT in required array
 - Arrays with minItems represent `[Type!]!`
@@ -689,6 +710,7 @@ Key differences:
 **Step 3**: For list fields with `!`, add `minItems: 1`
 
 **Example:**
+
 ```graphql
 type Post {
   id: ID!
@@ -730,6 +752,7 @@ type Post {
 **Step 3**: For arrays with `minItems: 1`, use `[Type]!` or `[Type!]!`
 
 **Example:**
+
 ```json
 {
   "type": "object",
@@ -761,13 +784,13 @@ type Post {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| All fields nullable | Clients can't rely on data | Mark important fields with `!` |
-| All fields non-null | Inflexible schema | Allow null for optional data |
-| Misunderstanding list nullability | Wrong assumptions about data | Test all 4 combinations |
-| Nullable IDs | Meaningless entities | Always use `ID!` |
-| Inconsistent list handling | Some endpoints empty, some null | Always return empty list |
+| Mistake                           | Problem                         | Fix                            |
+| --------------------------------- | ------------------------------- | ------------------------------ |
+| All fields nullable               | Clients can't rely on data      | Mark important fields with `!` |
+| All fields non-null               | Inflexible schema               | Allow null for optional data   |
+| Misunderstanding list nullability | Wrong assumptions about data    | Test all 4 combinations        |
+| Nullable IDs                      | Meaningless entities            | Always use `ID!`               |
+| Inconsistent list handling        | Some endpoints empty, some null | Always return empty list       |
 
 ---
 
@@ -801,7 +824,7 @@ type Post {
 ✅ **Empty lists are better** - Return `[]` instead of `null` for lists  
 ✅ **Document why** - Explain why each field is nullable or non-null  
 ✅ **IDs and core properties** - Always use `!` for these  
-✅ **JSON Schema uses `required`** - Mark required fields in the array  
+✅ **JSON Schema uses `required`** - Mark required fields in the array
 
 ---
 

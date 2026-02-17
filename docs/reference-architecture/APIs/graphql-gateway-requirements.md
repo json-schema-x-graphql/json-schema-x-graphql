@@ -51,11 +51,13 @@ We need a GraphQL gateway solution that:
 **Requirement:** Support rapid iteration on schema design during development phase.
 
 **Rationale:** The canonical schema is evolving. Developers need to:
+
 - Experiment with field names, types, and relationships
 - Validate breaking changes before committing
 - Get immediate feedback on schema validity
 
 **Acceptance Criteria:**
+
 - Schema changes reflected in GraphQL API within 2 minutes
 - Hot reload or quick restart capability
 - Clear error messages for invalid schema changes
@@ -69,6 +71,7 @@ We need a GraphQL gateway solution that:
 **Rationale:** Minimize operational complexity by using one gateway for dev and prod.
 
 **Acceptance Criteria:**
+
 - Deployable to cloud.gov (Cloud Foundry or Docker)
 - Configurable for multiple environments (dev/staging/prod)
 - Production-grade performance (>1000 req/sec for simple queries)
@@ -80,12 +83,14 @@ We need a GraphQL gateway solution that:
 
 **Requirement:** Proxy GraphQL queries to multiple REST API backends validated by JSON Schema.
 
-**Rationale:** 
+**Rationale:**
+
 - Backend data sources (Databricks Delta tables) expose REST APIs
 - Each source has a JSON Schema defining its contract
 - Gateway must validate responses and map to GraphQL types
 
 **Acceptance Criteria:**
+
 - HTTP/REST data source support
 - Configurable endpoint mappings (field → REST URL)
 - Response validation against JSON Schema
@@ -98,11 +103,13 @@ We need a GraphQL gateway solution that:
 **Requirement:** Minimize infrastructure costs during development and production.
 
 **Rationale:** Limited budget for infrastructure. Solution should:
+
 - Run efficiently on cloud.gov's smallest instance sizes
 - Not require expensive managed services
 - Be horizontally scalable when needed
 
 **Acceptance Criteria:**
+
 - Runs in <512MB RAM for dev workloads
 - Scales horizontally with load (stateless)
 - No vendor lock-in to expensive managed services
@@ -116,16 +123,19 @@ We need a GraphQL gateway solution that:
 **Requirement:** Preserve Apollo Federation v2.3+ semantics from our supergraph.
 
 **Context:**
+
 - Generated supergraph: `generated-schemas/schema_unification.supergraph.graphql`
 - 4 subgraphs: Legacy Procurement, Logistics Mgmt, Intake Process, Contract Data
 - Uses `@key`, `@shareable`, `@external`, `@provides`, `@requires` directives
 
 **Acceptance Criteria:**
+
 - Load supergraph SDL without losing federation metadata
 - Execute federated queries correctly (entity resolution across subgraphs)
 - Support `_entities` and `_service` queries
 
 **Open Questions:**
+
 - Do we need full federation gateway (Apollo Router/Mesh) or just schema stitching?
 - Can we simplify by merging subgraphs into one monolithic schema for development?
 
@@ -136,16 +146,19 @@ We need a GraphQL gateway solution that:
 **Requirement:** Integrate with existing schema generation tooling.
 
 **Context:**
+
 - Canonical source: `src/data/schema_unification.schema.json` (JSON Schema in snake_case)
 - Generated SDL: Multiple scripts produce various GraphQL outputs
 - Pipeline: JSON Schema → GraphQL SDL → Supergraph → Gateway
 
 **Acceptance Criteria:**
+
 - Gateway can load SDL from file or URL
 - Schema reload mechanism (file watch or API endpoint)
 - Compatible with our existing generators
 
 **Integration Points:**
+
 - `scripts/generate-graphql-from-json-schema.mjs`
 - `scripts/generate-subgraph-sdl.mjs`
 - `generated-schemas/` output directory
@@ -176,6 +189,7 @@ resolvers:
 ```
 
 **Acceptance Criteria:**
+
 - Declarative mapping (YAML or JSON config)
 - Support for path parameters, query params, headers
 - Response validation against JSON Schema
@@ -188,12 +202,14 @@ resolvers:
 
 **Requirement:** Generate realistic mock responses during development.
 
-**Rationale:** 
+**Rationale:**
+
 - Backend REST APIs may not exist yet
 - Need to develop frontend independently
 - Want to test error scenarios
 
 **Acceptance Criteria:**
+
 - Generate mocks from GraphQL schema types
 - Support custom mock data (fixtures or faker.js)
 - Toggle between mock and real data per resolver
@@ -206,6 +222,7 @@ resolvers:
 **Requirement:** Excellent local development experience.
 
 **Acceptance Criteria:**
+
 - Single command to start local server
 - GraphiQL or GraphQL Playground UI included
 - Hot reload on schema changes
@@ -219,6 +236,7 @@ resolvers:
 **Requirement:** Enable automated testing of schema and resolvers.
 
 **Acceptance Criteria:**
+
 - Programmatic API for tests (not just CLI)
 - Schema introspection for parity tests
 - Resolver testing with mocked data sources
@@ -233,10 +251,12 @@ resolvers:
 **Platform:** Cloud Foundry on cloud.gov (AWS GovCloud)
 
 **Deployment Options:**
+
 1. **Cloud Foundry Buildpack** (Node.js, Go, Python, etc.)
 2. **Docker Container** (custom runtime)
 
 **Constraints:**
+
 - No SSH access to running containers
 - Logs via `cf logs` (stdout/stderr)
 - Ephemeral filesystem (use S3 for persistent storage)
@@ -267,6 +287,7 @@ applications:
 ### 1. Existing POCs in `/dev/pocs`
 
 #### PostGraphile
+
 - **Location:** `dev/pocs/postgraphile/`
 - **Approach:** Postgres-first, auto-generate GraphQL from DB schema
 - **Status:** Basic POC complete, evaluation in progress
@@ -280,6 +301,7 @@ applications:
   - Federation support unclear
 
 #### Grafserv
+
 - **Location:** `dev/pocs/grafserv/`
 - **Approach:** Express + @graphql-tools/schema + manual delegation
 - **Status:** Spike implementation with wrap-schema variant
@@ -293,6 +315,7 @@ applications:
   - More code to maintain
 
 #### Prisma
+
 - **Location:** `dev/pocs/prisma/`
 - **Status:** Early exploration
 - **Approach:** ORM + Prisma Client for type-safe data access
@@ -305,6 +328,7 @@ applications:
   - Federation support unclear
 
 #### Mockforge
+
 - **Location:** `dev/pocs/mockforge/`
 - **Status:** Minimal setup
 - **Notes:** Need more investigation
@@ -318,6 +342,7 @@ applications:
 **Approach:** Code-first GraphQL server for Go
 
 **Pros:**
+
 - High performance (compiled Go)
 - Strong type safety
 - Good federation support (via federation library)
@@ -325,17 +350,20 @@ applications:
 - Excellent documentation
 
 **Cons:**
+
 - Go-based (may require new expertise)
 - Code-first (need to generate Go types from SDL)
 - Custom resolvers required for REST mapping
 
 **Cloud.gov Fit:**
+
 - ✅ Compiles to small binary (~20MB)
 - ✅ Low memory footprint (<128MB)
 - ✅ Fast startup time
 - ✅ Can use Go buildpack or Docker
 
 **REST Integration:**
+
 - Need custom resolvers calling REST endpoints
 - Can use `encoding/json` + `go-jsonschema` for validation
 - Example resolver pattern:
@@ -347,15 +375,15 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
         return nil, err
     }
     defer resp.Body.Close()
-    
+
     var data map[string]interface{}
     json.NewDecoder(resp.Body).Decode(&data)
-    
+
     // Validate against JSON Schema
     if err := validateResponse(data, solicitationSchema); err != nil {
         return nil, err
     }
-    
+
     // Transform to GraphQL type
     return transformToSolicitation(data), nil
 }
@@ -370,6 +398,7 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
 **Approach:** Schema-first with DataSource pattern for REST
 
 **Pros:**
+
 - Battle-tested for federation
 - Built-in federation gateway support
 - RESTDataSource pattern for REST APIs
@@ -377,33 +406,36 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
 - Large community
 
 **Cons:**
+
 - Node.js overhead (memory, startup time)
 - Requires custom DataSource implementations
 - No built-in JSON Schema validation
 - Can be heavyweight
 
 **Cloud.gov Fit:**
+
 - ✅ Node.js buildpack available
 - ⚠️ Higher memory usage (256-512MB typical)
 - ✅ Mature deployment patterns
 
 **REST Integration:**
+
 - RESTDataSource class handles HTTP concerns
 - Example:
 
 ```typescript
 class SolicitationAPI extends RESTDataSource {
-  override baseURL = 'https://api.example.gov/v1/';
-  
+  override baseURL = "https://api.example.gov/v1/";
+
   async getSolicitationById(id: string): Promise<Solicitation> {
     const data = await this.get(`solicitations/${id}`);
-    
+
     // Validate with ajv
     const validate = ajv.compile(solicitationSchema);
     if (!validate(data)) {
-      throw new Error('Response validation failed');
+      throw new Error("Response validation failed");
     }
-    
+
     return data;
   }
 }
@@ -418,17 +450,20 @@ class SolicitationAPI extends RESTDataSource {
 **Approach:** High-performance GraphQL for Fastify
 
 **Pros:**
+
 - Very fast (Fastify foundation)
 - Lower overhead than Express/Apollo
 - Federation support via `@mercuriusjs/federation`
 - Good plugin ecosystem
 
 **Cons:**
+
 - Smaller community than Apollo
 - Less mature federation implementation
 - Need custom REST integration
 
 **Cloud.gov Fit:**
+
 - ✅ Lower memory than Apollo (~256MB)
 - ✅ Fast startup
 - ✅ Node.js buildpack
@@ -451,6 +486,7 @@ See: `docs/archived/hasura-ddn-abandonment.md`
 **Approach:** Universal GraphQL Gateway (REST, gRPC, SQL, GraphQL)
 
 **Pros:**
+
 - Built specifically for REST to GraphQL
 - Declarative configuration (`.meshrc.yaml`)
 - JSON Schema support via OpenAPI handler
@@ -458,16 +494,19 @@ See: `docs/archived/hasura-ddn-abandonment.md`
 - Mock data support
 
 **Cons:**
+
 - Complex configuration
 - Can be heavy (multiple handlers/plugins)
 - Active development (frequent breaking changes)
 
 **Cloud.gov Fit:**
+
 - ⚠️ Medium memory footprint (256-512MB)
 - ✅ Node.js buildpack
 - ✅ Docker option
 
 **REST Integration:**
+
 - Best-in-class REST support
 - Example config:
 
@@ -504,21 +543,22 @@ sources:
 
 ### Scoring Matrix (0-5 scale)
 
-| Criterion | Weight | PostGraphile | Grafserv | gqlgen | Apollo | Mercurius | Mesh |
-|-----------|--------|--------------|----------|--------|--------|-----------|------|
-| **Federation Support** | 5 | ? | 3 | 4 | 5 | 4 | 5 |
-| **REST Integration** | 5 | 2 | 3 | 4 | 4 | 4 | 5 |
-| **Mock Data Support** | 3 | 2 | 3 | 3 | 4 | 3 | 5 |
-| **Development Speed** | 4 | 5 | 3 | 3 | 4 | 4 | 4 |
-| **Performance** | 4 | 5 | 4 | 5 | 3 | 4 | 3 |
-| **Cloud.gov Fit** | 5 | 3 | 4 | 5 | 4 | 4 | 3 |
-| **Operational Simplicity** | 4 | 4 | 3 | 4 | 4 | 4 | 2 |
-| **Schema Validation** | 3 | 3 | 2 | 3 | 3 | 3 | 4 |
-| **Community/Support** | 3 | 4 | 2 | 4 | 5 | 3 | 3 |
-| **Learning Curve** | 2 | 3 | 3 | 2 | 4 | 4 | 3 |
-| **TOTAL (weighted)** | - | **TBD** | **TBD** | **TBD** | **TBD** | **TBD** | **TBD** |
+| Criterion                  | Weight | PostGraphile | Grafserv | gqlgen  | Apollo  | Mercurius | Mesh    |
+| -------------------------- | ------ | ------------ | -------- | ------- | ------- | --------- | ------- |
+| **Federation Support**     | 5      | ?            | 3        | 4       | 5       | 4         | 5       |
+| **REST Integration**       | 5      | 2            | 3        | 4       | 4       | 4         | 5       |
+| **Mock Data Support**      | 3      | 2            | 3        | 3       | 4       | 3         | 5       |
+| **Development Speed**      | 4      | 5            | 3        | 3       | 4       | 4         | 4       |
+| **Performance**            | 4      | 5            | 4        | 5       | 3       | 4         | 3       |
+| **Cloud.gov Fit**          | 5      | 3            | 4        | 5       | 4       | 4         | 3       |
+| **Operational Simplicity** | 4      | 4            | 3        | 4       | 4       | 4         | 2       |
+| **Schema Validation**      | 3      | 3            | 2        | 3       | 3       | 3         | 4       |
+| **Community/Support**      | 3      | 4            | 2        | 4       | 5       | 3         | 3       |
+| **Learning Curve**         | 2      | 3            | 3        | 2       | 4       | 4         | 3       |
+| **TOTAL (weighted)**       | -      | **TBD**      | **TBD**  | **TBD** | **TBD** | **TBD**   | **TBD** |
 
 **Weights:**
+
 - 5 = Critical (dealbreaker if poor)
 - 4 = Very Important
 - 3 = Important
@@ -531,21 +571,27 @@ sources:
 ### 1. Federation Support (Weight: 5)
 
 **Questions:**
+
 - Can it load and serve our supergraph SDL?
 - Are `@key`, `@external`, `@requires`, `@provides` directives preserved?
 - Does it support `_entities` and `_service` queries?
 - Can it act as a federation gateway or just a standalone service?
 
 **Test:**
+
 ```graphql
 # Test federated entity resolution
 query {
-  _entities(representations: [
-    { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
-  ]) {
+  _entities(
+    representations: [
+      { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
+    ]
+  ) {
     ... on AssistRecord {
       iaPiidOrUniqueId
-      systemMetadata { systemName }
+      systemMetadata {
+        systemName
+      }
     }
   }
 }
@@ -556,6 +602,7 @@ query {
 ### 2. REST Integration (Weight: 5)
 
 **Questions:**
+
 - How do we map GraphQL fields to REST endpoints?
 - A: Ideal solution would provide a mechanism
 - Is it declarative (config) or code (resolvers)?
@@ -564,6 +611,7 @@ query {
 - Can we transform response formats (snake_case → camelCase)?
 
 **Test Scenarios:**
+
 - Map `Query.solicitationById` → `GET /api/v1/solicitations/{id}`
 - Handle 404 from REST API gracefully
 - Validate response matches `solicitation.schema.json`
@@ -574,12 +622,14 @@ query {
 ### 3. Mock Data Support (Weight: 3)
 
 **Questions:**
+
 - Can it generate mock data from schema types?
 - Can we provide custom fixtures?
 - Can we toggle mock vs real data per resolver?
 - Are mocks realistic (faker.js integration)?
 
 **Test:**
+
 ```graphql
 # Should return realistic mock data
 query {
@@ -597,12 +647,14 @@ query {
 ### 4. Development Speed (Weight: 4)
 
 **Measurement:**
+
 - Time to apply schema change and see it in GraphQL
 - Hot reload capability
 - Error clarity
 - Local setup time (first run)
 
 **Benchmark:**
+
 - Change field name in SDL
 - Measure time until GraphQL query returns new field
 - Target: <2 minutes end-to-end
@@ -612,12 +664,14 @@ query {
 ### 5. Performance (Weight: 4)
 
 **Benchmarks:**
+
 - Simple query latency (p50, p95, p99)
 - Throughput (requests/second)
 - Memory usage under load
 - Startup time
 
 **Test Query:**
+
 ```graphql
 query {
   solicitationById(id: "TEST123") {
@@ -631,8 +685,9 @@ query {
 **Tool:** `autocannon` or `k6`
 
 **Target:**
+
 - p95 latency <100ms
-- >1000 req/sec on 2 CPU cores
+- > 1000 req/sec on 2 CPU cores
 - <512MB memory
 
 ---
@@ -640,6 +695,7 @@ query {
 ### 6. Cloud.gov Fit (Weight: 5)
 
 **Checklist:**
+
 - ✅ Works with Cloud Foundry buildpack or Docker
 - ✅ Configurable via environment variables
 - ✅ Exposes health check endpoint
@@ -648,6 +704,7 @@ query {
 - ✅ Horizontal scaling (stateless)
 
 **Test:**
+
 ```bash
 # Push to cloud.gov
 cf push schema_unification-gateway -f manifest.yml
@@ -664,12 +721,14 @@ cf logs schema_unification-gateway --recent
 ### 7. Operational Simplicity (Weight: 4)
 
 **Questions:**
+
 - How many moving parts (services, databases, caches)?
 - Configuration complexity (how many files/env vars)?
 - Observability (logs, metrics, traces)?
 - Error handling and debugging
 
 **Ideal:**
+
 - Single process (no sidecars)
 - <10 environment variables for basic config
 - Structured JSON logs
@@ -680,18 +739,20 @@ cf logs schema_unification-gateway --recent
 ### 8. Schema Validation (Weight: 3)
 
 **Questions:**
+
 - Can it validate REST responses against JSON Schema?
 - Built-in or requires integration (ajv, etc.)?
 - Performance impact of validation?
 - Error reporting quality
 
 **Test:**
+
 ```javascript
 // Response from REST API
 const response = {
   solicitation_number: "ABC-123",
   title: "Test",
-  amount: "invalid" // Should be number
+  amount: "invalid", // Should be number
 };
 
 // Should fail validation
@@ -703,6 +764,7 @@ validateResponse(response, solicitationSchema);
 ### 9. Community/Support (Weight: 3)
 
 **Factors:**
+
 - GitHub stars and activity
 - Documentation quality
 - Stack Overflow questions
@@ -714,11 +776,13 @@ validateResponse(response, solicitationSchema);
 ### 10. Learning Curve (Weight: 2)
 
 **Questions:**
+
 - How familiar is the stack to our team?
 - Time to productivity for new contributor
 - Ecosystem maturity
 
 **Current Team Skills:**
+
 - ✅ Node.js/TypeScript (strong)
 - ✅ GraphQL (moderate)
 - ⚠️ Go (limited)
@@ -740,7 +804,7 @@ validateResponse(response, solicitationSchema);
    - Expected requests/day in production?
    - Concurrent users?
    - Data freshness requirements (cache TTL)?
-   - A: Per day refresh cycle with heavy caching 
+   - A: Per day refresh cycle with heavy caching
 
 3. **Security:**
    - Authentication requirements (OAuth, JWT, API keys)?
@@ -829,6 +893,7 @@ validateResponse(response, solicitationSchema);
    - Score against criteria
 
 **Deliverables:**
+
 - POC for gqlgen (new)
 - Updated POCs for existing solutions
 - Completed scoring matrix
@@ -896,14 +961,14 @@ START: Need GraphQL gateway for Schema Unification Forest
 ├─ Primary Use Case?
 │  ├─ Development/Mocking Only
 │  │  → Consider: Mockforge, GraphQL Mesh (mock mode)
-│  │  
+│  │
 │  ├─ Development + Future Production
 │  │  ├─ Team Expertise?
 │  │  │  ├─ Strong Node.js/TypeScript
 │  │  │  │  ├─ REST Integration Critical?
 │  │  │  │  │  ├─ Yes → GraphQL Mesh or Apollo + DataSources
 │  │  │  │  │  └─ No → Mercurius or Apollo
-│  │  │  │  
+│  │  │  │
 │  │  │  └─ Open to Go
 │  │  │     └─ Performance Critical?
 │  │  │        ├─ Yes → gqlgen
@@ -1019,7 +1084,7 @@ import (
     "encoding/json"
     "fmt"
     "net/http"
-    
+
     "github.com/example/schema_unification/graph/model"
     "github.com/xeipuuv/gojsonschema"
 )
@@ -1032,20 +1097,20 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
         return nil, fmt.Errorf("REST API error: %w", err)
     }
     defer resp.Body.Close()
-    
+
     if resp.StatusCode == 404 {
         return nil, nil
     }
     if resp.StatusCode != 200 {
         return nil, fmt.Errorf("REST API returned %d", resp.StatusCode)
     }
-    
+
     // Parse response
     var data map[string]interface{}
     if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
         return nil, fmt.Errorf("JSON decode error: %w", err)
     }
-    
+
     // Validate against JSON Schema
     schemaLoader := gojsonschema.NewReferenceLoader("file:///schemas/solicitation.schema.json")
     dataLoader := gojsonschema.NewGoLoader(data)
@@ -1056,7 +1121,7 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
     if !result.Valid() {
         return nil, fmt.Errorf("response validation failed: %v", result.Errors())
     }
-    
+
     // Transform to GraphQL model
     return &model.Solicitation{
         ID:                 id,
@@ -1073,17 +1138,21 @@ func (r *queryResolver) SolicitationByID(ctx context.Context, id string) (*model
 
 ```typescript
 // src/server.ts
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
-import { buildSubgraphSchema } from '@apollo/subgraph';
-import { readFileSync } from 'fs';
-import { SolicitationAPI } from './datasources/SolicitationAPI';
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { buildSubgraphSchema } from "@apollo/subgraph";
+import { readFileSync } from "fs";
+import { SolicitationAPI } from "./datasources/SolicitationAPI";
 
-const typeDefs = readFileSync('./schema.graphql', 'utf-8');
+const typeDefs = readFileSync("./schema.graphql", "utf-8");
 
 const resolvers = {
   Query: {
-    solicitationById: async (_: any, { id }: { id: string }, { dataSources }: any) => {
+    solicitationById: async (
+      _: any,
+      { id }: { id: string },
+      { dataSources }: any,
+    ) => {
       return dataSources.solicitationAPI.getSolicitationById(id);
     },
   },
@@ -1107,28 +1176,28 @@ console.log(`🚀 Server ready at ${url}`);
 
 ```typescript
 // src/datasources/SolicitationAPI.ts
-import { RESTDataSource } from '@apollo/datasource-rest';
-import Ajv from 'ajv';
-import solicitationSchema from '../schemas/solicitation.schema.json';
+import { RESTDataSource } from "@apollo/datasource-rest";
+import Ajv from "ajv";
+import solicitationSchema from "../schemas/solicitation.schema.json";
 
 const ajv = new Ajv();
 const validate = ajv.compile(solicitationSchema);
 
 export class SolicitationAPI extends RESTDataSource {
   override baseURL = process.env.DATABRICKS_BASE_URL;
-  
+
   override willSendRequest(_path: string, request: any) {
-    request.headers['Authorization'] = `Bearer ${process.env.DATABRICKS_TOKEN}`;
+    request.headers["Authorization"] = `Bearer ${process.env.DATABRICKS_TOKEN}`;
   }
-  
+
   async getSolicitationById(id: string) {
     const data = await this.get(`solicitations/${id}`);
-    
+
     // Validate response
     if (!validate(data)) {
       throw new Error(`Validation failed: ${ajv.errorsText(validate.errors)}`);
     }
-    
+
     // Transform snake_case to camelCase
     return {
       id: data.id,

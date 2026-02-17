@@ -23,6 +23,7 @@ pub struct MutationRoot;
 #[Object]
 impl MutationRoot {
     /// Converts a JSON Schema string into GraphQL SDL.
+    #[allow(clippy::field_reassign_with_default)]
     async fn convert_json_to_graphql(&self, input: ConvertInput) -> GqlResult<ConversionResult> {
         let options = input.options.unwrap_or_default();
         let mut internal_options = ConversionOptions::default();
@@ -43,8 +44,10 @@ impl MutationRoot {
             crate::api_types::IdInferenceStrategy::None => InternalIdInferenceStrategy::None,
             crate::api_types::IdInferenceStrategy::CommonPatterns => {
                 InternalIdInferenceStrategy::CommonPatterns
-            },
-            crate::api_types::IdInferenceStrategy::AllStrings => InternalIdInferenceStrategy::AllStrings,
+            }
+            crate::api_types::IdInferenceStrategy::AllStrings => {
+                InternalIdInferenceStrategy::AllStrings
+            }
         };
         internal_options.naming_convention = match options.naming_convention {
             crate::api_types::NamingConvention::Preserve => InternalNamingConvention::Preserve,
@@ -56,7 +59,7 @@ impl MutationRoot {
             crate::api_types::OutputFormat::Sdl => InternalOutputFormat::Sdl,
             crate::api_types::OutputFormat::SdlWithFederationMetadata => {
                 InternalOutputFormat::SdlWithFederationMetadata
-            },
+            }
             crate::api_types::OutputFormat::AstJson => InternalOutputFormat::AstJson,
         };
         internal_options.fail_on_warning = options.fail_on_warning;

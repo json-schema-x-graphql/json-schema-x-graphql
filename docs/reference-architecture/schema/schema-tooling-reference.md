@@ -6,6 +6,7 @@ Audience: Engineers working on Schema Unification Forest schema generation, vali
 This guide consolidates the schema tooling landscape for Schema Unification Forest. It explains how the generators, validators, shared libraries, tests, and CI interact; when to use each; and how to extend or replace pieces with minimal risk.
 
 See also:
+
 - `docs/process/quick-start.md` — TL;DR commands and environment setup
 - `docs/schema/schema-pipeline-guide.md` — End-to-end generation and validation pipeline details
 - `docs/schema/schema-v1-vs-v2-guide.md` — Conceptual differences between V1 and V2 and migration notes
@@ -26,6 +27,7 @@ Quick links: [Generators](#generators) · [Validators](#validators) · [Commands
   - `src/data/generated/` (consumed by the website and examples)
 
 Conventions:
+
 - Prefer snake_case for JSON Schema keys.
 - Prefer camelCase for GraphQL field names (unless otherwise justified).
 - Use `x-graphql-*` extensions on JSON Schema to preserve GraphQL semantics (enums, unions, scalars, directives, required-ness overrides, operations, pagination hints, etc.).
@@ -33,6 +35,7 @@ Conventions:
 ---
 
 <a id="generators"></a>
+
 ## 2) Generators
 
 Primary scripts (programmatic exports + thin CLI):
@@ -73,12 +76,14 @@ Shared library (new, centralized x-graphql handling):
   - Usage model: produce a base SDL (via `typeconv`, legacy builder, or GraphQL.js printSchema), then call `generateEnhancedSDL` with the canonical JSON Schema to apply hints.
 
 Notes:
+
 - `scripts/generate-graphql-with-extensions.mjs` and `scripts/generate-graphql-custom.mjs` have been refactored to call `generateEnhancedSDL` for consistent hint application and less duplication.
 - The enhanced generator `scripts/generate-graphql-enhanced.mjs` builds an SDL via phased construction and then applies the same shared enhancements for parity with the other approaches.
 
 ---
 
 <a id="validators"></a>
+
 ## 3) Validators
 
 - `scripts/validate-schema.mjs`
@@ -96,6 +101,7 @@ Notes:
   - Strict mode: reads a mapping config (`scripts/schema-sync.config.json`) to assert specific pointers and expected SDL fields.
 
 Python validators (optional):
+
 - `python/validate_schemas.py` (invoked via `pytest` or CLI) — secondary validation and cross-checks.
 
 ---
@@ -126,6 +132,7 @@ Direct invocation examples:
 ---
 
 <a id="testing-coverage"></a>
+
 ## 5) Test suite and coverage
 
 - Framework: Jest for JS/TS code; Pytest for Python.
@@ -145,13 +152,16 @@ Direct invocation examples:
 ---
 
 <a id="ci-integration"></a>
+
 ## 6) CI integration
 
 GitHub Actions:
+
 - `schema-validate-generate.yml` — installs dependencies, runs validators, generates interop artifacts, runs tests with coverage, and commits changed generated artifacts back to the PR when present.
 - `schema-validation.yml` — validates schema on pushes/PRs to `main`, runs interop generation, and publishes generated files for the site.
 
 Best practices:
+
 - Keep `generated-schemas/` diffs committed to make changes explicit.
 - Fail CI if required artifacts are missing after generation (guards against regressions).
 - Summarize coverage in job summary for quick signal.
@@ -161,15 +171,18 @@ Best practices:
 ## 7) Adding or modifying x-graphql hints
 
 When to use:
+
 - You need to express a GraphQL concept that JSON Schema cannot represent natively (enums with rich metadata, unions, custom scalars, directive annotations, required overrides, operations scaffolding, pagination scaffolding).
 
 Where to add:
+
 - In the canonical JSON Schema, add `x-graphql-*` fields at the appropriate level:
   - Definition-level: `x-graphql-enum`, `x-graphql-union`, `x-graphql-implements`, `x-graphql-type`, `x-graphql-directives`
   - Property-level: `x-graphql-scalar`, `x-graphql-required`, `x-graphql-field-name`, `x-graphql-nullable`, `x-graphql-args`
   - Root-level: `x-graphql-scalars`, `x-graphql-operations`, `x-graphql-pagination`
 
 How it flows:
+
 - Generators produce a base SDL (via typeconv, GraphQL.js, or phased builder).
 - `scripts/lib/graphql-hints.mjs` applies enhancements consistently across all generator paths.
 - New hint kinds should be centralized in `graphql-hints.mjs` to keep behavior uniform.
@@ -179,6 +192,7 @@ How it flows:
 ## 8) Extending or swapping generation approaches
 
 Supported paths:
+
 - `typeconv`-based (`scripts/generate-graphql-with-extensions.mjs`)
 - GraphQL.js builder-based (`scripts/generate-graphql-custom.mjs`)
 - Phased custom builder (`scripts/generate-graphql-enhanced.mjs`)
@@ -200,6 +214,7 @@ All approaches should call `generateEnhancedSDL` to apply the same hint logic, e
 ## 10) Troubleshooting
 
 Common issues and checks:
+
 - SDL parse errors: run `node scripts/validate-graphql-vs-jsonschema.mjs` to confirm SDL builds.
 - Missing `$schema` warnings: certain outputs strip `$schema` intentionally to avoid meta-schema interference in downstream steps.
 - Pointer or `$ref` resolution in Ajv: ensure local `$defs` or `definitions` include targets; for remote refs, add schemas to Ajv before compilation.
@@ -233,6 +248,7 @@ Common issues and checks:
 ## Appendix A — Programmatic API index (quick lookup)
 
 Generators:
+
 - `scripts/generate-graphql-json-schema.mjs` → `generateFromSDL(...)`
 - `scripts/generate-graphql-from-json-schema.mjs` → `generateFromJSONSchema(...)`
 - `scripts/generate-graphql-json-schema-v2.mjs` → `generateV2({...})`
@@ -241,9 +257,11 @@ Generators:
 - `scripts/generate-graphql-custom.mjs` → `convertJSONSchemaToGraphQL(schema)` (returns enhanced SDL)
 
 Shared lib:
+
 - `scripts/lib/graphql-hints.mjs` → `generateEnhancedSDL(...)`, `parseHintExtensions(...)`, `summarizeHints(...)`, plus helpers
 
 Validators:
+
 - `scripts/validate-schema.mjs` → `validateFiles({...})`
 - `scripts/validate-graphql-vs-jsonschema.mjs` → `SchemaSyncManager`, `validateParity(graphqlSchemaSDL, jsonSchema, sampleData?)`
 - `scripts/validate-schema-sync.mjs` → `compareSchemas(sdl, jsonSchema, { strict?, config?, repoRoot? }?)`
@@ -251,6 +269,7 @@ Validators:
 ---
 
 <a id="command-recipes"></a>
+
 ## Appendix B — Command recipes
 
 Full interop generation and validations:
@@ -274,4 +293,5 @@ Run tests with coverage summary:
 ---
 
 Changelog
+
 - 2024-12: Initial draft created (placeholder) to capture the consolidated reference for schema tooling.

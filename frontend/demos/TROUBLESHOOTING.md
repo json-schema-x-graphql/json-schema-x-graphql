@@ -7,6 +7,7 @@ Quick fixes for common issues in the Loro and Yjs Monaco demos.
 ## 🔴 GraphQL Editor Shows "Cannot parse the schema!"
 
 ### Symptoms
+
 - Conversion appears to succeed (no error alert)
 - GraphQL visual editor shows red error message
 - Console shows "Cannot parse the schema!"
@@ -14,13 +15,16 @@ Quick fixes for common issues in the Loro and Yjs Monaco demos.
 ### Common Causes
 
 #### 1. Invalid GraphQL Syntax
+
 **Check for:**
+
 - Missing or extra commas
 - Invalid directive syntax
 - Incorrectly formatted descriptions
 - Unbalanced brackets/braces
 
 **Solution:**
+
 ```bash
 # Check console logs for generated SDL
 console.log("Generated GraphQL:", graphqlOutput);
@@ -36,12 +40,15 @@ type User {
 ```
 
 #### 2. Undefined Type References
+
 **Check for:**
+
 - Field types that reference undefined types
 - Enum types not in $defs
 - Missing type definitions
 
 **Example Problem:**
+
 ```json
 {
   "role": {
@@ -53,6 +60,7 @@ type User {
 
 **Solution:**
 Add enum to `$defs`:
+
 ```json
 {
   "$defs": {
@@ -67,23 +75,27 @@ Add enum to `$defs`:
 ```
 
 #### 3. Invalid Directive Arguments
+
 **Check for:**
+
 - Directive arguments without proper quotes
 - Invalid directive names
 - Missing required arguments
 
 **Example Problem:**
+
 ```graphql
-type User @key(fields: id)  # Missing quotes around "id"
+type User @key(fields: id) # Missing quotes around "id"
 ```
 
 **Solution:**
 Ensure `x-graphql-federation-keys` format is correct:
+
 ```json
 {
   "x-graphql-federation-keys": [
     {
-      "fields": "id"  // This will generate: @key(fields: "id")
+      "fields": "id" // This will generate: @key(fields: "id")
     }
   ]
 }
@@ -94,6 +106,7 @@ Ensure `x-graphql-federation-keys` format is correct:
 ## 🔴 Editor Not Populating After Conversion
 
 ### Symptoms
+
 - Click "Convert to GraphQL →"
 - Alert shows success or no error
 - GraphQL editor panel remains blank or shows old content
@@ -101,32 +114,40 @@ Ensure `x-graphql-federation-keys` format is correct:
 ### Solutions
 
 #### 1. Check Loro/Yjs Initialization
+
 **Verify:**
+
 ```javascript
 // Should see in console:
-"📝 Updating Loro document with GraphQL SDL"
-"✅ Updated Loro: deleted X chars, inserted Y chars"
+"📝 Updating Loro document with GraphQL SDL";
+"✅ Updated Loro: deleted X chars, inserted Y chars";
 ```
 
 **If missing:**
+
 1. Click "Initialize Loro" button first
 2. Enter username and document ID
 3. Then try conversion again
 
 #### 2. Check for Console Errors
+
 **Look for:**
+
 ```
 ❌ GraphQLVisualEditor: Failed to set schema
 ❌ Conversion failed:
 ```
 
 **Action:**
+
 - Read error message details
 - Check if JSON Schema is valid
 - Verify all required fields are present
 
 #### 3. Refresh and Retry
+
 **Quick Fix:**
+
 1. Save your JSON Schema (copy to clipboard)
 2. Refresh page (Cmd+R / Ctrl+R)
 3. Click "Initialize Loro"
@@ -142,6 +163,7 @@ Ensure `x-graphql-federation-keys` format is correct:
 **Cause:** Invalid JSON syntax
 
 **Check:**
+
 - Missing commas between properties
 - Trailing commas (not allowed in JSON)
 - Unmatched brackets/braces
@@ -149,6 +171,7 @@ Ensure `x-graphql-federation-keys` format is correct:
 
 **Quick Fix:**
 Use a JSON validator:
+
 ```bash
 # Command line
 cat schema.json | jq .
@@ -161,6 +184,7 @@ cat schema.json | jq .
 **Cause:** Invalid property configuration
 
 **Common Issues:**
+
 ```json
 // ❌ Bad: No type specified
 {
@@ -184,12 +208,15 @@ cat schema.json | jq .
 ## 🔴 Enums Not Converting
 
 ### Symptoms
+
 - Enum defined in $defs
 - Not appearing in GraphQL output
 - No error message
 
 ### Solution
+
 **Ensure all required fields:**
+
 ```json
 {
   "$defs": {
@@ -197,10 +224,10 @@ cat schema.json | jq .
       // ✅ Required: type and enum
       "type": "string",
       "enum": ["ACTIVE", "INACTIVE"],
-      
+
       // ✅ Required: GraphQL type name
       "x-graphql-type-name": "Status",
-      
+
       // ✅ Required: Type kind
       "x-graphql-type-kind": "ENUM"
     }
@@ -209,12 +236,13 @@ cat schema.json | jq .
 ```
 
 **Then reference it:**
+
 ```json
 {
   "status": {
     "type": "string",
     "enum": ["ACTIVE", "INACTIVE"],
-    "x-graphql-field-type": "Status"  // Match the type name above
+    "x-graphql-field-type": "Status" // Match the type name above
   }
 }
 ```
@@ -224,19 +252,22 @@ cat schema.json | jq .
 ## 🔴 Federation Directives Not Appearing
 
 ### Symptoms
+
 - `x-graphql-federation-keys` defined
 - `@key` directive not in output
 
 ### Check Format
 
 **❌ Wrong:**
+
 ```json
 {
-  "x-graphql-federation-keys": "id"  // String, not array
+  "x-graphql-federation-keys": "id" // String, not array
 }
 ```
 
 **✅ Correct:**
+
 ```json
 {
   "x-graphql-federation-keys": [
@@ -253,13 +284,14 @@ cat schema.json | jq .
 ```json
 {
   "x-graphql-federation-keys": [
-    {"fields": "id"},
-    {"fields": "sku organizationId"}  // Compound key
+    { "fields": "id" },
+    { "fields": "sku organizationId" } // Compound key
   ]
 }
 ```
 
 **Generates:**
+
 ```graphql
 type Product @key(fields: "id") @key(fields: "sku organizationId") {
   # fields
@@ -271,17 +303,19 @@ type Product @key(fields: "id") @key(fields: "sku organizationId") {
 ## 🔴 Field Arguments Not Working
 
 ### Symptoms
+
 - `x-graphql-field-arguments` defined
 - Arguments not in generated SDL
 
 ### Check Format
 
 **✅ Correct:**
+
 ```json
 {
   "posts": {
     "type": "array",
-    "items": {"$ref": "#/$defs/post"},
+    "items": { "$ref": "#/$defs/post" },
     "x-graphql-field-arguments": [
       {
         "name": "limit",
@@ -300,6 +334,7 @@ type Product @key(fields: "id") @key(fields: "sku organizationId") {
 ```
 
 **Generates:**
+
 ```graphql
 posts(limit: Int = 10, offset: Int = 0): [Post]
 ```
@@ -309,33 +344,37 @@ posts(limit: Int = 10, offset: Int = 0): [Post]
 ## 🔴 Non-Null (!) Not Appearing
 
 ### Symptoms
+
 - Fields should be required
 - No `!` in GraphQL output
 
 ### Solutions
 
 #### Option 1: Use x-graphql-field-non-null
+
 ```json
 {
   "username": {
     "type": "string",
-    "x-graphql-field-non-null": true  // Explicit
+    "x-graphql-field-non-null": true // Explicit
   }
 }
 ```
 
 #### Option 2: Use required array
+
 ```json
 {
   "required": ["username", "email"],
   "properties": {
-    "username": {"type": "string"},
-    "email": {"type": "string"}
+    "username": { "type": "string" },
+    "email": { "type": "string" }
   }
 }
 ```
 
 **Both generate:**
+
 ```graphql
 username: String!
 email: String!
@@ -374,6 +413,7 @@ email: String!
 ## 🔴 WebSocket Connection Failed (Yjs Demo Only)
 
 ### Symptoms
+
 - Status shows "Disconnected"
 - Console shows WebSocket errors
 - Changes don't sync
@@ -381,16 +421,18 @@ email: String!
 ### Solution
 
 1. **Check WebSocket Server:**
+
    ```bash
    # Default: ws://localhost:1234
    # Verify server is running
    ```
 
 2. **Update WebSocket URL:**
+
    ```bash
    # Set environment variable
    export VITE_WS_URL=ws://your-server:port
-   
+
    # Or edit store.ts:
    const wsUrl = 'ws://localhost:1234';
    ```
@@ -404,17 +446,21 @@ email: String!
 ## 🔴 Changes Not Syncing
 
 ### For Loro Demo
+
 **Symptom:** Edits in JSON Schema don't update GraphQL
 
 **Check:**
+
 1. Is Loro initialized? (Green status indicator)
 2. Check console for update logs
 3. Try disconnecting and reconnecting
 
 ### For Yjs Demo
+
 **Symptom:** Other users don't see changes
 
 **Check:**
+
 1. WebSocket connection status
 2. Same room name for all users
 3. Network connectivity
@@ -425,12 +471,14 @@ email: String!
 ## 🔴 Type Definitions Missing in Output
 
 ### Symptoms
+
 - Types defined in $defs
 - Not appearing in GraphQL SDL
 
 ### Causes & Solutions
 
 #### 1. Missing x-graphql-type-name
+
 ```json
 // ❌ Won't convert
 {
@@ -456,12 +504,14 @@ email: String!
 ```
 
 #### 2. Not Referenced in Properties
+
 Types in $defs must be referenced:
+
 ```json
 {
   "properties": {
     "profile": {
-      "$ref": "#/$defs/profile"  // Reference it
+      "$ref": "#/$defs/profile" // Reference it
     }
   }
 }
@@ -503,18 +553,23 @@ When conversion fails, check in order:
 ## 🆘 Still Having Issues?
 
 ### 1. Check Example Schema
+
 Look at the working example:
+
 ```bash
 cat frontend/demos/example-schema.json
 ```
 
 ### 2. Review Documentation
+
 - `X_GRAPHQL_QUICK_REFERENCE.md` - Extension usage
 - `CONVERSION_FIX_SUMMARY.md` - Technical details
 - `schema/x-graphql-extensions.schema.json` - Full spec
 
 ### 3. Enable Debug Logging
+
 Already enabled! Check console for:
+
 ```
 📝 GraphQLVisualEditor: value prop changed
 🔄 Starting conversion: json-to-graphql
@@ -523,7 +578,9 @@ Already enabled! Check console for:
 ```
 
 ### 4. Test with Simple Schema
+
 Start minimal and add complexity:
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -547,6 +604,7 @@ If this works, gradually add features from your complex schema.
 ## 📞 Getting Help
 
 Include in bug reports:
+
 1. **Browser Console Logs** (full error messages)
 2. **Input JSON Schema** (what you're converting)
 3. **Expected Output** (what you wanted)

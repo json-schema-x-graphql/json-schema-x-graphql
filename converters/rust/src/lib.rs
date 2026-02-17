@@ -15,7 +15,7 @@
 //! # Example
 //!
 //! ```rust
-//! use json_schema_graphql_converter::{Converter, ConversionDirection};
+//! use json_schema_x_graphql::{Converter, ConversionDirection};
 //!
 //! let converter = Converter::new();
 //! let json_schema = r#"{"type": "object", "x-graphql-type-name": "User"}"#;
@@ -144,7 +144,7 @@ mod tests {
     #[test]
     fn test_converter_creation() {
         let converter = Converter::new();
-        assert_eq!(converter.options().validate, true);
+        assert!(converter.options().validate);
     }
 
     #[test]
@@ -161,7 +161,7 @@ mod tests {
             ..Default::default()
         };
         let converter = Converter::with_options(options);
-        assert_eq!(converter.options().validate, false);
+        assert!(!converter.options().validate);
     }
 
     #[test]

@@ -88,10 +88,10 @@ cf push -f manifests/manifest-oauth2-proxy.yml
 1. Configure IdP and redirect URIs
 
 - If using Login.gov directly with oauth2-proxy, register:
-   - Redirect URI: <https://ttse.apps.cloud.gov/oauth2/callback>
-   - Client ID (Issuer) and secret per your Login.gov registration
+  - Redirect URI: <https://ttse.apps.cloud.gov/oauth2/callback>
+  - Client ID (Issuer) and secret per your Login.gov registration
 - If brokering through Keycloak, configure the Login.gov IdP in Keycloak and set
-   - oauth2-proxy issuer to the Keycloak realm: <https://keycloak-ttse.apps.cloud.gov/realms/ttse>
+  - oauth2-proxy issuer to the Keycloak realm: <https://keycloak-ttse.apps.cloud.gov/realms/ttse>
 
 1. Push the app and wire the auth URL
 
@@ -154,6 +154,7 @@ Auth-related (cloud.gov examples):
 ### Common Issues
 
 1. **Build Failures**
+
    ```bash
    # Check build logs
    cf logs ttse-schema-unification-project --recent | grep -i error

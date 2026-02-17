@@ -12,6 +12,7 @@
 Phase 3A establishes a comprehensive local testing infrastructure for both Rust and Node.js converters. This infrastructure validates correctness, ensures bidirectional conversion fidelity, and prepares the foundation for the Phase 3B web UI implementation.
 
 **Key Achievements**:
+
 - ✅ 603 lines of Rust integration tests
 - ✅ 712 lines of Node.js integration tests
 - ✅ Automated test runner scripts
@@ -31,6 +32,7 @@ Phase 3A establishes a comprehensive local testing infrastructure for both Rust 
 #### Test Categories
 
 **Basic Type Conversion** (Lines 40-205):
+
 - ✅ Simple object types
 - ✅ Enum types with descriptions and deprecation
 - ✅ Interface types
@@ -38,6 +40,7 @@ Phase 3A establishes a comprehensive local testing infrastructure for both Rust 
 - ✅ Input object types
 
 **Apollo Federation Support** (Lines 207-358):
+
 - ✅ `@key` directive with resolvable fields
 - ✅ `@external`, `@requires`, `@provides` directives
 - ✅ `@shareable` directive
@@ -45,17 +48,20 @@ Phase 3A establishes a comprehensive local testing infrastructure for both Rust 
 - ✅ Federation entity resolution
 
 **Field Arguments** (Lines 360-397):
+
 - ✅ Arguments with types
 - ✅ Default values
 - ✅ Descriptions
 
 **Bidirectional Conversion** (Lines 399-479):
+
 - ✅ Round-trip: SDL → JSON → SDL
 - ✅ Round-trip: JSON → SDL → JSON
 - ✅ Federation metadata preservation
 - ✅ Lossless conversion validation
 
 **Edge Cases** (Lines 481-594):
+
 - ✅ Invalid JSON Schema handling
 - ✅ Invalid GraphQL SDL handling
 - ✅ Empty schemas
@@ -64,6 +70,7 @@ Phase 3A establishes a comprehensive local testing infrastructure for both Rust 
 - ✅ Custom scalars
 
 **Performance** (Lines 596-603):
+
 - ✅ Conversion statistics tracking
 - ✅ Performance metrics
 
@@ -112,6 +119,7 @@ fn test_federation_key_directive() {
 #### Test Suites
 
 **Basic Type Conversion** (Lines 38-189):
+
 - ✅ Object types with fields
 - ✅ Enum types with value configurations
 - ✅ Interface types
@@ -119,6 +127,7 @@ fn test_federation_key_directive() {
 - ✅ Input object types
 
 **Apollo Federation Support** (Lines 191-337):
+
 - ✅ `@key` directive
 - ✅ `@external`, `@requires`, `@provides`
 - ✅ `@shareable` directive
@@ -126,16 +135,19 @@ fn test_federation_key_directive() {
 - ✅ `@requiresScopes` directive (v2.5+)
 
 **Field Arguments** (Lines 339-388):
+
 - ✅ Arguments with types and descriptions
 - ✅ Default values (primitives and complex)
 
 **Bidirectional Conversion** (Lines 390-483):
+
 - ✅ Round-trip simple types
 - ✅ Round-trip with federation
 - ✅ Round-trip with enums
 - ✅ Metadata preservation validation
 
 **Edge Cases & Error Handling** (Lines 485-590):
+
 - ✅ Invalid JSON Schema detection
 - ✅ Invalid GraphQL SDL detection
 - ✅ Empty schema handling
@@ -143,38 +155,39 @@ fn test_federation_key_directive() {
 - ✅ Deprecated fields with reasons
 
 **Performance & Statistics** (Lines 592-658):
+
 - ✅ Conversion statistics
 - ✅ Performance benchmarks (< 100ms)
 
 **Custom Scalars** (Lines 660-682):
+
 - ✅ Custom scalar definitions
 
 **Complex Schemas** (Lines 684-712):
+
 - ✅ Federated schemas with multiple directives
 - ✅ Complete user service example
 
 #### Example Test
 
 ```typescript
-test('converts @key directive', async () => {
+test("converts @key directive", async () => {
   const jsonSchema = {
-    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    $schema: "https://json-schema.org/draft/2020-12/schema",
     $defs: {
       Product: {
-        type: 'object',
+        type: "object",
         properties: {
           id: {
-            type: 'string',
-            'x-graphql-field-name': 'id',
-            'x-graphql-field-type': 'ID!',
-            'x-graphql-field-non-null': true,
+            type: "string",
+            "x-graphql-field-name": "id",
+            "x-graphql-field-type": "ID!",
+            "x-graphql-field-non-null": true,
           },
         },
-        'x-graphql-type-name': 'Product',
-        'x-graphql-type-kind': 'OBJECT',
-        'x-graphql-federation-keys': [
-          { fields: 'id', resolvable: true },
-        ],
+        "x-graphql-type-name": "Product",
+        "x-graphql-type-kind": "OBJECT",
+        "x-graphql-federation-keys": [{ fields: "id", resolvable: true }],
       },
     },
   };
@@ -376,30 +389,30 @@ test('converts @key directive', async () => {
 
 ## Test Coverage Matrix
 
-| Feature | Rust Tests | Node.js Tests | Priority |
-|---------|------------|---------------|----------|
-| Object Types | ✅ | ✅ | Critical |
-| Enum Types | ✅ | ✅ | Critical |
-| Interface Types | ✅ | ✅ | Critical |
-| Union Types | ✅ | ✅ | Critical |
-| Input Types | ✅ | ✅ | Critical |
-| Custom Scalars | ✅ | ✅ | High |
-| @key directive | ✅ | ✅ | Critical |
-| @external directive | ✅ | ✅ | Critical |
-| @requires directive | ✅ | ✅ | Critical |
-| @provides directive | ✅ | ✅ | Critical |
-| @shareable directive | ✅ | ✅ | High |
-| @authenticated directive | ✅ | ✅ | High |
-| @requiresScopes directive | ❌ | ✅ | Medium |
-| @policy directive | ❌ | ❌ | Low |
-| @cost directive | ❌ | ❌ | Low |
-| Field Arguments | ✅ | ✅ | Critical |
-| Default Values | ✅ | ✅ | Critical |
-| List Types | ✅ | ✅ | Critical |
-| Deprecated Fields | ✅ | ✅ | High |
-| Round-Trip Conversion | ✅ | ✅ | Critical |
-| Error Handling | ✅ | ✅ | Critical |
-| Performance Metrics | ✅ | ✅ | High |
+| Feature                   | Rust Tests | Node.js Tests | Priority |
+| ------------------------- | ---------- | ------------- | -------- |
+| Object Types              | ✅         | ✅            | Critical |
+| Enum Types                | ✅         | ✅            | Critical |
+| Interface Types           | ✅         | ✅            | Critical |
+| Union Types               | ✅         | ✅            | Critical |
+| Input Types               | ✅         | ✅            | Critical |
+| Custom Scalars            | ✅         | ✅            | High     |
+| @key directive            | ✅         | ✅            | Critical |
+| @external directive       | ✅         | ✅            | Critical |
+| @requires directive       | ✅         | ✅            | Critical |
+| @provides directive       | ✅         | ✅            | Critical |
+| @shareable directive      | ✅         | ✅            | High     |
+| @authenticated directive  | ✅         | ✅            | High     |
+| @requiresScopes directive | ❌         | ✅            | Medium   |
+| @policy directive         | ❌         | ❌            | Low      |
+| @cost directive           | ❌         | ❌            | Low      |
+| Field Arguments           | ✅         | ✅            | Critical |
+| Default Values            | ✅         | ✅            | Critical |
+| List Types                | ✅         | ✅            | Critical |
+| Deprecated Fields         | ✅         | ✅            | High     |
+| Round-Trip Conversion     | ✅         | ✅            | Critical |
+| Error Handling            | ✅         | ✅            | Critical |
+| Performance Metrics       | ✅         | ✅            | High     |
 
 **Coverage**: 20/22 features (91%)
 
@@ -448,6 +461,7 @@ json-schema-x-graphql/
 ### Prerequisites
 
 **Rust**:
+
 ```bash
 # Install Rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -457,6 +471,7 @@ cargo install cargo-tarpaulin
 ```
 
 **Node.js**:
+
 ```bash
 # Install Node.js 18+
 nvm install 18
@@ -479,6 +494,7 @@ cd json-schema-x-graphql
 ### Individual Converter Tests
 
 **Rust**:
+
 ```bash
 cd converters/rust
 cargo test
@@ -487,6 +503,7 @@ cargo test --test integration_tests  # Integration only
 ```
 
 **Node.js**:
+
 ```bash
 cd converters/node
 npm install
@@ -534,6 +551,7 @@ npm run test:coverage  # With coverage
 ### Immediate Actions (User)
 
 1. **Run Tests**:
+
    ```bash
    cd json-schema-x-graphql
    ./scripts/run-tests.sh
@@ -559,6 +577,7 @@ npm run test:coverage  # With coverage
 Once Phase 3A is validated, proceed to Phase 3B:
 
 1. **Setup Web UI Project**:
+
    ```bash
    mkdir web-ui
    cd web-ui
@@ -566,6 +585,7 @@ Once Phase 3A is validated, proceed to Phase 3B:
    ```
 
 2. **Build WASM Module**:
+
    ```bash
    cd converters/rust
    wasm-pack build --target web --out-dir ../../web-ui/src/wasm
@@ -604,6 +624,7 @@ Once Phase 3A is validated, proceed to Phase 3B:
 ### GraphQL Editor Integration
 
 Using [graphql-editor](https://github.com/graphql-editor/graphql-editor):
+
 - Visual graph representation of schema
 - Interactive SDL editing
 - Type introspection panel
@@ -621,30 +642,33 @@ Using [graphql-editor](https://github.com/graphql-editor/graphql-editor):
 
 ## Performance Targets
 
-| Metric | Target | Status |
-|--------|--------|--------|
-| Rust test execution | < 1s | ⏳ TBD |
-| Node.js test execution | < 5s | ⏳ TBD |
-| Test coverage (Rust) | 80%+ | ⏳ TBD |
-| Test coverage (Node.js) | 80%+ | ⏳ TBD |
-| Parity tests | 100% pass | ⏳ TBD |
-| Conversion time (Rust) | < 5ms | ⏳ TBD |
-| Conversion time (Node.js) | < 10ms | ⏳ TBD |
+| Metric                    | Target    | Status |
+| ------------------------- | --------- | ------ |
+| Rust test execution       | < 1s      | ⏳ TBD |
+| Node.js test execution    | < 5s      | ⏳ TBD |
+| Test coverage (Rust)      | 80%+      | ⏳ TBD |
+| Test coverage (Node.js)   | 80%+      | ⏳ TBD |
+| Parity tests              | 100% pass | ⏳ TBD |
+| Conversion time (Rust)    | < 5ms     | ⏳ TBD |
+| Conversion time (Node.js) | < 10ms    | ⏳ TBD |
 
 ---
 
 ## Resources
 
 ### Documentation
+
 - [PHASE_3_TESTING.md](./PHASE_3_TESTING.md) - Detailed testing guide
 - [PHASE_3B_WEB_UI.md](./PHASE_3B_WEB_UI.md) - Web UI implementation plan
 - [PHASE_3_README.md](./PHASE_3_README.md) - Quick start guide
 
 ### Converters
+
 - [Rust Converter README](./converters/rust/README.md)
 - [Node.js Converter README](./converters/node/README.md)
 
 ### External Resources
+
 - [Rust Testing Guide](https://doc.rust-lang.org/book/ch11-00-testing.html)
 - [Jest Documentation](https://jestjs.io/)
 - [GraphQL Editor GitHub](https://github.com/graphql-editor/graphql-editor)

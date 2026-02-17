@@ -51,8 +51,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "system_metadata",
-    "common_elements"
-  ]
+  "required": ["system_metadata", "common_elements"]
 }

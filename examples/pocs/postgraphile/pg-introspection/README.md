@@ -13,10 +13,12 @@ Usage:
   ```
 
 What it does:
+
 - Attempts to run `npx @graphile/pg-introspection` (if `npx` is available). If that runs, it writes `pg-introspection.json` to this folder.
 - If `npx` is not available or fails, falls back to `pg_dump` inside the running Postgres container and writes `pg_schema.sql` and `tables.json`.
 
 Outputs:
+
 - `pg-introspection.json` (if npx succeeded)
 - `pg_schema.sql` (schema-only SQL dump)
 - `tables.json` (list of tables in `public` and `unified_model`)

@@ -5,6 +5,7 @@ This guide explains the JSON Schema representation of GraphQL specification defi
 ## Overview
 
 The JSON Schema (`graphql-spec-schema.json`) defines a complete schema that can:
+
 - Validate GraphQL type system definitions
 - Generate GraphQL schemas from JSON
 - Represent all built-in and standard GraphQL types
@@ -24,13 +25,13 @@ graphql-spec-schema.json
 
 The five required scalar types in GraphQL:
 
-| Name | Purpose |
-|------|---------|
-| **String** | UTF-8 text value |
-| **Int** | 32-bit signed integer (-2^31 to 2^31-1) |
-| **Float** | IEEE 754 floating-point value |
-| **Boolean** | True or false |
-| **ID** | Unique identifier (treated as string in transport, used for object IDs) |
+| Name        | Purpose                                                                 |
+| ----------- | ----------------------------------------------------------------------- |
+| **String**  | UTF-8 text value                                                        |
+| **Int**     | 32-bit signed integer (-2^31 to 2^31-1)                                 |
+| **Float**   | IEEE 754 floating-point value                                           |
+| **Boolean** | True or false                                                           |
+| **ID**      | Unique identifier (treated as string in transport, used for object IDs) |
 
 ### JSON Schema Scalar Definition
 
@@ -48,30 +49,35 @@ The five required scalar types in GraphQL:
 Five standard directives for schema manipulation:
 
 ### @include (if: Boolean!)
+
 - **Purpose**: Include a field in query if condition is true
 - **Locations**: FIELD, FRAGMENT_SPREAD, INLINE_FRAGMENT
 - **Arguments**: `if` (Boolean!, required)
 - **Repeatable**: No
 
 ### @skip (if: Boolean!)
-- **Purpose**: Skip field in query if condition is true  
+
+- **Purpose**: Skip field in query if condition is true
 - **Locations**: FIELD, FRAGMENT_SPREAD, INLINE_FRAGMENT
 - **Arguments**: `if` (Boolean!, required)
 - **Repeatable**: No
 
 ### @deprecated (reason: String!)
+
 - **Purpose**: Mark field/enum value as deprecated
 - **Locations**: FIELD_DEFINITION, ARGUMENT_DEFINITION, INPUT_FIELD_DEFINITION, ENUM_VALUE
 - **Arguments**: `reason` (String, optional, default: "No longer supported")
 - **Repeatable**: No
 
 ### @specifiedBy (url: String!)
+
 - **Purpose**: Reference specification for custom scalar
 - **Locations**: SCALAR
 - **Arguments**: `url` (String!, required - URI format)
 - **Repeatable**: No
 
 ### @oneOf
+
 - **Purpose**: Exactly one field of an input object must be populated (GraphQL spec v2021-11+)
 - **Locations**: INPUT_OBJECT
 - **Arguments**: None
@@ -99,10 +105,12 @@ Five standard directives for schema manipulation:
 
 Six core introspection types support GraphQL's self-describing nature:
 
-### __Schema
+### \_\_Schema
+
 Root type for schema introspection queries.
 
 **Fields**:
+
 - `types: [__Type!]!` - All types in the schema
 - `queryType: __Type!` - Root query type
 - `mutationType: __Type` - Root mutation type (if present)
@@ -110,19 +118,26 @@ Root type for schema introspection queries.
 - `directives: [__Directive!]!` - All directives in the schema
 
 **Query Example**:
+
 ```graphql
 {
   __schema {
-    types { name }
-    queryType { name }
+    types {
+      name
+    }
+    queryType {
+      name
+    }
   }
 }
 ```
 
-### __Type
+### \_\_Type
+
 Represents a type definition in the schema.
 
 **Fields**:
+
 - `kind: __TypeKind!` - SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
 - `name: String` - Type name (null for LIST/NON_NULL)
 - `description: String` - Documentation
@@ -134,10 +149,12 @@ Represents a type definition in the schema.
 - `ofType: __Type` - Wrapped type (LIST/NON_NULL only)
 - `isOneOf: Boolean!` - Has @oneOf directive (INPUT_OBJECT only)
 
-### __Field
+### \_\_Field
+
 Represents a field of an object or interface type.
 
 **Fields**:
+
 - `name: String!` - Field name
 - `description: String` - Documentation
 - `args: [__InputValue!]!` - Field arguments
@@ -145,10 +162,12 @@ Represents a field of an object or interface type.
 - `isDeprecated: Boolean!` - Deprecated flag
 - `deprecationReason: String` - Why deprecated
 
-### __InputValue
+### \_\_InputValue
+
 Represents a field argument or input object field.
 
 **Fields**:
+
 - `name: String!` - Argument/field name
 - `description: String` - Documentation
 - `type: __Type!` - Input type
@@ -156,19 +175,23 @@ Represents a field argument or input object field.
 - `isDeprecated: Boolean!` - Deprecated flag (input fields only)
 - `deprecationReason: String` - Why deprecated (input fields only)
 
-### __EnumValue
+### \_\_EnumValue
+
 Represents an enumeration value.
 
 **Fields**:
+
 - `name: String!` - Enum value name
 - `description: String` - Documentation
 - `isDeprecated: Boolean!` - Deprecated flag
 - `deprecationReason: String` - Why deprecated
 
-### __Directive
+### \_\_Directive
+
 Represents a directive definition.
 
 **Fields**:
+
 - `name: String!` - Directive name (without @)
 - `description: String` - Documentation
 - `locations: [__DirectiveLocation!]!` - Valid locations
@@ -177,7 +200,8 @@ Represents a directive definition.
 
 ## Type System Enums
 
-### __TypeKind
+### \_\_TypeKind
+
 Enumeration of type kinds in GraphQL:
 
 - **SCALAR** - Leaf type (String, Int, Boolean, etc.)
@@ -189,10 +213,12 @@ Enumeration of type kinds in GraphQL:
 - **LIST** - List/array wrapper type
 - **NON_NULL** - Non-null wrapper type
 
-### __DirectiveLocation
+### \_\_DirectiveLocation
+
 Enumeration of valid directive locations (19 values):
 
 **Executable Locations** (where directives can be used in queries/mutations):
+
 - QUERY
 - MUTATION
 - SUBSCRIPTION
@@ -203,6 +229,7 @@ Enumeration of valid directive locations (19 values):
 - VARIABLE_DEFINITION
 
 **Type System Locations** (where directives can be used in schema definitions):
+
 - SCHEMA
 - SCALAR
 - OBJECT
@@ -218,6 +245,7 @@ Enumeration of valid directive locations (19 values):
 ## JSON Schema Definitions Reference
 
 ### scalar
+
 Represents a scalar type definition.
 
 ```json
@@ -227,12 +255,14 @@ Represents a scalar type definition.
 ```
 
 **Properties**:
+
 - `name` (string, required) - Scalar name matching `^[_A-Za-z][_0-9A-Za-z]*$`
 - `description` (string) - Documentation
 - `specifiedByURL` (string, URI format) - Custom scalar specification
 - `isBuiltIn` (boolean, default: false) - Whether it's a standard GraphQL scalar
 
 ### type
+
 Represents any GraphQL type definition.
 
 ```json
@@ -242,6 +272,7 @@ Represents any GraphQL type definition.
 ```
 
 **Properties**:
+
 - `kind` (enum, required) - One of: SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
 - `name` (string) - Type name
 - `description` (string) - Documentation
@@ -254,6 +285,7 @@ Represents any GraphQL type definition.
 - `isOneOf` (boolean) - For INPUT_OBJECT types with @oneOf
 
 ### field
+
 Represents a field of an object or interface type.
 
 ```json
@@ -263,14 +295,16 @@ Represents a field of an object or interface type.
 ```
 
 **Properties**:
+
 - `name` (string, required) - Field name
-- `type` (string, required) - Return type (e.g., "String!", "[Int!]!", "__Type!")
+- `type` (string, required) - Return type (e.g., "String!", "[Int!]!", "\_\_Type!")
 - `description` (string) - Documentation
 - `args` (array) - Field arguments
 - `isDeprecated` (boolean, default: false)
 - `deprecationReason` (string)
 
 ### inputValue
+
 Represents a directive/field argument or input object field.
 
 ```json
@@ -280,6 +314,7 @@ Represents a directive/field argument or input object field.
 ```
 
 **Properties**:
+
 - `name` (string, required) - Argument/field name
 - `type` (string, required) - Input type (e.g., "Boolean!", "[String!]!")
 - `description` (string) - Documentation
@@ -288,6 +323,7 @@ Represents a directive/field argument or input object field.
 - `deprecationReason` (string)
 
 ### enumValue
+
 Represents a value of an enum type.
 
 ```json
@@ -297,6 +333,7 @@ Represents a value of an enum type.
 ```
 
 **Properties**:
+
 - `name` (string, required) - Enum value name
 - `description` (string) - Documentation
 - `isDeprecated` (boolean, default: false)

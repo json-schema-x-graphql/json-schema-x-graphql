@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What mutations are and how they differ from queries
 - Writing data (create, update, delete operations)
 - Mutation syntax and structure
@@ -13,9 +14,10 @@
 - How JSON Schema represents state changes
 
 **Why it matters:**
-Queries let you *read* data. Mutations let you *write* data. While queries should be safe (never changing data), mutations explicitly state "I'm making a change." This distinction is powerful—it makes APIs more predictable and easier to optimize. Good mutations validate changes, return the modified data, and handle errors gracefully.
+Queries let you _read_ data. Mutations let you _write_ data. While queries should be safe (never changing data), mutations explicitly state "I'm making a change." This distinction is powerful—it makes APIs more predictable and easier to optimize. Good mutations validate changes, return the modified data, and handle errors gracefully.
 
 **Prerequisites:**
+
 - Completed: [Module 1-8 (All Previous Modules)](/learning/01-introducing-types)
 - Understand types, arguments, input types, and queries
 - Ready to learn state changes
@@ -27,6 +29,7 @@ Queries let you *read* data. Mutations let you *write* data. While queries shoul
 ### Query vs Mutation
 
 **Queries** are for reading data (safe, readonly):
+
 ```graphql
 type Query {
   user(id: ID!): User
@@ -35,6 +38,7 @@ type Query {
 ```
 
 **Mutations** are for writing data (changes state):
+
 ```graphql
 type Mutation {
   createUser(input: CreateUserInput!): User!
@@ -56,6 +60,7 @@ type Mutation {
 Most mutations fall into three categories:
 
 1. **Create**: Add new data
+
    ```graphql
    type Mutation {
      createUser(input: CreateUserInput!): User!
@@ -63,6 +68,7 @@ Most mutations fall into three categories:
    ```
 
 2. **Update**: Modify existing data
+
    ```graphql
    type Mutation {
      updateUser(id: ID!, input: UpdateUserInput!): User!
@@ -165,11 +171,13 @@ input UpdatePostInput {
 
 # Create example
 mutation {
-  createPost(input: {
-    title: "GraphQL Guide"
-    content: "Learn GraphQL..."
-    tags: ["graphql", "api"]
-  }) {
+  createPost(
+    input: {
+      title: "GraphQL Guide"
+      content: "Learn GraphQL..."
+      tags: ["graphql", "api"]
+    }
+  ) {
     id
     title
   }
@@ -177,9 +185,7 @@ mutation {
 
 # Update example
 mutation {
-  updatePost(id: "123", input: {
-    title: "Updated Title"
-  }) {
+  updatePost(id: "123", input: { title: "Updated Title" }) {
     id
     title
     content
@@ -199,17 +205,12 @@ You can run multiple mutations (though they execute sequentially):
 ```graphql
 mutation {
   # First mutation
-  createPost(input: {
-    title: "New Post"
-    content: "Content..."
-  }) {
+  createPost(input: { title: "New Post", content: "Content..." }) {
     id
   }
 
   # Second mutation
-  createComment(postId: "123", input: {
-    text: "Great post!"
-  }) {
+  createComment(postId: "123", input: { text: "Great post!" }) {
     id
   }
 }
@@ -352,6 +353,7 @@ JSON Schema represents mutations as operations with input and output schemas:
 ### Converting Mutations to JSON Schema
 
 **GraphQL:**
+
 ```graphql
 type Mutation {
   createUser(input: CreateUserInput!): User!
@@ -370,6 +372,7 @@ type User {
 ```
 
 **Converts to JSON Schema (data types only):**
+
 ```json
 {
   "$defs": {
@@ -403,6 +406,7 @@ type User {
 ### Example 1: Blog Management Mutations
 
 **GraphQL:**
+
 ```graphql
 type Mutation {
   # Post mutations
@@ -472,6 +476,7 @@ type DeleteResult {
 ```
 
 **Example mutations:**
+
 ```graphql
 mutation PublishNewPost($postInput: CreatePostInput!) {
   createPost(input: $postInput) {
@@ -498,6 +503,7 @@ mutation {
 ### Example 2: E-Commerce Mutations
 
 **GraphQL:**
+
 ```graphql
 type Mutation {
   # Orders
@@ -580,6 +586,7 @@ type Payment {
 ```
 
 **Example mutations:**
+
 ```graphql
 mutation CreateNewOrder($orderInput: CreateOrderInput!) {
   createOrder(input: $orderInput) {
@@ -597,13 +604,7 @@ mutation CreateNewOrder($orderInput: CreateOrderInput!) {
 }
 
 mutation {
-  processPayment(
-    orderId: "123"
-    input: {
-      method: CREDIT_CARD
-      amount: 9999
-    }
-  ) {
+  processPayment(orderId: "123", input: { method: CREDIT_CARD, amount: 9999 }) {
     ... on Payment {
       id
       status
@@ -662,10 +663,7 @@ Operations on multiple items:
 ```graphql
 type Mutation {
   deleteUsers(ids: [ID!]!): BulkDeleteResult!
-  updatePostStatus(
-    ids: [ID!]!
-    status: PostStatus!
-  ): [Post!]!
+  updatePostStatus(ids: [ID!]!, status: PostStatus!): [Post!]!
 }
 
 type BulkDeleteResult {
@@ -692,9 +690,7 @@ input CreatePostWithCommentsInput {
 }
 
 type Mutation {
-  createPostWithComments(
-    input: CreatePostWithCommentsInput!
-  ): Post!
+  createPostWithComments(input: CreatePostWithCommentsInput!): Post!
 }
 ```
 
@@ -730,11 +726,7 @@ type Mutation {
 
 # ❌ Messy
 type Mutation {
-  createUser(
-    name: String!
-    email: String!
-    role: UserRole!
-  ): User!
+  createUser(name: String!, email: String!, role: UserRole!): User!
 }
 ```
 
@@ -826,7 +818,7 @@ type Mutation {
   createTask(input: CreateTaskInput!): Task!
   updateTask(id: ID!, input: UpdateTaskInput!): Task
   deleteTask(id: ID!): Boolean!
-  
+
   # Additional mutations
   completeTask(id: ID!): Task!
   reopenTask(id: ID!): Task!
@@ -903,16 +895,14 @@ enum ErrorCode {
 
 # Usage
 mutation {
-  createUser(input: {
-    name: "John"
-    email: "john@example.com"
-    password: "secret123"
-  }) {
+  createUser(
+    input: { name: "John", email: "john@example.com", password: "secret123" }
+  ) {
     ... on User {
       id
       name
     }
-    
+
     ... on CreateUserError {
       message
       code
@@ -935,10 +925,7 @@ Design a mutation to update multiple posts at once:
 
 ```graphql
 type Mutation {
-  bulkUpdatePostStatus(
-    ids: [ID!]!
-    status: PostStatus!
-  ): BulkUpdateResult!
+  bulkUpdatePostStatus(ids: [ID!]!, status: PostStatus!): BulkUpdateResult!
 }
 
 type BulkUpdateResult {
@@ -967,12 +954,16 @@ enum PostStatus {
 
 # Usage
 mutation {
-  bulkUpdatePostStatus(
-    ids: ["1", "2", "3"]
-    status: PUBLISHED
-  ) {
-    successful { id title status }
-    failed { id message }
+  bulkUpdatePostStatus(ids: ["1", "2", "3"], status: PUBLISHED) {
+    successful {
+      id
+      title
+      status
+    }
+    failed {
+      id
+      message
+    }
     total
   }
 }
@@ -987,6 +978,7 @@ mutation {
 ### Adding Mutations to Schema
 
 **Before (Query only):**
+
 ```graphql
 type Query {
   users: [User!]!
@@ -995,6 +987,7 @@ type Query {
 ```
 
 **Step 1**: Create input types
+
 ```graphql
 input CreateUserInput {
   name: String!
@@ -1008,6 +1001,7 @@ input UpdateUserInput {
 ```
 
 **Step 2**: Add Mutation type
+
 ```graphql
 type Mutation {
   createUser(input: CreateUserInput!): User!
@@ -1022,19 +1016,19 @@ type Mutation {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| Only returning ID | Client needs fresh data | Return full object |
-| No error handling | Errors unclear | Return error type from mutation |
-| All fields required in update | Can't do partial updates | Make input fields optional |
-| Mutations that don't change anything | Confusing, unnecessary | Keep mutations focused on changes |
-| No validation | Invalid data accepted | Validate in resolver |
+| Mistake                              | Problem                  | Fix                               |
+| ------------------------------------ | ------------------------ | --------------------------------- |
+| Only returning ID                    | Client needs fresh data  | Return full object                |
+| No error handling                    | Errors unclear           | Return error type from mutation   |
+| All fields required in update        | Can't do partial updates | Make input fields optional        |
+| Mutations that don't change anything | Confusing, unnecessary   | Keep mutations focused on changes |
+| No validation                        | Invalid data accepted    | Validate in resolver              |
 
 ---
 
 ## Next Steps
 
-**Congratulations!** You've completed all 9 core modules. 
+**Congratulations!** You've completed all 9 core modules.
 
 **What to do now:**
 
@@ -1057,7 +1051,7 @@ type Mutation {
 ✅ **Handle errors** - Union types for success/failure  
 ✅ **Validate thoroughly** - Check business logic  
 ✅ **Document clearly** - Explain what mutations do  
-✅ **Design for clients** - Return what they need  
+✅ **Design for clients** - Return what they need
 
 ---
 

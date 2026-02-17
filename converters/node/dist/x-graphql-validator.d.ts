@@ -7,7 +7,7 @@
 export interface ValidationError {
     path: string;
     message: string;
-    severity: 'error' | 'warning';
+    severity: "error" | "warning";
     attribute?: string;
 }
 export interface ValidationResult {

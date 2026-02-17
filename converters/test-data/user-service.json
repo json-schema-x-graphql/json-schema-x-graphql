@@ -1,11 +1,10 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.com/schemas/user-service.json",
   "title": "User Service Schema",
   "description": "Complete user service schema demonstrating all x-graphql-* extensions",
   "type": "object",
   "x-graphql-type-name": "User",
-  "x-graphql-type-kind": "type",
+  "x-graphql-type-kind": "OBJECT",
   "x-graphql-directives": [
     {
       "name": "key",

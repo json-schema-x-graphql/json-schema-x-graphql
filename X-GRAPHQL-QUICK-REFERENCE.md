@@ -16,6 +16,7 @@ The `x-graphql-*` namespace provides extensions to JSON Schema for precise contr
 ### Type & Field Naming
 
 #### `x-graphql-type-name`
+
 Specify the GraphQL type name.
 
 ```json
@@ -31,6 +32,7 @@ Specify the GraphQL type name.
 ---
 
 #### `x-graphql-field-name`
+
 Specify the GraphQL field name.
 
 ```json
@@ -49,6 +51,7 @@ Specify the GraphQL field name.
 ### Nullability Control
 
 #### `x-graphql-field-non-null`
+
 Mark a field as non-null (required in GraphQL).
 
 ```json
@@ -65,6 +68,7 @@ Mark a field as non-null (required in GraphQL).
 ---
 
 #### `x-graphql-nullable`
+
 Explicitly make a field nullable (overrides `required` array).
 
 ```json
@@ -83,6 +87,7 @@ Explicitly make a field nullable (overrides `required` array).
 ---
 
 #### `x-graphql-field-list-item-non-null`
+
 Control nullability of items in an array.
 
 ```json
@@ -102,6 +107,7 @@ Control nullability of items in an array.
 ### Field/Type Skipping
 
 #### `x-graphql-skip`
+
 Exclude a field or type from GraphQL schema generation.
 
 ```json
@@ -116,6 +122,7 @@ Exclude a field or type from GraphQL schema generation.
 **Result**: Field will not appear in GraphQL SDL
 
 **Use Cases**:
+
 - Hide sensitive data (passwords, tokens)
 - Exclude internal metadata
 - Remove database-specific fields
@@ -125,6 +132,7 @@ Exclude a field or type from GraphQL schema generation.
 ### Descriptions
 
 #### `x-graphql-description`
+
 Provide GraphQL-specific description (overrides JSON Schema `description`).
 
 ```json
@@ -137,6 +145,7 @@ Provide GraphQL-specific description (overrides JSON Schema `description`).
 ```
 
 **Output**:
+
 ```graphql
 """
 User entity exposed via GraphQL API
@@ -151,6 +160,7 @@ type User { ... }
 ### Type Overrides
 
 #### `x-graphql-field-type`
+
 Override the inferred GraphQL type.
 
 ```json
@@ -166,6 +176,7 @@ Override the inferred GraphQL type.
 **Output**: `createdAt: DateTime`
 
 **Common Uses**:
+
 - Map to custom scalars (`DateTime`, `Date`, `JSON`, `Upload`)
 - Override type inference
 - Use specific GraphQL types
@@ -177,6 +188,7 @@ Override the inferred GraphQL type.
 ### Interfaces
 
 #### `x-graphql-type-kind`
+
 Specify the GraphQL type kind.
 
 ```json
@@ -195,6 +207,7 @@ Specify the GraphQL type kind.
 ```
 
 **Output**:
+
 ```graphql
 interface Node {
   id: ID!
@@ -206,6 +219,7 @@ interface Node {
 ---
 
 #### `x-graphql-implements`
+
 Specify which interfaces a type implements.
 
 ```json
@@ -224,6 +238,7 @@ Specify which interfaces a type implements.
 ### Union Types
 
 #### `x-graphql-union-types`
+
 Define a union type with member types.
 
 ```json
@@ -247,6 +262,7 @@ Define a union type with member types.
 ### Federation
 
 #### `x-graphql-federation-keys`
+
 Define federation keys for Apollo Federation.
 
 ```json
@@ -261,6 +277,7 @@ Define federation keys for Apollo Federation.
 **Output**: `type User @key(fields: "id") { ... }`
 
 **Multiple Keys**:
+
 ```json
 {
   "x-graphql-federation-keys": ["id", "email"]
@@ -268,16 +285,18 @@ Define federation keys for Apollo Federation.
 ```
 
 **Output**:
+
 ```graphql
-type User 
+type User
   @key(fields: "id")
-  @key(fields: "email") 
+  @key(fields: "email")
 { ... }
 ```
 
 ---
 
 #### `x-graphql-federation-shareable`
+
 Mark a type as shareable across subgraphs.
 
 ```json
@@ -294,6 +313,7 @@ Mark a type as shareable across subgraphs.
 ---
 
 #### `x-graphql-federation-requires`
+
 Specify fields required for resolution.
 
 ```json
@@ -311,6 +331,7 @@ Specify fields required for resolution.
 ---
 
 #### `x-graphql-federation-provides`
+
 Specify fields provided by this resolver.
 
 ```json
@@ -484,6 +505,7 @@ Specify fields provided by this resolver.
 ```
 
 **Output**:
+
 ```graphql
 interface Node {
   id: ID!
@@ -521,17 +543,20 @@ npx validate-x-graphql schema.json --json
 ### Common Validation Errors
 
 **Invalid GraphQL Name**:
+
 ```
 Error: x-graphql-type-name "User-Type" is not a valid GraphQL name
 Must match: /^[_A-Za-z][_0-9A-Za-z]*$/
 ```
 
 **Missing Union Types**:
+
 ```
 Error: x-graphql-type-kind "UNION" requires x-graphql-union-types to be specified
 ```
 
 **Type Mismatch**:
+
 ```
 Error: x-graphql-skip must be a boolean
 ```
@@ -541,15 +566,18 @@ Error: x-graphql-skip must be a boolean
 ## Priority and Precedence
 
 ### Nullability Priority (Highest to Lowest)
+
 1. `x-graphql-nullable`
 2. `x-graphql-field-non-null`
 3. `required` array in JSON Schema
 
 ### Description Priority (Highest to Lowest)
+
 1. `x-graphql-description`
 2. `description` (JSON Schema)
 
 ### Naming Priority (Highest to Lowest)
+
 1. `x-graphql-type-name` / `x-graphql-field-name`
 2. `title` (for types)
 3. Property name (for fields)
@@ -577,19 +605,19 @@ Error: x-graphql-skip must be a boolean
 
 ## Cheat Sheet
 
-| Attribute | Purpose | Type | Example |
-|-----------|---------|------|---------|
-| `x-graphql-type-name` | Set type name | string | `"User"` |
-| `x-graphql-field-name` | Set field name | string | `"userId"` |
-| `x-graphql-field-type` | Override type | string | `"DateTime"` |
-| `x-graphql-field-non-null` | Make non-null | boolean | `true` |
-| `x-graphql-nullable` | Make nullable | boolean | `true` |
-| `x-graphql-skip` | Hide from SDL | boolean | `true` |
-| `x-graphql-description` | GraphQL desc | string | `"User entity"` |
-| `x-graphql-type-kind` | Type kind | enum | `"INTERFACE"` |
-| `x-graphql-implements` | Interfaces | array | `["Node"]` |
-| `x-graphql-union-types` | Union members | array | `["User", "Admin"]` |
-| `x-graphql-federation-keys` | Federation keys | array/string | `["id"]` |
+| Attribute                   | Purpose         | Type         | Example             |
+| --------------------------- | --------------- | ------------ | ------------------- |
+| `x-graphql-type-name`       | Set type name   | string       | `"User"`            |
+| `x-graphql-field-name`      | Set field name  | string       | `"userId"`          |
+| `x-graphql-field-type`      | Override type   | string       | `"DateTime"`        |
+| `x-graphql-field-non-null`  | Make non-null   | boolean      | `true`              |
+| `x-graphql-nullable`        | Make nullable   | boolean      | `true`              |
+| `x-graphql-skip`            | Hide from SDL   | boolean      | `true`              |
+| `x-graphql-description`     | GraphQL desc    | string       | `"User entity"`     |
+| `x-graphql-type-kind`       | Type kind       | enum         | `"INTERFACE"`       |
+| `x-graphql-implements`      | Interfaces      | array        | `["Node"]`          |
+| `x-graphql-union-types`     | Union members   | array        | `["User", "Admin"]` |
+| `x-graphql-federation-keys` | Federation keys | array/string | `["id"]`            |
 
 ---
 
@@ -606,18 +634,23 @@ Error: x-graphql-skip must be a boolean
 ## Getting Help
 
 ### Validation Errors
+
 Run the validator with `--verbose` for detailed information:
+
 ```bash
 npx validate-x-graphql schema.json --verbose
 ```
 
 ### Testing Your Schema
+
 Use the test schemas as examples:
+
 ```bash
 ls converters/test-data/x-graphql/
 ```
 
 ### Common Issues
+
 Check `IMPLEMENTATION_STATUS.md` for known issues and workarounds.
 
 ---

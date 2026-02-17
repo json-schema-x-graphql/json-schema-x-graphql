@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const StyledToolElement = styled.button<{ $hide?: boolean; $highlight?: boolean }>`
+export const StyledToolElement = styled.button<{
+  $hide?: boolean;
+  $highlight?: boolean;
+}>`
   display: ${({ $hide }) => ($hide ? "none" : "flex")};
   align-items: center;
   gap: 4px;

@@ -2,7 +2,7 @@
 //!
 //! Tests bidirectional conversion, federation support, and edge cases.
 
-use json_schema_graphql_converter::{ConversionOptions, Converter, NamingConvention};
+use json_schema_x_graphql::{ConversionOptions, Converter, NamingConvention};
 use serde_json::json;
 
 // ============================================================================
@@ -23,6 +23,7 @@ fn default_options() -> ConversionOptions {
     }
 }
 
+#[allow(dead_code)]
 fn compare_sdl(actual: &str, expected: &str) -> bool {
     let normalize = |s: &str| -> String {
         s.lines()

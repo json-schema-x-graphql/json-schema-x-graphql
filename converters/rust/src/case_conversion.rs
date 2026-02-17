@@ -17,9 +17,8 @@ pub fn camel_to_snake(s: &str) -> String {
 pub fn snake_to_camel(s: &str) -> String {
     let re = Regex::new(r"_([a-zA-Z0-9])").unwrap();
 
-    re.replace_all(s, |caps: &regex::Captures| {
-        caps[1].to_uppercase()
-    }).to_string()
+    re.replace_all(s, |caps: &regex::Captures| caps[1].to_uppercase())
+        .to_string()
 }
 
 #[cfg(test)]

@@ -1,4 +1,4 @@
-# x-graphql-* Annotation Cleanup for Public Spending Schema
+# x-graphql-\* Annotation Cleanup for Public Spending Schema
 
 ## Summary
 
@@ -11,6 +11,7 @@ The `public_spending.schema.json` file was created with redundant x-graphql anno
 ## Fields Requiring x-graphql-field-name (Truncated Names Only)
 
 ### Public SpendingProcurement
+
 - `awarding_sub_tier_agency_c` → `awardingSubTierAgencyCode`
 - `awarding_sub_tier_agency_n` → `awardingSubTierAgencyName`
 - `award_modification_amendme` → `awardModificationAmendment`
@@ -34,10 +35,12 @@ The `public_spending.schema.json` file was created with redundant x-graphql anno
 - `entity_doing_business_as_n` → `entityDoingBusinessAsName`
 
 ### SmallBusinessClassifications
+
 - `sba_certified_8_a_joint_ve` → `sbaCertified8aJointVenture`
 - `small_disadvantaged_busine` → `smallDisadvantagedBusiness`
 
 ### SocioeconomicClassifications
+
 - `service_disabled_veteran_o` → `serviceDisabledVeteranOwned`
 - `american_indian_owned_busi` → `americanIndianOwnedBusiness`
 - `alaskan_native_owned_corpo` → `alaskanNativeOwnedCorporation`
@@ -47,6 +50,7 @@ The `public_spending.schema.json` file was created with redundant x-graphql anno
 - `hispanic_american_owned_bu` → `hispanicAmericanOwnedBusiness`
 
 ### EntityStructureClassifications
+
 - `corporate_entity_tax_exemp` → `corporateEntityTaxExempt`
 - `limited_liability_corporat` → `limitedLiabilityCorporation`
 - `partnership_or_limited_lia` → `partnershipOrLimitedLiability`
@@ -60,6 +64,7 @@ The `public_spending.schema.json` file was created with redundant x-graphql anno
 ## Fields Requiring x-graphql-field-non-null
 
 All fields in the `required` array should have `x-graphql-field-non-null: true`:
+
 - `award_procurement_id`
 - `submission_id`
 - `job_id`
@@ -70,6 +75,7 @@ All fields in the `required` array should have `x-graphql-field-non-null: true`:
 ## Fields NOT Needing Annotations (Clean snake_case → camelCase)
 
 All other fields convert cleanly via standard snake_case → camelCase transformation and don't need explicit `x-graphql-field-name` annotations:
+
 - `awarding_agency_code` → `awardingAgencyCode`
 - `parent_award_id` → `parentAwardId`
 - `legal_entity_city_name` → `legalEntityCityName`
@@ -78,6 +84,7 @@ All other fields convert cleanly via standard snake_case → camelCase transform
 ## Cleanup Script
 
 A cleanup script should:
+
 1. Remove all `x-graphql-field-name` where field converts cleanly via snake_case → camelCase
 2. Remove all `x-graphql-field-type: "String"`, `x-graphql-field-type: "Boolean"`, `x-graphql-field-type: "Int"` (these are defaults)
 3. Keep only:

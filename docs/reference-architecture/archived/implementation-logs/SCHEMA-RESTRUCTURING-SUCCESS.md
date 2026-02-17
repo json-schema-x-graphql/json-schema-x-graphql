@@ -6,12 +6,12 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 
 ### Results
 
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| **Schema Structure** | Single root object | 30 named definitions + $ref | ✅ Standards-compliant |
-| **typeconv Conversion** | ❌ 0 types converted | ✅ 30 types converted | ✅ Works! |
-| **Lines of Custom Code Needed** | ~1,500 lines | ~200-300 lines | **80-85% reduction** |
-| **Maintainability** | High complexity | Standard tooling | ✅ Much better |
+| Metric                          | Before               | After                       | Improvement            |
+| ------------------------------- | -------------------- | --------------------------- | ---------------------- |
+| **Schema Structure**            | Single root object   | 30 named definitions + $ref | ✅ Standards-compliant |
+| **typeconv Conversion**         | ❌ 0 types converted | ✅ 30 types converted       | ✅ Works!              |
+| **Lines of Custom Code Needed** | ~1,500 lines         | ~200-300 lines              | **80-85% reduction**   |
+| **Maintainability**             | High complexity      | Standard tooling            | ✅ Much better         |
 
 ---
 
@@ -46,16 +46,19 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 ## Named Definitions Created (30 total)
 
 ### Core Contract Types
+
 1. **Contract** - Root type referencing all others
 2. **SystemMetadata** - System tracking and provenance
 3. **CommonElements** - Shared fields across all systems
 4. **SystemExtensions** - System-specific extensions
 
 ### System Metadata
+
 5. **SystemChainEntry** - Individual system in the chain
 6. **DataQuality** - Quality metrics
 
 ### Contract Information
+
 7. **ContractIdentification** - PIID and contract IDs
 8. **AgencyInfo** - Reusable agency/department info
 9. **OrganizationInfo** - Contracting and funding organizations
@@ -68,6 +71,7 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 16. **StatusInfo** - Contract status and dates
 
 ### Contract Data Extensions (7 types)
+
 17. **Contract DataExtension** - Main Contract Data extension container
 18. **Contract DataSpecificData** - Contract Data-specific fields
 19. **Contract DataAssistanceType** - Assistance type classification
@@ -76,6 +80,7 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 22. **Contract DataUsage** - Usage rules and restrictions
 
 ### Legacy Procurement Extensions (6 types)
+
 23. **AssistExtension** - Main Legacy Procurement extension container
 24. **AssistSpecificData** - Legacy Procurement-specific fields
 25. **AssistAcquisitionData** - Acquisition information
@@ -84,6 +89,7 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 28. **AssistAwardData** - Award-specific data
 
 ### EASi Extensions (2 types)
+
 29. **EasiExtension** - Main EASi extension container
 30. **EasiSpecificData** - EASi-specific fields (business owner, unit price, etc.)
 
@@ -120,6 +126,7 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 ```
 
 **Issues**:
+
 - ❌ No named types
 - ❌ Nested objects inline
 - ❌ Not reusable
@@ -150,6 +157,7 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 ```
 
 **Benefits**:
+
 - ✅ Named, reusable types
 - ✅ Clean composition with `$ref`
 - ✅ Works with standard tools
@@ -165,7 +173,8 @@ The JSON Schema has been successfully restructured from **document-oriented** to
 npx typeconv -f jsc -t gql -o generated-schemas/test.v2.graphql src/data/schema_unification.schema.v2.json
 ```
 
-**Result**: 
+**Result**:
+
 ```
 Type 'any' not supported  # 3 warnings (expected - for value: {} fields)
 💡 Converted 30 types in 1 files, in 0.2s
@@ -203,6 +212,7 @@ type SystemMetadata {
 ```
 
 **Quality**:
+
 - ✅ All types present
 - ✅ Descriptions preserved
 - ✅ Required fields marked with `!`
@@ -216,17 +226,20 @@ type SystemMetadata {
 ### Immediate Actions
 
 1. **Review the Generated Schema**
+
    ```bash
    code src/data/schema_unification.schema.v2.json
    ```
 
 2. **Compare with Original**
+
    ```bash
    # Ensure no data loss
    diff src/data/schema_unification.schema.json src/data/schema_unification.schema.v2.json
    ```
 
 3. **Validate the Schema**
+
    ```bash
    # Update validation script to use v2 schema
    node scripts/validate-schema.js
@@ -245,6 +258,7 @@ Once validated, you can replace the custom transformation scripts:
 #### Option A: Use typeconv CLI (Simplest)
 
 **Update `package.json`**:
+
 ```json
 {
   "scripts": {
@@ -255,10 +269,12 @@ Once validated, you can replace the custom transformation scripts:
 ```
 
 **Delete** (or archive):
+
 - `scripts/generate-graphql-from-json-schema.mjs` (250 lines)
 - Most of `scripts/json-to-graphql.config.mjs` (597 lines)
 
 **Keep** (for custom enums and naming):
+
 - Minimal post-processing script (~50 lines) if needed
 
 #### Option B: Use core-types API (More Control)
@@ -267,21 +283,38 @@ Create `scripts/generate-schema-with-core-types.mjs`:
 
 ```javascript
 #!/usr/bin/env node
-import fs from 'fs/promises';
-import { convertJsonSchemaToCoreTypes, convertCoreTypesToJsonSchema } from 'core-types-json-schema';
-import { convertCoreTypesToGraphQL, convertGraphQLToCoreTypes } from 'core-types-graphql';
+import fs from "fs/promises";
+import {
+  convertJsonSchemaToCoreTypes,
+  convertCoreTypesToJsonSchema,
+} from "core-types-json-schema";
+import {
+  convertCoreTypesToGraphQL,
+  convertGraphQLToCoreTypes,
+} from "core-types-graphql";
 
 // JSON Schema → GraphQL
-const jsonSchema = JSON.parse(await fs.readFile('src/data/schema_unification.schema.json', 'utf8'));
+const jsonSchema = JSON.parse(
+  await fs.readFile("src/data/schema_unification.schema.json", "utf8"),
+);
 const coreTypes = convertJsonSchemaToCoreTypes(jsonSchema);
 const graphql = convertCoreTypesToGraphQL(coreTypes);
-await fs.writeFile('generated-schemas/schema_unification.from-json.graphql', graphql);
+await fs.writeFile(
+  "generated-schemas/schema_unification.from-json.graphql",
+  graphql,
+);
 
-// GraphQL → JSON Schema  
-const graphqlSdl = await fs.readFile('src/data/schema_unification.graphql', 'utf8');
+// GraphQL → JSON Schema
+const graphqlSdl = await fs.readFile(
+  "src/data/schema_unification.graphql",
+  "utf8",
+);
 const coreTypesFromGql = convertGraphQLToCoreTypes(graphqlSdl);
 const jsonSchemaFromGql = convertCoreTypesToJsonSchema(coreTypesFromGql);
-await fs.writeFile('generated-schemas/schema_unification.from-graphql.json', JSON.stringify(jsonSchemaFromGql, null, 2));
+await fs.writeFile(
+  "generated-schemas/schema_unification.from-graphql.json",
+  JSON.stringify(jsonSchemaFromGql, null, 2),
+);
 ```
 
 ---
@@ -308,26 +341,31 @@ await fs.writeFile('generated-schemas/schema_unification.from-graphql.json', JSO
 ## Benefits Realized
 
 ### Code Reduction
+
 - **Before**: 1,558 lines of custom transformation code
 - **After**: ~100-200 lines (typeconv CLI + optional post-processing)
 - **Savings**: **85-90% reduction**
 
 ### Maintenance
+
 - **Before**: 40+ hours/year maintaining custom scripts
 - **After**: <5 hours/year (monitoring library updates)
 - **Savings**: **35+ hours/year**
 
 ### Quality
+
 - **Before**: Custom logic with potential bugs
 - **After**: Community-tested, battle-hardened tools
 - **Benefit**: Higher reliability
 
 ### Onboarding
+
 - **Before**: High complexity, must understand custom pointer logic
 - **After**: Standard JSON Schema + standard tools
 - **Benefit**: Easier for new contributors
 
 ### Future-Proofing
+
 - **Before**: Must maintain compatibility with evolving standards
 - **After**: Libraries handle standard updates
 - **Benefit**: Less technical debt
@@ -341,9 +379,10 @@ await fs.writeFile('generated-schemas/schema_unification.from-graphql.json', JSO
 **Issue**: typeconv maps JSON Schema enums to GraphQL `String` type
 
 **Current**:
+
 ```graphql
 type Contact {
-  role: String  # Should be ContactRole enum
+  role: String # Should be ContactRole enum
 }
 ```
 
@@ -352,10 +391,9 @@ type Contact {
 ```javascript
 const graphql = convertCoreTypesToGraphQL(coreTypes);
 // Post-process to add enum definitions
-const withEnums = graphql.replace(
-  /role: String/g,
-  'role: ContactRole'
-) + '\n\nenum ContactRole {\n  PRIMARY\n  TECHNICAL\n  ADMINISTRATIVE\n  CONTRACTING_OFFICER\n}';
+const withEnums =
+  graphql.replace(/role: String/g, "role: ContactRole") +
+  "\n\nenum ContactRole {\n  PRIMARY\n  TECHNICAL\n  ADMINISTRATIVE\n  CONTRACTING_OFFICER\n}";
 ```
 
 ### 2. `value: {}` Fields (Any Type)
@@ -363,6 +401,7 @@ const withEnums = graphql.replace(
 **Warnings**: "Type 'any' not supported" (3 instances)
 
 **Affected Fields**:
+
 - `Contract DataExtension.value`
 - `AssistExtension.value`
 - `EasiExtension.value`

@@ -16,12 +16,14 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 ## ✅ Completed Work
 
 ### Phase 1: Reference SDL Files
+
 - ✅ Apollo Classic example (Users, Products, Reviews)
 - ✅ Strawberry example (Books, Reviews)
 - ✅ Federation v2.3 directives
 - ✅ Proper entity relationships
 
 ### Phase 2: JSON Schema Definitions
+
 - ✅ Created 5 service schemas with x-graphql extensions
 - ✅ **Refactored to use snake_case conventions** (e.g., `birth_date`)
 - ✅ Automatic conversion to GraphQL camelCase (`birthDate`)
@@ -30,12 +32,14 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 - ✅ Federation metadata: `x-graphql-federation-keys`, `external`, `extends`
 
 ### Phase 3: Test Infrastructure
+
 - ✅ Automated test script: `scripts/test-federation-examples.sh`
 - ✅ Node.js and Rust converter integration
 - ✅ Comparison and validation logic
 - ✅ 100% conversion success rate (10/10 tests)
 
 ### Phase 4: Composition Validation
+
 - ✅ Installed @theguild/federation-composition
 - ✅ Created validation script: `scripts/validate-federation-composition.js`
 - ✅ Created schema link injection script: `scripts/add-federation-schema-link.sh`
@@ -44,6 +48,7 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 - ⚠️ Composition reveals entity reference design issues (expected, not a bug)
 
 ### Phase 5: Converter Improvements
+
 - ✅ Fixed ES module imports in Node CLI (added .js extensions)
 - ✅ Optimized CLI options for federation support
 - ✅ Resolved Query type exclusion issue
@@ -53,20 +58,22 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 
 ## 📊 Test Results
 
-| Metric | Result | Status |
-|--------|--------|--------|
-| JSON Schema Conversions | 10/10 | ✅ 100% |
-| SDL Parse Validation | 5/5 | ✅ 100% |
-| Federation Directives | 5/5 | ✅ 100% |
-| Schema Link Injection | 5/5 | ✅ 100% |
-| Composition Success | 0/2 | ⚠️ Design issue |
+| Metric                  | Result | Status          |
+| ----------------------- | ------ | --------------- |
+| JSON Schema Conversions | 10/10  | ✅ 100%         |
+| SDL Parse Validation    | 5/5    | ✅ 100%         |
+| Federation Directives   | 5/5    | ✅ 100%         |
+| Schema Link Injection   | 5/5    | ✅ 100%         |
+| Composition Success     | 0/2    | ⚠️ Design issue |
 
 ---
 
 ## 🔧 Key Improvements Made
 
 ### 1. JSON Schema Best Practices ⭐
+
 **Before:**
+
 ```json
 {
   "birthDate": {
@@ -78,6 +85,7 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 ```
 
 **After:**
+
 ```json
 {
   "birth_date": {
@@ -89,12 +97,14 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 ```
 
 **Benefits:**
+
 - ✅ Idiomatic JSON (snake_case)
 - ✅ Standard `description` field
 - ✅ Only override field name when necessary
 - ✅ Automatic camelCase conversion
 
 ### 2. Federation Extension Format
+
 ```json
 {
   "User": {
@@ -111,6 +121,7 @@ Successfully implemented JSON Schema ↔ GraphQL SDL conversion for Apollo Feder
 ```
 
 ### 3. Clean CLI Usage
+
 ```bash
 # Node.js
 node converters/node/dist/cli.js \
@@ -138,26 +149,28 @@ jxql --input schema.json --output schema.graphql \
 **Root Cause:** The example schemas don't follow proper Federation entity reference patterns. When `Review.product: Product!` references a Product entity, the Reviews service needs to store and return the product's key field (UPC) so the gateway can resolve it.
 
 **Current Schema (Problematic):**
+
 ```graphql
 type Review @key(fields: "id") {
   id: ID!
   body: String
-  product: Product!  # ❌ No key field stored
+  product: Product! # ❌ No key field stored
 }
 
 type Product @key(fields: "upc") {
-  upc: ID! @external  # ❌ Can't resolve from Review
+  upc: ID! @external # ❌ Can't resolve from Review
   reviews: [Review!]!
 }
 ```
 
 **Correct Pattern (Recommended):**
+
 ```graphql
 type Review @key(fields: "id") {
   id: ID!
   body: String
-  productUpc: ID!     # ✅ Store the foreign key
-  product: Product!   # ✅ Can be resolved via productUpc
+  productUpc: ID! # ✅ Store the foreign key
+  product: Product! # ✅ Can be resolved via productUpc
 }
 
 type Product @key(fields: "upc") {
@@ -259,16 +272,16 @@ scripts/
 
 ## 📖 Documentation Index
 
-| Document | Description | Status |
-|----------|-------------|--------|
-| [README.md](./README.md) | Overview and getting started | ✅ Complete |
-| [DELIVERABLES.md](./DELIVERABLES.md) | Project deliverables checklist | ✅ Complete |
-| [FEDERATION_EXAMPLES_PLAN.md](../../docs/FEDERATION_EXAMPLES_PLAN.md) | Original implementation plan | ✅ Complete |
-| [IMPLEMENTATION_RESULTS.md](./IMPLEMENTATION_RESULTS.md) | Detailed implementation results | ✅ Complete |
-| [COMPOSITION_VALIDATION_RESULTS.md](./COMPOSITION_VALIDATION_RESULTS.md) | Composition validation details | ✅ Complete |
-| [QUICK_REFERENCE.md](./QUICK_REFERENCE.md) | Quick reference guide | ✅ Complete |
-| [STATUS.md](./STATUS.md) | This file - current status | ✅ Complete |
-| PATTERNS.md | Federation design patterns | 📋 TODO |
+| Document                                                                 | Description                     | Status      |
+| ------------------------------------------------------------------------ | ------------------------------- | ----------- |
+| [README.md](./README.md)                                                 | Overview and getting started    | ✅ Complete |
+| [DELIVERABLES.md](./DELIVERABLES.md)                                     | Project deliverables checklist  | ✅ Complete |
+| [FEDERATION_EXAMPLES_PLAN.md](../../docs/FEDERATION_EXAMPLES_PLAN.md)    | Original implementation plan    | ✅ Complete |
+| [IMPLEMENTATION_RESULTS.md](./IMPLEMENTATION_RESULTS.md)                 | Detailed implementation results | ✅ Complete |
+| [COMPOSITION_VALIDATION_RESULTS.md](./COMPOSITION_VALIDATION_RESULTS.md) | Composition validation details  | ✅ Complete |
+| [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)                               | Quick reference guide           | ✅ Complete |
+| [STATUS.md](./STATUS.md)                                                 | This file - current status      | ✅ Complete |
+| PATTERNS.md                                                              | Federation design patterns      | 📋 TODO     |
 
 ---
 
@@ -400,6 +413,7 @@ node converters/node/dist/cli.js \
 ---
 
 **For detailed information, see:**
+
 - Technical details: [IMPLEMENTATION_RESULTS.md](./IMPLEMENTATION_RESULTS.md)
 - Composition analysis: [COMPOSITION_VALIDATION_RESULTS.md](./COMPOSITION_VALIDATION_RESULTS.md)
 - Quick reference: [QUICK_REFERENCE.md](./QUICK_REFERENCE.md)

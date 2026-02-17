@@ -23,12 +23,13 @@ json-schema-x-graphql is a tool that converts between two fundamental schema for
 
 ### Why This Matters
 
-| Format | Strengths | Use Cases |
-|--------|-----------|-----------|
-| **GraphQL** | Query language built-in, typed fields, auto-docs | APIs, real-time data, flexible queries |
-| **JSON Schema** | Validation, data generation, language-agnostic | APIs, data pipelines, documentation |
+| Format          | Strengths                                        | Use Cases                              |
+| --------------- | ------------------------------------------------ | -------------------------------------- |
+| **GraphQL**     | Query language built-in, typed fields, auto-docs | APIs, real-time data, flexible queries |
+| **JSON Schema** | Validation, data generation, language-agnostic   | APIs, data pipelines, documentation    |
 
 The converter lets you:
+
 - 📊 Build GraphQL APIs with JSON Schema validation
 - 🔄 Generate GraphQL from JSON schemas
 - 📝 Document data in multiple formats
@@ -112,8 +113,9 @@ The converter lets you:
 All 9 modules with prerequisites and key topics:
 
 ### Module 1: Introducing Types ✓
+
 - **Prerequisites**: None
-- **Topics**: 
+- **Topics**:
   - What are GraphQL types?
   - Object types vs scalar types
   - The Query type as gateway
@@ -123,6 +125,7 @@ All 9 modules with prerequisites and key topics:
 - **Read**: [Full module](/learning/01-introducing-types)
 
 ### Module 2: Scalars, Objects, and Lists ✓
+
 - **Prerequisites**: Module 1
 - **Topics**:
   - String, Int, Float, Boolean, ID
@@ -135,6 +138,7 @@ All 9 modules with prerequisites and key topics:
 - **Read**: [Full module](/learning/02-scalars-objects-lists)
 
 ### Module 3: Nullability ⏳
+
 - **Prerequisites**: Module 2
 - **Topics**:
   - What is null in data?
@@ -147,6 +151,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 4: Querying Between Types ⏳
+
 - **Prerequisites**: Module 2
 - **Topics**:
   - Object type relationships
@@ -159,6 +164,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 5: Schema ⏳
+
 - **Prerequisites**: Module 3
 - **Topics**:
   - Schema as contract
@@ -171,6 +177,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 6: Enums ⏳
+
 - **Prerequisites**: Module 2
 - **Topics**:
   - What are enums?
@@ -183,6 +190,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 7: Interfaces & Unions ⏳
+
 - **Prerequisites**: Module 4
 - **Topics**:
   - Interfaces for shared fields
@@ -196,6 +204,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 8: Arguments ⏳
+
 - **Prerequisites**: Module 3
 - **Topics**:
   - Field arguments and parameters
@@ -208,6 +217,7 @@ All 9 modules with prerequisites and key topics:
 - **Coming Soon**
 
 ### Module 9: Mutations ⏳
+
 - **Prerequisites**: Module 8
 - **Topics**:
   - Query vs Mutation
@@ -224,30 +234,35 @@ All 9 modules with prerequisites and key topics:
 ## Interactive Tools
 
 ### Type Visualizer
+
 Visually see how your types relate to each other.
 
 **Use when**: You want to understand type relationships  
 **Try it**: [Open Type Visualizer](/tools/type-visualizer)
 
 ### Schema Converter
+
 Convert between GraphQL SDL and JSON Schema formats.
 
 **Use when**: You need to convert between formats  
 **Try it**: [Open Schema Converter](/tools/schema-converter)
 
 ### Query Builder
+
 Interactively build GraphQL queries from a schema.
 
 **Use when**: You want to practice building queries  
 **Try it**: [Open Query Builder](/tools/query-builder)
 
 ### Validation Tools
+
 Check if your schema is valid.
 
 **GraphQL Validator**: [Validate GraphQL SDL](/tools/validate-graphql)  
 **JSON Schema Validator**: [Validate JSON Schema](/tools/validate-json-schema)
 
 ### Code Examples
+
 Searchable database of real-world schema examples.
 
 **Browse**: [View Examples](/examples)
@@ -292,21 +307,25 @@ Check the [Code Examples](/examples) section, where each module has real-world e
 ## Study Strategies
 
 ### Strategy 1: Module-by-Module
-Read one module per session, complete the exercises, try the tools. 
+
+Read one module per session, complete the exercises, try the tools.
 **Time**: ~2 hours spread over days
 **Best for**: Thorough learning
 
 ### Strategy 2: Concept Focusing
+
 Jump to specific modules based on what you need to learn.
 **Time**: ~15 minutes per topic
 **Best for**: Solving specific problems
 
 ### Strategy 3: Intensive Week
+
 Study multiple modules per day to become expert quickly.
 **Time**: ~1-2 hour sessions
 **Best for**: Crash course learning
 
 ### Strategy 4: Referencing
+
 Use the Quick Reference and Module Index as lookup tools.
 **Time**: ~2-5 minutes per lookup
 **Best for**: Experienced developers needing quick answers
@@ -330,16 +349,16 @@ Complete modules and exercises to earn badges:
 
 ### Quick Format Translation
 
-| Concept | GraphQL | JSON Schema | Example |
-|---------|---------|-------------|---------|
-| Type | `type User { ... }` | `{ "type": "object", "title": "User" }` | Object |
-| String field | `name: String` | `"type": "string"` | Text |
-| List field | `items: [String]` | `"type": "array"` | Arrays |
-| Required | `id: ID!` | In `required: [...]` | Non-null |
-| Optional | `bio: String` | Not in `required` | Nullable |
-| Reference | `author: User` | `"$ref": "#/$defs/User"` | Relations |
-| Enum | `enum Status { ... }` | `"enum": [...]` | Choices |
-| Comments | `"""docs"""` | `"description": ""` | Docs |
+| Concept      | GraphQL               | JSON Schema                             | Example   |
+| ------------ | --------------------- | --------------------------------------- | --------- |
+| Type         | `type User { ... }`   | `{ "type": "object", "title": "User" }` | Object    |
+| String field | `name: String`        | `"type": "string"`                      | Text      |
+| List field   | `items: [String]`     | `"type": "array"`                       | Arrays    |
+| Required     | `id: ID!`             | In `required: [...]`                    | Non-null  |
+| Optional     | `bio: String`         | Not in `required`                       | Nullable  |
+| Reference    | `author: User`        | `"$ref": "#/$defs/User"`                | Relations |
+| Enum         | `enum Status { ... }` | `"enum": [...]`                         | Choices   |
+| Comments     | `"""docs"""`          | `"description": ""`                     | Docs      |
 
 ---
 
@@ -370,22 +389,26 @@ Complete modules and exercises to earn badges:
 ## Resources
 
 ### Official Documentation
+
 - [GraphQL Official Docs](https://graphql.org/)
 - [JSON Schema Official Docs](https://json-schema.org/)
 - [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/)
 
 ### Community
+
 - [GraphQL Community](https://graphql.org/community/)
 - [JSON Schema Community](https://json-schema.org/community)
 - [Stack Overflow - GraphQL](https://stackoverflow.com/questions/tagged/graphql)
 - [Stack Overflow - JSON Schema](https://stackoverflow.com/questions/tagged/json-schema)
 
 ### Interactive Learning
+
 - [Apollo Sandbox](https://studio.apollographql.com/sandbox) - Try GraphQL live
 - [GraphQL Voyager](https://graphql-voyager.herokuapp.com/) - Explore schemas graphically
 - [json-schema.org - Understanding JSON Schema](https://json-schema.org/understanding-json-schema/)
 
 ### Tools
+
 - [Apollo DevTools](https://www.apollographql.com/docs/devtools/)
 - [GraphQL Playground](https://github.com/graphql/graphql-playground)
 - [JSON Schema Validators](https://json-schema.org/implementations.html)
@@ -403,12 +426,14 @@ Found a typo? Want to suggest an example? Have a better explanation?
 ## What's New?
 
 ### Recent Updates
+
 - ✅ Module 1 & 2 complete
 - 📅 Module 3 coming soon
 - 📅 Modules 4-9 in progress
 - 🔧 Tools being built
 
 ### Feedback
+
 Help us improve! [Tell us what you'd like to see](/feedback)
 
 ---
@@ -418,6 +443,7 @@ Help us improve! [Tell us what you'd like to see](/feedback)
 👉 **[Begin with Module 1: Introducing Types](/learning/01-introducing-types)**
 
 Or pick a specific topic:
+
 - Just learning? → [Module 1](/learning/01-introducing-types)
 - Know some GraphQL? → [Module 3](/learning/03-nullability)
 - Need a reference? → [Quick Reference](/dashboard/QUICK_REFERENCE.md)

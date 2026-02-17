@@ -61,7 +61,7 @@ export type FileStates = typeof initialStates;
 
 const isURL = (value: string) => {
   return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi.test(
-    value
+    value,
   );
 };
 
@@ -76,8 +76,8 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     set({ contents: "" });
     useJson.getState().clear();
   },
-  setJsonSchema: jsonSchema => set({ jsonSchema }),
-  setFile: fileData => {
+  setJsonSchema: (jsonSchema) => set({ jsonSchema }),
+  setFile: (fileData) => {
     set({ fileData, format: fileData.format || FileFormat.JSON });
     get().setContents({ contents: fileData.content, hasChanges: false });
     gaEvent("set_content", { label: fileData.format });
@@ -85,21 +85,31 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   getContents: () => get().contents,
   getFormat: () => get().format,
   getHasChanges: () => get().hasChanges,
-  setFormat: async format => {
+  setFormat: async (format) => {
     try {
       const prevFormat = get().format;
 
       set({ format });
       const contentJson = await contentToJson(get().contents, prevFormat);
-      const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
+      const jsonContent = await jsonToContent(
+        JSON.stringify(contentJson, null, 2),
+        format,
+      );
 
       get().setContents({ contents: jsonContent });
     } catch {
       get().clear();
-      console.warn("The content was unable to be converted, so it was cleared instead.");
+      console.warn(
+        "The content was unable to be converted, so it was cleared instead.",
+      );
     }
   },
-  setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
+  setContents: async ({
+    contents,
+    hasChanges = true,
+    skipUpdate = false,
+    format,
+  }) => {
     try {
       set({
         ...(contents && { contents }),
@@ -113,7 +123,13 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       if (!useConfig.getState().liveTransformEnabled && skipUpdate) return;
 
-      if (get().hasChanges && contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
+      if (
+        get().hasChanges &&
+        contents &&
+        contents.length < 80_000 &&
+        !isIframe() &&
+        !isFetchURL
+      ) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
         set({ hasChanges: true });
@@ -127,9 +143,9 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       useGraph.setState({ loading: false });
     }
   },
-  setError: error => set({ error }),
-  setHasChanges: hasChanges => set({ hasChanges }),
-  fetchUrl: async url => {
+  setError: (error) => set({ error }),
+  setHasChanges: (hasChanges) => set({ hasChanges }),
+  fetchUrl: async (url) => {
     try {
       const res = await fetch(url);
       const json = await res.json();

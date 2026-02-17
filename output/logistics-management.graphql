@@ -132,8 +132,8 @@ type Solicitation {
   placeOfPerformancePrimary: String
   geographicRegion: String
   placeOfPerformanceCode: String
-  fedConnectLink: URL
-  fedConnectUrl: URL
+  fedConnectLink: URI
+  fedConnectUrl: URI
   workspaceNumber: String
   site: Site
   owner: Person

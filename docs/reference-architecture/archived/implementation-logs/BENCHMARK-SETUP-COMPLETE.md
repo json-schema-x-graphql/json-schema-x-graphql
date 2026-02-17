@@ -13,28 +13,33 @@ Created a comprehensive benchmark suite to compare 5 different approaches for co
 ## Approaches to Benchmark
 
 ### 1. **typeconv (base)** - Baseline
+
 - Pure typeconv with no post-processing
 - Fastest but minimal features
 - No custom code required
 
 ### 2. **typeconv + extensions** - Our Phase 1 ⭐
+
 - typeconv + custom post-processor
 - Full `x-graphql-*` extension support
 - 420 lines of custom code
 - **Expected winner for best balance**
 
 ### 3. **json-schema-to-graphql-types** - Third-party
+
 - npm library: `json-schema-to-graphql-types`
 - Simple API
 - Limited extension support
 
 ### 4. **custom graphql-js** - Build from scratch
+
 - Uses `graphql-js` directly
 - Programmatic schema building
 - ~350 lines of custom code
 - Full control over output
 
 ### 5. **refparser + graphql-js** - Hybrid
+
 - Uses `@apidevtools/json-schema-ref-parser` for $ref resolution
 - Then builds with `graphql-js`
 - ~400 lines of custom code
@@ -43,12 +48,14 @@ Created a comprehensive benchmark suite to compare 5 different approaches for co
 ## What Gets Measured
 
 ### Performance Metrics
+
 - **Operations/second**: Throughput
 - **Average time**: Mean execution time (ms)
 - **Variance**: Performance consistency (±%)
 - **Relative speed**: % compared to fastest
 
 ### Feature Support Metrics
+
 - **Types**: Object type coverage
 - **Enums**: Proper enum support with custom names
 - **Unions**: Union type generation
@@ -57,6 +64,7 @@ Created a comprehensive benchmark suite to compare 5 different approaches for co
 - **Feature Score**: Overall /100
 
 ### Maintainability Metrics
+
 - **Lines of Code**: Custom code required
 - **Dependencies**: External package count
 - **Complexity**: Low/Medium/High
@@ -65,12 +73,14 @@ Created a comprehensive benchmark suite to compare 5 different approaches for co
 ## Test Schemas
 
 ### Complex Schema (Real-world)
+
 - **File**: `src/data/schema_unification.schema.v2-graphql.json`
 - **Size**: 30+ type definitions
-- **Features**: Full x-graphql-* extensions
+- **Features**: Full x-graphql-\* extensions
 - **Tests**: Real production schema
 
 ### Simple Schema (Baseline)
+
 - **File**: `benchmarks/fixtures/simple-schema.json`
 - **Size**: 5 types
 - **Features**: Basic types + 1 enum
@@ -96,12 +106,14 @@ benchmarks/
 ## Running the Benchmark
 
 ### Install Dependencies
+
 ```bash
 cd benchmarks
 pnpm install
 ```
 
 ### Run Full Benchmark
+
 ```bash
 pnpm run benchmark
 ```
@@ -109,6 +121,7 @@ pnpm run benchmark
 **Output**: Performance + Feature + Maintainability tables
 
 ### Run with Details
+
 ```bash
 pnpm run benchmark:detailed
 ```
@@ -116,6 +129,7 @@ pnpm run benchmark:detailed
 **Output**: Extended analysis
 
 ### Test Converters Only
+
 ```bash
 pnpm run test:converters
 ```
@@ -126,13 +140,13 @@ pnpm run test:converters
 
 Based on Phase 1 testing:
 
-| Approach | Performance | Features | Maintainability | Best For |
-|----------|-------------|----------|-----------------|----------|
-| typeconv (base) | ★★★★★ (fastest) | ★★☆☆☆ (basic) | ★★★★★ (minimal) | Speed only |
-| **typeconv + ext** | **★★★★☆ (fast)** | **★★★★★ (complete)** | **★★★★☆ (low)** | **Best balance** |
-| json-schema-to-graphql | ★★★★☆ (fast) | ★★☆☆☆ (limited) | ★★★★☆ (simple) | Simple schemas |
-| custom graphql-js | ★★★☆☆ (moderate) | ★★★★☆ (good) | ★★★☆☆ (medium) | Custom output |
-| refparser + graphql-js | ★★☆☆☆ (slow) | ★★★★☆ (good) | ★★☆☆☆ (complex) | Complex refs |
+| Approach               | Performance      | Features             | Maintainability | Best For         |
+| ---------------------- | ---------------- | -------------------- | --------------- | ---------------- |
+| typeconv (base)        | ★★★★★ (fastest)  | ★★☆☆☆ (basic)        | ★★★★★ (minimal) | Speed only       |
+| **typeconv + ext**     | **★★★★☆ (fast)** | **★★★★★ (complete)** | **★★★★☆ (low)** | **Best balance** |
+| json-schema-to-graphql | ★★★★☆ (fast)     | ★★☆☆☆ (limited)      | ★★★★☆ (simple)  | Simple schemas   |
+| custom graphql-js      | ★★★☆☆ (moderate) | ★★★★☆ (good)         | ★★★☆☆ (medium)  | Custom output    |
+| refparser + graphql-js | ★★☆☆☆ (slow)     | ★★★★☆ (good)         | ★★☆☆☆ (complex) | Complex refs     |
 
 ## Sample Output
 
@@ -223,6 +237,7 @@ The benchmark will help answer:
 ## Next Steps
 
 1. **Run the benchmark**
+
    ```bash
    cd benchmarks
    pnpm install
@@ -274,6 +289,7 @@ The benchmark will help answer:
 ## Success Criteria
 
 Benchmark is successful if:
+
 - ✅ All converters execute without errors (or fail gracefully)
 - ✅ Performance data is consistent (variance <5%)
 - ✅ Feature scores accurately reflect capabilities

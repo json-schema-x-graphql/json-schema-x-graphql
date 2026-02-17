@@ -17,14 +17,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          profile: minimal
-          override: true
 
       - name: Cache Rust dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
@@ -36,12 +34,12 @@ jobs:
 
       - name: Build validation CLI
         working-directory: converters/rust
-        run: cargo build --release --bin validate --features cli
+        run: cargo build --release --bin jxql --features cli
 
       - name: Run JSON Schema validation
         working-directory: converters/rust
         run: |
-          ./target/release/validate json-schema ../test-data/x-graphql -r || true
+          ./target/release/jxql json-schema ../test-data/x-graphql -r || true
           echo "Validation completed (exit code: $?)"
 
       - name: Run validation tests
@@ -55,14 +53,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          profile: minimal
-          override: true
 
       - name: Cache Rust dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
@@ -74,13 +70,13 @@ jobs:
 
       - name: Build validation CLI
         working-directory: converters/rust
-        run: cargo build --release --bin validate --features cli
+        run: cargo build --release --bin jxql --features cli
 
       - name: Run GraphQL SDL validation
         working-directory: converters/rust
         run: |
           if [ -d "../test-data/x-graphql/expected" ]; then
-            ./target/release/validate graphql ../test-data/x-graphql/expected -r || true
+            ./target/release/jxql graphql ../test-data/x-graphql/expected -r || true
             echo "SDL validation completed (exit code: $?)"
           else
             echo "Expected SDL directory not found, skipping"
@@ -95,17 +91,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: converters/node/package-lock.json
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         working-directory: converters/node
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Node validator
         working-directory: converters/node
-        run: npm run build
+        run: pnpm run build
 
       - name: Run JSON Schema validation (Node)
         working-directory: converters/node
@@ -130,14 +127,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          profile: minimal
-          override: true
 
       - name: Cache Rust dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
@@ -176,24 +171,39 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: converters/node/package-lock.json
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         working-directory: converters/node
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         working-directory: converters/node
-        run: npm run build
+        run: pnpm run build
 
       - name: Run performance benchmarks
         working-directory: converters/node
-        run: npm run benchmark || true
+        run: pnpm run benchmark || true
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: node-benchmark-results
@@ -206,21 +216,34 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
-          profile: minimal
-          override: true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: converters/node/package-lock.json
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Cache Rust dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
@@ -236,11 +259,11 @@ jobs:
 
       - name: Install Node dependencies
         working-directory: converters/node
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Node
         working-directory: converters/node
-        run: npm run build
+        run: pnpm run build
 
       - name: Run Rust integration tests
         working-directory: converters/rust
@@ -248,13 +271,13 @@ jobs:
 
       - name: Run Node integration tests
         working-directory: converters/node
-        run: npm test -- x-graphql-shared.test.ts
+        run: pnpm test x-graphql-shared.test.ts
 
       - name: Run validation integration
         run: |
           echo "Testing full validation pipeline..."
           cd converters/rust
-          cargo run --bin validate --features cli -- json-schema ../test-data/x-graphql -r --format json > rust-validation.json || true
+          cargo run --bin jxql --features cli -- json-schema ../test-data/x-graphql -r --format json > rust-validation.json || true
 
           cd ../node
           node dist/cli/validate.js json-schema ../test-data/x-graphql -r --format json > node-validation.json || true

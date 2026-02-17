@@ -17,6 +17,7 @@ The schema generation process (`scripts/generate-subgraph-sdl.mjs`) only generat
 ### 1. Fixed JSON Schemas (Upstream)
 
 #### Logistics Mgmt Schema
+
 Added minimal `x-graphql-operations` with `_service` query (Federation metadata):
 
 ```json
@@ -31,6 +32,7 @@ Added minimal `x-graphql-operations` with `_service` query (Federation metadata)
 ```
 
 #### Contract Data & Public Spending Schemas
+
 Changed `"query"` to `"queries"` to match what the generator expects:
 
 ```json
@@ -53,6 +55,7 @@ Added Public Spending to the subgraph generation pipeline:
 ### 3. Cleaned Up Mock Server
 
 Removed workarounds from `dev/pocs/mockforge/mock-server.js`:
+
 - Removed Query type detection logic
 - Removed conditional `_service` resolver injection
 - Simplified to always include `_service` resolver for Federation
@@ -60,15 +63,18 @@ Removed workarounds from `dev/pocs/mockforge/mock-server.js`:
 ## Files Changed
 
 ### JSON Schemas (Source of Truth)
+
 - ✅ `src/data/logistics_mgmt.schema.json` - Added `x-graphql-operations.queries`
 - ✅ `src/data/contract_data.schema.json` - Fixed `"query"` → `"queries"`
 - ✅ `src/data/public_spending.schema.json` - Fixed `"query"` → `"queries"`
 
 ### Scripts & Configuration
+
 - ✅ `package.json` - Added Public Spending to generation pipeline
 - ✅ `dev/pocs/mockforge/mock-server.js` - Removed Query type workarounds
 
 ### Generated Files (To Be Regenerated)
+
 - ⏳ `generated-schemas/logistics_mgmt.subgraph.graphql` - Will now include Query type
 - ⏳ `generated-schemas/contract_data.subgraph.graphql` - Will regenerate with correct structure
 - ⏳ `generated-schemas/public_spending.subgraph.graphql` - Will regenerate with correct structure
@@ -84,6 +90,7 @@ pnpm run generate:subgraphs
 ```
 
 This will regenerate all 5 subgraph files from the updated JSON schemas:
+
 - legacy_procurement.subgraph.graphql
 - intake_process.subgraph.graphql
 - logistics_mgmt.subgraph.graphql ✨ **Now with Query type**
@@ -143,6 +150,7 @@ Mock Service (Docker container on port 400X)
 **Fix schemas at the source (JSON) rather than patching at runtime (middleware).**
 
 This ensures:
+
 - Generated schemas are always valid
 - No runtime workarounds needed
 - Consistent behavior across all tools
@@ -151,6 +159,7 @@ This ensures:
 ## Validation
 
 After regeneration, all subgraph files should:
+
 1. ✅ Have `type Query` with at least one field
 2. ✅ Include Federation directives (`extend schema @link...`)
 3. ✅ Be parseable by GraphQL parsers without errors

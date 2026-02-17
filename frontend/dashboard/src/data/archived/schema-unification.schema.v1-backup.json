@@ -121,7 +121,12 @@
     "system_type": {
       "type": "string",
       "description": "Source system type",
-      "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"],
+      "enum": [
+        "Contract Data",
+        "Legacy Procurement",
+        "Intake Process",
+        "Logistics Mgmt"
+      ],
       "x-graphql-enum": {
         "name": "SystemType",
         "description": "Federal contracting system type",
@@ -640,7 +645,11 @@
           "$ref": "#/$defs/status_info"
         }
       },
-      "required": ["contract_identification", "organization_info", "status_info"]
+      "required": [
+        "contract_identification",
+        "organization_info",
+        "status_info"
+      ]
     },
     "system_extensions": {
       "type": "object",

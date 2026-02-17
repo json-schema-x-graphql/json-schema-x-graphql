@@ -83,7 +83,8 @@ export async function convertJsonSchemaToGraphQL(
       diagnostics: [
         {
           severity: "error",
-          message: error instanceof Error ? error.message : "Unknown conversion error",
+          message:
+            error instanceof Error ? error.message : "Unknown conversion error",
           kind: "conversion-error",
         },
       ],
@@ -118,7 +119,8 @@ export async function convertGraphQLToJsonSchema(
       diagnostics: [
         {
           severity: "error",
-          message: error instanceof Error ? error.message : "Unknown conversion error",
+          message:
+            error instanceof Error ? error.message : "Unknown conversion error",
           kind: "conversion-error",
         },
       ],

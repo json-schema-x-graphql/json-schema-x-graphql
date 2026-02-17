@@ -93,13 +93,14 @@ A unified script for managing Docker Compose deployments in the Schema Unificati
 
 - **Hasura Console**: <http://localhost:8080> (admin secret: `changeit`)
 - **PostgreSQL**: localhost:5441 (user: `postgres`, pass: `postgres`)
-- **pgAdmin**: <http://localhost:5050> (admin@local.dev / admin) - *when using `with-tools`*
+- **pgAdmin**: <http://localhost:5050> (admin@local.dev / admin) - _when using `with-tools`_
 
 ## Environment Configuration
 
 ### Main Application
 
 The main `docker-compose.yml` uses profiles to control which services start:
+
 - `full-stack`: All services including authentication
 - `frontend-only`: Just the JSON viewer frontend
 - `backend-only`: Just authentication services (Keycloak, oauth2-proxy)
@@ -107,6 +108,7 @@ The main `docker-compose.yml` uses profiles to control which services start:
 ### Hasura DDN
 
 Configuration is managed via `dev/hasura-ddn/.env`. Key variables:
+
 - Database connection settings
 - Hasura admin secret and console settings
 - pgAdmin credentials (when using tools)
@@ -141,6 +143,7 @@ Configuration is managed via `dev/hasura-ddn/.env`. Key variables:
 ## Integration with CI/CD
 
 This script is designed for local development. For production deployments:
+
 - Use the individual `docker-compose.yml` files
 - Configure environment variables appropriately
 - Consider using Docker Swarm or Kubernetes for orchestration

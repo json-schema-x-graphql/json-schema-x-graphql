@@ -28,6 +28,7 @@ The linter provides three types of feedback:
 ### 1. Schema Version & Metadata
 
 **Missing $schema declaration**
+
 ```json
 // ❌ Bad
 {
@@ -42,6 +43,7 @@ The linter provides three types of feedback:
 ```
 
 **Old JSON Schema draft**
+
 ```json
 // 💡 Suggestion: Upgrade to Draft 2020-12
 {
@@ -55,6 +57,7 @@ The linter provides three types of feedback:
 ```
 
 **Missing title and description**
+
 ```json
 // 💡 Suggestion: Add title and description
 {
@@ -74,6 +77,7 @@ The linter provides three types of feedback:
 ### 2. Documentation
 
 **Missing property descriptions**
+
 ```json
 // 💡 Suggestion: Add descriptions
 {
@@ -101,6 +105,7 @@ The linter provides three types of feedback:
 ```
 
 **Missing examples**
+
 ```json
 // 💡 Suggestion: Add examples
 {
@@ -125,6 +130,7 @@ The linter provides three types of feedback:
 ### 3. Type Constraints
 
 **Numeric types without constraints**
+
 ```json
 // 💡 Suggestion: Add min/max
 {
@@ -148,6 +154,7 @@ The linter provides three types of feedback:
 ```
 
 **Strings without format**
+
 ```json
 // 💡 Suggestion: Use format for known patterns
 {
@@ -171,6 +178,7 @@ The linter provides three types of feedback:
 ```
 
 **Arrays without items or size constraints**
+
 ```json
 // ⚠️ Warning: Missing items definition
 {
@@ -208,6 +216,7 @@ The linter provides three types of feedback:
 ### 4. Required Fields & Additional Properties
 
 **Invalid required fields**
+
 ```json
 // ⚠️ Warning: Required field not in properties
 {
@@ -230,6 +239,7 @@ The linter provides three types of feedback:
 ```
 
 **Missing required fields specification**
+
 ```json
 // 💡 Suggestion: Consider which fields are mandatory
 {
@@ -252,6 +262,7 @@ The linter provides three types of feedback:
 ```
 
 **Missing additionalProperties**
+
 ```json
 // 💡 Suggestion: Explicitly set additionalProperties
 {
@@ -274,6 +285,7 @@ The linter provides three types of feedback:
 ### 5. Enum & Constants
 
 **Empty enum**
+
 ```json
 // ⚠️ Warning: Empty enum
 {
@@ -299,6 +311,7 @@ The linter provides three types of feedback:
 ```
 
 **Single-value enum**
+
 ```json
 // 💡 Suggestion: Use const instead
 {
@@ -326,6 +339,7 @@ The linter provides three types of feedback:
 ### 6. Deprecated Keywords
 
 **Using old keywords**
+
 ```json
 // 💡 Suggestion: Use $defs instead of definitions
 {

@@ -24,12 +24,12 @@ This is a strategic decision to prioritize performance and responsiveness above 
 
 ### Positive
 
-*   **Guaranteed Performance**: By committing to Rust and WASM, we can ensure that the computationally intensive conversion logic meets the performance standards required for a real-time, lag-free user experience. This was deemed the most critical factor.
-*   **Simplified Core Logic**: We avoid the significant overhead of maintaining two separate implementations (one in Rust, one in TS/JS) of the same complex conversion logic. This prevents bugs, reduces testing complexity, and ensures a single source of truth.
-*   **Focused Effort**: All development effort for the core engine can be concentrated on optimizing and improving the single Rust codebase.
+- **Guaranteed Performance**: By committing to Rust and WASM, we can ensure that the computationally intensive conversion logic meets the performance standards required for a real-time, lag-free user experience. This was deemed the most critical factor.
+- **Simplified Core Logic**: We avoid the significant overhead of maintaining two separate implementations (one in Rust, one in TS/JS) of the same complex conversion logic. This prevents bugs, reduces testing complexity, and ensures a single source of truth.
+- **Focused Effort**: All development effort for the core engine can be concentrated on optimizing and improving the single Rust codebase.
 
 ### Negative
 
-*   **Higher Barrier to Contribution**: The project's core logic will be less accessible to the broad community of JavaScript/TypeScript developers. Contributing to the converter will require knowledge of Rust.
-*   **WASM Integration Complexity**: This decision necessitates the use of a more complex build pipeline involving `wasm-pack` and careful management of the interface between JavaScript and the WASM module.
-*   **Exclusion of JS/TS Ecosystem**: We cannot leverage the rich ecosystem of JavaScript libraries for schema parsing, validation, or transformation directly within our core conversion logic. We are reliant on the Rust ecosystem (crates) for these needs.
+- **Higher Barrier to Contribution**: The project's core logic will be less accessible to the broad community of JavaScript/TypeScript developers. Contributing to the converter will require knowledge of Rust.
+- **WASM Integration Complexity**: This decision necessitates the use of a more complex build pipeline involving `wasm-pack` and careful management of the interface between JavaScript and the WASM module.
+- **Exclusion of JS/TS Ecosystem**: We cannot leverage the rich ecosystem of JavaScript libraries for schema parsing, validation, or transformation directly within our core conversion logic. We are reliant on the Rust ecosystem (crates) for these needs.

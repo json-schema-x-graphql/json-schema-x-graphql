@@ -92,6 +92,7 @@ User Input (JSON Schema)
 ### Frontend Framework
 
 **React 18+ with TypeScript**
+
 - Modern hooks-based architecture
 - Strong typing for converter APIs
 - Excellent ecosystem support
@@ -109,6 +110,7 @@ User Input (JSON Schema)
 ### Editors
 
 **1. JSON Schema Editor: Monaco Editor**
+
 ```json
 {
   "dependencies": {
@@ -119,6 +121,7 @@ User Input (JSON Schema)
 ```
 
 Features:
+
 - VS Code-like experience
 - JSON Schema validation built-in
 - Syntax highlighting
@@ -127,6 +130,7 @@ Features:
 - Multi-cursor editing
 
 **2. GraphQL Editor: graphql-editor**
+
 ```json
 {
   "dependencies": {
@@ -137,6 +141,7 @@ Features:
 ```
 
 Features:
+
 - Visual graph representation
 - SDL editing
 - Type introspection
@@ -146,6 +151,7 @@ Features:
 ### Converters
 
 **Node.js Converter**
+
 ```json
 {
   "dependencies": {
@@ -155,6 +161,7 @@ Features:
 ```
 
 **Rust WASM Converter**
+
 ```bash
 # Build WASM from Rust converter
 cd ../../converters/rust
@@ -164,6 +171,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### State Management
 
 **Zustand** (lightweight, TypeScript-friendly)
+
 ```json
 {
   "dependencies": {
@@ -175,6 +183,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Styling
 
 **TailwindCSS** + **shadcn/ui**
+
 ```json
 {
   "dependencies": {
@@ -190,6 +199,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Build Tool
 
 **Vite**
+
 ```json
 {
   "devDependencies": {
@@ -219,6 +229,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Week 1: Project Setup & Infrastructure
 
 **Days 1-2: Initial Setup**
+
 - [ ] Initialize Vite + React + TypeScript project
 - [ ] Configure TailwindCSS
 - [ ] Install all dependencies
@@ -226,18 +237,21 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Configure build pipeline
 
 **Days 3-4: WASM Integration**
+
 - [ ] Build Rust converter to WASM
 - [ ] Create WASM TypeScript bindings
 - [ ] Test WASM loading and execution
 - [ ] Setup WASM error handling
 
 **Days 5-7: Base Layout**
+
 - [ ] Create three-panel responsive layout
 - [ ] Setup routing (if needed)
 - [ ] Implement theme switching (light/dark)
 - [ ] Basic navigation and header
 
 **Deliverables**:
+
 - Working Vite build
 - WASM module loading successfully
 - Base UI layout responsive
@@ -245,6 +259,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Week 2: Editor Integration
 
 **Days 8-10: Monaco Editor Setup**
+
 - [ ] Integrate Monaco Editor
 - [ ] Configure JSON Schema language support
 - [ ] Add custom theme matching app design
@@ -253,6 +268,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Setup auto-formatting (Prettier)
 
 **Days 11-14: GraphQL Editor Integration**
+
 - [ ] Integrate graphql-editor component
 - [ ] Configure federation support
 - [ ] Setup visual graph rendering
@@ -261,6 +277,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Configure custom theme
 
 **Deliverables**:
+
 - Fully functional JSON Schema editor
 - Fully functional GraphQL editor
 - Both editors styled and responsive
@@ -268,6 +285,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Week 3: Converter Integration
 
 **Days 15-17: Node.js Converter**
+
 - [ ] Import Node.js converter package
 - [ ] Create converter service wrapper
 - [ ] Implement JSON → SDL conversion
@@ -276,6 +294,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Show conversion statistics
 
 **Days 18-21: WASM Converter**
+
 - [ ] Create WASM converter wrapper
 - [ ] Implement async WASM loading
 - [ ] Add JSON → SDL via WASM
@@ -284,6 +303,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Add performance comparison metrics
 
 **Deliverables**:
+
 - Both converters working end-to-end
 - Converter toggle functional
 - Statistics displayed accurately
@@ -291,6 +311,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Week 4: Features & Polish
 
 **Days 22-24: Import/Export**
+
 - [ ] Implement file upload (JSON/GraphQL)
 - [ ] Add drag-and-drop support
 - [ ] Create export functionality (JSON, SDL, both)
@@ -299,6 +320,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Add sample schema selector
 
 **Days 25-26: Validation & Errors**
+
 - [ ] Real-time JSON Schema validation
 - [ ] GraphQL SDL validation
 - [ ] Federation directive validation
@@ -307,6 +329,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Warning notifications
 
 **Days 27-28: UX Enhancements**
+
 - [ ] Add loading states
 - [ ] Implement keyboard shortcuts guide
 - [ ] Add tooltips and help text
@@ -315,6 +338,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Mobile responsiveness
 
 **Deliverables**:
+
 - Complete feature set
 - Polished user experience
 - All edge cases handled
@@ -322,6 +346,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 ### Week 5: Testing, Documentation & Deployment
 
 **Days 29-30: Testing**
+
 - [ ] Unit tests for components
 - [ ] Integration tests for converters
 - [ ] E2E tests with Playwright
@@ -329,12 +354,14 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Browser compatibility testing
 
 **Days 31-32: Documentation**
+
 - [ ] User guide
 - [ ] API documentation
 - [ ] Troubleshooting guide
 - [ ] Video tutorial (optional)
 
 **Days 33-35: Deployment**
+
 - [ ] Configure deployment (Vercel/Netlify)
 - [ ] Setup CI/CD pipeline
 - [ ] Configure custom domain
@@ -343,6 +370,7 @@ wasm-pack build --target web --out-dir ../../web-ui/src/wasm
 - [ ] Launch!
 
 **Deliverables**:
+
 - 80%+ test coverage
 - Complete documentation
 - Live production deployment
@@ -443,27 +471,27 @@ web-ui/
 ```typescript
 // src/store/editorStore.ts
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface EditorState {
   // Content
   jsonSchema: string;
   graphqlSdl: string;
-  
+
   // Converter settings
-  converterMode: 'node' | 'wasm';
+  converterMode: "node" | "wasm";
   options: ConversionOptions;
-  
+
   // State
   isConverting: boolean;
   lastConversion: ConversionResult | null;
   errors: string[];
-  
+
   // Actions
   setJsonSchema: (schema: string) => void;
   setGraphqlSdl: (sdl: string) => void;
-  setConverterMode: (mode: 'node' | 'wasm') => void;
+  setConverterMode: (mode: "node" | "wasm") => void;
   convert: () => Promise<void>;
   convertReverse: () => Promise<void>;
   clearErrors: () => void;
@@ -473,30 +501,31 @@ interface EditorState {
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
-      jsonSchema: '{\n  "$schema": "https://json-schema.org/draft/2020-12/schema"\n}',
-      graphqlSdl: '',
-      converterMode: 'wasm',
+      jsonSchema:
+        '{\n  "$schema": "https://json-schema.org/draft/2020-12/schema"\n}',
+      graphqlSdl: "",
+      converterMode: "wasm",
       options: {
         validate: true,
         includeDescriptions: true,
         preserveFieldOrder: true,
-        federationVersion: '2.9',
+        federationVersion: "2.9",
         prettyPrint: true,
       },
       isConverting: false,
       lastConversion: null,
       errors: [],
-      
+
       // Implementation...
     }),
     {
-      name: 'json-graphql-editor',
+      name: "json-graphql-editor",
       partialize: (state) => ({
         converterMode: state.converterMode,
         options: state.options,
       }),
-    }
-  )
+    },
+  ),
 );
 ```
 
@@ -512,19 +541,19 @@ import { validateJsonSchema } from '@/utils/validation';
 
 export const JsonSchemaEditor: React.FC = () => {
   const { jsonSchema, setJsonSchema } = useEditorStore();
-  
+
   const handleEditorChange = (value: string | undefined) => {
     if (value !== undefined) {
       setJsonSchema(value);
     }
   };
-  
+
   return (
     <div className="h-full border rounded-lg overflow-hidden">
       <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b">
         <h3 className="text-sm font-semibold">JSON Schema</h3>
       </div>
-      
+
       <Editor
         height="calc(100% - 40px)"
         defaultLanguage="json"
@@ -556,13 +585,13 @@ import { useEditorStore } from '@/store/editorStore';
 
 export const GraphQLEditor: React.FC = () => {
   const { graphqlSdl, setGraphqlSdl } = useEditorStore();
-  
+
   return (
     <div className="h-full border rounded-lg overflow-hidden">
       <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b">
         <h3 className="text-sm font-semibold">GraphQL SDL</h3>
       </div>
-      
+
       <GQLEditor
         schema={graphqlSdl}
         onChange={(newSdl) => setGraphqlSdl(newSdl)}
@@ -588,15 +617,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 export const ConverterToggle: React.FC = () => {
-  const { 
-    converterMode, 
-    setConverterMode, 
+  const {
+    converterMode,
+    setConverterMode,
     convert,
     convertReverse,
     isConverting,
-    lastConversion 
+    lastConversion
   } = useEditorStore();
-  
+
   return (
     <div className="flex flex-col gap-4 p-4">
       {/* Mode Toggle */}
@@ -620,7 +649,7 @@ export const ConverterToggle: React.FC = () => {
           </Button>
         </div>
       </div>
-      
+
       {/* Convert Buttons */}
       <div className="flex flex-col gap-2">
         <Button
@@ -630,7 +659,7 @@ export const ConverterToggle: React.FC = () => {
         >
           {isConverting ? 'Converting...' : 'JSON → SDL'}
         </Button>
-        
+
         <Button
           onClick={convertReverse}
           disabled={isConverting}
@@ -640,7 +669,7 @@ export const ConverterToggle: React.FC = () => {
           {isConverting ? 'Converting...' : 'SDL → JSON'}
         </Button>
       </div>
-      
+
       {/* Statistics */}
       {lastConversion && (
         <div className="space-y-1 text-sm">
@@ -674,22 +703,22 @@ export const ConverterToggle: React.FC = () => {
 ```typescript
 // src/converters/nodeConverter.ts
 
-import { 
-  convertJsonToSdl, 
+import {
+  convertJsonToSdl,
   convertSdlToJson,
-  ConversionOptions 
-} from '@json-schema-x-graphql/node-converter';
+  ConversionOptions,
+} from "@json-schema-x-graphql/node-converter";
 
 export async function convertJsonToSdlNode(
   jsonSchema: any,
-  options: ConversionOptions
+  options: ConversionOptions,
 ): Promise<ConversionResult> {
   const startTime = performance.now();
-  
+
   try {
     const result = await convertJsonToSdl(jsonSchema, options);
     const duration = performance.now() - startTime;
-    
+
     return {
       success: result.success,
       sdl: result.sdl,
@@ -701,7 +730,7 @@ export async function convertJsonToSdlNode(
   } catch (error) {
     return {
       success: false,
-      sdl: '',
+      sdl: "",
       errors: [error.message],
       duration: performance.now() - startTime,
       typesConverted: 0,
@@ -712,14 +741,14 @@ export async function convertJsonToSdlNode(
 
 export async function convertSdlToJsonNode(
   sdl: string,
-  options: ConversionOptions
+  options: ConversionOptions,
 ): Promise<ConversionResult> {
   const startTime = performance.now();
-  
+
   try {
     const result = await convertSdlToJson(sdl, options);
     const duration = performance.now() - startTime;
-    
+
     return {
       success: result.success,
       schema: result.schema,
@@ -746,10 +775,10 @@ export async function convertSdlToJsonNode(
 ```typescript
 // src/converters/wasmConverter.ts
 
-import init, { 
-  convert_json_to_sdl, 
-  convert_sdl_to_json 
-} from '../wasm/json_schema_graphql_converter';
+import init, {
+  convert_json_to_sdl,
+  convert_sdl_to_json,
+} from "../wasm/json_schema_graphql_converter";
 
 let wasmInitialized = false;
 
@@ -762,21 +791,21 @@ async function ensureWasmInit() {
 
 export async function convertJsonToSdlWasm(
   jsonSchema: any,
-  options: ConversionOptions
+  options: ConversionOptions,
 ): Promise<ConversionResult> {
   const startTime = performance.now();
-  
+
   try {
     await ensureWasmInit();
-    
+
     const result = convert_json_to_sdl(
       JSON.stringify(jsonSchema),
-      JSON.stringify(options)
+      JSON.stringify(options),
     );
-    
+
     const parsed = JSON.parse(result);
     const duration = performance.now() - startTime;
-    
+
     return {
       ...parsed,
       duration: Math.round(duration * 100) / 100,
@@ -784,7 +813,7 @@ export async function convertJsonToSdlWasm(
   } catch (error) {
     return {
       success: false,
-      sdl: '',
+      sdl: "",
       errors: [error.message],
       duration: performance.now() - startTime,
       typesConverted: 0,
@@ -795,21 +824,18 @@ export async function convertJsonToSdlWasm(
 
 export async function convertSdlToJsonWasm(
   sdl: string,
-  options: ConversionOptions
+  options: ConversionOptions,
 ): Promise<ConversionResult> {
   const startTime = performance.now();
-  
+
   try {
     await ensureWasmInit();
-    
-    const result = convert_sdl_to_json(
-      sdl,
-      JSON.stringify(options)
-    );
-    
+
+    const result = convert_sdl_to_json(sdl, JSON.stringify(options));
+
     const parsed = JSON.parse(result);
     const duration = performance.now() - startTime;
-    
+
     return {
       ...parsed,
       duration: Math.round(duration * 100) / 100,
@@ -832,29 +858,35 @@ export async function convertSdlToJsonWasm(
 ```typescript
 // src/hooks/useConverter.ts
 
-import { useEditorStore } from '@/store/editorStore';
-import { convertJsonToSdlNode, convertSdlToJsonNode } from '@/converters/nodeConverter';
-import { convertJsonToSdlWasm, convertSdlToJsonWasm } from '@/converters/wasmConverter';
+import { useEditorStore } from "@/store/editorStore";
+import {
+  convertJsonToSdlNode,
+  convertSdlToJsonNode,
+} from "@/converters/nodeConverter";
+import {
+  convertJsonToSdlWasm,
+  convertSdlToJsonWasm,
+} from "@/converters/wasmConverter";
 
 export function useConverter() {
   const { converterMode, options } = useEditorStore();
-  
+
   const convertJsonToSdl = async (jsonSchema: any) => {
-    if (converterMode === 'node') {
+    if (converterMode === "node") {
       return convertJsonToSdlNode(jsonSchema, options);
     } else {
       return convertJsonToSdlWasm(jsonSchema, options);
     }
   };
-  
+
   const convertSdlToJson = async (sdl: string) => {
-    if (converterMode === 'node') {
+    if (converterMode === "node") {
       return convertSdlToJsonNode(sdl, options);
     } else {
       return convertSdlToJsonWasm(sdl, options);
     }
   };
-  
+
   return {
     convertJsonToSdl,
     convertSdlToJson,
@@ -906,15 +938,15 @@ export function useConverter() {
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl/Cmd + Enter` | Convert JSON → SDL |
-| `Ctrl/Cmd + Shift + Enter` | Convert SDL → JSON |
-| `Ctrl/Cmd + S` | Save/Export |
-| `Ctrl/Cmd + O` | Open file |
-| `Ctrl/Cmd + K` | Show shortcuts |
-| `Ctrl/Cmd + ,` | Open settings |
-| `Ctrl/Cmd + Shift + T` | Toggle converter mode |
+| Shortcut                   | Action                |
+| -------------------------- | --------------------- |
+| `Ctrl/Cmd + Enter`         | Convert JSON → SDL    |
+| `Ctrl/Cmd + Shift + Enter` | Convert SDL → JSON    |
+| `Ctrl/Cmd + S`             | Save/Export           |
+| `Ctrl/Cmd + O`             | Open file             |
+| `Ctrl/Cmd + K`             | Show shortcuts        |
+| `Ctrl/Cmd + ,`             | Open settings         |
+| `Ctrl/Cmd + Shift + T`     | Toggle converter mode |
 
 ### Mobile Responsiveness
 
@@ -946,6 +978,7 @@ vercel --prod
 ```
 
 **vercel.json**:
+
 ```json
 {
   "buildCommand": "npm run build",
@@ -971,6 +1004,7 @@ dist
 ```
 
 **netlify.toml**:
+
 ```toml
 [build]
   command = "npm run build"
@@ -1007,13 +1041,13 @@ import { ConverterToggle } from '@/components/converter/ConverterToggle';
 describe('ConverterToggle', () => {
   it('switches between Node.js and WASM modes', () => {
     render(<ConverterToggle />);
-    
+
     const nodeButton = screen.getByText('Node.js');
     const wasmButton = screen.getByText(/Rust\/WASM/);
-    
+
     fireEvent.click(nodeButton);
     expect(nodeButton).toHaveClass('active');
-    
+
     fireEvent.click(wasmButton);
     expect(wasmButton).toHaveClass('active');
   });
@@ -1025,31 +1059,31 @@ describe('ConverterToggle', () => {
 ```typescript
 // tests/integration/conversion.test.tsx
 
-import { renderHook, act } from '@testing-library/react';
-import { useConverter } from '@/hooks/useConverter';
+import { renderHook, act } from "@testing-library/react";
+import { useConverter } from "@/hooks/useConverter";
 
-describe('Converter Integration', () => {
-  it('converts JSON Schema to SDL', async () => {
+describe("Converter Integration", () => {
+  it("converts JSON Schema to SDL", async () => {
     const { result } = renderHook(() => useConverter());
-    
+
     const jsonSchema = {
-      $schema: 'https://json-schema.org/draft/2020-12/schema',
+      $schema: "https://json-schema.org/draft/2020-12/schema",
       $defs: {
         User: {
-          type: 'object',
-          'x-graphql-type-name': 'User',
-          'x-graphql-type-kind': 'OBJECT',
+          type: "object",
+          "x-graphql-type-name": "User",
+          "x-graphql-type-kind": "OBJECT",
         },
       },
     };
-    
+
     let conversionResult;
     await act(async () => {
       conversionResult = await result.current.convertJsonToSdl(jsonSchema);
     });
-    
+
     expect(conversionResult.success).toBe(true);
-    expect(conversionResult.sdl).toContain('type User');
+    expect(conversionResult.sdl).toContain("type User");
   });
 });
 ```
@@ -1059,21 +1093,23 @@ describe('Converter Integration', () => {
 ```typescript
 // tests/e2e/editor.spec.ts
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('complete conversion workflow', async ({ page }) => {
-  await page.goto('http://localhost:5173');
-  
+test("complete conversion workflow", async ({ page }) => {
+  await page.goto("http://localhost:5173");
+
   // Paste JSON Schema
   await page.click('[data-testid="json-editor"]');
-  await page.keyboard.type('{"$schema": "https://json-schema.org/draft/2020-12/schema"}');
-  
+  await page.keyboard.type(
+    '{"$schema": "https://json-schema.org/draft/2020-12/schema"}',
+  );
+
   // Click convert
   await page.click('[data-testid="convert-button"]');
-  
+
   // Wait for result
   await page.waitForSelector('[data-testid="graphql-editor"]');
-  
+
   // Verify SDL output
   const sdl = await page.textContent('[data-testid="graphql-editor"]');
   expect(sdl).toBeTruthy();

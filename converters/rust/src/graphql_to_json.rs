@@ -65,7 +65,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
                         type_registry
                             .keys()
                             .next()
-                            .map(|s| s.clone())
+                            .map(|s| s.to_string())
                             .unwrap_or_default()
                     })
             }
@@ -85,7 +85,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
     };
 
     // Ensure schema version is set
-    if !root_schema.get("$schema").is_some() {
+    if root_schema.get("$schema").is_none() {
         root_schema["$schema"] = json!("http://json-schema.org/draft-07/schema#");
     }
 
@@ -93,7 +93,7 @@ pub fn convert(sdl: &str, _options: &ConversionOptions) -> Result<String, Conver
     let mut schema_defs = IndexMap::new();
     for (name, type_def) in context.type_registry {
         if name.as_str() != root_ref_name.as_str() {
-            let schema = convert_type_to_schema(&type_def, &context);
+            let schema = convert_type_to_schema(type_def, &context);
             schema_defs.insert(name.clone(), schema);
         }
     }
@@ -171,9 +171,9 @@ fn get_description(desc: &Option<Positioned<String>>) -> Option<String> {
     desc.as_ref().map(|d| d.node.clone())
 }
 
-fn convert_definition<'a>(
+fn convert_definition(
     definition: Positioned<TypeDefinition>,
-    context: &'a ConversionContext,
+    context: &ConversionContext,
 ) -> Option<(String, TypeDef)> {
     let name = definition.node.name.node.to_string();
     let description = get_description(&definition.node.description);
@@ -181,7 +181,7 @@ fn convert_definition<'a>(
         .node
         .directives
         .iter()
-        .map(|d| convert_directive(d))
+        .map(convert_directive)
         .collect::<Vec<_>>();
 
     let type_def = match &definition.node.kind {
@@ -283,10 +283,7 @@ fn convert_definition<'a>(
     type_def
 }
 
-fn convert_field<'a>(
-    field: &Positioned<FieldDefinition>,
-    context: &'a ConversionContext,
-) -> FieldDef {
+fn convert_field(field: &Positioned<FieldDefinition>, context: &ConversionContext) -> FieldDef {
     FieldDef {
         name: field.node.name.node.to_string(),
         field_type: convert_gql_type(&field.node.ty.node, context),
@@ -306,14 +303,14 @@ fn convert_field<'a>(
             .node
             .directives
             .iter()
-            .map(|d| convert_directive(d))
+            .map(convert_directive)
             .collect(),
     }
 }
 
-fn convert_input_field<'a>(
+fn convert_input_field(
     field: &Positioned<InputValueDefinition>,
-    context: &'a ConversionContext,
+    context: &ConversionContext,
 ) -> FieldDef {
     FieldDef {
         name: field.node.name.node.to_string(),
@@ -324,7 +321,7 @@ fn convert_input_field<'a>(
             .node
             .directives
             .iter()
-            .map(|d| convert_directive(d))
+            .map(convert_directive)
             .collect(),
     }
 }
@@ -340,7 +337,8 @@ fn convert_directive(directive: &Positioned<ConstDirective>) -> DirectiveDef {
     }
 }
 
-fn convert_gql_type<'a>(gql_type: &Type, context: &'a ConversionContext) -> GqlType {
+#[allow(clippy::only_used_in_recursion)]
+fn convert_gql_type(gql_type: &Type, context: &ConversionContext) -> GqlType {
     let result = match &gql_type.base {
         BaseType::Named(name) => {
             let type_name = name.to_string();
@@ -611,6 +609,7 @@ fn gql_type_to_string(gql_type: &GqlType) -> String {
     }
 }
 
+#[allow(clippy::only_used_in_recursion)]
 fn gql_type_to_json_schema(gql_type: &GqlType, context: &ConversionContext) -> (JsonValue, bool) {
     match gql_type {
         GqlType::Scalar(scalar) => (

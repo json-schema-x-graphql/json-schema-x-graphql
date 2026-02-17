@@ -3,6 +3,7 @@
 ## Overview
 
 **What you'll learn:**
+
 - What enums are and why they're powerful
 - Defining enums with fixed values
 - Type-safe status fields
@@ -16,6 +17,7 @@
 Enums let you restrict values to a specific set of options. Instead of accepting any string, an enum says "this field can only be one of these values." This prevents bugs—the API guarantees you'll only get valid values, and clients can use them with type safety. It's like using radio buttons instead of free-text fields.
 
 **Prerequisites:**
+
 - Completed: [Module 1: Introducing Types](/learning/01-introducing-types)
 - Completed: [Module 2: Scalars, Objects, Lists](/learning/02-scalars-objects-lists)
 - Completed: [Module 3: Nullability](/learning/03-nullability)
@@ -30,14 +32,16 @@ Enums let you restrict values to a specific set of options. Instead of accepting
 An **enum** is a special type that restricts values to a predefined set of options.
 
 Instead of:
+
 ```graphql
 # ❌ Risky - any string accepted
 type Post {
-  status: String    # Could be "published", "PUBLISHED", "pub", typos...
+  status: String # Could be "published", "PUBLISHED", "pub", typos...
 }
 ```
 
 Use:
+
 ```graphql
 # ✅ Type-safe
 type Post {
@@ -54,11 +58,13 @@ enum PostStatus {
 ### Why Enums Matter
 
 **For API developers:**
+
 - Restrict what values are valid
 - Make invalid states impossible to represent
 - Easier to evolve (add new values without breaking)
 
 **For clients:**
+
 - Autocomplete in editors
 - Type safety (TypeScript, Python, etc. know valid values)
 - No string typos
@@ -198,12 +204,13 @@ When you query an enum field, you get back the enum value (not a string):
 query {
   post(id: "1") {
     title
-    status    # Returns: PUBLISHED (not "PUBLISHED")
+    status # Returns: PUBLISHED (not "PUBLISHED")
   }
 }
 ```
 
 Response:
+
 ```json
 {
   "data": {
@@ -311,6 +318,7 @@ Compare approaches:
 ### Converting GraphQL Enums to JSON Schema
 
 **GraphQL:**
+
 ```graphql
 enum PostStatus {
   DRAFT
@@ -324,6 +332,7 @@ type Post {
 ```
 
 **Converts to JSON Schema:**
+
 ```json
 {
   "$defs": {
@@ -341,6 +350,7 @@ type Post {
 ### Converter Handling
 
 The converter automatically:
+
 - ✅ Extracts enum definitions
 - ✅ Maps to JSON Schema `enum` keyword
 - ✅ Creates references in `$defs`
@@ -348,6 +358,7 @@ The converter automatically:
 - ✅ Handles enum descriptions (if provided)
 
 **Usage:**
+
 ```javascript
 const converter = new Converter();
 
@@ -366,8 +377,8 @@ const graphqlSchema = `
 const result = await converter.convert({
   graphql: graphqlSchema,
   options: {
-    includeDescriptions: true
-  }
+    includeDescriptions: true,
+  },
 });
 
 // Result includes PostStatus in $defs with enum constraint
@@ -380,6 +391,7 @@ const result = await converter.convert({
 ### Example 1: E-Commerce Order System
 
 **GraphQL:**
+
 ```graphql
 enum OrderStatus {
   PENDING
@@ -427,12 +439,20 @@ type Query {
 ```
 
 **JSON Schema:**
+
 ```json
 {
   "$defs": {
     "OrderStatus": {
       "type": "string",
-      "enum": ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"]
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "SHIPPED",
+        "DELIVERED",
+        "CANCELLED",
+        "REFUNDED"
+      ]
     },
     "PaymentStatus": {
       "type": "string",
@@ -462,6 +482,7 @@ type Query {
 ### Example 2: User Management System
 
 **GraphQL:**
+
 ```graphql
 enum UserRole {
   OWNER
@@ -505,7 +526,10 @@ type Query {
 type Mutation {
   updateUserRole(id: ID!, role: UserRole!): User!
   updateAccountStatus(id: ID!, status: AccountStatus!): User!
-  setNotificationPreferences(id: ID!, preferences: [NotificationPreference!]!): User!
+  setNotificationPreferences(
+    id: ID!
+    preferences: [NotificationPreference!]!
+  ): User!
 }
 ```
 
@@ -533,7 +557,7 @@ type Project {
 
 # ❌ Bad
 type Project {
-  status: String!  # Could be "planning", "PLANNING", "plan", typos...
+  status: String! # Could be "planning", "PLANNING", "plan", typos...
 }
 ```
 
@@ -603,8 +627,8 @@ For optional enum fields:
 type Product {
   id: ID!
   name: String!
-  category: ProductCategory!      # Required
-  subcategory: ProductCategory    # Optional
+  category: ProductCategory! # Required
+  subcategory: ProductCategory # Optional
 }
 
 enum ProductCategory {
@@ -649,12 +673,21 @@ enum UserRole {
   USER
 }
 
-type User { role: UserRole! }
-type Team { owner: User!, moderators: [User!]! }
+type User {
+  role: UserRole!
+}
+type Team {
+  owner: User!
+  moderators: [User!]!
+}
 
 # ❌ Repeated
-type User { role: String! }  # Documented as ADMIN|MODERATOR|USER
-type Team { role: String! }  # Documented as ADMIN|MODERATOR|USER
+type User {
+  role: String!
+} # Documented as ADMIN|MODERATOR|USER
+type Team {
+  role: String!
+} # Documented as ADMIN|MODERATOR|USER
 ```
 
 ### 3. Meaningful Enum Values
@@ -695,7 +728,9 @@ enum AccountStatus {
 }
 
 type User {
-  """Current account status"""
+  """
+  Current account status
+  """
   status: AccountStatus!
 }
 ```
@@ -759,6 +794,7 @@ Should these be enums or strings?
 ### Exercise 2: Design Enums for a Blog
 
 Design enums for a blogging platform with these requirements:
+
 - Posts can be drafted, published, or archived
 - Comments can be pending (awaiting moderation), approved, or rejected
 - Users can have roles: owner, editor, author, reader
@@ -819,8 +855,8 @@ Convert this schema to use enums instead of string fields:
 type Task {
   id: ID!
   title: String!
-  priority: String!           # Values: "low", "medium", "high"
-  status: String!             # Values: "todo", "in_progress", "done"
+  priority: String! # Values: "low", "medium", "high"
+  status: String! # Values: "todo", "in_progress", "done"
   assignee: User!
 }
 ```
@@ -860,6 +896,7 @@ type Mutation {
 ```
 
 **Benefits:**
+
 - Type-safe (can't pass invalid values)
 - Autocomplete in clients
 - Better IDE support
@@ -874,13 +911,15 @@ type Mutation {
 ### Converting String to Enum
 
 **Before:**
+
 ```graphql
 type Task {
-  status: String!  # Documented as: "todo", "in_progress", "done"
+  status: String! # Documented as: "todo", "in_progress", "done"
 }
 ```
 
 **Step 1**: Define the enum
+
 ```graphql
 enum TaskStatus {
   TODO
@@ -890,6 +929,7 @@ enum TaskStatus {
 ```
 
 **Step 2**: Update field type
+
 ```graphql
 type Task {
   status: TaskStatus!
@@ -899,6 +939,7 @@ type Task {
 **Step 3**: Update resolvers to return enum values instead of strings
 
 **After:**
+
 ```graphql
 enum TaskStatus {
   TODO
@@ -932,8 +973,8 @@ enum OrderStatus {
   PENDING
   SHIPPED
   DELIVERED
-  RETURNED      # ← New value
-  REFUNDED      # ← New value
+  RETURNED # ← New value
+  REFUNDED # ← New value
 }
 
 # Clients not expecting RETURNED/REFUNDED just ignore them
@@ -943,13 +984,13 @@ enum OrderStatus {
 
 ## Common Mistakes
 
-| Mistake | Problem | Fix |
-|---------|---------|-----|
-| Lowercase enum values | Non-standard, inconsistent | Use SCREAMING_SNAKE_CASE |
-| Duplicate enum definitions | Confusing, hard to maintain | Define once in $defs, reference everywhere |
-| Enum instead of flags | Wrong data structure | Use array of enums or separate boolean fields |
-| Overly restrictive enums | Hard to evolve | Ensure room for future values |
-| No validation on strings | Defeats enum purpose | Use type system, not documentation |
+| Mistake                    | Problem                     | Fix                                           |
+| -------------------------- | --------------------------- | --------------------------------------------- |
+| Lowercase enum values      | Non-standard, inconsistent  | Use SCREAMING_SNAKE_CASE                      |
+| Duplicate enum definitions | Confusing, hard to maintain | Define once in $defs, reference everywhere    |
+| Enum instead of flags      | Wrong data structure        | Use array of enums or separate boolean fields |
+| Overly restrictive enums   | Hard to evolve              | Ensure room for future values                 |
+| No validation on strings   | Defeats enum purpose        | Use type system, not documentation            |
 
 ---
 
@@ -984,7 +1025,7 @@ enum OrderStatus {
 ✅ **Define once, reuse everywhere** - Put in $defs  
 ✅ **Easy to evolve** - Add new values without breaking changes  
 ✅ **Better than strings** - More expressive and safer  
-✅ **Filter with enums** - Use in query arguments  
+✅ **Filter with enums** - Use in query arguments
 
 ---
 

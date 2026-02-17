@@ -18,38 +18,45 @@ Core library that analyzes GraphQL schemas and detects field dependencies.
 #### Key Functions:
 
 **`generateDirectiveSuggestions(subgraphs, supergraphSdl)`**
+
 - Analyzes all subgraphs for cross-schema references
 - Detects @requires dependencies (field references to external types)
 - Identifies entity extensions (@provides opportunities)
 - Returns ranked list of suggestions with reasons
 
 **`applySuggestionsToSdl(sdl, suggestions)`**
+
 - Applies validated suggestions to GraphQL SDL
 - Inserts directives at appropriate locations
 - Prevents directive duplication
 
 **`filterSuggestions(suggestions, filters)`**
+
 - Filter by severity (error, warning, info)
 - Filter by type (requires, extension, composite_key)
 - Filter by applicability status
 
 **`rankSuggestions(suggestions)`**
+
 - Prioritizes suggestions by severity
 - Secondary sort by type importance
 - Helps users focus on critical issues first
 
 **`validateSuggestion(suggestion, sdl)`**
+
 - Checks if type exists in SDL
 - Validates field references
 - Ensures directive syntax correctness
 
 **`analyzeDirectiveRequirements(suggestions)`**
+
 - Calculates federation complexity score
 - Counts types and fields affected
 - Identifies external references
 - Returns composition difficulty assessment
 
 **`generateSuggestionReport(suggestions)`**
+
 - Creates human-readable report
 - Groups by type and severity
 - Includes reasons and directives
@@ -57,6 +64,7 @@ Core library that analyzes GraphQL schemas and detects field dependencies.
 #### Algorithms:
 
 **Dependency Detection**
+
 ```javascript
 1. Parse SDL to extract all type and field definitions
 2. For each field, identify referenced types
@@ -66,6 +74,7 @@ Core library that analyzes GraphQL schemas and detects field dependencies.
 ```
 
 **Entity Extension Detection**
+
 ```javascript
 1. Find all `extend type X` declarations
 2. Identify extending schemas
@@ -74,6 +83,7 @@ Core library that analyzes GraphQL schemas and detects field dependencies.
 ```
 
 **Shared Type Detection**
+
 ```javascript
 1. Build type-to-schema map
 2. Identify types in multiple schemas
@@ -90,32 +100,38 @@ Interactive UI for managing federation directive suggestions.
 #### Features:
 
 **Suggestion Display**
+
 - Shows all suggestions with severity badges
 - Expandable details for each suggestion
 - Shows reasons, directives, dependencies, schemas
 
 **Filtering**
+
 - Filter by type (@requires, extensions, composite keys)
 - Filter by severity (error, warning, info)
 - Dynamic result count
 
 **Selection Management**
+
 - Individual checkbox selection
 - Select All / Deselect All buttons
 - Visual feedback for selected items
 - Real-time count display
 
 **Preview**
+
 - Shows how SDL will look after applying directives
 - Live update as selections change
 - Copy to clipboard functionality
 
 **Bulk Operations**
+
 - Apply all selected suggestions at once
 - Dismiss selected suggestions
 - Atomic operations with loading state
 
 **Visual States**
+
 - Empty state when no suggestions
 - Expanded/collapsed detail panels
 - Color-coded severity levels
@@ -134,6 +150,7 @@ Interactive UI for managing federation directive suggestions.
 ```
 
 #### CSS Features:
+
 - Responsive grid layout
 - Severity color coding (red/orange/blue)
 - Smooth animations and transitions
@@ -147,6 +164,7 @@ Interactive UI for managing federation directive suggestions.
 Comprehensive styling for the suggestions component.
 
 **Key Classes**:
+
 - `.directive-suggester` - Main container
 - `.suggestion-item` - Individual suggestion card
 - `.severity-badge` - Severity indicator
@@ -155,6 +173,7 @@ Comprehensive styling for the suggestions component.
 - `.bulk-actions` - Action buttons
 
 **Features**:
+
 - Color-coded by severity
 - Hover effects
 - Expandable animations
@@ -169,6 +188,7 @@ Comprehensive styling for the suggestions component.
 State management for federation directive suggestions.
 
 #### State:
+
 ```javascript
 {
   suggestions: [],              // Current suggestions
@@ -183,12 +203,14 @@ State management for federation directive suggestions.
 #### Methods:
 
 **`generateSuggestions(subgraphs, supergraphSdl)`**
+
 - Async generation with timeout
 - Filters dismissed suggestions
 - Ranks by importance
 - Updates show state
 
 **`applySuggestions(selectedSuggestions, newSdl)`**
+
 - Validates all suggestions
 - Applies valid ones
 - Tracks applied directives
@@ -196,23 +218,28 @@ State management for federation directive suggestions.
 - Returns modified SDL
 
 **`dismissSuggestion(index)`**
+
 - Removes single suggestion
 - Marks as dismissed
 - Updates show state
 
 **`dismissAll()`**
+
 - Dismisses all active suggestions
 - Clears suggestions list
 
 **`reset()`**
+
 - Clears all state
 - Used when schemas change
 
 **`filterSuggestionsBy(filters)`**
+
 - Applies filters to current suggestions
 - Returns filtered list
 
 **`getStats()`**
+
 - Returns suggestion statistics
 - Counts by type and severity
 - Includes applied/dismissed counts
@@ -227,7 +254,7 @@ const {
   generateSuggestions,
   applySuggestions,
   dismissSuggestion,
-  setShowSuggestions
+  setShowSuggestions,
 } = useDirectiveSuggestions();
 
 // In useEffect after composition
@@ -245,12 +272,14 @@ useEffect(() => {
 #### Changes Made:
 
 1. **Import additions**:
+
    ```javascript
-   import DirectiveSuggester from './components/DirectiveSuggester.jsx';
-   import { useDirectiveSuggestions } from './hooks/useDirectiveSuggestions.js';
+   import DirectiveSuggester from "./components/DirectiveSuggester.jsx";
+   import { useDirectiveSuggestions } from "./hooks/useDirectiveSuggestions.js";
    ```
 
 2. **Hook initialization**:
+
    ```javascript
    const {
      suggestions,
@@ -258,11 +287,12 @@ useEffect(() => {
      generateSuggestions,
      applySuggestions,
      dismissSuggestion,
-     setShowSuggestions
+     setShowSuggestions,
    } = useDirectiveSuggestions();
    ```
 
 3. **Auto-trigger suggestions on composition**:
+
    ```javascript
    useEffect(() => {
      if (supergraphSDL && subgraphs.length > 1) {
@@ -294,6 +324,7 @@ useEffect(() => {
 #### Test Categories:
 
 **1. Dependency Detection (6 tests)**
+
 - ✅ Generates suggestions for cross-schema dependencies
 - ✅ Identifies @requires for external references
 - ✅ Detects entity extensions
@@ -302,6 +333,7 @@ useEffect(() => {
 - ✅ Handles empty/invalid input
 
 **2. Filtering (6 tests)**
+
 - ✅ Filter by severity
 - ✅ Filter by type
 - ✅ Filter by applicability
@@ -310,42 +342,50 @@ useEffect(() => {
 - ✅ Preserves original data
 
 **3. Ranking (3 tests)**
+
 - ✅ Ranks by severity order
 - ✅ Maintains secondary sort by type
 - ✅ Does not modify original array
 
 **4. Validation (3 tests)**
+
 - ✅ Validates existing types
 - ✅ Rejects non-existent types
 - ✅ Detects empty directives
 
 **5. Application (4 tests)**
+
 - ✅ Applies @requires directive
 - ✅ Prevents duplicate directives
 - ✅ Handles multiple suggestions
 - ✅ Returns unchanged SDL when no suggestions
 
 **6. Merging (2 tests)**
+
 - ✅ Merges valid suggestions
 - ✅ Filters invalid before merge
 
 **7. Analysis (4 tests)**
+
 - ✅ Calculates complexity score
 - ✅ Counts types and fields
 - ✅ Detects requires and extensions
 - ✅ Tracks external references
 
 **8. Report Generation (3 tests)**
+
 - ✅ Generates readable report
 - ✅ Includes all suggestion types
 - ✅ Groups by type
 
 **9. Integration (3 tests)**
+
 - ✅ Complete workflow: generate → filter → rank → validate → apply
 - ✅ Handles complex multi-schema composition
 - ✅ Consistent suggestions for same input
 
 **10. Edge Cases (7 tests)**
+
 - ✅ Handles SDL with no types
 - ✅ Handles scalar-only SDL
 - ✅ Handles circular type references
@@ -357,7 +397,7 @@ useEffect(() => {
 #### Sample Test:
 
 ```javascript
-test('generates suggestions for cross-schema dependencies', () => {
+test("generates suggestions for cross-schema dependencies", () => {
   const suggestions = generateDirectiveSuggestions(subgraphs, composedSdl);
 
   expect(suggestions).toBeDefined();
@@ -373,17 +413,17 @@ test('generates suggestions for cross-schema dependencies', () => {
 ### Basic Usage
 
 ```javascript
-import { useDirectiveSuggestions } from './hooks/useDirectiveSuggestions';
-import DirectiveSuggester from './components/DirectiveSuggester';
+import { useDirectiveSuggestions } from "./hooks/useDirectiveSuggestions";
+import DirectiveSuggester from "./components/DirectiveSuggester";
 
 function MyComponent() {
-  const { suggestions, generateSuggestions, applySuggestions } = 
+  const { suggestions, generateSuggestions, applySuggestions } =
     useDirectiveSuggestions();
 
   const handleCompose = async (subgraphs, sdl) => {
     // Generate suggestions after composition
     await generateSuggestions(subgraphs, sdl);
-    
+
     // User selects directives in UI
     // Then applies them
     const newSdl = applySuggestions(selected, sdl);
@@ -407,16 +447,16 @@ import {
   generateDirectiveSuggestions,
   rankSuggestions,
   filterSuggestions,
-  validateSuggestion
-} from './lib/federationDirectiveGenerator';
+  validateSuggestion,
+} from "./lib/federationDirectiveGenerator";
 
 // Generate and filter
 const suggestions = generateDirectiveSuggestions(subgraphs, sdl);
-const critical = filterSuggestions(suggestions, { severity: 'error' });
+const critical = filterSuggestions(suggestions, { severity: "error" });
 const ranked = rankSuggestions(critical);
 
 // Validate before applying
-const valid = ranked.filter(s => validateSuggestion(s, sdl).valid);
+const valid = ranked.filter((s) => validateSuggestion(s, sdl).valid);
 
 // Apply to SDL
 const updatedSdl = mergeSuggestionsIntoSdl(sdl, valid);
@@ -526,14 +566,14 @@ Can be customized in `federationDirectiveGenerator.js`:
 const COMPLEXITY_WEIGHTS = {
   typeCount: 10,
   fieldCount: 5,
-  externalReferences: 8
+  externalReferences: 8,
 };
 
 // Severity levels
 const SEVERITY_LEVELS = {
-  error: 0,    // Must fix
-  warning: 1,  // Should fix
-  info: 2      // Nice to have
+  error: 0, // Must fix
+  warning: 1, // Should fix
+  info: 2, // Nice to have
 };
 ```
 
@@ -546,10 +586,10 @@ In `DirectiveSuggester.jsx`:
 const MAX_VISIBLE = 5;
 
 // Preview max height
-const PREVIEW_MAX_HEIGHT = '300px';
+const PREVIEW_MAX_HEIGHT = "300px";
 
 // Animation duration
-const ANIMATION_DURATION = '0.3s';
+const ANIMATION_DURATION = "0.3s";
 ```
 
 ---
@@ -558,8 +598,8 @@ const ANIMATION_DURATION = '0.3s';
 
 ### Analysis Complexity
 
-- **Time Complexity**: O(n*m) where n = schemas, m = fields
-- **Space Complexity**: O(n*m) for dependency maps
+- **Time Complexity**: O(n\*m) where n = schemas, m = fields
+- **Space Complexity**: O(n\*m) for dependency maps
 - **Typical performance**: < 100ms for 10 schemas
 - **Large composition**: < 500ms for 50 types
 
@@ -577,11 +617,13 @@ const ANIMATION_DURATION = '0.3s';
 ### Compatibility
 
 ✅ Works with all existing hooks:
+
 - useSchemaManager - Tracks schemas
 - useSubgraphGenerator - Triggers on conversion
 - useComposition - Triggered after composition
 
 ✅ Integrates with existing components:
+
 - App.jsx - Main orchestration
 - SupergraphPreview - Shows final SDL with directives
 - SchemaEditor - Doesn't interfere
@@ -616,7 +658,7 @@ const ANIMATION_DURATION = '0.3s';
 try {
   const suggestions = generateDirectiveSuggestions(subgraphs, sdl);
 } catch (err) {
-  console.error('Directive generation failed:', err.message);
+  console.error("Directive generation failed:", err.message);
   setError(err.message);
 }
 ```
@@ -633,18 +675,21 @@ try {
 ## Testing Coverage
 
 ### Unit Tests: 30+ cases
+
 - Dependency detection
 - Filtering and ranking
 - Validation logic
 - Application to SDL
 
 ### Integration Tests: 10+ cases
+
 - Complete workflow
 - Multi-schema scenarios
 - State management
 - Hook interactions
 
 ### Edge Cases: 10+ cases
+
 - Empty input
 - Circular references
 - Large compositions
@@ -657,18 +702,21 @@ try {
 ## Next Steps
 
 ### Phase 5b: Advanced Features
+
 - [ ] Shared type detection UI
 - [ ] Automatic @provides generation
 - [ ] Conflict resolution wizard
 - [ ] Schema versioning
 
 ### Phase 6: Dashboard
+
 - [ ] Visual dependency graph
 - [ ] Federation metrics
 - [ ] Composition troubleshooting
 - [ ] Performance dashboard
 
 ### Phase 7+: Production Features
+
 - [ ] Git integration
 - [ ] Collaborative editing
 - [ ] Marketplace integration
@@ -678,16 +726,16 @@ try {
 
 ## File Summary
 
-| File | Type | Lines | Purpose |
-|------|------|-------|---------|
-| federationDirectiveGenerator.js | Library | 320 | Core analysis and generation |
-| DirectiveSuggester.jsx | Component | 300 | UI for suggestions |
-| DirectiveSuggester.css | Styles | 250 | Component styling |
-| useDirectiveSuggestions.js | Hook | 180 | State management |
-| federationDirectiveGenerator.test.js | Tests | 280 | 50+ test cases |
-| App.jsx | Modified | +50 | Integration |
-| App.css | Modified | +30 | Layout for directives |
-| **Total** | | **1,410** | **Complete Phase 5** |
+| File                                 | Type      | Lines     | Purpose                      |
+| ------------------------------------ | --------- | --------- | ---------------------------- |
+| federationDirectiveGenerator.js      | Library   | 320       | Core analysis and generation |
+| DirectiveSuggester.jsx               | Component | 300       | UI for suggestions           |
+| DirectiveSuggester.css               | Styles    | 250       | Component styling            |
+| useDirectiveSuggestions.js           | Hook      | 180       | State management             |
+| federationDirectiveGenerator.test.js | Tests     | 280       | 50+ test cases               |
+| App.jsx                              | Modified  | +50       | Integration                  |
+| App.css                              | Modified  | +30       | Layout for directives        |
+| **Total**                            |           | **1,410** | **Complete Phase 5**         |
 
 ---
 
@@ -696,7 +744,7 @@ try {
 ### 1. Add to your schema composition:
 
 ```javascript
-import { useDirectiveSuggestions } from './hooks/useDirectiveSuggestions';
+import { useDirectiveSuggestions } from "./hooks/useDirectiveSuggestions";
 
 const { suggestions, generateSuggestions } = useDirectiveSuggestions();
 

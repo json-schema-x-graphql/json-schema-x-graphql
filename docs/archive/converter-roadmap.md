@@ -11,11 +11,13 @@
 After analyzing the production scripts in `scripts/tmp/scripts`, we've identified critical improvements needed in both the Node.js and Rust converters. This document provides an actionable roadmap to bring the converters to production quality.
 
 **Current State:**
+
 - ✅ Rust converter: Handles basic schemas well, resolves simple $refs
 - ⚠️ Node converter: Basic functionality but lacks $ref resolution entirely
 - ❌ Both converters: Missing advanced features present in production scripts
 
 **Target State:**
+
 - Handle complex schemas with nested $refs
 - Support circular reference detection
 - Filter non-business types intelligently
@@ -29,10 +31,12 @@ After analyzing the production scripts in `scripts/tmp/scripts`, we've identifie
 ### 🚨 Priority 1: Enhanced $ref Resolution (BOTH CONVERTERS)
 
 **Current Issue:**
+
 - Rust: Only resolves one level of $ref
 - Node: Doesn't resolve $refs at all (outputs as `String`)
 
 **What Production Scripts Do Better:**
+
 ```javascript
 // Recursive resolution with fallbacks
 function resolvePointer(schema, pointer) {
@@ -44,6 +48,7 @@ function resolvePointer(schema, pointer) {
 ```
 
 **Action Items:**
+
 - [ ] **Rust:** Add recursive $ref following (follow refs within resolved nodes)
 - [ ] **Rust:** Add case conversion fallback logic
 - [ ] **Node:** Implement full $ref resolution from scratch
@@ -52,6 +57,7 @@ function resolvePointer(schema, pointer) {
 - [ ] **Both:** Add tests for nested refs, circular refs, missing refs
 
 **Files to Modify:**
+
 - `converters/rust/src/json_to_graphql.rs` (lines 81-107)
 - `converters/node/src/json-to-graphql.ts` (add new method)
 
@@ -63,15 +69,17 @@ function resolvePointer(schema, pointer) {
 ### 🚨 Priority 2: Circular Reference Protection (NODE CONVERTER)
 
 **Current Issue:**
+
 - Node converter will crash with stack overflow on circular types
 - No detection or protection mechanism
 
 **What Production Scripts Do:**
+
 ```javascript
 // Track types currently being built
-ctx.building.add(name);     // Mark as in-progress
+ctx.building.add(name); // Mark as in-progress
 // ... process type ...
-ctx.building.delete(name);  // Remove from in-progress
+ctx.building.delete(name); // Remove from in-progress
 
 // Check before processing
 if (ctx.building.has(name)) {
@@ -80,6 +88,7 @@ if (ctx.building.has(name)) {
 ```
 
 **Action Items:**
+
 - [ ] **Node:** Add `building: Set<string>` to conversion context
 - [ ] **Node:** Check set before processing each type
 - [ ] **Node:** Add/remove types from set properly (use try/finally)
@@ -88,6 +97,7 @@ if (ctx.building.has(name)) {
 - [ ] **Both:** Add test cases for circular references
 
 **Files to Modify:**
+
 - `converters/node/src/json-to-graphql.ts`
 - `converters/rust/src/json_to_graphql.rs`
 
@@ -99,11 +109,13 @@ if (ctx.building.has(name)) {
 ### 🔥 Priority 3: Extract Types from $defs (NODE CONVERTER)
 
 **Current Issue:**
+
 - Node converter only processes root type
 - Ignores entire `$defs`/`definitions` section
 - Can't output multiple types
 
 **What Production Scripts Do:**
+
 ```javascript
 // Process $defs section first
 if (let defs = obj.get("$defs") || obj.get("definitions")) {
@@ -117,6 +129,7 @@ if (let defs = obj.get("$defs") || obj.get("definitions")) {
 ```
 
 **Action Items:**
+
 - [ ] **Node:** Check for `$defs` and `definitions` in root schema
 - [ ] **Node:** Iterate through each definition
 - [ ] **Node:** Convert each with `x-graphql-type-name` to GraphQL type
@@ -124,6 +137,7 @@ if (let defs = obj.get("$defs") || obj.get("definitions")) {
 - [ ] **Node:** Test with test.json schema (has extensive $defs)
 
 **Files to Modify:**
+
 - `converters/node/src/json-to-graphql.ts`
 
 **Estimated Effort:** 4-6 hours
@@ -136,10 +150,11 @@ if (let defs = obj.get("$defs") || obj.get("definitions")) {
 ### 🔶 Priority 4: Type Filtering
 
 **What Production Scripts Do:**
+
 ```javascript
 const EXCLUDED_TYPE_NAMES = ["Query", "Mutation", "Subscription", "PageInfo"];
 const EXCLUDED_TYPE_SUFFIXES = [
-  "Filter", "Sort", "Connection", "Edge", 
+  "Filter", "Sort", "Connection", "Edge",
   "Payload", "Result", "Args"
 ];
 
@@ -150,6 +165,7 @@ shouldIncludeType(type) {
 ```
 
 **Action Items:**
+
 - [ ] **Both:** Add type exclusion configuration
 - [ ] **Both:** Default exclude list for operational types
 - [ ] **Both:** Allow override via options
@@ -163,6 +179,7 @@ shouldIncludeType(type) {
 ### 🔶 Priority 5: CLI Tools
 
 **What Production Scripts Do:**
+
 ```bash
 node generate-graphql-from-json-schema.mjs \
   --schema src/data/system.schema.json \
@@ -171,6 +188,7 @@ node generate-graphql-from-json-schema.mjs \
 ```
 
 **Action Items:**
+
 - [ ] **Rust:** Create `src/bin/json-to-sdl.rs` with full CLI
 - [ ] **Node:** Create `src/cli.ts` with commander.js
 - [ ] **Both:** Support `--input`, `--output`, `--config` flags
@@ -186,15 +204,17 @@ node generate-graphql-from-json-schema.mjs \
 ### 🔶 Priority 6: Advanced Nullable Handling
 
 **What Production Scripts Do:**
+
 ```javascript
-const makeNullable = schema => {
+const makeNullable = (schema) => {
   // Handle anyOf/oneOf/allOf properly
   // Avoid duplicate null types
   // Wrap $refs correctly
-}
+};
 ```
 
 **Action Items:**
+
 - [ ] **Both:** Enhance nullable logic for composition keywords
 - [ ] **Both:** Check for existing null before adding
 - [ ] **Both:** Handle $ref to nullable types
@@ -210,15 +230,18 @@ const makeNullable = schema => {
 ### 🔷 Case Conversion Utilities
 
 **Files to Create:**
+
 - `converters/rust/src/case_conversion.rs`
 - `converters/node/src/case-conversion.ts`
 
 **Functions:**
+
 - `camelToSnake(str: string): string`
 - `snakeToCamel(str: string): string`
 - `convertObjectKeys(obj: any, converter: Function): any`
 
 **Use Cases:**
+
 - $ref resolution fallbacks
 - Field name normalization
 - Configurable naming conventions
@@ -230,6 +253,7 @@ const makeNullable = schema => {
 ### 🔷 Configuration File Support
 
 **Format:**
+
 ```javascript
 // converter.config.js
 module.exports = {
@@ -253,6 +277,7 @@ module.exports = {
 ```
 
 **Action Items:**
+
 - [ ] Define configuration schema
 - [ ] Add config file loading
 - [ ] Support pointer-based field mappings
@@ -265,6 +290,7 @@ module.exports = {
 ### 🔷 SDL Validation & Canonicalization
 
 **What Production Scripts Do:**
+
 ```javascript
 export function emitCanonicalSDL(sdlText) {
   const schema = buildSchema(sdlText);
@@ -273,6 +299,7 @@ export function emitCanonicalSDL(sdlText) {
 ```
 
 **Action Items:**
+
 - [ ] **Both:** Add optional validation step
 - [ ] **Both:** Parse and reformat output SDL
 - [ ] **Both:** Return validation result + canonical SDL
@@ -287,6 +314,7 @@ export function emitCanonicalSDL(sdlText) {
 ### New Test Suites to Add
 
 **1. $ref Resolution Tests** (`ref-resolution.test.ts/rs`)
+
 ```
 ✓ Simple internal $ref
 ✓ Nested $ref (ref to ref to ref)
@@ -299,6 +327,7 @@ export function emitCanonicalSDL(sdlText) {
 ```
 
 **2. Circular Reference Tests** (`circular-refs.test.ts/rs`)
+
 ```
 ✓ Self-referencing type
 ✓ Mutual references (A→B→A)
@@ -308,6 +337,7 @@ export function emitCanonicalSDL(sdlText) {
 ```
 
 **3. Type Filtering Tests** (`type-filtering.test.ts/rs`)
+
 ```
 ✓ Exclude Query/Mutation/Subscription
 ✓ Exclude Connection types
@@ -317,6 +347,7 @@ export function emitCanonicalSDL(sdlText) {
 ```
 
 **4. $defs Extraction Tests** (`defs-extraction.test.ts/rs`)
+
 ```
 ✓ Extract all types from $defs
 ✓ Support both $defs and definitions
@@ -326,6 +357,7 @@ export function emitCanonicalSDL(sdlText) {
 ```
 
 **5. Integration Tests** (`integration.test.ts/rs`)
+
 ```
 ✓ Convert test.json (complex schema)
 ✓ Round-trip conversion (JSON→GQL→JSON)
@@ -341,18 +373,21 @@ export function emitCanonicalSDL(sdlText) {
 ### Week 1: Critical Fixes
 
 **Day 1-2: $ref Resolution (Rust)**
+
 - [ ] Add recursive ref following
 - [ ] Add case conversion fallbacks
 - [ ] Add tests
 - [ ] Update documentation
 
 **Day 3-4: $ref Resolution (Node)**
+
 - [ ] Implement from scratch
 - [ ] Handle $defs extraction
 - [ ] Add tests
 - [ ] Update documentation
 
 **Day 5: Circular Reference Protection**
+
 - [ ] Node: Add building set
 - [ ] Rust: Review and enhance
 - [ ] Add tests
@@ -361,18 +396,21 @@ export function emitCanonicalSDL(sdlText) {
 ### Week 2: Essential Features
 
 **Day 1-2: Type Filtering**
+
 - [ ] Add configuration options
 - [ ] Implement exclusion logic
 - [ ] Add tests
 - [ ] Document behavior
 
 **Day 3-4: CLI Tools**
+
 - [ ] Rust CLI with clap
 - [ ] Node CLI with commander
 - [ ] Add help text
 - [ ] Test with examples
 
 **Day 5: Nullable Handling**
+
 - [ ] Enhance both converters
 - [ ] Add composition keyword support
 - [ ] Add tests
@@ -416,15 +454,17 @@ If you want to start immediately, begin with the highest impact task:
 **Steps:**
 
 1. **Add to context interface** (`src/json-to-graphql.ts`):
+
 ```typescript
 interface ConversionContext {
   schema: JsonSchema;
   processedTypes: Set<string>;
-  building: Set<string>;  // ← Add this
+  building: Set<string>; // ← Add this
 }
 ```
 
 2. **Check before processing**:
+
 ```typescript
 private convertTypeDefinition(
   schema: JsonSchema,
@@ -439,9 +479,9 @@ private convertTypeDefinition(
       'CIRCULAR_REF'
     );
   }
-  
+
   context.building.add(typeName);
-  
+
   try {
     // ... existing conversion logic ...
     return output;
@@ -452,19 +492,19 @@ private convertTypeDefinition(
 ```
 
 3. **Add test** (`tests/circular-refs.test.ts`):
+
 ```typescript
-describe('Circular Reference Protection', () => {
-  it('should detect self-referencing type', () => {
+describe("Circular Reference Protection", () => {
+  it("should detect self-referencing type", () => {
     const schema = {
-      type: 'object',
-      'x-graphql-type-name': 'Node',
+      type: "object",
+      "x-graphql-type-name": "Node",
       properties: {
-        next: { $ref: '#' }
-      }
+        next: { $ref: "#" },
+      },
     };
-    
-    expect(() => jsonSchemaToGraphQL(schema))
-      .toThrow(/Circular reference/);
+
+    expect(() => jsonSchemaToGraphQL(schema)).toThrow(/Circular reference/);
   });
 });
 ```
@@ -489,6 +529,7 @@ describe('Circular Reference Protection', () => {
 ## Questions or Issues?
 
 Refer to:
+
 1. The detailed analysis in `CONVERTER_BEST_PRACTICES_ANALYSIS.md`
 2. Production script implementations in `scripts/tmp/scripts/`
 3. Previous debugging session thread for context

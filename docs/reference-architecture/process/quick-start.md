@@ -43,6 +43,7 @@ pnpm install
 ```
 
 This will install all JavaScript/TypeScript dependencies including:
+
 - Next.js (frontend framework)
 - GraphQL tools
 - Schema validators
@@ -64,6 +65,7 @@ uv pip install -e ".[dev]"
 ```
 
 This installs:
+
 - JSON Schema validators
 - Testing tools (pytest)
 - Code quality tools (ruff)
@@ -96,6 +98,7 @@ pnpm run generate:schema:interop
 ```
 
 This will:
+
 1. Generate field name mappings
 2. Convert GraphQL SDL → JSON Schema
 3. Convert JSON Schema → GraphQL SDL
@@ -116,6 +119,7 @@ pnpm dev
 The application will be available at **http://localhost:3000/**
 
 You should see:
+
 - 🏠 Homepage with project overview
 - 📊 Schema viewer and visualization tools
 - 📚 Documentation pages
@@ -128,6 +132,7 @@ You should see:
 ### View the Canonical Schema
 
 Navigate to the JSON Schema viewer:
+
 - **URL:** http://localhost:3000/
 - **File:** `src/data/schema_unification.schema.json`
 
@@ -136,12 +141,14 @@ This is the canonical source of truth for the Schema Unification Forest data mod
 ### Explore GraphQL Schema
 
 View the GraphQL SDL:
+
 - **File:** `src/data/schema_unification.graphql`
 - **Generated:** `generated-schemas/schema_unification.from-json.graphql`
 
 ### Check Documentation
 
 Browse documentation pages:
+
 - **URL:** http://localhost:3000/docs/
 - **Files:** All `.md` files in `docs/` are automatically available
 
@@ -307,18 +314,23 @@ pnpm test __tests__/scripts/generate-graphql-from-json-schema.test.mjs
 Now that you're set up, explore these guides:
 
 ### Learn the Schema Pipeline
+
 📖 [Schema Pipeline Guide](../schema/schema-pipeline-guide.md) — Complete guide to schema generation, validation, and publishing
 
 ### Understand V1 vs V2
+
 📖 [Schema V1 vs V2 Guide](../schema/schema-v1-vs-v2-guide.md) — Differences, migration, and architecture
 
 ### Work with x-graphql Hints
+
 📖 [x-graphql Hints Guide](../schema/x-graphql-hints-guide.md) — Comprehensive guide to GraphQL hints system
 
 ### System Integration
+
 📖 [System Mappings Guide](../mappings/system-mappings-guide.md) — Contract Data, Legacy Procurement, EASi mappings
 
 ### Python Validation
+
 📖 [Python Validation Guide](../implementation/python-validation-guide.md) — Python setup and advanced validation
 
 ---
@@ -326,18 +338,22 @@ Now that you're set up, explore these guides:
 ## Getting Help
 
 ### Documentation
+
 - **Main README:** [`README.md`](../../README.md)
 - **All Docs:** Browse http://localhost:3000/docs/ or `docs/` directory
 - **Implementation Plan:** [`IMPLEMENTATION-PLAN.md`](../../IMPLEMENTATION-PLAN.md)
 
 ### Architecture Decision Records
+
 - [`docs/adr/`](../adr/) — Key architectural decisions
 
 ### Common Issues
+
 - **Schema validation:** Check `docs/schema/schema-linting-guide.md`
 - **GraphQL converter issues:** See archived troubleshooting in `docs/archived/implementation-logs/`
 
 ### Community
+
 - **GitHub Issues:** Report bugs or request features
 - **Project Wiki:** Additional documentation
 - **Team Chat:** Contact TTS team for support
@@ -393,18 +409,21 @@ Now that you're set up, explore these guides:
 ## Quick Reference
 
 ### File Paths
+
 - Canonical JSON Schema: `src/data/schema_unification.schema.json`
 - Canonical GraphQL SDL: `src/data/schema_unification.graphql`
 - Generated artifacts: `generated-schemas/`
 - Website schemas: `src/data/generated/`
 
 ### Key Scripts
+
 - Generate: `pnpm run generate:schema:interop`
 - Validate: `pnpm run validate:all`
 - Test: `pnpm test && pytest`
 - Dev server: `pnpm dev`
 
 ### Important Conventions
+
 - JSON Schema: **snake_case** (canonical)
 - GraphQL SDL: **camelCase**
 - Generated files: **Committed to Git**

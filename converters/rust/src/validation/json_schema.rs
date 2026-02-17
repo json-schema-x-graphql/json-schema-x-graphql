@@ -353,7 +353,7 @@ impl ComprehensiveValidator {
                     }
 
                     // Check naming convention (PascalCase for types)
-                    if !name_str.chars().next().map_or(false, |c| c.is_uppercase()) {
+                    if !name_str.chars().next().is_some_and(|c| c.is_uppercase()) {
                         warnings.push(ValidationIssue {
                             path: format!("{}.x-graphql-type-name", path),
                             message: format!(

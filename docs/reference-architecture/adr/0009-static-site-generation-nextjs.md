@@ -3,7 +3,7 @@
 **Status:** Accepted  
 **Date:** 2024-12-01  
 **Authors:** Development Team  
-**Supersedes:** None  
+**Supersedes:** None
 
 ## Context
 
@@ -14,15 +14,17 @@ The Schema Unification Forest project provides interactive JSON Schema and Graph
 The project uses Next.js 14 with static site generation (SSG):
 
 **next.config.js:**
+
 ```javascript
 const config = {
-  output: "export",  // Static HTML export
+  output: "export", // Static HTML export
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
 };
 ```
 
 **Build Output:**
+
 ```bash
 $ pnpm run build
 # Generates static files in out/ directory
@@ -39,6 +41,7 @@ out/
 ```
 
 **Deployment:**
+
 - Static files served via nginx (see ADR 0007)
 - No Node.js runtime needed in production
 - Docker image: 200MB (vs 1.75GB with Node.js)
@@ -46,21 +49,25 @@ out/
 ### Why Static Site Generation?
 
 **Cost Optimization:**
+
 - No persistent Node.js process (saves memory)
 - nginx serves static files (50-100MB RAM vs 200-500MB for Node.js)
 - Cloud.gov charges by instance memory (4GB/instance → fewer instances needed)
 
 **Performance:**
+
 - Static HTML served instantly (no server-side rendering delay)
 - CDN-friendly (all assets pre-built, immutable URLs)
 - nginx gzip compression reduces bandwidth (60-80% smaller payloads)
 
 **Security:**
+
 - No Node.js attack surface in production
 - Static files cannot execute code
 - nginx unprivileged user (non-root)
 
 **Simplicity:**
+
 - No database or API server required
 - No session management or authentication state
 - No server-side data fetching (all data in static JSON)
@@ -87,6 +94,7 @@ out/
 ### Next.js Static Export Limitations
 
 **Disabled Features:**
+
 - ❌ API Routes (`pages/api/*`)
 - ❌ Server-Side Rendering (SSR)
 - ❌ Incremental Static Regeneration (ISR)
@@ -95,6 +103,7 @@ out/
 - ❌ Server Components (React Server Components)
 
 **Workarounds:**
+
 - API Routes → Static JSON files + client-side fetch
 - SSR → Static generation at build time
 - Image Optimization → External CDN or pre-optimized images
@@ -109,6 +118,7 @@ out/
 #### 1. Pages Architecture
 
 **Static Pages (Generated at Build Time):**
+
 ```
 src/pages/
 ├── index.tsx                    # Homepage
@@ -122,6 +132,7 @@ src/pages/
 ```
 
 **Build Process:**
+
 1. Next.js discovers all pages in `src/pages/`
 2. Runs `getStaticPaths()` for dynamic routes (e.g., `/docs/[...slug]`)
 3. Runs `getStaticProps()` for each path to fetch data
@@ -131,34 +142,35 @@ src/pages/
 #### 2. Dynamic Documentation Pages
 
 **Implementation (`src/pages/docs/[...slug].tsx`):**
+
 ```typescript
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
 export async function getStaticPaths() {
-  const docsDir = path.join(process.cwd(), 'docs');
-  const files = fs.readdirSync(docsDir).filter(f => f.endsWith('.md'));
-  
+  const docsDir = path.join(process.cwd(), "docs");
+  const files = fs.readdirSync(docsDir).filter((f) => f.endsWith(".md"));
+
   return {
-    paths: files.map(file => ({
-      params: { slug: [file.replace('.md', '')] }
+    paths: files.map((file) => ({
+      params: { slug: [file.replace(".md", "")] },
     })),
-    fallback: false  // 404 for non-existent pages
+    fallback: false, // 404 for non-existent pages
   };
 }
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
-  const filePath = path.join(process.cwd(), 'docs', `${slug[0]}.md`);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+  const filePath = path.join(process.cwd(), "docs", `${slug[0]}.md`);
+  const fileContent = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(fileContent);
-  
+
   return {
     props: {
       frontmatter: data,
       markdown: content,
-    }
+    },
   };
 }
 ```
@@ -176,7 +188,7 @@ import dynamic from 'next/dynamic';
 
 const MonacoEditor = dynamic(
   () => import('@monaco-editor/react'),
-  { 
+  {
     ssr: false,  // Client-only
     loading: () => <Spinner />
   }
@@ -189,6 +201,7 @@ const GraphQLEditor = dynamic(
 ```
 
 **Benefits:**
+
 - Initial bundle: ~300KB (fast First Contentful Paint)
 - Heavy editors loaded on-demand (lazy loading)
 - No server-side rendering for client-only libraries
@@ -196,10 +209,11 @@ const GraphQLEditor = dynamic(
 #### 4. Static Data Loading
 
 **Schema Data Strategy:**
+
 ```typescript
 // At build time, read JSON Schema files
-import schema_unificationSchema from '@/data/schema_unification.schema.json';
-import legacy_procurementSchema from '@/data/legacy_procurement.schema.json';
+import schema_unificationSchema from "@/data/schema_unification.schema.json";
+import legacy_procurementSchema from "@/data/legacy_procurement.schema.json";
 
 // Inline into JavaScript bundle
 export default function SchemaViewer() {
@@ -209,11 +223,12 @@ export default function SchemaViewer() {
 ```
 
 **For Large Schemas:**
+
 ```typescript
 // Fetch from static JSON at runtime (client-side)
 useEffect(() => {
-  fetch('/data/schema_unification.schema.json')
-    .then(r => r.json())
+  fetch("/data/schema_unification.schema.json")
+    .then((r) => r.json())
     .then(setSchema);
 }, []);
 ```
@@ -221,6 +236,7 @@ useEffect(() => {
 #### 5. SPA Routing with nginx
 
 **nginx Configuration:**
+
 ```nginx
 location / {
   try_files $uri $uri/ /index.html;
@@ -232,6 +248,7 @@ location / {
 ### Build Configuration
 
 **Memory Requirement:**
+
 ```json
 {
   "scripts": {
@@ -241,6 +258,7 @@ location / {
 ```
 
 **Why 4GB Heap:**
+
 - Monaco Editor processing (~10MB source)
 - GraphQL Editor bundling (~5MB source)
 - Markdown processing (100+ doc files)
@@ -250,6 +268,7 @@ location / {
 ### Deployment Workflow
 
 **Local Build:**
+
 ```bash
 pnpm run build
 # Output: out/ directory with static files
@@ -260,6 +279,7 @@ npx serve out    # Serve with static file server
 ```
 
 **Docker Build (Production):**
+
 ```dockerfile
 # Builder stage
 RUN pnpm run build
@@ -270,6 +290,7 @@ COPY --from=builder /app/out /app
 ```
 
 **Cloud.gov Deploy:**
+
 ```bash
 docker build -t schema-unification-project:prod .
 cf push schema-unification-project -o schema-unification-project:prod
@@ -312,6 +333,7 @@ cf push schema-unification-project -o schema-unification-project:prod
 **Approach:** Use Next.js with Node.js runtime, enable SSR
 
 **Why Rejected:**
+
 - Requires persistent Node.js process (200-500MB RAM)
 - Higher cloud.gov costs (more instances needed)
 - Longer startup time (Node.js bootstrap)
@@ -323,6 +345,7 @@ cf push schema-unification-project -o schema-unification-project:prod
 **Approach:** Use CRA instead of Next.js
 
 **Why Rejected:**
+
 - No static page generation (single `index.html` for all routes)
 - Worse SEO (all content in JavaScript bundle)
 - No automatic code splitting (manual webpack config)
@@ -334,6 +357,7 @@ cf push schema-unification-project -o schema-unification-project:prod
 **Approach:** Use Gatsby instead of Next.js
 
 **Why Rejected:**
+
 - Gatsby primarily for content-heavy sites (blogs, marketing)
 - Complex plugin ecosystem (more dependencies)
 - Slower build times than Next.js for large sites
@@ -345,6 +369,7 @@ cf push schema-unification-project -o schema-unification-project:prod
 **Approach:** Use Astro for islands architecture (partial hydration)
 
 **Why Rejected:**
+
 - Astro better for content sites, not interactive tools
 - Heavy client libraries (Monaco, GraphQL Editor) need full hydration
 - Next.js has larger ecosystem and better tooling

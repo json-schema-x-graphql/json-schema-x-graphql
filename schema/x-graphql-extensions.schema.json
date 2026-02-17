@@ -54,7 +54,14 @@
 
     "graphqlKind": {
       "type": "string",
-      "enum": ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"],
+      "enum": [
+        "OBJECT",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "INPUT_OBJECT",
+        "SCALAR"
+      ],
       "description": "GraphQL type kind"
     },
 
@@ -79,10 +86,24 @@
     "directiveLocation": {
       "type": "string",
       "enum": [
-        "QUERY", "MUTATION", "SUBSCRIPTION", "FIELD", "FRAGMENT_DEFINITION",
-        "FRAGMENT_SPREAD", "INLINE_FRAGMENT", "VARIABLE_DEFINITION",
-        "SCHEMA", "SCALAR", "OBJECT", "FIELD_DEFINITION", "ARGUMENT_DEFINITION",
-        "INTERFACE", "UNION", "ENUM", "ENUM_VALUE", "INPUT_OBJECT",
+        "QUERY",
+        "MUTATION",
+        "SUBSCRIPTION",
+        "FIELD",
+        "FRAGMENT_DEFINITION",
+        "FRAGMENT_SPREAD",
+        "INLINE_FRAGMENT",
+        "VARIABLE_DEFINITION",
+        "SCHEMA",
+        "SCALAR",
+        "OBJECT",
+        "FIELD_DEFINITION",
+        "ARGUMENT_DEFINITION",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "ENUM_VALUE",
+        "INPUT_OBJECT",
         "INPUT_FIELD_DEFINITION"
       ],
       "description": "Valid GraphQL directive location"
@@ -255,7 +276,19 @@
         },
         "federation-version": {
           "type": "string",
-          "enum": ["v1.0", "v2.0", "v2.1", "v2.2", "v2.3", "v2.4", "v2.5", "v2.6", "v2.7", "v2.8", "v2.9"],
+          "enum": [
+            "v1.0",
+            "v2.0",
+            "v2.1",
+            "v2.2",
+            "v2.3",
+            "v2.4",
+            "v2.5",
+            "v2.6",
+            "v2.7",
+            "v2.8",
+            "v2.9"
+          ],
           "default": "v2.9",
           "description": "Apollo Federation version"
         }

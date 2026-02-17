@@ -21,16 +21,16 @@ This document analyzes both GraphQL schemas (V1 auto-generated vs V2 hand-crafte
 
 ### Overview Statistics
 
-| Metric | V1 Auto-Generated | V2 Hand-Crafted |
-|--------|-------------------|-----------------|
-| **Lines of GraphQL SDL** | 295 | 537 |
-| **Object Types** | 17 | 30 |
-| **Enums** | 3 | 3 |
-| **Scalars** | 6 | 6 |
-| **Source** | Auto-converted from V1 nested schema | Manually crafted with extensions |
-| **System Extensions** | Opaque (JSON type) | Typed & Queryable (13 specialized types) |
-| **Documentation Quality** | Basic | Detailed with descriptions |
-| **API/Dashboard Ready** | ❌ Limited | ✅ Production-Ready |
+| Metric                    | V1 Auto-Generated                    | V2 Hand-Crafted                          |
+| ------------------------- | ------------------------------------ | ---------------------------------------- |
+| **Lines of GraphQL SDL**  | 295                                  | 537                                      |
+| **Object Types**          | 17                                   | 30                                       |
+| **Enums**                 | 3                                    | 3                                        |
+| **Scalars**               | 6                                    | 6                                        |
+| **Source**                | Auto-converted from V1 nested schema | Manually crafted with extensions         |
+| **System Extensions**     | Opaque (JSON type)                   | Typed & Queryable (13 specialized types) |
+| **Documentation Quality** | Basic                                | Detailed with descriptions               |
+| **API/Dashboard Ready**   | ❌ Limited                           | ✅ Production-Ready                      |
 
 ---
 
@@ -84,6 +84,7 @@ type EasiExtension {
 ```
 
 **Problems:**
+
 - ❌ System-specific data is opaque JSON blob
 - ❌ Cannot query specific Contract Data/Legacy Procurement/EASi fields
 - ❌ No type safety for filters/sorting
@@ -92,6 +93,7 @@ type EasiExtension {
 - ❌ Cannot use GraphQL fragments on system-specific data
 
 **Example Query Limitation:**
+
 ```graphql
 # ❌ CANNOT DO THIS with V1:
 query {
@@ -100,7 +102,7 @@ query {
     contract_dataExtension {
       contract_data {
         specificData {
-          legacy_procurementanceType  # Error: JSON type has no fields
+          legacy_procurementanceType # Error: JSON type has no fields
         }
       }
     }
@@ -112,7 +114,7 @@ query {
   contracts {
     piid
     contract_dataExtension {
-      contract_data  # Returns opaque JSON - must parse client-side
+      contract_data # Returns opaque JSON - must parse client-side
     }
   }
 }
@@ -129,13 +131,13 @@ type Contract DataExtension {
 type Contract DataSpecificData {
   """Assistance type information"""
   legacy_procurementanceType: Contract DataAssistanceType
-  
+
   """Applicant/beneficiary details"""
   applicantBeneficiary: Contract DataApplicantBeneficiaryType
-  
+
   """Eligibility criteria"""
   eligibility: Contract DataEligibility
-  
+
   """Usage and reporting"""
   usage: Contract DataUsage
 }
@@ -143,10 +145,10 @@ type Contract DataSpecificData {
 type Contract DataAssistanceType {
   """Type code for legacy_procurementance"""
   code: String
-  
+
   """Type description"""
   description: String
-  
+
   """Financial legacy_procurementance flag"""
   isFinancialAssistance: Boolean
 }
@@ -155,6 +157,7 @@ type Contract DataAssistanceType {
 ```
 
 **Benefits:**
+
 - ✅ System-specific data is fully typed and queryable
 - ✅ Can query specific nested fields
 - ✅ Type safety for filters, sorting, validation
@@ -163,6 +166,7 @@ type Contract DataAssistanceType {
 - ✅ Better developer experience (autocomplete, docs)
 
 **Example Query Power:**
+
 ```graphql
 # ✅ CAN DO THIS with V2:
 query {
@@ -202,21 +206,29 @@ query {
 
 ```graphql
 type Query {
-  """Fetch a single contract by global ID"""
+  """
+  Fetch a single contract by global ID
+  """
   contract: Contract
 
-  """Fetch a contract by PIID"""
+  """
+  Fetch a contract by PIID
+  """
   contractByPiid: Contract
 
-  """List all contracts with optional filtering"""
-  contracts: String  # ⚠️ Returns String (should be [Contract])
-
-  """List contracts by source system"""
-  contractsBySystem: String  # ⚠️ Returns String (should be [Contract])
+  """
+  List all contracts with optional filtering
+  """
+  contracts: String # ⚠️ Returns String (should be [Contract])
+  """
+  List contracts by source system
+  """
+  contractsBySystem: String # ⚠️ Returns String (should be [Contract])
 }
 ```
 
 **Problems:**
+
 - ⚠️ Query arguments not properly typed (converter limitation)
 - ⚠️ Return types are String instead of proper types
 - ❌ No pagination support
@@ -227,27 +239,36 @@ type Query {
 
 ```graphql
 type Query {
-  """Fetch a single contract by global ID"""
+  """
+  Fetch a single contract by global ID
+  """
   contract: Contract
 
-  """Fetch a contract by PIID"""
+  """
+  Fetch a contract by PIID
+  """
   contractByPiid: Contract
 
-  """Paginated list of contracts with filtering"""
-  contracts: String  # Should be ContractConnection for pagination
-
-  """Full-text search for contracts"""
-  searchContracts: String  # Should be [Contract] with SearchInput
+  """
+  Paginated list of contracts with filtering
+  """
+  contracts: String # Should be ContractConnection for pagination
+  """
+  Full-text search for contracts
+  """
+  searchContracts: String # Should be [Contract] with SearchInput
 }
 ```
 
 **Improvements:**
+
 - ✅ More query options (pagination, search)
 - ⚠️ Still has String return types (needs enhancement)
 - ✅ Better documentation
 - ✅ Clearer intent for different query types
 
 **Ideal State (Future Enhancement):**
+
 ```graphql
 type Query {
   contract(id: ID!): Contract
@@ -275,29 +296,35 @@ type Query {
 **Requirement:** Display contracts by agency with financial totals, filterable by system (Contract Data, Legacy Procurement, EASi).
 
 **V1 Auto-Generated:**
+
 ```graphql
 # ❌ Cannot filter by system-specific fields
 query DashboardData {
   contracts {
     contractTitle
     organizationInfo {
-      contractingAgency { name }
+      contractingAgency {
+        name
+      }
     }
     financialInfo {
       totalContractValue
     }
     contract_dataExtension {
-      contract_data  # Opaque JSON - must parse client-side
+      contract_data # Opaque JSON - must parse client-side
     }
   }
 }
 ```
+
 **Problems:**
+
 - Must fetch all contracts and filter client-side
 - Cannot aggregate by Contract Data-specific fields
 - No type safety on filtering
 
 **V2 Hand-Crafted:**
+
 ```graphql
 # ✅ Can filter and query system-specific fields
 query DashboardData {
@@ -321,7 +348,9 @@ query DashboardData {
   }
 }
 ```
+
 **Benefits:**
+
 - Server-side filtering by system
 - Typed system-specific data
 - Can aggregate specific Contract Data fields
@@ -335,32 +364,42 @@ query DashboardData {
 **Requirement:** Full-text search with faceted filters (agency, system, contract type, financial range).
 
 **V1 Auto-Generated:**
+
 ```graphql
 # ❌ Limited search capabilities
 query SearchContracts {
-  contracts {  # No filtering args
+  contracts {
+    # No filtering args
     piid
     contractTitle
     organizationInfo {
-      contractingAgency { name }
+      contractingAgency {
+        name
+      }
     }
   }
 }
 ```
+
 **Problems:**
+
 - No search query support
 - Must fetch all and search client-side
 - No faceted filtering
 
 **V2 Hand-Crafted:**
+
 ```graphql
 # ✅ Dedicated search query (though args need enhancement)
 query SearchContracts {
-  searchContracts {  # Supports full-text search
+  searchContracts {
+    # Supports full-text search
     piid
     contractTitle
     organizationInfo {
-      contractingAgency { name }
+      contractingAgency {
+        name
+      }
     }
     systemMetadata {
       primarySystem
@@ -368,7 +407,9 @@ query SearchContracts {
   }
 }
 ```
+
 **Benefits:**
+
 - Dedicated search endpoint
 - Can extend with proper filter args
 - Better performance (server-side search)
@@ -382,6 +423,7 @@ query SearchContracts {
 **Requirement:** Generate Contract Data-specific report showing legacy_procurementance types and eligibility.
 
 **V1 Auto-Generated:**
+
 ```graphql
 # ❌ Cannot query Contract Data-specific fields
 query Contract DataReport {
@@ -393,12 +435,15 @@ query Contract DataReport {
   }
 }
 ```
+
 **Problems:**
+
 - Cannot query specific Contract Data fields
 - Must transfer entire JSON blob
 - No validation on expected fields
 
 **V2 Hand-Crafted:**
+
 ```graphql
 # ✅ Precise field selection for Contract Data data
 query Contract DataReport {
@@ -425,7 +470,9 @@ query Contract DataReport {
   }
 }
 ```
+
 **Benefits:**
+
 - Precise field selection (efficient)
 - Type-safe Contract Data data access
 - Clear structure for reporting
@@ -466,11 +513,13 @@ query Contract DataReport {
    - Better documentation
 
 **V1 Use Cases:**
+
 - Understanding core data model (educational)
 - Quick schema exploration
 - Simple validation scenarios
 
 **V2 Use Cases:**
+
 - Production API implementation ✅
 - Leadership dashboards ✅
 - System-specific reporting ✅
@@ -490,6 +539,7 @@ The challenge: We want to keep `src/data/schema_unification.schema.json` (V1) si
 #### Phase 1: Keep V1 Schema as Human Source of Truth ✅ (DONE)
 
 **Current State:**
+
 - `src/data/schema_unification.schema.json` - Simple nested structure
 - Easy to read and maintain
 - Perfect for documentation and validation
@@ -536,12 +586,14 @@ The challenge: We want to keep `src/data/schema_unification.schema.json` (V1) si
 ```
 
 **Benefits:**
+
 - ✅ V1 schema remains readable
 - ✅ Auto-converter knows which fields to expand
-- ✅ Non-invasive (x-graphql-* properties ignored by validators)
+- ✅ Non-invasive (x-graphql-\* properties ignored by validators)
 - ✅ Enables richer GraphQL output
 
 **Drawbacks:**
+
 - ⚠️ V1 schema grows slightly (minimal)
 - ⚠️ Requires converter enhancements
 - ⚠️ Two places to document (JSON Schema + x-graphql hints)
@@ -556,19 +608,19 @@ The challenge: We want to keep `src/data/schema_unification.schema.json` (V1) si
 function extractDefinitions(v1Schema) {
   // Existing: Extract core types
   const definitions = extractCoreTypes(v1Schema);
-  
+
   // NEW: Process x-graphql-expand hints
-  const expandableTypes = findPropertiesWithHint(v1Schema, 'x-graphql-expand');
-  
+  const expandableTypes = findPropertiesWithHint(v1Schema, "x-graphql-expand");
+
   for (const prop of expandableTypes) {
-    if (prop['x-graphql-extract-types']) {
+    if (prop["x-graphql-extract-types"]) {
       // Extract nested types specified in hints
-      for (const typeName of prop['x-graphql-extract-types']) {
+      for (const typeName of prop["x-graphql-extract-types"]) {
         definitions[typeName] = extractNestedType(prop, typeName);
       }
     }
   }
-  
+
   return definitions;
 }
 ```
@@ -580,12 +632,14 @@ function extractDefinitions(v1Schema) {
 **Strategy:** Auto-generate V2 as base, then allow manual enhancements for complex cases.
 
 **Workflow:**
+
 1. Edit V1 schema (simple nested structure)
 2. Run enhanced converter → generates V2 base
 3. Manually refine V2 for complex system extensions (optional)
 4. Generate GraphQL SDL from V2
 
 **Version Control:**
+
 ```
 src/data/
   schema_unification.schema.json              # V1: Human-maintained source of truth
@@ -598,7 +652,7 @@ src/data/
 ```
 Need to add new field?
 │
-├─ Core contract data? 
+├─ Core contract data?
 │  └─ Edit V1 → Run converter → Done ✅
 │
 └─ System-specific detail?
@@ -690,12 +744,14 @@ Need to add new field?
 ### For JSON Schema Maintenance (V1)
 
 **DO:**
+
 - ✅ Keep nested structure (human-readable)
 - ✅ Add x-graphql hints for complex types (minimal)
 - ✅ Use clear descriptions (become GraphQL docs)
 - ✅ Maintain as single source of truth
 
 **DON'T:**
+
 - ❌ Don't add definitions section (breaks simplicity)
 - ❌ Don't restructure for tooling (defeats purpose)
 - ❌ Don't duplicate data between V1 and V2 manually
@@ -703,12 +759,14 @@ Need to add new field?
 ### For GraphQL Generation (V2)
 
 **DO:**
+
 - ✅ Use V2 hand-crafted for production API
 - ✅ Auto-generate V2 base from V1 when possible
 - ✅ Manually refine system extensions (Contract Data, Legacy Procurement, EASi)
 - ✅ Keep V2 in version control (review changes)
 
 **DON'T:**
+
 - ❌ Don't manually edit auto-generated sections
 - ❌ Don't lose manual refinements on regeneration
 - ❌ Don't skip documentation in V2
@@ -716,12 +774,14 @@ Need to add new field?
 ### For Landing Page
 
 **DO:**
+
 - ✅ Show both Voyager buttons (Core Model vs API/Dashboard)
 - ✅ Use visual distinction (gradient for V2)
 - ✅ Label clearly (purpose, not just version number)
 - ✅ Link to documentation explaining differences
 
 **DON'T:**
+
 - ❌ Don't hide V1 (still useful for learning)
 - ❌ Don't make them equal (V2 is production-ready)
 
@@ -801,6 +861,7 @@ Need to add new field?
 ```
 
 **Result:** Generates proper typed structures:
+
 ```graphql
 type Contract DataSpecificData {
   legacy_procurementanceType: Contract DataAssistanceType
@@ -821,6 +882,7 @@ type Contract DataEligibility {
 ```
 
 **Trade-off Analysis:**
+
 - V1 schema grows from ~50 lines to ~100 lines for Contract Data section
 - BUT: Remains readable and well-structured
 - AND: Generates production-ready GraphQL types
@@ -855,16 +917,19 @@ type Contract DataEligibility {
 ### Expected Outcomes
 
 **For Developers:**
+
 - ✅ Powerful GraphQL API for dashboards (V2)
 - ✅ Simple JSON Schema for maintenance (V1)
 - ✅ Clear upgrade path (hints + manual refinement)
 
 **For Leadership:**
+
 - ✅ Production-ready API schema visualization (V2)
 - ✅ Clear understanding of system-specific data
 - ✅ Confidence in data structure for reporting
 
 **For Contributors:**
+
 - ✅ Easy to maintain JSON Schema (V1 remains simple)
 - ✅ Clear guidelines on when to use hints
 - ✅ Automated tooling reduces manual work

@@ -13,9 +13,7 @@
       "description": "Book in the catalog",
       "x-graphql-type-name": "Book",
       "x-graphql-type-kind": "OBJECT",
-      "x-graphql-federation-keys": [
-        "isbn"
-      ],
+      "x-graphql-federation-keys": ["isbn"],
       "properties": {
         "isbn": {
           "type": "string",
@@ -42,10 +40,7 @@
           "x-graphql-nullable": true
         }
       },
-      "required": [
-        "isbn",
-        "title"
-      ]
+      "required": ["isbn", "title"]
     },
     "Query": {
       "type": "object",

@@ -9,12 +9,14 @@ This guide documents the SDL (Schema Definition Language) linting capabilities a
 ### Quick Rules
 
 **✅ Supergraph Namespace** - Use ONLY for the base entity owner subgraph:
+
 - `x-graphql-supergraph-name`
 - `x-graphql-supergraph-type` = `"base-entity"`
 - `x-graphql-supergraph-entity`
 - `x-graphql-supergraph-query-root` = `true`
 
 **✅ Subgraph Namespace** - Use for ALL extending subgraphs:
+
 - `x-graphql-subgraph-name`
 - `x-graphql-subgraph-type` = `"entity-extending"` or `"utility"`
 - `x-graphql-subgraph-entity`
@@ -23,6 +25,7 @@ This guide documents the SDL (Schema Definition Language) linting capabilities a
 ### Example: Three-Subgraph Federation
 
 #### Subgraph 1: Users Service (Owner/Base Entity)
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -46,6 +49,7 @@ This guide documents the SDL (Schema Definition Language) linting capabilities a
 ```
 
 #### Subgraph 2: User Status Service (Extending)
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -63,12 +67,16 @@ This guide documents the SDL (Schema Definition Language) linting capabilities a
       "x-graphql-directives": [{ "name": "external" }]
     },
     "account_role": { "type": "string", "enum": ["ADMIN", "USER", "GUEST"] },
-    "current_status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "SUSPENDED"] }
+    "current_status": {
+      "type": "string",
+      "enum": ["ACTIVE", "INACTIVE", "SUSPENDED"]
+    }
   }
 }
 ```
 
 #### Subgraph 3: User Details Service (Extending)
+
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -97,19 +105,19 @@ This guide documents the SDL (Schema Definition Language) linting capabilities a
 
 The `lintSDL()` function checks GraphQL SDL for:
 
-| Check | Severity | Details |
-|-------|----------|---------|
-| **Type Naming** | Error | Types must use PascalCase (e.g., `User`, `Account`) |
-| **Field Naming** | Warning | Fields should use snake_case (e.g., `user_id`, `first_name`) |
-| **@extends/@key** | Warning | Types with @extends should have @key directive |
-| **@external/@extends** | Warning | @external should only appear with @extends |
-| **Duplicate Types** | Error | Type name appears more than once |
-| **Empty Types** | Info | Type has no fields or only placeholder |
+| Check                  | Severity | Details                                                      |
+| ---------------------- | -------- | ------------------------------------------------------------ |
+| **Type Naming**        | Error    | Types must use PascalCase (e.g., `User`, `Account`)          |
+| **Field Naming**       | Warning  | Fields should use snake_case (e.g., `user_id`, `first_name`) |
+| **@extends/@key**      | Warning  | Types with @extends should have @key directive               |
+| **@external/@extends** | Warning  | @external should only appear with @extends                   |
+| **Duplicate Types**    | Error    | Type name appears more than once                             |
+| **Empty Types**        | Info     | Type has no fields or only placeholder                       |
 
 ### Using the Linter
 
 ```javascript
-import { lintSDL } from './lib/federation-validator.js';
+import { lintSDL } from "./lib/federation-validator.js";
 
 const sdl = `
   type User @key(fields: "id") {
@@ -120,12 +128,13 @@ const sdl = `
 
 const issues = lintSDL(sdl);
 
-console.log('Errors:', issues.errors);     // Critical issues (fail build)
-console.log('Warnings:', issues.warnings); // Best practice violations
-console.log('Infos:', issues.infos);       // Informational hints
+console.log("Errors:", issues.errors); // Critical issues (fail build)
+console.log("Warnings:", issues.warnings); // Best practice violations
+console.log("Infos:", issues.infos); // Informational hints
 ```
 
 **Example Output:**
+
 ```javascript
 {
   errors: [
@@ -163,40 +172,41 @@ The `validateSubgraphNaming()` function enforces:
 ### Using the Validator
 
 ```javascript
-import { validateSubgraphNaming } from './lib/federation-validator.js';
+import { validateSubgraphNaming } from "./lib/federation-validator.js";
 
 const schemas = [
   {
-    name: 'users-service',
+    name: "users-service",
     schema: {
-      'x-graphql-supergraph-name': 'users-service',
-      'x-graphql-supergraph-type': 'base-entity',
-      'x-graphql-supergraph-entity': 'User',
-      'x-graphql-supergraph-query-root': true
+      "x-graphql-supergraph-name": "users-service",
+      "x-graphql-supergraph-type": "base-entity",
+      "x-graphql-supergraph-entity": "User",
+      "x-graphql-supergraph-query-root": true,
     },
-    type: 'owner'
+    type: "owner",
   },
   {
-    name: 'user-status-service',
+    name: "user-status-service",
     schema: {
-      'x-graphql-subgraph-name': 'user-status-service',
-      'x-graphql-subgraph-type': 'entity-extending',
-      'x-graphql-subgraph-entity': 'User'
+      "x-graphql-subgraph-name": "user-status-service",
+      "x-graphql-subgraph-type": "entity-extending",
+      "x-graphql-subgraph-entity": "User",
     },
-    type: 'extending'
-  }
+    type: "extending",
+  },
 ];
 
 const result = validateSubgraphNaming(schemas);
 
-console.log('Valid:', result.valid);                    // true/false
-console.log('Supergraph count:', result.supergraphCount); // Should be 1
-console.log('Subgraph count:', result.subgraphCount);     // Should be N-1
-console.log('Errors:', result.errors);                   // Any validation errors
-console.log('Warnings:', result.warnings);               // Any warnings
+console.log("Valid:", result.valid); // true/false
+console.log("Supergraph count:", result.supergraphCount); // Should be 1
+console.log("Subgraph count:", result.subgraphCount); // Should be N-1
+console.log("Errors:", result.errors); // Any validation errors
+console.log("Warnings:", result.warnings); // Any warnings
 ```
 
 **Example Output:**
+
 ```javascript
 {
   valid: true,
@@ -277,6 +287,7 @@ The converter automatically:
 ## Test Coverage
 
 ✅ **164 tests passing** including:
+
 - 15 SDL linting tests
 - 12 subgraph naming validation tests
 - All federation validator tests
@@ -286,25 +297,29 @@ The converter automatically:
 ## Best Practices
 
 1. **Always validate** before composition
+
    ```javascript
    const naming = validateSubgraphNaming(schemas);
-   const linting = schemas.forEach(s => lintSDL(s.sdl));
+   const linting = schemas.forEach((s) => lintSDL(s.sdl));
    ```
 
 2. **One owner, many extenders**
+
    ```
-   1 supergraph (base-entity) 
+   1 supergraph (base-entity)
    + N subgraphs (entity-extending)
    = Federated composition
    ```
 
 3. **Use snake_case for fields**
+
    ```json
    ✅ "user_id", "first_name", "account_status"
    ❌ "userId", "firstName", "accountStatus"
    ```
 
 4. **Use PascalCase for types**
+
    ```graphql
    ✅ type User, type Account, type UserStatus
    ❌ type user, type account, type user_status

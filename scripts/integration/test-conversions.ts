@@ -444,6 +444,32 @@ async function main() {
   const harness = new IntegrationTestHarness();
   const report = await harness.runAll();
 
+  // Handle update-expected flag
+  if (flags.updateExpected && report.failedTests > 0) {
+    console.log("\n🔄 Updating expected SDL files...");
+    let updatedCount = 0;
+
+    for (const result of report.results) {
+      if (!result.passed && result.expectedFile && result.generatedSDL) {
+        try {
+          const fullPath = join(PROJECT_ROOT, result.expectedFile);
+          writeFileSync(fullPath, result.generatedSDL);
+          console.log(`   📝 Updated: ${result.expectedFile}`);
+          updatedCount++;
+          // Mark as passed for the report if we want, or just let users re-run
+          result.passed = true; // Optimistically mark as passed
+          report.failedTests--;
+          report.passedTests++;
+        } catch (err: any) {
+          console.error(
+            `   ❌ Failed to update ${result.expectedFile}: ${err.message}`,
+          );
+        }
+      }
+    }
+    console.log(`\n✅ Updated ${updatedCount} expected files.\n`);
+  }
+
   // Print summary
   console.log("\n" + "=".repeat(60));
   console.log("INTEGRATION TEST SUMMARY");

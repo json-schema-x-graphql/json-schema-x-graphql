@@ -8,11 +8,11 @@
 
 ## Quick Status
 
-| Component | Status | Details |
-|-----------|--------|---------|
-| **Schema Format** | ✅ Fixed | Changed from object-style `x-graphql-type` to separate extensions |
-| **Node Converter** | ✅ Working | Type kind mapping fixed, validation passes |
-| **Rust Converter** | ✅ Working | `$ref` resolution added, $defs extraction working |
+| Component          | Status     | Details                                                           |
+| ------------------ | ---------- | ----------------------------------------------------------------- |
+| **Schema Format**  | ✅ Fixed   | Changed from object-style `x-graphql-type` to separate extensions |
+| **Node Converter** | ✅ Working | Type kind mapping fixed, validation passes                        |
+| **Rust Converter** | ✅ Working | `$ref` resolution added, $defs extraction working                 |
 
 ---
 
@@ -21,6 +21,7 @@
 ### 1. Schema Extension Format ✅
 
 **Problem:** Schema used non-standard `x-graphql-type` as object:
+
 ```json
 "x-graphql-type": {
   "name": "Contract",
@@ -30,6 +31,7 @@
 ```
 
 **Solution:** Converted to standard format:
+
 ```json
 "x-graphql-type-name": "Contract",
 "x-graphql-type-kind": "OBJECT",
@@ -38,6 +40,7 @@
 ```
 
 **Files:**
+
 - Backup: `schema/test.json.backup`
 - Fixed: `schema/test.json`
 
@@ -46,11 +49,12 @@
 **Problem:** Output showed `OBJECT Contract {` instead of `type Contract {`
 
 **Solution:** Added enum-to-keyword mapping in `converters/node/src/json-to-graphql.ts`:
+
 ```typescript
 const typeKindMap = {
-  OBJECT: 'type',
-  INTERFACE: 'interface',
-  ENUM: 'enum',
+  OBJECT: "type",
+  INTERFACE: "interface",
+  ENUM: "enum",
   // ...
 };
 ```
@@ -66,6 +70,7 @@ const typeKindMap = {
 **Status:** Now working! Conversion succeeds with proper type resolution.
 
 **Fixes Applied:**
+
 1. Added `$ref` detection in `infer_graphql_type()` function
 2. Extracts type name from `$ref` path (e.g., `#/$defs/system_metadata` → `SystemMetadata`)
 3. Made `type` field optional when `$ref` or `x-graphql-type-name` is present
@@ -74,6 +79,7 @@ const typeKindMap = {
 6. Fixed interface implementation property name
 
 **Result:** Rust converter now produces superior output with:
+
 - Proper `$ref` resolution to actual type names
 - Extraction of types from `$defs` section
 - Accurate GraphQL types (ID!, [Contract!], etc.)
@@ -81,6 +87,7 @@ const typeKindMap = {
 ### Both Converters: Limited Scope ⚠️
 
 Currently only convert the root type. Missing:
+
 - Type extraction from `$defs` (34 types not converted)
 - Custom scalar definitions (`x-graphql-scalars`)
 - Query/Mutation operations (`x-graphql-operations`)
@@ -102,6 +109,7 @@ console.log(jsonSchemaToGraphQL(schema, { validate: true }));
 ```
 
 **Output:** (783 bytes, 1 type, all references show as String)
+
 ```graphql
 type Contract implements Node {
   id: String
@@ -120,6 +128,7 @@ cargo run --example json_to_sdl -- ../../schema/test.json
 ```
 
 **Output:** (38 lines, 3 types, proper type resolution!)
+
 ```graphql
 type Contract implements Node {
   commonElements: CommonElements!
@@ -155,11 +164,13 @@ type SystemMetadata {
 ## Next Actions
 
 ### For You
+
 1. **✅ Review** both converter outputs - Rust significantly better!
 2. **Choose** which converter to use (Rust recommended)
 3. **Test** Node tests: `cd converters/node && npm test`
 
 ### For Development Team (MEDIUM Priority)
+
 1. **✅ Fix Rust converter** `$ref` resolution - DONE!
 2. **Expand `$defs` processing** - both converters (Rust partial, Node none)
 3. **Fix duplicate types** in Rust output (Contract appears twice)

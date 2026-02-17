@@ -38,16 +38,19 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ### Documentation (10% Complete)
 
 **Completed**:
+
 - ✅ Source documentation analyzed (52+ attributes cataloged from TTSE)
 - ✅ Implementation plan created (1,715 lines)
 - ✅ Migration checklist established (622 lines)
 - ✅ Documentation hub page created
 
 **In Progress**:
+
 - 🔄 Attribute reconciliation (comparing TTSE vs current project)
 - 🔄 Documentation structure planning
 
 **Planned**:
+
 - ⏳ Quick Start Guide
 - ⏳ Complete Attribute Reference
 - ⏳ Common Patterns Guide
@@ -58,6 +61,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ### Converter Implementation (33% Complete)
 
 **Node.js Converter** (65% feature support, 70% test coverage):
+
 - ✅ Type name mapping (`x-graphql-type-name`)
 - ✅ Type kind specification (`x-graphql-type-kind`)
 - ✅ Field name mapping (`x-graphql-field-name`)
@@ -67,6 +71,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - 🟡 Partial: Interface implementation, union types, federation features
 
 **Rust Converter** (60% feature support, 65% test coverage):
+
 - ✅ Type name mapping (`x-graphql-type-name`)
 - ✅ Type kind specification (`x-graphql-type-kind`)
 - ✅ Field name mapping (`x-graphql-field-name`)
@@ -78,12 +83,14 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ### Test Coverage (0% of Target)
 
 **Test Schemas**: 0/14 created
+
 - ⏳ Basic types, nullability, interfaces, unions, enums, directives
 - ⏳ Federation (basic and advanced), field arguments, scalars
 - ⏳ Descriptions, skip fields, complex nested types
 - ⏳ Real-world API examples
 
 **Test Suites**: 0/166 tests written
+
 - ⏳ 83 tests for Node.js converter
 - ⏳ 83 tests for Rust converter
 
@@ -92,6 +99,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## Key Deliverables
 
 ### Phase 1: Documentation Audit & Migration (Week 1)
+
 **Duration**: 3-4 days | **Effort**: 20 hours
 
 - Migrate 8 key documentation files from TTSE-petrified-forest
@@ -100,19 +108,23 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - Review and reconcile 52+ attributes
 
 ### Phase 2: Converter Implementation Audit (Week 1-2)
+
 **Duration**: 3-5 days | **Effort**: 40 hours
 
 **P0 Features** (Critical):
+
 - Implement `x-graphql-skip` (field/type exclusion)
 - Implement `x-graphql-nullable` (explicit nullability)
 - Implement `x-graphql-description` (GraphQL-specific descriptions)
 
 **P1 Features** (Important):
+
 - Complete `x-graphql-implements` (interface implementation)
 - Complete `x-graphql-union-types` (union type generation)
 - Complete federation support (`requires`, `provides`)
 
 ### Phase 3: Test Coverage Enhancement (Week 2-3)
+
 **Duration**: 4-6 days | **Effort**: 60 hours
 
 - Create 14 comprehensive test schemas
@@ -121,6 +133,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - Verify round-trip fidelity ≥99%
 
 ### Phase 4: Documentation Enhancement (Week 2-3)
+
 **Duration**: 4-5 days | **Effort**: 30 hours
 
 - Quick Start Guide (5-minute getting started)
@@ -131,6 +144,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - Migration Guide (from TTSE and other tools)
 
 ### Phase 5: Validation & Tooling (Week 3)
+
 **Duration**: 3-4 days | **Effort**: 25 hours
 
 - Enhanced meta-schema validation
@@ -139,6 +153,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - VS Code extension (optional)
 
 ### Phase 6: Integration & Testing (Week 3-4)
+
 **Duration**: 3-4 days | **Effort**: 20 hours
 
 - End-to-end integration tests
@@ -146,6 +161,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - Compatibility testing (Apollo, GraphQL.js, Federation)
 
 ### Phase 7: Deployment & Documentation (Week 4)
+
 **Duration**: 2-3 days | **Effort**: 15 hours
 
 - Documentation site deployment
@@ -153,6 +169,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - Release announcement
 
 ### Phase 8: Monitoring & Metrics (Week 4)
+
 **Duration**: 2-3 days | **Effort**: 10 hours
 
 - Usage metrics tracking
@@ -163,12 +180,12 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 
 ## Timeline
 
-| Week | Phases | Key Milestones |
-|------|--------|----------------|
-| **Week 1** | 1, 2A | Documentation migrated, P0 features implemented |
-| **Week 2** | 2B, 3A, 4A | P1 features, test schemas, quick start guide |
-| **Week 3** | 3B, 4B, 5 | Full test suites, advanced docs, validation tooling |
-| **Week 4** | 6, 7, 8 | Integration tests, deployment, monitoring |
+| Week       | Phases     | Key Milestones                                      |
+| ---------- | ---------- | --------------------------------------------------- |
+| **Week 1** | 1, 2A      | Documentation migrated, P0 features implemented     |
+| **Week 2** | 2B, 3A, 4A | P1 features, test schemas, quick start guide        |
+| **Week 3** | 3B, 4B, 5  | Full test suites, advanced docs, validation tooling |
+| **Week 4** | 6, 7, 8    | Integration tests, deployment, monitoring           |
 
 **Start Date**: December 30, 2024  
 **Target Completion**: January 27, 2025  
@@ -180,6 +197,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## X-GraphQL Attribute Categories
 
 ### 1. Type-Level Attributes (7)
+
 - `x-graphql-type-name` - GraphQL type name (PascalCase)
 - `x-graphql-type-kind` - Type kind (OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, SCALAR)
 - `x-graphql-implements` - List of interfaces implemented
@@ -189,6 +207,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - `x-graphql-skip` - Exclude type from SDL generation
 
 ### 2. Field-Level Attributes (8)
+
 - `x-graphql-field-name` - Field name (camelCase)
 - `x-graphql-field-type` - GraphQL field type override
 - `x-graphql-field-non-null` - Field is non-nullable (`!`)
@@ -199,6 +218,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - `x-graphql-skip` - Exclude field from SDL
 
 ### 3. Federation Attributes (6+)
+
 - `x-graphql-federation-keys` - Entity reference keys (`@key`)
 - `x-graphql-federation-shareable` - Shareable field/type (`@shareable`)
 - `x-graphql-federation-requires` - Required fields from other subgraph (`@requires`)
@@ -207,6 +227,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - `x-graphql-federation-override-from` - Field migration source (`@override`)
 
 ### 4. Additional Categories
+
 - **Scalars**: Custom scalar type mapping
 - **Enums**: Enum value configuration
 - **Directives**: Custom directive definitions
@@ -220,18 +241,21 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## Benefits
 
 ### For Developers
+
 - **Clear Documentation**: Single source of truth for all x-graphql attributes
 - **Real Examples**: 30+ working examples showing common patterns
 - **Quick Start**: Get from zero to first conversion in ≤10 minutes
 - **Troubleshooting**: Solutions to 10+ common issues
 
 ### For the Project
+
 - **Feature Completeness**: 100% attribute support in both converters
 - **Quality Assurance**: ≥95% test coverage, ≥99% round-trip fidelity
 - **Validation**: Tooling to enforce correct usage and prevent errors
 - **Maintainability**: Consolidated documentation reduces technical debt
 
 ### For the Ecosystem
+
 - **Standardization**: Canonical pattern for JSON Schema ↔ GraphQL conversion
 - **Interoperability**: Works with Apollo, GraphQL.js, Federation, and other tools
 - **Migration Path**: Easy migration from TTSE-petrified-forest and other projects
@@ -242,17 +266,20 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## Resource Requirements
 
 ### Team
+
 - **Core Engineering**: 2-3 developers (converter implementation, testing)
 - **Documentation**: 1 technical writer (documentation migration, guides)
 - **QA**: 1 engineer (test coverage, integration testing)
 - **DevOps**: 1 engineer (tooling, deployment, monitoring)
 
 ### Estimated Effort
+
 - **Total Hours**: 220 hours
 - **Per Week**: ~55 hours (with 4-person team)
 - **Per Person**: ~55 hours over 4 weeks
 
 ### Infrastructure
+
 - CI/CD for automated testing
 - Documentation hosting (GitHub Pages)
 - Package registries (npm, crates.io)
@@ -262,19 +289,20 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 
 ## Risks & Mitigations
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| **Breaking Changes** | Medium | High | Comprehensive testing, migration guide, semver |
-| **Performance Regression** | Low | Medium | Benchmark tests, performance budgets |
-| **Federation Compatibility** | Medium | High | Test with Apollo Federation, compatibility matrix |
-| **Documentation Incomplete** | Low | Medium | Prioritize P0/P1 docs, iterative releases |
-| **Adoption Resistance** | Medium | Medium | Clear migration guide, backward compatibility |
+| Risk                         | Probability | Impact | Mitigation                                        |
+| ---------------------------- | ----------- | ------ | ------------------------------------------------- |
+| **Breaking Changes**         | Medium      | High   | Comprehensive testing, migration guide, semver    |
+| **Performance Regression**   | Low         | Medium | Benchmark tests, performance budgets              |
+| **Federation Compatibility** | Medium      | High   | Test with Apollo Federation, compatibility matrix |
+| **Documentation Incomplete** | Low         | Medium | Prioritize P0/P1 docs, iterative releases         |
+| **Adoption Resistance**      | Medium      | Medium | Clear migration guide, backward compatibility     |
 
 ---
 
 ## Success Metrics
 
 ### Documentation Quality
+
 - [ ] All 36+ attributes documented with examples
 - [ ] Quick start guide completed (≤10 minutes)
 - [ ] 30+ working examples published
@@ -282,6 +310,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 - [ ] User feedback score ≥4.5/5
 
 ### Converter Quality
+
 - [ ] 100% feature support (36+ attributes)
 - [ ] ≥95% test coverage
 - [ ] ≥99% round-trip fidelity
@@ -291,6 +320,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
   - Large schemas (5000 fields): <1s
 
 ### Adoption Metrics
+
 - [ ] 80% adoption rate (TTSE-petrified-forest users)
 - [ ] Zero critical validation errors in production
 - [ ] Zero unmitigated breaking changes
@@ -301,6 +331,7 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## Related Documentation
 
 ### Planning Documents
+
 - **[Implementation Plan](docs/plans/X-GRAPHQL-NAMESPACE-IMPLEMENTATION-PLAN.md)** (1,715 lines)
   - Detailed roadmap with 8 phases
   - Technical specifications for each deliverable
@@ -312,12 +343,14 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
   - Owner assignments and deadlines
 
 ### Documentation Hub
+
 - **[X-GraphQL README](docs/x-graphql/README.md)** (389 lines)
   - Overview and quick links
   - Current status and timeline
   - Examples and FAQs
 
 ### Source Material
+
 - **TTSE-petrified-forest documentation**:
   - `~/TTSE-petrified-forest/docs/schema/x-graphql-quick-reference.md`
   - `~/TTSE-petrified-forest/docs/X-GRAPHQL-ATTRIBUTE-REGISTRY.md`
@@ -330,24 +363,28 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 ## Next Steps
 
 ### Immediate Actions (This Week)
+
 1. **Complete attribute reconciliation** - Compare TTSE vs current project
 2. **Implement P0 missing features** - skip, nullable, description
 3. **Create first test schemas** - Basic types, nullability, interfaces
 4. **Begin Quick Start guide** - 5-minute getting started
 
 ### Week 2 Priorities
+
 1. **P1 feature implementation** - Complete interfaces, unions, federation
 2. **Test schema creation** - All 14 schemas with expected outputs
 3. **Attribute reference** - Document all 36+ attributes
 4. **Common patterns guide** - 7 real-world patterns
 
 ### Week 3 Priorities
+
 1. **Full test suite** - 166 tests across both converters
 2. **Advanced documentation** - Interfaces, unions, federation deep-dive
 3. **Validation tooling** - CLI tool, pre-commit hooks
 4. **Integration testing** - Apollo, GraphQL.js, Federation
 
 ### Week 4 Priorities
+
 1. **Performance benchmarks** - Verify targets met
 2. **Documentation deployment** - Publish to GitHub Pages
 3. **Package releases** - v2.0.0 for Node.js and Rust
@@ -357,12 +394,12 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 
 ## Approval & Sign-off
 
-| Role | Name | Status | Date |
-|------|------|--------|------|
-| **Project Lead** | TBD | ⏳ Pending | - |
-| **Core Engineering Lead** | TBD | ⏳ Pending | - |
-| **Documentation Lead** | TBD | ⏳ Pending | - |
-| **QA Lead** | TBD | ⏳ Pending | - |
+| Role                      | Name | Status     | Date |
+| ------------------------- | ---- | ---------- | ---- |
+| **Project Lead**          | TBD  | ⏳ Pending | -    |
+| **Core Engineering Lead** | TBD  | ⏳ Pending | -    |
+| **Documentation Lead**    | TBD  | ⏳ Pending | -    |
+| **QA Lead**               | TBD  | ⏳ Pending | -    |
 
 ---
 
@@ -382,4 +419,4 @@ This initiative consolidates and enhances the `x-graphql-*` namespace documentat
 
 ---
 
-*This initiative represents a significant investment in documentation quality, converter completeness, and developer experience. Upon completion, the json-schema-x-graphql project will have the most comprehensive x-graphql namespace implementation and documentation in the ecosystem.*
+_This initiative represents a significant investment in documentation quality, converter completeness, and developer experience. Upon completion, the json-schema-x-graphql project will have the most comprehensive x-graphql namespace implementation and documentation in the ecosystem._

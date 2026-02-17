@@ -5,13 +5,16 @@ export const searchQuery = (param: string) => {
 export const cleanupHighlight = () => {
   const nodes = document.querySelectorAll("foreignObject.searched, .highlight");
 
-  nodes.forEach(node => {
+  nodes.forEach((node) => {
     node.classList.remove("highlight", "searched");
   });
 };
 
-export const highlightMatchedNodes = (nodes: NodeListOf<Element>, selectedNode: number) => {
-  nodes.forEach(node => {
+export const highlightMatchedNodes = (
+  nodes: NodeListOf<Element>,
+  selectedNode: number,
+) => {
+  nodes.forEach((node) => {
     const foreignObject = node.parentElement?.closest("foreignObject");
 
     if (foreignObject) {
