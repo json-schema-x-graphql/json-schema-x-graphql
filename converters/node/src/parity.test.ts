@@ -140,7 +140,9 @@ describe("Parity: Node vs Rust converter outputs", () => {
   const testDataDir = join(repoRoot, "converters", "test-data");
   const scriptPath = join(repoRoot, "scripts", "test-both-converters.js");
 
-  const files = readdirSync(testDataDir).filter((f) => f.endsWith(".json"));
+  const files = readdirSync(testDataDir).filter(
+    (f) => f.endsWith(".json") && !f.endsWith(".options.json"),
+  );
   if (files.length === 0) {
     test("no fixtures found", () => {
       expect(files.length).toBeGreaterThan(0);
