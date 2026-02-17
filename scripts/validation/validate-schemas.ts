@@ -246,38 +246,104 @@ class SchemaValidator {
         if (key.startsWith("x-graphql-")) {
           const extName = key.substring("x-graphql-".length);
 
-          // Validate known extensions
-          const knownExtensions = [
+          // Canonical x-graphql extensions from X-GRAPHQL-ATTRIBUTE-REGISTRY.md
+          // See: docs/reference/x-graphql/X-GRAPHQL-ATTRIBUTE-REGISTRY.md
+          const knownExtensions = new Set([
+            // Federation Attributes (6+)
+            "federation",
+            "federation-keys",
+            "federation-shareable",
+            "federation-authenticated",
+            "federation-inaccessible",
+            "federation-interface-object",
+            "federation-provides",
+            "federation-external",
+            "federation-requires",
+            "federation-override-from",
+
+            // Type Definition Attributes (7)
             "type",
-            "name",
+            "type-name",
+            "type-kind",
+            "type-directives",
+            "implements",
+            "union",
+            "union-types",
+
+            // Field Definition Attributes (8+)
+            "field",
+            "field-type",
             "field-name",
-            "description",
+            "field-directives",
+            "field-non-null",
+            "field-list-item-non-null",
+            "required",
             "nullable",
             "skip",
-            "interface",
-            "union",
-            "implements",
-            "directive",
-            "key",
-            "external",
-            "requires",
-            "provides",
-            "shareable",
-            "inaccessible",
-            "override",
-            "tag",
-            "extend",
-            "input",
-            "enum-value",
-            "resolver",
-            "subscription",
-            "deprecated",
-            "default-value",
-            "argument",
-            "list-item-nullable",
-          ];
+            "arguments",
 
-          if (!knownExtensions.includes(extName)) {
+            // Scalar Attributes (4)
+            "scalar",
+            "scalar-type",
+            "scalar-references",
+            "shared-scalars",
+
+            // Directive Attributes (3)
+            "directives",
+            "directives-catalog",
+            "arg-directives",
+
+            // Operations & Query Attributes (3)
+            "operations",
+            "pagination",
+            "args",
+
+            // Enum Attributes (2)
+            "enum",
+            "enums",
+
+            // Schema & System Attributes (2)
+            "schema-reference",
+            "system",
+
+            // Data Source Mapping Attributes (3)
+            "source-reference",
+            "source-mapping-type",
+            "mapping-notes",
+
+            // Performance Attributes (4)
+            "performance",
+            "phase3-performance",
+            "complexity",
+            "query-cost",
+
+            // Security & Authorization Attributes (3)
+            "authorization",
+            "security",
+            "sensitive-data",
+
+            // Caching & Observability Attributes (3)
+            "caching",
+            "observability",
+            "rate-limiting",
+
+            // Cost Model Attribute (1)
+            "cost-model",
+
+            // Error Handling Attribute (1)
+            "error-codes",
+
+            // Query Templates Attribute (1)
+            "query-templates",
+
+            // Other common attributes
+            "description",
+            "inline-object-threshold",
+            "inline-description-threshold",
+            "description-block-threshold",
+          ]);
+
+          if (!knownExtensions.has(extName)) {
             result.warnings?.push(
               `Unknown x-graphql extension at ${currentPath}: ${key}`,
             );

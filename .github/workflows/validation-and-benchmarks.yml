@@ -271,7 +271,7 @@ jobs:
 
       - name: Run Node integration tests
         working-directory: converters/node
-        run: pnpm test -- x-graphql-shared.test.ts
+        run: pnpm test x-graphql-shared.test.ts
 
       - name: Run validation integration
         run: |

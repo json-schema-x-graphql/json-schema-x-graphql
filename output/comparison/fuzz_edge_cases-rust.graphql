@@ -51,7 +51,7 @@ type DeeplyNestedInline {
 }
 
 type CombinatorEdgeCases {
-  oneOfEmpty: JSON
+  oneOfValid: JSON
   anyOfSingle: JSON
   allOfConflict: JSON
 }

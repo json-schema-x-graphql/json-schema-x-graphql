@@ -146,7 +146,7 @@ jobs:
       - name: Run unit tests
         run: |
           cd converters/node
-          pnpm test -- --coverage
+          pnpm test --coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
