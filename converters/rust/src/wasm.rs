@@ -5,8 +5,8 @@ use crate::api_types::{
     NamingConvention,
 };
 use crate::types::{
-    IdInferenceStrategy as InternalIdInferenceStrategy, NamingConvention as InternalNamingConvention,
-    OutputFormat as InternalOutputFormat,
+    IdInferenceStrategy as InternalIdInferenceStrategy,
+    NamingConvention as InternalNamingConvention, OutputFormat as InternalOutputFormat,
 };
 use crate::{ConversionDirection, ConversionOptions, Converter};
 use serde::{Deserialize, Serialize};
@@ -269,8 +269,10 @@ pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
         crate::api_types::IdInferenceStrategy::None => InternalIdInferenceStrategy::None,
         crate::api_types::IdInferenceStrategy::CommonPatterns => {
             InternalIdInferenceStrategy::CommonPatterns
-        },
-        crate::api_types::IdInferenceStrategy::AllStrings => InternalIdInferenceStrategy::AllStrings,
+        }
+        crate::api_types::IdInferenceStrategy::AllStrings => {
+            InternalIdInferenceStrategy::AllStrings
+        }
     };
     internal_options.naming_convention = match options.naming_convention {
         NamingConvention::Preserve => InternalNamingConvention::Preserve,
@@ -280,7 +282,7 @@ pub fn convert_api(input: JsValue) -> Result<JsValue, JsValue> {
         crate::api_types::OutputFormat::Sdl => InternalOutputFormat::Sdl,
         crate::api_types::OutputFormat::SdlWithFederationMetadata => {
             InternalOutputFormat::SdlWithFederationMetadata
-        },
+        }
         crate::api_types::OutputFormat::AstJson => InternalOutputFormat::AstJson,
     };
     internal_options.fail_on_warning = options.fail_on_warning;

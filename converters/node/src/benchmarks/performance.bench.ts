@@ -6,7 +6,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
-// @ts-ignore - benchmark types may not be available in all environments
+// @ts-expect-error - benchmark types may not be available in all environments
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Benchmark = require("benchmark");
 import { JsonSchemaValidator } from "../cli/validate";
 // Note: Import actual converter implementation based on project structure
@@ -62,7 +63,8 @@ const mediumSchema = {
   },
 };
 
-// Small SDL
+// Test data definitions (used as part of benchmark infrastructure)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const smallSDL = `
 type User {
   id: ID!
@@ -74,7 +76,7 @@ type Query {
 }
 `;
 
-// Medium SDL
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mediumSDL = `
 type Product {
   id: ID!
@@ -91,7 +93,7 @@ type Query {
 }
 `;
 
-// Complex SDL with interfaces and unions
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const complexSDL = `
 interface Node {
   id: ID!
@@ -154,7 +156,9 @@ function runBenchmarks() {
   // Benchmark: JSON to GraphQL Conversion
   const jsonToGraphQLSuite = new Benchmark.Suite("JSON to GraphQL Conversion");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const smallSchemaStr = JSON.stringify(smallSchema);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const mediumSchemaStr = JSON.stringify(mediumSchema);
 
   jsonToGraphQLSuite

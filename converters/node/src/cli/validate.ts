@@ -11,7 +11,6 @@ import * as path from "path";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import { parse, DocumentNode } from "graphql";
-import { validateSDL } from "graphql/validation/validate";
 import { buildSchema, GraphQLError } from "graphql";
 
 interface ValidationIssue {
@@ -252,7 +251,8 @@ class GraphQLSDLValidator {
 
     try {
       // Parse the SDL
-      const document: DocumentNode = parse(sdl);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _document: DocumentNode = parse(sdl);
 
       // Validate using GraphQL's built-in validator
       try {

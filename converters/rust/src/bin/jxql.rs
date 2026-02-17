@@ -121,9 +121,13 @@ async fn main() -> Result<()> {
         naming_convention,
         output_format,
         fail_on_warning: args.fail_on_warning,
-        exclude_types: args.exclude_types.unwrap_or(ConversionOptions::default().exclude_types),
+        exclude_types: args
+            .exclude_types
+            .unwrap_or(ConversionOptions::default().exclude_types),
         exclude_patterns: args.exclude_patterns,
-        exclude_type_suffixes: args.exclude_type_suffixes.unwrap_or(ConversionOptions::default().exclude_type_suffixes),
+        exclude_type_suffixes: args
+            .exclude_type_suffixes
+            .unwrap_or(ConversionOptions::default().exclude_type_suffixes),
         ..Default::default()
     };
 
@@ -169,13 +173,13 @@ fn detect_graphql_format(content: &str) -> bool {
             || trimmed.contains("\"definitions\"")
             || trimmed.contains("\"$defs\"")
             || trimmed.contains("\"properties\"")
-            || trimmed.contains("\"type\"") 
+            || trimmed.contains("\"type\"")
         {
             return false;
         }
         // If it looks like a JSON object but we aren't sure, check if it's valid JSON
         if serde_json::from_str::<serde_json::Value>(trimmed).is_ok() {
-             return false;
+            return false;
         }
     }
 
@@ -209,10 +213,10 @@ fn detect_graphql_format(content: &str) -> bool {
 
     // Default: assume GraphQL SDL if we can't decide, but since we check JSON validity above,
     // this might be risky. Let's try to be safer.
-    
+
     // If it has typical GraphQL keywords at start of lines, it's GraphQL.
     // Otherwise, if it parses as JSON, it's JSON.
-    
+
     // Existing logic just defaulted to true.
     true
 }
