@@ -13,7 +13,8 @@ fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
     }
 
     // Check operational types
-    if !options.include_operational_types && options.exclude_types.contains(&type_name.to_string()) {
+    if !options.include_operational_types && options.exclude_types.contains(&type_name.to_string())
+    {
         return false;
     }
 

@@ -283,10 +283,7 @@ fn convert_definition(
     type_def
 }
 
-fn convert_field(
-    field: &Positioned<FieldDefinition>,
-    context: &ConversionContext,
-) -> FieldDef {
+fn convert_field(field: &Positioned<FieldDefinition>, context: &ConversionContext) -> FieldDef {
     FieldDef {
         name: field.node.name.node.to_string(),
         field_type: convert_gql_type(&field.node.ty.node, context),

@@ -15,7 +15,7 @@
 //! # Example
 //!
 //! ```rust
-//! use json_schema_graphql_converter::{Converter, ConversionDirection};
+//! use json_schema_x_graphql::{Converter, ConversionDirection};
 //!
 //! let converter = Converter::new();
 //! let json_schema = r#"{"type": "object", "x-graphql-type-name": "User"}"#;
