@@ -64,19 +64,19 @@
   "properties": {
     "user": {
       "description": "Reference using snake_case when definition is camelCase",
-      "$ref": "#/$defs/user_info"
+      "$ref": "#/$defs/userInfo"
     },
     "account": {
       "description": "Reference using snake_case when definition is PascalCase",
-      "$ref": "#/$defs/account_details"
+      "$ref": "#/$defs/AccountDetails"
     },
     "profile": {
       "description": "Reference using camelCase when definition is snake_case",
-      "$ref": "#/$defs/userProfile"
+      "$ref": "#/$defs/user_profile"
     },
     "alternateUser": {
       "description": "Reference using PascalCase when definition is camelCase",
-      "$ref": "#/$defs/UserInfo"
+      "$ref": "#/$defs/userInfo"
     }
   }
 }
