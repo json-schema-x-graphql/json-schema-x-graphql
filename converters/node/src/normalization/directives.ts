@@ -60,7 +60,7 @@ export function extractDirectives(
       // Collect all keys into a single directive
       const keyFields: string[] = [];
       const keyConfigs: Array<{ fields: string; resolvable?: boolean }> = [];
-      
+
       for (const key of schema["x-graphql-federation-keys"]) {
         if (typeof key === "string") {
           keyFields.push(key);
@@ -71,7 +71,7 @@ export function extractDirectives(
           });
         }
       }
-      
+
       // If we have string keys, combine them into a single directive
       if (keyFields.length > 0) {
         directives.push({
@@ -79,14 +79,16 @@ export function extractDirectives(
           args: { fields: keyFields.join(" ") },
         });
       }
-      
+
       // Add any object-format key configs as separate directives
       for (const config of keyConfigs) {
         directives.push({
           name: "key",
           args: {
             fields: config.fields,
-            ...(config.resolvable !== undefined && { resolvable: config.resolvable }),
+            ...(config.resolvable !== undefined && {
+              resolvable: config.resolvable,
+            }),
           },
         });
       }

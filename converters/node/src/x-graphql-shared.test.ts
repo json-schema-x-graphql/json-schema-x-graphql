@@ -97,7 +97,7 @@ describe("X-GraphQL Shared Test Data", () => {
       // Should support combined federation keys (array format gets combined into single directive)
       // User type has array format federation-keys: ["id", "email"] -> @key(fields: "id email")
       expect(result).toContain('@key(fields: "id email")');
-      
+
       // Should have @shareable directive on User
       expect(result).toContain("@shareable");
     });
