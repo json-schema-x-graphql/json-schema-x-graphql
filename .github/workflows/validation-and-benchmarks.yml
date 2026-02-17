@@ -172,20 +172,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: converters/node/package-lock.json
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         working-directory: converters/node
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         working-directory: converters/node
-        run: npm run build
+        run: pnpm run build
 
       - name: Run performance benchmarks
         working-directory: converters/node
-        run: npm run benchmark || true
+        run: pnpm run benchmark || true
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -209,8 +224,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          cache: 'npm'
-          cache-dependency-path: converters/node/package-lock.json
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Cache Rust dependencies
         uses: actions/cache@v4
@@ -229,11 +259,11 @@ jobs:
 
       - name: Install Node dependencies
         working-directory: converters/node
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Node
         working-directory: converters/node
-        run: npm run build
+        run: pnpm run build
 
       - name: Run Rust integration tests
         working-directory: converters/rust
@@ -241,7 +271,7 @@ jobs:
 
       - name: Run Node integration tests
         working-directory: converters/node
-        run: npm test -- x-graphql-shared.test.ts
+        run: pnpm test -- x-graphql-shared.test.ts
 
       - name: Run validation integration
         run: |
