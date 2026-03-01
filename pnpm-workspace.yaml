@@ -4,6 +4,11 @@ packages:
   - frontend/demos/yjs-monaco
   - frontend/demos/loro-monaco
   - frontend/schema-authoring
+  - external/visual-json
+  - external/visual-json/packages/*
+
+onlyBuiltDependencies:
+  - "visual-json"
 
 overrides:
   diff@>=5.0.0 <5.2.2: '>=5.2.2'
