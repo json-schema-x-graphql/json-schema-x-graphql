@@ -1,7 +1,4 @@
-json-schema-x-graphql/LICENSE
-```
 
-```
 MIT License
 
 Copyright (c) 2023 JJediny and Contributors

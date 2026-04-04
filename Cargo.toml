@@ -13,6 +13,15 @@ members = [
   "converters/rust",
 ]
 
+[profile.release]
+opt-level = "z"     # Optimize for size
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+strip = true        # Strip symbols from binary
+
+[profile.release.package."*"]
+opt-level = "z"
+
 # Optional: workspace-wide metadata or configuration can be placed under workspace.metadata
 [workspace.metadata]
 description = "Workspace for JSON Schema ↔ GraphQL project. Contains the Rust converter and related crates."
