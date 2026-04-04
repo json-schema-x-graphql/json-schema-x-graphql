@@ -1,5 +1,5 @@
 "User information (defined in camelCase)"
-type UserInfo {
+type Userinfo {
   "User ID"
   userId: ID!
   "Full name"
@@ -8,33 +8,28 @@ type UserInfo {
 }
 
 "Account details (defined in PascalCase)"
-type AccountDetails {
+type Accountdetails {
   accountId: ID!
   accountType: String!
   createdAt: DateTime
 }
 
 "User profile (defined in snake_case)"
-type UserProfile {
+type Userprofile {
   profileId: ID
   bio: String
-  avatarUrl: URI
+  avatarUrl: URL
 }
 
 "Test schema where $ref paths use different casing than definitions"
 type Casemismatchtest {
   "Reference using snake_case when definition is camelCase"
-  user: UserInfo
+  user: Userinfo
   "Reference using snake_case when definition is PascalCase"
-  account: AccountDetails
+  account: Accountdetails
   "Reference using camelCase when definition is snake_case"
-  profile: UserProfile
+  profile: Userprofile
   "Reference using PascalCase when definition is camelCase"
-  alternateUser: UserInfo
+  alternateUser: Userinfo
 }
-
-# Implied Scalars
-scalar DateTime
-scalar Email
-scalar URI
 

@@ -19,10 +19,8 @@
     "analyze": "du -sh dist/"
   },
   "dependencies": {
-    "@codemirror/basic-setup": "^0.20.0",
-    "@codemirror/lang-json": "^6.0.0",
-    "@codemirror/state": "^6.4.0",
-    "@codemirror/view": "^6.28.0",
+    "@visual-json/react": "workspace:*",
+    "@visual-json/core": "workspace:*",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-tools/utils": "^10.0.0",
     "@json-schema-x-graphql/core": "file:../../converters/node",

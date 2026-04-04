@@ -1,60 +1,129 @@
-import React from "react";
-import { useEffect, useRef } from "react";
-import { EditorState } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
-import { json } from "@codemirror/lang-json";
+import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
 
-const theme = EditorView.theme({
-  ".cm-editor": { height: "100%", fontSize: "13px" },
-  ".cm-gutters": { backgroundColor: "#f5f5f5" },
-  ".cm-activeLineGutter": { backgroundColor: "#e8e8e8" },
-});
-
-export default function CodeMirrorEditor({ value, onChange }) {
+const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange }, ref) {
+  const [EditorComp, setEditorComp] = useState(null);
+  const [loadError, setLoadError] = useState(false);
+  const textareaRef = useRef(null);
   const editorRef = useRef(null);
-  const viewRef = useRef(null);
+  const containerRef = useRef(null);
+  const [currentValue, setCurrentValue] = useState(value);
 
   useEffect(() => {
-    if (!editorRef.current) return;
-
-    const state = EditorState.create({
-      doc: value,
-      extensions: [
-        json(),
-        EditorView.updateListener.of((update) => {
-          if (update.docChanged) {
-            const newValue = update.state.doc.toString();
-            onChange(newValue);
-          }
-        }),
-        theme,
-      ],
-    });
-
-    const view = new EditorView({
-      state,
-      parent: editorRef.current,
-    });
-
-    viewRef.current = view;
-
+    let mounted = true;
+    // Dynamic import to support multiple package layout possibilities
+    import("@visual-json/react")
+      .then((m) => {
+        if (!mounted) return;
+        let Comp = null;
+        // Prefer a ready-to-render editor component
+        if (m.JsonEditor) {
+          Comp = m.JsonEditor;
+        } else if (m.FormView) {
+          Comp = m.FormView;
+        } else if (m.VisualJson && m.JsonEditor) {
+          // Compose provider + editor
+          const Visual = m.VisualJson;
+          const JsonEd = m.JsonEditor;
+          Comp = function WrappedVisualJson(props) {
+            return React.createElement(Visual, { value: props.value, onChange: props.onChange }, React.createElement(JsonEd, null));
+          };
+        } else if (m.VisualJson) {
+          Comp = m.VisualJson;
+        } else if (m.default) {
+          Comp = m.default;
+        }
+        if (Comp) setEditorComp(() => Comp);
+        else setLoadError(true);
+      })
+      .catch(() => setLoadError(true));
     return () => {
-      view.destroy();
+      mounted = false;
     };
   }, []);
 
-  // Update editor when value prop changes (from outside)
-  useEffect(() => {
-    if (viewRef.current && viewRef.current.state.doc.toString() !== value) {
-      viewRef.current.dispatch({
-        changes: {
-          from: 0,
-          to: viewRef.current.state.doc.length,
-          insert: value,
-        },
-      });
-    }
-  }, [value]);
+  // keep internal currentValue in sync with prop
+  useEffect(() => setCurrentValue(value), [value]);
 
-  return <div ref={editorRef} style={{ height: "100%", width: "100%" }} />;
-}
+  // Parse value to object for structured editor; if invalid JSON, fallback to text area
+  let parsed = null;
+  let invalidJson = false;
+  try {
+    parsed = currentValue ? JSON.parse(currentValue) : {};
+  } catch (e) {
+    invalidJson = true;
+    parsed = currentValue;
+  }
+
+  const handleChange = (newVal) => {
+    let strVal;
+    try {
+      if (typeof newVal === "string") {
+        strVal = newVal;
+      } else {
+        strVal = JSON.stringify(newVal, null, 2);
+      }
+    } catch (e) {
+      strVal = String(newVal);
+    }
+    setCurrentValue(strVal);
+    try {
+      onChange(strVal);
+    } catch (e) {
+      // ignore upstream handler errors here
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    getValue: () => currentValue,
+    setValue: (v) => {
+      // accept object or string
+      const next = typeof v === "string" ? v : JSON.stringify(v, null, 2);
+      setCurrentValue(next);
+      try {
+        onChange(next);
+      } catch (e) {}
+    },
+    focus: () => {
+      if (editorRef.current && typeof editorRef.current.focus === "function") {
+        try {
+          editorRef.current.focus();
+          return;
+        } catch (e) {}
+      }
+      // Try to focus a focusable element inside the VisualJson container
+      try {
+        if (containerRef.current) {
+          const focusable = containerRef.current.querySelector(
+            "[tabindex], button, input, textarea, [role=tree], [role=button]"
+          );
+          if (focusable && typeof focusable.focus === "function") {
+            focusable.focus();
+            return;
+          }
+        }
+      } catch (e) {}
+      if (textareaRef.current) textareaRef.current.focus();
+    },
+  }));
+
+  if (EditorComp && !invalidJson) {
+    const Editor = EditorComp;
+    return (
+      <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
+        <Editor value={parsed} onChange={handleChange} />
+      </div>
+    );
+  }
+
+  // Fallback: if JSON invalid or editor failed to load, show a textarea
+  return (
+    <textarea
+      ref={textareaRef}
+      style={{ height: "100%", width: "100%", fontFamily: "monospace", fontSize: 13 }}
+      value={currentValue}
+      onChange={(e) => handleChange(e.target.value)}
+    />
+  );
+});
+
+export default CodeMirrorEditor;

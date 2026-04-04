@@ -1,40 +1,46 @@
 /* tslint:disable */
 /* eslint-disable */
 
+/**
+ * WASM-compatible conversion options
+ */
 export class WasmConversionOptions {
-  free(): void;
-  [Symbol.dispose](): void;
-  constructor();
-  validate: boolean;
-  infer_ids: boolean;
-  federation_version: number;
-  include_descriptions: boolean;
-  preserve_field_order: boolean;
+    free(): void;
+    [Symbol.dispose](): void;
+    constructor();
+    federation_version: number;
+    include_descriptions: boolean;
+    infer_ids: boolean;
+    preserve_field_order: boolean;
+    validate: boolean;
 }
 
+/**
+ * WASM-compatible converter
+ */
 export class WasmConverter {
-  free(): void;
-  [Symbol.dispose](): void;
-  /**
-   * Create a new converter with custom options
-   */
-  static withOptions(options: WasmConversionOptions): WasmConverter;
-  /**
-   * Convert GraphQL SDL to JSON Schema
-   */
-  graphqlToJsonSchema(graphql_sdl: string): string;
-  /**
-   * Convert JSON Schema to GraphQL SDL
-   */
-  jsonSchemaToGraphQL(json_schema: string): string;
-  /**
-   * Create a new converter with default options
-   */
-  constructor();
-  /**
-   * Convert between formats (bidirectional)
-   */
-  convert(input: string, direction: string): string;
+    free(): void;
+    [Symbol.dispose](): void;
+    /**
+     * Convert between formats (bidirectional)
+     */
+    convert(input: string, direction: string): string;
+    /**
+     * Convert GraphQL SDL to JSON Schema
+     */
+    graphqlToJsonSchema(graphql_sdl: string): string;
+    /**
+     * Convert JSON Schema to GraphQL SDL
+     */
+    jsonSchemaToGraphQL(json_schema: string): string;
+    /**
+     * Create a new converter with default options
+     */
+    constructor();
+    /**
+     * Create a new converter with custom options
+     */
+    static withOptions(options: WasmConversionOptions): WasmConverter;
 }
 
 /**
@@ -77,92 +83,44 @@ export function validateGraphQLSdl(graphql_sdl: string): boolean;
  */
 export function validateJsonSchema(json_schema: string): boolean;
 
-export type InitInput =
-  | RequestInfo
-  | URL
-  | Response
-  | BufferSource
-  | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
-  readonly memory: WebAssembly.Memory;
-  readonly __wbg_wasmconversionoptions_free: (a: number, b: number) => void;
-  readonly __wbg_wasmconverter_free: (a: number, b: number) => void;
-  readonly convert: (a: any) => [number, number, number];
-  readonly getVersion: () => [number, number];
-  readonly graphqlToJsonSchema: (
-    a: number,
-    b: number,
-  ) => [number, number, number, number];
-  readonly jsonSchemaToGraphQL: (
-    a: number,
-    b: number,
-  ) => [number, number, number, number];
-  readonly validateGraphQLName: (
-    a: number,
-    b: number,
-  ) => [number, number, number];
-  readonly validateGraphQLSdl: (
-    a: number,
-    b: number,
-  ) => [number, number, number];
-  readonly validateJsonSchema: (
-    a: number,
-    b: number,
-  ) => [number, number, number];
-  readonly wasmconversionoptions_federation_version: (a: number) => number;
-  readonly wasmconversionoptions_include_descriptions: (a: number) => number;
-  readonly wasmconversionoptions_infer_ids: (a: number) => number;
-  readonly wasmconversionoptions_new: () => number;
-  readonly wasmconversionoptions_preserve_field_order: (a: number) => number;
-  readonly wasmconversionoptions_set_federation_version: (
-    a: number,
-    b: number,
-  ) => void;
-  readonly wasmconversionoptions_set_include_descriptions: (
-    a: number,
-    b: number,
-  ) => void;
-  readonly wasmconversionoptions_set_infer_ids: (a: number, b: number) => void;
-  readonly wasmconversionoptions_set_preserve_field_order: (
-    a: number,
-    b: number,
-  ) => void;
-  readonly wasmconversionoptions_set_validate: (a: number, b: number) => void;
-  readonly wasmconversionoptions_validate: (a: number) => number;
-  readonly wasmconverter_convert: (
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-    e: number,
-  ) => [number, number, number, number];
-  readonly wasmconverter_graphqlToJsonSchema: (
-    a: number,
-    b: number,
-    c: number,
-  ) => [number, number, number, number];
-  readonly wasmconverter_jsonSchemaToGraphQL: (
-    a: number,
-    b: number,
-    c: number,
-  ) => [number, number, number, number];
-  readonly wasmconverter_new: () => number;
-  readonly wasmconverter_withOptions: (a: number) => number;
-  readonly init: () => void;
-  readonly __wbindgen_malloc: (a: number, b: number) => number;
-  readonly __wbindgen_realloc: (
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-  ) => number;
-  readonly __wbindgen_exn_store: (a: number) => void;
-  readonly __externref_table_alloc: () => number;
-  readonly __wbindgen_externrefs: WebAssembly.Table;
-  readonly __wbindgen_free: (a: number, b: number, c: number) => void;
-  readonly __externref_table_dealloc: (a: number) => void;
-  readonly __wbindgen_start: () => void;
+    readonly memory: WebAssembly.Memory;
+    readonly __wbg_wasmconversionoptions_free: (a: number, b: number) => void;
+    readonly __wbg_wasmconverter_free: (a: number, b: number) => void;
+    readonly convert: (a: any) => [number, number, number];
+    readonly getVersion: () => [number, number];
+    readonly graphqlToJsonSchema: (a: number, b: number) => [number, number, number, number];
+    readonly jsonSchemaToGraphQL: (a: number, b: number) => [number, number, number, number];
+    readonly validateGraphQLName: (a: number, b: number) => [number, number, number];
+    readonly validateGraphQLSdl: (a: number, b: number) => [number, number, number];
+    readonly validateJsonSchema: (a: number, b: number) => [number, number, number];
+    readonly wasmconversionoptions_federation_version: (a: number) => number;
+    readonly wasmconversionoptions_include_descriptions: (a: number) => number;
+    readonly wasmconversionoptions_infer_ids: (a: number) => number;
+    readonly wasmconversionoptions_new: () => number;
+    readonly wasmconversionoptions_preserve_field_order: (a: number) => number;
+    readonly wasmconversionoptions_set_federation_version: (a: number, b: number) => void;
+    readonly wasmconversionoptions_set_include_descriptions: (a: number, b: number) => void;
+    readonly wasmconversionoptions_set_infer_ids: (a: number, b: number) => void;
+    readonly wasmconversionoptions_set_preserve_field_order: (a: number, b: number) => void;
+    readonly wasmconversionoptions_set_validate: (a: number, b: number) => void;
+    readonly wasmconversionoptions_validate: (a: number) => number;
+    readonly wasmconverter_convert: (a: number, b: number, c: number, d: number, e: number) => [number, number, number, number];
+    readonly wasmconverter_graphqlToJsonSchema: (a: number, b: number, c: number) => [number, number, number, number];
+    readonly wasmconverter_jsonSchemaToGraphQL: (a: number, b: number, c: number) => [number, number, number, number];
+    readonly wasmconverter_new: () => number;
+    readonly wasmconverter_withOptions: (a: number) => number;
+    readonly init: () => void;
+    readonly __wbindgen_malloc: (a: number, b: number) => number;
+    readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+    readonly __wbindgen_exn_store: (a: number) => void;
+    readonly __externref_table_alloc: () => number;
+    readonly __wbindgen_externrefs: WebAssembly.Table;
+    readonly __wbindgen_free: (a: number, b: number, c: number) => void;
+    readonly __externref_table_dealloc: (a: number) => void;
+    readonly __wbindgen_start: () => void;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
@@ -175,9 +133,7 @@ export type SyncInitInput = BufferSource | WebAssembly.Module;
  *
  * @returns {InitOutput}
  */
-export function initSync(
-  module: { module: SyncInitInput } | SyncInitInput,
-): InitOutput;
+export function initSync(module: { module: SyncInitInput } | SyncInitInput): InitOutput;
 
 /**
  * If `module_or_path` is {RequestInfo} or {URL}, makes a request and
@@ -187,9 +143,4 @@ export function initSync(
  *
  * @returns {Promise<InitOutput>}
  */
-export default function __wbg_init(
-  module_or_path?:
-    | { module_or_path: InitInput | Promise<InitInput> }
-    | InitInput
-    | Promise<InitInput>,
-): Promise<InitOutput>;
+export default function __wbg_init (module_or_path?: { module_or_path: InitInput | Promise<InitInput> } | InitInput | Promise<InitInput>): Promise<InitOutput>;
