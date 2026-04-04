@@ -22,23 +22,29 @@
  *  - Each script's stdout/stderr are captured and truncated to 10000 chars in the output file.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { spawn } = require('child_process');
+const fs = require("fs");
+const path = require("path");
+const { spawn } = require("child_process");
 
 const repoRoot = process.cwd();
-const RESULTS_DIR = path.join(repoRoot, 'scripts');
-const RESULTS_FILE = path.join(RESULTS_DIR, 'pnpm-run-results.json');
+const RESULTS_DIR = path.join(repoRoot, "scripts");
+const RESULTS_FILE = path.join(RESULTS_DIR, "pnpm-run-results.json");
 
 const DEFAULT_TIMEOUT_MS = 60 * 1000;
 const TRUNCATE_LEN = 10000;
-const LONG_RUNNING_REGEX = /^(start|dev|watch|serve)$/i;
+const LONG_RUNNING_REGEX =
+  /^(?:watch|serve)$|^(?:dev|start)(?:$|:)|:(?:dev|start)\b/i;
 
 function parseCli() {
   const args = process.argv.slice(2);
   const timeoutSeconds = args[0] ? Number(args[0]) : null;
-  const timeoutMs = Number.isFinite(timeoutSeconds) && timeoutSeconds > 0 ? timeoutSeconds * 1000 : DEFAULT_TIMEOUT_MS;
-  const includeLongRunning = args[1] ? String(args[1]).toLowerCase() === 'true' : false;
+  const timeoutMs =
+    Number.isFinite(timeoutSeconds) && timeoutSeconds > 0
+      ? timeoutSeconds * 1000
+      : DEFAULT_TIMEOUT_MS;
+  const includeLongRunning = args[1]
+    ? String(args[1]).toLowerCase() === "true"
+    : false;
   return { timeoutMs, includeLongRunning };
 }
 
@@ -57,9 +63,15 @@ function findPackageJsonFiles(startDir) {
     for (const e of entries) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) {
-        if (e.name === 'node_modules' || e.name === '.git' || e.name === 'dist' || e.name === 'build') continue;
+        if (
+          e.name === "node_modules" ||
+          e.name === ".git" ||
+          e.name === "dist" ||
+          e.name === "build"
+        )
+          continue;
         walk(full);
-      } else if (e.isFile() && e.name === 'package.json') {
+      } else if (e.isFile() && e.name === "package.json") {
         results.push(full);
       }
     }
@@ -70,15 +82,15 @@ function findPackageJsonFiles(startDir) {
 }
 
 function truncate(s, n) {
-  if (!s) return '';
+  if (!s) return "";
   if (s.length <= n) return s;
   return s.slice(0, n) + `\n...truncated ${s.length - n} chars...`;
 }
 
 function runCommand(cmd, args, cwd, timeoutMs) {
   return new Promise((resolve) => {
-    let stdout = '';
-    let stderr = '';
+    let stdout = "";
+    let stderr = "";
     let timedOut = false;
     let finished = false;
 
@@ -89,28 +101,41 @@ function runCommand(cmd, args, cwd, timeoutMs) {
     const timer = setTimeout(() => {
       if (!finished) {
         timedOut = true;
-        try { child.kill('SIGKILL'); } catch (e) { try { child.kill(); } catch (e2) {} }
+        try {
+          child.kill("SIGKILL");
+        } catch (e) {
+          try {
+            child.kill();
+          } catch (e2) {}
+        }
       }
     }, timeoutMs);
 
     if (child.stdout) {
-      child.stdout.on('data', (chunk) => {
+      child.stdout.on("data", (chunk) => {
         stdout += String(chunk);
       });
     }
     if (child.stderr) {
-      child.stderr.on('data', (chunk) => {
+      child.stderr.on("data", (chunk) => {
         stderr += String(chunk);
       });
     }
 
-    child.on('error', (err) => {
+    child.on("error", (err) => {
       clearTimeout(timer);
       finished = true;
-      resolve({ code: null, signal: null, error: String(err), stdout, stderr, timedOut });
+      resolve({
+        code: null,
+        signal: null,
+        error: String(err),
+        stdout,
+        stderr,
+        timedOut,
+      });
     });
 
-    child.on('close', (code, signal) => {
+    child.on("close", (code, signal) => {
       clearTimeout(timer);
       finished = true;
       resolve({ code, signal, error: null, stdout, stderr, timedOut });
@@ -135,17 +160,23 @@ async function main() {
     run_at: new Date().toISOString(),
     timeout_ms: timeoutMs,
     include_long_running: includeLongRunning,
-    packages: []
+    packages: [],
   };
 
   for (const pkgPath of pkgFiles) {
     let pkg;
     try {
-      const raw = fs.readFileSync(pkgPath, 'utf8');
+      const raw = fs.readFileSync(pkgPath, "utf8");
       pkg = JSON.parse(raw);
     } catch (err) {
-      console.warn(`Skipping invalid package.json at ${pkgPath}: ${err && err.message ? err.message : String(err)}`);
-      summary.packages.push({ package: pkgPath, error: 'invalid package.json', details: String(err) });
+      console.warn(
+        `Skipping invalid package.json at ${pkgPath}: ${err && err.message ? err.message : String(err)}`,
+      );
+      summary.packages.push({
+        package: pkgPath,
+        error: "invalid package.json",
+        details: String(err),
+      });
       continue;
     }
 
@@ -158,7 +189,7 @@ async function main() {
       packageName: pkg.name || null,
       scripts: scriptNames,
       skipped: [],
-      results: []
+      results: [],
     };
 
     if (scriptNames.length === 0) {
@@ -166,7 +197,9 @@ async function main() {
       continue;
     }
 
-    console.log(`\nPackage: ${path.relative(repoRoot, pkgDir)} (${pkg.name || 'unnamed'}) - scripts: [${scriptNames.join(', ')}]`);
+    console.log(
+      `\nPackage: ${path.relative(repoRoot, pkgDir)} (${pkg.name || "unnamed"}) - scripts: [${scriptNames.join(", ")}]`,
+    );
 
     for (const name of scriptNames) {
       if (!includeLongRunning && LONG_RUNNING_REGEX.test(name)) {
@@ -175,16 +208,25 @@ async function main() {
         continue;
       }
 
-      console.log(`- Running '${name}' (timeout ${timeoutMs} ms) in ${path.relative(repoRoot, pkgDir)}`);
+      console.log(
+        `- Running '${name}' (timeout ${timeoutMs} ms) in ${path.relative(repoRoot, pkgDir)}`,
+      );
       // use pnpm run <name> --silent to reduce noise; nevertheless some scripts ignore --silent
-      const cmd = 'pnpm';
-      const args = ['run', name, '--silent'];
+      const cmd = "pnpm";
+      const args = ["run", name, "--silent"];
 
       let res;
       try {
         res = await runCommand(cmd, args, pkgDir, timeoutMs);
       } catch (err) {
-        res = { code: null, signal: null, error: String(err), stdout: '', stderr: '', timedOut: false };
+        res = {
+          code: null,
+          signal: null,
+          error: String(err),
+          stdout: "",
+          stderr: "",
+          timedOut: false,
+        };
       }
 
       const record = {
@@ -195,11 +237,13 @@ async function main() {
         timedOut: Boolean(res.timedOut),
         error: res.error,
         stdout: truncate(res.stdout, TRUNCATE_LEN),
-        stderr: truncate(res.stderr, TRUNCATE_LEN)
+        stderr: truncate(res.stderr, TRUNCATE_LEN),
       };
 
       pkgEntry.results.push(record);
-      console.log(`  -> finished: name='${name}' code=${record.code} timedOut=${record.timedOut} succeeded=${record.succeeded}`);
+      console.log(
+        `  -> finished: name='${name}' code=${record.code} timedOut=${record.timedOut} succeeded=${record.succeeded}`,
+      );
     }
 
     summary.packages.push(pkgEntry);
@@ -213,10 +257,15 @@ async function main() {
   }
 
   try {
-    fs.writeFileSync(RESULTS_FILE, JSON.stringify(summary, null, 2), 'utf8');
-    console.log(`\nResults written to: ${path.relative(repoRoot, RESULTS_FILE)}`);
+    fs.writeFileSync(RESULTS_FILE, JSON.stringify(summary, null, 2), "utf8");
+    console.log(
+      `\nResults written to: ${path.relative(repoRoot, RESULTS_FILE)}`,
+    );
   } catch (err) {
-    console.error('Failed to write results file:', err && err.message ? err.message : String(err));
+    console.error(
+      "Failed to write results file:",
+      err && err.message ? err.message : String(err),
+    );
     process.exitCode = 2;
     return;
   }
@@ -227,18 +276,23 @@ async function main() {
   let totalTimedOut = 0;
   for (const p of summary.packages) {
     totalScripts += (p.scripts || []).length;
-    for (const r of (p.results || [])) {
+    for (const r of p.results || []) {
       if (!r.succeeded) totalFailed += 1;
       if (r.timedOut) totalTimedOut += 1;
     }
   }
 
-  console.log(`\nSummary: packages=${summary.packages.length} scripts_discovered=${totalScripts} failed_or_nonzero=${totalFailed} timed_out=${totalTimedOut}`);
+  console.log(
+    `\nSummary: packages=${summary.packages.length} scripts_discovered=${totalScripts} failed_or_nonzero=${totalFailed} timed_out=${totalTimedOut}`,
+  );
 }
 
 if (require.main === module) {
   main().catch((err) => {
-    console.error('Unexpected error:', err && err.stack ? err.stack : String(err));
+    console.error(
+      "Unexpected error:",
+      err && err.stack ? err.stack : String(err),
+    );
     process.exit(1);
   });
 }

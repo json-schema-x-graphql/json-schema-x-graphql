@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-04T02:14:02.833Z",
+  "timestamp": "2026-04-04T02:47:52.783Z",
   "totalTests": 12,
   "passedTests": 12,
   "failedTests": 0,
@@ -45,7 +45,7 @@
       "warnings": [],
       "generatedSDL": "\"JSON Schema description that should be overridden\"\ninterface Node {\n  \"Fallback description\"\n  id: ID!\n}\n\n\"JSON Schema description for User\"\ntype User implements Node {\n  id: ID!\n  username: String!\n  email: Email!\n  displayName: String\n  emailVerified: Boolean!\n  \"User's age (uses JSON Schema description as fallback)\"\n  age: Int\n  bio: String\n  avatarUrl: URI\n  roles: [String!]\n  permissions: [String!]!\n  tags: [String]\n  createdAt: DateTime!\n  updatedAt: DateTime\n  deletedAt: DateTime\n  lastLoginAt: DateTime\n  profile: UserProfile\n  posts: [Post!]!\n}\n\ntype UserProfile {\n  firstName: String\n  lastName: String\n  phoneNumber: String\n  dateOfBirth: Date\n  address: Address\n}\n\ntype Address {\n  street: String!\n  city: String!\n  state: String!\n  postalCode: String!\n  country: String!\n  apartment: String\n}\n\ntype Post implements Node {\n  id: ID!\n  title: String!\n  slug: String!\n  content: String!\n  excerpt: String\n  published: Boolean!\n  publishedAt: DateTime\n  author: User!\n  tags: [String!]\n  viewCount: Int!\n  createdAt: DateTime!\n  updatedAt: DateTime\n}\n\ntype Comment implements Node {\n  id: ID!\n  post: Post!\n  author: User!\n  content: String!\n  parentComment: Comment\n  replies: [Comment!]!\n  createdAt: DateTime!\n  editedAt: DateTime\n}\n\n# Implied Scalars\nscalar Email\nscalar URI",
       "metadata": {
-        "conversionTimeMs": 1,
+        "conversionTimeMs": 0,
         "generatedTypes": 8,
         "hasXGraphQLExtensions": true,
         "expectedTypes": 8
@@ -210,7 +210,7 @@
         "skipped": 0
       }
     },
-    "averageConversionTimeMs": 0.25,
+    "averageConversionTimeMs": 0.16666666666666666,
     "totalTypesGenerated": 77
   }
 }
