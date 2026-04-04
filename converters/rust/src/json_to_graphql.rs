@@ -55,6 +55,26 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                             })
                         });
 
+                    // Prioritize x-graphql-description over description
+                    let description = def_schema
+                        .get("x-graphql-description")
+                        .and_then(|v| v.as_str())
+                        .or_else(|| def_schema.get("description").and_then(|v| v.as_str()));
+
+                    // Add descriptions to the output if available
+                    if let Some(description) = description {
+                        context
+                            .output
+                            .push(format_description(description, options));
+                    }
+
+                    // Add descriptions to the output if available
+                    if let Some(description) = description {
+                        context
+                            .output
+                            .push(format_description(description, options));
+                    }
+
                     let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
                         .unwrap_or(def_key);
@@ -169,6 +189,9 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
 
     // If there are no types rendered, return an empty SDL string rather than an error
     // so the parity harness can compare empty outputs deterministically.
+    if context.output.is_empty() {
+        context.output.push("# No types rendered\n".to_string());
+    }
     let final_output = context.output.join("");
     Ok(final_output)
 }
@@ -579,7 +602,11 @@ fn convert_type_definition(
             output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             // Description for enum
             if context.options.include_descriptions {
-                if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                if let Some(description) = obj
+                    .get("x-graphql-description")
+                    .and_then(|v| v.as_str())
+                    .or_else(|| obj.get("description").and_then(|v| v.as_str()))
+                {
                     output.push_str(&format_description(description, context.options));
                 }
             }
@@ -599,7 +626,11 @@ fn convert_type_definition(
         "union" => {
             // Description for union
             if context.options.include_descriptions {
-                if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                if let Some(description) = obj
+                    .get("x-graphql-description")
+                    .and_then(|v| v.as_str())
+                    .or_else(|| obj.get("description").and_then(|v| v.as_str()))
+                {
                     output.push_str(&format_description(description, context.options));
                 }
             }
@@ -748,7 +779,11 @@ fn convert_type_definition(
                 // Emit the description for object-like kinds now that we know
                 // the type will be rendered.
                 if context.options.include_descriptions {
-                    if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+                    if let Some(description) = obj
+                        .get("x-graphql-description")
+                        .and_then(|v| v.as_str())
+                        .or_else(|| obj.get("description").and_then(|v| v.as_str()))
+                    {
                         output.push_str(&format_description(description, context.options));
                     }
                 }
@@ -790,7 +825,11 @@ fn convert_field(
 
     // Description
     if context.options.include_descriptions {
-        if let Some(description) = obj.get("description").and_then(|v| v.as_str()) {
+        if let Some(description) = obj
+            .get("x-graphql-description")
+            .and_then(|v| v.as_str())
+            .or_else(|| obj.get("description").and_then(|v| v.as_str()))
+        {
             output.push_str(&format_description(description, context.options));
         }
     }

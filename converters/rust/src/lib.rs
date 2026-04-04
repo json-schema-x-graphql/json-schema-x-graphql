@@ -97,6 +97,7 @@ impl Converter {
 
     /// Convert JSON Schema to GraphQL SDL
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String> {
+        println!("Debug: Input JSON Schema: {}", json_schema);
         let schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
 
@@ -104,7 +105,9 @@ impl Converter {
             validator::validate_json_schema(&schema)?;
         }
 
-        json_to_graphql::convert(&schema, &self.options)
+        let graphql_sdl = json_to_graphql::convert(&schema, &self.options)?;
+        println!("Debug: Output GraphQL SDL: {}", graphql_sdl);
+        Ok(graphql_sdl)
     }
 
     /// Convert GraphQL SDL to JSON Schema

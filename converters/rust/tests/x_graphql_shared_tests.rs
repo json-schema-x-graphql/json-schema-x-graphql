@@ -369,6 +369,7 @@ fn test_descriptions_conversion() {
     // When both description and x-graphql-description exist,
     // x-graphql-description should take precedence
     // This is verified by checking the output contains description markers
+    println!("Debug: Full GraphQL SDL Output:\n{}\n", result);
     assert!(
         result.contains("\"\"\"") || result.contains("#"),
         "Should include descriptions in output"
