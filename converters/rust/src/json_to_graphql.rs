@@ -825,11 +825,13 @@ fn convert_field(
 
     // Description
     if context.options.include_descriptions {
+        // Prioritize `x-graphql-description` over `description` for GraphQL SDL descriptions
         if let Some(description) = obj
             .get("x-graphql-description")
             .and_then(|v| v.as_str())
             .or_else(|| obj.get("description").and_then(|v| v.as_str()))
         {
+            // Format and append the description to the output
             output.push_str(&format_description(description, context.options));
         }
     }

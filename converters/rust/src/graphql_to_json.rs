@@ -167,8 +167,13 @@ struct DirectiveDef {
 
 // --- CST to Intermediate Representation Conversion ---
 
-fn get_description(desc: &Option<Positioned<String>>) -> Option<String> {
-    desc.as_ref().map(|d| d.node.clone())
+fn get_description(
+    desc: &Option<Positioned<String>>,
+    x_graphql_desc: &Option<String>,
+) -> Option<String> {
+    x_graphql_desc
+        .clone()
+        .or_else(|| desc.as_ref().map(|d| d.node.clone()))
 }
 
 fn convert_definition(
@@ -176,7 +181,7 @@ fn convert_definition(
     context: &ConversionContext,
 ) -> Option<(String, TypeDef)> {
     let name = definition.node.name.node.to_string();
-    let description = get_description(&definition.node.description);
+    let description = get_description(&definition.node.description, &None);
     let directives = definition
         .node
         .directives
@@ -287,7 +292,22 @@ fn convert_field(field: &Positioned<FieldDefinition>, context: &ConversionContex
     FieldDef {
         name: field.node.name.node.to_string(),
         field_type: convert_gql_type(&field.node.ty.node, context),
-        description: get_description(&field.node.description),
+        description: get_description(
+            &field.node.description,
+            &field.node.directives.iter().find_map(|d| {
+                if d.node.name.node == "x-graphql-description" {
+                    d.node.arguments.iter().find_map(|arg| {
+                        if arg.0.node == "value" {
+                            Some(arg.1.to_string())
+                        } else {
+                            None
+                        }
+                    })
+                } else {
+                    None
+                }
+            }),
+        ),
         arguments: field
             .node
             .arguments
@@ -295,7 +315,7 @@ fn convert_field(field: &Positioned<FieldDefinition>, context: &ConversionContex
             .map(|a| ArgumentDef {
                 name: a.node.name.node.to_string(),
                 arg_type: convert_gql_type(&a.node.ty.node, context),
-                description: get_description(&a.node.description),
+                description: get_description(&a.node.description, &None),
                 default_value: a.node.default_value.as_ref().map(|v| v.node.to_string()),
             })
             .collect(),
@@ -315,7 +335,7 @@ fn convert_input_field(
     FieldDef {
         name: field.node.name.node.to_string(),
         field_type: convert_gql_type(&field.node.ty.node, context),
-        description: get_description(&field.node.description),
+        description: get_description(&field.node.description, &None),
         arguments: vec![], // Input fields don't have arguments
         directives: field
             .node
