@@ -1,0 +1,5 @@
+type Astjsonfixture {
+  count: Int!
+  items: [String]
+}
+

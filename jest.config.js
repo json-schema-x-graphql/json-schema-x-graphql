@@ -6,6 +6,18 @@ module.exports = {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
   testMatch: ["<rootDir>/converters/node/src/**/*.test.ts"],
-  testPathIgnorePatterns: ["<rootDir>/pkg/"],
-  modulePathIgnorePatterns: ["<rootDir>/pkg/"],
+  testPathIgnorePatterns: [
+    "<rootDir>/pkg/",
+    "<rootDir>/converters/rust/pkg/",
+    "<rootDir>/frontend/",
+    "<rootDir>/external/",
+    "<rootDir>/scripts/",
+  ],
+  modulePathIgnorePatterns: [
+    "<rootDir>/pkg/",
+    "<rootDir>/converters/rust/pkg/",
+    "<rootDir>/frontend/",
+    "<rootDir>/external/",
+    "<rootDir>/scripts/",
+  ],
 };
