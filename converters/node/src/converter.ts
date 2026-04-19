@@ -602,13 +602,13 @@ function convertTypeDefinition(
     ensureConnectionType(connectionBase, context);
   }
 
-  if (schema["x-graphql-enum"] || schema.enum) {
+  if (schema["x-graphql-enum"] || schema.enum || schema["x-graphql-type"] === "enum") {
     const r = renderEnum(typeName, schema, options);
     if (r) context.output.push(r);
-  } else if (schema.oneOf || schema["x-graphql-union-types"]) {
+  } else if (schema.oneOf || schema["x-graphql-union-types"] || schema["x-graphql-type"] === "union") {
     const r = renderUnion(typeName, schema, context);
     if (r) context.output.push(r);
-  } else if (schema.type === "object" || schema.properties || schema.allOf) {
+  } else if (schema.type === "object" || schema.properties || schema.allOf || schema["x-graphql-type"] === "interface" || schema["x-graphql-type"] === "input") {
     const r = renderObject(typeName, schema, context);
     if (r) context.output.push(r);
   } else if (schema["x-graphql-type"] === "scalar") {
@@ -805,10 +805,10 @@ function convertField(
   const fieldNullable = schema["x-graphql-nullable"];
 
   let effectiveRequired = isRequired;
-  if (typeof fieldNonNull === "boolean") {
-    effectiveRequired = fieldNonNull;
-  } else if (typeof fieldNullable === "boolean") {
+  if (typeof fieldNullable === "boolean") {
     effectiveRequired = !fieldNullable;
+  } else if (typeof fieldNonNull === "boolean") {
+    effectiveRequired = fieldNonNull;
   }
 
   let typeRef = inferGraphQLType(
@@ -1166,10 +1166,29 @@ function emitOperations(schema: JsonSchema, context: ConversionContext) {
   }
 
   if (ops.mutations && shouldExcludeType("Mutation", context.options)) {
-    return;
+    // Skip if filtered
   } else if (ops.mutations) {
     const lines = ["type Mutation {"];
     for (const [name, def] of Object.entries(ops.mutations)) {
+      if (def.description && context.options.includeDescriptions) {
+        lines.push(
+          `  ${formatDescription(def.description, context.options).trim()}`,
+        );
+      }
+      const args = formatOperationArgs(def.args);
+      const resultType = def.type ?? "String";
+      lines.push(`  ${name}${args}: ${resultType}`);
+    }
+    lines.push("}\n");
+    context.output.push(lines.join("\n"));
+  }
+
+  if (ops.subscriptions && shouldExcludeType("Subscription", context.options)) {
+    // Skip if filtered
+  } else if (ops.subscriptions) {
+    const lines = ["type Subscription {"];
+    for (const [name, rawDef] of Object.entries(ops.subscriptions)) {
+      const def = rawDef as any;
       if (def.description && context.options.includeDescriptions) {
         lines.push(
           `  ${formatDescription(def.description, context.options).trim()}`,
@@ -1674,10 +1693,11 @@ function isFederationDirective(name: string): boolean {
 }
 
 function formatArgs(schema: JsonSchema): string {
-  const args = schema["x-graphql-arguments"];
+  const args = schema["x-graphql-args"] || schema["x-graphql-arguments"] || schema["x-graphql-field-arguments"];
   if (!args) return "";
 
-  const entries = Object.entries(args).map(([name, def]) => {
+  const entries = Object.entries(args).map(([name, rawDef]) => {
+    const def = rawDef as any;
     const configuredType =
       def.type ??
       (typeof def["x-graphql-type"] === "string"
@@ -1696,7 +1716,8 @@ function formatOperationArgs(
   args?: Record<string, GraphQLOperationArg>,
 ): string {
   if (!args) return "";
-  const rendered = Object.entries(args).map(([name, def]) => {
+  const rendered = Object.entries(args).map(([name, rawDef]) => {
+    const def = rawDef as any;
     const configuredType =
       def.type ??
       (typeof def["x-graphql-type"] === "string"

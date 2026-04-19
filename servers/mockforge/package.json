@@ -1,0 +1,21 @@
+{
+  "name": "@json-schema-x-graphql/mockforge",
+  "version": "0.1.0",
+  "description": "Minimal mockforge server emulation for subgraphs and mesh gateway",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@graphql-mesh/cli": "^0.90.1",
+    "@graphql-mesh/graphql": "^0.97.2",
+    "@graphql-tools/mock": "^9.0.3",
+    "@graphql-tools/schema": "^10.0.4",
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

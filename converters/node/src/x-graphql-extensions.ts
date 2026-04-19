@@ -170,6 +170,7 @@ export function extractExtensions(
         break;
       case "field-arguments":
       case "arguments":
+      case "args":
         extensions.fieldArguments = value as Record<string, FieldArgument>;
         break;
 

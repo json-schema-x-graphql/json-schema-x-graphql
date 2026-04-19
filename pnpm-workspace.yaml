@@ -6,6 +6,7 @@ packages:
   - frontend/schema-authoring
   - external/visual-json
   - external/visual-json/packages/*
+  - servers/mockforge
 
 onlyBuiltDependencies:
   - "visual-json"

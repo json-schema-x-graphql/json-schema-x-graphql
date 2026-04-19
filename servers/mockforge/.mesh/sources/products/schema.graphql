@@ -1,0 +1,83 @@
+schema {
+  query: Query
+}
+
+directive @external on FIELD_DEFINITION | OBJECT
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+directive @shareable repeatable on OBJECT | FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+directive @composeDirective(name: String!) repeatable on SCHEMA
+
+directive @extends on OBJECT | INTERFACE
+
+directive @key(fields: String!, resolvable: Boolean = true) on OBJECT | INTERFACE
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @external on FIELD_DEFINITION | OBJECT
+
+directive @shareable on OBJECT | FIELD_DEFINITION
+
+directive @tag(name: String!) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @extends on OBJECT | INTERFACE
+
+directive @link(url: String!, as: String, import: [String]) on SCHEMA
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+directive @composeDirective(name: String!) on SCHEMA
+
+directive @interfaceObject on OBJECT
+
+scalar _Any
+
+scalar _FieldSet
+
+scalar link__Import
+
+enum link__Purpose {
+  SECURITY
+  EXECUTION
+}
+
+type _Service {
+  sdl: String!
+}
+
+type Query {
+  """Get a product by UPC"""
+  product(upc: String!): Product
+  """Get all products"""
+  products: [Product!]!
+}
+
+"""Product in the catalog"""
+type Product {
+  """Universal Product Code (primary key)"""
+  upc: String!
+  """Product name"""
+  name: String
+  """Product price in cents"""
+  price: Int
+  """Product weight in grams"""
+  weight: Int
+}

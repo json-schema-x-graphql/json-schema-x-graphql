@@ -35,7 +35,8 @@
     "test:parity": "jest converters/node/src/parity.test.ts",
     "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
     "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
-    "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary"
+    "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary",
+    "mockforge:start": "pnpm -C servers/mockforge run start"
   },
   "keywords": [
     "graphql",
@@ -114,7 +115,8 @@
       "picomatch": "4.0.4",
       "brace-expansion": "5.0.5",
       "yaml": "1.10.3",
-      "@tootallnate/once": "3.0.1"
+      "@tootallnate/once": "3.0.1",
+      "fast-json-stringify": "^5.0.0"
     }
   },
   "dependencies": {}
