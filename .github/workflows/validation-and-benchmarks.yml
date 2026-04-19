@@ -153,11 +153,14 @@ jobs:
       - name: Store benchmark results
         uses: benchmark-action/github-action-benchmark@v1
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        continue-on-error: true
         with:
           tool: 'cargo'
           output-file-path: converters/rust/benchmark-results.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
           alert-threshold: '150%'
           comment-on-alert: true
           fail-on-alert: false
