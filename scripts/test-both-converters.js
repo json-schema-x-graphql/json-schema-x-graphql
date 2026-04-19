@@ -219,8 +219,9 @@ async function testRustConverter(inputFile, outputFile) {
       return { success: true, sdl: result, duration };
     }
 
-    // Fallback: use cargo example with defaults (may differ from STANDARD_OPTIONS)
-    const cmdFallback = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}"`;
+    // Fallback: use cargo run --bin jxql
+    const argsFallback = buildRustArgs(EFFECTIVE_OPTIONS, inputFile, outputFile);
+    const cmdFallback = `cd "${rustDir}" && cargo run -q --bin jxql --features="cli" -- ${argsFallback.join(" ")}`;
     execSync(cmdFallback, { encoding: "utf-8", stdio: "inherit" });
 
     const duration = Date.now() - startTime;

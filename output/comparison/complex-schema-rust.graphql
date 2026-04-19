@@ -96,3 +96,8 @@ type Complextestschema @auth {
   allOfExample: JSON
 }
 
+# Implied Scalars
+scalar Date
+scalar DateTime
+scalar Email
+

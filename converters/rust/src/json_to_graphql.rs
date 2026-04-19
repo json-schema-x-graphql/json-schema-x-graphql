@@ -61,19 +61,7 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                         .and_then(|v| v.as_str())
                         .or_else(|| def_schema.get("description").and_then(|v| v.as_str()));
 
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
 
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
 
                     let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))

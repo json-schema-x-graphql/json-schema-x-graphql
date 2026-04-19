@@ -127,6 +127,10 @@ try {
     return (value ? value.toUpperCase() : fallback) as T;
   };
 
+  if (values["infer-ids"]) {
+    console.warn("Warning: --infer-ids is deprecated. Use --id-strategy=COMMON_PATTERNS instead.");
+  }
+
   const converterOptions: ConverterOptions = {
     includeDescriptions: values.descriptions,
     preserveFieldOrder: values["preserve-order"],

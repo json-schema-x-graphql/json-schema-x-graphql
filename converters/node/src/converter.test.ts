@@ -72,4 +72,56 @@ describe("jsonSchemaToGraphQL - nested $ref resolution", () => {
     expect(sdl).toContain("type DeepData");
     expect(sdl).toContain("value: Int!");
   });
+
+  it("handles circular $ref structures gracefully", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      "x-graphql-type-name": "Node",
+      properties: {
+        id: { type: "string" },
+        next: { $ref: "#" }
+      },
+      required: ["id"]
+    };
+
+    const sdl = jsonSchemaToGraphQL(JSON.stringify(schema));
+
+    expect(sdl).toContain("type Node");
+    expect(sdl).toContain("id: String!");
+    expect(sdl).toContain("next: Node");
+  });
+
+  it("handles deeply nested array $refs", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      "x-graphql-type-name": "Matrix",
+      properties: {
+        data: {
+          type: "array",
+          items: {
+            type: "array",
+            items: { $ref: "#/$defs/Cell" }
+          }
+        }
+      },
+      $defs: {
+        Cell: {
+          type: "object",
+          "x-graphql-type-name": "Cell",
+          properties: {
+            value: { type: "number" }
+          }
+        }
+      }
+    };
+
+    const sdl = jsonSchemaToGraphQL(JSON.stringify(schema));
+
+    expect(sdl).toContain("type Matrix");
+    expect(sdl).toContain("data: [[Cell]]");
+    expect(sdl).toContain("type Cell");
+    expect(sdl).toContain("value: Float");
+  });
 });
