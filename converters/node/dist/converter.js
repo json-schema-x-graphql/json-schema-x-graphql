@@ -708,6 +708,11 @@ function ensureReferencedType(refPath, context) {
     if (!inferredName) {
         return null;
     }
+    // If the type is currently being generated, we have a circular reference.
+    // We can just return the inferred name instead of trying to generate it again.
+    if (context.generating.has(inferredName)) {
+        return inferredName;
+    }
     convertTypeDefinition(target, inferredName, context);
     return inferredName;
 }

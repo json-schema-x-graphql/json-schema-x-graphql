@@ -1,24 +1,27 @@
 SKIP REPORT SUMMARY
 ============================================================
-Generated at : 2026-01-01T03:16:46.931Z
+Generated at : 2026-04-19T16:05:28.414Z
 Scanned path : .
 
 GLOBAL COUNTS
 ---------------
-Files scanned : 1110
-Skip entries  : 22
-Warnings      : 9
+Files scanned : 2970
+Skip entries  : 45
+Warnings      : 21
 
 BY SCOPE
 --------
-  field      : 13
-  type       : 9
+  type       : 18
+  field      : 14
+  unknown    : 13
 
 FILES WITH SKIPPED ENTRIES (top by number of entries)
 --------------------------------------------------
-   1. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json — 12 entryies
-   2. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json — 8 entryies
-   3. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive-features.json — 2 entryies
+   1. /home/john/json-schema-x-graphql/reports/skip-report.json — 22 entryies
+   2. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive.json — 12 entryies
+   3. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/skip-fields.json — 8 entryies
+   4. /home/john/json-schema-x-graphql/converters/test-data/x-graphql/comprehensive-features.json — 2 entryies
+   5. /home/john/json-schema-x-graphql/docs/reference/x-graphql/attribute-registry.json — 1 entry
 
 SAMPLED SKIP ENTRIES
 ---------------------
@@ -176,16 +179,190 @@ SAMPLED SKIP ENTRIES
      Reason : skipped
      Snip   : {"type":"string","x-graphql-field-name":"internalField","x-graphql-skip":true,"description":"This field should be skipped and not appear in GraphQL"}
 
+ 23. File   : /home/john/json-schema-x-graphql/docs/reference/x-graphql/attribute-registry.json
+     Pointer: /attributes/6/example/jsonSchema/properties/internal_only
+     Scope  : field
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true}
+
+ 24. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/0/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Internal password hash - excluded from GraphQL"}
+
+ 25. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/1/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal type excluded from GraphQL schema","properties":{"internal_id":{"type":"string"},"secret_data":{"type":"string"}}}
+
+ 26. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/10/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal analytics data"}
+
+ 27. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/11/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-type-name":"InternalType","x-graphql-skip":true,"description":"This entire type should be skipped from GraphQL schema generation","properties":{"internal_field_1":{"type...
+
+ 28. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/12/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"boolean","x-graphql-skip":true,"description":"Moderation flag - internal only"}
+
+ 29. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/13/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"number","x-graphql-skip":true,"description":"Spam detection score - internal only"}
+
+ 30. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/14/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-field-name":"internalField","x-graphql-skip":true,"description":"This field should be skipped and not appear in GraphQL"}
+
+ 31. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/15/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal metadata that should not be exposed"}
+
+ 32. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/16/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-field-name":"hiddenField","x-graphql-skip":true}
+
+ 33. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/17/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-type-name":"InternalType","x-graphql-skip":true,"description":"This entire type should be skipped","properties":{"some_field":{"type":"string","x-graphql-field-name":"so...
+
+ 34. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/18/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password hash should never be exposed via GraphQL"}
+
+ 35. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/19/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Internal notes for admin use only"}
+
+ 36. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/2/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password hash - should never appear in GraphQL"}
+
+ 37. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/20/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"integer","x-graphql-skip":true,"description":"Database versioning field"}
+
+ 38. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/21/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"array","items":{"type":"string"},"x-graphql-field-name":"hiddenItems","x-graphql-skip":true}
+
+ 39. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/3/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Password salt - should never appear in GraphQL"}
+
+ 40. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/4/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"number","x-graphql-skip":true,"description":"Internal scoring metric"}
+
+ 41. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/5/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal metadata object"}
+
+ 42. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/6/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"string","x-graphql-skip":true,"description":"Social Security Number - private data"}
+
+ 43. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/7/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true}
+
+ 44. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/8/snippet
+     Scope  : type
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"object","x-graphql-skip":true,"description":"Internal geocoding data"}
+
+ 45. File   : /home/john/json-schema-x-graphql/reports/skip-report.json
+     Pointer: /entries/9/snippet
+     Scope  : unknown
+     Value  : true
+     Reason : skipped
+     Snip   : {"type":"boolean","x-graphql-skip":true,"description":"Draft status - internal only"}
+
 
 WARNINGS (files that failed to parse or other issues)
 ------------------------------------------------------
- - /home/john/json-schema-x-graphql/docs/x-graphql/attribute-registry.json: Failed to parse JSON: SyntaxError: Expected property name or '}' in JSON at position 4622 (line 84 column 60)
- - /home/john/json-schema-x-graphql/frontend/dashboard/scripts/mappings/logistics-mgmt-to-schema-unification.mapping.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 1023 (line 16 column 3)
- - /home/john/json-schema-x-graphql/frontend/dashboard/tsconfig.json: Failed to parse JSON: SyntaxError: Unexpected token ']', ..."env.d.ts",],
-  "excl"... is not valid JSON
- - /home/john/json-schema-x-graphql/frontend/demos/loro-monaco/tsconfig.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 187 (line 9 column 5)
- - /home/john/json-schema-x-graphql/frontend/schema-authoring/tsconfig.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 187 (line 9 column 5)
- - /home/john/json-schema-x-graphql/frontend/schema-authoring/tsconfig.node.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 220 (line 10 column 3)
- - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-node.json: Failed to parse JSON: SyntaxError: Unexpected end of JSON input
- - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-rust.json: Failed to parse JSON: SyntaxError: Unexpected end of JSON input
- - /home/john/json-schema-x-graphql/scripts/legacy-reference/mappings/logistics-mgmt-to-schema-unification.mapping.json: Failed to parse JSON: SyntaxError: Expected double-quoted property name in JSON at position 1023 (line 16 column 3)
+ - /home/john/json-schema-x-graphql/.github/workflows/composition-pipeline.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Compo"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Compo"... is not valid JS...
+ - /home/john/json-schema-x-graphql/.github/workflows/comprehensive-tests.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Compr"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Compr"... is not valid JS...
+ - /home/john/json-schema-x-graphql/.github/workflows/deploy-schema-authoring.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Deplo"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Deplo"... is not valid JS...
+ - /home/john/json-schema-x-graphql/.github/workflows/security-audit.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Secur"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Secur"... is not valid JS...
+ - /home/john/json-schema-x-graphql/.github/workflows/validation-and-benchmarks.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Valid"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Valid"... is not valid JS...
+ - /home/john/json-schema-x-graphql/.github/workflows/validation-and-testing.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Valid"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Valid"... is not valid JS...
+ - /home/john/json-schema-x-graphql/docs/reference-architecture/APIs/openapi.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'o', "openapi: 3"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'o', "openapi: 3"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/examples/federation/supergraph-apollo-classic.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Apollo F"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Apollo F"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/examples/hasura-ddn-reference/docker-compose.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Local de"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Local de"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/frontend/dashboard/scripts/example-mapping.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Example "... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Example "... is not valid JSON...
+ - /home/john/json-schema-x-graphql/frontend/dashboard/scripts/mappings/logistics-mgmt-to-schema-unification.mapping.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Logistic"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Logistic"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/frontend/dashboard/scripts/tools/graphql-editor/pnpm-lock.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/pnpm-lock.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/frontend/schema-authoring/.github/workflows/playwright.yml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'a', "name: Playw"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'a', "name: Playw"... is not valid JS...
+ - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-node.json: Failed to parse file: json parse error: SyntaxError: Unexpected end of JSON input; jsonc parse error: SyntaxError: Unexpected end of JSON input; yaml parser not available (optional). To enable YAML...
+ - /home/john/json-schema-x-graphql/output/comparison/ast_json_output-rust.json: Failed to parse file: json parse error: SyntaxError: Unexpected end of JSON input; jsonc parse error: SyntaxError: Unexpected end of JSON input; yaml parser not available (optional). To enable YAML...
+ - /home/john/json-schema-x-graphql/pnpm-lock.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/pnpm-workspace.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'p', "packages:
+"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'p', "packages:
+"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/scripts/legacy-reference/example-mapping.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Example "... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Example "... is not valid JSON...
+ - /home/john/json-schema-x-graphql/scripts/legacy-reference/mappings/logistics-mgmt-to-schema-unification.mapping.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token '#', "# Logistic"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token '#', "# Logistic"... is not valid JSON...
+ - /home/john/json-schema-x-graphql/scripts/legacy-reference/tools/graphql-editor/pnpm-lock.yaml: Failed to parse file: json parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON; jsonc parse error: SyntaxError: Unexpected token 'l', "lockfileVe"... is not valid JSON...
