@@ -128,7 +128,9 @@ try {
   };
 
   if (values["infer-ids"]) {
-    console.warn("Warning: --infer-ids is deprecated. Use --id-strategy=COMMON_PATTERNS instead.");
+    console.warn(
+      "Warning: --infer-ids is deprecated. Use --id-strategy=COMMON_PATTERNS instead.",
+    );
   }
 
   const converterOptions: ConverterOptions = {

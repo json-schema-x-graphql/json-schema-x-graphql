@@ -237,6 +237,8 @@ export interface AppSettings {
   formatOnSave: boolean;
   validateOnType: boolean;
   debounceMs: number;
+  /** Persisted divider position between editors (percentage, 10-90) */
+  dividerPosition: number;
 }
 
 /**
@@ -336,6 +338,16 @@ export interface AIAccessibleAPI {
    * Export schemas in various formats
    */
   exportSchemas(format: "json" | "yaml" | "typescript"): Promise<ExportResult>;
+
+  /**
+   * Get the current divider position (percentage)
+   */
+  getDividerPosition(): number;
+
+  /**
+   * Set the divider position (percentage, clamped 10-90)
+   */
+  setDividerPosition(pct: number): void;
 
   /**
    * Get application state snapshot

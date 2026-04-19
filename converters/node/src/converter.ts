@@ -602,13 +602,27 @@ function convertTypeDefinition(
     ensureConnectionType(connectionBase, context);
   }
 
-  if (schema["x-graphql-enum"] || schema.enum || schema["x-graphql-type"] === "enum") {
+  if (
+    schema["x-graphql-enum"] ||
+    schema.enum ||
+    schema["x-graphql-type"] === "enum"
+  ) {
     const r = renderEnum(typeName, schema, options);
     if (r) context.output.push(r);
-  } else if (schema.oneOf || schema["x-graphql-union-types"] || schema["x-graphql-type"] === "union") {
+  } else if (
+    schema.oneOf ||
+    schema["x-graphql-union-types"] ||
+    schema["x-graphql-type"] === "union"
+  ) {
     const r = renderUnion(typeName, schema, context);
     if (r) context.output.push(r);
-  } else if (schema.type === "object" || schema.properties || schema.allOf || schema["x-graphql-type"] === "interface" || schema["x-graphql-type"] === "input") {
+  } else if (
+    schema.type === "object" ||
+    schema.properties ||
+    schema.allOf ||
+    schema["x-graphql-type"] === "interface" ||
+    schema["x-graphql-type"] === "input"
+  ) {
     const r = renderObject(typeName, schema, context);
     if (r) context.output.push(r);
   } else if (schema["x-graphql-type"] === "scalar") {
@@ -1693,7 +1707,10 @@ function isFederationDirective(name: string): boolean {
 }
 
 function formatArgs(schema: JsonSchema): string {
-  const args = schema["x-graphql-args"] || schema["x-graphql-arguments"] || schema["x-graphql-field-arguments"];
+  const args =
+    schema["x-graphql-args"] ||
+    schema["x-graphql-arguments"] ||
+    schema["x-graphql-field-arguments"];
   if (!args) return "";
 
   const entries = Object.entries(args).map(([name, rawDef]) => {

@@ -45,7 +45,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   const monacoRef = useRef<Monaco | null>(null);
   const theme = useAppStore((state) => state.settings.theme);
   const autoValidate = useAppStore((state) => state.settings.autoValidate);
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Determine Monaco language
   const language = mode === "jsonschema" ? "json" : "graphql";
@@ -85,7 +85,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
       // Register completion provider for JSON Schema extensions
       if (mode === "jsonschema" && monaco) {
         monaco.languages.registerCompletionItemProvider("json", {
-          provideCompletionItems: (model, position) => {
+          provideCompletionItems: (model: any, position: any) => {
             const textUntilPosition = model.getValueInRange({
               startLineNumber: 1,
               startColumn: 1,

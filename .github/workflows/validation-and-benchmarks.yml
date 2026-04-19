@@ -144,7 +144,7 @@ jobs:
 
       - name: Run validation benchmarks
         working-directory: converters/rust
-        run: cargo bench --bench validation_benchmark -- --output-format bencher | tee benchmark-results.txt
+        run: cargo bench --bench validation_benchmark | tee benchmark-results.txt
 
       - name: Run conversion benchmarks
         working-directory: converters/rust
@@ -159,6 +159,7 @@ jobs:
           output-file-path: converters/rust/benchmark-results.txt
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: true
+          skip-fetch-gh-pages: true
           gh-pages-branch: gh-pages
           benchmark-data-dir-path: dev/bench
           alert-threshold: '150%'
