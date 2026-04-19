@@ -4,6 +4,7 @@
  * This provides a REST endpoint for the frontend to call the Node.js converter.
  */
 import http from "http";
+import { performance } from "perf_hooks";
 import { jsonSchemaToGraphQL, graphqlToJsonSchema } from "./converter.js";
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3004;
 const HOST = process.env.HOST || "localhost";

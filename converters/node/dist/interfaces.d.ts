@@ -45,7 +45,9 @@ export interface JsonSchema {
     oneOf?: JsonSchema[];
     anyOf?: JsonSchema[];
     allOf?: JsonSchema[];
+    "x-graphql-args"?: Record<string, GraphQLArgumentConfig>;
     "x-graphql-arguments"?: Record<string, GraphQLArgumentConfig>;
+    "x-graphql-field-arguments"?: Record<string, GraphQLArgumentConfig>;
     "x-graphql-directives"?: (GraphQLDirective | string)[];
     "x-graphql-enum"?: GraphQLEnumConfig;
     "x-graphql-field-name"?: string;
@@ -89,6 +91,7 @@ export interface GraphQLOperationField {
 export interface GraphQLOperations {
     queries?: Record<string, GraphQLOperationField>;
     mutations?: Record<string, GraphQLOperationField>;
+    subscriptions?: Record<string, GraphQLOperationField>;
 }
 export interface GraphQLScalarConfig {
     description?: string;

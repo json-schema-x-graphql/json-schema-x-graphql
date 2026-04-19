@@ -73,6 +73,7 @@ export function extractExtensions(schema) {
                 break;
             case "field-arguments":
             case "arguments":
+            case "args":
                 extensions.fieldArguments = value;
                 break;
             // P0 Features
