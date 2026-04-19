@@ -112,3 +112,6 @@ frontend/**/*.zip
 *.swp
 *.swo
 *~
+
+# graphify
+graphify-out/
