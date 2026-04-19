@@ -106,6 +106,9 @@ try {
     const toEnum = (value, fallback) => {
         return (value ? value.toUpperCase() : fallback);
     };
+    if (values["infer-ids"]) {
+        console.warn("Warning: --infer-ids is deprecated. Use --id-strategy=COMMON_PATTERNS instead.");
+    }
     const converterOptions = {
         includeDescriptions: values.descriptions,
         preserveFieldOrder: values["preserve-order"],
