@@ -2,9 +2,9 @@ name: Comprehensive Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
   workflow_dispatch:
 
 env:
@@ -136,12 +136,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check formatting
-        working-directory: converters/node
-        run: pnpm run format:check
+        working-directory: ../..
+        run: pnpm exec oxfmt check converters/node/src
 
       - name: Run linter
-        working-directory: converters/node
-        run: pnpm run lint
+        working-directory: ../..
+        run: pnpm exec oxlint check --config .oxlint/config.json converters/node/src
 
       - name: Build
         working-directory: converters/node

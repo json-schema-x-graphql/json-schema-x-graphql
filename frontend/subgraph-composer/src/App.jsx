@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import SplitPane from "react-split-pane";
+import { SplitPane } from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
 import SchemaEditor from "./components/SchemaEditor.jsx";
-import SupergraphPreview from "./components/SupergraphPreview.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import DirectiveSuggester from "./components/DirectiveSuggester.jsx";
 import SubgraphEditor from "./components/SubgraphEditor.jsx";
@@ -39,7 +38,7 @@ export default function App() {
 
   const {
     suggestions,
-    appliedDirectives,
+
     isLoading: suggestionsLoading,
     showSuggestions,
     generateSuggestions,
@@ -105,7 +104,11 @@ export default function App() {
             return generateSubgraph(parsed, schema.id, converterOptions);
           } catch (error) {
             console.error(`Failed to parse schema ${schema.id}:`, error);
-            return { success: false, error: error.message, sdl: null };
+            return {
+              success: false,
+              error: error instanceof Error ? error.message : String(error),
+              sdl: null,
+            };
           }
         }),
       );
@@ -132,7 +135,7 @@ export default function App() {
     } catch (error) {
       console.error("Failed to generate subgraphs:", error);
     }
-  }, [schemas, generateSubgraph, subgraphsMap, compose, getConverterOptions]);
+  }, [schemas, generateSubgraph, compose, getConverterOptions]);
 
   const handleAddSchema = useCallback(async () => {
     if (schemas.length >= 10) {
@@ -311,7 +314,7 @@ export default function App() {
                       name: activeSchema?.name || "Subgraph 1",
                       content: subgraphs[0].sdl || "",
                     }}
-                    onUpdate={(content) => {
+                    onUpdate={() => {
                       /* TODO: implement subgraph update logic */
                     }}
                     isLoading={isLoading}

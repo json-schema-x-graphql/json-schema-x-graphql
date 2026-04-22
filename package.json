@@ -2,27 +2,52 @@
   "name": "json-schema-x-graphql",
   "version": "0.1.0",
   "description": "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support",
-  "main": "converters/rust/pkg/json_schema_graphql_converter.js",
-  "module": "converters/rust/pkg/json_schema_graphql_converter.js",
-  "types": "converters/rust/pkg/json_schema_graphql_converter.d.ts",
+  "keywords": [
+    "apollo-federation",
+    "bidirectional",
+    "graphql",
+    "json-schema",
+    "schema-conversion",
+    "type-system",
+    "validation",
+    "wasm"
+  ],
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "JJediny and Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJediny/json-schema-x-graphql.git"
+  },
+  "workspaces": [
+    "converters/node"
+  ],
   "files": [
     "converters/rust/pkg",
     "schema",
     "README.md",
     "LICENSE"
   ],
-  "workspaces": [
-    "converters/node"
-  ],
-  "packageManager": "pnpm@10.33.0",
+  "main": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "module": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "types": "converters/rust/pkg/json_schema_graphql_converter.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm --release",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src/**/*.ts",
-    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "lint": "oxlint check --fix --config .oxlint/config.json .",
+    "format": "pnpm run format:prettier",
+    "format:oxfmt": "oxfmt check .",
+    "format:oxfmt:fix": "oxfmt --write .",
+    "format:prettier": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:prettier:check": "prettier --check \"**/*.{ts,js,json,md}\"",
     "prepublishOnly": "pnpm run build",
     "docs": "typedoc src/index.ts",
     "converters:node:install": "pnpm -C converters/node install",
@@ -38,26 +63,6 @@
     "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary",
     "mockforge:start": "pnpm -C servers/mockforge run start"
   },
-  "keywords": [
-    "graphql",
-    "json-schema",
-    "apollo-federation",
-    "wasm",
-    "schema-conversion",
-    "bidirectional",
-    "validation",
-    "type-system"
-  ],
-  "author": "JJediny and Contributors",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JJediny/json-schema-x-graphql.git"
-  },
-  "bugs": {
-    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
-  },
-  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
   "devDependencies": {
     "@codemirror/basic-setup": "^0.20.0",
     "@humanwhocodes/config-array": "^0.13.0",
@@ -71,7 +76,7 @@
     "@typescript-eslint/parser": "^8.58.2",
     "abab": "^2.0.6",
     "domexception": "^4.0.0",
-    "eslint": "^10.2.1",
+    "eslint": "^8.57.1",
     "glob": "^13.0.6",
     "graphql": "^16.13.2",
     "graphql-language-service-interface": "^2.10.2",
@@ -81,6 +86,7 @@
     "inflight": "^1.0.6",
     "jest": "^30.3.0",
     "node-domexception": "^2.0.2",
+    "oxlint": "^1.60.0",
     "prettier": "^3.8.3",
     "rimraf": "^6.1.3",
     "rollup": "^4.60.2",
@@ -97,22 +103,20 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
       "serialize-javascript": "7.0.3",
       "webpack": "5.106.2",
       "ws": "8.17.1",
       "esbuild": "0.25.0",
-      "ajv": "8.18.0",
       "axios": "1.15.0",
       "tar": "7.5.11",
       "flatted": "3.4.2",
       "dompurify": "3.4.0",
       "picomatch": "4.0.4",
       "brace-expansion": "5.0.5",
+      "minimatch": "4.2.5",
       "yaml": "1.10.3",
       "@tootallnate/once": "3.0.1",
       "fast-json-stringify": "^5.0.0"
