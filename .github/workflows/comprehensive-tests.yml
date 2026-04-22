@@ -136,7 +136,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check formatting
-        run: pnpm exec oxfmt check converters/node/src
+        working-directory: converters/node
+        run: pnpm exec oxfmt check src
 
       - name: Run linter
         run: pnpm exec oxlint check --config .oxlint/config.json converters/node/src

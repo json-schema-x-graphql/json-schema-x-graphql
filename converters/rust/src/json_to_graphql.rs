@@ -55,12 +55,6 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                             })
                         });
 
-                    // Prioritize x-graphql-description over description
-                    let description = def_schema
-                        .get("x-graphql-description")
-                        .and_then(|v| v.as_str())
-                        .or_else(|| def_schema.get("description").and_then(|v| v.as_str()));
-
                     let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
                         .unwrap_or(def_key);
