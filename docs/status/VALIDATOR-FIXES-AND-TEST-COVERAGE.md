@@ -22,8 +22,7 @@ This document summarizes the fixes made to the Node.js converter to properly sup
 ```typescript
 // converter.ts - renderObject function
 const typeKind = (schema["x-graphql-type-kind"] || "").toUpperCase();
-const isInterface =
-  typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
+const isInterface = typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
 const header = [
   isInterface ? "interface" : "type",
   typeName,
@@ -144,15 +143,8 @@ if (typeof fieldNonNull === "boolean") {
 ```typescript
 // inferGraphQLType function - array case
 const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
-const itemRequired =
-  typeof listItemNonNull === "boolean" ? listItemNonNull : false;
-const itemType = inferGraphQLType(
-  items,
-  itemRequired,
-  context,
-  depth + 1,
-  nameHint,
-);
+const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+const itemType = inferGraphQLType(items, itemRequired, context, depth + 1, nameHint);
 ```
 
 **Result:** Arrays can now specify non-null items: `[String!]`

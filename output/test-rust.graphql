@@ -1,38 +1,55 @@
 "Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure"
 type Contract implements Node {
   commonElements: CommonElements!
-  "Alias for globalRecordId for GraphQL Node interface" id: ID!
-  "Procurement Instrument Identifier" piid: String
-  "Alias (camelCase) for place_of_performance for GraphQL parity" placeOfPerformance: PlaceOfPerformance
-  "Location data" placeOfPerformance: PlaceOfPerformance
-  "Related contracts via referencedPiid" relatedContracts: [Contract!]
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: ID!
+  "Procurement Instrument Identifier"
+  piid: String
+  "Alias (camelCase) for place_of_performance for GraphQL parity"
+  placeOfPerformance: PlaceOfPerformance
+  "Location data"
+  placeOfPerformance: PlaceOfPerformance
+  "Related contracts via referencedPiid"
+  relatedContracts: [Contract!]
   systemExtensions: SystemExtensions
   systemMetadata: SystemMetadata!
-  "Alias (camelCase) for vendor_info for GraphQL parity" vendorInfo: VendorInfo
-  "Vendor information structure" vendorInfo: VendorInfo
+  "Alias (camelCase) for vendor_info for GraphQL parity"
+  vendorInfo: VendorInfo
+  "Vendor information structure"
+  vendorInfo: VendorInfo
 }
 
 "Metadata supporting multiple nested systems"
 type SystemMetadata {
-  "Global unique identifier across all systems" globalRecordId: String!
-  "Last modification timestamp" lastModified: DateTime
-  "Primary source system" primarySystem: SystemType!
-  "Schema version" schemaVersion: String
-  "Chain of systems data has flowed through" systemChain: [SystemChainEntry]!
+  "Global unique identifier across all systems"
+  globalRecordId: String!
+  "Last modification timestamp"
+  lastModified: DateTime
+  "Primary source system"
+  primarySystem: SystemType!
+  "Schema version"
+  schemaVersion: String
+  "Chain of systems data has flowed through"
+  systemChain: [SystemChainEntry]!
 }
 
 "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation"
 type Contract implements Node {
   commonElements: CommonElements!
-  "Alias for globalRecordId for GraphQL Node interface" id: ID!
-  "Procurement Instrument Identifier" piid: String
-  "Alias (camelCase) for place_of_performance for GraphQL parity" placeOfPerformance: PlaceOfPerformance
-  "Location data" placeOfPerformance: PlaceOfPerformance
-  "Related contracts via referencedPiid" relatedContracts: [Contract!]
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: ID!
+  "Procurement Instrument Identifier"
+  piid: String
+  "Alias (camelCase) for place_of_performance for GraphQL parity"
+  placeOfPerformance: PlaceOfPerformance
+  "Location data"
+  placeOfPerformance: PlaceOfPerformance
+  "Related contracts via referencedPiid"
+  relatedContracts: [Contract!]
   systemExtensions: SystemExtensions
   systemMetadata: SystemMetadata!
-  "Alias (camelCase) for vendor_info for GraphQL parity" vendorInfo: VendorInfo
-  "Vendor information structure" vendorInfo: VendorInfo
+  "Alias (camelCase) for vendor_info for GraphQL parity"
+  vendorInfo: VendorInfo
+  "Vendor information structure"
+  vendorInfo: VendorInfo
 }
-
-

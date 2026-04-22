@@ -8,10 +8,9 @@
 /**
  * Convert JSON Schema to GraphQL SDL
  * @param {string} jsonSchemaStr - JSON Schema as string
- * @param {Object} options - Conversion options
  * @returns {string} GraphQL SDL
  */
-export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
+export function jsonSchemaToGraphQL(jsonSchemaStr) {
   try {
     const schema = JSON.parse(jsonSchemaStr);
 
@@ -30,9 +29,7 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
     // Add custom scalars if defined
     if (schema["x-graphql-scalars"]) {
       sdl += "# Custom Scalars\n";
-      for (const [scalarName, scalarDef] of Object.entries(
-        schema["x-graphql-scalars"],
-      )) {
+      for (const [scalarName, scalarDef] of Object.entries(schema["x-graphql-scalars"])) {
         if (scalarDef.description) {
           sdl += `"${scalarDef.description}"\n`;
         }
@@ -42,7 +39,7 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
 
     // Add enums from definitions
     if (schema.$defs) {
-      for (const [defName, defSchema] of Object.entries(schema.$defs)) {
+      for (const [, defSchema] of Object.entries(schema.$defs)) {
         if (defSchema["x-graphql-enum"]) {
           sdl += convertEnum(defSchema);
         }
@@ -67,20 +64,16 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
     // Add queries if defined
     if (schema["x-graphql-operations"]?.queries) {
       sdl += "type Query {\n";
-      for (const [queryName, queryDef] of Object.entries(
-        schema["x-graphql-operations"].queries,
-      )) {
+      for (const [queryName, queryDef] of Object.entries(schema["x-graphql-operations"].queries)) {
         if (queryDef.description) {
           sdl += `  "${queryDef.description}"\n`;
         }
 
         let args = "";
         if (queryDef.args) {
-          const argsList = Object.entries(queryDef.args).map(
-            ([argName, argDef]) => {
-              return `${argName}: ${argDef.type}`;
-            },
-          );
+          const argsList = Object.entries(queryDef.args).map(([argName, argDef]) => {
+            return `${argName}: ${argDef.type}`;
+          });
           args = `(${argsList.join(", ")})`;
         }
 
@@ -101,11 +94,9 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
 
         let args = "";
         if (mutationDef.args) {
-          const argsList = Object.entries(mutationDef.args).map(
-            ([argName, argDef]) => {
-              return `${argName}: ${argDef.type}`;
-            },
-          );
+          const argsList = Object.entries(mutationDef.args).map(([argName, argDef]) => {
+            return `${argName}: ${argDef.type}`;
+          });
           args = `(${argsList.join(", ")})`;
         }
 
@@ -116,19 +107,16 @@ export function jsonSchemaToGraphQL(jsonSchemaStr, options = {}) {
 
     return sdl.trim();
   } catch (error) {
-    throw new Error(
-      `Failed to convert JSON Schema to GraphQL: ${error.message}`,
-    );
+    throw new Error(`Failed to convert JSON Schema to GraphQL: ${error.message}`);
   }
 }
 
 /**
  * Convert GraphQL SDL to JSON Schema
  * @param {string} graphqlSdl - GraphQL SDL string
- * @param {Object} options - Conversion options
  * @returns {string} JSON Schema as string
  */
-export function graphqlToJsonSchema(graphqlSdl, options = {}) {
+export function graphqlToJsonSchema(graphqlSdl) {
   try {
     const schema = {
       $schema: "https://json-schema.org/draft/2020-12/schema",
@@ -158,11 +146,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
       }
 
       // Parse type definition
-      if (
-        line.startsWith("type ") &&
-        !line.includes("Query") &&
-        !line.includes("Mutation")
-      ) {
+      if (line.startsWith("type ") && !line.includes("Query") && !line.includes("Mutation")) {
         const match = line.match(/type\s+(\w+)/);
         if (match) {
           currentType = match[1];
@@ -246,9 +230,7 @@ export function graphqlToJsonSchema(graphqlSdl, options = {}) {
 
     return JSON.stringify(schema, null, 2);
   } catch (error) {
-    throw new Error(
-      `Failed to convert GraphQL to JSON Schema: ${error.message}`,
-    );
+    throw new Error(`Failed to convert GraphQL to JSON Schema: ${error.message}`);
   }
 }
 
@@ -264,9 +246,7 @@ function convertProperty(propName, propSchema, required = []) {
 
   // Add field name
   const fieldName =
-    propSchema["x-graphql-field"]?.name ||
-    propSchema["x-graphql-field-name"] ||
-    propName;
+    propSchema["x-graphql-field"]?.name || propSchema["x-graphql-field-name"] || propName;
   sdl += fieldName;
 
   // Add type
@@ -276,8 +256,7 @@ function convertProperty(propName, propSchema, required = []) {
     jsonTypeToGraphQLType(propSchema);
 
   // Check if required
-  const isRequired =
-    required?.includes(propName) || propSchema["x-graphql-required"] === true;
+  const isRequired = required?.includes(propName) || propSchema["x-graphql-required"] === true;
 
   if (isRequired && !graphqlType.endsWith("!")) {
     graphqlType += "!";
@@ -353,9 +332,7 @@ function jsonTypeToGraphQLType(propSchema) {
   }
 
   if (type === "array") {
-    const itemType = propSchema.items
-      ? jsonTypeToGraphQLType(propSchema.items)
-      : "String";
+    const itemType = propSchema.items ? jsonTypeToGraphQLType(propSchema.items) : "String";
     return `[${itemType}]`;
   }
 
@@ -368,7 +345,7 @@ function jsonTypeToGraphQLType(propSchema) {
 
 function convertGraphQLTypeToJSON(graphqlType) {
   // Remove non-null marker
-  const isRequired = graphqlType.endsWith("!");
+  graphqlType.endsWith("!");
   const cleanType = graphqlType.replace(/!/g, "");
 
   // Handle arrays

@@ -62,9 +62,7 @@ export function parser(jsonStr: string): Graph {
       const emptyNode = { id: null, text: "", isEmpty: true, data: {} };
       const emptyId = addNodeToGraph({ graph, ...emptyNode });
 
-      notHaveParent.forEach((childId) =>
-        addEdgeToGraph(graph, emptyId, childId),
-      );
+      notHaveParent.forEach((childId) => addEdgeToGraph(graph, emptyId, childId));
     }
 
     if (states.graph.nodes.length === 0) {

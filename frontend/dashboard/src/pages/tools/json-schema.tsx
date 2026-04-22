@@ -20,10 +20,12 @@ const JSONSchemaTool = () => {
   const [jsonError, setJsonError] = React.useState(false);
   const [jsonSchemaError, setJsonSchemaError] = React.useState(false);
   const [json, setJson] = React.useState("");
-  const [jsonSchema, setJsonSchema] = React.useState(JSON.stringify(schema_unificationSchema, null, 2));
+  const [jsonSchema, setJsonSchema] = React.useState(
+    JSON.stringify(schema_unificationSchema, null, 2),
+  );
   // Keep a parsed representation so we can pass a real object to Monaco diagnostics
   const [parsedJsonSchema, setParsedJsonSchema] = React.useState<object | null>(
-    () => schema_unificationSchema || null
+    () => schema_unificationSchema || null,
   );
 
   React.useEffect(() => {
@@ -38,11 +40,11 @@ const JSONSchemaTool = () => {
         if (schemaPath) {
           // Try to fetch the requested schema path (publically served)
           fetch(schemaPath)
-            .then(res => {
+            .then((res) => {
               if (!res.ok) throw new Error("Failed to fetch schema");
               return res.json();
             })
-            .then(j => {
+            .then((j) => {
               setJsonSchema(JSON.stringify(j, null, 2));
               setParsedJsonSchema(j);
             })
@@ -151,8 +153,8 @@ const JSONSchemaTool = () => {
             </Box>
             <Editor
               value={json}
-              onChange={value => setJson(value || "")}
-              onValidate={errors => setJsonError(!!errors.length)}
+              onChange={(value) => setJson(value || "")}
+              onValidate={(errors) => setJsonError(!!errors.length)}
               language="json"
               height={500}
               options={editorOptions}
@@ -168,7 +170,7 @@ const JSONSchemaTool = () => {
             </Box>
             <Editor
               value={jsonSchema}
-              onChange={value => {
+              onChange={(value) => {
                 const v = value || "";
                 setJsonSchema(v);
                 // Keep a parsed object in sync when possible so Monaco gets an object
@@ -181,7 +183,7 @@ const JSONSchemaTool = () => {
                   setParsedJsonSchema(null);
                 }
               }}
-              onValidate={errors => setJsonSchemaError(!!errors.length)}
+              onValidate={(errors) => setJsonSchemaError(!!errors.length)}
               language="json"
               height={500}
               options={editorOptions}

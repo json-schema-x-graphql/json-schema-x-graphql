@@ -8,7 +8,9 @@ scalar Datetime
 "Time in HH:mm:ss format"
 scalar Time
 
-"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
+"""
+Arbitrary precision decimal represented as a string to avoid float rounding issues.
+"""
 scalar Decimal
 
 "Email address conforming to RFC 5322 (simplified)."
@@ -21,7 +23,9 @@ scalar Uri
 scalar Json
 
 type Site {
-  """The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map."""
+  """
+  The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
+  """
   siteCode: JSON!
   siteDescription: String
 }
@@ -137,7 +141,9 @@ type Solicitation {
   workspaceNumber: String
   site: Site
   owner: Person
-  """NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system."""
+  """
+  NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
+  """
   buyer: Person
   contractingOfficer: Person
   agreementsOfficer: Person
@@ -302,9 +308,13 @@ type Requisition {
   buyer: Person
   technicalPointOfContact: Person
   originatingOfficeAddress: Address
-  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
   issuingOfficeAddress: Address
-  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
   adminOfficeAddress: Address
   paymentOfficeAddress: Address
   approvalHistory: [RequisitionApprovalHistory]
@@ -421,11 +431,13 @@ type AssociatedRequisitionInfo {
   associatedRequisitionAccountSequenceNumber: String
 }
 
-"""JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.
+"""
+JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.
 
 NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.
 
-NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations."""
+NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.
+"""
 type ProcurementDataSchema {
   solicitation: Solicitation
   requisition: Requisition

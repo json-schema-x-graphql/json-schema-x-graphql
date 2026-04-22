@@ -3,10 +3,7 @@ let wasm;
 let cachedUint8ArrayMemory0 = null;
 
 function getUint8ArrayMemory0() {
-  if (
-    cachedUint8ArrayMemory0 === null ||
-    cachedUint8ArrayMemory0.byteLength === 0
-  ) {
+  if (cachedUint8ArrayMemory0 === null || cachedUint8ArrayMemory0.byteLength === 0) {
     cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
   }
   return cachedUint8ArrayMemory0;
@@ -31,9 +28,7 @@ function decodeText(ptr, len) {
     cachedTextDecoder.decode();
     numBytesDecoded = len;
   }
-  return cachedTextDecoder.decode(
-    getUint8ArrayMemory0().subarray(ptr, ptr + len),
-  );
+  return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
 }
 
 function getStringFromWasm0(ptr, len) {
@@ -156,11 +151,7 @@ export function graphqlToJsonSchema(graphql_sdl) {
   let deferred3_1;
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      graphql_sdl,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr0 = passStringToWasm0(graphql_sdl, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
     wasm.graphqlToJsonSchema(retptr, ptr0, len0);
     var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -219,11 +210,7 @@ export function init() {
 export function validateJsonSchema(json_schema) {
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      json_schema,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr0 = passStringToWasm0(json_schema, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
     wasm.validateJsonSchema(retptr, ptr0, len0);
     var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -248,11 +235,7 @@ export function jsonSchemaToGraphQL(json_schema) {
   let deferred3_1;
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      json_schema,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr0 = passStringToWasm0(json_schema, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
     wasm.jsonSchemaToGraphQL(retptr, ptr0, len0);
     var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -283,11 +266,7 @@ export function jsonSchemaToGraphQL(json_schema) {
 export function validateGraphQLName(name) {
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      name,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr0 = passStringToWasm0(name, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
     wasm.validateGraphQLName(retptr, ptr0, len0);
     var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -310,11 +289,7 @@ export function validateGraphQLName(name) {
 export function validateGraphQLSdl(graphql_sdl) {
   try {
     const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-    const ptr0 = passStringToWasm0(
-      graphql_sdl,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr0 = passStringToWasm0(graphql_sdl, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len0 = WASM_VECTOR_LEN;
     wasm.validateGraphQLSdl(retptr, ptr0, len0);
     var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -332,9 +307,7 @@ export function validateGraphQLSdl(graphql_sdl) {
 const WasmConversionOptionsFinalization =
   typeof FinalizationRegistry === "undefined"
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry((ptr) =>
-        wasm.__wbg_wasmconversionoptions_free(ptr >>> 0, 1),
-      );
+    : new FinalizationRegistry((ptr) => wasm.__wbg_wasmconversionoptions_free(ptr >>> 0, 1));
 /**
  * WASM-compatible conversion options
  */
@@ -410,15 +383,12 @@ export class WasmConversionOptions {
   }
 }
 if (Symbol.dispose)
-  WasmConversionOptions.prototype[Symbol.dispose] =
-    WasmConversionOptions.prototype.free;
+  WasmConversionOptions.prototype[Symbol.dispose] = WasmConversionOptions.prototype.free;
 
 const WasmConverterFinalization =
   typeof FinalizationRegistry === "undefined"
     ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry((ptr) =>
-        wasm.__wbg_wasmconverter_free(ptr >>> 0, 1),
-      );
+    : new FinalizationRegistry((ptr) => wasm.__wbg_wasmconverter_free(ptr >>> 0, 1));
 /**
  * WASM-compatible converter
  */
@@ -462,18 +432,9 @@ export class WasmConverter {
     let deferred3_1;
     try {
       const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-      const ptr0 = passStringToWasm0(
-        graphql_sdl,
-        wasm.__wbindgen_export2,
-        wasm.__wbindgen_export3,
-      );
+      const ptr0 = passStringToWasm0(graphql_sdl, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
       const len0 = WASM_VECTOR_LEN;
-      wasm.wasmconverter_graphqlToJsonSchema(
-        retptr,
-        this.__wbg_ptr,
-        ptr0,
-        len0,
-      );
+      wasm.wasmconverter_graphqlToJsonSchema(retptr, this.__wbg_ptr, ptr0, len0);
       var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
       var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
       var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
@@ -503,18 +464,9 @@ export class WasmConverter {
     let deferred3_1;
     try {
       const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-      const ptr0 = passStringToWasm0(
-        json_schema,
-        wasm.__wbindgen_export2,
-        wasm.__wbindgen_export3,
-      );
+      const ptr0 = passStringToWasm0(json_schema, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
       const len0 = WASM_VECTOR_LEN;
-      wasm.wasmconverter_jsonSchemaToGraphQL(
-        retptr,
-        this.__wbg_ptr,
-        ptr0,
-        len0,
-      );
+      wasm.wasmconverter_jsonSchemaToGraphQL(retptr, this.__wbg_ptr, ptr0, len0);
       var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
       var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
       var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
@@ -554,26 +506,11 @@ export class WasmConverter {
     let deferred4_1;
     try {
       const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-      const ptr0 = passStringToWasm0(
-        input,
-        wasm.__wbindgen_export2,
-        wasm.__wbindgen_export3,
-      );
+      const ptr0 = passStringToWasm0(input, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
       const len0 = WASM_VECTOR_LEN;
-      const ptr1 = passStringToWasm0(
-        direction,
-        wasm.__wbindgen_export2,
-        wasm.__wbindgen_export3,
-      );
+      const ptr1 = passStringToWasm0(direction, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
       const len1 = WASM_VECTOR_LEN;
-      wasm.wasmconverter_convert(
-        retptr,
-        this.__wbg_ptr,
-        ptr0,
-        len0,
-        ptr1,
-        len1,
-      );
+      wasm.wasmconverter_convert(retptr, this.__wbg_ptr, ptr0, len0, ptr1, len1);
       var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
       var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
       var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
@@ -594,8 +531,7 @@ export class WasmConverter {
     }
   }
 }
-if (Symbol.dispose)
-  WasmConverter.prototype[Symbol.dispose] = WasmConverter.prototype.free;
+if (Symbol.dispose) WasmConverter.prototype[Symbol.dispose] = WasmConverter.prototype.free;
 
 const EXPECTED_RESPONSE_TYPES = new Set(["basic", "cors", "default"]);
 
@@ -605,13 +541,9 @@ async function __wbg_load(module, imports) {
       try {
         return await WebAssembly.instantiateStreaming(module, imports);
       } catch (e) {
-        const validResponse =
-          module.ok && EXPECTED_RESPONSE_TYPES.has(module.type);
+        const validResponse = module.ok && EXPECTED_RESPONSE_TYPES.has(module.type);
 
-        if (
-          validResponse &&
-          module.headers.get("Content-Type") !== "application/wasm"
-        ) {
+        if (validResponse && module.headers.get("Content-Type") !== "application/wasm") {
           console.warn(
             "`WebAssembly.instantiateStreaming` failed because your server does not serve Wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n",
             e,
@@ -672,11 +604,7 @@ function __wbg_get_imports() {
   };
   imports.wbg.__wbg_stack_0ed75d68575b0f3c = function (arg0, arg1) {
     const ret = getObject(arg1).stack;
-    const ptr1 = passStringToWasm0(
-      ret,
-      wasm.__wbindgen_export2,
-      wasm.__wbindgen_export3,
-    );
+    const ptr1 = passStringToWasm0(ret, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
     const len1 = WASM_VECTOR_LEN;
     getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
     getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
@@ -714,9 +642,7 @@ function initSync(module) {
     if (Object.getPrototypeOf(module) === Object.prototype) {
       ({ module } = module);
     } else {
-      console.warn(
-        "using deprecated parameters for `initSync()`; pass a single object instead",
-      );
+      console.warn("using deprecated parameters for `initSync()`; pass a single object instead");
     }
   }
 
@@ -745,10 +671,7 @@ async function __wbg_init(module_or_path) {
   }
 
   if (typeof module_or_path === "undefined") {
-    module_or_path = new URL(
-      "json_schema_graphql_converter_bg.wasm",
-      import.meta.url,
-    );
+    module_or_path = new URL("json_schema_graphql_converter_bg.wasm", import.meta.url);
   }
   const imports = __wbg_get_imports();
 

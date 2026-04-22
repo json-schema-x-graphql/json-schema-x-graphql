@@ -10,4 +10,3 @@ type Refnamingcollision {
   a: Index
   b: Index1
 }
-

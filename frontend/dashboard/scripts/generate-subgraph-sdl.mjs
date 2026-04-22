@@ -65,7 +65,7 @@ function getDescription(schema) {
   const raw = schema["x-graphql-description"] || schema.description || "";
   if (typeof raw !== "string" || !raw) return "";
   // Escape triple quotes for SDL
-  return raw.replace(/\"\"\"/g, '\\"\\"\\"');
+  return raw.replace(/"""/g, '\\"\\"\\"');
 }
 
 /**
@@ -247,7 +247,9 @@ function generateEnum(name, schema, output) {
   } else if (schema.enum) {
     schema.enum.forEach((value) => {
       if (value === null) return;
-      const enumValue = String(value).toUpperCase().replace(/[^A-Z0-9_]/g, "_");
+      const enumValue = String(value)
+        .toUpperCase()
+        .replace(/[^A-Z0-9_]/g, "_");
       output.push(`  ${enumValue}`);
     });
   }
@@ -414,14 +416,14 @@ function generateEnums(schema, output) {
     if (desc) {
       output.push(`"""\n${desc}\n"""`);
     }
-    
+
     output.push(`enum ${enumName} {`);
-    
+
     const values = config.values || [];
     values.forEach((value) => {
       output.push(`  ${value}`);
     });
-    
+
     output.push(`}\n`);
   });
 }
@@ -493,7 +495,8 @@ function generateOperations(schema, output, generatedTypes) {
     const ops = operations[opType];
     if (!ops || Object.keys(ops).length === 0) return;
 
-    const typeName = opType === "queries" ? "Query" : opType === "mutations" ? "Mutation" : "Subscription";
+    const typeName =
+      opType === "queries" ? "Query" : opType === "mutations" ? "Mutation" : "Subscription";
 
     if (generatedTypes.has(typeName)) return;
     generatedTypes.add(typeName);
@@ -527,7 +530,9 @@ function generateOperations(schema, output, generatedTypes) {
  * Generate federation schema directive
  */
 function generateSchemaDirective(output) {
-  output.unshift('extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])\n');
+  output.unshift(
+    'extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])\n',
+  );
 }
 
 /**
@@ -569,9 +574,13 @@ async function generateSubgraphSDL(inputPath, outputPath) {
   // Skip root type generation if title looks like a description (contains spaces)
   if (schema.properties && Object.keys(schema.properties).length > 0) {
     const rootTypeName = schema.title?.replace(/\s+/g, "") || "RootType";
-    
+
     // Only generate if the type name is valid and not already generated
-    if (rootTypeName && /^[A-Z][A-Za-z0-9_]*$/.test(rootTypeName) && !generatedTypes.has(rootTypeName)) {
+    if (
+      rootTypeName &&
+      /^[A-Z][A-Za-z0-9_]*$/.test(rootTypeName) &&
+      !generatedTypes.has(rootTypeName)
+    ) {
       generateObjectType(rootTypeName, schema, output, generatedTypes);
     }
   }

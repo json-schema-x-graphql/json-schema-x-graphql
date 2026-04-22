@@ -93,16 +93,12 @@ export function useSchemaManager() {
 
   const updateSchema = useCallback((schemaId, content) => {
     setSchemas((prev) =>
-      prev.map((s) =>
-        s.id === schemaId ? { ...s, content, lastModified: Date.now() } : s,
-      ),
+      prev.map((s) => (s.id === schemaId ? { ...s, content, lastModified: Date.now() } : s)),
     );
   }, []);
 
   const renameSchema = useCallback((schemaId, newName) => {
-    setSchemas((prev) =>
-      prev.map((s) => (s.id === schemaId ? { ...s, name: newName } : s)),
-    );
+    setSchemas((prev) => prev.map((s) => (s.id === schemaId ? { ...s, name: newName } : s)));
   }, []);
 
   const reorderSchemas = useCallback((reorderedSchemas) => {
@@ -136,9 +132,7 @@ export function useSchemaManager() {
   }, []);
 
   const toggleSchema = useCallback((schemaId) => {
-    setSchemas((prev) =>
-      prev.map((s) => (s.id === schemaId ? { ...s, enabled: !s.enabled } : s)),
-    );
+    setSchemas((prev) => prev.map((s) => (s.id === schemaId ? { ...s, enabled: !s.enabled } : s)));
   }, []);
 
   return {

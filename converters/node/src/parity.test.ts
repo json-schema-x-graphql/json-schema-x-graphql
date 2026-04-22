@@ -34,9 +34,7 @@ function sortDefinitions(ast: DocumentNode): DocumentNode {
       for (const f of def.fields) {
         if (f.arguments) {
           f.arguments.sort((a: any, b: any) =>
-            String(a.name?.value || "").localeCompare(
-              String(b.name?.value || ""),
-            ),
+            String(a.name?.value || "").localeCompare(String(b.name?.value || "")),
           );
         }
       }
@@ -69,8 +67,7 @@ function normalizeSDL(sdl: string) {
     if (visited.has(node)) return;
     visited.add(node);
     if (node.kind === "StringValue" && typeof node.value === "string") {
-      node.block =
-        node.value.includes("\n") || node.value.length >= BLOCK_THRESHOLD;
+      node.block = node.value.includes("\n") || node.value.length >= BLOCK_THRESHOLD;
     }
     for (const k of Object.keys(node)) {
       const v = node[k];
@@ -88,11 +85,7 @@ function normalizeSDL(sdl: string) {
   // inline type and the other prefers the opaque `JSON` scalar.
   const inlineTypeNames = new Set<string>();
   for (const def of (ast as any).definitions || []) {
-    if (
-      def &&
-      def.kind === "ObjectTypeDefinition" &&
-      /^Nested/i.test(def.name?.value)
-    ) {
+    if (def && def.kind === "ObjectTypeDefinition" && /^Nested/i.test(def.name?.value)) {
       inlineTypeNames.add(def.name.value);
     }
   }
@@ -103,11 +96,7 @@ function normalizeSDL(sdl: string) {
       if (!node || typeof node !== "object") return;
       if (visitedReplace.has(node)) return;
       visitedReplace.add(node);
-      if (
-        node.kind === "NamedType" &&
-        node.name &&
-        inlineTypeNames.has(node.name.value)
-      ) {
+      if (node.kind === "NamedType" && node.name && inlineTypeNames.has(node.name.value)) {
         node.name.value = "JSON";
       }
       for (const k of Object.keys(node)) {
@@ -122,12 +111,7 @@ function normalizeSDL(sdl: string) {
     replaceNamedTypes(ast as any);
     // Remove the inline type definitions themselves
     (ast as any).definitions = (ast as any).definitions.filter(
-      (d: any) =>
-        !(
-          d &&
-          d.kind === "ObjectTypeDefinition" &&
-          inlineTypeNames.has(d.name?.value)
-        ),
+      (d: any) => !(d && d.kind === "ObjectTypeDefinition" && inlineTypeNames.has(d.name?.value)),
     );
   }
   const stripped = stripLoc(ast as any);
@@ -169,18 +153,8 @@ describe("Parity: Node vs Rust converter outputs", () => {
         env,
       });
 
-      const nodeOut = join(
-        repoRoot,
-        "output",
-        "comparison",
-        `${basename}-node.graphql`,
-      );
-      const rustOut = join(
-        repoRoot,
-        "output",
-        "comparison",
-        `${basename}-rust.graphql`,
-      );
+      const nodeOut = join(repoRoot, "output", "comparison", `${basename}-node.graphql`);
+      const rustOut = join(repoRoot, "output", "comparison", `${basename}-rust.graphql`);
 
       expect(existsSync(nodeOut)).toBe(true);
       expect(existsSync(rustOut)).toBe(true);

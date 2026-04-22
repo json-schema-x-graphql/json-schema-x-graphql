@@ -3,10 +3,8 @@ import type { InferGetStaticPropsType, GetStaticProps } from "next";
 import { NextSeo } from "next-seo";
 import { SEO } from "../constants/seo";
 import { Features } from "../layout/Landing/Features";
-// import { HeroPreview } from "../layout/Landing/HeroPreview";
 import { HeroSection } from "../layout/Landing/HeroSection";
 import { Section1 } from "../layout/Landing/Section1";
-// import { Section2 } from "../layout/Landing/Section2";
 import { Section3 } from "../layout/Landing/Section3";
 import Layout from "../layout/PageLayout";
 
@@ -15,9 +13,7 @@ export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
     <Layout>
       <NextSeo {...SEO} canonical="https://ttse-schema-unification-project.app.cloud.gov" />
       <HeroSection stars={props.stars} />
-      {/* <HeroPreview /> */}
       <Section1 docs={props.docs} />
-      {/* <Section2 /> */}
       <Section3 />
       <Features />
     </Layout>
@@ -27,7 +23,6 @@ export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
 export default HomePage;
 
 export const getStaticProps = (async () => {
-  // Fetch repo stars as before
   let stars = 0;
   try {
     const res = await fetch("https://api.github.com/repos/GSA-TTS/enterprise-schema-unification", {
@@ -35,11 +30,10 @@ export const getStaticProps = (async () => {
     });
     const data = await res.json();
     stars = data?.stargazers_count || 0;
-  } catch (e) {
+  } catch {
     // ignore
   }
 
-  // Generate docs list dynamically based on directory structure
   let docs: string[] = [];
   try {
     const fs = await import("fs");
@@ -59,11 +53,9 @@ export const getStaticProps = (async () => {
         } else if (ent.isFile() && ent.name.endsWith(".md")) {
           let rel = pathMod.relative(base, full).replace(/\\/g, "/");
 
-          // Handle READMEs: docs/adr/README.md -> adr
           if (rel.endsWith("/README.md")) {
             rel = rel.replace(/\/README\.md$/, "");
           } else if (rel === "README.md") {
-            // Root README maps to root docs index
             rel = "";
           } else {
             rel = rel.replace(/\.md$/, "");
@@ -78,8 +70,7 @@ export const getStaticProps = (async () => {
     };
 
     docs = walk(docsDir);
-  } catch (e) {
-    console.error("Error generating docs list:", e);
+  } catch {
     docs = [];
   }
 

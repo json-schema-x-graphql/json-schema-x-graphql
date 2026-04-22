@@ -76,24 +76,18 @@ function patchSeoOpenGraph() {
   const localPath = "/assets/diagram.svg";
 
   if (!cloudUrlRegex.test(current)) {
-    console.log(
-      "[skip] SEO file does not reference cloud.gov diagram.svg (or already patched).",
-    );
+    console.log("[skip] SEO file does not reference cloud.gov diagram.svg (or already patched).");
     return { patched: false };
   }
 
   // Backup original
   const backupPath = path.join(BACKUP_DIR, "seo.ts.bak");
   safeWrite(backupPath, current);
-  console.log(
-    `Backed up original SEO file to ${path.relative(ROOT, backupPath)}`,
-  );
+  console.log(`Backed up original SEO file to ${path.relative(ROOT, backupPath)}`);
 
   const patched = current.replace(cloudUrlRegex, localPath);
   safeWrite(seoPath, patched);
-  console.log(
-    `Patched SEO OpenGraph image URL -> ${localPath} in ${path.relative(ROOT, seoPath)}`,
-  );
+  console.log(`Patched SEO OpenGraph image URL -> ${localPath} in ${path.relative(ROOT, seoPath)}`);
 
   // Warn if the asset file is missing
   const assetCandidate = path.join(ROOT, "public", "assets", "diagram.svg");
@@ -123,9 +117,7 @@ function ensureNextConfigRewrites() {
     content.includes("source: '/graphql-editor'") ||
     content.includes("/graphql-editor/index.html")
   ) {
-    console.log(
-      "[skip] next.config.js already contains graphql-editor rewrites/redirects.",
-    );
+    console.log("[skip] next.config.js already contains graphql-editor rewrites/redirects.");
     return { patched: false };
   }
 
@@ -150,8 +142,7 @@ function ensureNextConfigRewrites() {
 
   // Insert injection right after the opening of the config object
   const insertPos = idx + marker.length;
-  const patched =
-    content.slice(0, insertPos) + "\n" + injection + content.slice(insertPos);
+  const patched = content.slice(0, insertPos) + "\n" + injection + content.slice(insertPos);
 
   // Backup and write
   const backupPath = path.join(BACKUP_DIR, "next.config.js.bak");
@@ -187,9 +178,7 @@ function runLinkinator(url) {
     if (err.stdout) {
       try {
         fs.writeFileSync(outFile, err.stdout);
-        console.log(
-          `Partial linkinator output saved to ${path.relative(ROOT, outFile)}`,
-        );
+        console.log(`Partial linkinator output saved to ${path.relative(ROOT, outFile)}`);
         return JSON.parse(err.stdout.toString());
       } catch (e) {
         console.error("Failed to parse linkinator output:", e.message);
@@ -303,9 +292,7 @@ function writeOutputs(broken, mapping) {
   const mappingFile = path.join(OUT_DIR, "broken-links-sources.json");
   safeWrite(brokenFile, JSON.stringify(broken, null, 2));
   safeWrite(mappingFile, JSON.stringify(mapping, null, 2));
-  console.log(
-    `Wrote ${broken.length} broken link entries to ${path.relative(ROOT, brokenFile)}`,
-  );
+  console.log(`Wrote ${broken.length} broken link entries to ${path.relative(ROOT, brokenFile)}`);
   console.log(`Wrote mapping to ${path.relative(ROOT, mappingFile)}`);
 }
 
@@ -327,10 +314,7 @@ function writeOutputs(broken, mapping) {
       console.log("Injected rewrites into next.config.js.");
     }
   } catch (e) {
-    console.error(
-      "Error while attempting safe fixes:",
-      e && e.message ? e.message : e,
-    );
+    console.error("Error while attempting safe fixes:", e && e.message ? e.message : e);
   }
 
   // Run linkinator

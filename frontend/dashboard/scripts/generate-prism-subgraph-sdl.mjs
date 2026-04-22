@@ -64,7 +64,7 @@ function pascalCase(str) {
     .replace(/[_\-\s]+/g, " ")
     .split(" ")
     .filter(Boolean)
-    .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join("");
 }
 
@@ -91,7 +91,7 @@ function normalizeEnumValue(value) {
 function tripleQuote(desc, indent = "") {
   if (!desc) return "";
   const text = String(desc).replace(/"""/g, '\\"""');
-  const lines = text.split(/\r?\n/).map(l => indent + l);
+  const lines = text.split(/\r?\n/).map((l) => indent + l);
   return `${indent}"""\n${lines.join("\n")}\n${indent}"""`;
 }
 
@@ -157,7 +157,7 @@ class PrismSDLBuilder {
 
   mapScalar(propDef, propName) {
     const t = propDef && propDef.type;
-    const types = Array.isArray(t) ? t.filter(x => x !== "null") : t ? [t] : [];
+    const types = Array.isArray(t) ? t.filter((x) => x !== "null") : t ? [t] : [];
 
     // Prefer explicit date formats even when flexible (string | number | null)
     if (types.includes("string") || types.length === 0) {
@@ -193,19 +193,19 @@ class PrismSDLBuilder {
     // anyOf/oneOf: prefer $ref -> object -> number -> boolean -> string
     const alts = (propDef && (propDef.anyOf || propDef.oneOf)) || null;
     if (Array.isArray(alts) && alts.length) {
-      const refAlt = alts.find(a => a && a.$ref);
+      const refAlt = alts.find((a) => a && a.$ref);
       if (refAlt) return this.getTypeNameForRef(refAlt.$ref);
-      const objAlt = alts.find(a => a && a.type === "object");
+      const objAlt = alts.find((a) => a && a.type === "object");
       if (objAlt) return "JSON";
       const numAlt = alts.find(
-        a =>
+        (a) =>
           a &&
           (Array.isArray(a.type)
             ? a.type.includes("number") || a.type.includes("integer")
-            : a.type === "number" || a.type === "integer")
+            : a.type === "number" || a.type === "integer"),
       );
       if (numAlt) return this.mapScalar(numAlt, propName);
-      const boolAlt = alts.find(a => a && a.type === "boolean");
+      const boolAlt = alts.find((a) => a && a.type === "boolean");
       if (boolAlt) return "Boolean";
       return "String";
     }
@@ -239,16 +239,16 @@ class PrismSDLBuilder {
     const choice = (propDef && (propDef.anyOf || propDef.oneOf || propDef.allOf)) || null;
     if (Array.isArray(choice) && choice.length) {
       // Prefer $ref branch
-      const refAlt = choice.find(a => a && a.$ref);
+      const refAlt = choice.find((a) => a && a.$ref);
       if (refAlt) return this.getTypeNameForRef(refAlt.$ref);
       // Prefer array branch
       const arrAlt = choice.find(
-        a => a && (a.type === "array" || (Array.isArray(a.type) && a.type.includes("array")))
+        (a) => a && (a.type === "array" || (Array.isArray(a.type) && a.type.includes("array"))),
       );
       if (arrAlt) return this.mapPropertyType(parentTypeName, propName, arrAlt);
       // Prefer object branch -> JSON
       const objAlt = choice.find(
-        a => a && (a.type === "object" || (Array.isArray(a.type) && a.type.includes("object")))
+        (a) => a && (a.type === "object" || (Array.isArray(a.type) && a.type.includes("object"))),
       );
       if (objAlt) return "JSON";
       // Fallback to scalar mapping
@@ -257,7 +257,7 @@ class PrismSDLBuilder {
 
     // Handle multi-type unions (e.g., ["integer","string","null"])
     const t = propDef && propDef.type;
-    const types = Array.isArray(t) ? t.filter(x => x !== "null") : t ? [t] : [];
+    const types = Array.isArray(t) ? t.filter((x) => x !== "null") : t ? [t] : [];
 
     // array
     if (types.includes("array") || (propDef && propDef.type === "array")) {
@@ -267,7 +267,7 @@ class PrismSDLBuilder {
       // items can be unioned
       const itemChoice = items.anyOf || items.oneOf || items.allOf || null;
       if (Array.isArray(itemChoice) && itemChoice.length) {
-        const itemRef = itemChoice.find(a => a && a.$ref);
+        const itemRef = itemChoice.find((a) => a && a.$ref);
         if (itemRef) {
           inner = this.getTypeNameForRef(itemRef.$ref);
         } else {
@@ -365,10 +365,10 @@ class PrismSDLBuilder {
   buildEnumsSDL() {
     const parts = [];
     for (const [name, set] of Array.from(this.enumRegistry.entries()).sort((a, b) =>
-      a[0] > b[0] ? 1 : -1
+      a[0] > b[0] ? 1 : -1,
     )) {
       const values = Array.from(set.values());
-      parts.push(`enum ${name} {\n${values.map(v => `  ${v}`).join("\n")}\n}`);
+      parts.push(`enum ${name} {\n${values.map((v) => `  ${v}`).join("\n")}\n}`);
     }
     return parts.join("\n\n");
   }
@@ -396,8 +396,8 @@ class PrismSDLBuilder {
 
       // Candidate key sets
       const hasAmendment = required.includes("amendment_number");
-      const numberField = required.find(r => /_number$/.test(r) && r !== "amendment_number");
-      const idField = required.find(r => /(_id$|^id$)/.test(r));
+      const numberField = required.find((r) => r.endsWith("_number") && r !== "amendment_number");
+      const idField = required.find((r) => /(_id$|^id$)/.test(r));
 
       if (hasAmendment && numberField) {
         argsSDL = `(${numberField}: String!, amendment_number: String)`;
@@ -424,7 +424,7 @@ class PrismSDLBuilder {
           `  List query for ${propName} records (non-paginated snapshot)`,
           '  """',
           `  ${plural}(limit: Int = 50): [${typeName}!]!`,
-        ].join("\n")
+        ].join("\n"),
       );
     }
 
@@ -448,7 +448,7 @@ class PrismSDLBuilder {
       `"""High-precision decimal"""`,
       `scalar Decimal`,
       `"""Arbitrary JSON value"""`,
-      `scalar JSON`
+      `scalar JSON`,
     );
     return lines.join("\n");
   }
@@ -544,7 +544,7 @@ async function main() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("❌ Error:", err && err.stack ? err.stack : String(err));
     process.exit(1);
   });

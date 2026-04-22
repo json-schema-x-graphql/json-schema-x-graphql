@@ -8,14 +8,8 @@
  * Outputs test results in JSON format for CI/CD integration.
  */
 
-import {
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-  existsSync,
-} from "fs";
-import { join, relative, basename, extname } from "path";
+import { readFileSync, readdirSync, writeFileSync } from "fs";
+import { join, relative, basename } from "path";
 import { jsonSchemaToGraphQL } from "../../converters/node/src/converter";
 import { parse as parseGraphQL } from "graphql";
 
@@ -46,10 +40,7 @@ interface IntegrationTestReport {
   skippedTests: number;
   results: ConversionTestResult[];
   summary: {
-    byDirectory: Record<
-      string,
-      { total: number; passed: number; failed: number; skipped: number }
-    >;
+    byDirectory: Record<string, { total: number; passed: number; failed: number; skipped: number }>;
     averageConversionTimeMs: number;
     totalTypesGenerated: number;
   };
@@ -111,7 +102,7 @@ class IntegrationTestHarness {
       try {
         const content = readFileSync(optionsPath, "utf-8");
         return JSON.parse(content);
-      } catch (err) {
+      } catch {
         // Invalid options file, use defaults
         return {};
       }
@@ -156,7 +147,7 @@ class IntegrationTestHarness {
         }
       }
       return count;
-    } catch (err) {
+    } catch {
       return 0;
     }
   }
@@ -209,9 +200,7 @@ class IntegrationTestHarness {
     const relativePath = relative(PROJECT_ROOT, test.schemaPath);
     const result: ConversionTestResult = {
       schemaFile: relativePath,
-      expectedFile: test.expectedPath
-        ? relative(PROJECT_ROOT, test.expectedPath)
-        : undefined,
+      expectedFile: test.expectedPath ? relative(PROJECT_ROOT, test.expectedPath) : undefined,
       passed: false,
       skipped: false,
       warnings: [],
@@ -231,8 +220,7 @@ class IntegrationTestHarness {
       // Check if test should be skipped
       if (options._skip || schema._skip) {
         result.skipped = true;
-        result.skipReason =
-          options._skipReason || schema._skipReason || "Marked as skip";
+        result.skipReason = options._skipReason || schema._skipReason || "Marked as skip";
         return result;
       }
 
@@ -273,19 +261,14 @@ class IntegrationTestHarness {
         } else {
           result.passed = false;
           result.errors = ["Generated SDL does not match expected SDL"];
-          result.diff = this.generateDiff(
-            normalizedExpected,
-            normalizedGenerated,
-          );
+          result.diff = this.generateDiff(normalizedExpected, normalizedGenerated);
         }
       } else {
         // No expected output - just validate SDL is parseable
         try {
           parseGraphQL(generatedSDL);
           result.passed = true;
-          result.warnings?.push(
-            "No expected SDL to compare against - validated syntax only",
-          );
+          result.warnings?.push("No expected SDL to compare against - validated syntax only");
         } catch (parseError: any) {
           result.passed = false;
           result.errors = [`Generated invalid SDL: ${parseError.message}`];
@@ -298,9 +281,7 @@ class IntegrationTestHarness {
         const hasSkipExtension =
           schema["x-graphql-skip"] !== undefined ||
           JSON.stringify(schema).includes("x-graphql-skip");
-        const hasDescriptionExtension = JSON.stringify(schema).includes(
-          "x-graphql-description",
-        );
+        const hasDescriptionExtension = JSON.stringify(schema).includes("x-graphql-description");
 
         if (hasSkipExtension && generatedSDL.includes("# Skipped")) {
           result.warnings?.push("x-graphql-skip may not be applied correctly");
@@ -375,9 +356,7 @@ class IntegrationTestHarness {
         console.log(
           `      ${result.metadata.conversionTimeMs}ms, ` +
             `${result.metadata.generatedTypes} types` +
-            (result.metadata.expectedTypes
-              ? ` (expected ${result.metadata.expectedTypes})`
-              : ""),
+            (result.metadata.expectedTypes ? ` (expected ${result.metadata.expectedTypes})` : ""),
         );
       }
 
@@ -394,9 +373,7 @@ class IntegrationTestHarness {
           console.log(`      ${line}`);
         });
         if (result.diff.split("\n").length > 10) {
-          console.log(
-            `      ... (${result.diff.split("\n").length - 10} more lines)`,
-          );
+          console.log(`      ... (${result.diff.split("\n").length - 10} more lines)`);
         }
       }
 
@@ -420,8 +397,7 @@ class IntegrationTestHarness {
       results,
       summary: {
         byDirectory,
-        averageConversionTimeMs:
-          conversionCount > 0 ? totalConversionTime / conversionCount : 0,
+        averageConversionTimeMs: conversionCount > 0 ? totalConversionTime / conversionCount : 0,
         totalTypesGenerated,
       },
     };
@@ -461,9 +437,7 @@ async function main() {
           report.failedTests--;
           report.passedTests++;
         } catch (err: any) {
-          console.error(
-            `   ❌ Failed to update ${result.expectedFile}: ${err.message}`,
-          );
+          console.error(`   ❌ Failed to update ${result.expectedFile}: ${err.message}`);
         }
       }
     }
@@ -478,9 +452,7 @@ async function main() {
   console.log(`Passed:          ${report.passedTests} ✅`);
   console.log(`Failed:          ${report.failedTests} ❌`);
   console.log(`Skipped:         ${report.skippedTests} ⏭️`);
-  console.log(
-    `Avg conv time:   ${report.summary.averageConversionTimeMs.toFixed(2)}ms`,
-  );
+  console.log(`Avg conv time:   ${report.summary.averageConversionTimeMs.toFixed(2)}ms`);
   console.log(`Total types:     ${report.summary.totalTypesGenerated}`);
   console.log("\nBy directory:");
   for (const [dir, stats] of Object.entries(report.summary.byDirectory)) {

@@ -87,7 +87,7 @@ function collectDefinitionsFromSDL(ast) {
     ObjectTypeDefinition(node) {
       const name = node.name && node.name.value;
       if (!name) return;
-      const fields = (node.fields || []).map(f => (f.name && f.name.value) || "<unknown>");
+      const fields = (node.fields || []).map((f) => (f.name && f.name.value) || "<unknown>");
       types.set(name, fields);
     },
   });
@@ -178,7 +178,7 @@ function buildTopologyMermaid(supergraphSDL) {
           // look for @join__field directives with graph arg
           for (const d of f.directives || []) {
             if (d.name && d.name.value === "join__field") {
-              const arg = (d.arguments || []).find(a => a.name && a.name.value === "graph");
+              const arg = (d.arguments || []).find((a) => a.name && a.name.value === "graph");
               if (arg && arg.value && arg.value.kind === Kind.ENUM) {
                 const g = arg.value.value;
                 rootEdges.add(g);
@@ -202,7 +202,7 @@ function buildTopologyMermaid(supergraphSDL) {
         mMatches.push(mm[1]);
       }
       const matches = [...new Set(mMatches)];
-      matches.forEach(m => graphs.add(m.toUpperCase()));
+      matches.forEach((m) => graphs.add(m.toUpperCase()));
     }
     for (const g of graphs) {
       lines.push(`  ${g}["${g}"]`);
@@ -233,7 +233,7 @@ async function runTheGuild(services, outBase, projectPackage) {
   }
 
   // theguild expects parsed ASTs for composeServices in many versions; ensure we pass ASTs
-  const guildServices = services.map(svc => {
+  const guildServices = services.map((svc) => {
     try {
       return { name: svc.name, typeDefs: parse(svc.sdl, { noLocation: true }) };
     } catch (e) {
@@ -353,7 +353,7 @@ async function runApollo(services, outBase, projectPackage) {
   }
 
   // Apollo composeServices expects SDL strings
-  const apServices = services.map(svc => ({ name: svc.name, typeDefs: svc.sdl }));
+  const apServices = services.map((svc) => ({ name: svc.name, typeDefs: svc.sdl }));
 
   const meta = {
     tool: "@apollo/composition",
@@ -474,7 +474,7 @@ async function main() {
 
   if (!files || files.length === 0) {
     console.warn(
-      "No canonical subgraph SDLs found under generated-schemas/subgraphs or fallback directories. Nothing to do."
+      "No canonical subgraph SDLs found under generated-schemas/subgraphs or fallback directories. Nothing to do.",
     );
     return;
   }
@@ -523,7 +523,7 @@ async function main() {
 
   // all-systems.json - aggregate ownership across tools (use ownership from either tool)
   const agg = {
-    services: services.map(s => ({ name: s.name, file: s.file })),
+    services: services.map((s) => ({ name: s.name, file: s.file })),
     generatedAt: new Date().toISOString(),
     results,
   };
@@ -586,7 +586,7 @@ async function main() {
     // eslint-disable-next-line no-console
     console.warn(
       "Prettier formatting of composition artifacts failed (non-fatal):",
-      err && err.message ? err.message : err
+      err && err.message ? err.message : err,
     );
   }
 
@@ -615,10 +615,10 @@ if (
   import.meta.url === `file://${process.argv[1]}` ||
   process.argv[1].endsWith("generate-composition-artifacts.mjs")
 ) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error(
       "generate-composition-artifacts.mjs: unexpected error:",
-      err && err.stack ? err.stack : err
+      err && err.stack ? err.stack : err,
     );
     process.exit(1);
   });

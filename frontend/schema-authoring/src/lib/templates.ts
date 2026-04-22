@@ -53,10 +53,7 @@ export function getTemplate(key: string): {
 /**
  * Get all templates grouped by category
  */
-export function getTemplatesByCategory(): Record<
-  string,
-  Array<{ key: string } & Template>
-> {
+export function getTemplatesByCategory(): Record<string, Array<{ key: string } & Template>> {
   const grouped: Record<string, Array<{ key: string } & Template>> = {};
   Object.entries(SCHEMA_TEMPLATES).forEach(([key, value]) => {
     const category = value.category;
@@ -636,14 +633,7 @@ export const SCHEMA_TEMPLATES: Record<string, Template> = {
           format: "date-time",
         },
       },
-      required: [
-        "id",
-        "orderNumber",
-        "customer",
-        "items",
-        "totalAmount",
-        "status",
-      ],
+      required: ["id", "orderNumber", "customer", "items", "totalAmount", "status"],
     },
   },
 };

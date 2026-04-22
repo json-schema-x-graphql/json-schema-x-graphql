@@ -95,9 +95,7 @@ export interface GraphQLEnumValue {
 }
 
 export interface GraphQLEnumConfig {
-  values?:
-    | Array<string | number | GraphQLEnumValue>
-    | Record<string, string | GraphQLEnumValue>;
+  values?: Array<string | number | GraphQLEnumValue> | Record<string, string | GraphQLEnumValue>;
 }
 
 export interface GraphQLOperationField {

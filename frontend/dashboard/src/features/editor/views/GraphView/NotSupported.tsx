@@ -58,8 +58,8 @@ const ShiningButton = styled.div`
 `;
 
 export const NotSupported = () => {
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const setVisible = useModal(state => state.setVisible);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const setVisible = useModal((state) => state.setVisible);
 
   return (
     <Overlay

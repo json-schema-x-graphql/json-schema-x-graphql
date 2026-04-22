@@ -120,12 +120,7 @@ Given your use case and the comparison highlights, I recommend **JSON Schema as 
    {
      "ContactRole": {
        "type": "string",
-       "enum": [
-         "primary",
-         "technical",
-         "administrative",
-         "contracting_officer"
-       ],
+       "enum": ["primary", "technical", "administrative", "contracting_officer"],
        "x-graphql-enum": {
          "additional": ["PROGRAM_MANAGER", "COR"],
          "transform": "UPPER_CASE"

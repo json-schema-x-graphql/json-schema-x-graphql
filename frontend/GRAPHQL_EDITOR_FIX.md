@@ -48,11 +48,7 @@ The GraphQL editor component was not rendering due to multiple issues:
 **After**:
 
 ```tsx
-<textarea
-  readOnly
-  value={graphqlSdl}
-  className="flex-1 p-3 font-mono text-sm..."
-/>
+<textarea readOnly value={graphqlSdl} className="flex-1 p-3 font-mono text-sm..." />
 ```
 
 ### 3. Vite Configuration Optimization

@@ -116,7 +116,7 @@ export async function runInteropGeneration(options = {}) {
   // Use npx to invoke prettier so this works in CI without requiring a global install.
   try {
     // Filter out null/undefined values from generatedFiles
-    const filesToFormat = generatedFiles.filter(f => f != null);
+    const filesToFormat = generatedFiles.filter((f) => f != null);
     if (filesToFormat.length > 0) {
       const prettierCmd = "npx";
       const prettierArgs = ["prettier", "--write", ...filesToFormat];
@@ -134,7 +134,7 @@ export async function runInteropGeneration(options = {}) {
     if (verbose)
       console.warn(
         "Prettier formatting encountered an error:",
-        err && err.message ? err.message : err
+        err && err.message ? err.message : err,
       );
   }
 
@@ -153,7 +153,7 @@ export async function runInteropGeneration(options = {}) {
 
   if (verbose) {
     console.log("\nGenerated:");
-    for (const output of generatedFiles.filter(f => f != null)) {
+    for (const output of generatedFiles.filter((f) => f != null)) {
       console.log(` - ${path.relative(repoRoot, output)}`);
     }
   }
@@ -164,10 +164,10 @@ export async function runInteropGeneration(options = {}) {
 // CLI execution
 if (import.meta.url === `file://${process.argv[1]}`) {
   runInteropGeneration()
-    .then(files => {
+    .then((files) => {
       process.exit(0);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error running interop generation:", error);
       process.exit(1);
     });

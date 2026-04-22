@@ -20,11 +20,11 @@ console.log("Generating subgraphs from system schemas...");
 for (const schema of schemas) {
   const schemaPath = path.join(repoRoot, "src", "data", schema);
   console.log(`  - Generating subgraph from ${schema}...`);
-  
+
   const result = spawnSync(
     process.execPath,
     [path.join(repoRoot, "scripts", "generate-subgraph-sdl.mjs"), schemaPath],
-    { cwd: repoRoot, stdio: "inherit" }
+    { cwd: repoRoot, stdio: "inherit" },
   );
 
   if (result.status !== 0) {

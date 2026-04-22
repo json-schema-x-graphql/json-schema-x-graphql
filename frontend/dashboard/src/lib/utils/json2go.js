@@ -7,13 +7,7 @@
 	A simple utility to translate JSON into a Go type definition.
 */
 
-function jsonToGo(
-  json,
-  typename,
-  flatten = true,
-  example = false,
-  allOmitempty = false,
-) {
+function jsonToGo(json, typename, flatten = true, example = false, allOmitempty = false) {
   let data;
   let scope;
   let go = "";
@@ -59,10 +53,7 @@ function jsonToGo(
           }
         }
 
-        const slice =
-          flatten && ["struct", "slice"].includes(sliceType)
-            ? `[]${parent}`
-            : "[]";
+        const slice = flatten && ["struct", "slice"].includes(sliceType) ? `[]${parent}` : "[]";
 
         if (flatten && depth >= 2) appender(slice);
         else append(slice);
@@ -198,11 +189,7 @@ function jsonToGo(
         if (allOmitempty || (omitempty && omitempty[keys[i]] === true)) {
           append(",omitempty");
         }
-        if (
-          example &&
-          scope[keys[i]] !== "" &&
-          typeof scope[keys[i]] !== "object"
-        ) {
+        if (example && scope[keys[i]] !== "" && typeof scope[keys[i]] !== "object") {
           append('" example:"' + scope[keys[i]]);
         }
         append('"`\n');
@@ -290,8 +277,7 @@ function jsonToGo(
 
     switch (typeof val) {
       case "string":
-        if (/\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(\+\d\d:\d\d|Z)/.test(val))
-          return "time.Time";
+        if (/\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?(\+\d\d:\d\d|Z)/.test(val)) return "time.Time";
         else return "string";
       case "number":
         if (val % 1 === 0) {
@@ -311,8 +297,7 @@ function jsonToGo(
   // Given two types, returns the more specific of the two
   function mostSpecificPossibleGoType(typ1, typ2) {
     if (typ1.substr(0, 5) == "float" && typ2.substr(0, 3) == "int") return typ1;
-    else if (typ1.substr(0, 3) == "int" && typ2.substr(0, 5) == "float")
-      return typ2;
+    else if (typ1.substr(0, 3) == "int" && typ2.substr(0, 5) == "float") return typ2;
     else return "any";
   }
 
@@ -367,8 +352,7 @@ function jsonToGo(
 
     return str
       .replace(/(^|[^a-zA-Z])([a-z]+)/g, function (unused, sep, frag) {
-        if (commonInitialisms.indexOf(frag.toUpperCase()) >= 0)
-          return sep + frag.toUpperCase();
+        if (commonInitialisms.indexOf(frag.toUpperCase()) >= 0) return sep + frag.toUpperCase();
         else return sep + frag[0].toUpperCase() + frag.substr(1).toLowerCase();
       })
       .replace(/([A-Z])([a-z]+)/g, function (unused, sep, frag) {
@@ -379,14 +363,11 @@ function jsonToGo(
   }
 
   function uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        var r = (Math.random() * 16) | 0,
-          v = c == "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      },
-    );
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 
   function getOriginalName(unique) {

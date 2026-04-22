@@ -25,13 +25,13 @@ const editorOptions: EditorProps["options"] = {
 
 const TextEditor = () => {
   // useMonaco removed — access the Monaco global via `window.monaco` in effects instead
-  const contents = useFile(state => state.contents);
-  const setContents = useFile(state => state.setContents);
-  const setError = useFile(state => state.setError);
-  const jsonSchema = useFile(state => state.jsonSchema);
-  const getHasChanges = useFile(state => state.getHasChanges);
-  const theme = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
-  const fileType = useFile(state => state.format);
+  const contents = useFile((state) => state.contents);
+  const setContents = useFile((state) => state.setContents);
+  const setError = useFile((state) => state.setError);
+  const jsonSchema = useFile((state) => state.jsonSchema);
+  const getHasChanges = useFile((state) => state.getHasChanges);
+  const theme = useConfig((state) => (state.darkmodeEnabled ? "vs-dark" : "light"));
+  const fileType = useFile((state) => state.format);
 
   React.useEffect(() => {
     // The Monaco global may not be available immediately because the editor is
@@ -58,7 +58,7 @@ const TextEditor = () => {
           });
           return true;
         }
-      } catch (e) {
+      } catch {
         // ignore and allow retry
       }
       return false;
@@ -100,7 +100,7 @@ const TextEditor = () => {
     };
   }, [getHasChanges]);
 
-  const handleMount = useCallback(editor => {
+  const handleMount = useCallback((editor) => {
     editor.onDidPaste(() => {
       editor.getAction("editor.action.formatDocument")?.run();
     });
@@ -116,8 +116,8 @@ const TextEditor = () => {
           value={contents}
           options={editorOptions}
           onMount={handleMount}
-          onValidate={errors => setError(errors[0]?.message)}
-          onChange={contents => setContents({ contents, skipUpdate: true })}
+          onValidate={(errors) => setError(errors[0]?.message)}
+          onChange={(contents) => setContents({ contents, skipUpdate: true })}
           loading={<LoadingOverlay visible />}
         />
       </StyledWrapper>

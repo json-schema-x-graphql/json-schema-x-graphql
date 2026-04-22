@@ -3,13 +3,13 @@ Acquisition data including agreement identifiers and acquisition nature.
 """
 type AssistAcquisitionData {
   """
-Interagency agreement PIID or unique identifier within Legacy Procurement
-"""
-iaPiidOrUniqueId: String!
+  Interagency agreement PIID or unique identifier within Legacy Procurement
   """
-Nature of acquisition (taxonomy specific to Legacy Procurement)
-"""
-natureOfAcquisition: String!
+  iaPiidOrUniqueId: String!
+  """
+  Nature of acquisition (taxonomy specific to Legacy Procurement)
+  """
+  natureOfAcquisition: String!
 }
 
 """
@@ -17,21 +17,21 @@ Award-related settings and timelines within Legacy Procurement.
 """
 type AssistAwardData {
   """
-Base period of performance
-"""
-basePeriod: PeriodOfPerformance
+  Base period of performance
   """
-Option periods of performance
-"""
-optionPeriods: [PeriodOfPerformance]
+  basePeriod: PeriodOfPerformance
   """
-Type of indefinite delivery contract (if applicable)
-"""
-typeOfIdc: String
+  Option periods of performance
   """
-Authorized users of the IDC
-"""
-whoCanUseIdc: String
+  optionPeriods: [PeriodOfPerformance]
+  """
+  Type of indefinite delivery contract (if applicable)
+  """
+  typeOfIdc: String
+  """
+  Authorized users of the IDC
+  """
+  whoCanUseIdc: String
 }
 
 """
@@ -39,21 +39,21 @@ Client organization identity and related information.
 """
 type AssistClientData {
   """
-Name of the client organization
-"""
-clientOrganizationName: String!
+  Name of the client organization
   """
-Client office address
-"""
-officeAddress: AssistOfficeAddress
+  clientOrganizationName: String!
   """
-Primary client point-of-contact email
-"""
-primaryContactEmail: Email
+  Client office address
   """
-Primary client point-of-contact phone
-"""
-primaryContactPhone: String
+  officeAddress: AssistOfficeAddress
+  """
+  Primary client point-of-contact email
+  """
+  primaryContactEmail: Email
+  """
+  Primary client point-of-contact phone
+  """
+  primaryContactPhone: String
 }
 
 """
@@ -61,29 +61,29 @@ Address structure for client organizations in Legacy Procurement.
 """
 type AssistOfficeAddress {
   """
-City
-"""
-city: String
+  City
   """
-Country
-"""
-country: String
+  city: String
   """
-Postal or ZIP code
-"""
-postalCode: String
+  Country
   """
-State or province
-"""
-state: String
+  country: String
   """
-Primary street address line
-"""
-streetAddress1: String
+  Postal or ZIP code
   """
-Secondary street address line
-"""
-streetAddress2: String
+  postalCode: String
+  """
+  State or province
+  """
+  state: String
+  """
+  Primary street address line
+  """
+  streetAddress1: String
+  """
+  Secondary street address line
+  """
+  streetAddress2: String
 }
 
 """
@@ -91,17 +91,17 @@ Root Legacy Procurement entity record combining system metadata and Legacy Procu
 """
 type AssistRecord {
   """
-Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups.
-"""
-iaPiidOrUniqueId: String
+  Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups.
   """
-Legacy Procurement-specific domain fields.
-"""
-legacyProcurementSpecific: AssistSpecificData!
+  iaPiidOrUniqueId: String
   """
-System-level metadata for lineage, versioning, and ingestion.
-"""
-systemMetadata: SystemMetadata!
+  Legacy Procurement-specific domain fields.
+  """
+  legacyProcurementSpecific: AssistSpecificData!
+  """
+  System-level metadata for lineage, versioning, and ingestion.
+  """
+  systemMetadata: SystemMetadata!
 }
 
 """
@@ -109,17 +109,17 @@ Container for Legacy Procurement-specific data slices.
 """
 type AssistSpecificData {
   """
-Acquisition-related data coming from Legacy Procurement.
-"""
-acquisitionData: AssistAcquisitionData
+  Acquisition-related data coming from Legacy Procurement.
   """
-Award-related metadata specific to Legacy Procurement.
-"""
-awardData: AssistAwardData
+  acquisitionData: AssistAcquisitionData
   """
-Client organization data associated with the Legacy Procurement record.
-"""
-clientData: AssistClientData
+  Award-related metadata specific to Legacy Procurement.
+  """
+  awardData: AssistAwardData
+  """
+  Client organization data associated with the Legacy Procurement record.
+  """
+  clientData: AssistClientData
 }
 
 """
@@ -127,13 +127,13 @@ Start and end dates for a period of performance.
 """
 type PeriodOfPerformance {
   """
-End date (YYYY-MM-DD)
-"""
-endDate: Date
+  End date (YYYY-MM-DD)
   """
-Start date (YYYY-MM-DD)
-"""
-startDate: Date
+  endDate: Date
+  """
+  Start date (YYYY-MM-DD)
+  """
+  startDate: Date
 }
 
 """
@@ -141,25 +141,25 @@ Metadata describing the source system, identifiers, and lifecycle timestamps.
 """
 type SystemMetadata @shareable {
   """
-Timestamp when this record was ingested into the data fabric
-"""
-ingestedAt: DateTime
+  Timestamp when this record was ingested into the data fabric
   """
-Timestamp when this record was last modified in its source
-"""
-lastModified: DateTime
+  ingestedAt: DateTime
   """
-Version of the canonical Legacy Procurement schema used to produce this record
-"""
-schemaVersion: String
+  Timestamp when this record was last modified in its source
   """
-Primary identifier of the record within Legacy Procurement
-"""
-sourceRecordId: String!
+  lastModified: DateTime
   """
-Constant system identifier string
-"""
-systemName: String!
+  Version of the canonical Legacy Procurement schema used to produce this record
+  """
+  schemaVersion: String
+  """
+  Primary identifier of the record within Legacy Procurement
+  """
+  sourceRecordId: String!
+  """
+  Constant system identifier string
+  """
+  systemName: String!
 }
 
 """
@@ -167,8 +167,7 @@ Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to
 """
 type LegacyProcurementCanonicalSchema {
   """
-Root Legacy Procurement entity
-"""
-legacyProcurementRecord: AssistRecord
+  Root Legacy Procurement entity
+  """
+  legacyProcurementRecord: AssistRecord
 }
-

@@ -58,7 +58,7 @@ function usage() {
   console.log("");
   console.log("Usage:");
   console.log(
-    "  node scripts/generate-canonical-subgraphs.mjs [--dirs=dir1,dir2] [--out=outdir] [--no-public]"
+    "  node scripts/generate-canonical-subgraphs.mjs [--dirs=dir1,dir2] [--out=outdir] [--no-public]",
   );
   console.log("");
   console.log("Default directories:");
@@ -81,7 +81,7 @@ function parseArgs() {
       opts.dirs = a
         .slice("--dirs=".length)
         .split(",")
-        .map(s => s.trim())
+        .map((s) => s.trim())
         .filter(Boolean);
     } else if (a.startsWith("--out=")) {
       opts.out = a.slice("--out=".length).trim();
@@ -307,7 +307,7 @@ async function main() {
     } catch (err) {
       console.error(
         `Failed to parse SDL in ${file}:`,
-        err && err.message ? err.message : String(err)
+        err && err.message ? err.message : String(err),
       );
       continue;
     }
@@ -463,7 +463,7 @@ async function main() {
       } catch (err) {
         console.error(
           `Failed to write ${pubPath}:`,
-          err && err.message ? err.message : String(err)
+          err && err.message ? err.message : String(err),
         );
       }
     }
@@ -502,7 +502,7 @@ async function main() {
     // eslint-disable-next-line no-console
     console.warn(
       "Prettier formatting of generated subgraphs failed (non-fatal):",
-      err && err.message ? err.message : err
+      err && err.message ? err.message : err,
     );
   }
 
@@ -514,7 +514,7 @@ if (
   import.meta.url === `file://${process.argv[1]}` ||
   (process.argv[1] && process.argv[1].endsWith("generate-canonical-subgraphs.mjs"))
 ) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("Unexpected error:", err && err.stack ? err.stack : String(err));
     process.exit(1);
   });

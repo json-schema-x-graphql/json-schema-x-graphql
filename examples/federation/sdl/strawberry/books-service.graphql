@@ -1,8 +1,7 @@
 # Books Service - Strawberry GraphQL Federation Example
 # This service owns the Book entity
 
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable"])
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable"])
 
 """
 Book entity with author and title information

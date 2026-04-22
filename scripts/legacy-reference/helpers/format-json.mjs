@@ -1,4 +1,4 @@
-import prettier from 'prettier';
+import prettier from "prettier";
 
 /**
  * Format an object as prettified JSON using Prettier.
@@ -7,5 +7,5 @@ import prettier from 'prettier';
 export function formatJson(obj) {
   const raw = JSON.stringify(obj);
   // Use Prettier's JSON parser to get consistent, single-line short arrays etc.
-  return prettier.format(raw, { parser: 'json' });
+  return prettier.format(raw, { parser: "json" });
 }

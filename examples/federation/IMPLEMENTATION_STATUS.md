@@ -136,14 +136,7 @@ node converters/node/dist/cli.js \
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.3"
-    import: [
-      "@key"
-      "@shareable"
-      "@external"
-      "@provides"
-      "@requires"
-      "@extends"
-    ]
+    import: ["@key", "@shareable", "@external", "@provides", "@requires", "@extends"]
   )
 
 type User @key(fields: "email") {

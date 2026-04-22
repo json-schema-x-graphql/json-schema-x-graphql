@@ -17,9 +17,7 @@ describe("Directives Normalization", () => {
 
     it("should process explicit x-graphql-directives arrays of objects", () => {
       const schema = {
-        "x-graphql-directives": [
-          { name: "custom", arguments: { arg1: "val1" } },
-        ],
+        "x-graphql-directives": [{ name: "custom", arguments: { arg1: "val1" } }],
       };
       const result = extractDirectives(schema, {
         includeFederationDirectives: true,
@@ -31,10 +29,7 @@ describe("Directives Normalization", () => {
       const schema = {
         "x-graphql-federation-shareable": true,
         "x-graphql-federation-inaccessible": true,
-        "x-graphql-federation-keys": [
-          "id",
-          { fields: "email", resolvable: false },
-        ],
+        "x-graphql-federation-keys": ["id", { fields: "email", resolvable: false }],
       };
       const result = extractDirectives(schema, {
         includeFederationDirectives: true,
@@ -63,9 +58,7 @@ describe("Directives Normalization", () => {
 
   describe("printDirectives", () => {
     it("should print raw directives as-is", () => {
-      const result = printDirectives([
-        { name: "custom", raw: "@custom(a: 1)" },
-      ]);
+      const result = printDirectives([{ name: "custom", raw: "@custom(a: 1)" }]);
       expect(result).toBe(" @custom(a: 1)");
     });
 
@@ -83,9 +76,7 @@ describe("Directives Normalization", () => {
           args: { scopes: [["read", "write"], ["admin"]] },
         },
       ]);
-      expect(result).toBe(
-        ' @requiresScopes(scopes: [["read", "write"], ["admin"] ])',
-      );
+      expect(result).toBe(' @requiresScopes(scopes: [["read", "write"], ["admin"] ])');
       // Normalize spaces for simpler comparison since formatting is tested
     });
 

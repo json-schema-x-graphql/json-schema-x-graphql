@@ -3,13 +3,21 @@ Federation key directive (minimal definition for composition)
 """
 directive @key(fields: String!) on OBJECT | INTERFACE
 
-"""ISO 8601 date and time"""
+"""
+ISO 8601 date and time
+"""
 scalar DateTime
-"""ISO 8601 date"""
+"""
+ISO 8601 date
+"""
 scalar Date
-"""High-precision decimal"""
+"""
+High-precision decimal
+"""
 scalar Decimal
-"""Arbitrary JSON value"""
+"""
+Arbitrary JSON value
+"""
 scalar JSON
 
 type Site {

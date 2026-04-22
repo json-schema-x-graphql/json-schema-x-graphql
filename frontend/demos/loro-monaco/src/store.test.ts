@@ -58,11 +58,7 @@ describe("Editor Store", () => {
 
     it("should support all output formats", () => {
       const store = useEditorStore.getState();
-      const formats = [
-        "SDL",
-        "SDL_WITH_FEDERATION_METADATA",
-        "AST_JSON",
-      ] as const;
+      const formats = ["SDL", "SDL_WITH_FEDERATION_METADATA", "AST_JSON"] as const;
 
       formats.forEach((format) => {
         store.setOptions({ outputFormat: format });

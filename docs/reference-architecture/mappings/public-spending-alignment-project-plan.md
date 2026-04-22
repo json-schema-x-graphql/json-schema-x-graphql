@@ -471,8 +471,7 @@ class VendorClassificationAggregator {
         veteran_owned_business: row.veteran_owned_business === true,
         service_disabled_veteran_owned: row.service_disabled_veteran_o === true,
         historically_black_college: row.historically_black_college === true,
-        historically_underutilized_business:
-          row.historically_underutilized === true,
+        historically_underutilized_business: row.historically_underutilized === true,
       },
       entity_structure: {
         corporate_entity_tax_exempt: row.corporate_entity_tax_exemp === true,
@@ -482,8 +481,7 @@ class VendorClassificationAggregator {
         subchapter_s_corporation: row.subchapter_s_corporation === true,
         limited_liability_corporation: row.limited_liability_corporat === true,
         sole_proprietorship: row.sole_proprietorship === true,
-        partnership_or_limited_liability:
-          row.partnership_or_limited_lia === true,
+        partnership_or_limited_liability: row.partnership_or_limited_lia === true,
       },
     };
   }

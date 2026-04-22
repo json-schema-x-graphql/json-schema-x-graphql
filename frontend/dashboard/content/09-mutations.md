@@ -172,11 +172,7 @@ input UpdatePostInput {
 # Create example
 mutation {
   createPost(
-    input: {
-      title: "GraphQL Guide"
-      content: "Learn GraphQL..."
-      tags: ["graphql", "api"]
-    }
+    input: { title: "GraphQL Guide", content: "Learn GraphQL...", tags: ["graphql", "api"] }
   ) {
     id
     title
@@ -895,9 +891,7 @@ enum ErrorCode {
 
 # Usage
 mutation {
-  createUser(
-    input: { name: "John", email: "john@example.com", password: "secret123" }
-  ) {
+  createUser(input: { name: "John", email: "john@example.com", password: "secret123" }) {
     ... on User {
       id
       name

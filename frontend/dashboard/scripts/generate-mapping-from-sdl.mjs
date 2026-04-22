@@ -57,7 +57,7 @@ function parseArgs() {
       opts.dirs = a
         .slice("--dirs=".length)
         .split(",")
-        .map(s => s.trim())
+        .map((s) => s.trim())
         .filter(Boolean);
     } else if (a === "--no-public") {
       opts.noPublic = true;
@@ -118,7 +118,7 @@ function extractMappingsFromSDL(sdlText) {
             for (const d of f.directives) {
               if (d.name && d.name.value === "mapFrom") {
                 // find argument 'path'
-                const arg = (d.arguments || []).find(a => a.name && a.name.value === "path");
+                const arg = (d.arguments || []).find((a) => a.name && a.name.value === "path");
                 if (arg && arg.value) {
                   // only handle literal string for now
                   if (arg.value.kind === Kind.STRING) {
@@ -204,7 +204,7 @@ async function main() {
       const typeNames = Object.keys(mappings);
       if (typeNames.length === 0) {
         console.log(
-          `No @mapFrom directives found in ${path.relative(projectRoot, file)} - skipping.`
+          `No @mapFrom directives found in ${path.relative(projectRoot, file)} - skipping.`,
         );
         continue;
       }
@@ -255,7 +255,7 @@ if (
   import.meta.url === `file://${process.argv[1]}` ||
   process.argv[1].endsWith("generate-mapping-from-sdl.mjs")
 ) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("Unexpected error:", err);
     process.exit(1);
   });

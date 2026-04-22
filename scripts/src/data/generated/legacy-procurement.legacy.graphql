@@ -1,4 +1,8 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external", "@provides", "@requires"]
+  )
 
 """
 ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)
@@ -19,10 +23,14 @@ scalar Email
 Enumeration of system identifiers
 """
 enum SystemName {
-  Legacy Procurement
-  Intake Process
-  Logistics Mgmt
-  Contract Data
+  Legacy
+  Procurement
+  Intake
+  Process
+  Logistics
+  Mgmt
+  Contract
+  Data
   PRISM
 }
 
@@ -30,11 +38,17 @@ enum SystemName {
 Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data.
 """
 type AssistRecord @key(fields: "ia_piid_or_unique_id") @key(fields: "source_record_id") {
-  """System-level metadata for lineage, versioning, and ingestion."""
+  """
+  System-level metadata for lineage, versioning, and ingestion.
+  """
   systemMetadata: SystemMetadata!
-  """Legacy Procurement-specific domain fields."""
+  """
+  Legacy Procurement-specific domain fields.
+  """
   legacyProcurementSpecific: LegacyProcurementSpecificData!
-  """Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."""
+  """
+  Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups.
+  """
   iaPiidOrUniqueId: String
 }
 
@@ -42,15 +56,25 @@ type AssistRecord @key(fields: "ia_piid_or_unique_id") @key(fields: "source_reco
 Metadata describing the source system, identifiers, and lifecycle timestamps.
 """
 type SystemMetadata @shareable {
-  """Constant system identifier string"""
+  """
+  Constant system identifier string
+  """
   systemName: SystemName!
-  """Primary identifier of the record within Legacy Procurement"""
+  """
+  Primary identifier of the record within Legacy Procurement
+  """
   sourceRecordId: String!
-  """Version of the canonical Legacy Procurement schema used to produce this record"""
+  """
+  Version of the canonical Legacy Procurement schema used to produce this record
+  """
   schemaVersion: String
-  """Timestamp when this record was ingested into the data fabric"""
+  """
+  Timestamp when this record was ingested into the data fabric
+  """
   ingestedAt: DateTime
-  """Timestamp when this record was last modified in its source"""
+  """
+  Timestamp when this record was last modified in its source
+  """
   lastModified: DateTime
 }
 
@@ -58,11 +82,17 @@ type SystemMetadata @shareable {
 Container for Legacy Procurement-specific data slices.
 """
 type AssistSpecificData {
-  """Acquisition-related data coming from Legacy Procurement."""
+  """
+  Acquisition-related data coming from Legacy Procurement.
+  """
   acquisitionData: LegacyProcurementAcquisitionData
-  """Client organization data associated with the Legacy Procurement record."""
+  """
+  Client organization data associated with the Legacy Procurement record.
+  """
   clientData: LegacyProcurementClientData
-  """Award-related metadata specific to Legacy Procurement."""
+  """
+  Award-related metadata specific to Legacy Procurement.
+  """
   awardData: LegacyProcurementAwardData
 }
 
@@ -70,9 +100,13 @@ type AssistSpecificData {
 Acquisition data including agreement identifiers and acquisition nature.
 """
 type AssistAcquisitionData {
-  """Interagency agreement PIID or unique identifier within Legacy Procurement"""
+  """
+  Interagency agreement PIID or unique identifier within Legacy Procurement
+  """
   iaPiidOrUniqueId: String!
-  """Nature of acquisition (taxonomy specific to Legacy Procurement)"""
+  """
+  Nature of acquisition (taxonomy specific to Legacy Procurement)
+  """
   natureOfAcquisition: String!
 }
 
@@ -80,13 +114,21 @@ type AssistAcquisitionData {
 Client organization identity and related information.
 """
 type AssistClientData {
-  """Name of the client organization"""
+  """
+  Name of the client organization
+  """
   clientOrganizationName: String!
-  """Client office address"""
+  """
+  Client office address
+  """
   officeAddress: LegacyProcurementOfficeAddress
-  """Primary client point-of-contact email"""
+  """
+  Primary client point-of-contact email
+  """
   primaryContactEmail: Email
-  """Primary client point-of-contact phone"""
+  """
+  Primary client point-of-contact phone
+  """
   primaryContactPhone: String
 }
 
@@ -94,17 +136,29 @@ type AssistClientData {
 Address structure for client organizations in Legacy Procurement.
 """
 type AssistOfficeAddress {
-  """Primary street address line"""
+  """
+  Primary street address line
+  """
   streetAddress1: String
-  """Secondary street address line"""
+  """
+  Secondary street address line
+  """
   streetAddress2: String
-  """City"""
+  """
+  City
+  """
   city: String
-  """State or province"""
+  """
+  State or province
+  """
   state: String
-  """Postal or ZIP code"""
+  """
+  Postal or ZIP code
+  """
   postalCode: String
-  """Country"""
+  """
+  Country
+  """
   country: String
 }
 
@@ -112,13 +166,21 @@ type AssistOfficeAddress {
 Award-related settings and timelines within Legacy Procurement.
 """
 type AssistAwardData {
-  """Type of indefinite delivery contract (if applicable)"""
+  """
+  Type of indefinite delivery contract (if applicable)
+  """
   typeOfIdc: String
-  """Authorized users of the IDC"""
+  """
+  Authorized users of the IDC
+  """
   whoCanUseIdc: String
-  """Base period of performance"""
+  """
+  Base period of performance
+  """
   basePeriod: PeriodOfPerformance
-  """Option periods of performance"""
+  """
+  Option periods of performance
+  """
   optionPeriods: [PeriodOfPerformance]
 }
 
@@ -126,9 +188,13 @@ type AssistAwardData {
 Start and end dates for a period of performance.
 """
 type PeriodOfPerformance {
-  """Start date (YYYY-MM-DD)"""
+  """
+  Start date (YYYY-MM-DD)
+  """
   startDate: Date
-  """End date (YYYY-MM-DD)"""
+  """
+  End date (YYYY-MM-DD)
+  """
   endDate: Date
 }
 
@@ -136,13 +202,24 @@ type PeriodOfPerformance {
 Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields.
 """
 type LegacyProcurementCanonicalSchema {
-  """Root Legacy Procurement entity"""
+  """
+  Root Legacy Procurement entity
+  """
   legacyProcurementRecord: LegacyProcurementRecord
 }
 
 type Query {
-  """Fetch a single Legacy Procurement record by IA PIID or unique ID"""
-  legacyProcurementRecord("Interagency agreement PIID or the Legacy Procurement unique identifier" ia_piid_or_unique_id: String!, "Optional source record identifier for disambiguation" source_record_id: ID): AssistRecord
-  """Return a list of Legacy Procurement records (non-paginated)"""
+  """
+  Fetch a single Legacy Procurement record by IA PIID or unique ID
+  """
+  legacyProcurementRecord(
+    "Interagency agreement PIID or the Legacy Procurement unique identifier"
+    ia_piid_or_unique_id: String!
+    "Optional source record identifier for disambiguation"
+    source_record_id: ID
+  ): AssistRecord
+  """
+  Return a list of Legacy Procurement records (non-paginated)
+  """
   legacyProcurementRecords: [AssistRecord!]!
 }

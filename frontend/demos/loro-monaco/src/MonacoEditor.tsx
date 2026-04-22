@@ -155,10 +155,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
                 title: { type: "string" },
                 description: { type: "string" },
                 type: {
-                  oneOf: [
-                    { type: "string" },
-                    { type: "array", items: { type: "string" } },
-                  ],
+                  oneOf: [{ type: "string" }, { type: "array", items: { type: "string" } }],
                 },
                 properties: { type: "object" },
                 required: { type: "array", items: { type: "string" } },
@@ -202,7 +199,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
           ],
           typeKeywords: ["String", "Int", "Float", "Boolean", "ID"],
           operators: ["=", "!", "?", ":", "&", "|", "@"],
-          symbols: /[=><!~?:&|+\-*\/\^%]+/,
+          symbols: /[=><!~?:&|+\-*/^%]+/,
 
           tokenizer: {
             root: [
@@ -217,17 +214,11 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
                 },
               ],
               { include: "@whitespace" },
-              [/[{}()\[\]]/, "@brackets"],
+              [/[{}()[\]]/, "@brackets"],
               [/[<>](?!@symbols)/, "@brackets"],
-              [
-                /@symbols/,
-                { cases: { "@operators": "operator", "@default": "" } },
-              ],
+              [/@symbols/, { cases: { "@operators": "operator", "@default": "" } }],
               [/"([^"\\]|\\.)*$/, "string.invalid"],
-              [
-                /"/,
-                { token: "string.quote", bracket: "@open", next: "@string" },
-              ],
+              [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
               [/\d+/, "number"],
             ],
 

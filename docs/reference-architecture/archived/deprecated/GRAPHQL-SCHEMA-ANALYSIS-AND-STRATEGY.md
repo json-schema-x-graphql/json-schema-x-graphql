@@ -279,11 +279,7 @@ type Query {
     filter: ContractFilter
     sort: ContractSort
   ): ContractConnection!
-  searchContracts(
-    query: String!
-    fields: [SearchField!]
-    first: Int = 20
-  ): [Contract!]!
+  searchContracts(query: String!, fields: [SearchField!], first: Int = 20): [Contract!]!
 }
 ```
 

@@ -41,10 +41,7 @@ During the build, `tsc` consumes `tsconfig.json`, which is scoped to `src/` and 
 ### Programmatic API
 
 ```ts
-import {
-  jsonSchemaToGraphQL,
-  graphqlToJsonSchema,
-} from "@json-schema-x-graphql/core";
+import { jsonSchemaToGraphQL, graphqlToJsonSchema } from "@json-schema-x-graphql/core";
 
 const sdl = jsonSchemaToGraphQL(schemaStringOrObject, {
   includeDescriptions: true,

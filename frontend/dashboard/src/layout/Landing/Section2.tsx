@@ -92,8 +92,9 @@ export const Section2 = () => {
             Don&apos;t waste time with JSON formatters
           </Title>
           <Text my="md" c="gray.7" fz={16} maw={510}>
-            Format JSON and transform into a readable graph in seconds. Enterprise Schema Unification Forest is a
-            government tool that helps you visualize and understand contract data.
+            Format JSON and transform into a readable graph in seconds. Enterprise Schema
+            Unification Forest is a government tool that helps you visualize and understand contract
+            data.
           </Text>
           <List
             fz={{
@@ -162,7 +163,7 @@ export const Section2 = () => {
                 ],
               },
               null,
-              2
+              2,
             )}
           />
         </StyledDottedContainer>

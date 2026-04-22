@@ -124,5 +124,3 @@ type DigitalWallet {
   provider: String!
   email: String
 }
-
-

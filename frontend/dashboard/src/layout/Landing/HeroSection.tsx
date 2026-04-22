@@ -165,7 +165,7 @@ const StyledBadge = styled.span<{ variant?: "stable" | "draft" }>`
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  background: ${props => (props.variant === "draft" ? "#f59f00" : "#51cf66")};
+  background: ${(props) => (props.variant === "draft" ? "#f59f00" : "#51cf66")};
   color: white;
 `;
 
@@ -196,16 +196,16 @@ export const HeroSection = ({ stars = 0 }) => {
           </Link>
 
           <StyledHeroTitle>
-            Federal Procurement Data Fabric (FPDF) v2.0 by Schema Unification Forest Project with GraphQL
-            Extensions
+            Federal Procurement Data Fabric (FPDF) v2.0 by Schema Unification Forest Project with
+            GraphQL Extensions
           </StyledHeroTitle>
           <StyledHeroText>
-            The <strong>Federal Procurement Data Fabric (FPDF) v2.0</strong> by Schema Unification Forest
-            Project provides interactive visualization tools for government contract data, powered
-            by advanced GraphQL extensions. Explore normalized contract records from Contract Data, Legacy Procurement,
-            and EASi systems, and examine the unified <strong>schema_unification.schema.json</strong> data
-            structure that enables cross-system analysis, reporting, and modern API/dashboard
-            applications.
+            The <strong>Federal Procurement Data Fabric (FPDF) v2.0</strong> by Schema Unification
+            Forest Project provides interactive visualization tools for government contract data,
+            powered by advanced GraphQL extensions. Explore normalized contract records from
+            Contract Data, Legacy Procurement, and EASi systems, and examine the unified{" "}
+            <strong>schema_unification.schema.json</strong> data structure that enables cross-system
+            analysis, reporting, and modern API/dashboard applications.
           </StyledHeroText>
 
           <StyledVersionSection>

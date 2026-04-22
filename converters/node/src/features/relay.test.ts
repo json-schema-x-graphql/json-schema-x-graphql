@@ -21,9 +21,7 @@ describe("Relay Features", () => {
     it("should add PageInfo to output and generatedTypes if not present", () => {
       ensurePageInfo(mockContext);
       expect(mockContext.generatedTypes.has("PageInfo")).toBe(true);
-      expect(
-        mockContext.output.some((str) => str.includes("type PageInfo {")),
-      ).toBe(true);
+      expect(mockContext.output.some((str) => str.includes("type PageInfo {"))).toBe(true);
     });
 
     it("should not duplicate PageInfo if already present", () => {

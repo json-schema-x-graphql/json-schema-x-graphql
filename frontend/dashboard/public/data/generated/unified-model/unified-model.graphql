@@ -1,14 +1,26 @@
-"""High-precision decimal"""
+"""
+High-precision decimal
+"""
 scalar Decimal
-"""Arbitrary JSON value"""
+"""
+Arbitrary JSON value
+"""
 scalar JSON
-"""ISO 8601 date"""
+"""
+ISO 8601 date
+"""
 scalar Date
-"""ISO 8601 date and time"""
+"""
+ISO 8601 date and time
+"""
 scalar DateTime
-"""Valid email address"""
+"""
+Valid email address
+"""
 scalar Email
-"""Valid URI/URL"""
+"""
+Valid URI/URL
+"""
 scalar URI
 
 type Gsdm {

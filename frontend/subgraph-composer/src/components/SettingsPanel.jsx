@@ -4,7 +4,7 @@ import "./SettingsPanel.css";
 export default function SettingsPanel({
   settings,
   onUpdateSetting,
-  onUpdateSettings,
+  onUpdateSettings: _onUpdateSettings,
   onSaveSettings,
   onResetDefaults,
   isDirty,
@@ -63,16 +63,12 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.validate}
-                  onChange={(e) =>
-                    onUpdateSetting("validate", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("validate", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Validate Schemas</span>
               </label>
-              <p className="setting-description">
-                Validate JSON Schemas before conversion
-              </p>
+              <p className="setting-description">Validate JSON Schemas before conversion</p>
             </div>
 
             <div className="setting-group">
@@ -80,9 +76,7 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.descriptions}
-                  onChange={(e) =>
-                    onUpdateSetting("descriptions", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("descriptions", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Include Descriptions</span>
@@ -97,9 +91,7 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.federation}
-                  onChange={(e) =>
-                    onUpdateSetting("federation", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("federation", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Apollo Federation Support</span>
@@ -113,9 +105,7 @@ export default function SettingsPanel({
               <label className="setting-label">Federation Version</label>
               <select
                 value={settings.federationVersion}
-                onChange={(e) =>
-                  onUpdateSetting("federationVersion", e.target.value)
-                }
+                onChange={(e) => onUpdateSetting("federationVersion", e.target.value)}
                 className="setting-select"
                 disabled={!settings.federation}
               >
@@ -123,9 +113,7 @@ export default function SettingsPanel({
                 <option value="1">Federation v1</option>
                 <option value="2">Federation v2</option>
               </select>
-              <p className="setting-description">
-                Which Apollo Federation version to target
-              </p>
+              <p className="setting-description">Which Apollo Federation version to target</p>
             </div>
 
             <div className="setting-group">
@@ -135,12 +123,8 @@ export default function SettingsPanel({
                 onChange={(e) => onUpdateSetting("naming", e.target.value)}
                 className="setting-select"
               >
-                <option value="GRAPHQL_IDIOMATIC">
-                  GraphQL Idiomatic (camelCase)
-                </option>
-                <option value="KEEP_ORIGINAL">
-                  Keep Original (snake_case)
-                </option>
+                <option value="GRAPHQL_IDIOMATIC">GraphQL Idiomatic (camelCase)</option>
+                <option value="KEEP_ORIGINAL">Keep Original (snake_case)</option>
                 <option value="PASCAL_CASE">PascalCase</option>
               </select>
               <p className="setting-description">
@@ -163,9 +147,7 @@ export default function SettingsPanel({
                   min="10"
                   max="20"
                   value={settings.fontSize}
-                  onChange={(e) =>
-                    onUpdateSetting("fontSize", parseInt(e.target.value))
-                  }
+                  onChange={(e) => onUpdateSetting("fontSize", parseInt(e.target.value))}
                   className="setting-slider"
                 />
                 <span className="setting-value">{settings.fontSize}px</span>
@@ -178,16 +160,12 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.darkMode}
-                  onChange={(e) =>
-                    onUpdateSetting("darkMode", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("darkMode", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Dark Mode</span>
               </label>
-              <p className="setting-description">
-                Enable dark theme (coming soon)
-              </p>
+              <p className="setting-description">Enable dark theme (coming soon)</p>
             </div>
 
             <div className="setting-group">
@@ -195,9 +173,7 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.showStats}
-                  onChange={(e) =>
-                    onUpdateSetting("showStats", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("showStats", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Show Composition Statistics</span>
@@ -219,9 +195,7 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.autoCompose}
-                  onChange={(e) =>
-                    onUpdateSetting("autoCompose", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("autoCompose", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Auto-Compose on Generate</span>
@@ -236,16 +210,12 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.autoFormat}
-                  onChange={(e) =>
-                    onUpdateSetting("autoFormat", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("autoFormat", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Auto-Format SDL</span>
               </label>
-              <p className="setting-description">
-                Automatically format generated GraphQL SDL
-              </p>
+              <p className="setting-description">Automatically format generated GraphQL SDL</p>
             </div>
 
             <div className="setting-group">
@@ -253,9 +223,7 @@ export default function SettingsPanel({
                 <input
                   type="checkbox"
                   checked={settings.showAdvancedOptions}
-                  onChange={(e) =>
-                    onUpdateSetting("showAdvancedOptions", e.target.checked)
-                  }
+                  onChange={(e) => onUpdateSetting("showAdvancedOptions", e.target.checked)}
                   className="setting-checkbox"
                 />
                 <span>Show Advanced Options</span>
@@ -281,11 +249,7 @@ export default function SettingsPanel({
           <button onClick={onClose} className="btn btn-secondary">
             Cancel
           </button>
-          <button
-            onClick={handleSave}
-            className="btn btn-primary"
-            disabled={!isDirty}
-          >
+          <button onClick={handleSave} className="btn btn-primary" disabled={!isDirty}>
             {isDirty ? "💾 Save Changes" : "✓ Saved"}
           </button>
         </div>

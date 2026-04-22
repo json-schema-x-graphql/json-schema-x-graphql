@@ -133,7 +133,7 @@
 # ----------------------------------------------------------------------
 # Owner / Buyer Assignment Dates
 # ----------------------------------------------------------------------
-"Solicitation.status_date": "Contract.common_elements.status_info.last_modified_date"
+"Solicitation.owner_assignment_date": "Contract.common_elements.status_info.last_modified_date"
 "Requisition.buyer_assigned_date": "Contract.common_elements.status_info.last_modified_date"
 
 # ----------------------------------------------------------------------

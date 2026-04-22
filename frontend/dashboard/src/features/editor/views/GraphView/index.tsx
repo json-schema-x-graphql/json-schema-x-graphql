@@ -79,12 +79,12 @@ interface GraphProps {
 
 const GraphCanvas = ({ isWidget }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
-  const setLoading = useGraph(state => state.setLoading);
-  const centerView = useGraph(state => state.centerView);
-  const direction = useGraph(state => state.direction);
-  const nodes = useGraph(state => state.nodes);
+  const setLoading = useGraph((state) => state.setLoading);
+  const centerView = useGraph((state) => state.centerView);
+  const direction = useGraph((state) => state.direction);
+  const nodes = useGraph((state) => state.nodes);
   const colorScheme = useComputedColorScheme();
-  const edges = useGraph(state => state.edges);
+  const edges = useGraph((state) => state.edges);
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
@@ -106,15 +106,15 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
         });
       }
     },
-    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes]
+    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes],
   );
 
   return (
     <Canvas
       className="jsoncrack-canvas"
       onLayoutChange={onLayoutChange}
-      node={p => <CustomNode {...p} />}
-      edge={p => <CustomEdge {...p} />}
+      node={(p) => <CustomNode {...p} />}
+      edge={(p) => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
       arrow={null}
@@ -137,12 +137,12 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 };
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
-  const setViewPort = useGraph(state => state.setViewPort);
-  const viewPort = useGraph(state => state.viewPort);
-  const aboveSupportedLimit = useGraph(state => state.aboveSupportedLimit);
-  const loading = useGraph(state => state.loading);
-  const gesturesEnabled = useConfig(state => state.gesturesEnabled);
-  const rulersEnabled = useConfig(state => state.rulersEnabled);
+  const setViewPort = useGraph((state) => state.setViewPort);
+  const viewPort = useGraph((state) => state.viewPort);
+  const aboveSupportedLimit = useGraph((state) => state.aboveSupportedLimit);
+  const loading = useGraph((state) => state.loading);
+  const gesturesEnabled = useConfig((state) => state.gesturesEnabled);
+  const rulersEnabled = useConfig((state) => state.rulersEnabled);
   const [debouncedLoading] = useDebouncedValue(loading, 300);
 
   const callback = React.useCallback(() => {
@@ -175,7 +175,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
       <ZoomControl />
       <StyledEditorWrapper
         $widget={isWidget}
-        onContextMenu={e => e.preventDefault()}
+        onContextMenu={(e) => e.preventDefault()}
         onClick={blurOnClick}
         key={String(gesturesEnabled)}
         $showRulers={rulersEnabled}
@@ -184,7 +184,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         <Space
           onUpdated={() => debouncedOnZoomChangeHandler()}
           onCreate={setViewPort}
-          onContextMenu={e => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
           pollForElementResizing
           className="jsoncrack-space"

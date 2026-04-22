@@ -31,7 +31,7 @@ try {
 } catch (err) {
   console.error(
     "\nERROR: required package `js-yaml` is not installed.\n" +
-      "Install it with `pnpm add -D js-yaml` (or npm/yarn) and re-run the script.\n"
+      "Install it with `pnpm add -D js-yaml` (or npm/yarn) and re-run the script.\n",
   );
   process.exit(1);
 }
@@ -64,7 +64,7 @@ function deepMerge(a, b) {
   if (Array.isArray(a) && Array.isArray(b)) return b.slice();
   if (Array.isArray(a) || Array.isArray(b)) return b;
   if (typeof a === "object" && typeof b === "object") {
-    const out = { ...(a || {}) };
+    const out = { ...a };
     for (const k of Object.keys(b || {})) {
       out[k] = deepMerge(a?.[k], b[k]);
     }
@@ -82,7 +82,7 @@ function randSuffix(len = 6) {
 
 function generateUuid() {
   // simple RFC4122 v4-ish generator (not cryptographically secure)
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     const v = c === "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
@@ -102,7 +102,7 @@ function isDirectiveObject(obj) {
   ]);
   const keys = Object.keys(obj);
   // treat as directive when the object has exactly one of the known directive keys
-  const found = keys.filter(k => directiveKeys.has(k));
+  const found = keys.filter((k) => directiveKeys.has(k));
   return found.length > 0 && keys.length === found.length;
 }
 
@@ -259,7 +259,9 @@ async function main() {
     const outFileName = exampleDef.output || `${systemKey}.json`;
     const template = templates[templateName];
     if (!template) {
-      console.warn(`Skipping example ${exampleDef.id || outFileName}: template "${templateName}" not found.`);
+      console.warn(
+        `Skipping example ${exampleDef.id || outFileName}: template "${templateName}" not found.`,
+      );
       continue;
     }
 
@@ -285,8 +287,11 @@ async function main() {
 
       // Add some metadata fields to the generated object if not present
       generated.systemMetadata = generated.systemMetadata || {};
-      generated.systemMetadata.primarySystem = generated.systemMetadata.primarySystem || ctx.system.toUpperCase();
-      generated.systemMetadata.globalRecordId = generated.systemMetadata.globalRecordId || `PETRIFIED-${String(ctx.system).toUpperCase()}-${String(ctx.seq)}`;
+      generated.systemMetadata.primarySystem =
+        generated.systemMetadata.primarySystem || ctx.system.toUpperCase();
+      generated.systemMetadata.globalRecordId =
+        generated.systemMetadata.globalRecordId ||
+        `PETRIFIED-${String(ctx.system).toUpperCase()}-${String(ctx.seq)}`;
       generated.systemMetadata.schemaVersion = generated.systemMetadata.schemaVersion || "2.0";
       generated.systemMetadata.lastModified = generated.systemMetadata.lastModified || ctx.now;
 
@@ -297,15 +302,23 @@ async function main() {
 
       // Determine file names: write to both legacy folder and public folder
       const seqSuffix = count > 1 ? `-${i + 1}` : "";
-      const targetFileLegacy = path.join(legacyOutDir, outFileName.replace(/\.json$/, `${seqSuffix}.json`));
-      const targetFilePublic = path.join(publicOutDir, outFileName.replace(/\.json$/, `${seqSuffix}.json`));
+      const targetFileLegacy = path.join(
+        legacyOutDir,
+        outFileName.replace(/\.json$/, `${seqSuffix}.json`),
+      );
+      const targetFilePublic = path.join(
+        publicOutDir,
+        outFileName.replace(/\.json$/, `${seqSuffix}.json`),
+      );
 
       const content = pretty ? JSON.stringify(generated, null, 2) : JSON.stringify(generated);
 
       try {
         await fs.writeFile(targetFileLegacy, content, "utf8");
         await fs.writeFile(targetFilePublic, content, "utf8");
-        console.log(`Wrote example for '${systemKey}' -> ${path.relative(process.cwd(), targetFilePublic)}`);
+        console.log(
+          `Wrote example for '${systemKey}' -> ${path.relative(process.cwd(), targetFilePublic)}`,
+        );
       } catch (err) {
         console.error("Failed to write generated example:", err);
       }
@@ -317,7 +330,7 @@ async function main() {
   console.log("Example generation complete.");
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error("Unexpected error:", err);
   process.exit(1);
 });

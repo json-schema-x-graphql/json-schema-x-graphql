@@ -17,7 +17,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test tests --project=chromium",
-    "build:wasm": "sh ../../scripts/build-wasm.sh",
+    "build:wasm": "bash ../../scripts/build-wasm.sh",
     "postinstall": "pnpm run build:wasm || echo 'WASM build skipped - will use Node converter only'"
   },
   "dependencies": {

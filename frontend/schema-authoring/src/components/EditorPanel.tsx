@@ -44,7 +44,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const theme = useAppStore((state) => state.settings.theme);
-  const autoValidate = useAppStore((state) => state.settings.autoValidate);
+  const _autoValidate = useAppStore((state) => state.settings.autoValidate);
   const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Determine Monaco language
@@ -119,8 +119,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                 },
                 {
                   label: "x-graphql-arguments",
-                  insertText:
-                    '"x-graphql-arguments": {\n  "$1": {\n    "type": "$2"\n  }\n}',
+                  insertText: '"x-graphql-arguments": {\n  "$1": {\n    "type": "$2"\n  }\n}',
                   documentation: "Add GraphQL arguments to a field",
                 },
                 {
@@ -140,9 +139,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
                   label: ext.label,
                   kind: monaco.languages.CompletionItemKind.Property,
                   insertText: ext.insertText,
-                  insertTextRules:
-                    monaco.languages.CompletionItemInsertTextRule
-                      .InsertAsSnippet,
+                  insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                   documentation: ext.documentation,
                 })),
               };
@@ -230,20 +227,14 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
     <div className={`editor-panel flex flex-col h-full ${className}`}>
       {title && (
         <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-            {title}
-          </h2>
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300">{title}</h2>
           <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
             {errors.length > 0 && (
               <span className="text-red-600 dark:text-red-400">
                 {errors.length} {errors.length === 1 ? "error" : "errors"}
               </span>
             )}
-            {readOnly && (
-              <span className="text-yellow-600 dark:text-yellow-400">
-                Read-only
-              </span>
-            )}
+            {readOnly && <span className="text-yellow-600 dark:text-yellow-400">Read-only</span>}
           </div>
         </div>
       )}
@@ -256,7 +247,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
           theme={theme}
           onChange={handleEditorChange}
           onMount={handleEditorDidMount}
-          beforeMount={(monaco) => {
+          beforeMount={(_monaco) => {
             console.log("Monaco beforeMount called, language:", language);
           }}
           options={{
@@ -280,9 +271,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
             <div className="flex items-center justify-center h-full bg-white dark:bg-gray-900">
               <div className="text-center">
                 <div className="animate-spin h-8 w-8 border-4 border-primary-500 border-t-transparent rounded-full mx-auto mb-3" />
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Loading editor...
-                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Loading editor...</p>
               </div>
             </div>
           }
@@ -293,8 +282,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
       {errors.length > 0 && !title && (
         <div className="bg-red-50 dark:bg-red-900/20 px-4 py-2 border-t border-red-200 dark:border-red-800">
           <p className="text-xs text-red-700 dark:text-red-400">
-            {errors.length} validation{" "}
-            {errors.length === 1 ? "error" : "errors"} detected
+            {errors.length} validation {errors.length === 1 ? "error" : "errors"} detected
           </p>
         </div>
       )}

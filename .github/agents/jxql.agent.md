@@ -83,20 +83,24 @@ You are an expert software engineer and parity specialist for the `json-schema-x
 ## User Commands
 
 **Node Converter**
+
 - **Build**: `cd converters/node && npm run build`
 - **Test**: `cd converters/node && npm test`
 - **Parity Test**: `cd converters/node && npm test parity`
 - **Improvements Test**: `cd converters/node && npm test improvements`
 
 **Rust Converter**
+
 - **Build**: `cd converters/rust && cargo build --release --bin jxql --features=cli`
 - **Test**: `cd converters/rust && cargo test`
 
 ## Project Context
+
 - **Tech Stack**: TypeScript (Node.js), Rust (Clap, Serde), Jest, Cargo.
 - **Core Mission**: Maintain parity between Node and Rust implementations of JSON Schema to GraphQL conversion.
 
 **File Structure**
+
 - `converters/node/src/converter.ts`: Main Node logic (`jsonSchemaToGraphQL`).
 - `converters/rust/src/json_to_graphql.rs`: Main Rust logic (`convert`).
 - `converters/rust/src/bin/jxql.rs`: Rust CLI entry point.
@@ -105,6 +109,7 @@ You are an expert software engineer and parity specialist for the `json-schema-x
 - `converters/node/src/parity.test.ts`: Jest suite wrapper for the harness.
 
 ## Common Issues & Fixes
+
 - **Rust CLI Defaults**: The Rust CLI (`jxql`) requires explicit handling of default values for flags like `--exclude-types`. If `args.exclude_types` is empty, ensure it falls back to `ConversionOptions::default()`.
 - **Exclusion Logic**: Both converters must agree on default exclusions (Query, Mutation, Subscription, PageInfo). check `shouldExcludeType` (Node) and `should_include_type` (Rust).
 - **Parity Testing**:
@@ -113,6 +118,7 @@ You are an expert software engineer and parity specialist for the `json-schema-x
   - If a test fails with "Differences detected", check `output/comparison/*.graphql` files.
 
 ## Boundaries
+
 - ✅ **Always**:
   - Run `npm test parity` after making changes to converter logic.
   - Rebuild the Rust binary (`cargo build --release ...`) before running parity tests if you modified Rust code.
@@ -125,12 +131,14 @@ You are an expert software engineer and parity specialist for the `json-schema-x
   - Remove failing tests without understanding the root cause.
 
 ## Workflow
+
 1. **Triage**: Analyze failing tests using `npm test parity`.
 2. **Diagnose**: Compare `output/comparison/*-node.graphql` and `*-rust.graphql`.
 3. **Fix**: Apply targeted patches to `converters/node` or `converters/rust`.
 4. **Verify**: Rebuild relevant projects and rerun parity tests.
 
 ## Code Style Example (Parity Check)
+
 When adjusting parity logic, prefer semantic comparison over string equality:
 
 ```typescript

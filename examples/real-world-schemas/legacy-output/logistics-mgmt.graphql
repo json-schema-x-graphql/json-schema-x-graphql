@@ -1,4 +1,8 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external", "@provides", "@requires"]
+  )
 
 """
 Calendar date in ISO 8601 format (YYYY-MM-DD).
@@ -29,10 +33,14 @@ scalar URI
 Enumeration of system identifiers
 """
 enum SystemName {
-  Legacy Procurement
-  Intake Process
-  Logistics Mgmt
-  Contract Data
+  Legacy
+  Procurement
+  Intake
+  Process
+  Logistics
+  Mgmt
+  Contract
+  Data
   PRISM
 }
 
@@ -46,7 +54,9 @@ enum UnipricedFlag {
 }
 
 type Site @shareable {
-  """The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map."""
+  """
+  The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
+  """
   siteCode: Int!
   siteDescription: String
 }
@@ -162,7 +172,9 @@ type Solicitation @key(fields: "solicitation_number amendment_number") {
   workspaceNumber: String
   site: Site
   owner: Person
-  """NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system."""
+  """
+  NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
+  """
   buyer: Person
   contractingOfficer: Person
   agreementsOfficer: Person
@@ -327,9 +339,13 @@ type Requisition @key(fields: "requisition_number amendment_number") {
   buyer: Person
   technicalPointOfContact: Person
   originatingOfficeAddress: Address
-  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
   issuingOfficeAddress: Address
-  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  """
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
   adminOfficeAddress: Address
   paymentOfficeAddress: Address
   approvalHistory: [RequisitionApprovalHistory]
@@ -459,6 +475,8 @@ type ProcurementDataSchema {
 }
 
 type Query {
-  """Placeholder query for library-only subgraph"""
+  """
+  Placeholder query for library-only subgraph
+  """
   Empty: String
 }

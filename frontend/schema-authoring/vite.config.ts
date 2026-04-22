@@ -10,9 +10,7 @@ const wasmDir = path.resolve(__dirname, "./src/wasm");
 const hasWasm = fs.existsSync(wasmDir);
 
 if (!hasWasm) {
-  console.warn(
-    "⚠️  WASM module not found. The app will use Node.js converter fallback.",
-  );
+  console.warn("⚠️  WASM module not found. The app will use Node.js converter fallback.");
   console.info("💡 To enable WASM: run `pnpm run build:wasm`");
 }
 
@@ -30,9 +28,7 @@ export default defineConfig({
   },
   define: {
     // Monaco editor needs this
-    "process.env.NODE_ENV": JSON.stringify(
-      process.env.NODE_ENV || "development",
-    ),
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
   },
   build: {
     target: "esnext",

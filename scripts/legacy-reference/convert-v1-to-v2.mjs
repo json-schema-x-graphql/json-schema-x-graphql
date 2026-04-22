@@ -94,7 +94,7 @@ function extractDefinitions(schema) {
     if (common.contractIdentification) {
       definitions.ContractIdentification = extractObject(
         common.contractIdentification,
-        "ContractIdentification"
+        "ContractIdentification",
       );
     }
 
@@ -138,7 +138,7 @@ function extractDefinitions(schema) {
     if (common.placeOfPerformance) {
       definitions.PlaceOfPerformance = extractObject(
         common.placeOfPerformance,
-        "PlaceOfPerformance"
+        "PlaceOfPerformance",
       );
     }
 
@@ -151,7 +151,7 @@ function extractDefinitions(schema) {
     if (common.businessClassification) {
       definitions.BusinessClassification = extractObject(
         common.businessClassification,
-        "BusinessClassification"
+        "BusinessClassification",
       );
     }
 
@@ -159,7 +159,7 @@ function extractDefinitions(schema) {
     if (common.contractCharacteristics) {
       definitions.ContractCharacteristics = extractObject(
         common.contractCharacteristics,
-        "ContractCharacteristics"
+        "ContractCharacteristics",
       );
     }
 
@@ -178,16 +178,17 @@ function extractDefinitions(schema) {
   if (schema.properties?.systemExtensions?.properties) {
     const extensions = schema.properties.systemExtensions.properties;
 
-    // Contract DataExtension
+    // ContractDataExtension
     if (extensions.contract_data?.items) {
-      definitions.Contract DataExtension = {
+      definitions.ContractDataExtension = {
         type: "object",
         description: "Contract Data-specific fields and extensions",
         properties: {
           fieldName: { type: "string" },
           fieldType: { type: "string" },
           value: {},
-          contract_dataSpecific: extensions.contract_data.items.properties?.contract_dataSpecific || {},
+          contract_dataSpecific:
+            extensions.contract_data.items.properties?.contract_dataSpecific || {},
         },
       };
     }
@@ -201,7 +202,8 @@ function extractDefinitions(schema) {
           fieldName: { type: "string" },
           fieldType: { type: "string" },
           value: {},
-          legacy_procurementSpecific: extensions.legacy_procurement.items.properties?.legacy_procurementSpecific || {},
+          legacy_procurementSpecific:
+            extensions.legacy_procurement.items.properties?.legacy_procurementSpecific || {},
         },
       };
     }
@@ -215,7 +217,8 @@ function extractDefinitions(schema) {
           fieldName: { type: "string" },
           fieldType: { type: "string" },
           value: {},
-          intake_processSpecific: extensions.intake_process.items.properties?.intake_processSpecific || {},
+          intake_processSpecific:
+            extensions.intake_process.items.properties?.intake_processSpecific || {},
         },
       };
     }
@@ -233,7 +236,9 @@ function extractDefinitions(schema) {
       placeOfPerformance: { $ref: "#/definitions/PlaceOfPerformance" },
       financialInfo: { $ref: "#/definitions/FinancialInfo" },
       businessClassification: { $ref: "#/definitions/BusinessClassification" },
-      contractCharacteristics: { $ref: "#/definitions/ContractCharacteristics" },
+      contractCharacteristics: {
+        $ref: "#/definitions/ContractCharacteristics",
+      },
       contacts: {
         type: "array",
         items: { $ref: "#/definitions/Contact" },
@@ -241,7 +246,7 @@ function extractDefinitions(schema) {
       statusInfo: { $ref: "#/definitions/StatusInfo" },
       contract_dataExtensions: {
         type: "array",
-        items: { $ref: "#/definitions/Contract DataExtension" },
+        items: { $ref: "#/definitions/ContractDataExtension" },
       },
       legacy_procurementExtensions: {
         type: "array",
@@ -298,10 +303,22 @@ function addGraphQLExtensions(definitions) {
       name: "SystemType",
       description: "Source system types",
       values: {
-        Contract Data: { name: "Contract Data", description: "Federal Procurement Data System - Next Generation" },
-        Legacy Procurement: { name: "Legacy Procurement", description: "Award System for Streamlined IT Transactions" },
-        Intake Process: { name: "Intake Process", description: "Enterprise Acquisition System for Infrastructure" },
-        Logistics Mgmt: { name: "Logistics Mgmt", description: "Contract Award Lifecycle Management" },
+        contract_data: {
+          name: "Contract Data",
+          description: "Federal Procurement Data System - Next Generation",
+        },
+        legacy_procurement: {
+          name: "Legacy Procurement",
+          description: "Award System for Streamlined IT Transactions",
+        },
+        intake_process: {
+          name: "Intake Process",
+          description: "Enterprise Acquisition System for Infrastructure",
+        },
+        logistics_mgmt: {
+          name: "Logistics Mgmt",
+          description: "Contract Award Lifecycle Management",
+        },
       },
     },
   };
@@ -316,8 +333,14 @@ function addGraphQLExtensions(definitions) {
       values: {
         primary: { name: "PRIMARY", description: "Primary contact" },
         technical: { name: "TECHNICAL", description: "Technical contact" },
-        administrative: { name: "ADMINISTRATIVE", description: "Administrative contact" },
-        contracting_officer: { name: "CONTRACTING_OFFICER", description: "Contracting officer" },
+        administrative: {
+          name: "ADMINISTRATIVE",
+          description: "Administrative contact",
+        },
+        contracting_officer: {
+          name: "CONTRACTING_OFFICER",
+          description: "Contracting officer",
+        },
       },
     },
   };
@@ -407,10 +430,10 @@ function addGraphQLExtensions(definitions) {
     "x-graphql-union": {
       name: "SystemExtension",
       description: "Union of system-specific extensions",
-      types: ["Contract DataExtension", "AssistExtension", "EasiExtension"],
+      types: ["ContractDataExtension", "AssistExtension", "EasiExtension"],
     },
     oneOf: [
-      { $ref: "#/definitions/Contract DataExtension" },
+      { $ref: "#/definitions/ContractDataExtension" },
       { $ref: "#/definitions/AssistExtension" },
       { $ref: "#/definitions/EasiExtension" },
     ],
@@ -511,7 +534,7 @@ function convertV1ToV2(v1Schema) {
   console.log("  ├─ Adding GraphQL operations...");
   const operations = addGraphQLOperations();
   console.log(
-    `  ├─ Added ${Object.keys(operations.queries).length} queries and ${Object.keys(operations.mutations).length} mutations`
+    `  ├─ Added ${Object.keys(operations.queries).length} queries and ${Object.keys(operations.mutations).length} mutations`,
   );
 
   // Build V2 schema

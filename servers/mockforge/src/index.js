@@ -1,18 +1,18 @@
-import { createYoga } from 'graphql-yoga';
-import { createServer } from 'http';
-import { readFileSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-import { addMocksToSchema } from '@graphql-tools/mock';
-import { faker } from '@faker-js/faker';
-import { spawn } from 'child_process';
+import { createYoga } from "graphql-yoga";
+import { createServer } from "http";
+import { readFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { addMocksToSchema } from "@graphql-tools/mock";
+import { faker } from "@faker-js/faker";
+import { spawn } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Ensure we are referencing the correct path to the examples directory
-const EXAMPLES_DIR = resolve(__dirname, '../../../examples/federation/sdl/apollo-classic');
+const EXAMPLES_DIR = resolve(__dirname, "../../../examples/federation/sdl/apollo-classic");
 
 const FEDERATION_DIRECTIVES = `
 directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
@@ -33,7 +33,7 @@ scalar _FieldSet
 
 function createMockServer(name, filename, port) {
   try {
-    let typeDefs = readFileSync(resolve(EXAMPLES_DIR, filename), 'utf-8');
+    let typeDefs = readFileSync(resolve(EXAMPLES_DIR, filename), "utf-8");
     typeDefs = FEDERATION_DIRECTIVES + typeDefs;
 
     const baseSchema = makeExecutableSchema({ typeDefs });
@@ -71,30 +71,30 @@ function createMockServer(name, filename, port) {
 }
 
 async function main() {
-  console.log('🚀 Starting MockForge Subgraphs...');
-  
+  console.log("🚀 Starting MockForge Subgraphs...");
+
   const servers = [
-    createMockServer('Products', 'products-service.graphql', 4001),
-    createMockServer('Reviews', 'reviews-service.graphql', 4002),
-    createMockServer('Users', 'users-service.graphql', 4003),
+    createMockServer("Products", "products-service.graphql", 4001),
+    createMockServer("Reviews", "reviews-service.graphql", 4002),
+    createMockServer("Users", "users-service.graphql", 4003),
   ];
 
-  console.log('✨ Starting GraphQL Mesh Gateway on port 5050...');
-  
-  const meshProcess = spawn('npx', ['mesh', 'dev'], {
-    cwd: resolve(__dirname, '..'),
-    stdio: 'inherit',
-    shell: true
+  console.log("✨ Starting GraphQL Mesh Gateway on port 5050...");
+
+  const meshProcess = spawn("npx", ["mesh", "dev"], {
+    cwd: resolve(__dirname, ".."),
+    stdio: "inherit",
+    shell: true,
   });
 
-  meshProcess.on('error', (err) => {
-    console.error('Failed to start GraphQL Mesh:', err);
+  meshProcess.on("error", (err) => {
+    console.error("Failed to start GraphQL Mesh:", err);
   });
 
-  process.on('SIGINT', () => {
-    console.log('🛑 Shutting down MockForge...');
-    meshProcess.kill('SIGINT');
-    servers.forEach(s => s && s.close());
+  process.on("SIGINT", () => {
+    console.log("🛑 Shutting down MockForge...");
+    meshProcess.kill("SIGINT");
+    servers.forEach((s) => s && s.close());
     process.exit(0);
   });
 }

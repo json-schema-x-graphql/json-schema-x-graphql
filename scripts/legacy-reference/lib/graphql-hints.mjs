@@ -157,7 +157,7 @@ function indent(text, spaces = 2) {
   const pad = " ".repeat(spaces);
   return text
     .split("\n")
-    .map(l => (l.trim().length ? pad + l : l))
+    .map((l) => (l.trim().length ? pad + l : l))
     .join("\n");
 }
 
@@ -341,12 +341,14 @@ export function addOperationsSDL(operationsConfig, options = {}) {
           }
           argLines.push(indent(argLine));
         }
-        if (argLines.some(l => l.trim().startsWith('"""'))) {
+        if (argLines.some((l) => l.trim().startsWith('"""'))) {
           // multiline args style
           argsSDL = `(\n${argLines.join("\n")}\n  )`;
         } else {
           // single line style if minimal
-          const simpleArgs = argLines.filter(l => !l.trim().startsWith('"""')).map(l => l.trim());
+          const simpleArgs = argLines
+            .filter((l) => !l.trim().startsWith('"""'))
+            .map((l) => l.trim());
           argsSDL = `(${simpleArgs.join(", ")})`;
         }
       }
@@ -364,7 +366,7 @@ export function addOperationsSDL(operationsConfig, options = {}) {
   const q = makeType("Query", operationsConfig.queries);
   const m = makeType("Mutation", operationsConfig.mutations);
   const s = makeType("Subscription", operationsConfig.subscriptions);
-  [q, m, s].forEach(b => {
+  [q, m, s].forEach((b) => {
     if (b) blocks.push(b);
   });
   return blocks.join("\n\n");
@@ -388,7 +390,7 @@ export function addPaginationTypesSDL(paginationConfig, baseSDL = "") {
 
   // Skip types already present
   const needed = [connectionTypeName, edgeTypeName, pageInfoTypeName, nodeInterfaceName].filter(
-    typeName => !new RegExp(`(^|\\n)type\\s+${typeName}\\b`).test(baseSDL)
+    (typeName) => !new RegExp(`(^|\\n)type\\s+${typeName}\\b`).test(baseSDL),
   );
 
   if (!needed.length) return "";
@@ -450,7 +452,7 @@ export function enhanceUnionDescriptions(sdl, unionsMap) {
     // If description already exists, skip insert
     const descPattern = new RegExp(`("""[\\s\\S]*?"""\\s+)?union\\s+${unionName}\\s*=`);
     const alreadyHasDesc = new RegExp(`(^|\\n)"""[\\s\\S]*?"""\\s+union\\s+${unionName}\\s*=`).test(
-      updated
+      updated,
     );
     if (alreadyHasDesc) continue;
 
@@ -495,7 +497,7 @@ export function applyScalarFieldReplacements(sdl, scalarFieldMap) {
     if (!targetScalar) continue;
 
     // Replace the type part only (avoid altering description lines)
-    lines[i] = line.replace(/:\s*([[\]\w!]+)/, match => {
+    lines[i] = line.replace(/:\s*([[\]\w!]+)/, (match) => {
       // Preserve wrapping (list/non-null) but substitute base scalar
       const originalType = match.replace(/:\s*/, "");
       // Extract wrappers
@@ -509,7 +511,7 @@ export function applyScalarFieldReplacements(sdl, scalarFieldMap) {
         wrappersPrefix = listPrefixMatch[1];
         base = base.slice(wrappersPrefix.length);
       }
-      const listSuffixMatch = base.match(/(\!*\]+)$/);
+      const listSuffixMatch = base.match(/(!*\]+)$/);
       if (listSuffixMatch) {
         wrappersSuffix = listSuffixMatch[1];
         base = base.slice(0, base.length - wrappersSuffix.length);
@@ -569,7 +571,7 @@ export function applyRequiredFieldNonNull(sdl, requiredFieldMap) {
     const typePart = typePartMatch[1];
 
     // Already non-null outermost?
-    if (/\!$/.test(typePart.trim())) continue;
+    if (typePart.trim().endsWith("!")) continue;
 
     // Append ! after the entire type (including any closing brackets)
     let newTypePart = typePart;
@@ -645,7 +647,7 @@ export function generateEnhancedSDL(baseSDL, schema, options = {}) {
   // 4. Enums - Insert definitions if missing
   if (includeEnums && Object.keys(meta.enums).length) {
     const existingEnumNames = new Set();
-    sdl.split("\n").forEach(line => {
+    sdl.split("\n").forEach((line) => {
       const m = line.match(/^\s*enum\s+(\w+)/);
       if (m) existingEnumNames.add(m[1]);
     });
@@ -704,21 +706,21 @@ export function generateEnhancedSDL(baseSDL, schema, options = {}) {
  */
 export function mergeParsedHints(a, b) {
   const out = {
-    scalars: { ...(a.scalars || {}), ...(b.scalars || {}) },
-    enums: { ...(a.enums || {}), ...(b.enums || {}) },
-    unions: { ...(a.unions || {}), ...(b.unions || {}) },
+    scalars: { ...a.scalars, ...b.scalars },
+    enums: { ...a.enums, ...b.enums },
+    unions: { ...a.unions, ...b.unions },
     operations: {
       queries: {
-        ...(a.operations?.queries || {}),
-        ...(b.operations?.queries || {}),
+        ...a.operations?.queries,
+        ...b.operations?.queries,
       },
       mutations: {
-        ...(a.operations?.mutations || {}),
-        ...(b.operations?.mutations || {}),
+        ...a.operations?.mutations,
+        ...b.operations?.mutations,
       },
       subscriptions: {
-        ...(a.operations?.subscriptions || {}),
-        ...(b.operations?.subscriptions || {}),
+        ...a.operations?.subscriptions,
+        ...b.operations?.subscriptions,
       },
     },
     pagination: b.pagination != null ? b.pagination : a.pagination,
@@ -736,7 +738,7 @@ export function mergeParsedHints(a, b) {
  */
 export function buildMissingEnums(baseSDL, enums) {
   const existing = new Set();
-  baseSDL.split("\n").forEach(line => {
+  baseSDL.split("\n").forEach((line) => {
     const m = line.match(/^\s*enum\s+(\w+)/);
     if (m) existing.add(m[1]);
   });

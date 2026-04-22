@@ -68,9 +68,9 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
 const EditorPage = () => {
   const { query, isReady } = useRouter();
   const { setColorScheme } = useMantineColorScheme();
-  const checkEditorSession = useFile(state => state.checkEditorSession);
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const checkEditorSession = useFile((state) => state.checkEditorSession);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const fullscreen = useGraph((state) => state.fullscreen);
 
   useEffect(() => {
     if (isReady) checkEditorSession(query?.json);

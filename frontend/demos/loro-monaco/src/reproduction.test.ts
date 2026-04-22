@@ -117,44 +117,26 @@ describe("User Provided Reproduction Case", () => {
 
   it("should correctly parse specific federation directives", () => {
     const doc = parse(USER_PROVIDED_SDL);
-    const userType = doc.definitions.find(
-      (def: any) => def.name.value === "User",
-    ) as any;
+    const userType = doc.definitions.find((def: any) => def.name.value === "User") as any;
 
     expect(userType).toBeDefined();
 
     // Check @key directive on the type itself
-    const keyDirective = userType.directives.find(
-      (d: any) => d.name.value === "key",
-    );
+    const keyDirective = userType.directives.find((d: any) => d.name.value === "key");
     expect(keyDirective).toBeDefined();
     expect(keyDirective.arguments[0].name.value).toBe("fields");
     expect(keyDirective.arguments[0].value.value).toBe("id");
 
     // Check @authenticated on email field
-    const emailField = userType.fields.find(
-      (f: any) => f.name.value === "email",
-    );
-    expect(
-      emailField.directives.some((d: any) => d.name.value === "authenticated"),
-    ).toBe(true);
+    const emailField = userType.fields.find((f: any) => f.name.value === "email");
+    expect(emailField.directives.some((d: any) => d.name.value === "authenticated")).toBe(true);
 
     // Check @inaccessible on internalId field
-    const internalIdField = userType.fields.find(
-      (f: any) => f.name.value === "internalId",
-    );
-    expect(
-      internalIdField.directives.some(
-        (d: any) => d.name.value === "inaccessible",
-      ),
-    ).toBe(true);
+    const internalIdField = userType.fields.find((f: any) => f.name.value === "internalId");
+    expect(internalIdField.directives.some((d: any) => d.name.value === "inaccessible")).toBe(true);
 
     // Check @override on preferences field
-    const preferencesField = userType.fields.find(
-      (f: any) => f.name.value === "preferences",
-    );
-    expect(
-      preferencesField.directives.some((d: any) => d.name.value === "override"),
-    ).toBe(true);
+    const preferencesField = userType.fields.find((f: any) => f.name.value === "preferences");
+    expect(preferencesField.directives.some((d: any) => d.name.value === "override")).toBe(true);
   });
 });

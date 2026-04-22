@@ -153,10 +153,7 @@ Use `x-graphql-union` to explicitly name the union, rather than relying on the c
 ```json
 {
   "x-graphql-union": "SearchResult",
-  "oneOf": [
-    { "$ref": "#/definitions/Human" },
-    { "$ref": "#/definitions/Droid" }
-  ]
+  "oneOf": [{ "$ref": "#/definitions/Human" }, { "$ref": "#/definitions/Droid" }]
 }
 ```
 

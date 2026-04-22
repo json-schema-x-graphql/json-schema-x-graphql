@@ -191,8 +191,7 @@
   border-radius: 0;
   border: none;
   overflow: visible;
-  font-family:
-    "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+  font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
   color: #d4d4d4;
   background-color: #1e1e1e;
 }

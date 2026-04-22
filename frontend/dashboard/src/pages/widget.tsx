@@ -25,20 +25,20 @@ const ModalController = dynamic(() => import("../features/modals/ModalController
 });
 
 const GraphView = dynamic(
-  () => import("../features/editor/views/GraphView").then(c => c.GraphView),
+  () => import("../features/editor/views/GraphView").then((c) => c.GraphView),
   {
     ssr: false,
-  }
+  },
 );
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const { setColorScheme } = useMantineColorScheme();
   const [theme, setTheme] = React.useState<"dark" | "light">("dark");
-  const checkEditorSession = useFile(state => state.checkEditorSession);
-  const setContents = useFile(state => state.setContents);
-  const setDirection = useGraph(state => state.setDirection);
-  const clearGraph = useGraph(state => state.clearGraph);
+  const checkEditorSession = useFile((state) => state.checkEditorSession);
+  const setContents = useFile((state) => state.setContents);
+  const setDirection = useGraph((state) => state.setDirection);
+  const clearGraph = useGraph((state) => state.clearGraph);
 
   React.useEffect(() => {
     if (isReady) {

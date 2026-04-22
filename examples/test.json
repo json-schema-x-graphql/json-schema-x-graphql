@@ -58,9 +58,7 @@
         "federation": {
           "keys": [{ "fields": "id", "resolvable": true }]
         },
-        "directives": [
-          { "name": "cacheControl", "arguments": { "maxAge": 300 } }
-        ]
+        "directives": [{ "name": "cacheControl", "arguments": { "maxAge": 300 } }]
       },
       "properties": {
         "id": {

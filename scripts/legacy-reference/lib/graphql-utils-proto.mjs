@@ -54,7 +54,7 @@ export function emitCanonicalSDL(sdlText) {
         // Include stack to stderr to help debugging the 'Assignment to constant variable' issue
         try {
           process.stderr.write(
-            `mapSchema error during canonicalization: ${mapErr.stack || String(mapErr)}\n`
+            `mapSchema error during canonicalization: ${mapErr.stack || String(mapErr)}\n`,
           );
         } catch (e) {
           // ignore

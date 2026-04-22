@@ -38,7 +38,7 @@ const scalarFactories = new Map([
   ],
 ]);
 const scalarFallbackFactory = () => ({ type: "string" });
-export const isBuiltInScalar = name => scalarFactories.has(name);
+export const isBuiltInScalar = (name) => scalarFactories.has(name);
 
 // Exclusion rules for types
 const EXCLUDED_TYPE_NAMES = new Set(["Query", "Mutation", "Subscription", "PageInfo"]);
@@ -55,19 +55,19 @@ const EXCLUDED_TYPE_SUFFIXES = [
   "Response",
   "PaginationInput",
 ];
-export const shouldIncludeType = type => {
+export const shouldIncludeType = (type) => {
   if (!type) return false;
   const name = type.name ?? "";
   if (!name) return false;
   if (name.startsWith("__")) return false;
   if (EXCLUDED_TYPE_NAMES.has(name)) return false;
-  if (EXCLUDED_TYPE_SUFFIXES.some(suffix => name.endsWith(suffix))) return false;
+  if (EXCLUDED_TYPE_SUFFIXES.some((suffix) => name.endsWith(suffix))) return false;
   if (isInputObjectType(type)) return false;
   return true;
 };
 
 // Utility to allow nulls
-const makeNullable = schema => {
+const makeNullable = (schema) => {
   if (!schema) return schema;
   if (schema.anyOf || schema.oneOf || schema.allOf || schema.$ref) {
     return {
@@ -98,7 +98,7 @@ const makeNullable = schema => {
 };
 
 // Convert GraphQL scalar to JSON Schema
-const convertScalar = name => {
+const convertScalar = (name) => {
   const factory = scalarFactories.get(name) ?? scalarFallbackFactory;
   return factory();
 };
@@ -141,7 +141,7 @@ export function buildEnumDefinition(enumType) {
   const values = enumType.getValues();
   return {
     type: "string",
-    enum: values.map(value => value.name),
+    enum: values.map((value) => value.name),
     ...(enumType.description ? { description: enumType.description } : {}),
   };
 }
@@ -149,7 +149,7 @@ export function buildEnumDefinition(enumType) {
 // Build union definitions
 export function buildUnionDefinition(unionType, ctx) {
   const possibleTypes = unionType.getTypes?.() ?? ctx.schema.getPossibleTypes(unionType);
-  const refs = possibleTypes.map(type => {
+  const refs = possibleTypes.map((type) => {
     ensureDefinition(type, ctx);
     return { $ref: `#/definitions/${type.name}` };
   });
@@ -165,7 +165,7 @@ export function buildObjectDefinition(type, ctx) {
   const properties = {};
   const required = [];
 
-  Object.keys(fields).forEach(fieldName => {
+  Object.keys(fields).forEach((fieldName) => {
     const field = fields[fieldName];
     const { schema, nullable } = convertGraphQLType(field.type, ctx);
     const fieldSchema = nullable ? makeNullable(schema) : schema;

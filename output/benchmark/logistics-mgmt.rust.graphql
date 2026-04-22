@@ -41,9 +41,9 @@ type Requisition {
   accountingPeriod: String
   actionRequestType: String
   """
-NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
-"""
-adminOfficeAddress: Address
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
+  adminOfficeAddress: Address
   amendmentNumber: String
   amount: JSON
   approvalHistory: [RequisitionApprovalHistory]
@@ -70,9 +70,9 @@ adminOfficeAddress: Address
   highRisk: String
   internalNoteText: String
   """
-NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
-"""
-issuingOfficeAddress: Address
+  NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023.
+  """
+  issuingOfficeAddress: Address
   items: JSON
   lastUpdatedBy: String
   lastUpdatedDate: DateTime
@@ -213,9 +213,9 @@ type RequisitionShipment {
 
 type Site {
   """
-The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
-"""
-siteCode: JSON!
+  The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
+  """
+  siteCode: JSON!
   siteDescription: String
 }
 
@@ -231,9 +231,9 @@ type Solicitation {
   baseCurrencyCode: String
   bundledContract: String
   """
-NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
-"""
-buyer: Person
+  NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.
+  """
+  buyer: Person
   cancelledDate: DateTime
   changeText: String
   closedDate: DateTime
@@ -418,4 +418,3 @@ type ProcurementDataSchema {
   requisition: Requisition
   solicitation: Solicitation
 }
-

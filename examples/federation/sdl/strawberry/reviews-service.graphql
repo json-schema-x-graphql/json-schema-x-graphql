@@ -2,7 +2,10 @@
 # This service extends the Book entity and owns the Review entity
 
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external"])
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external"]
+  )
 
 """
 Review of a book with rating and comment

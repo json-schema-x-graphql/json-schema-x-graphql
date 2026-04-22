@@ -91,9 +91,9 @@ function getNodeByPath(root, loc) {
 
 function formatDescription(description, indent = "") {
   if (!description) return "";
-  const sanitized = String(description).replace(/\"\"\"/g, '\"\\\"\\\"');
+  const sanitized = String(description).replace(/"""/g, '"\\\"\\\"');
   const lines = sanitized.replace(/\r/g, "").split("\n");
-  const indented = lines.map(line => `${indent}${line}`);
+  const indented = lines.map((line) => `${indent}${line}`);
   return `${indent}"""
 ${indented.join("\n")}
 ${indent}"""`;
@@ -220,12 +220,12 @@ function resolvePointer(schema, pointer) {
       if (foundItems) continue;
 
       console.warn(
-        `Warning: Pointer segment 'items' not found in schema for pointer '${pointer}'.`
+        `Warning: Pointer segment 'items' not found in schema for pointer '${pointer}'.`,
       );
       return { node: null, parent, key, required: false };
     }
 
-    if (candidates.some(c => c === "any_of" || c === "one_of" || c === "all_of")) {
+    if (candidates.some((c) => c === "any_of" || c === "one_of" || c === "all_of")) {
       const arrKey = node?.any_of
         ? "any_of"
         : node?.one_of
@@ -235,7 +235,7 @@ function resolvePointer(schema, pointer) {
             : null;
       if (!arrKey || !Array.isArray(node[arrKey])) {
         console.warn(
-          `Warning: Pointer segment expected to be an array in pointer '${pointer}', but was not found.`
+          `Warning: Pointer segment expected to be an array in pointer '${pointer}', but was not found.`,
         );
         return { node: null, parent, key, required: false };
       }
@@ -245,7 +245,7 @@ function resolvePointer(schema, pointer) {
 
     if (!node || typeof node !== "object") {
       console.warn(
-        `Warning: Cannot resolve pointer '${pointer}'. Encountered non-object at segment '${part}'.`
+        `Warning: Cannot resolve pointer '${pointer}'. Encountered non-object at segment '${part}'.`,
       );
       return { node: null, parent, key, required: false };
     }
@@ -317,7 +317,7 @@ function resolvePointer(schema, pointer) {
     if (resolved) continue;
 
     console.warn(
-      `Warning: Pointer segment '${part}' not found while resolving '${pointer}'. Tried candidates: ${candidates.join(", ")}`
+      `Warning: Pointer segment '${part}' not found while resolving '${pointer}'. Tried candidates: ${candidates.join(", ")}`,
     );
     return { node: null, parent, key, required: false };
   }
@@ -325,10 +325,10 @@ function resolvePointer(schema, pointer) {
   // Determine if this segment was required in the parent by checking any candidate name
   const required = Boolean(
     parent &&
-      Array.isArray(parent.required) &&
-      parent.required.some(r => {
-        return r === key || r === camelToSnake(key) || r === snakeToCamel(key);
-      })
+    Array.isArray(parent.required) &&
+    parent.required.some((r) => {
+      return r === key || r === camelToSnake(key) || r === snakeToCamel(key);
+    }),
   );
   return { node, parent, key, required };
 }
@@ -369,9 +369,9 @@ function findNodeByCandidates(root, candidates) {
       for (const v of Object.values(node.properties)) stack.push(v);
     }
     if (node.items) stack.push(node.items);
-    if (Array.isArray(node.any_of)) node.any_of.forEach(n => stack.push(n));
-    if (Array.isArray(node.one_of)) node.one_of.forEach(n => stack.push(n));
-    if (Array.isArray(node.all_of)) node.all_of.forEach(n => stack.push(n));
+    if (Array.isArray(node.any_of)) node.any_of.forEach((n) => stack.push(n));
+    if (Array.isArray(node.one_of)) node.one_of.forEach((n) => stack.push(n));
+    if (Array.isArray(node.all_of)) node.all_of.forEach((n) => stack.push(n));
   }
   return null;
 }
@@ -390,7 +390,7 @@ function transformEnumValues(values, transform) {
     const base = typeof transform === "function" ? transform(rawValue) : rawValue;
     const normalized = String(base)
       .replace(/[^A-Za-z0-9_]/g, "_")
-      .replace(/^[^A-Za-z_]/, match => `_${match}`)
+      .replace(/^[^A-Za-z_]/, (match) => `_${match}`)
       .toUpperCase();
 
     if (!seen.has(normalized)) {
@@ -447,7 +447,7 @@ function buildEnumSDL(schema, config, warnings) {
     lines.push(formatDescription(description));
   }
   lines.push(`enum ${config.name} {`);
-  gqlValues.forEach(value => {
+  gqlValues.forEach((value) => {
     lines.push(`  ${value.name}`);
   });
   lines.push("}");
@@ -470,7 +470,7 @@ function buildFieldSDL(schema, fieldConfig, warnings) {
   const isNonNull = fieldConfig.graphqlType.trim().endsWith("!");
   if (isNonNull && !pointerInfo.required && !fieldConfig.allowOptionalNonNull) {
     warnings.push(
-      `Field '${fieldConfig.name}' is non-null in GraphQL but not marked required in schema pointer '${fieldConfig.pointer}'.`
+      `Field '${fieldConfig.name}' is non-null in GraphQL but not marked required in schema pointer '${fieldConfig.pointer}'.`,
     );
   }
 
@@ -479,7 +479,7 @@ function buildFieldSDL(schema, fieldConfig, warnings) {
       resolvePointer(schema, fieldConfig.itemsPointer);
     } catch (error) {
       warnings.push(
-        `itemsPointer '${fieldConfig.itemsPointer}' for field '${fieldConfig.name}' could not be resolved: ${error.message}`
+        `itemsPointer '${fieldConfig.itemsPointer}' for field '${fieldConfig.name}' could not be resolved: ${error.message}`,
       );
     }
   }
@@ -509,7 +509,7 @@ function buildTypeSDL(schema, config, warnings) {
       lines.push(fieldSDL.line);
     } catch (error) {
       warnings.push(
-        `Field '${fieldConfig.name}' skipped for type '${config.name}': ${error.message}`
+        `Field '${fieldConfig.name}' skipped for type '${config.name}': ${error.message}`,
       );
     }
   }
@@ -617,10 +617,10 @@ export async function generateFromJSONSchema({
       unionConfigs,
       scalars,
       fieldMapping,
-      warnings
+      warnings,
     );
     // Merge warnings
-    emitterWarnings.forEach(w => warnings.push(w));
+    emitterWarnings.forEach((w) => warnings.push(w));
 
     let document = printed + "\n";
 
@@ -641,10 +641,12 @@ export async function generateFromJSONSchema({
     warnings.push(`IR->GraphQL emitter failed: ${String(err)}`);
 
     const sections = [];
-    sections.push("# Auto-generated from src/data/schema_unification.schema.json. Do not edit manually.");
+    sections.push(
+      "# Auto-generated from src/data/schema_unification.schema.json. Do not edit manually.",
+    );
     sections.push("");
     if (scalars.length) {
-      scalars.forEach(scalar => {
+      scalars.forEach((scalar) => {
         sections.push(`scalar ${scalar}`);
       });
       sections.push("");
@@ -677,7 +679,7 @@ export async function generateFromJSONSchema({
 
   if (warnings.length) {
     process.stderr.write("Warnings while generating GraphQL SDL:\n");
-    warnings.forEach(warning => process.stderr.write(` - ${warning}\n`));
+    warnings.forEach((warning) => process.stderr.write(` - ${warning}\n`));
   }
 
   // Write website consumption copy if enabled
@@ -688,7 +690,7 @@ export async function generateFromJSONSchema({
       await fs.writeFile(generatedOutPath, finalSDL, "utf8");
     } catch (e) {
       process.stderr.write(
-        `Warning: failed to write generated copy for '${outputBaseName}': ${String(e)}\n`
+        `Warning: failed to write generated copy for '${outputBaseName}': ${String(e)}\n`,
       );
     }
   }
@@ -728,15 +730,15 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       process.stdout.write(`GraphQL SDL written to ${path.relative(process.cwd(), finalOut)}\n`);
       if (generatedOutPath) {
         process.stdout.write(
-          `Generated copy written to ${path.relative(process.cwd(), generatedOutPath)}\n`
+          `Generated copy written to ${path.relative(process.cwd(), generatedOutPath)}\n`,
         );
       }
       if (warnings && warnings.length) {
         process.stdout.write(`Warnings (${warnings.length}):\n`);
-        warnings.forEach(w => process.stdout.write(` - ${w}\n`));
+        warnings.forEach((w) => process.stdout.write(` - ${w}\n`));
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("[generate-graphql-from-json-schema]", error);
       process.exit(1);
     });

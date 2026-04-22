@@ -16,24 +16,24 @@
  *   2 - Sample provided but fails JSON Schema validation
  */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { validateParity } from '../../scripts/validate-graphql-vs-jsonschema.mjs';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { validateParity } from "../../scripts/validate-graphql-vs-jsonschema.mjs";
 
 // Resolve repo root relative to this example script (docs/examples/)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, '../../');
+const repoRoot = path.resolve(__dirname, "../../");
 
 function parseArgs(argv) {
   const args = {};
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--sdl') args.sdl = argv[++i];
-    else if (a === '--schema') args.schema = argv[++i];
-    else if (a === '--sample') args.sample = argv[++i];
-    else if (a === '--help' || a === '-h') args.help = true;
+    if (a === "--sdl") args.sdl = argv[++i];
+    else if (a === "--schema") args.schema = argv[++i];
+    else if (a === "--sample") args.sample = argv[++i];
+    else if (a === "--help" || a === "-h") args.help = true;
   }
   return args;
 }
@@ -52,7 +52,7 @@ Options:
 }
 
 function readFileUtf8(p) {
-  return fs.readFileSync(p, 'utf8');
+  return fs.readFileSync(p, "utf8");
 }
 
 function readJson(p) {
@@ -66,13 +66,13 @@ async function main() {
     process.exit(0);
   }
 
-  const sdlPath = path.isAbsolute(args.sdl || '')
+  const sdlPath = path.isAbsolute(args.sdl || "")
     ? args.sdl
-    : path.join(repoRoot, args.sdl || 'generated-schemas/schema_unification.supergraph.graphql');
+    : path.join(repoRoot, args.sdl || "generated-schemas/schema_unification.supergraph.graphql");
 
-  const schemaPath = path.isAbsolute(args.schema || '')
+  const schemaPath = path.isAbsolute(args.schema || "")
     ? args.schema
-    : path.join(repoRoot, args.schema || 'src/data/schema_unification.schema.json');
+    : path.join(repoRoot, args.schema || "src/data/schema_unification.schema.json");
 
   if (!fs.existsSync(sdlPath)) {
     console.error(`❌ SDL file not found: ${sdlPath}`);
@@ -95,13 +95,13 @@ async function main() {
   try {
     const result = validateParity(sdl, jsonSchema);
     if (result && result.sdlBuilds) {
-      console.log('✅ GraphQL SDL parsed and schema built successfully.');
+      console.log("✅ GraphQL SDL parsed and schema built successfully.");
     } else {
-      console.error('❌ SDL did not build successfully (unexpected state).');
+      console.error("❌ SDL did not build successfully (unexpected state).");
       process.exit(1);
     }
   } catch (e) {
-    console.error('❌ GraphQL SDL validation failed:');
+    console.error("❌ GraphQL SDL validation failed:");
     console.error(e?.message || e);
     process.exit(1);
   }
@@ -126,13 +126,13 @@ async function main() {
       if (result && result.sampleValid) {
         console.log(`✅ Sample JSON validated against JSON Schema (${samplePath}).`);
       } else {
-        console.error('❌ Sample validation did not return expected success (unexpected state).');
+        console.error("❌ Sample validation did not return expected success (unexpected state).");
         process.exit(2);
       }
     } catch (e) {
       console.error(`❌ Validation failed for sample: ${samplePath}`);
       if (e && Array.isArray(e.validationErrors)) {
-        console.error('Ajv validation errors:');
+        console.error("Ajv validation errors:");
         console.error(JSON.stringify(e.validationErrors, null, 2));
       } else {
         console.error(e?.message || e);
@@ -140,14 +140,14 @@ async function main() {
       process.exit(2);
     }
   } else {
-    console.log('ℹ️ No sample provided. SDL check completed.');
+    console.log("ℹ️ No sample provided. SDL check completed.");
   }
 
-  console.log('🎉 Done.');
+  console.log("🎉 Done.");
   process.exit(0);
 }
 
 main().catch((err) => {
-  console.error('❌ Unexpected error:', err?.message || err);
+  console.error("❌ Unexpected error:", err?.message || err);
   process.exit(1);
 });

@@ -41,11 +41,26 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
 
   // Load external schema files that are referenced in schema_unification.schema.json
   const externalSchemas = [
-    { path: path.join(repoRoot, "src/data/contract_data.schema.json"), name: "contract_data.schema.json" },
-    { path: path.join(repoRoot, "src/data/legacy_procurement.schema.json"), name: "legacy_procurement.schema.json" },
-    { path: path.join(repoRoot, "src/data/intake_process.schema.json"), name: "intake_process.schema.json" },
-    { path: path.join(repoRoot, "src/data/logistics_mgmt.schema.json"), name: "logistics_mgmt.schema.json" },
-    { path: path.join(repoRoot, "src/data/public_spending.schema.json"), name: "public_spending.schema.json" },
+    {
+      path: path.join(repoRoot, "src/data/contract_data.schema.json"),
+      name: "contract_data.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/legacy_procurement.schema.json"),
+      name: "legacy_procurement.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/intake_process.schema.json"),
+      name: "intake_process.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/logistics_mgmt.schema.json"),
+      name: "logistics_mgmt.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/public_spending.schema.json"),
+      name: "public_spending.schema.json",
+    },
   ];
 
   for (const extSchema of externalSchemas) {
@@ -104,7 +119,7 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
     }
     console.error("Top-level schema $id:", schema.$id || schema.id || "(none)");
     console.error(
-      "Hint: ensure all internal $ref targets exist in $defs or are absolute URIs resolvable by Ajv. If you use remote references, add them to Ajv via ajv.addSchema()."
+      "Hint: ensure all internal $ref targets exist in $defs or are absolute URIs resolvable by Ajv. If you use remote references, add them to Ajv via ajv.addSchema().",
     );
     // Throw error instead of process.exit for testability
     throw new Error(errorMsg);
@@ -124,7 +139,10 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
         results.fileResults[dataFile.name] = valid;
         if (!valid) {
           results.totalErrors += (validate.errors || []).length;
-          if (dataFile.name === "schema_unification.json" || dataFile.name === "schema_unification.v2.json")
+          if (
+            dataFile.name === "schema_unification.json" ||
+            dataFile.name === "schema_unification.v2.json"
+          )
             results.mainFileValid = false;
         }
       } else {
@@ -133,7 +151,10 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
     } catch (e) {
       results.fileResults[dataFile.name] = false;
       results.totalErrors++;
-      if (dataFile.name === "schema_unification.json" || dataFile.name === "schema_unification.v2.json")
+      if (
+        dataFile.name === "schema_unification.json" ||
+        dataFile.name === "schema_unification.v2.json"
+      )
         results.mainFileValid = false;
     }
   }

@@ -25,7 +25,7 @@ description: |
   in `src/data/archived/` as canonical inputs, and define per-system overrides
   to produce compact, human-readable example JSON records for the site.
 output:
-  dir: "public/data/generated/examples"    # where generator should write example files
+  dir: "public/data/generated/examples" # where generator should write example files
   pretty_print: true
   default_count: 1
 
@@ -49,7 +49,7 @@ mapping_templates:
   common: &common
     systemMetadata:
       primarySystem:
-        template: "{{SYSTEM}}"          # replaced by generator with the system key
+        template: "{{SYSTEM}}" # replaced by generator with the system key
       globalRecordId:
         template: "PETRIFIED-{{SYSTEM}}-{{SEQ}}-2024"
       schemaVersion:
@@ -133,7 +133,7 @@ mapping_templates:
       # Contract Data specific system extensions
     systemExtensions:
       contract_data:
-        copy: "systemExtensions.contract_data"   # copy the entire contract_data extension array if present
+        copy: "systemExtensions.contract_data" # copy the entire contract_data extension array if present
 
   # Legacy Procurement-specific overrides
   legacy_procurement:
@@ -150,7 +150,7 @@ mapping_templates:
           # generator should copy existing example values where present or synthesize a sample.
           copy: "commonElements.contractIdentification.piid"
       contacts:
-        array_from: "commonElements.contacts"   # retain contact list from archive if present
+        array_from: "commonElements.contacts" # retain contact list from archive if present
     systemExtensions:
       legacy_procurement:
         copy: "systemExtensions.legacy_procurement"
@@ -231,7 +231,7 @@ hints:
   timestamp_format: "iso8601"
   random_suffix_length: 6
   preserve_array_order: true
-  copy_missing_fallback: "literal"   # if copy pointer missing, fallback to literal/default if provided
+  copy_missing_fallback: "literal" # if copy pointer missing, fallback to literal/default if provided
   example_comment:
     - "This file is generated from mapping definitions in scripts/example-mapping.yaml"
     - "To regenerate, run: node scripts/generate-examples.mjs (implement this small script to interpret the mapping)"

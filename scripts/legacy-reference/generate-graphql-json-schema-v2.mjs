@@ -61,7 +61,11 @@ async function generateV2({ schemaFile = schemaPath, outPath = outputPath } = {}
     rawSDL = await fs.readFile(schemaFile, "utf8");
   } catch (err) {
     // Fallback: if the V2 target SDL isn't present, fall back to the canonical SDL
-    const fallback = path.join(repoRoot, "generated-schemas", "schema_unification.supergraph.graphql");
+    const fallback = path.join(
+      repoRoot,
+      "generated-schemas",
+      "schema_unification.supergraph.graphql",
+    );
     rawSDL = await fs.readFile(fallback, "utf8");
   }
 
@@ -77,7 +81,7 @@ async function generateV2({ schemaFile = schemaPath, outPath = outputPath } = {}
 
   // Ensure definitions for all relevant types
   const typeMap = schema.getTypeMap();
-  Object.values(typeMap).forEach(type => {
+  Object.values(typeMap).forEach((type) => {
     ensureDefinition(type, ctx);
   });
 
@@ -97,8 +101,8 @@ async function generateV2({ schemaFile = schemaPath, outPath = outputPath } = {}
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   generateV2()
-    .then(p => console.log(`Generated: ${path.relative(repoRoot, p)}`))
-    .catch(e => {
+    .then((p) => console.log(`Generated: ${path.relative(repoRoot, p)}`))
+    .catch((e) => {
       console.error(e);
       process.exit(1);
     });

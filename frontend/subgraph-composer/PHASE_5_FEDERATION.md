@@ -417,8 +417,7 @@ import { useDirectiveSuggestions } from "./hooks/useDirectiveSuggestions";
 import DirectiveSuggester from "./components/DirectiveSuggester";
 
 function MyComponent() {
-  const { suggestions, generateSuggestions, applySuggestions } =
-    useDirectiveSuggestions();
+  const { suggestions, generateSuggestions, applySuggestions } = useDirectiveSuggestions();
 
   const handleCompose = async (subgraphs, sdl) => {
     // Generate suggestions after composition

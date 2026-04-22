@@ -10,13 +10,20 @@ directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
 
-directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+directive @link(
+  url: String!
+  as: String
+  for: link__Purpose
+  import: [link__Import]
+) repeatable on SCHEMA
 
 directive @shareable repeatable on OBJECT | FIELD_DEFINITION
 
 directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
-directive @tag(name: String!) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @tag(
+  name: String!
+) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
 directive @override(from: String!) on FIELD_DEFINITION
 
@@ -34,7 +41,9 @@ directive @external on FIELD_DEFINITION | OBJECT
 
 directive @shareable on OBJECT | FIELD_DEFINITION
 
-directive @tag(name: String!) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @tag(
+  name: String!
+) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
 directive @extends on OBJECT | INTERFACE
 
@@ -64,36 +73,62 @@ type _Service {
 }
 
 type Query {
-  """Get a review by ID"""
+  """
+  Get a review by ID
+  """
   review(id: ID!): Review
-  """Get all reviews"""
+  """
+  Get all reviews
+  """
   reviews: [Review!]!
 }
 
-"""Product review entity"""
+"""
+Product review entity
+"""
 type Review {
-  """Review unique identifier"""
+  """
+  Review unique identifier
+  """
   id: ID!
-  """Review body text"""
+  """
+  Review body text
+  """
   body: String
-  """Review author (provides username field)"""
+  """
+  Review author (provides username field)
+  """
   author: User
-  """Product being reviewed"""
+  """
+  Product being reviewed
+  """
   product: Product
 }
 
-"""Extended User type with reviews"""
+"""
+Extended User type with reviews
+"""
 type User {
-  """User's email address (from Users service)"""
+  """
+  User's email address (from Users service)
+  """
   email: ID!
-  """Reviews written by this user"""
+  """
+  Reviews written by this user
+  """
   reviews: [Review]
 }
 
-"""Extended Product type with reviews"""
+"""
+Extended Product type with reviews
+"""
 type Product {
-  """Universal Product Code (from Products service)"""
+  """
+  Universal Product Code (from Products service)
+  """
   upc: String!
-  """Reviews for this product"""
+  """
+  Reviews for this product
+  """
   reviews: [Review]
 }

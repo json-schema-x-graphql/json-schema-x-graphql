@@ -12,7 +12,7 @@ declare global {
         options: {
           introspection: unknown;
           displayOptions?: Record<string, unknown>;
-        }
+        },
       ) => void;
     };
   }
@@ -55,7 +55,7 @@ const VoyagerV2HintedPage: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors.map(graphqlError => graphqlError.message).join("\n")
+            introspectionResult.errors.map((graphqlError) => graphqlError.message).join("\n"),
           );
         }
 
@@ -102,7 +102,9 @@ const VoyagerV2HintedPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>GraphQL Voyager - V2 x-graphql Hinted Contract Data Example | Schema Unification Forest</title>
+        <title>
+          GraphQL Voyager - V2 x-graphql Hinted Contract Data Example | Schema Unification Forest
+        </title>
         <meta
           name="description"
           content="Visualise the V2 x-graphql hinted Contract Data example schema with interfaces, unions, and custom scalars as an interactive graph using GraphQL Voyager."

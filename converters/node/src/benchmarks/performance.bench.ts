@@ -332,10 +332,7 @@ function printSummary() {
   console.log("Benchmark Results:");
   console.log("-".repeat(80));
   console.log(
-    "Name".padEnd(50) +
-      "Ops/sec".padStart(12) +
-      "Mean (ms)".padStart(12) +
-      "±".padStart(6),
+    "Name".padEnd(50) + "Ops/sec".padStart(12) + "Mean (ms)".padStart(12) + "±".padStart(6),
   );
   console.log("-".repeat(80));
 
@@ -357,32 +354,18 @@ function printSummary() {
   console.log("  • Round-trip: > 500 ops/sec (< 2ms per operation)");
 
   // Check if we meet targets
-  const validationBenches = results.filter((r) =>
-    r.name.includes("validation"),
-  );
-  const conversionBenches = results.filter((r) =>
-    r.name.includes("conversion"),
-  );
+  const validationBenches = results.filter((r) => r.name.includes("validation"));
+  const conversionBenches = results.filter((r) => r.name.includes("conversion"));
   const roundTripBenches = results.filter((r) => r.name.includes("Round-trip"));
 
-  const validationPassed = validationBenches.every(
-    (r) => r.opsPerSecond > 10000,
-  );
-  const conversionPassed = conversionBenches.every(
-    (r) => r.opsPerSecond > 1000,
-  );
+  const validationPassed = validationBenches.every((r) => r.opsPerSecond > 10000);
+  const conversionPassed = conversionBenches.every((r) => r.opsPerSecond > 1000);
   const roundTripPassed = roundTripBenches.every((r) => r.opsPerSecond > 500);
 
   console.log("\n✅ Performance Status:");
-  console.log(
-    `  Validation: ${validationPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`,
-  );
-  console.log(
-    `  Conversion: ${conversionPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`,
-  );
-  console.log(
-    `  Round-trip: ${roundTripPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`,
-  );
+  console.log(`  Validation: ${validationPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`);
+  console.log(`  Conversion: ${conversionPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`);
+  console.log(`  Round-trip: ${roundTripPassed ? "✅ PASS" : "⚠️  NEEDS IMPROVEMENT"}`);
 
   // Save results to file
   const resultsPath = path.join(__dirname, "../../../benchmark-results.json");

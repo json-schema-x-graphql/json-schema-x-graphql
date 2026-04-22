@@ -11,7 +11,7 @@ declare global {
         options: {
           introspection: unknown;
           displayOptions?: Record<string, unknown>;
-        }
+        },
       ) => void;
     };
   }
@@ -26,7 +26,7 @@ const GraphQLPage: NextPage = () => {
   const [mode, setMode] = useState<"canonical" | "hinted" | "unified_model">("canonical");
   const [compare, setCompare] = useState<boolean>(false);
   const [schemaLabel, setSchemaLabel] = useState<string>(
-    "Schema Unification (canonical) - /data/schema_unification.graphql"
+    "Schema Unification (canonical) - /data/schema_unification.graphql",
   );
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const GraphQLPage: NextPage = () => {
               ? `Unified Model View - ${url}`
               : mode === "hinted"
                 ? `Schema Unification (hinted) - ${url}`
-                : `Schema Unification (canonical) - ${url}`
+                : `Schema Unification (canonical) - ${url}`,
           );
           const schema = buildSchema(text);
           const introspection = await graphql({ schema, source: getIntrospectionQuery() });
@@ -244,7 +244,7 @@ const GraphQLPage: NextPage = () => {
               <input
                 type="checkbox"
                 checked={compare}
-                onChange={e => setCompare(e.target.checked)}
+                onChange={(e) => setCompare(e.target.checked)}
               />
               Compare canonical vs Unified Model
             </label>

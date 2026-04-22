@@ -2,7 +2,10 @@
 # This service extends User and Product entities and owns the Review entity
 
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external", "@provides", "@requires"]
+  )
 
 """
 Product review entity

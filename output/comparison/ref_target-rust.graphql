@@ -9,4 +9,3 @@ type Externalreftarget {
   "A field in the external document root"
   commonField: String
 }
-

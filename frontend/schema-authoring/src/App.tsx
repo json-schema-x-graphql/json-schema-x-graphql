@@ -8,19 +8,9 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useAppStore } from "./store/app-store";
 import { converterManager } from "./converters/converter-manager";
-import {
-  EditorPanel,
-  Toolbar,
-  ErrorPanel,
-  StatusBar,
-  SettingsPanel,
-} from "./components";
+import { EditorPanel, Toolbar, ErrorPanel, StatusBar, SettingsPanel } from "./components";
 import type { ValidationError } from "./types";
-import {
-  getTemplateNames,
-  getTemplate,
-  getDefaultTemplate,
-} from "./lib/templates";
+import { getTemplateNames, getTemplate, getDefaultTemplate } from "./lib/templates";
 
 export function App() {
   const mode = useAppStore((state) => state.mode);
@@ -28,23 +18,15 @@ export function App() {
   const autoConvert = useAppStore((state) => state.settings.autoConvert);
   const autoValidate = useAppStore((state) => state.settings.autoValidate);
 
-  const jsonSchemaContent = useAppStore(
-    (state) => state.jsonSchemaEditor.content,
-  );
+  const jsonSchemaContent = useAppStore((state) => state.jsonSchemaEditor.content);
   const graphQLContent = useAppStore((state) => state.graphqlEditor.content);
   const validationResult = useAppStore((state) => state.validationResult);
   const isConverting = useAppStore((state) => state.isConverting);
 
-  const setJsonSchemaContent = useAppStore(
-    (state) => state.setJsonSchemaContent,
-  );
+  const setJsonSchemaContent = useAppStore((state) => state.setJsonSchemaContent);
   const setGraphQLContent = useAppStore((state) => state.setGraphQLContent);
-  const convertJsonToGraphQL = useAppStore(
-    (state) => state.convertJsonToGraphQL,
-  );
-  const convertGraphQLToJson = useAppStore(
-    (state) => state.convertGraphQLToJson,
-  );
+  const convertJsonToGraphQL = useAppStore((state) => state.convertJsonToGraphQL);
+  const convertGraphQLToJson = useAppStore((state) => state.convertGraphQLToJson);
   const validateJsonSchema = useAppStore((state) => state.validateJsonSchema);
   const validateGraphQL = useAppStore((state) => state.validateGraphQL);
 
@@ -83,7 +65,7 @@ export function App() {
         // Persist the last position to the store (rounded)
         try {
           storeSetDividerPosition(Math.round(dividerPosition));
-        } catch (err) {
+        } catch {
           // best-effort persistence; swallow errors so UI is not blocked
           // console.debug('Persist divider failed', err);
         }
@@ -192,14 +174,7 @@ export function App() {
     }, 800); // Debounce validation slightly longer
 
     return () => clearTimeout(timer);
-  }, [
-    jsonSchemaContent,
-    graphQLContent,
-    autoValidate,
-    mode,
-    validateJsonSchema,
-    validateGraphQL,
-  ]);
+  }, [jsonSchemaContent, graphQLContent, autoValidate, mode, validateJsonSchema, validateGraphQL]);
 
   // Handle JSON Schema content changes
   const handleJsonSchemaChange = useCallback(
@@ -221,19 +196,15 @@ export function App() {
   const handleJumpToError = useCallback(
     (error: ValidationError) => {
       // Determine which editor to focus based on error source
-      const isJsonSchemaError =
-        error.source?.includes("json") || mode === "json-to-graphql";
+      const isJsonSchemaError = error.source?.includes("json") || mode === "json-to-graphql";
 
       // TODO: Implement actual jump-to-line in Monaco editor
       // For now, just log the action
-      console.log(
-        `Jump to ${isJsonSchemaError ? "JSON Schema" : "GraphQL"} error:`,
-        {
-          line: error.line,
-          column: error.column,
-          message: error.message,
-        },
-      );
+      console.log(`Jump to ${isJsonSchemaError ? "JSON Schema" : "GraphQL"} error:`, {
+        line: error.line,
+        column: error.column,
+        message: error.message,
+      });
 
       // You can add Monaco editor jump logic here when editor refs are available
     },
@@ -293,12 +264,7 @@ export function App() {
                 onClick={() => setShowTemplates(false)}
                 className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -398,26 +364,26 @@ export function App() {
                 setDividerPosition(next);
                 try {
                   storeSetDividerPosition(Math.round(next));
-                } catch (err) {}
+                } catch {}
               } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
                 e.preventDefault();
                 const next = Math.max(10, Math.min(90, dividerPosition + step));
                 setDividerPosition(next);
                 try {
                   storeSetDividerPosition(Math.round(next));
-                } catch (err) {}
+                } catch {}
               } else if (e.key === "Home") {
                 e.preventDefault();
                 setDividerPosition(10);
                 try {
                   storeSetDividerPosition(10);
-                } catch (err) {}
+                } catch {}
               } else if (e.key === "End") {
                 e.preventDefault();
                 setDividerPosition(90);
                 try {
                   storeSetDividerPosition(90);
-                } catch (err) {}
+                } catch {}
               }
             }}
             style={{ height: "100%" }}
@@ -457,10 +423,7 @@ export function App() {
       <StatusBar />
 
       {/* Settings Modal */}
-      <SettingsPanel
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-      />
+      <SettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
     </div>
   );
 }

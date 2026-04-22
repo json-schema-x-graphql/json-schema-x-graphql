@@ -121,9 +121,7 @@ export class SchemaDiff {
   getSummary() {
     const added = this.differences.filter((d) => d.type === "added").length;
     const removed = this.differences.filter((d) => d.type === "removed").length;
-    const modified = this.differences.filter(
-      (d) => d.type === "modified",
-    ).length;
+    const modified = this.differences.filter((d) => d.type === "modified").length;
 
     return {
       totalChanges: this.differences.length,
@@ -162,9 +160,7 @@ export class SchemaDiff {
       case "removed":
         return `Removed field "${diff.field}"`;
       case "modified": {
-        const changeStrs = diff.changes.map(
-          (c) => `${c.aspect}: ${c.from} → ${c.to}`,
-        );
+        const changeStrs = diff.changes.map((c) => `${c.aspect}: ${c.from} → ${c.to}`);
         return `Modified "${diff.field}": ${changeStrs.join(", ")}`;
       }
       default:
@@ -238,15 +234,11 @@ export class SchemaDiff {
       lines.push("");
 
       for (const diff of this.differences) {
-        lines.push(
-          `  [${diff.type.toUpperCase()}] ${this.getChangeDescription(diff)}`,
-        );
+        lines.push(`  [${diff.type.toUpperCase()}] ${this.getChangeDescription(diff)}`);
 
         if (diff.changes) {
           for (const change of diff.changes) {
-            lines.push(
-              `    - ${change.aspect}: "${change.from}" → "${change.to}"`,
-            );
+            lines.push(`    - ${change.aspect}: "${change.from}" → "${change.to}"`);
           }
         }
         lines.push("");
@@ -281,14 +273,10 @@ export function compareMultipleSchemas(schemas) {
   }
 
   // Find common fields across all
-  const allFields = schemas.map(
-    (s) => new Set(Object.keys(s.parsed.properties || {})),
-  );
+  const allFields = schemas.map((s) => new Set(Object.keys(s.parsed.properties || {})));
 
   const commonFields = allFields
-    .reduce(
-      (common, current) => new Set([...common].filter((f) => current.has(f))),
-    )
+    .reduce((common, current) => new Set([...common].filter((f) => current.has(f))))
     .then((x) => [...x]);
 
   const uniqueFieldsBySchema = schemas.map((schema, idx) => {

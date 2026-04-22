@@ -7,9 +7,9 @@ import { useModal } from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
 export const FileMenu = () => {
-  const setVisible = useModal(state => state.setVisible);
-  const getContents = useFile(state => state.getContents);
-  const getFormat = useFile(state => state.getFormat);
+  const setVisible = useModal((state) => state.setVisible);
+  const getContents = useFile((state) => state.getContents);
+  const getFormat = useFile((state) => state.getFormat);
 
   const handleSave = () => {
     const a = document.createElement("a");

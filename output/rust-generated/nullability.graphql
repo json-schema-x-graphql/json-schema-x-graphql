@@ -47,5 +47,3 @@ type ComplexType {
   fieldA: String
   fieldB: Int!
 }
-
-

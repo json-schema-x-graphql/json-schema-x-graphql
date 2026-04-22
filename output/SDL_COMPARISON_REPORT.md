@@ -72,10 +72,7 @@
 **Federation Directives Generated:**
 
 ```graphql
-type User implements Node & Timestamped
-  @key(fields: "id")
-  @key(fields: "email")
-  @shareable
+type User implements Node & Timestamped @key(fields: "id") @key(fields: "email") @shareable
 type Product implements Node @key(fields: "id")
 type Order @key(fields: "id")
 ```

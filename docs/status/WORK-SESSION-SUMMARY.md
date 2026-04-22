@@ -29,8 +29,7 @@
 
 ```typescript
 const typeKind = (schema["x-graphql-type-kind"] || "").toUpperCase();
-const isInterface =
-  typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
+const isInterface = typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
 ```
 
 **Impact:** All interface schemas now generate correct GraphQL interface definitions
@@ -115,8 +114,7 @@ if (typeof fieldNonNull === "boolean") {
 
 ```typescript
 const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
-const itemRequired =
-  typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
 ```
 
 **Impact:** Arrays can now specify non-null items: `[String!]` vs `[String]`

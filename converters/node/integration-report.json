@@ -10,9 +10,7 @@
       "expectedFile": "converters/test-data/x-graphql/expected/basic-types.graphql",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "Schema may be missing descriptions"
-      ],
+      "warnings": ["Schema may be missing descriptions"],
       "generatedSDL": "\"A user in the system\"\ntype User {\n  \"Unique identifier for the user\"\n  id: ID!\n  \"User's email address\"\n  email: Email!\n  \"User's full name\"\n  fullName: String\n  \"User's age in years\"\n  age: Int\n  \"Whether the user account is active\"\n  isActive: Boolean\n  \"Timestamp when the user was created\"\n  createdAt: DateTime\n}\n\n\"A product in the catalog\"\ntype Product {\n  id: ID!\n  name: String!\n  price: Float!\n  stockCount: Int\n}\n\n# Implied Scalars\nscalar Email",
       "metadata": {
         "conversionTimeMs": 1,
@@ -72,9 +70,7 @@
       "expectedFile": "converters/test-data/x-graphql/expected/interfaces.graphql",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "Schema may be missing descriptions"
-      ],
+      "warnings": ["Schema may be missing descriptions"],
       "generatedSDL": "\"Base interface for entities with a unique identifier\"\ninterface Node {\n  \"Unique identifier\"\n  id: ID!\n}\n\n\"Interface for entities with timestamp fields\"\ninterface Timestamped {\n  \"Creation timestamp\"\n  createdAt: DateTime!\n  \"Last update timestamp\"\n  updatedAt: DateTime\n}\n\n\"Interface for entities that can be searched\"\ninterface Searchable {\n  \"Search relevance ranking\"\n  searchRank: Float\n}\n\n\"User type implementing Node and Timestamped interfaces\"\ntype User implements Node & Timestamped {\n  id: ID!\n  createdAt: DateTime!\n  updatedAt: DateTime\n  \"Unique username\"\n  username: String!\n  \"User email address\"\n  email: Email!\n  \"User profile information\"\n  profile: UserProfile\n}\n\n\"Product type implementing multiple interfaces\"\ntype Product implements Node & Timestamped & Searchable {\n  id: ID!\n  createdAt: DateTime!\n  updatedAt: DateTime\n  searchRank: Float\n  \"Product name\"\n  name: String!\n  \"Product description\"\n  description: String\n  \"Product price\"\n  price: Float!\n  \"Product category\"\n  category: Category\n}\n\n\"Category type implementing only Node interface\"\ntype Category implements Node {\n  id: ID!\n  \"Category name\"\n  name: String!\n  \"URL-friendly category identifier\"\n  slug: String!\n  \"Parent category for nested hierarchies\"\n  parent: Category\n}\n\n\"User profile data (does not implement any interfaces)\"\ntype UserProfile {\n  \"User biography\"\n  bio: String\n  \"URL to user's avatar image\"\n  avatarUrl: URI\n  \"User's location\"\n  location: String\n  \"User's personal website\"\n  website: URI\n}\n\n\"Interface that extends another interface\"\ninterface ExtendedInterface implements Node {\n  id: ID!\n  \"Additional field for extended interface\"\n  extendedField: String\n}\n\n\"Concrete type implementing an extended interface\"\ntype ConcreteExtended implements ExtendedInterface {\n  id: ID!\n  extendedField: String\n  \"Field specific to concrete implementation\"\n  concreteField: String\n}\n\n# Implied Scalars\nscalar Email\nscalar URI",
       "metadata": {
         "conversionTimeMs": 0,
@@ -89,9 +85,7 @@
       "expectedFile": "converters/test-data/x-graphql/expected/nullability.graphql",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "Schema may be missing descriptions"
-      ],
+      "warnings": ["Schema may be missing descriptions"],
       "generatedSDL": "\"Tests various nullability configurations\"\ntype NullabilityTest {\n  \"Field explicitly marked as non-null\"\n  requiredField: String!\n  \"Field that is nullable by default\"\n  optionalField: String\n  \"Field explicitly marked as nullable even if required\"\n  nullableOverride: String\n  \"Non-null list of nullable items\"\n  nonNullList: [String]!\n  \"Nullable list of nullable items\"\n  nullableList: [String]\n  \"Nullable list of non-null items\"\n  listOfNonNullItems: [String!]\n  \"Non-null list of non-null items\"\n  nonNullListOfNonNullItems: [String!]!\n  \"Non-null nested list\"\n  nestedList: [[String]]!\n  \"Complex type that is explicitly nullable\"\n  complexNullable: ComplexType\n}\n\n\"A complex nested type\"\ntype ComplexType {\n  fieldA: String\n  fieldB: Int!\n}",
       "metadata": {
         "conversionTimeMs": 0,
@@ -106,9 +100,7 @@
       "expectedFile": "converters/test-data/x-graphql/expected/skip-fields.graphql",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "Schema may be missing descriptions"
-      ],
+      "warnings": ["Schema may be missing descriptions"],
       "generatedSDL": "\"A type that should appear in the GraphQL schema\"\ntype VisibleType {\n  \"This field should be visible\"\n  publicField: String!\n  \"Another visible field\"\n  anotherPublicField: Int\n  \"A nested type that should be visible\"\n  visibleNested: NestedType\n}\n\n\"A nested type with some skipped fields\"\ntype NestedType {\n  visibleField: String\n  anotherVisible: Boolean\n}\n\n\"User type with both public and private fields\"\ntype UserWithPrivateData {\n  id: ID!\n  username: String!\n  email: String\n  createdAt: DateTime\n}\n\n\"Tests skipping within arrays\"\ntype SkipListItems {\n  visibleItems: [String]\n}",
       "metadata": {
         "conversionTimeMs": 0,
@@ -123,9 +115,7 @@
       "expectedFile": "converters/test-data/x-graphql/expected/unions.graphql",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "Schema may be missing descriptions"
-      ],
+      "warnings": ["Schema may be missing descriptions"],
       "generatedSDL": "\"Union type representing possible search results\"\nunion SearchResult = User | Product | Article\n\n\"A user entity\"\ntype User {\n  id: ID!\n  username: String!\n  email: Email!\n}\n\n\"A product entity\"\ntype Product {\n  id: ID!\n  name: String!\n  price: Float!\n}\n\n\"An article entity\"\ntype Article {\n  id: ID!\n  title: String!\n  content: String!\n  author: User\n}\n\n\"Union type for different media types\"\nunion MediaItem = Image | Video | Audio\n\n\"An image file\"\ntype Image {\n  id: ID!\n  url: URI!\n  width: Int!\n  height: Int!\n  altText: String\n}\n\n\"A video file\"\ntype Video {\n  id: ID!\n  url: URI!\n  \"Duration in seconds\"\n  duration: Int!\n  thumbnail: URI\n}\n\n\"An audio file\"\ntype Audio {\n  id: ID!\n  url: URI!\n  \"Duration in seconds\"\n  duration: Int!\n  \"Audio bitrate in kbps\"\n  bitrate: Int\n}\n\n\"Target for a notification - can be a user or team\"\nunion NotificationTarget = User | Team\n\n\"A team entity\"\ntype Team {\n  id: ID!\n  name: String!\n  members: [User!]\n}\n\n\"Different payment method types\"\nunion PaymentMethod = CreditCard | BankAccount | DigitalWallet\n\n\"Credit card payment method\"\ntype CreditCard {\n  id: ID!\n  lastFour: String!\n  brand: String!\n  expiryMonth: Int!\n  expiryYear: Int!\n}\n\n\"Bank account payment method\"\ntype BankAccount {\n  id: ID!\n  accountNumberLastFour: String!\n  routingNumber: String!\n  accountType: String\n}\n\n\"Digital wallet payment method\"\ntype DigitalWallet {\n  id: ID!\n  provider: String!\n  email: Email\n}\n\n# Implied Scalars\nscalar Email\nscalar URI",
       "metadata": {
         "conversionTimeMs": 0,
@@ -139,9 +129,7 @@
       "schemaFile": "converters/test-data/complex-schema.json",
       "passed": true,
       "skipped": false,
-      "warnings": [
-        "No expected SDL to compare against - validated syntax only"
-      ],
+      "warnings": ["No expected SDL to compare against - validated syntax only"],
       "generatedSDL": "\"Additional metadata\"\ntype Metadata {\n  createdAt: DateTime\n  updatedAt: DateTime\n  version: Int\n}\n\ntype Address {\n  street: String!\n  city: String!\n  state: String\n  zipCode: String\n  country: String!\n}\n\ntype Phonenumbers {\n  type: String!\n  number: String!\n  primary: Boolean\n}\n\ntype Notifications {\n  email: Boolean\n  sms: Boolean\n  push: Boolean\n}\n\ntype Preferences {\n  theme: String\n  notifications: Notifications\n  language: String\n}\n\ntype Datefields {\n  birthDate: Date\n  registrationTime: DateTime\n  lastLogin: DateTime\n}\n\ntype Level3 {\n  deepValue: String\n}\n\ntype Level2 {\n  level3: Level3\n}\n\ntype Level1 {\n  level2: Level2\n}\n\ntype Complexnested {\n  level1: Level1\n}\n\ntype Conditionalfield {\n  type: String!\n  taxId: String\n}\n\n\"\"\"A comprehensive test schema covering all JSON Schema features for round-trip validation\"\"\"\ntype Complextestschema @auth {\n  \"Unique identifier\"\n  id: ID!\n  \"Name field with length constraints\"\n  name: String!\n  \"Email address\"\n  email: Email!\n  \"Age in years\"\n  age: Int\n  \"Score value\"\n  score: Float\n  \"Active status flag\"\n  isActive: Boolean\n  \"Array of tags\"\n  tags: [String]\n  \"User roles\"\n  roles: [String]\n  \"Additional metadata\"\n  metadata: Metadata\n  \"Current status\"\n  status: String\n  address: Address\n  phoneNumbers: [Phonenumbers]\n  preferences: Preferences\n  \"Field that can be null\"\n  nullableField: JSON\n  \"Array with mixed types\"\n  mixedArray: [JSON]\n  dateFields: Datefields\n  complexNested: Complexnested\n  conditionalField: Conditionalfield\n  \"Field that accepts either email or URI\"\n  anyOfExample: JSON\n  \"Combined schema using allOf\"\n  allOfExample: JSON\n}\n\n# Implied Scalars\nscalar Email\nscalar DateTime\nscalar Date",
       "metadata": {
         "conversionTimeMs": 0,

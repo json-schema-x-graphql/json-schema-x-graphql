@@ -358,13 +358,8 @@ Validate GraphQL SDL builds and optionally validate sample data.
 import { validateParity } from "./scripts/validate-graphql-vs-jsonschema.mjs";
 import fs from "fs";
 
-const sdl = fs.readFileSync(
-  "generated-schemas/schema_unification.supergraph.graphql",
-  "utf8",
-);
-const jsonSchema = JSON.parse(
-  fs.readFileSync("src/data/schema_unification.schema.json", "utf8"),
-);
+const sdl = fs.readFileSync("generated-schemas/schema_unification.supergraph.graphql", "utf8");
+const jsonSchema = JSON.parse(fs.readFileSync("src/data/schema_unification.schema.json", "utf8"));
 const sampleData = {
   /* your test data */
 };
@@ -498,10 +493,7 @@ Recursively convert object keys using a converter function.
 **Example:**
 
 ```javascript
-import {
-  convertObjectKeys,
-  camelToSnake,
-} from "./scripts/helpers/case-conversion.mjs";
+import { convertObjectKeys, camelToSnake } from "./scripts/helpers/case-conversion.mjs";
 
 const camelData = {
   vendorInfo: {
@@ -533,10 +525,7 @@ Convert GraphQL field names in SDL string using a converter.
 **Example:**
 
 ```javascript
-import {
-  convertGraphQLFields,
-  camelToSnake,
-} from "./scripts/helpers/case-conversion.mjs";
+import { convertGraphQLFields, camelToSnake } from "./scripts/helpers/case-conversion.mjs";
 
 const sdl = `
 type Contract {
@@ -754,9 +743,7 @@ Parse all x-graphql-\* extensions from a JSON Schema.
 import { parseHintExtensions } from "./scripts/lib/graphql-hints.mjs";
 import fs from "fs";
 
-const schema = JSON.parse(
-  fs.readFileSync("src/data/schema_unification.schema.json", "utf8"),
-);
+const schema = JSON.parse(fs.readFileSync("src/data/schema_unification.schema.json", "utf8"));
 const hints = parseHintExtensions(schema);
 
 console.log("Custom scalars:", Array.from(hints.scalars.keys()));
@@ -787,9 +774,7 @@ import { generateEnhancedSDL } from "./scripts/lib/graphql-hints.mjs";
 import fs from "fs";
 
 const baseSDL = fs.readFileSync("generated-schemas/base.graphql", "utf8");
-const schema = JSON.parse(
-  fs.readFileSync("src/data/schema_unification.schema.json", "utf8"),
-);
+const schema = JSON.parse(fs.readFileSync("src/data/schema_unification.schema.json", "utf8"));
 
 const enhancedSDL = generateEnhancedSDL(baseSDL, schema, {
   includeCustomScalars: true,
@@ -929,10 +914,7 @@ async function fullPipeline() {
 
   // Step 3: Validate GraphQL ↔ JSON Schema parity
   console.log("Validating parity...");
-  const sdl = await fs.readFile(
-    "generated-schemas/schema_unification.supergraph.graphql",
-    "utf8",
-  );
+  const sdl = await fs.readFile("generated-schemas/schema_unification.supergraph.graphql", "utf8");
   const jsonSchema = JSON.parse(
     await fs.readFile("src/data/schema_unification.schema.json", "utf8"),
   );

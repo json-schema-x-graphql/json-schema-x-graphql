@@ -2,8 +2,16 @@
   "name": "subgraph-composer",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "description": "Lightweight utility to compose multiple JSON Schemas into a unified GraphQL supergraph",
+  "keywords": [
+    "composer",
+    "federation",
+    "graphql",
+    "json-schema",
+    "subgraph",
+    "x-graphql"
+  ],
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -47,13 +55,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "keywords": [
-    "graphql",
-    "json-schema",
-    "composer",
-    "federation",
-    "subgraph",
-    "x-graphql"
-  ]
+  }
 }

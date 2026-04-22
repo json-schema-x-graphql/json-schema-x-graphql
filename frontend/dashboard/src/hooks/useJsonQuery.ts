@@ -8,11 +8,7 @@ const useJsonQuery = () => {
 
   const transformer = async ({ value }) => {
     const { run } = await import("json_typegen_wasm");
-    return run(
-      "Root",
-      value,
-      JSON.stringify({ output_mode: "typescript/typealias" }),
-    );
+    return run("Root", value, JSON.stringify({ output_mode: "typescript/typealias" }));
   };
 
   const updateJson = async (query: string, cb?: () => void) => {
