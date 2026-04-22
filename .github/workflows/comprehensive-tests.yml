@@ -136,11 +136,9 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check formatting
-        working-directory: ../..
         run: pnpm exec oxfmt check converters/node/src
 
       - name: Run linter
-        working-directory: ../..
         run: pnpm exec oxlint check --config .oxlint/config.json converters/node/src
 
       - name: Build
@@ -424,7 +422,8 @@ jobs:
   test-summary:
     name: Test Summary
     runs-on: ubuntu-latest
-    needs: [rust-tests, node-tests, rust-coverage, node-coverage, round-trip-tests]
+    needs:
+      [rust-tests, node-tests, rust-coverage, node-coverage, round-trip-tests]
     if: always()
 
     steps:

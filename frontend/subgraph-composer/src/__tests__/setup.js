@@ -4,12 +4,7 @@ import "@testing-library/jest-dom";
 jest.mock("react-split-pane", () => {
   const React = require("react");
 
-  const SplitPane = ({
-    children,
-    className = "",
-    style = {},
-    split = "vertical",
-  }) =>
+  const SplitPane = ({ children, className = "", style = {}, split = "vertical" }) =>
     React.createElement(
       "div",
       {
