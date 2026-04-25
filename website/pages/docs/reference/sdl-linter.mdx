@@ -1,0 +1,177 @@
+---
+title: SDL Linter & Subgraph Naming Guide
+---
+
+# SDL Linter & Subgraph Naming Guide
+
+The SDL (Schema Definition Language) linting capabilities and subgraph/supergraph metadata naming convention for the JSON Schema to GraphQL converter.
+
+---
+
+## Subgraph/Supergraph Naming Convention
+
+### Quick Rules
+
+**Supergraph namespace** — use ONLY for the base entity owner subgraph:
+
+- `x-graphql-supergraph-name`
+- `x-graphql-supergraph-type` = `"base-entity"`
+- `x-graphql-supergraph-entity`
+- `x-graphql-supergraph-query-root` = `true`
+
+**Subgraph namespace** — use for ALL extending subgraphs:
+
+- `x-graphql-subgraph-name`
+- `x-graphql-subgraph-type` = `"entity-extending"` or `"utility"`
+- `x-graphql-subgraph-entity`
+- `x-graphql-subgraph-query-root` = `false` (or omitted)
+
+### Example: Three-Subgraph Federation
+
+#### Subgraph 1: Users Service (Owner)
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-graphql-supergraph-name": "users-service",
+  "x-graphql-supergraph-type": "base-entity",
+  "x-graphql-supergraph-entity": "User",
+  "x-graphql-supergraph-query-root": true,
+  "properties": {
+    "user_id": { "type": "string", "format": "uuid", "x-graphql-type": "ID!" }
+  }
+}
+```
+
+#### Subgraph 2: User Status Service (Extending)
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-graphql-subgraph-name": "user-status-service",
+  "x-graphql-subgraph-type": "entity-extending",
+  "x-graphql-subgraph-entity": "User",
+  "x-graphql-subgraph-query-root": false,
+  "properties": {
+    "user_id": {
+      "type": "string", "format": "uuid", "x-graphql-type": "ID!",
+      "x-graphql-directives": [{ "name": "external" }]
+    },
+    "account_role": { "type": "string", "enum": ["ADMIN", "USER", "GUEST"] }
+  }
+}
+```
+
+---
+
+## SDL Linting
+
+### What Gets Linted
+
+| Check               | Severity | Details                                             |
+| ------------------- | -------- | --------------------------------------------------- |
+| **Type Naming**     | Error    | Types must use PascalCase (`User`, `Account`)       |
+| **Field Naming**    | Warning  | Fields should use snake_case (`user_id`, `first_name`) |
+| **@extends/@key**   | Warning  | Types with @extends should have @key directive      |
+| **@external**       | Warning  | @external should only appear with @extends          |
+| **Duplicate Types** | Error    | Type name appears more than once                    |
+| **Empty Types**     | Info     | Type has no fields or only a placeholder            |
+
+### Using the Linter
+
+```javascript
+import { lintSDL } from "./lib/federation-validator.js";
+
+const sdl = `
+  type User @key(fields: "id") {
+    id: ID!
+    first_name: String!
+  }
+`;
+
+const issues = lintSDL(sdl);
+console.log("Errors:", issues.errors);    // Critical issues (fail build)
+console.log("Warnings:", issues.warnings); // Best practice violations
+console.log("Infos:", issues.infos);      // Informational hints
+```
+
+---
+
+## Subgraph Naming Validation
+
+### Validation Rules
+
+The `validateSubgraphNaming()` function enforces:
+
+1. **Only ONE supergraph allowed** — error if multiple schemas use `x-graphql-supergraph-*`
+2. **Supergraph must be base-entity** — error if supergraph has any other type
+3. **No mixed metadata** — error if a schema uses both `x-graphql-supergraph-*` and `x-graphql-subgraph-*`
+4. **Valid subgraph types** — only `"entity-extending"` or `"utility"` allowed for subgraphs
+5. **Consistency** — warning if extending subgraphs exist without a base entity
+
+### Using the Validator
+
+```javascript
+import { validateSubgraphNaming } from "./lib/federation-validator.js";
+
+const result = validateSubgraphNaming(schemas);
+console.log("Valid:", result.valid);
+console.log("Errors:", result.errors);
+console.log("Supergraph count:", result.supergraphCount); // Should be 1
+console.log("Subgraph count:", result.subgraphCount);
+```
+
+---
+
+## Common Patterns
+
+### Valid Three-Subgraph Composition
+
+```
+users-service (OWNER)
+  ├─ x-graphql-supergraph-name
+  ├─ x-graphql-supergraph-type: "base-entity"
+  └─ @key(fields: "user_id")
+
+user-status-service (EXTENDING)
+  ├─ x-graphql-subgraph-name
+  ├─ x-graphql-subgraph-type: "entity-extending"
+  └─ @extends + @key(fields: "user_id")
+```
+
+### Invalid: Multiple Base Entities ❌
+
+```
+users-service (x-graphql-supergraph-type: "base-entity")
+products-service (x-graphql-supergraph-type: "base-entity")
+↑ Error: Only 1 subgraph can use x-graphql-supergraph-* metadata
+```
+
+### Invalid: Mixed Metadata ❌
+
+```json
+{ "x-graphql-supergraph-name": "...", "x-graphql-subgraph-name": "..." }
+↑ Error: Cannot mix x-graphql-supergraph-* and x-graphql-subgraph-* metadata
+```
+
+---
+
+## Best Practices
+
+1. Always validate before composition:
+   ```javascript
+   const naming = validateSubgraphNaming(schemas);
+   schemas.forEach(s => lintSDL(s.sdl));
+   ```
+2. One owner, many extenders: 1 supergraph (base-entity) + N subgraphs (entity-extending)
+3. Use `snake_case` for fields: `user_id`, `first_name`, `account_status`
+4. Use `PascalCase` for types: `User`, `Account`, `UserStatus`
+5. Define ID fields explicitly with `"x-graphql-type": "ID!"`
+
+---
+
+## Related
+
+- [Supergraph Entity Design](./supergraph-entity-design) — `x-graphql-supergraph-*` extension reference
+- [ADR 0008: Subgraph/Supergraph Metadata Naming](../adr/0008-subgraph-supergraph-metadata-naming)
+- [ADR 0009: GraphQL-ESLint for SDL Linting](../adr/0009-use-graphql-eslint-for-sdl-linting)

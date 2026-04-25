@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Users Service Schema",
+  "description": "User entity for Apollo Federation classic example - this service owns the User entity",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "federationVersion": "V2",
+    "includeDescriptions": true
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "description": "User account in the system",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["email"],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User's email address (primary key)",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "description": "User's display name",
+          "x-graphql-nullable": true
+        },
+        "username": {
+          "type": "string",
+          "description": "Unique username for the account",
+          "x-graphql-nullable": true
+        },
+        "birth_date": {
+          "type": "string",
+          "format": "date",
+          "description": "User's date of birth",
+          "x-graphql-field-name": "birthDate",
+          "x-graphql-field-type": "String",
+          "x-graphql-nullable": true
+        }
+      },
+      "required": ["email"]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "user": {
+          "type": "object",
+          "description": "Get a user by email",
+          "x-graphql-field-type": "User",
+          "x-graphql-arguments": {
+            "email": {
+              "x-graphql-type": "ID!",
+              "description": "User's email address"
+            }
+          }
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          },
+          "description": "Get all users",
+          "x-graphql-field-type": "[User!]",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

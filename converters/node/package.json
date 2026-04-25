@@ -1,0 +1,93 @@
+{
+  "name": "@json-schema-x-graphql/core",
+  "version": "2.0.0",
+  "description": "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support",
+  "keywords": [
+    "apollo",
+    "apollo-federation",
+    "converter",
+    "federation",
+    "graphql",
+    "graphql-federation",
+    "json-schema",
+    "schema-conversion",
+    "sdl",
+    "typescript",
+    "validation",
+    "x-graphql"
+  ],
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "JJediny and Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJediny/json-schema-x-graphql.git",
+    "directory": "converters/node"
+  },
+  "bin": {
+    "json-schema-x-graphql": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "dist/converter.js",
+  "types": "dist/converter.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev:api": "tsx src/api-server.ts",
+    "start:api": "node dist/api-server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "prepublishOnly": "pnpm run build && pnpm run test",
+    "validate:schemas": "tsx ../../scripts/validation/validate-schemas.ts",
+    "validate:graphql": "tsx ../../scripts/validation/validate-graphql.ts",
+    "validate:all": "pnpm run validate:schemas && pnpm run validate:graphql",
+    "test:integration": "tsx ../../scripts/integration/test-conversions.ts",
+    "test:integration:ci": "tsx ../../scripts/integration/test-conversions.ts --fail-on-error --output=integration-report.json",
+    "benchmark": "tsx ../../scripts/benchmarks/run-benchmarks.ts",
+    "benchmark:quick": "tsx ../../scripts/benchmarks/run-benchmarks.ts --iterations=10",
+    "benchmark:full": "tsx ../../scripts/benchmarks/run-benchmarks.ts --iterations=1000 --output=benchmark-report.json",
+    "benchmark:compare": "tsx ../../scripts/benchmarks/run-benchmarks.ts --compare=baseline-benchmark.json --output=current-benchmark.json",
+    "ci:validate": "pnpm run validate:all -- --fail-on-error --output=validation-report.json",
+    "ci:test": "pnpm run test:integration:ci && pnpm test",
+    "ci:benchmark": "pnpm run benchmark:full",
+    "precommit": "pnpm run lint && pnpm run validate:all"
+  },
+  "dependencies": {
+    "graphql": "^16.13.2"
+  },
+  "devDependencies": {
+    "@apollo/subgraph": "^2.13.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@graphql-codegen/cli": "^6.3.1",
+    "@graphql-codegen/typescript": "^5.0.10",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "ajv": "8.18.0",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^10.2.1",
+    "graphql-tag": "^2.12.6",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.58.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.13.1"
+}

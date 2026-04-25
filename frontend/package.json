@@ -1,0 +1,13 @@
+{
+  "name": "json-schema-x-graphql-frontend",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [],
+  "scripts": {
+    "dev": "pnpm --filter subgraph-composer run dev",
+    "build": "pnpm --filter subgraph-composer run build",
+    "preview": "pnpm --filter subgraph-composer run preview",
+    "test": "pnpm --filter subgraph-composer run test",
+    "test:watch": "pnpm --filter subgraph-composer run test:watch"
+  }
+}

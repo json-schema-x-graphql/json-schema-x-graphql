@@ -1,0 +1,353 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Unions Test Schema",
+  "description": "Tests x-graphql-union-types attribute for GraphQL union type generation",
+  "type": "object",
+  "definitions": {
+    "SearchResult": {
+      "type": "object",
+      "x-graphql-type-name": "SearchResult",
+      "x-graphql-type-kind": "UNION",
+      "x-graphql-union-types": ["User", "Product", "Article"],
+      "description": "Union type representing possible search results",
+      "oneOf": [
+        { "$ref": "#/definitions/User" },
+        { "$ref": "#/definitions/Product" },
+        { "$ref": "#/definitions/Article" }
+      ]
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "A user entity",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username",
+          "x-graphql-field-non-null": true
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "username", "email"]
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "A product entity",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-field-name": "name",
+          "x-graphql-field-non-null": true
+        },
+        "price": {
+          "type": "number",
+          "x-graphql-field-name": "price",
+          "x-graphql-field-type": "Float",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "name", "price"]
+    },
+    "Article": {
+      "type": "object",
+      "x-graphql-type-name": "Article",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "An article entity",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "title": {
+          "type": "string",
+          "x-graphql-field-name": "title",
+          "x-graphql-field-non-null": true
+        },
+        "content": {
+          "type": "string",
+          "x-graphql-field-name": "content",
+          "x-graphql-field-non-null": true
+        },
+        "author": {
+          "type": "object",
+          "x-graphql-field-name": "author",
+          "x-graphql-field-type": "User"
+        }
+      },
+      "required": ["id", "title", "content"]
+    },
+    "MediaItem": {
+      "type": "object",
+      "x-graphql-type-name": "MediaItem",
+      "x-graphql-type-kind": "UNION",
+      "x-graphql-union-types": ["Image", "Video", "Audio"],
+      "description": "Union type for different media types",
+      "oneOf": [
+        { "$ref": "#/definitions/Image" },
+        { "$ref": "#/definitions/Video" },
+        { "$ref": "#/definitions/Audio" }
+      ]
+    },
+    "Image": {
+      "type": "object",
+      "x-graphql-type-name": "Image",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "An image file",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "url",
+          "x-graphql-field-non-null": true
+        },
+        "width": {
+          "type": "integer",
+          "x-graphql-field-name": "width",
+          "x-graphql-field-non-null": true
+        },
+        "height": {
+          "type": "integer",
+          "x-graphql-field-name": "height",
+          "x-graphql-field-non-null": true
+        },
+        "alt_text": {
+          "type": "string",
+          "x-graphql-field-name": "altText"
+        }
+      },
+      "required": ["id", "url", "width", "height"]
+    },
+    "Video": {
+      "type": "object",
+      "x-graphql-type-name": "Video",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "A video file",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "url",
+          "x-graphql-field-non-null": true
+        },
+        "duration": {
+          "type": "integer",
+          "x-graphql-field-name": "duration",
+          "x-graphql-field-non-null": true,
+          "description": "Duration in seconds"
+        },
+        "thumbnail": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "thumbnail"
+        }
+      },
+      "required": ["id", "url", "duration"]
+    },
+    "Audio": {
+      "type": "object",
+      "x-graphql-type-name": "Audio",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "An audio file",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "url",
+          "x-graphql-field-non-null": true
+        },
+        "duration": {
+          "type": "integer",
+          "x-graphql-field-name": "duration",
+          "x-graphql-field-non-null": true,
+          "description": "Duration in seconds"
+        },
+        "bitrate": {
+          "type": "integer",
+          "x-graphql-field-name": "bitrate",
+          "description": "Audio bitrate in kbps"
+        }
+      },
+      "required": ["id", "url", "duration"]
+    },
+    "NotificationTarget": {
+      "type": "object",
+      "x-graphql-type-name": "NotificationTarget",
+      "x-graphql-type-kind": "UNION",
+      "x-graphql-union-types": ["User", "Team"],
+      "description": "Target for a notification - can be a user or team",
+      "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Team" }]
+    },
+    "Team": {
+      "type": "object",
+      "x-graphql-type-name": "Team",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "A team entity",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-field-name": "name",
+          "x-graphql-field-non-null": true
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "x-graphql-field-type": "User"
+          },
+          "x-graphql-field-name": "members",
+          "x-graphql-field-list-item-non-null": true
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "PaymentMethod": {
+      "type": "object",
+      "x-graphql-type-name": "PaymentMethod",
+      "x-graphql-type-kind": "UNION",
+      "x-graphql-union-types": ["CreditCard", "BankAccount", "DigitalWallet"],
+      "description": "Different payment method types",
+      "oneOf": [
+        { "$ref": "#/definitions/CreditCard" },
+        { "$ref": "#/definitions/BankAccount" },
+        { "$ref": "#/definitions/DigitalWallet" }
+      ]
+    },
+    "CreditCard": {
+      "type": "object",
+      "x-graphql-type-name": "CreditCard",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "Credit card payment method",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "last_four": {
+          "type": "string",
+          "x-graphql-field-name": "lastFour",
+          "x-graphql-field-non-null": true
+        },
+        "brand": {
+          "type": "string",
+          "x-graphql-field-name": "brand",
+          "x-graphql-field-non-null": true
+        },
+        "expiry_month": {
+          "type": "integer",
+          "x-graphql-field-name": "expiryMonth",
+          "x-graphql-field-non-null": true
+        },
+        "expiry_year": {
+          "type": "integer",
+          "x-graphql-field-name": "expiryYear",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "last_four", "brand", "expiry_month", "expiry_year"]
+    },
+    "BankAccount": {
+      "type": "object",
+      "x-graphql-type-name": "BankAccount",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "Bank account payment method",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "account_number_last_four": {
+          "type": "string",
+          "x-graphql-field-name": "accountNumberLastFour",
+          "x-graphql-field-non-null": true
+        },
+        "routing_number": {
+          "type": "string",
+          "x-graphql-field-name": "routingNumber",
+          "x-graphql-field-non-null": true
+        },
+        "account_type": {
+          "type": "string",
+          "x-graphql-field-name": "accountType",
+          "enum": ["CHECKING", "SAVINGS"]
+        }
+      },
+      "required": ["id", "account_number_last_four", "routing_number"]
+    },
+    "DigitalWallet": {
+      "type": "object",
+      "x-graphql-type-name": "DigitalWallet",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "Digital wallet payment method",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "provider": {
+          "type": "string",
+          "x-graphql-field-name": "provider",
+          "x-graphql-field-non-null": true,
+          "enum": ["PAYPAL", "APPLE_PAY", "GOOGLE_PAY"]
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email"
+        }
+      },
+      "required": ["id", "provider"]
+    }
+  }
+}

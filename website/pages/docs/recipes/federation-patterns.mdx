@@ -1,0 +1,403 @@
+---
+title: Apollo Federation Design Patterns
+---
+
+# Apollo Federation Design Patterns
+
+Best practices and common patterns for implementing Apollo Federation with `x-graphql` converters.
+
+---
+
+## Table of Contents
+
+1. [Entity Resolution Patterns](#entity-resolution-patterns)
+2. [Foreign Key Pattern (Recommended)](#foreign-key-pattern)
+3. [Non-Resolvable References](#non-resolvable-references)
+4. [Composite Keys](#composite-keys)
+5. [Entity Extensions](#entity-extensions)
+6. [Resolver Implementation](#resolver-implementation)
+7. [Common Mistakes](#common-mistakes)
+8. [Testing & Validation](#testing--validation)
+
+---
+
+## Entity Resolution Patterns
+
+Apollo Federation allows you to split your GraphQL schema across multiple services (subgraphs). Entities are types that can be referenced and extended across subgraph boundaries.
+
+**Key Concepts:**
+- **Entity**: A type with `@key` directive that can be referenced from other subgraphs
+- **Foreign Key**: A field storing the key value of a related entity
+- **Reference Resolution**: How the gateway fetches entity data across subgraphs
+- **`@external`**: Marks fields defined in another subgraph
+- **`@provides`**: Tells the gateway which fields this subgraph can provide
+- **`@requires`**: Declares dependencies on other fields for resolution
+
+---
+
+## Foreign Key Pattern
+
+### The Problem
+
+Without foreign key fields, the gateway cannot construct the query to fetch entity data from the owning service.
+
+### The Solution
+
+**Store foreign key fields on the referencing entity** that match the `@key` fields of the referenced entity.
+
+### Example: Product Reviews
+
+#### Products Service (Owner)
+
+```json
+{
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "x-graphql-federation-keys": ["upc"],
+      "properties": {
+        "upc": {
+          "type": "string",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": { "type": "string" },
+        "price": { "type": "number" }
+      },
+      "required": ["upc"]
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Product @key(fields: "upc") {
+  upc: ID!
+  name: String
+  price: Float
+}
+```
+
+#### Reviews Service (Referencer)
+
+```json
+{
+  "definitions": {
+    "Review": {
+      "type": "object",
+      "x-graphql-federation-keys": ["id"],
+      "properties": {
+        "id": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+        "product_upc": {
+          "type": "string",
+          "x-graphql-field-name": "productUpc",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "rating": { "type": "integer" },
+        "body": { "type": "string" },
+        "product": { "type": "object", "x-graphql-field-type": "Product", "x-graphql-field-non-null": true }
+      },
+      "required": ["id", "product_upc", "product"]
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Review @key(fields: "id") {
+  id: ID!
+  productUpc: ID!
+  rating: Int
+  body: String
+  product: Product!
+}
+```
+
+### Why This Works
+
+1. **Gateway Query Path**: When resolving `Review.product`, the gateway reads `Review.productUpc`, constructs `Product(upc: "...")`, and fetches from the Products service.
+2. **No Ambiguity**: The foreign key explicitly stores which product the review belongs to.
+
+---
+
+## Non-Resolvable References
+
+Use `resolvable: false` when you only need an entity stub — no additional field fetching.
+
+```json
+{
+  "Product": {
+    "type": "object",
+    "x-graphql-federation-keys": [{ "fields": "upc", "resolvable": false }],
+    "properties": {
+      "upc": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Product @key(fields: "upc", resolvable: false) {
+  upc: ID!
+}
+```
+
+> **Note:** With `resolvable: false`, the gateway will **not** fetch additional Product fields. Queries requesting those fields will fail.
+
+---
+
+## Composite Keys
+
+### Multiple Fields
+
+```json
+{
+  "User": {
+    "x-graphql-federation-keys": ["id organizationId"],
+    "properties": {
+      "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "organization_id": {
+        "x-graphql-field-name": "organizationId",
+        "x-graphql-field-type": "ID",
+        "x-graphql-field-non-null": true
+      }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type User @key(fields: "id organizationId") {
+  id: ID!
+  organizationId: ID!
+}
+```
+
+### Nested Object Keys
+
+```json
+{
+  "User": {
+    "x-graphql-federation-keys": ["id organization { id }"],
+    "properties": {
+      "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "organization": { "x-graphql-field-type": "Organization", "x-graphql-field-non-null": true }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type User @key(fields: "id organization { id }") {
+  id: ID!
+  organization: Organization!
+}
+```
+
+### Multiple Keys
+
+```json
+{
+  "Product": {
+    "x-graphql-federation-keys": ["upc", "sku"],
+    "properties": {
+      "upc": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "sku": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Product @key(fields: "upc") @key(fields: "sku") {
+  upc: ID!
+  sku: ID!
+}
+```
+
+---
+
+## Entity Extensions
+
+### Using @external and @requires
+
+```json
+{
+  "Product": {
+    "x-graphql-federation-keys": ["upc"],
+    "x-graphql-federation-extends": true,
+    "properties": {
+      "upc": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "price": { "x-graphql-federation-external": true },
+      "weight": { "x-graphql-federation-external": true },
+      "shipping_estimate": {
+        "x-graphql-field-name": "shippingEstimate",
+        "x-graphql-field-type": "Float",
+        "x-graphql-federation-requires": "price weight"
+      }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Product @key(fields: "upc") {
+  upc: ID!
+  price: Float @external
+  weight: Float @external
+  shippingEstimate: Float @requires(fields: "price weight")
+}
+```
+
+### Using @provides
+
+```json
+{
+  "Review": {
+    "properties": {
+      "product": {
+        "x-graphql-field-type": "Product",
+        "x-graphql-field-non-null": true,
+        "x-graphql-federation-provides": "name"
+      }
+    }
+  }
+}
+```
+
+**Generated SDL:**
+```graphql
+type Review {
+  product: Product! @provides(fields: "name")
+}
+```
+
+---
+
+## Resolver Implementation
+
+### \_\_resolveReference
+
+```javascript
+const resolvers = {
+  Product: {
+    __resolveReference(reference) {
+      return fetchProductByUpc(reference.upc);
+    },
+  },
+};
+```
+
+**With DataLoader (recommended):**
+
+```javascript
+const resolvers = {
+  Product: {
+    __resolveReference(reference, context) {
+      return context.productLoader.load(reference.upc);
+    },
+  },
+};
+```
+
+### Foreign Key Resolvers
+
+```javascript
+const resolvers = {
+  Review: {
+    product(review, args, context) {
+      return context.productLoader.load(review.productUpc);
+    },
+    author(review, args, context) {
+      return context.userLoader.load(review.authorEmail);
+    },
+  },
+};
+```
+
+---
+
+## Common Mistakes
+
+### 1. Missing Foreign Keys ❌
+
+```json
+// ❌ No product_upc = gateway cannot resolve Product
+{ "Review": { "properties": { "product": { "x-graphql-field-type": "Product" } } } }
+
+// ✅ Add the foreign key
+{
+  "Review": {
+    "properties": {
+      "product_upc": { "x-graphql-field-name": "productUpc", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "product": { "x-graphql-field-type": "Product" }
+    },
+    "required": ["product_upc"]
+  }
+}
+```
+
+### 2. Key Field Marked @external in Extension ❌
+
+Key fields in an extension **must not** be marked `@external` — they identify the entity.
+
+### 3. Circular Dependencies ❌
+
+Restructure so one service owns the entity; others only extend it.
+
+### 4. Missing \_\_resolveReference ❌
+
+Always implement `__resolveReference` for every entity type.
+
+### 5. Mismatched Key Types ❌
+
+Ensure key field types match across all services (e.g., both use `ID`, not one `String` and one `ID`).
+
+---
+
+## Testing & Validation
+
+### Composition Validation
+
+```bash
+node scripts/validate-federation-composition.js
+```
+
+### Common Composition Errors
+
+| Error                       | Cause                                    | Fix                                        |
+| --------------------------- | ---------------------------------------- | ------------------------------------------ |
+| `SATISFIABILITY_ERROR`      | Missing foreign keys or @external on keys | Add foreign key fields                    |
+| `EXTERNAL_MISSING_ON_BASE`  | @external on field not in owning service  | Remove @external or add field to owner    |
+| `KEY_FIELDS_MISSING_EXTERNAL`| Extension declares new key fields        | Use same keys as owning service           |
+
+### Manual Testing
+
+```graphql
+query {
+  product(upc: "12345") {
+    name
+    reviews {
+      rating
+      author { name }
+    }
+  }
+}
+```
+
+---
+
+## Related
+
+- [Federation recipe](./federation) — basic federation setup with `x-graphql`
+- [x-graphql attribute reference](../reference/x-graphql-attributes) — full `x-graphql-federation-*` attribute docs
+- [Examples](https://github.com/json-schema-x-graphql/json-schema-x-graphql/tree/main/examples/federation)

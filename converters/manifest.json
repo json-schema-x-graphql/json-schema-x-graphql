@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "description": "Structured metadata describing the standalone converters so they can be promoted to dedicated repositories or git submodules without lossy manual steps.",
+  "converters": [
+    {
+      "name": "node",
+      "packageName": "@json-schema-x-graphql/core",
+      "language": "TypeScript",
+      "path": "./node",
+      "entryPoints": {
+        "source": "./node/src/index.ts",
+        "build": "./node/dist/converter.js",
+        "types": "./node/dist/converter.d.ts"
+      },
+      "commands": {
+        "install": "npm install",
+        "build": "npm run build",
+        "test": "npm test",
+        "lint": "npm run lint"
+      },
+      "artifacts": ["dist"],
+      "peerDependencies": {
+        "graphql": "^16.8.1"
+      },
+      "notes": [
+        "tsconfig.json is scoped to src and excludes *.test.ts to keep the published bundle clean.",
+        "Jest configuration lives at the project root; update jest.config.js if the converter is moved to its own repo."
+      ]
+    },
+    {
+      "name": "rust",
+      "packageName": "json-schema-graphql-converter",
+      "language": "Rust",
+      "path": "./rust",
+      "entryPoints": {
+        "crateRoot": "./rust/src/lib.rs",
+        "wasmPackage": "./rust/pkg/json_schema_graphql_converter.js"
+      },
+      "commands": {
+        "build": "cargo build --release",
+        "test": "cargo test",
+        "lint": "cargo clippy --all-targets --all-features",
+        "wasm": "wasm-pack build --target web --release"
+      },
+      "artifacts": ["target/release", "pkg"],
+      "peerDependencies": {
+        "wasm-pack": ">=0.12.0"
+      },
+      "notes": [
+        "Cargo.toml exposes both native and wasm targets; keep version parity with the Node converter.",
+        "pkg/ is generated; ensure it is ignored or published via npm as needed."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+"""
+This is the JSON Schema description
+"""
+type DocumentedType {
+  """
+  JSON Schema description for this field
+  """
+  fieldWithBothDescriptions: String
+  """
+  This field only has a JSON Schema description
+  """
+  fieldWithJsonDescriptionOnly: String
+  fieldWithGraphqlDescriptionOnly: String
+  fieldWithNoDescription: String
+}
+
+type MultilineDescriptions {
+  fieldWithMultiline: String
+  fieldWithMarkdown: String
+}
+
+"""
+Testing description priority - this is the base description
+"""
+type DescriptionPriority {
+  """
+  Base description that should be overridden
+  """
+  overrideWithGraphql: String
+  """
+  This should be used as fallback
+  """
+  fallbackToJson: String
+  noDescriptionAtAll: Int
+}
+
+type SpecialCharactersInDescription {
+  fieldWithQuotes: String
+  fieldWithSymbols: String
+  fieldWithUnicode: String
+}
+
+"""
+Testing edge cases with empty and whitespace descriptions
+"""
+type EmptyAndWhitespaceDescriptions {
+  """
+  Fallback description
+  """
+  emptyGraphqlDescription: String
+  whitespaceOnly: String
+  """
+  Should use this one
+  """
+  nullLikeDescription: String
+}
+
+"""
+Type with deprecated fields
+"""
+type DeprecationInDescription {
+  currentField: String
+  deprecatedField: String
+  """
+  Legacy field - should use GraphQL description
+  """
+  legacyField: String
+}

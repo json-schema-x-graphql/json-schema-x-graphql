@@ -1,0 +1,90 @@
+"Base interface for entities with a unique identifier"
+interface Node {
+  "Unique identifier"
+  id: ID!
+}
+
+"Interface for entities with timestamp fields"
+interface Timestamped {
+  "Creation timestamp"
+  createdAt: DateTime!
+  "Last update timestamp"
+  updatedAt: DateTime
+}
+
+"Interface for entities that can be searched"
+interface Searchable {
+  "Search relevance ranking"
+  searchRank: Float
+}
+
+"User type implementing Node and Timestamped interfaces"
+type User implements Node & Timestamped {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  "Unique username"
+  username: String!
+  "User email address"
+  email: Email!
+  "User profile information"
+  profile: UserProfile
+}
+
+"Product type implementing multiple interfaces"
+type Product implements Node & Timestamped & Searchable {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  searchRank: Float
+  "Product name"
+  name: String!
+  "Product description"
+  description: String
+  "Product price"
+  price: Float!
+  "Product category"
+  category: Category
+}
+
+"Category type implementing only Node interface"
+type Category implements Node {
+  id: ID!
+  "Category name"
+  name: String!
+  "URL-friendly category identifier"
+  slug: String!
+  "Parent category for nested hierarchies"
+  parent: Category
+}
+
+"User profile data (does not implement any interfaces)"
+type UserProfile {
+  "User biography"
+  bio: String
+  "URL to user's avatar image"
+  avatarUrl: URI
+  "User's location"
+  location: String
+  "User's personal website"
+  website: URI
+}
+
+"Interface that extends another interface"
+interface ExtendedInterface implements Node {
+  id: ID!
+  "Additional field for extended interface"
+  extendedField: String
+}
+
+"Concrete type implementing an extended interface"
+type ConcreteExtended implements ExtendedInterface {
+  id: ID!
+  extendedField: String
+  "Field specific to concrete implementation"
+  concreteField: String
+}
+
+# Implied Scalars
+scalar Email
+scalar URI

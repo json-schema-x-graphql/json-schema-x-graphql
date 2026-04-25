@@ -1,0 +1,433 @@
+---
+title: GraphQL Specification Schema Guide
+---
+
+# GraphQL Specification Schema Guide
+
+This guide explains the JSON Schema representation of GraphQL specification definitions from Appendix D.
+
+## Overview
+
+The JSON Schema (`graphql-spec-schema.json`) defines a complete schema that can:
+
+- Validate GraphQL type system definitions
+- Generate GraphQL schemas from JSON
+- Represent all built-in and standard GraphQL types
+- Support code generation and introspection
+
+## File Structure
+
+```
+graphql-spec-schema.json
+├── Scalars (5 built-in types)
+├── Directives (5 built-in directives)
+├── Introspection Types (6 types + 2 enums)
+└── Definitions (Reusable schema components)
+```
+
+## Built-in Scalars
+
+The five required scalar types in GraphQL:
+
+| Name        | Purpose                                                                 |
+| ----------- | ----------------------------------------------------------------------- |
+| **String**  | UTF-8 text value                                                        |
+| **Int**     | 32-bit signed integer (-2^31 to 2^31-1)                                 |
+| **Float**   | IEEE 754 floating-point value                                           |
+| **Boolean** | True or false                                                           |
+| **ID**      | Unique identifier (treated as string in transport, used for object IDs) |
+
+### JSON Schema Scalar Definition
+
+```json
+{
+  "name": "String",
+  "description": "Built-in String scalar type",
+  "isBuiltIn": true,
+  "specifiedByURL": null
+}
+```
+
+## Built-in Directives
+
+Five standard directives for schema manipulation:
+
+### @include (if: Boolean!)
+
+- **Purpose**: Include a field in query if condition is true
+- **Locations**: FIELD, FRAGMENT_SPREAD, INLINE_FRAGMENT
+- **Arguments**: `if` (Boolean!, required)
+- **Repeatable**: No
+
+### @skip (if: Boolean!)
+
+- **Purpose**: Skip field in query if condition is true
+- **Locations**: FIELD, FRAGMENT_SPREAD, INLINE_FRAGMENT
+- **Arguments**: `if` (Boolean!, required)
+- **Repeatable**: No
+
+### @deprecated (reason: String!)
+
+- **Purpose**: Mark field/enum value as deprecated
+- **Locations**: FIELD_DEFINITION, ARGUMENT_DEFINITION, INPUT_FIELD_DEFINITION, ENUM_VALUE
+- **Arguments**: `reason` (String, optional, default: "No longer supported")
+- **Repeatable**: No
+
+### @specifiedBy (url: String!)
+
+- **Purpose**: Reference specification for custom scalar
+- **Locations**: SCALAR
+- **Arguments**: `url` (String!, required - URI format)
+- **Repeatable**: No
+
+### @oneOf
+
+- **Purpose**: Exactly one field of an input object must be populated (GraphQL spec v2021-11+)
+- **Locations**: INPUT_OBJECT
+- **Arguments**: None
+- **Repeatable**: No
+
+### JSON Schema Directive Definition
+
+```json
+{
+  "name": "include",
+  "description": "Include field if condition is true",
+  "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+  "args": [
+    {
+      "name": "if",
+      "type": "Boolean!",
+      "description": "Condition to check"
+    }
+  ],
+  "isRepeatable": false
+}
+```
+
+## Introspection System Types
+
+Six core introspection types support GraphQL's self-describing nature:
+
+### \_\_Schema
+
+Root type for schema introspection queries.
+
+**Fields**:
+
+- `types: [__Type!]!` - All types in the schema
+- `queryType: __Type!` - Root query type
+- `mutationType: __Type` - Root mutation type (if present)
+- `subscriptionType: __Type` - Root subscription type (if present)
+- `directives: [__Directive!]!` - All directives in the schema
+
+**Query Example**:
+
+```graphql
+{
+  __schema {
+    types {
+      name
+    }
+    queryType {
+      name
+    }
+  }
+}
+```
+
+### \_\_Type
+
+Represents a type definition in the schema.
+
+**Fields**:
+
+- `kind: __TypeKind!` - SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
+- `name: String` - Type name (null for LIST/NON_NULL)
+- `description: String` - Documentation
+- `fields(includeDeprecated: Boolean!): [__Field!]` - Type's fields
+- `interfaces: [__Type!]!` - Implemented interfaces (OBJECT only)
+- `possibleTypes: [__Type!]!` - Possible concrete types (INTERFACE/UNION only)
+- `enumValues(includeDeprecated: Boolean!): [__EnumValue!]` - Enum values (ENUM only)
+- `inputFields: [__InputValue!]` - Input fields (INPUT_OBJECT only)
+- `ofType: __Type` - Wrapped type (LIST/NON_NULL only)
+- `isOneOf: Boolean!` - Has @oneOf directive (INPUT_OBJECT only)
+
+### \_\_Field
+
+Represents a field of an object or interface type.
+
+**Fields**:
+
+- `name: String!` - Field name
+- `description: String` - Documentation
+- `args: [__InputValue!]!` - Field arguments
+- `type: __Type!` - Return type
+- `isDeprecated: Boolean!` - Deprecated flag
+- `deprecationReason: String` - Why deprecated
+
+### \_\_InputValue
+
+Represents a field argument or input object field.
+
+**Fields**:
+
+- `name: String!` - Argument/field name
+- `description: String` - Documentation
+- `type: __Type!` - Input type
+- `defaultValue: String` - JSON-encoded default value
+- `isDeprecated: Boolean!` - Deprecated flag (input fields only)
+- `deprecationReason: String` - Why deprecated (input fields only)
+
+### \_\_EnumValue
+
+Represents an enumeration value.
+
+**Fields**:
+
+- `name: String!` - Enum value name
+- `description: String` - Documentation
+- `isDeprecated: Boolean!` - Deprecated flag
+- `deprecationReason: String` - Why deprecated
+
+### \_\_Directive
+
+Represents a directive definition.
+
+**Fields**:
+
+- `name: String!` - Directive name (without @)
+- `description: String` - Documentation
+- `locations: [__DirectiveLocation!]!` - Valid locations
+- `args: [__InputValue!]!` - Directive arguments
+- `isRepeatable: Boolean!` - Can be applied multiple times
+
+## Type System Enums
+
+### \_\_TypeKind
+
+Enumeration of type kinds in GraphQL:
+
+- **SCALAR** - Leaf type (String, Int, Boolean, etc.)
+- **OBJECT** - Complex type with fields
+- **INTERFACE** - Abstract type defining field contracts
+- **UNION** - Abstract type combining possible types
+- **ENUM** - Enumeration of discrete values
+- **INPUT_OBJECT** - Input type for arguments/mutations
+- **LIST** - List/array wrapper type
+- **NON_NULL** - Non-null wrapper type
+
+### \_\_DirectiveLocation
+
+Enumeration of valid directive locations (19 values):
+
+**Executable Locations** (where directives can be used in queries/mutations):
+
+- QUERY
+- MUTATION
+- SUBSCRIPTION
+- FIELD
+- FRAGMENT_DEFINITION
+- FRAGMENT_SPREAD
+- INLINE_FRAGMENT
+- VARIABLE_DEFINITION
+
+**Type System Locations** (where directives can be used in schema definitions):
+
+- SCHEMA
+- SCALAR
+- OBJECT
+- FIELD_DEFINITION
+- ARGUMENT_DEFINITION
+- INTERFACE
+- UNION
+- ENUM
+- ENUM_VALUE
+- INPUT_OBJECT
+- INPUT_FIELD_DEFINITION
+
+## JSON Schema Definitions Reference
+
+### scalar
+
+Represents a scalar type definition.
+
+```json
+{
+  "$ref": "#/definitions/scalar"
+}
+```
+
+**Properties**:
+
+- `name` (string, required) - Scalar name matching `^[_A-Za-z][_0-9A-Za-z]*$`
+- `description` (string) - Documentation
+- `specifiedByURL` (string, URI format) - Custom scalar specification
+- `isBuiltIn` (boolean, default: false) - Whether it's a standard GraphQL scalar
+
+### type
+
+Represents any GraphQL type definition.
+
+```json
+{
+  "$ref": "#/definitions/type"
+}
+```
+
+**Properties**:
+
+- `kind` (enum, required) - One of: SCALAR, OBJECT, INTERFACE, UNION, ENUM, INPUT_OBJECT, LIST, NON_NULL
+- `name` (string) - Type name
+- `description` (string) - Documentation
+- `fields` (array) - For OBJECT/INTERFACE types
+- `interfaces` (array) - For OBJECT types
+- `possibleTypes` (array) - For UNION/INTERFACE types
+- `enumValues` (array) - For ENUM types
+- `inputFields` (array) - For INPUT_OBJECT types
+- `ofType` (type) - For LIST/NON_NULL wrapper types
+- `isOneOf` (boolean) - For INPUT_OBJECT types with @oneOf
+
+### field
+
+Represents a field of an object or interface type.
+
+```json
+{
+  "$ref": "#/definitions/field"
+}
+```
+
+**Properties**:
+
+- `name` (string, required) - Field name
+- `type` (string, required) - Return type (e.g., "String!", "[Int!]!", "\_\_Type!")
+- `description` (string) - Documentation
+- `args` (array) - Field arguments
+- `isDeprecated` (boolean, default: false)
+- `deprecationReason` (string)
+
+### inputValue
+
+Represents a directive/field argument or input object field.
+
+```json
+{
+  "$ref": "#/definitions/inputValue"
+}
+```
+
+**Properties**:
+
+- `name` (string, required) - Argument/field name
+- `type` (string, required) - Input type (e.g., "Boolean!", "[String!]!")
+- `description` (string) - Documentation
+- `defaultValue` (string) - Default value
+- `isDeprecated` (boolean, default: false)
+- `deprecationReason` (string)
+
+### enumValue
+
+Represents a value of an enum type.
+
+```json
+{
+  "$ref": "#/definitions/enumValue"
+}
+```
+
+**Properties**:
+
+- `name` (string, required) - Enum value name
+- `description` (string) - Documentation
+- `isDeprecated` (boolean, default: false)
+- `deprecationReason` (string)
+
+## Usage Examples
+
+### Validate a Custom Scalar Definition
+
+```json
+{
+  "name": "DateTime",
+  "description": "ISO 8601 DateTime string",
+  "specifiedByURL": "https://tools.ietf.org/html/rfc3339"
+}
+```
+
+This validates against `#/definitions/scalar`.
+
+### Validate a Directive Definition
+
+```json
+{
+  "name": "cached",
+  "description": "Mark field as cacheable",
+  "locations": ["FIELD_DEFINITION"],
+  "args": [
+    {
+      "name": "ttl",
+      "type": "Int!",
+      "description": "Cache time-to-live in seconds",
+      "defaultValue": "3600"
+    }
+  ],
+  "isRepeatable": false
+}
+```
+
+This validates against `#/definitions/directive`.
+
+### Validate a Complex Type Definition
+
+```json
+{
+  "kind": "OBJECT",
+  "name": "User",
+  "description": "A user in the system",
+  "fields": [
+    {
+      "name": "id",
+      "type": "ID!",
+      "description": "Unique identifier",
+      "args": []
+    },
+    {
+      "name": "email",
+      "type": "String!",
+      "description": "User email address",
+      "args": [],
+      "isDeprecated": false
+    }
+  ]
+}
+```
+
+This validates against `#/definitions/type`.
+
+## Integration with Project
+
+This schema can be integrated into the project for:
+
+1. **Validation**: Validate GraphQL schema definitions against the spec
+2. **Code Generation**: Generate TypeScript/JavaScript types from GraphQL definitions
+3. **Schema Migration**: Transform between different schema versions
+4. **Documentation**: Generate API documentation from introspection data
+5. **Testing**: Verify schema compliance with GraphQL specifications
+
+## Related Files
+
+- `graphql-spec-schema.json` - The JSON Schema definition
+- `GRAPHQL_SPEC_SCHEMA_GUIDE.md` - This documentation
+- GraphQL Specification: https://github.com/graphql/graphql-spec
+
+## Specification References
+
+- [GraphQL Specification](https://spec.graphql.org/)
+- [Appendix D - Specified Definitions](https://github.com/graphql/graphql-spec/blob/main/spec/Appendix%20D%20--%20Specified%20Definitions.md)
+- [JSON Schema Draft 7](https://json-schema.org/draft-07/)
+
+## Version History
+
+- **1.0** - Initial schema supporting GraphQL 2021-11 specification including @oneOf directive
+- **Base** - Covers all 5 built-in scalars, 5 directives, 6 introspection types, 2 enums

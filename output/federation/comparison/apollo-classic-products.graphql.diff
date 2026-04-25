@@ -1,0 +1,45 @@
+--- /home/john/json-schema-x-graphql/output/federation/node/apollo-classic-products.graphql	2025-12-31 16:19:04.454725120 -0500
++++ /home/john/json-schema-x-graphql/output/federation/rust/apollo-classic-products.graphql	2025-12-31 16:19:04.465725236 -0500
+@@ -1,18 +1,33 @@
+-"Product in the catalog"
++"""
++Product in the catalog
++"""
+ type Product @key(fields: "upc") {
+-  "Universal Product Code (primary key)"
++  """
++  Universal Product Code (primary key)
++  """
+   upc: ID!
+-  "Product name"
++  """
++  Product name
++  """
+   name: String!
+-  "Product price"
++  """
++  Product price
++  """
+   price: Float
+-  "Product weight in grams"
++  """
++  Product weight in grams
++  """
+   weight: Int
+ }
+ 
+ type Query {
+-  "Get a product by UPC"
++  """
++  Get a product by UPC
++  """
+   product(upc: ID!): Product
+-  "Get all products"
++  """
++  Get all products
++  """
+   products: [Product!]!
+-}
+\ No newline at end of file
++}
++

@@ -1,0 +1,8 @@
+{
+  "$id": "http://example.com/adr/empty_object.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EmptyObject",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+type DeepData {
+  value: Int
+}
+
+type Structure {
+  data: DeepData
+}
+
+"Test schema for deeply nested $ref resolution"
+type Root {
+  simple: String
+  deep: DeepData
+}
+

@@ -1,0 +1,50 @@
+# Reviews Service - Strawberry GraphQL Federation Example
+# This service extends the Book entity and owns the Review entity
+
+extend schema
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external"]
+  )
+
+"""
+Review of a book with rating and comment
+"""
+type Review {
+  """
+  Unique review identifier
+  """
+  id: ID!
+
+  """
+  Rating from 1 to 5
+  """
+  rating: Int!
+
+  """
+  Optional review comment
+  """
+  comment: String
+}
+
+"""
+Extended Book type with reviews
+"""
+type Book @key(fields: "id") {
+  """
+  Book ID (from Books service)
+  """
+  id: ID! @external
+
+  """
+  Reviews for this book
+  """
+  reviews: [Review!]!
+}
+
+type Query {
+  """
+  Get all reviews
+  """
+  reviews: [Review!]!
+}

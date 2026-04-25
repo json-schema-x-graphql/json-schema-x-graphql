@@ -1,0 +1,605 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "public_spending.schema.json",
+  "title": "Public Spending Procurement Schema",
+  "description": "Canonical schema for Public Spending (ExternalDB) procurement contract data from award_procurement table",
+  "x-graphql-scalars": {
+    "DateTime": {
+      "description": "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+    },
+    "Date": {
+      "description": "ISO 8601 date string (YYYY-MM-DD)"
+    },
+    "Decimal": {
+      "description": "High-precision decimal number"
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "public_spendingProcurement": {
+        "description": "Fetch a single Public Spending procurement record by PIID",
+        "args": {
+          "piid": {
+            "type": "String!",
+            "description": "Procurement Instrument Identifier"
+          }
+        },
+        "type": "Public SpendingProcurement"
+      },
+      "public_spendingProcurements": {
+        "description": "Return a list of Public Spending procurement records",
+        "type": "[Public SpendingProcurement!]!"
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "public_spending_procurement": {
+      "$ref": "#/$defs/Public SpendingProcurement"
+    }
+  },
+  "$defs": {
+    "Public SpendingProcurement": {
+      "type": "object",
+      "description": "Public Spending award_procurement table record",
+      "x-graphql-type-name": "Public SpendingProcurement",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["piid", "unique_award_key"],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Record creation timestamp",
+          "x-graphql-field-type": "DateTime"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp",
+          "x-graphql-field-type": "DateTime"
+        },
+        "award_procurement_id": {
+          "type": "integer",
+          "description": "Primary key in award_procurement table",
+          "x-graphql-field-non-null": true
+        },
+        "submission_id": {
+          "type": "integer",
+          "description": "Submission ID",
+          "x-graphql-field-non-null": true
+        },
+        "job_id": {
+          "type": "integer",
+          "description": "Job ID",
+          "x-graphql-field-non-null": true
+        },
+        "row_number": {
+          "type": "integer",
+          "description": "Row number in batch",
+          "x-graphql-field-non-null": true
+        },
+        "piid": {
+          "type": "string",
+          "description": "Procurement Instrument Identifier (join key)",
+          "x-graphql-field-non-null": true
+        },
+        "unique_award_key": {
+          "type": "string",
+          "description": "Unique award identifier",
+          "x-graphql-field-non-null": true
+        },
+        "awarding_sub_tier_agency_c": {
+          "type": "string",
+          "description": "Awarding sub-tier agency code",
+          "x-graphql-field-name": "awardingSubTierAgencyCode"
+        },
+        "awarding_sub_tier_agency_n": {
+          "type": "string",
+          "description": "Awarding sub-tier agency name",
+          "x-graphql-field-name": "awardingSubTierAgencyName"
+        },
+        "awarding_agency_code": {
+          "type": "string",
+          "description": "Awarding agency code"
+        },
+        "awarding_agency_name": {
+          "type": "string",
+          "description": "Awarding agency name"
+        },
+        "parent_award_id": {
+          "type": "string",
+          "description": "Parent award identifier"
+        },
+        "award_modification_amendme": {
+          "type": "string",
+          "description": "Award modification/amendment number",
+          "x-graphql-field-name": "awardModificationAmendment"
+        },
+        "type_of_contract_pricing": {
+          "type": "string",
+          "description": "Type of contract pricing"
+        },
+        "contract_award_type": {
+          "type": "string",
+          "description": "Contract award type code"
+        },
+        "naics": {
+          "type": "string",
+          "description": "NAICS code"
+        },
+        "naics_description": {
+          "type": "string",
+          "description": "NAICS description"
+        },
+        "awardee_or_recipient_uniqu": {
+          "type": "string",
+          "description": "Awardee or recipient unique identifier (DUNS)",
+          "x-graphql-field-name": "awardeeOrRecipientDuns"
+        },
+        "awardee_or_recipient_uei": {
+          "type": "string",
+          "description": "Awardee or recipient UEI"
+        },
+        "ultimate_parent_legal_enti": {
+          "type": "string",
+          "description": "Ultimate parent legal entity name",
+          "x-graphql-field-name": "ultimateParentLegalEntity"
+        },
+        "ultimate_parent_unique_ide": {
+          "type": "string",
+          "description": "Ultimate parent unique identifier (DUNS)",
+          "x-graphql-field-name": "ultimateParentDuns"
+        },
+        "ultimate_parent_uei": {
+          "type": "string",
+          "description": "Ultimate parent UEI"
+        },
+        "award_description": {
+          "type": "string",
+          "description": "Award description"
+        },
+        "awardee_or_recipient_legal": {
+          "type": "string",
+          "description": "Awardee or recipient legal business name",
+          "x-graphql-field-name": "awardeeOrRecipientLegalName"
+        },
+        "legal_entity_address_line1": {
+          "type": "string",
+          "description": "Legal entity address line 1"
+        },
+        "legal_entity_address_line2": {
+          "type": "string",
+          "description": "Legal entity address line 2"
+        },
+        "legal_entity_address_line3": {
+          "type": "string",
+          "description": "Legal entity address line 3"
+        },
+        "legal_entity_city_name": {
+          "type": "string",
+          "description": "Legal entity city"
+        },
+        "legal_entity_state_code": {
+          "type": "string",
+          "description": "Legal entity state code"
+        },
+        "legal_entity_zip4": {
+          "type": "string",
+          "description": "Legal entity ZIP+4"
+        },
+        "legal_entity_congressional": {
+          "type": "string",
+          "description": "Legal entity congressional district"
+        },
+        "legal_entity_country_code": {
+          "type": "string",
+          "description": "Legal entity country code"
+        },
+        "legal_entity_country_name": {
+          "type": "string",
+          "description": "Legal entity country name"
+        },
+        "place_of_performance_city": {
+          "type": "string",
+          "description": "Place of performance city"
+        },
+        "place_of_perform_county_na": {
+          "type": "string",
+          "description": "Place of performance county name",
+          "x-graphql-field-name": "placeOfPerformanceCountyName"
+        },
+        "place_of_perform_state_nam": {
+          "type": "string",
+          "description": "Place of performance state name",
+          "x-graphql-field-name": "placeOfPerformanceStateName"
+        },
+        "place_of_performance_zip4a": {
+          "type": "string",
+          "description": "Place of performance ZIP+4",
+          "x-graphql-field-name": "placeOfPerformanceZip4"
+        },
+        "place_of_performance_congr": {
+          "type": "string",
+          "description": "Place of performance congressional district",
+          "x-graphql-field-name": "placeOfPerformanceCongressional"
+        },
+        "place_of_perform_country_n": {
+          "type": "string",
+          "description": "Place of performance country name",
+          "x-graphql-field-name": "placeOfPerformanceCountryName"
+        },
+        "period_of_performance_star": {
+          "type": "string",
+          "description": "Period of performance start date",
+          "x-graphql-field-name": "periodOfPerformanceStart"
+        },
+        "period_of_performance_curr": {
+          "type": "string",
+          "description": "Period of performance current end date",
+          "x-graphql-field-name": "periodOfPerformanceCurrent"
+        },
+        "period_of_perf_potential_e": {
+          "type": "string",
+          "description": "Period of performance potential end date",
+          "x-graphql-field-name": "periodOfPerformancePotentialEnd"
+        },
+        "ordering_period_end_date": {
+          "type": "string",
+          "description": "Ordering period end date"
+        },
+        "action_date": {
+          "type": "string",
+          "description": "Action date"
+        },
+        "action_type": {
+          "type": "string",
+          "description": "Action type code"
+        },
+        "federal_action_obligation": {
+          "type": "number",
+          "description": "Federal action obligation amount",
+          "x-graphql-field-type": "Decimal"
+        },
+        "current_total_value_award": {
+          "type": "string",
+          "description": "Current total value of award (as text)"
+        },
+        "potential_total_value_awar": {
+          "type": "string",
+          "description": "Potential total value of award (as text)",
+          "x-graphql-field-name": "potentialTotalValueAward"
+        },
+        "base_and_all_options_value": {
+          "type": "string",
+          "description": "Base and all options value (as text)"
+        },
+        "base_exercised_options_val": {
+          "type": "string",
+          "description": "Base exercised options value (as text)",
+          "x-graphql-field-name": "baseExercisedOptionsValue"
+        },
+        "total_obligated_amount": {
+          "type": "string",
+          "description": "Total obligated amount (as text)"
+        },
+        "funding_sub_tier_agency_co": {
+          "type": "string",
+          "description": "Funding sub-tier agency code",
+          "x-graphql-field-name": "fundingSubTierAgencyCode"
+        },
+        "funding_sub_tier_agency_na": {
+          "type": "string",
+          "description": "Funding sub-tier agency name",
+          "x-graphql-field-name": "fundingSubTierAgencyName"
+        },
+        "funding_office_code": {
+          "type": "string",
+          "description": "Funding office code"
+        },
+        "funding_office_name": {
+          "type": "string",
+          "description": "Funding office name"
+        },
+        "awarding_office_code": {
+          "type": "string",
+          "description": "Awarding office code"
+        },
+        "awarding_office_name": {
+          "type": "string",
+          "description": "Awarding office name"
+        },
+        "funding_agency_code": {
+          "type": "string",
+          "description": "Funding agency code"
+        },
+        "funding_agency_name": {
+          "type": "string",
+          "description": "Funding agency name"
+        },
+        "referenced_idv_agency_iden": {
+          "type": "string",
+          "description": "Referenced IDV agency identifier",
+          "x-graphql-field-name": "referencedIdvAgencyIdentifier"
+        },
+        "product_or_service_code": {
+          "type": "string",
+          "description": "Product or service code (PSC)"
+        },
+        "cage_code": {
+          "type": "string",
+          "description": "Commercial and Government Entity (CAGE) code"
+        },
+        "entity_doing_business_as_n": {
+          "type": "string",
+          "description": "Entity doing business as name",
+          "x-graphql-field-name": "entityDoingBusinessAsName"
+        },
+        "entity_phone_number": {
+          "type": "string",
+          "description": "Entity phone number"
+        },
+        "entity_fax_number": {
+          "type": "string",
+          "description": "Entity fax number"
+        },
+        "dod_claimant_program_code": {
+          "type": "string",
+          "description": "DoD claimant program code"
+        },
+        "type_set_aside": {
+          "type": "string",
+          "description": "Type of set-aside"
+        },
+        "extent_competed": {
+          "type": "string",
+          "description": "Extent competed"
+        },
+        "solicitation_identifier": {
+          "type": "string",
+          "description": "Solicitation identifier"
+        },
+        "solicitation_date": {
+          "type": "string",
+          "description": "Solicitation date"
+        },
+        "solicitation_procedures": {
+          "type": "string",
+          "description": "Solicitation procedures"
+        },
+        "last_modified": {
+          "type": "string",
+          "description": "Last modified timestamp"
+        },
+        "vendor_classifications": {
+          "$ref": "#/$defs/VendorClassifications"
+        }
+      },
+      "required": [
+        "award_procurement_id",
+        "submission_id",
+        "job_id",
+        "row_number",
+        "piid",
+        "unique_award_key"
+      ]
+    },
+    "VendorClassifications": {
+      "type": "object",
+      "description": "Vendor business type classifications (100+ boolean flags)",
+      "x-graphql-type-name": "VendorClassifications",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "small_business": {
+          "$ref": "#/$defs/SmallBusinessClassifications"
+        },
+        "socioeconomic": {
+          "$ref": "#/$defs/SocioeconomicClassifications"
+        },
+        "entity_structure": {
+          "$ref": "#/$defs/EntityStructureClassifications"
+        },
+        "government": {
+          "$ref": "#/$defs/GovernmentClassifications"
+        },
+        "education": {
+          "$ref": "#/$defs/EducationClassifications"
+        }
+      }
+    },
+    "SmallBusinessClassifications": {
+      "type": "object",
+      "description": "Small business classifications",
+      "x-graphql-type-name": "SmallBusinessClassifications",
+      "properties": {
+        "small_business_competitive": {
+          "type": "boolean",
+          "description": "Small business competitive"
+        },
+        "emerging_small_business": {
+          "type": "boolean",
+          "description": "Emerging small business"
+        },
+        "c8a_program_participant": {
+          "type": "boolean",
+          "description": "8(a) program participant"
+        },
+        "sba_certified_8_a_joint_ve": {
+          "type": "boolean",
+          "description": "SBA certified 8(a) joint venture",
+          "x-graphql-field-name": "sbaCertified8aJointVenture"
+        },
+        "historically_underutilized": {
+          "type": "boolean",
+          "description": "Historically underutilized business zone (HUBZone) firm"
+        },
+        "small_disadvantaged_busine": {
+          "type": "boolean",
+          "description": "Small disadvantaged business",
+          "x-graphql-field-name": "smallDisadvantagedBusiness"
+        }
+      }
+    },
+    "SocioeconomicClassifications": {
+      "type": "object",
+      "description": "Socioeconomic classifications",
+      "x-graphql-type-name": "SocioeconomicClassifications",
+      "properties": {
+        "woman_owned_business": {
+          "type": "boolean",
+          "description": "Woman-owned business"
+        },
+        "women_owned_small_business": {
+          "type": "boolean",
+          "description": "Women-owned small business (WOSB)"
+        },
+        "minority_owned_business": {
+          "type": "boolean",
+          "description": "Minority-owned business"
+        },
+        "veteran_owned_business": {
+          "type": "boolean",
+          "description": "Veteran-owned business"
+        },
+        "service_disabled_veteran_o": {
+          "type": "boolean",
+          "description": "Service-disabled veteran-owned business",
+          "x-graphql-field-name": "serviceDisabledVeteranOwned"
+        },
+        "american_indian_owned_busi": {
+          "type": "boolean",
+          "description": "American Indian-owned business",
+          "x-graphql-field-name": "americanIndianOwnedBusiness"
+        },
+        "alaskan_native_owned_corpo": {
+          "type": "boolean",
+          "description": "Alaskan Native-owned corporation",
+          "x-graphql-field-name": "alaskanNativeOwnedCorporation"
+        },
+        "native_hawaiian_owned_busi": {
+          "type": "boolean",
+          "description": "Native Hawaiian-owned business",
+          "x-graphql-field-name": "nativeHawaiianOwnedBusiness"
+        },
+        "asian_pacific_american_own": {
+          "type": "boolean",
+          "description": "Asian-Pacific American-owned business",
+          "x-graphql-field-name": "asianPacificAmericanOwned"
+        },
+        "black_american_owned_busin": {
+          "type": "boolean",
+          "description": "Black American-owned business",
+          "x-graphql-field-name": "blackAmericanOwnedBusiness"
+        },
+        "hispanic_american_owned_bu": {
+          "type": "boolean",
+          "description": "Hispanic American-owned business",
+          "x-graphql-field-name": "hispanicAmericanOwnedBusiness"
+        }
+      }
+    },
+    "EntityStructureClassifications": {
+      "type": "object",
+      "description": "Entity structure classifications",
+      "x-graphql-type-name": "EntityStructureClassifications",
+      "properties": {
+        "corporate_entity_tax_exemp": {
+          "type": "boolean",
+          "description": "Corporate entity tax exempt",
+          "x-graphql-field-name": "corporateEntityTaxExempt"
+        },
+        "nonprofit_organization": {
+          "type": "boolean",
+          "description": "Nonprofit organization"
+        },
+        "for_profit_organization": {
+          "type": "boolean",
+          "description": "For-profit organization"
+        },
+        "subchapter_s_corporation": {
+          "type": "boolean",
+          "description": "Subchapter S corporation"
+        },
+        "limited_liability_corporat": {
+          "type": "boolean",
+          "description": "Limited liability corporation",
+          "x-graphql-field-name": "limitedLiabilityCorporation"
+        },
+        "sole_proprietorship": {
+          "type": "boolean",
+          "description": "Sole proprietorship"
+        },
+        "partnership_or_limited_lia": {
+          "type": "boolean",
+          "description": "Partnership or limited liability partnership",
+          "x-graphql-field-name": "partnershipOrLimitedLiability"
+        },
+        "manufacturer_of_goods": {
+          "type": "boolean",
+          "description": "Manufacturer of goods"
+        }
+      }
+    },
+    "GovernmentClassifications": {
+      "type": "object",
+      "description": "Government entity classifications",
+      "x-graphql-type-name": "GovernmentClassifications",
+      "properties": {
+        "us_federal_government": {
+          "type": "boolean",
+          "description": "U.S. federal government"
+        },
+        "us_state_government": {
+          "type": "boolean",
+          "description": "U.S. state government"
+        },
+        "us_local_government": {
+          "type": "boolean",
+          "description": "U.S. local government"
+        },
+        "us_tribal_government": {
+          "type": "boolean",
+          "description": "U.S. tribal government"
+        },
+        "foreign_government": {
+          "type": "boolean",
+          "description": "Foreign government"
+        }
+      }
+    },
+    "EducationClassifications": {
+      "type": "object",
+      "description": "Educational institution classifications",
+      "x-graphql-type-name": "EducationClassifications",
+      "properties": {
+        "educational_institution": {
+          "type": "boolean",
+          "description": "Educational institution"
+        },
+        "historically_black_college": {
+          "type": "boolean",
+          "description": "Historically Black college or university"
+        },
+        "c1862_land_grant_college": {
+          "type": "boolean",
+          "description": "1862 Land Grant College"
+        },
+        "c1890_land_grant_college": {
+          "type": "boolean",
+          "description": "1890 Land Grant College"
+        },
+        "c1994_land_grant_college": {
+          "type": "boolean",
+          "description": "1994 Land Grant College"
+        },
+        "minority_institution": {
+          "type": "boolean",
+          "description": "Minority institution"
+        },
+        "tribal_college": {
+          "type": "boolean",
+          "description": "Tribal college"
+        }
+      }
+    }
+  }
+}

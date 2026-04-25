@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "FilteringTest",
+  "description": "Test schema with types intended for exclusion based on filtering rules",
+  "$defs": {
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "description": "A user type that should be included",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      },
+      "required": ["id", "name"]
+    },
+    "UserFilter": {
+      "type": "object",
+      "x-graphql-type-name": "UserFilter",
+      "description": "Filter input for User queries - should be excluded by default",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "UserSort": {
+      "type": "object",
+      "x-graphql-type-name": "UserSort",
+      "description": "Sort input for User queries - should be excluded by default",
+      "properties": {
+        "field": {
+          "type": "string",
+          "enum": ["name", "email", "createdAt"]
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["ASC", "DESC"]
+        }
+      }
+    },
+    "UserConnection": {
+      "type": "object",
+      "x-graphql-type-name": "UserConnection",
+      "description": "Relay-style connection for User - should be excluded by default",
+      "properties": {
+        "edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/UserEdge"
+          }
+        },
+        "pageInfo": {
+          "$ref": "#/$defs/PageInfo"
+        }
+      }
+    },
+    "UserEdge": {
+      "type": "object",
+      "x-graphql-type-name": "UserEdge",
+      "description": "Edge type for UserConnection - should be excluded by default",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "node": {
+          "$ref": "#/$defs/User"
+        }
+      }
+    },
+    "PageInfo": {
+      "type": "object",
+      "x-graphql-type-name": "PageInfo",
+      "description": "Standard pagination info - should be excluded by default",
+      "properties": {
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "type": "boolean"
+        },
+        "startCursor": {
+          "type": "string"
+        },
+        "endCursor": {
+          "type": "string"
+        }
+      },
+      "required": ["hasNextPage", "hasPreviousPage"]
+    },
+    "CreateUserPayload": {
+      "type": "object",
+      "x-graphql-type-name": "CreateUserPayload",
+      "description": "Mutation payload for creating a user - should be excluded by default",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/User"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "DeleteUserArgs": {
+      "type": "object",
+      "x-graphql-type-name": "DeleteUserArgs",
+      "description": "Arguments for deleting a user - should be excluded by default",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": ["id"]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "description": "Root query type - should be excluded by default unless includeOperationalTypes is true",
+      "properties": {
+        "user": {
+          "$ref": "#/$defs/User"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/User"
+          }
+        }
+      }
+    },
+    "Mutation": {
+      "type": "object",
+      "x-graphql-type-name": "Mutation",
+      "description": "Root mutation type - should be excluded by default unless includeOperationalTypes is true",
+      "properties": {
+        "createUser": {
+          "$ref": "#/$defs/CreateUserPayload"
+        },
+        "deleteUser": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "description": "A product type that should be included",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "name", "price"]
+    },
+    "ProductFilterInput": {
+      "type": "object",
+      "x-graphql-type-name": "ProductFilterInput",
+      "description": "Filter input for Product queries - should be excluded by default",
+      "properties": {
+        "minPrice": {
+          "type": "number"
+        },
+        "maxPrice": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductSortInput": {
+      "type": "object",
+      "x-graphql-type-name": "ProductSortInput",
+      "description": "Sort input for Product queries - should be excluded by default",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "order": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

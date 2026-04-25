@@ -1,0 +1,25 @@
+{
+  "name": "visual-json",
+  "version": "1.0.0",
+  "description": "Vendored JSON tree viewer/editor component — shim maintained in-repo to avoid external npm dependency",
+  "main": "dist/index.js",
+  "module": "src/index.tsx",
+  "types": "src/index.tsx",
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "tsc --outDir dist --declaration",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": ["json", "viewer", "editor", "react", "tree"],
+  "license": "MIT",
+  "private": true,
+  "sideEffects": false
+}

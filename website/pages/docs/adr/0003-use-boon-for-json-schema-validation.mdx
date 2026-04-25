@@ -1,0 +1,40 @@
+---
+title: 0003: Use Boon for JSON Schema Validation
+---
+
+# 0003: Use Boon for JSON Schema Validation
+
+Date: 2024-07-29
+
+## Status
+
+Accepted
+
+## Context
+
+The converter must handle various versions of the JSON Schema specification, as users may provide schemas conforming to different drafts (e.g., Draft 4, Draft 7, 2020-12). To ensure the integrity of the JSON Schema to GraphQL conversion, a robust validation step is necessary. This validator must be able to:
+
+1.  **Support Multiple Schema Versions**: Correctly identify and validate against different drafts of the JSON Schema specification.
+2.  **Be Performant**: Validation should be fast to not impede the real-time conversion process.
+3.  **Provide Clear Errors**: When validation fails, the errors should be descriptive enough to guide the user in fixing their schema.
+4.  **Integrate with Rust**: The validator must be a Rust crate to integrate seamlessly into the existing WASM module.
+
+## Decision
+
+We will use the `boon` crate for all JSON Schema validation within the Rust converter.
+
+`Boon` is a comprehensive Rust library for JSON Schema validation that explicitly supports multiple specification versions, including Draft 4, 6, 7, 2019-09, and 2020-12. This aligns perfectly with our requirement for multi-version compatibility. The library will be used to validate any incoming JSON Schema before attempting conversion.
+
+## Consequences
+
+### Positive
+
+- **Multi-Version Compatibility**: `Boon`'s primary strength is its support for multiple JSON Schema drafts. This eliminates the need for us to write complex, version-aware validation logic and ensures broad compatibility for our users.
+- **Performance**: Being a native Rust crate, `boon` offers excellent performance suitable for real-time validation within the WASM environment.
+- **Correctness**: The crate is well-tested and focuses on correctly implementing the JSON Schema specification, incrintake_processng the reliability of our conversion tool.
+- **Simplified Logic**: By offloading the complexity of validation, our core converter logic can focus solely on the transformation from a valid schema to GraphQL SDL.
+
+### Negative
+
+- **New Dependency**: We are introducing another external dependency into the project, which we will need to manage and keep updated.
+- **API Specificity**: The development team will need to learn the specific API and error-reporting mechanisms of `boon` to integrate it effectively.

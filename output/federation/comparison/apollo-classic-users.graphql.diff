@@ -1,0 +1,45 @@
+--- /home/john/json-schema-x-graphql/output/federation/node/apollo-classic-users.graphql	2025-12-31 16:19:04.333723846 -0500
++++ /home/john/json-schema-x-graphql/output/federation/rust/apollo-classic-users.graphql	2025-12-31 16:19:04.344723962 -0500
+@@ -1,18 +1,33 @@
+-"User account in the system"
++"""
++User account in the system
++"""
+ type User @key(fields: "email") {
+-  "User's email address (primary key)"
++  """
++  User's email address (primary key)
++  """
+   email: ID!
+-  "User's display name"
++  """
++  User's display name
++  """
+   name: String
+-  "Unique username for the account"
++  """
++  Unique username for the account
++  """
+   username: String
+-  "User's date of birth"
++  """
++  User's date of birth
++  """
+   birthDate: String
+ }
+ 
+ type Query {
+-  "Get a user by email"
++  """
++  Get a user by email
++  """
+   user(email: ID!): User
+-  "Get all users"
++  """
++  Get all users
++  """
+   users: [User!]!
+-}
+\ No newline at end of file
++}
++

@@ -1,0 +1,275 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar Datetime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"High-precision decimal number"
+scalar Decimal
+
+"Educational institution classifications"
+type EducationClassifications {
+  "1862 Land Grant College"
+  c1862_land_grant_college: Boolean
+  "1890 Land Grant College"
+  c1890_land_grant_college: Boolean
+  "1994 Land Grant College"
+  c1994_land_grant_college: Boolean
+  "Educational institution"
+  educational_institution: Boolean
+  "Historically Black college or university"
+  historically_black_college: Boolean
+  "Minority institution"
+  minority_institution: Boolean
+  "Tribal college"
+  tribal_college: Boolean
+}
+
+"Entity structure classifications"
+type EntityStructureClassifications {
+  "Corporate entity tax exempt"
+  corporateEntityTaxExempt: Boolean
+  "For-profit organization"
+  for_profit_organization: Boolean
+  "Limited liability corporation"
+  limitedLiabilityCorporation: Boolean
+  "Manufacturer of goods"
+  manufacturer_of_goods: Boolean
+  "Nonprofit organization"
+  nonprofit_organization: Boolean
+  "Partnership or limited liability partnership"
+  partnershipOrLimitedLiability: Boolean
+  "Sole proprietorship"
+  sole_proprietorship: Boolean
+  "Subchapter S corporation"
+  subchapter_s_corporation: Boolean
+}
+
+"Government entity classifications"
+type GovernmentClassifications {
+  "Foreign government"
+  foreign_government: Boolean
+  "U.S. federal government"
+  us_federal_government: Boolean
+  "U.S. local government"
+  us_local_government: Boolean
+  "U.S. state government"
+  us_state_government: Boolean
+  "U.S. tribal government"
+  us_tribal_government: Boolean
+}
+
+"Small business classifications"
+type SmallBusinessClassifications {
+  "8(a) program participant"
+  c8a_program_participant: Boolean
+  "Emerging small business"
+  emerging_small_business: Boolean
+  "Historically underutilized business zone (HUBZone) firm"
+  historically_underutilized: Boolean
+  "SBA certified 8(a) joint venture"
+  sbaCertified8aJointVenture: Boolean
+  "Small business competitive"
+  small_business_competitive: Boolean
+  "Small disadvantaged business"
+  smallDisadvantagedBusiness: Boolean
+}
+
+"Socioeconomic classifications"
+type SocioeconomicClassifications {
+  "Alaskan Native-owned corporation"
+  alaskanNativeOwnedCorporation: Boolean
+  "American Indian-owned business"
+  americanIndianOwnedBusiness: Boolean
+  "Asian-Pacific American-owned business"
+  asianPacificAmericanOwned: Boolean
+  "Black American-owned business"
+  blackAmericanOwnedBusiness: Boolean
+  "Hispanic American-owned business"
+  hispanicAmericanOwnedBusiness: Boolean
+  "Minority-owned business"
+  minority_owned_business: Boolean
+  "Native Hawaiian-owned business"
+  nativeHawaiianOwnedBusiness: Boolean
+  "Service-disabled veteran-owned business"
+  serviceDisabledVeteranOwned: Boolean
+  "Veteran-owned business"
+  veteran_owned_business: Boolean
+  "Woman-owned business"
+  woman_owned_business: Boolean
+  "Women-owned small business (WOSB)"
+  women_owned_small_business: Boolean
+}
+
+"Vendor business type classifications (100+ boolean flags)"
+type VendorClassifications {
+  education: EducationClassifications
+  entity_structure: EntityStructureClassifications
+  government: GovernmentClassifications
+  small_business: SmallBusinessClassifications
+  socioeconomic: SocioeconomicClassifications
+}
+
+"Public Spending award_procurement table record"
+type Public SpendingProcurement {
+  "Action date"
+  action_date: String
+  "Action type code"
+  action_type: String
+  "Award description"
+  award_description: String
+  "Award modification/amendment number"
+  awardModificationAmendment: String
+  "Primary key in award_procurement table"
+  award_procurement_id: Int!
+  "Awardee or recipient legal business name"
+  awardeeOrRecipientLegalName: String
+  "Awardee or recipient UEI"
+  awardee_or_recipient_uei: String
+  "Awardee or recipient unique identifier (DUNS)"
+  awardeeOrRecipientDuns: String
+  "Awarding agency code"
+  awarding_agency_code: String
+  "Awarding agency name"
+  awarding_agency_name: String
+  "Awarding office code"
+  awarding_office_code: String
+  "Awarding office name"
+  awarding_office_name: String
+  "Awarding sub-tier agency code"
+  awardingSubTierAgencyCode: String
+  "Awarding sub-tier agency name"
+  awardingSubTierAgencyName: String
+  "Base and all options value (as text)"
+  base_and_all_options_value: String
+  "Base exercised options value (as text)"
+  baseExercisedOptionsValue: String
+  "Commercial and Government Entity (CAGE) code"
+  cage_code: String
+  "Contract award type code"
+  contract_award_type: String
+  "Record creation timestamp"
+  created_at: DateTime
+  "Current total value of award (as text)"
+  current_total_value_award: String
+  "DoD claimant program code"
+  dod_claimant_program_code: String
+  "Entity doing business as name"
+  entityDoingBusinessAsName: String
+  "Entity fax number"
+  entity_fax_number: String
+  "Entity phone number"
+  entity_phone_number: String
+  "Extent competed"
+  extent_competed: String
+  "Federal action obligation amount"
+  federal_action_obligation: Float
+  "Funding agency code"
+  funding_agency_code: String
+  "Funding agency name"
+  funding_agency_name: String
+  "Funding office code"
+  funding_office_code: String
+  "Funding office name"
+  funding_office_name: String
+  "Funding sub-tier agency code"
+  fundingSubTierAgencyCode: String
+  "Funding sub-tier agency name"
+  fundingSubTierAgencyName: String
+  "Job ID"
+  job_id: Int!
+  "Last modified timestamp"
+  last_modified: String
+  "Legal entity address line 1"
+  legal_entity_address_line1: String
+  "Legal entity address line 2"
+  legal_entity_address_line2: String
+  "Legal entity address line 3"
+  legal_entity_address_line3: String
+  "Legal entity city"
+  legal_entity_city_name: String
+  "Legal entity congressional district"
+  legal_entity_congressional: String
+  "Legal entity country code"
+  legal_entity_country_code: String
+  "Legal entity country name"
+  legal_entity_country_name: String
+  "Legal entity state code"
+  legal_entity_state_code: String
+  "Legal entity ZIP+4"
+  legal_entity_zip4: String
+  "NAICS code"
+  naics: String
+  "NAICS description"
+  naics_description: String
+  "Ordering period end date"
+  ordering_period_end_date: String
+  "Parent award identifier"
+  parent_award_id: String
+  "Period of performance potential end date"
+  periodOfPerformancePotentialEnd: String
+  "Period of performance current end date"
+  periodOfPerformanceCurrent: String
+  "Period of performance start date"
+  periodOfPerformanceStart: String
+  "Procurement Instrument Identifier (join key)"
+  piid: String!
+  "Place of performance country name"
+  placeOfPerformanceCountryName: String
+  "Place of performance county name"
+  placeOfPerformanceCountyName: String
+  "Place of performance state name"
+  placeOfPerformanceStateName: String
+  "Place of performance city"
+  place_of_performance_city: String
+  "Place of performance congressional district"
+  placeOfPerformanceCongressional: String
+  "Place of performance ZIP+4"
+  placeOfPerformanceZip4: String
+  "Potential total value of award (as text)"
+  potentialTotalValueAward: String
+  "Product or service code (PSC)"
+  product_or_service_code: String
+  "Referenced IDV agency identifier"
+  referencedIdvAgencyIdentifier: String
+  "Row number in batch"
+  row_number: Int!
+  "Solicitation date"
+  solicitation_date: String
+  "Solicitation identifier"
+  solicitation_identifier: String
+  "Solicitation procedures"
+  solicitation_procedures: String
+  "Submission ID"
+  submission_id: Int!
+  "Total obligated amount (as text)"
+  total_obligated_amount: String
+  "Type of contract pricing"
+  type_of_contract_pricing: String
+  "Type of set-aside"
+  type_set_aside: String
+  "Ultimate parent legal entity name"
+  ultimateParentLegalEntity: String
+  "Ultimate parent UEI"
+  ultimate_parent_uei: String
+  "Ultimate parent unique identifier (DUNS)"
+  ultimateParentDuns: String
+  "Unique award identifier"
+  unique_award_key: String!
+  "Last update timestamp"
+  updated_at: DateTime
+  vendor_classifications: VendorClassifications
+}
+
+"Canonical schema for Public Spending (GDSM) procurement contract data from award_procurement table"
+type PublicSpendingProcurementSchema {
+  public_spending_procurement: Public SpendingProcurement
+}
+
+type Query {
+  "Fetch a single Public Spending procurement record by PIID"
+  public_spendingProcurement(piid: String!): Public SpendingProcurement
+  "Return a list of Public Spending procurement records"
+  public_spendingProcurements: [Public SpendingProcurement!]!
+}

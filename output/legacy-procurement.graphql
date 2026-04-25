@@ -1,0 +1,119 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar DateTime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"High-precision decimal number for amounts"
+scalar Decimal
+
+"Arbitrary JSON value"
+scalar Json
+
+"Valid email address"
+scalar Email
+
+"Valid URI/URL"
+scalar Uri
+
+"""Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
+type ProcurementRecord {
+  "System-level metadata for lineage, versioning, and ingestion."
+  systemMetadata: SystemMetadata!
+  "Legacy Procurement-specific domain fields."
+  legacyProcurementSpecific: ProcurementSpecificData!
+  """Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."""
+  iaPiidOrUniqueId: String
+}
+
+"Metadata describing the source system, identifiers, and lifecycle timestamps."
+type SystemMetadata @shareable {
+  "Constant system identifier string"
+  systemName: SystemName!
+  "Primary identifier of the record within Legacy Procurement"
+  sourceRecordId: String!
+  "Version of the canonical Legacy Procurement schema used to produce this record"
+  schemaVersion: String
+  "Timestamp when this record was ingested into the data fabric"
+  ingestedAt: DateTime
+  "Timestamp when this record was last modified in its source"
+  lastModified: DateTime
+}
+
+"Container for Legacy Procurement-specific data slices."
+type ProcurementSpecificData {
+  "Acquisition-related data coming from Legacy Procurement."
+  acquisitionData: ProcurementAcquisitionData
+  "Client organization data associated with the Legacy Procurement record."
+  clientData: ProcurementClientData
+  "Award-related metadata specific to Legacy Procurement."
+  awardData: ProcurementAwardData
+}
+
+"Acquisition data including agreement identifiers and acquisition nature."
+type ProcurementAcquisitionData {
+  "Interagency agreement PIID or unique identifier within Legacy Procurement"
+  iaPiidOrUniqueId: String!
+  "Nature of acquisition (taxonomy specific to Legacy Procurement)"
+  natureOfAcquisition: String!
+}
+
+"Client organization identity and related information."
+type ProcurementClientData {
+  "Name of the client organization"
+  clientOrganizationName: String!
+  "Client office address"
+  officeAddress: ProcurementOfficeAddress
+  "Primary client point-of-contact email"
+  primaryContactEmail: Email
+  "Primary client point-of-contact phone"
+  primaryContactPhone: String
+}
+
+"Address structure for client organizations in Legacy Procurement."
+type ProcurementOfficeAddress {
+  "Primary street address line"
+  streetAddress1: String
+  "Secondary street address line"
+  streetAddress2: String
+  "City"
+  city: String
+  "State or province"
+  state: String
+  "Postal or ZIP code"
+  postalCode: String
+  "Country"
+  country: String
+}
+
+"Award-related settings and timelines within Legacy Procurement."
+type ProcurementAwardData {
+  "Type of indefinite delivery contract (if applicable)"
+  typeOfIdc: String
+  "Authorized users of the IDC"
+  whoCanUseIdc: String
+  "Base period of performance"
+  basePeriod: PeriodOfPerformance
+  "Option periods of performance"
+  optionPeriods: [PeriodOfPerformance]
+}
+
+"Start and end dates for a period of performance."
+type PeriodOfPerformance {
+  "Start date (YYYY-MM-DD)"
+  startDate: Date
+  "End date (YYYY-MM-DD)"
+  endDate: Date
+}
+
+"""Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields."""
+type LegacyProcurementCanonicalSchema {
+  "Root Legacy Procurement entity"
+  legacyProcurementRecord: ProcurementRecord
+}
+
+# Implied Scalars
+scalar DateTime
+scalar Email
+scalar Date

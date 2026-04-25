@@ -1,0 +1,34 @@
+# Generated from JSON Schema by json-schema-x-graphql
+"Metadata supporting multiple nested systems"
+type SystemMetadata {
+  "Primary source system"
+  primarySystem: String!
+  "Chain of systems data has flowed through"
+  systemChain: [Object]!
+  "Schema version"
+  schemaVersion: String
+  "Last modification timestamp"
+  lastModified: DateTime
+  "Global unique identifier across all systems"
+  globalRecordId: String!
+}
+"Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure"
+type Contract implements Node {
+  "Alias for globalRecordId for GraphQL Node interface"
+  id: String
+  systemMetadata: SystemMetadata!
+  commonElements: Object!
+  systemExtensions: Object
+  "Related contracts via referencedPiid"
+  relatedContracts: String
+  "Procurement Instrument Identifier"
+  piid: String
+  "Vendor information structure"
+  vendorInfo: Object
+  "Alias (camelCase) for vendor_info for GraphQL parity"
+  vendorInfo: Object
+  "Location data"
+  placeOfPerformance: Object
+  "Alias (camelCase) for place_of_performance for GraphQL parity"
+  placeOfPerformance: Object
+}

@@ -1,0 +1,432 @@
+# Custom Scalars
+"Calendar date in ISO 8601 format (YYYY-MM-DD)."
+scalar Date
+
+"Timestamp in ISO 8601 format (includes time and optional offset)."
+scalar Datetime
+
+"Time in HH:mm:ss format"
+scalar Time
+
+"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
+scalar Decimal
+
+"Email address conforming to RFC 5322 (simplified)."
+scalar Email
+
+"Uniform Resource Identifier or URL string."
+scalar Uri
+
+"Arbitrary JSON value serialized as a string."
+scalar Json
+
+type Site {
+  """The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map."""
+  siteCode: JSON!
+  siteDescription: String
+}
+
+type Person {
+  prismUserId: String
+  firstName: String
+  lastName: String
+  email: Email
+}
+
+type Address {
+  addressCode: String
+  officeAddressName: String
+  address1: String
+  address2: String
+  address3: String
+  address4: String
+  city: String
+  state: String
+  zipcode: String
+  country: String
+  phone: String
+  fax: String
+  email: Email
+  regionCode: String
+  province: String
+  county: String
+  custAddress1: String
+  custAddress2: String
+  custAddress3: String
+  custAddress4: String
+  custAddress5: String
+}
+
+type Solicitation {
+  destination: String
+  origin: String
+  createBy: String
+  createDate: DateTime
+  lastUpdatedBy: String
+  lastUpdatedDate: DateTime
+  solicitationNumber: String
+  amendmentNumber: String
+  solicitationDocumentDescription: String
+  headerText: String
+  changeText: String
+  footerText: String
+  numItems: JSON
+  amount: JSON
+  popStartDate: DateTime
+  popEndDate: DateTime
+  preferenceAward: String
+  percentSetaside: JSON
+  unipricedFlag: String
+  subsistenceFlag: JSON
+  primaryProductCode: String
+  primaryNaicsCode: String
+  projectId: String
+  projectTitle: String
+  baseCurrencyCode: String
+  printCurrencyCode: String
+  securityClassificationCode: String
+  postToEbuy: String
+  majorSystems: String
+  highRisk: String
+  sourceSystemEvaluationType: String
+  documentStatus: String
+  statusDate: DateTime
+  pendingDate: DateTime
+  approvedDate: DateTime
+  releasedDate: DateTime
+  cancelledDate: DateTime
+  closedDate: DateTime
+  thisVersionFundedAmount: JSON
+  totalReleasedFundedAmount: JSON
+  thisVersionRecoveryActFundsAmount: JSON
+  totalReleasedRecoveryActFundsAmount: JSON
+  criticalityDesignator: String
+  solicitationPurpose: String
+  potentialAmount: JSON
+  issuedDate: DateTime
+  responseDueDate: Date
+  responseDueTime: Time
+  responseDueTimeZone: String
+  solicitationType: String
+  gwacGsaPurchaseFlag: JSON
+  specialCircumstancesCode: String
+  multiAwardIdv: String
+  bundledContract: String
+  consolidatedContract: String
+  emergencyRequestContractFlag: JSON
+  solicitationProcedure: String
+  extentCompeted: String
+  justificationAndApprovalNumber: String
+  anticipatedTypeOfVehicle: String
+  anticipatedTypeOfContract: String
+  smallDisadvantagedBusinessPercentage: JSON
+  hubzonePercentage: JSON
+  setAside: String
+  paymentBondRequiredFlag: JSON
+  performanceBondRequiredFlag: JSON
+  depositoryCode: String
+  depositoryDescription: String
+  placeOfPerformanceName: String
+  placeOfPerformanceZip: String
+  placeOfPerformanceCountry: String
+  placeOfPerformancePrimary: String
+  geographicRegion: String
+  placeOfPerformanceCode: String
+  fedConnectLink: URI
+  fedConnectUrl: URI
+  workspaceNumber: String
+  site: Site
+  owner: Person
+  """NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system."""
+  buyer: Person
+  contractingOfficer: Person
+  agreementsOfficer: Person
+  contractingOfficerRepresentative: Person
+  adminContractingOfficer: Person
+  originatingOfficeAddress: Address
+  issuingOfficeAddress: Address
+  adminOfficeAddress: Address
+  invoiceOfficeAddress: Address
+  paymentOfficeAddress: Address
+  solicitationLines: [SolicitationLineItem]
+  solicitationClauses: [SolicitationClause]
+}
+
+type SolicitationLineItem {
+  accountablePropertyFlag: JSON
+  addEditCancelIndicator: String
+  allowDeliveryOrdersFlag: JSON
+  solicitationLineAmount: JSON
+  awardFee: JSON
+  baseFee: JSON
+  completedFormFlag: JSON
+  creditAmount: JSON
+  deliveryOrderObligatesFlag: JSON
+  economicPriceAdjustmentAwardTypeIndicator: String
+  solicitationLineItemDescription: String
+  fixedFee: JSON
+  freightOnBoardIndicator: String
+  footerText: String
+  governmentFurnishedPropertyIndicator: String
+  governmentSharePercentage: JSON
+  guaranteeFlag: JSON
+  headerText: String
+  incrementallyFundedIndicator: String
+  incrementallyFundedAmount: JSON
+  incrementallyFundedThruDate: DateTime
+  inspectionText: String
+  internalNotesText: String
+  itemAwardType: String
+  itemNumber: String
+  lineItemTypeCode: String
+  invoiceMatchingRule: String
+  minimumAmount: JSON
+  minimumQuantity: JSON
+  notesToTheBuyerText: String
+  obligatedAmount: JSON
+  optionAnticipatedExerciseDate: DateTime
+  optionDays: JSON
+  optionExercisedDate: DateTime
+  optionLineItemIndicator: String
+  originCity: String
+  originState: String
+  paymentTermsCustom1: String
+  paymentTermsCustom2: String
+  periodOfPerformanceEndDate: DateTime
+  periodOfPerformanceStartDate: DateTime
+  priceCeiling: JSON
+  priorityCode: String
+  productServiceCode: String
+  profitAdjustmentFormula: String
+  profitFee: JSON
+  lineItemQualifier: String
+  lineItemQuantity: JSON
+  securityClassificationCode: String
+  sequenceNumber: String
+  specialHandlingCode: String
+  solicitationLineItemStatusCode: String
+  statusDate: DateTime
+  subItemNumber: String
+  targetCost: JSON
+  targetFee: JSON
+  targetFeeHigh: JSON
+  targetFeeLow: JSON
+  totalObligatedAmount: JSON
+  tradeDiscount: JSON
+  unitOfMeasureCode: String
+  unitPrice: JSON
+  userDefinedProductCode: String
+  userProductCodeDescription: String
+  ussglTransCode: String
+  lastAmendmentVersionNumber: String
+  deliveries: [SolicitationLineDelivery]
+}
+
+type SolicitationLineDelivery {
+  solicitationLineDeliveryAmount: JSON
+  daysAfterTypeCode: String
+  deliveryDate: DateTime
+  deliveryDaysAfterAward: JSON
+  solicitationLineDeliveryQuantity: JSON
+  solicitationLineDeliveryShipToSequenceNumber: String
+  tankSize: String
+  tankDescription: String
+  markForAddress: Address
+  shipToAddress: Address
+}
+
+type SolicitationClause {
+  clauseGloballyUniqueId: String
+  clauseDatabaseName: String
+  clauseNumber: String
+  clauseEffectiveDate: DateTime
+  clauseFullText: String
+}
+
+type Requisition {
+  criticalityDesignator: String
+  origin: String
+  externalFinanceDoc: String
+  externalFinanceApprovedDate: DateTime
+  requisitionForModFlag: JSON
+  associatedAwardNumber: String
+  priorAllZeroFlag: JSON
+  financeChangeType: String
+  actionRequestType: String
+  createBy: String
+  createDate: DateTime
+  lastUpdatedBy: String
+  lastUpdatedDate: DateTime
+  requisitionNumber: String
+  amendmentNumber: String
+  description: String
+  headerText: String
+  footerText: String
+  changeText: String
+  internalNoteText: String
+  noteToBuyerText: String
+  items: JSON
+  amount: JSON
+  totalCommittedAmount: JSON
+  popStartDate: DateTime
+  popEndDate: DateTime
+  primaryProductCode: String
+  projectId: String
+  projectTitle: String
+  requisitionPurpose: String
+  baseCurrencyCode: String
+  printCurrencyCode: String
+  securityClassificationCode: String
+  accountingPeriod: String
+  majorSystems: String
+  highRisk: String
+  legacyPegasysDocument: String
+  status: String
+  statusDate: DateTime
+  fullyAwardedFlag: JSON
+  paperRequisitionReceivedDate: DateTime
+  requisitionApprovedDate: DateTime
+  pendingDate: DateTime
+  approvedDate: DateTime
+  releasedDate: DateTime
+  canceledDate: DateTime
+  closedDate: DateTime
+  buyerAssignedDate: DateTime
+  faaPreUpiidFlag: JSON
+  transactionIndicator: String
+  requestorFullName: String
+  requestorPhoneNumber: String
+  site: Site
+  owner: Person
+  requisitioner: Person
+  buyer: Person
+  technicalPointOfContact: Person
+  originatingOfficeAddress: Address
+  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  issuingOfficeAddress: Address
+  """NOTE: Some fields are disabled due to receiving incorrect data from the source system as of 9/13/2023."""
+  adminOfficeAddress: Address
+  paymentOfficeAddress: Address
+  approvalHistory: [RequisitionApprovalHistory]
+  requisitionLines: [RequisitionLineItem]
+  associatedRequisitionInfo: AssociatedRequisitionInfo
+}
+
+type RequisitionApprovalHistory {
+  approverSequenceNumber: String
+  approverRouteRole: String
+  approverRequisitionApprovedDate: DateTime
+  approverComments: String
+  approverUser: Person
+}
+
+type RequisitionLineItem {
+  addEditCancelFlag: String
+  itemNumber: String
+  sequenceNumber: String
+  subItemNumber: String
+  suppliesOrServicesFlag: JSON
+  description: String
+  internalNoteText: String
+  headerText: String
+  footerText: String
+  inspectionText: String
+  noteToBuyerText: String
+  lineItemQualifier: String
+  quantity: JSON
+  unit: String
+  unitPrice: JSON
+  amount: JSON
+  committedAmount: JSON
+  totalCommittedAmount: JSON
+  remainingCommittedAmount: JSON
+  optionFlag: JSON
+  anticipatedExerciseDate: DateTime
+  optionDays: JSON
+  optionExerciseDate: DateTime
+  popStartDate: DateTime
+  popEndDate: DateTime
+  productCode: String
+  userProductCode: String
+  userProductCodeDescription: String
+  projectId: String
+  projectTitle: String
+  gfeFlag: JSON
+  priorityCode: String
+  specialHandlingCode: String
+  renewalDate: DateTime
+  ussglTransCode: String
+  versionNumber: String
+  securityClassificationCode: String
+  fobIndicator: String
+  originCity: String
+  originState: String
+  statusIndicator: String
+  statusDate: DateTime
+  fullyAwardedFlag: JSON
+  shipments: [RequisitionShipment]
+  accounts: [RequisitionAccount]
+}
+
+type RequisitionShipment {
+  shipToSequenceNumber: String
+  quantity: JSON
+  amount: JSON
+  deliveryDate: DateTime
+  deliveryDaysAfteraward: JSON
+  financialChangeType: String
+  daysAfterType: String
+  tankSize: String
+  tankDescription: String
+  shipToAddress: Address
+  markForAddress: Address
+}
+
+type RequisitionAccount {
+  accountSequenceNumber: String
+  finChangeType: String
+  accountCode: String
+  accountFundingLineFund: String
+  accountFundingLineBeginningBudgetFiscalYear: String
+  accountFundingLineProgram: String
+  accountFundingLineOrganization: String
+  accountFundingLineActivity: String
+  accountFundingLineSubjectObjectClass: String
+  accountFundingLineRegion: String
+  accountFundingLineEndingBudgetFiscalYear: String
+  accountFundingLineProjectCode: String
+  accountFundingLineLocationSystem: String
+  accountFundingLineCostOrganization: String
+  accountFundingLineYearOfBudgetAuthority: String
+  accountFundingLinePromptPayType: String
+  fundsType: String
+  includesRecoveryActFundsFlag: JSON
+  tasSegment1: String
+  tasSegment2: String
+  tasSegment3: String
+  tas: String
+  quantity: JSON
+  amount: JSON
+  awardAmount: JSON
+  totalAmount: JSON
+  remainingAmount: JSON
+  subjectToFundingFlag: JSON
+}
+
+type AssociatedRequisitionInfo {
+  associatedRequisitionNumber: String
+  associatedRequisitionLineItemNumber: String
+  associatedRequisitionSubLineItemNumber: String
+  associatedRequisitionShipToSequenceNumber: String
+  associatedRequisitionAccountSequenceNumber: String
+}
+
+"""JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.
+
+NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.
+
+NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations."""
+type ProcurementDataSchema {
+  solicitation: Solicitation
+  requisition: Requisition
+}

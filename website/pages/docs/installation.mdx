@@ -1,0 +1,68 @@
+---
+title: Installation
+---
+
+import { Tabs } from 'nextra/components'
+
+# Installation
+
+## Node.js / TypeScript
+
+```bash npm2yarn
+npm install @json-schema-x-graphql/core
+```
+
+The package ships a single runtime dependency (`graphql`).
+
+## CLI
+
+```bash
+npx @json-schema-x-graphql/core --help
+
+# Convert a file
+npx @json-schema-x-graphql/core convert schema.json -o schema.graphql
+
+# Pipe stdin
+cat schema.json | npx @json-schema-x-graphql/core convert -
+```
+
+## Rust
+
+Add to your `Cargo.toml`:
+
+```toml
+[dependencies]
+json-schema-x-graphql = "2"
+```
+
+Or with specific features:
+
+```toml
+[dependencies]
+json-schema-x-graphql = { version = "2", features = ["cli", "wasm"] }
+```
+
+## WebAssembly (browser)
+
+The Rust converter can be built to WASM and loaded directly in a browser or edge runtime:
+
+```bash
+wasm-pack build converters/rust --target web
+```
+
+Then in your app:
+
+```ts
+import init, { convert_json_schema_to_graphql } from './pkg/json_schema_graphql_converter.js';
+
+await init();
+const sdl = convert_json_schema_to_graphql(JSON.stringify(mySchema), null);
+```
+
+## Peer requirements
+
+| Environment | Minimum version |
+|---|---|
+| Node.js | 18 |
+| Rust | 1.70 |
+| Browsers | Evergreen (Chrome 90+, Firefox 90+, Safari 15+) |

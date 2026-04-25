@@ -1,0 +1,348 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar Datetime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"Decimal number as string to preserve precision"
+scalar Decimal
+
+"Email address conforming to RFC 5322 (simplified)"
+scalar Email
+
+"Uniform Resource Identifier or URL string"
+scalar Uri
+
+"""Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."""
+type Fpdsrecord {
+  systemMetadata: SystemMetadata!
+  identifiers: Identifiers!
+  financial: Financial
+  vendor: Vendor
+  agency: Agency
+  dates: Dates
+  classification: Classification
+  competition: Competition
+  placeOfPerformance: Placeofperformance
+  idvReference: Idvreference
+  compliance: Compliance
+  "Description of requirement"
+  description: String
+}
+
+"System-level metadata for record tracking, versioning, and lineage."
+type SystemMetadata @shareable {
+  "Constant system identifier"
+  systemName: SystemName!
+  "Primary identifier of the record within Contract Data"
+  sourceRecordId: String!
+  "Version of the canonical Contract Data schema"
+  schemaVersion: String
+  "Timestamp when record was ingested"
+  ingestedAt: DateTime
+  "Timestamp when record was last modified at source"
+  lastModified: DateTime
+}
+
+"Core contract identifiers and reference numbers."
+type Identifiers {
+  "Unique identifier for each record in the dataset"
+  id: Int
+  "Procurement Instrument Identifier - unique contract identifier"
+  piid: String!
+  "Legacy PIID from previous system"
+  oldPiid: String
+  "Original PIID for reference"
+  originalPiid: String
+  "Reference to parent contract"
+  referencePiid: String
+  "Code for the agency involved"
+  agencyCode: String
+  "Name of the agency associated with PIID"
+  piidAgencyName: String
+  "Indicates whether record is an award or IDV"
+  awardOrIdv: String
+  "Transaction sequence number"
+  transactionNumber: Int
+  "Contract modification number"
+  modificationNumber: String
+  "Solicitation identifier"
+  solicitationId: String
+  "Fiscal year of the award"
+  awardFiscalYear: String
+  "Record version number"
+  version: String
+}
+
+"Financial information including obligations, values, and fees."
+type Financial {
+  "Total dollars obligated"
+  dollarsObligated: Float
+  "Dollars obligated per action"
+  dollarsObligatedPerAction: Float
+  "Current contract value"
+  currentContractValue: Float
+  "Ultimate expected contract value"
+  ultimateContractValue: Float
+  "Base obligation amount"
+  baseDollarsObligated: Float
+  "Maximum order limit"
+  maxOrderLimit: Float
+  "Service fee paid"
+  feePaidForUseOfService: Float
+  "Lower fee range value"
+  feeRangeLowerValue: Float
+  "Upper fee range value"
+  feeRangeUpperValue: Float
+  "Fixed fee amount"
+  fixedFeeValue: Float
+  "Non-federal funding amount"
+  nonFederalFundingAmount: Float
+  "Non-government contribution"
+  nonGovernmentValue: Float
+  "Total non-government value"
+  totalNonGovernmentValue: Float
+}
+
+"""Vendor information including identity, address, contact, and business classifications."""
+type Vendor {
+  "Legal vendor name"
+  vendorName: String
+  "Unique Entity Identifier (Entity Management.gov)"
+  vendorUei: String
+  "DUNS number (deprecated)"
+  vendorDunsNumber: String
+  "Commercial and Government Entity code"
+  cageCode: String
+  "DBA name"
+  doingBusinessAsName: String
+  vendorAddress: Address
+  "Vendor phone"
+  vendorPhoneNumber: String
+  "Vendor email"
+  emailAddress: Email
+  "Annual revenue"
+  annualRevenue: Float
+  "Employee count"
+  numberOfEmployees: Int
+  "Organization type"
+  organizationalType: String
+  "Incorporation state"
+  stateOfIncorporation: String
+  "Incorporation country"
+  countryOfIncorporation: String
+  parent: Parentorganization
+  businessClassifications: Businessclassifications
+}
+
+"Physical address structure."
+type Address {
+  "Address line 1"
+  line1: String
+  "Address line 2"
+  line2: String
+  "Address line 3"
+  line3: String
+  "City"
+  city: String
+  "State code"
+  stateCode: String
+  "State name"
+  stateName: String
+  "ZIP/postal code"
+  zipCode: String
+  "Country code"
+  countryCode: String
+  "Country name"
+  countryName: String
+}
+
+"Parent organization information."
+type Parentorganization {
+  "Parent DUNS"
+  parentDunsNumber: String
+  "Parent name"
+  parentVendorName: String
+  "Parent UEI"
+  parentUei: String
+}
+
+"Business classification flags for vendor categories."
+type Businessclassifications {
+  "Small business indicator"
+  smallBusinessFlag: String
+  "Veteran-owned indicator"
+  veteranOwnedFlag: String
+  "Women-owned indicator"
+  womenOwnedFlag: String
+  "Minority-owned indicator"
+  minorityOwnedBusinessFlag: String
+  "HUBZone certified indicator"
+  hubzoneFlag: String
+  "8(a) program participant"
+  eightAFlag: String
+  "Small disadvantaged business"
+  sdbFlag: String
+  "Service-disabled veteran-owned"
+  srdvobFlag: String
+  "Women-owned small business"
+  wosbFlag: String
+  "Economically disadvantaged WOSB"
+  edwosbFlag: String
+  "Educational institution"
+  educationalInstitutionFlag: String
+  "Hospital"
+  hospitalFlag: String
+  "Nonprofit organization"
+  nonprofitOrganizationFlag: String
+}
+
+"Agency and organizational information."
+type Agency {
+  "Contracting agency ID"
+  contractingAgencyId: String
+  "Contracting agency name"
+  contractingAgencyName: String
+  "Contracting office ID"
+  contractingOfficeId: String
+  "Contracting office name"
+  contractingOfficeName: String
+  "Department ID"
+  departmentId: String
+  "Department name"
+  departmentName: String
+  "Funding agency code"
+  fundingAgencyCode: String
+  "Funding agency name"
+  fundingAgencyName: String
+  "Funding office code"
+  fundingOfficeCode: String
+  "Funding office name"
+  fundingOfficeName: String
+  "Funding department ID"
+  fundingDepartmentId: String
+  "Funding department name"
+  fundingDepartmentName: String
+  "Regional code"
+  regionCode: String
+}
+
+"Timeline and date information."
+type Dates {
+  "Contract signature date"
+  dateSigned: DateTime
+  "Effective date"
+  effectiveDate: DateTime
+  "Expected completion date"
+  currentCompletionDate: DateTime
+  "Ultimate completion deadline"
+  ultimateCompletionDate: DateTime
+  "Cancellation date"
+  cancellationDate: DateTime
+  "Public reveal date"
+  revealDate: DateTime
+  "Record preparation date"
+  preparedDate: DateTime
+  "Last modification date"
+  lastModifiedDate: DateTime
+}
+
+"Contract classification codes and categories."
+type Classification {
+  "NAICS industry classification code"
+  naicsCode: String
+  "NAICS description"
+  naicsDescription: String
+  "Product or service code (PSC)"
+  productOrServiceCode: String
+  "PSC description"
+  productOrServiceDescription: String
+  "System equipment code"
+  systemEquipmentCode: String
+  "System equipment description"
+  systemEquipmentDesc: String
+  "Contract financing type"
+  contractFinancing: String
+  "Contract pricing type"
+  typeOfContractPricing: String
+  "Commercial item acquisition indicator"
+  commercialItemAcquisition: String
+}
+
+"Competition and procurement procedure information."
+type Competition {
+  "Extent of competition"
+  extentCompeted: String
+  "Solicitation procedures used"
+  solicitationProcedures: String
+  "Type of set-aside"
+  typeOfSetAside: String
+  "Evaluated preference applied"
+  evaluatedPreference: String
+  "Number of offers received"
+  numberOfOffersReceived: Int
+  "Reason for non-competition"
+  reasonNotCompeted: String
+  "Fair opportunity explanation"
+  fairOpportunityDescription: String
+}
+
+"Place of performance location details."
+type Placeofperformance {
+  "Performance location code"
+  popLocationCode: String
+  "Performance location name"
+  popLocationName: String
+  "Performance state code"
+  popLocationStateCd: String
+  "Performance state name"
+  popLocationStateName: String
+  "Performance county code"
+  popCountyCode: String
+  "Performance county name"
+  popCountyName: String
+  "Performance country code"
+  popCountryCode: String
+  "Performance country name"
+  popCountryName: String
+  "Performance ZIP code"
+  popZipCode: String
+}
+
+"""IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts."""
+type Idvreference {
+  "Type of indefinite delivery contract"
+  typeOfIdc: String
+  "Multiple or single award IDC"
+  multipleOrSingleAwardIdc: String
+  "IDV last date"
+  idvLastDate: DateTime
+  "Who can use the IDV"
+  whoCanUse: String
+}
+
+"Compliance and regulatory information."
+type Compliance {
+  "Cost accounting standards"
+  costAcctStandards: String
+  "Cost or pricing data requirement"
+  costOrPricingData: String
+  "Subcontracting plan"
+  subcontractPlan: String
+  "Use of EPA products"
+  useOfEpaProducts: String
+  "Recovered material clauses"
+  recoveredMaterialClauses: String
+  "Davis-Bacon Act applicability"
+  davisBaconAct: String
+  "Service Contract Act applicability"
+  serviceContractAct: String
+  "Walsh-Healey Act applicability"
+  walshHealeyAct: String
+}
+
+"""Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
+type ContractDataCanonicalSchema {
+  contractDataRecord: Fpdsrecord
+}

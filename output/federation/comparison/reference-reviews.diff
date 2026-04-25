@@ -1,0 +1,104 @@
+--- /home/john/json-schema-x-graphql/examples/federation/sdl/apollo-classic/reviews-service.graphql	2025-12-31 15:30:31.413333838 -0500
++++ /home/john/json-schema-x-graphql/output/federation/node/apollo-classic-reviews.graphql	2025-12-31 16:19:04.584726489 -0500
+@@ -1,72 +1,40 @@
+-# Reviews Service - Apollo Federation Classic Example
+-# This service extends User and Product entities and owns the Review entity
+-
+-extend schema
+-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+-
+-"""
+-Product review entity
+-"""
+-type Review @key(fields: "id") {
+-  """
+-  Review unique identifier
+-  """
+-  id: ID!
+-
+-  """
+-  Review body text
+-  """
+-  body: String
+-
+-  """
+-  Review author (provides username field)
+-  """
+-  author: User @provides(fields: "username")
+-
+-  """
+-  Product being reviewed
+-  """
+-  product: Product
+-}
+-
+-"""
+-Extended User type with reviews
+-"""
++"Extended User type with reviews"
+ type User @key(fields: "email") {
+-  """
+-  User's email address (from Users service)
+-  """
+-  email: ID! @external
+-
+-  """
+-  Reviews written by this user
+-  """
+-  reviews: [Review]
++  "User's email address"
++  email: ID!
++  "Reviews written by this user"
++  reviews: [Review!]!
+ }
+ 
+-"""
+-Extended Product type with reviews
+-"""
++"Extended Product type with reviews"
+ type Product @key(fields: "upc") {
+-  """
+-  Universal Product Code (from Products service)
+-  """
+-  upc: String! @external
++  "Universal Product Code"
++  upc: ID!
++  "Reviews for this product"
++  reviews: [Review!]!
++}
+ 
+-  """
+-  Reviews for this product
+-  """
+-  reviews: [Review]
++"Product review by a user"
++type Review @key(fields: "id") {
++  "Review ID (primary key)"
++  id: ID!
++  "Foreign key to Product (UPC)"
++  productUpc: ID!
++  "Foreign key to User (email)"
++  authorEmail: ID!
++  "Review text content"
++  body: String
++  "Rating from 1-5"
++  rating: Int
++  "User who wrote the review"
++  author: User!
++  "Product being reviewed"
++  product: Product!
+ }
+ 
+ type Query {
+-  """
+-  Get a review by ID
+-  """
++  "Get a review by ID"
+   review(id: ID!): Review
+-
+-  """
+-  Get all reviews
+-  """
++  "Get all reviews"
+   reviews: [Review!]!
+ }

@@ -1,0 +1,10 @@
+{
+  "x-graphql-quick-start": "Quick Start",
+  "x-graphql-attributes": "Attribute Reference",
+  "x-graphql-patterns": "Common Patterns",
+  "x-graphql-migration": "Migration Guide",
+  "x-graphql-registry": "Attribute Registry",
+  "federation-quick-reference": "Federation Quick Reference",
+  "sdl-linter": "SDL Linter & Naming",
+  "supergraph-entity-design": "Supergraph Entity Design"
+}

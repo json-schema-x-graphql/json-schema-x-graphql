@@ -1,0 +1,82 @@
+{
+  "title": "SanitizationCoverage",
+  "description": "Schema to test naming convention application (PRESERVE vs GRAPHQL_IDIOMATIC) and identifier sanitization.",
+  "type": "object",
+  "properties": {
+    "standardField": {
+      "type": "string",
+      "description": "Already camelCase"
+    },
+    "PascalCaseField": {
+      "type": "string",
+      "description": "Should become camelCase in idiomatic mode"
+    },
+    "snake_case_field": {
+      "type": "string",
+      "description": "Should become camelCase in idiomatic mode"
+    },
+    "SCREAMING_SNAKE_CASE": {
+      "type": "string",
+      "description": "Should become camelCase in idiomatic mode"
+    },
+    "kebab-case-field": {
+      "type": "string",
+      "description": "Contains dashes, needs sanitization"
+    },
+    "field.with.dots": {
+      "type": "string",
+      "description": "Contains dots, needs sanitization"
+    },
+    "field with spaces": {
+      "type": "string",
+      "description": "Contains spaces, needs sanitization"
+    },
+    "field$with#special&chars": {
+      "type": "string",
+      "description": "Contains special chars, needs sanitization"
+    },
+    "123numericStart": {
+      "type": "string",
+      "description": "Starts with number, invalid GraphQL identifier"
+    },
+    "__doubleUnderscore": {
+      "type": "string",
+      "description": "Starts with double underscore, reserved in GraphQL"
+    },
+    "reserved_keywords": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "interface": { "type": "string" },
+        "enum": { "type": "string" },
+        "union": { "type": "string" },
+        "input": { "type": "string" }
+      }
+    },
+    "complex_type_ref": {
+      "$ref": "#/definitions/Complex_Type_Name_123"
+    },
+    "numeric_type_ref": {
+      "$ref": "#/definitions/123NumericType"
+    }
+  },
+  "definitions": {
+    "Complex_Type_Name_123": {
+      "type": "object",
+      "properties": {
+        "inner_prop": { "type": "string" }
+      }
+    },
+    "123NumericType": {
+      "type": "object",
+      "description": "Type name starts with number",
+      "properties": {
+        "val": { "type": "integer" }
+      }
+    },
+    "kebab-case-type": {
+      "type": "string",
+      "description": "Type name with dashes"
+    }
+  }
+}

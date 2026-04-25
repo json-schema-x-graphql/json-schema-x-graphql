@@ -1,0 +1,31 @@
+{
+  "title": "NestedRefTest",
+  "description": "Test schema for deeply nested $ref resolution",
+  "type": "object",
+  "x-graphql-type-name": "Root",
+  "properties": {
+    "simple": {
+      "$ref": "#/$defs/SimpleString"
+    },
+    "deep": {
+      "$ref": "#/$defs/Structure/properties/data"
+    }
+  },
+  "$defs": {
+    "SimpleString": {
+      "type": "string"
+    },
+    "Structure": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "value": { "type": "integer" }
+          },
+          "x-graphql-type-name": "DeepData"
+        }
+      }
+    }
+  }
+}

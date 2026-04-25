@@ -1,0 +1,84 @@
+[package]
+name = "json-schema-x-graphql"
+version = "2.0.0"
+edition = "2021"
+authors = ["JJediny and Contributors"]
+description = "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support"
+license = "MIT"
+homepage = "https://github.com/JJediny/json-schema-x-graphql"
+repository = "https://github.com/JJediny/json-schema-x-graphql"
+documentation = "https://docs.rs/json-schema-x-graphql"
+readme = "README.md"
+keywords = ["json-schema", "graphql", "converter", "federation", "x-graphql"]
+categories = ["parsing", "wasm", "web-programming", "api-bindings", "development-tools"]
+rust-version = "1.70"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+async-graphql = { version = "7.0.5" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+thiserror = "1.0"
+indexmap = { version = "2.1", features = ["serde"] }
+regex = "1.7"
+clap = { version = "4.5", features = ["derive"], optional = true }
+reqwest = { version = "0.11", features = ["json", "blocking"], optional = true }
+tokio = { version = "1.0", features = ["full"], optional = true }
+anyhow = { version = "1.0", optional = true }
+
+# WASM dependencies
+wasm-bindgen = { version = "0.2", optional = true }
+console_error_panic_hook = { version = "0.1", optional = true }
+serde-wasm-bindgen = { version = "0.6", optional = true }
+
+# Ensure getrandom compiles for wasm32-unknown-unknown using the wasm_js backend.
+# This enables Web Crypto (via wasm-bindgen) as the entropy source when building for web.
+getrandom = { version = "0.3", features = ["wasm_js"] }
+
+# Optional caching
+lru = { version = "0.13", optional = true }
+
+# JSON Schema validation
+# jsonschema and boon pull in blocking reqwest which is not available on wasm targets.
+# Ensure on wasm targets jsonschema is included without default features to avoid
+# pulling in `reqwest::blocking`. For non-wasm builds enable the reqwest feature.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+jsonschema = { version = "0.18", default-features = false }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+jsonschema = { version = "0.18", features = ["reqwest"] }
+
+# GraphQL SDL and Federation validation
+apollo-parser = "0.8"
+apollo-compiler = "1.0"
+
+[dev-dependencies]
+pretty_assertions = "1.4"
+criterion = "0.5"
+# Test-only: JSON Schema validation (native only)
+boon = "0.6"
+# Test-only: GraphQL composition and schema validation
+graphql-composition = "0.1"
+graphql-schema-validation = "0.1"
+
+
+[features]
+default = ["wasm"]
+wasm = ["wasm-bindgen", "console_error_panic_hook", "serde-wasm-bindgen"]
+caching = ["lru"]
+cli = ["clap", "reqwest", "tokio", "anyhow"]
+
+
+[[bin]]
+name = "jxql"
+path = "src/bin/jxql.rs"
+required-features = ["cli"]
+
+[[bench]]
+name = "conversion_benchmark"
+harness = false

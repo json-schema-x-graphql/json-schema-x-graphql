@@ -1,0 +1,375 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+  NODE_VERSION: "24"
+
+# Cancel in-progress runs for the same branch on new push
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Fast gates ────────────────────────────────────────────────────────────
+
+  lint-rust:
+    name: Lint & Format (Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            converters/rust/target
+          key: ${{ runner.os }}-cargo-lint-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Check formatting
+        working-directory: converters/rust
+        run: cargo fmt -- --check
+
+      - name: Run clippy
+        working-directory: converters/rust
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+  lint-node:
+    name: Lint & Format (Node.js)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: pnpm run format:oxfmt
+
+      - name: Run linter
+        run: pnpm exec oxlint check --config .oxlint/config.json converters/node/src
+
+      - name: Type check
+        working-directory: converters/node
+        run: npx tsc --noEmit
+
+  # ── Core tests ────────────────────────────────────────────────────────────
+
+  test-rust:
+    name: Test Rust (${{ matrix.rust }})
+    runs-on: ubuntu-latest
+    needs: lint-rust
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: [stable, beta]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            converters/rust/target
+          key: ${{ runner.os }}-cargo-${{ matrix.rust }}-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Build
+        working-directory: converters/rust
+        run: cargo build --release --all-features --verbose
+
+      - name: Run tests
+        working-directory: converters/rust
+        run: cargo test --all-features --verbose
+
+      - name: Run doc tests
+        working-directory: converters/rust
+        run: cargo test --doc --all-features --verbose
+
+  test-node:
+    name: Test Node.js
+    runs-on: ubuntu-latest
+    needs: lint-node
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        working-directory: converters/node
+        run: pnpm run build
+
+      - name: Run tests (includes parity snapshot tests)
+        working-directory: converters/node
+        run: pnpm test
+
+  # ── Cross-converter drift protection ─────────────────────────────────────
+
+  parity:
+    name: Rust ↔ Node Parity
+    runs-on: ubuntu-latest
+    needs: [test-rust, test-node]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            converters/rust/target
+          key: ${{ runner.os }}-cargo-stable-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Build both converters
+        run: |
+          cd converters/rust && cargo build --release && cd ../..
+          cd converters/node && pnpm install --frozen-lockfile && pnpm run build && cd ../..
+
+      - name: Run parity script
+        run: |
+          if [ -f scripts/test-parity.sh ]; then
+            chmod +x scripts/test-parity.sh
+            ./scripts/test-parity.sh
+          else
+            echo "⚠️  scripts/test-parity.sh not found — skipping"
+          fi
+
+  round-trip:
+    name: Round-Trip Drift Detection (3-cycle)
+    runs-on: ubuntu-latest
+    needs: [test-node]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install & build Node converter
+        run: |
+          cd converters/node && pnpm install --frozen-lockfile && pnpm run build
+
+      - name: Run 3-cycle round-trip validation
+        run: |
+          mkdir -p test-output
+          TEST_FILE="converters/test-data/complex-schema.json"
+          if [ ! -f "$TEST_FILE" ]; then
+            mkdir -p converters/test-data
+            cat > "$TEST_FILE" << 'SCHEMA'
+          {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "title": "User",
+            "properties": {
+              "id": { "type": "string", "format": "uuid" },
+              "name": { "type": "string", "minLength": 1 },
+              "email": { "type": "string", "format": "email" },
+              "age": { "type": "integer", "minimum": 0 },
+              "tags": { "type": "array", "items": { "type": "string" } },
+              "metadata": { "type": "object" }
+            },
+            "required": ["id", "name", "email"]
+          }
+          SCHEMA
+          fi
+
+          cat > converters/node/roundtrip-ci.mjs << 'EOF'
+          import { jsonSchemaToGraphQL, graphqlToJsonSchema } from './dist/index.js';
+          import fs from 'fs';
+          const [,, testFile, outputDir] = process.argv;
+          const initial = JSON.parse(fs.readFileSync(testFile, 'utf8'));
+          const g1 = jsonSchemaToGraphQL(initial); fs.writeFileSync(`${outputDir}/cycle1.graphql`, g1);
+          const j1 = graphqlToJsonSchema(g1);       fs.writeFileSync(`${outputDir}/cycle1.json`, JSON.stringify(j1, null, 2));
+          const g2 = jsonSchemaToGraphQL(j1);        fs.writeFileSync(`${outputDir}/cycle2.graphql`, g2);
+          const j2 = graphqlToJsonSchema(g2);        fs.writeFileSync(`${outputDir}/cycle2.json`, JSON.stringify(j2, null, 2));
+          const g3 = jsonSchemaToGraphQL(j2);        fs.writeFileSync(`${outputDir}/cycle3.graphql`, g3);
+          const j3 = graphqlToJsonSchema(g3);        fs.writeFileSync(`${outputDir}/cycle3.json`, JSON.stringify(j3, null, 2));
+          if (JSON.stringify(j1) !== JSON.stringify(j2)) { console.error('Drift: j1 ≠ j2'); process.exit(1); }
+          if (JSON.stringify(j2) !== JSON.stringify(j3)) { console.error('Drift: j2 ≠ j3'); process.exit(1); }
+          if (g1 !== g2) { console.error('Drift: g1 ≠ g2'); process.exit(1); }
+          if (g2 !== g3) { console.error('Drift: g2 ≠ g3'); process.exit(1); }
+          console.log('✅ 3-cycle round-trip passed — no drift detected');
+          EOF
+
+          cd converters/node
+          node roundtrip-ci.mjs "../../$TEST_FILE" "../../test-output"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: round-trip-outputs
+          path: test-output/
+          retention-days: 7
+
+  # ── Integration tests ─────────────────────────────────────────────────────
+
+  integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [test-node]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Node converter
+        working-directory: converters/node
+        run: pnpm run build
+
+      - name: Run integration tests
+        run: |
+          cd converters/node
+          pnpm tsx ../../scripts/integration/test-conversions.ts \
+            --fail-on-error \
+            --output=../../integration-test-report.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration-test-report
+          path: integration-test-report.json
+          retention-days: 30
+
+  # ── Coverage (non-blocking on summary) ───────────────────────────────────
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    needs: [test-rust, test-node]
+    # Skip on forks to avoid leaking tokens
+    if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name != 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            converters/rust/target
+          key: ${{ runner.os }}-cargo-stable-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Node.js coverage
+        working-directory: converters/node
+        run: pnpm run test:coverage
+
+      - name: Upload Node coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./converters/node/coverage/lcov.info
+          flags: node
+          name: node-coverage
+
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+
+      - name: Rust coverage
+        working-directory: converters/rust
+        run: cargo tarpaulin --all-features --workspace --timeout 300 --out Xml
+
+      - name: Upload Rust coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./converters/rust/cobertura.xml
+          flags: rust
+          name: rust-coverage
+
+  # ── Summary gate ──────────────────────────────────────────────────────────
+
+  ci-summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs: [test-rust, test-node, parity, round-trip, integration]
+    if: always()
+
+    steps:
+      - name: Evaluate results
+        run: |
+          echo "## CI Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Job | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Rust Tests   | ${{ needs.test-rust.result }}   |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Node Tests   | ${{ needs.test-node.result }}   |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Parity       | ${{ needs.parity.result }}       |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Round-Trip   | ${{ needs.round-trip.result }}   |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Integration  | ${{ needs.integration.result }}  |" >> "$GITHUB_STEP_SUMMARY"
+
+          for result in \
+            "${{ needs.test-rust.result }}" \
+            "${{ needs.test-node.result }}" \
+            "${{ needs.parity.result }}" \
+            "${{ needs.round-trip.result }}" \
+            "${{ needs.integration.result }}"; do
+            if [ "$result" != "success" ] && [ "$result" != "skipped" ]; then
+              echo "❌ One or more CI jobs failed." >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+          done
+          echo "✅ All CI checks passed." >> "$GITHUB_STEP_SUMMARY"

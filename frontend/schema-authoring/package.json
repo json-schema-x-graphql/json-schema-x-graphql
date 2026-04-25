@@ -1,0 +1,70 @@
+{
+  "name": "@json-schema-x-graphql/schema-authoring",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JSON Schema authoring UI with live GraphQL SDL conversion, validation, and AI-accessible APIs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:api": "cd ../../converters/node && pnpm run dev:api",
+    "dev:full": "concurrently \"pnpm run dev:api\" \"pnpm run dev\" --names \"API,VITE\" --prefix-colors \"blue,green\"",
+    "debug:browser": "tsx debug-browser.ts",
+    "debug:install": "pnpm add -D playwright @playwright/test && pnpm exec playwright install chromium",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test tests --project=chromium",
+    "build:wasm": "bash ../../scripts/build-wasm.sh",
+    "postinstall": "pnpm run build:wasm || echo 'WASM build skipped - will use Node converter only'"
+  },
+  "dependencies": {
+    "@graphql-tools/utils": "^11.0.1",
+    "@monaco-editor/react": "^4.7.0",
+    "ajv": "8.18.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
+    "clsx": "^2.1.1",
+    "graphql": "^16.13.2",
+    "immer": "^11.1.4",
+    "lucide-react": "^1.8.0",
+    "monaco-editor": "^0.55.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-hot-toast": "^2.6.0",
+    "tailwind-merge": "^3.5.0",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@tailwindcss/forms": "^0.5.11",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/ui": "^4.1.4",
+    "autoprefixer": "^10.5.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "playwright": "^1.59.1",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.8",
+    "vite-plugin-top-level-await": "^1.6.0",
+    "vite-plugin-wasm": "^3.6.0",
+    "vitest": "^4.1.4"
+  },
+  "peerDependencies": {
+    "@json-schema-x-graphql/core": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,339 @@
+{
+  "timestamp": "2026-04-04T02:47:37.327Z",
+  "environment": {
+    "nodeVersion": "v24.12.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpus": 32
+  },
+  "totalBenchmarks": 8,
+  "results": [
+    {
+      "name": "basic-types",
+      "file": "converters/test-data/x-graphql/basic-types.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.00999,
+          "max": 0.256189,
+          "mean": 0.013335673000000022,
+          "median": 0.01087,
+          "stdDev": 0.011398874937644988,
+          "p95": 0.02018,
+          "p99": 0.044619
+        },
+        "validationTimeMs": {
+          "min": 0.05955,
+          "max": 2.500074,
+          "mean": 0.08094129999999984,
+          "median": 0.06497449999999999,
+          "stdDev": 0.08574127230692342,
+          "p95": 0.127199,
+          "p99": 0.245958
+        },
+        "memoryUsageMB": {
+          "before": 12.152565002441406,
+          "after": 19.810317993164062,
+          "delta": 7.657752990722656
+        },
+        "throughput": {
+          "conversionsPerSecond": 74986.84168395538,
+          "typesPerSecond": 224960.52505186613
+        }
+      },
+      "metadata": {
+        "schemaSize": 2351,
+        "typesGenerated": 3,
+        "fieldsGenerated": 10,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "comprehensive",
+      "file": "converters/test-data/x-graphql/comprehensive.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.03554,
+          "max": 0.172889,
+          "mean": 0.04172829500000006,
+          "median": 0.0388545,
+          "stdDev": 0.011625378168815627,
+          "p95": 0.05707,
+          "p99": 0.092409
+        },
+        "validationTimeMs": {
+          "min": 0.245289,
+          "max": 1.148973,
+          "mean": 0.282828206,
+          "median": 0.2597335,
+          "stdDev": 0.06664633509498903,
+          "p95": 0.408578,
+          "p99": 0.488606
+        },
+        "memoryUsageMB": {
+          "before": 13.344032287597656,
+          "after": 15.938232421875,
+          "delta": 2.5942001342773438
+        },
+        "throughput": {
+          "conversionsPerSecond": 23964.554506720164,
+          "typesPerSecond": 191716.4360537613
+        }
+      },
+      "metadata": {
+        "schemaSize": 15871,
+        "typesGenerated": 8,
+        "fieldsGenerated": 49,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "interfaces",
+      "file": "converters/test-data/x-graphql/interfaces.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.02774,
+          "max": 0.171369,
+          "mean": 0.02997009499999999,
+          "median": 0.02894,
+          "stdDev": 0.009039385942970633,
+          "p95": 0.03308,
+          "p99": 0.03982
+        },
+        "validationTimeMs": {
+          "min": 0.178939,
+          "max": 2.525853,
+          "mean": 0.262092676,
+          "median": 0.2122985,
+          "stdDev": 0.1307374407522919,
+          "p95": 0.385988,
+          "p99": 0.556277
+        },
+        "memoryUsageMB": {
+          "before": 17.104026794433594,
+          "after": 20.512596130371094,
+          "delta": 3.4085693359375
+        },
+        "throughput": {
+          "conversionsPerSecond": 33366.59426671822,
+          "typesPerSecond": 367032.5369339004
+        }
+      },
+      "metadata": {
+        "schemaSize": 8853,
+        "typesGenerated": 11,
+        "fieldsGenerated": 31,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "unions",
+      "file": "converters/test-data/x-graphql/unions.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.06249,
+          "max": 1.57812,
+          "mean": 0.0813939459999999,
+          "median": 0.07278899999999999,
+          "stdDev": 0.0696707780719512,
+          "p95": 0.09464,
+          "p99": 0.247128
+        },
+        "validationTimeMs": {
+          "min": 0.207338,
+          "max": 15.555908,
+          "mean": 0.5761345880000007,
+          "median": 0.42768249999999997,
+          "stdDev": 0.9606094987822886,
+          "p95": 0.695326,
+          "p99": 4.241853
+        },
+        "memoryUsageMB": {
+          "before": 21.884765625,
+          "after": 84.6402587890625,
+          "delta": 62.7554931640625
+        },
+        "throughput": {
+          "conversionsPerSecond": 12285.926031894329,
+          "typesPerSecond": 196574.81651030926
+        }
+      },
+      "metadata": {
+        "schemaSize": 10674,
+        "typesGenerated": 16,
+        "fieldsGenerated": 38,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "complex-schema",
+      "file": "converters/test-data/complex-schema.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.051489,
+          "max": 10.038055,
+          "mean": 0.1192116830000001,
+          "median": 0.09677949999999999,
+          "stdDev": 0.37036853584225343,
+          "p95": 0.121949,
+          "p99": 0.170648
+        },
+        "validationTimeMs": {
+          "min": 0.205468,
+          "max": 9.625927,
+          "mean": 0.44253590500000034,
+          "median": 0.389342,
+          "stdDev": 0.46308067386193924,
+          "p95": 0.504167,
+          "p99": 2.816542
+        },
+        "memoryUsageMB": {
+          "before": 86.47911834716797,
+          "after": 71.09391021728516,
+          "delta": -15.385208129882812
+        },
+        "throughput": {
+          "conversionsPerSecond": 8388.439579365717,
+          "typesPerSecond": 125826.59369048575
+        }
+      },
+      "metadata": {
+        "schemaSize": 6476,
+        "typesGenerated": 15,
+        "fieldsGenerated": 46,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "user-service",
+      "file": "converters/test-data/user-service.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.01663,
+          "max": 1.454071,
+          "mean": 0.03941594200000004,
+          "median": 0.0308195,
+          "stdDev": 0.0775327578162071,
+          "p95": 0.04463,
+          "p99": 0.174579
+        },
+        "validationTimeMs": {
+          "min": 0.294489,
+          "max": 4.6605,
+          "mean": 0.637439703,
+          "median": 0.5664210000000001,
+          "stdDev": 0.41396076824984107,
+          "p95": 0.883384,
+          "p99": 3.560417
+        },
+        "memoryUsageMB": {
+          "before": 72.05489349365234,
+          "after": 110.91969299316406,
+          "delta": 38.86479949951172
+        },
+        "throughput": {
+          "conversionsPerSecond": 25370.445288355637,
+          "typesPerSecond": 25370.445288355637
+        }
+      },
+      "metadata": {
+        "schemaSize": 6653,
+        "typesGenerated": 1,
+        "fieldsGenerated": 21,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "federation_v2",
+      "file": "converters/test-data/federation_v2.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.00433,
+          "max": 0.105419,
+          "mean": 0.007758088999999997,
+          "median": 0.007730000000000001,
+          "stdDev": 0.005053535150672148,
+          "p95": 0.01101,
+          "p99": 0.02387
+        },
+        "validationTimeMs": {
+          "min": 0.046769,
+          "max": 0.470937,
+          "mean": 0.10667158599999996,
+          "median": 0.1136795,
+          "stdDev": 0.028888183966123658,
+          "p95": 0.125999,
+          "p99": 0.154619
+        },
+        "memoryUsageMB": {
+          "before": 111.5996322631836,
+          "after": 92.44562530517578,
+          "delta": -19.154006958007812
+        },
+        "throughput": {
+          "conversionsPerSecond": 128897.72210656521,
+          "typesPerSecond": 128897.72210656521
+        }
+      },
+      "metadata": {
+        "schemaSize": 456,
+        "typesGenerated": 1,
+        "fieldsGenerated": 3,
+        "hasXGraphQLExtensions": true
+      }
+    },
+    {
+      "name": "deep_nesting",
+      "file": "converters/test-data/deep_nesting.json",
+      "iterations": 1000,
+      "metrics": {
+        "conversionTimeMs": {
+          "min": 0.071559,
+          "max": 3.188199,
+          "mean": 0.11800963200000025,
+          "median": 0.1181295,
+          "stdDev": 0.10678437368792569,
+          "p95": 0.145169,
+          "p99": 0.171499
+        },
+        "validationTimeMs": {
+          "min": 0.191508,
+          "max": 8.649684,
+          "mean": 0.28283017699999957,
+          "median": 0.21727849999999999,
+          "stdDev": 0.4365002065345626,
+          "p95": 0.387707,
+          "p99": 0.459647
+        },
+        "memoryUsageMB": {
+          "before": 94.54438781738281,
+          "after": 172.54397583007812,
+          "delta": 77.99958801269531
+        },
+        "throughput": {
+          "conversionsPerSecond": 8473.884572405055,
+          "typesPerSecond": 262690.4217445567
+        }
+      },
+      "metadata": {
+        "schemaSize": 11683,
+        "typesGenerated": 31,
+        "fieldsGenerated": 31,
+        "hasXGraphQLExtensions": false
+      }
+    }
+  ],
+  "summary": {
+    "fastest": "federation_v2",
+    "slowest": "complex-schema",
+    "averageConversionMs": 0.056352919375000046,
+    "totalTypesGenerated": 86,
+    "totalIterations": 8000
+  }
+}

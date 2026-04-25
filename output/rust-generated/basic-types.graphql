@@ -1,0 +1,39 @@
+"""
+A user in the system
+"""
+type User {
+  """
+  Unique identifier for the user
+  """
+  id: ID!
+  """
+  User's email address
+  """
+  email: String!
+  """
+  User's full name
+  """
+  fullName: String
+  """
+  User's age in years
+  """
+  age: Int
+  """
+  Whether the user account is active
+  """
+  isActive: Boolean
+  """
+  Timestamp when the user was created
+  """
+  createdAt: DateTime
+}
+
+"""
+A product in the catalog
+"""
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  stockCount: Int
+}

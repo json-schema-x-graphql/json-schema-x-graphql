@@ -1,0 +1,22 @@
+{
+  "$id": "http://example.com/adr/ref_naming_collision.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RefNamingCollision",
+  "definitions": {
+    "targetA": {
+      "title": "index",
+      "type": "object",
+      "properties": { "x": { "type": "string" } }
+    },
+    "targetB": {
+      "title": "index",
+      "type": "object",
+      "properties": { "y": { "type": "string" } }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "a": { "$ref": "#/definitions/targetA" },
+    "b": { "$ref": "#/definitions/targetB" }
+  }
+}

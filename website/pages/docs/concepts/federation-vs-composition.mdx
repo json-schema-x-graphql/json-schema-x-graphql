@@ -1,0 +1,29 @@
+---
+title: Federation vs. Composition
+---
+
+# GraphQL Federation vs. Composition
+
+> This page is a stub. The full specification reference is maintained by the GraphQL Foundation.
+
+## The distinction
+
+**Apollo Federation** is a concrete implementation of a distributed GraphQL architecture. Individual services (**subgraphs**) expose partial schemas, and a **gateway** or **router** composes them into a unified **supergraph** schema that clients query as one endpoint.
+
+**GraphQL Composition** is the formal specification-level process of merging multiple schemas into one. The [GraphQL Composite Schemas Spec](https://graphql.github.io/composite-schemas-spec/draft/) defines the rules by which types, fields, and directives from separate schemas are merged and validated.
+
+## Relevance to this project
+
+`json-schema-x-graphql` generates **subgraph-ready SDL** from JSON Schema. The generated SDL:
+- Uses `x-graphql-federation` extensions to annotate entity types with `@key`
+- Marks entity fields with `@external`, `@requires`, and `@provides` as directed by the JSON Schema source
+- Is compatible with both Apollo Federation v1 and v2 gateways
+
+See the [Federation recipe](/docs/recipes/federation) for a practical example of annotating JSON Schema for federation output.
+
+## Further reading
+
+- [GraphQL Composite Schemas Spec (draft)](https://graphql.github.io/composite-schemas-spec/draft/#sec-Validate-Source-Schemas)
+- [Apollo Federation Docs](https://www.apollographql.com/docs/federation/)
+- [ADR 0005: React + Rust + WASM Stack](/docs/adr/0005-use-react-rust-wasm-stack)
+

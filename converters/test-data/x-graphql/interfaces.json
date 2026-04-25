@@ -1,0 +1,278 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Interfaces Test Schema",
+  "description": "Tests x-graphql-implements attribute for GraphQL interface implementation",
+  "type": "object",
+  "definitions": {
+    "Node": {
+      "type": "object",
+      "x-graphql-type-name": "Node",
+      "x-graphql-type-kind": "INTERFACE",
+      "description": "Base interface for entities with a unique identifier",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "description": "Unique identifier"
+        }
+      },
+      "required": ["id"]
+    },
+    "Timestamped": {
+      "type": "object",
+      "x-graphql-type-name": "Timestamped",
+      "x-graphql-type-kind": "INTERFACE",
+      "description": "Interface for entities with timestamp fields",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true,
+          "description": "Creation timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["created_at"]
+    },
+    "Searchable": {
+      "type": "object",
+      "x-graphql-type-name": "Searchable",
+      "x-graphql-type-kind": "INTERFACE",
+      "description": "Interface for entities that can be searched",
+      "properties": {
+        "search_rank": {
+          "type": "number",
+          "x-graphql-field-name": "searchRank",
+          "x-graphql-field-type": "Float",
+          "description": "Search relevance ranking"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node", "Timestamped"],
+      "description": "User type implementing Node and Timestamped interfaces",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime"
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username",
+          "x-graphql-field-non-null": true,
+          "description": "Unique username"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "x-graphql-field-non-null": true,
+          "description": "User email address"
+        },
+        "profile": {
+          "type": "object",
+          "x-graphql-field-name": "profile",
+          "x-graphql-field-type": "UserProfile",
+          "description": "User profile information"
+        }
+      },
+      "required": ["id", "created_at", "username", "email"]
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node", "Timestamped", "Searchable"],
+      "description": "Product type implementing multiple interfaces",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime"
+        },
+        "search_rank": {
+          "type": "number",
+          "x-graphql-field-name": "searchRank",
+          "x-graphql-field-type": "Float"
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-field-name": "name",
+          "x-graphql-field-non-null": true,
+          "description": "Product name"
+        },
+        "description": {
+          "type": "string",
+          "x-graphql-field-name": "description",
+          "description": "Product description"
+        },
+        "price": {
+          "type": "number",
+          "x-graphql-field-name": "price",
+          "x-graphql-field-type": "Float",
+          "x-graphql-field-non-null": true,
+          "description": "Product price"
+        },
+        "category": {
+          "type": "object",
+          "x-graphql-field-name": "category",
+          "x-graphql-field-type": "Category",
+          "description": "Product category"
+        }
+      },
+      "required": ["id", "created_at", "name", "price"]
+    },
+    "Category": {
+      "type": "object",
+      "x-graphql-type-name": "Category",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node"],
+      "description": "Category type implementing only Node interface",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-field-name": "name",
+          "x-graphql-field-non-null": true,
+          "description": "Category name"
+        },
+        "slug": {
+          "type": "string",
+          "x-graphql-field-name": "slug",
+          "x-graphql-field-non-null": true,
+          "description": "URL-friendly category identifier"
+        },
+        "parent": {
+          "type": "object",
+          "x-graphql-field-name": "parent",
+          "x-graphql-field-type": "Category",
+          "description": "Parent category for nested hierarchies"
+        }
+      },
+      "required": ["id", "name", "slug"]
+    },
+    "UserProfile": {
+      "type": "object",
+      "x-graphql-type-name": "UserProfile",
+      "x-graphql-type-kind": "OBJECT",
+      "description": "User profile data (does not implement any interfaces)",
+      "properties": {
+        "bio": {
+          "type": "string",
+          "x-graphql-field-name": "bio",
+          "description": "User biography"
+        },
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "avatarUrl",
+          "description": "URL to user's avatar image"
+        },
+        "location": {
+          "type": "string",
+          "x-graphql-field-name": "location",
+          "description": "User's location"
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "website",
+          "description": "User's personal website"
+        }
+      }
+    },
+    "ExtendedInterface": {
+      "type": "object",
+      "x-graphql-type-name": "ExtendedInterface",
+      "x-graphql-type-kind": "INTERFACE",
+      "x-graphql-implements": ["Node"],
+      "description": "Interface that extends another interface",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "extended_field": {
+          "type": "string",
+          "x-graphql-field-name": "extendedField",
+          "description": "Additional field for extended interface"
+        }
+      },
+      "required": ["id"]
+    },
+    "ConcreteExtended": {
+      "type": "object",
+      "x-graphql-type-name": "ConcreteExtended",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["ExtendedInterface"],
+      "description": "Concrete type implementing an extended interface",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "extended_field": {
+          "type": "string",
+          "x-graphql-field-name": "extendedField"
+        },
+        "concrete_field": {
+          "type": "string",
+          "x-graphql-field-name": "concreteField",
+          "description": "Field specific to concrete implementation"
+        }
+      },
+      "required": ["id"]
+    }
+  }
+}

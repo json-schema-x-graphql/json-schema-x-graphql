@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Reviews Service Schema",
+  "description": "Review entity for Apollo Federation classic example",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "federationVersion": "V2",
+    "includeDescriptions": true
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "description": "Extended User type with reviews",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["email"],
+      "x-graphql-federation-extends": true,
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User's email address",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "description": "Reviews written by this user",
+          "x-graphql-field-type": "[Review!]",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["email"]
+    },
+    "Product": {
+      "type": "object",
+      "description": "Extended Product type with reviews",
+      "x-graphql-type-name": "Product",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["upc"],
+      "x-graphql-federation-extends": true,
+      "properties": {
+        "upc": {
+          "type": "string",
+          "description": "Universal Product Code",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "description": "Reviews for this product",
+          "x-graphql-field-type": "[Review!]",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["upc"]
+    },
+    "Review": {
+      "type": "object",
+      "description": "Product review by a user",
+      "x-graphql-type-name": "Review",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-federation-keys": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Review ID (primary key)",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "product_upc": {
+          "type": "string",
+          "description": "Foreign key to Product (UPC)",
+          "x-graphql-field-name": "productUpc",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "author_email": {
+          "type": "string",
+          "format": "email",
+          "description": "Foreign key to User (email)",
+          "x-graphql-field-name": "authorEmail",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "body": {
+          "type": "string",
+          "description": "Review text content",
+          "x-graphql-nullable": true
+        },
+        "rating": {
+          "type": "integer",
+          "description": "Rating from 1-5",
+          "x-graphql-nullable": true
+        },
+        "author": {
+          "type": "object",
+          "description": "User who wrote the review",
+          "x-graphql-field-type": "User",
+          "x-graphql-field-non-null": true
+        },
+        "product": {
+          "type": "object",
+          "description": "Product being reviewed",
+          "x-graphql-field-type": "Product",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "product_upc", "author_email", "author", "product"]
+    },
+    "Query": {
+      "type": "object",
+      "x-graphql-type-name": "Query",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "review": {
+          "type": "object",
+          "description": "Get a review by ID",
+          "x-graphql-field-type": "Review",
+          "x-graphql-arguments": {
+            "id": {
+              "x-graphql-type": "ID!",
+              "description": "Review ID"
+            }
+          }
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          },
+          "description": "Get all reviews",
+          "x-graphql-field-type": "[Review!]",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

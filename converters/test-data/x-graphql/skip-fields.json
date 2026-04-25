@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skip Fields Test Schema",
+  "description": "Tests x-graphql-skip attribute for excluding fields and types from GraphQL SDL generation",
+  "type": "object",
+  "definitions": {
+    "VisibleType": {
+      "type": "object",
+      "x-graphql-type-name": "VisibleType",
+      "description": "A type that should appear in the GraphQL schema",
+      "properties": {
+        "public_field": {
+          "type": "string",
+          "x-graphql-field-name": "publicField",
+          "description": "This field should be visible"
+        },
+        "internal_field": {
+          "type": "string",
+          "x-graphql-field-name": "internalField",
+          "x-graphql-skip": true,
+          "description": "This field should be skipped and not appear in GraphQL"
+        },
+        "another_public_field": {
+          "type": "integer",
+          "x-graphql-field-name": "anotherPublicField",
+          "description": "Another visible field"
+        },
+        "_metadata": {
+          "type": "object",
+          "x-graphql-skip": true,
+          "description": "Internal metadata that should not be exposed"
+        },
+        "visible_nested": {
+          "type": "object",
+          "x-graphql-field-name": "visibleNested",
+          "x-graphql-field-type": "NestedType",
+          "description": "A nested type that should be visible"
+        }
+      },
+      "required": ["public_field"]
+    },
+    "NestedType": {
+      "type": "object",
+      "x-graphql-type-name": "NestedType",
+      "description": "A nested type with some skipped fields",
+      "properties": {
+        "visible_field": {
+          "type": "string",
+          "x-graphql-field-name": "visibleField"
+        },
+        "hidden_field": {
+          "type": "string",
+          "x-graphql-field-name": "hiddenField",
+          "x-graphql-skip": true
+        },
+        "another_visible": {
+          "type": "boolean",
+          "x-graphql-field-name": "anotherVisible"
+        }
+      }
+    },
+    "InternalType": {
+      "type": "object",
+      "x-graphql-type-name": "InternalType",
+      "x-graphql-skip": true,
+      "description": "This entire type should be skipped",
+      "properties": {
+        "some_field": {
+          "type": "string",
+          "x-graphql-field-name": "someField"
+        },
+        "another_field": {
+          "type": "integer",
+          "x-graphql-field-name": "anotherField"
+        }
+      }
+    },
+    "UserWithPrivateData": {
+      "type": "object",
+      "x-graphql-type-name": "UserWithPrivateData",
+      "description": "User type with both public and private fields",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username"
+        },
+        "email": {
+          "type": "string",
+          "x-graphql-field-name": "email"
+        },
+        "password_hash": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Password hash should never be exposed via GraphQL"
+        },
+        "internal_notes": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Internal notes for admin use only"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime"
+        },
+        "_db_version": {
+          "type": "integer",
+          "x-graphql-skip": true,
+          "description": "Database versioning field"
+        }
+      },
+      "required": ["id", "username"]
+    },
+    "SkipListItems": {
+      "type": "object",
+      "x-graphql-type-name": "SkipListItems",
+      "description": "Tests skipping within arrays",
+      "properties": {
+        "visible_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "visibleItems"
+        },
+        "hidden_items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "hiddenItems",
+          "x-graphql-skip": true
+        }
+      }
+    }
+  }
+}

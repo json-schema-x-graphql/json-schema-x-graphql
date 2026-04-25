@@ -1,0 +1,28 @@
+"Extended Book type with reviews"
+type Book @key(fields: "isbn") {
+  "International Standard Book Number"
+  isbn: ID!
+  "Reviews for this book"
+  reviews: [Review!]!
+}
+
+"Book review by a user"
+type Review @key(fields: "id") {
+  "Review ID (primary key)"
+  id: ID!
+  "Foreign key to Book (ISBN)"
+  bookIsbn: ID!
+  "Rating from 1-5"
+  rating: Int!
+  "Review text content"
+  content: String
+  "Book being reviewed"
+  book: Book!
+}
+
+type Query {
+  "Get a review by ID"
+  review(id: ID!): Review
+  "Get all reviews"
+  reviews: [Review!]!
+}

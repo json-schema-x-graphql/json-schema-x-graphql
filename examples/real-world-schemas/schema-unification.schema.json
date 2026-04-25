@@ -1,0 +1,835 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schema_unification.schema.json",
+  "title": "Data Integration Fabric (DIF) v2.0 by Data Integration Project with GraphQL Extensions",
+  "description": "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation",
+  "x-graphql-scalars": {
+    "date_time": {
+      "description": "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)",
+      "serialize": "String"
+    },
+    "date": {
+      "description": "ISO 8601 date string (YYYY-MM-DD)",
+      "serialize": "String"
+    },
+    "decimal": {
+      "description": "High-precision decimal number for currency and financial values",
+      "serialize": "Float"
+    },
+    "json": {
+      "description": "Arbitrary JSON value",
+      "serialize": "JSON"
+    },
+    "email": {
+      "description": "Valid email address",
+      "serialize": "String"
+    },
+    "uri": {
+      "description": "Valid URI/URL",
+      "serialize": "String"
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "contract": {
+        "type": "Contract",
+        "description": "Fetch a single contract by global ID",
+        "args": {
+          "id": {
+            "type": "ID!",
+            "description": "Global record identifier"
+          }
+        }
+      },
+      "contract_by_piid": {
+        "type": "Contract",
+        "description": "Fetch a contract by PIID",
+        "args": {
+          "piid": {
+            "type": "String!",
+            "description": "Procurement Instrument Identifier"
+          }
+        }
+      },
+      "contracts": {
+        "type": "ContractConnection!",
+        "description": "Paginated list of contracts with filtering",
+        "args": {
+          "first": {
+            "type": "Int",
+            "description": "Number of contracts to return",
+            "default": 10
+          },
+          "after": {
+            "type": "String",
+            "description": "Cursor for pagination"
+          },
+          "filter": {
+            "type": "ContractFilter",
+            "description": "Filter criteria"
+          },
+          "order_by": {
+            "type": "ContractOrderBy",
+            "description": "Ordering criteria"
+          }
+        }
+      },
+      "search_contracts": {
+        "type": "[Contract!]!",
+        "description": "Full-text search for contracts",
+        "args": {
+          "query": {
+            "type": "String!",
+            "description": "Search query"
+          },
+          "limit": {
+            "type": "Int",
+            "default": 20
+          }
+        }
+      }
+    },
+    "mutations": {
+      "trigger_data_ingestion": {
+        "type": "IngestionResult!",
+        "description": "Trigger data ingestion from external system",
+        "args": {
+          "system": {
+            "type": "SystemType!",
+            "description": "System to ingest from (Contract Data, Legacy Procurement, Intake Process, Logistics Mgmt)"
+          },
+          "full_refresh": {
+            "type": "Boolean",
+            "description": "Whether to perform full refresh",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "x-graphql-pagination": {
+    "enabled": true,
+    "style": "relay",
+    "types": {
+      "contract": {
+        "connection": "ContractConnection",
+        "edge": "ContractEdge"
+      }
+    }
+  },
+  "$defs": {
+    "system_type": {
+      "type": "string",
+      "description": "Source system type",
+      "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"],
+      "x-graphql-enum": {
+        "name": "SystemType",
+        "description": "Federal contracting system type",
+        "values": {
+          "contract_data": {
+            "name": "Contract Data",
+            "description": "Contract Data System - Next Generation"
+          },
+          "legacy_procurement": {
+            "name": "Legacy Procurement",
+            "description": "Award System for Streamlined IT Transactions"
+          },
+          "intake_process": {
+            "name": "Intake Process",
+            "description": "Enterprise Acquisition System for Infrastructure"
+          },
+          "logistics_mgmt": {
+            "name": "Logistics Mgmt",
+            "description": "Contract Award Lifecycle Management"
+          }
+        }
+      }
+    },
+    "contact_role": {
+      "type": "string",
+      "description": "Role classification for contract contacts",
+      "enum": ["primary", "technical", "administrative", "contracting_officer"],
+      "x-graphql-enum": {
+        "name": "ContactRole",
+        "description": "Role classification for contract personnel",
+        "values": {
+          "primary": {
+            "name": "PRIMARY",
+            "description": "Primary contact for the contract"
+          },
+          "technical": {
+            "name": "TECHNICAL",
+            "description": "Technical point of contact"
+          },
+          "administrative": {
+            "name": "ADMINISTRATIVE",
+            "description": "Administrative contact"
+          },
+          "contracting_officer": {
+            "name": "CONTRACTING_OFFICER",
+            "description": "Government contracting officer"
+          }
+        }
+      }
+    },
+    "contract_status": {
+      "type": "string",
+      "description": "Contract lifecycle status",
+      "enum": ["draft", "published", "awarded", "completed", "cancelled"],
+      "x-graphql-enum": {
+        "name": "ContractStatus",
+        "description": "Current status in the contract lifecycle",
+        "values": {
+          "draft": {
+            "name": "DRAFT",
+            "description": "Contract in draft state"
+          },
+          "published": {
+            "name": "PUBLISHED",
+            "description": "Contract published for bidding"
+          },
+          "awarded": {
+            "name": "AWARDED",
+            "description": "Contract awarded to vendor"
+          },
+          "completed": {
+            "name": "COMPLETED",
+            "description": "Contract completed"
+          },
+          "cancelled": {
+            "name": "CANCELLED",
+            "description": "Contract cancelled"
+          }
+        }
+      }
+    },
+    "data_quality": {
+      "type": "object",
+      "description": "Data quality metrics for system chain entry",
+      "properties": {
+        "completeness_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Data completeness score (0-1)"
+        },
+        "validation_errors": {
+          "type": "array",
+          "description": "List of validation errors",
+          "items": {
+            "type": "string"
+          }
+        },
+        "last_validated": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+          "description": "Last validation timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)",
+          "x-graphql-scalar": "DateTime"
+        }
+      }
+    },
+    "system_chain_entry": {
+      "type": "object",
+      "description": "Entry in the system chain showing data flow",
+      "properties": {
+        "system_name": {
+          "$ref": "#/$defs/system_type"
+        },
+        "record_id": {
+          "type": "string",
+          "description": "Record ID in the source system"
+        },
+        "processed_date": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+          "description": "When this record was processed (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)",
+          "x-graphql-scalar": "DateTime"
+        },
+        "transformation_rules": {
+          "type": "array",
+          "description": "Rules applied during transformation",
+          "items": {
+            "type": "string"
+          }
+        },
+        "data_quality": {
+          "$ref": "#/$defs/data_quality"
+        }
+      },
+      "required": ["system_name", "record_id", "processed_date"]
+    },
+    "system_metadata": {
+      "type": "object",
+      "description": "Metadata supporting multiple nested systems",
+      "x-graphql-type": {
+        "name": "SystemMetadata",
+        "description": "System metadata tracking data lineage and quality"
+      },
+      "properties": {
+        "primary_system": {
+          "$ref": "#/$defs/system_type",
+          "description": "Primary source system"
+        },
+        "system_chain": {
+          "type": "array",
+          "description": "Chain of systems data has flowed through",
+          "items": {
+            "$ref": "#/$defs/system_chain_entry"
+          }
+        },
+        "schema_version": {
+          "type": "string",
+          "default": "2.0",
+          "description": "Schema version",
+          "x-graphql-required": true
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+          "description": "Last modification timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)",
+          "x-graphql-scalar": "DateTime",
+          "x-graphql-required": true
+        },
+        "global_record_id": {
+          "type": "string",
+          "description": "Global unique identifier across all systems",
+          "x-graphql-required": true
+        }
+      },
+      "required": ["primary_system", "system_chain", "global_record_id"]
+    },
+    "contract_identification": {
+      "type": "object",
+      "description": "Contract identification information",
+      "properties": {
+        "piid": {
+          "type": "string",
+          "max_length": 100,
+          "description": "Procurement Instrument Identifier"
+        },
+        "original_award_piid": {
+          "type": "string",
+          "max_length": 100,
+          "description": "Original Award PIID (Preceding Reference Info)"
+        },
+        "referenced_piid": {
+          "type": "string",
+          "max_length": 100,
+          "description": "Referenced PIID for related contracts"
+        },
+        "contract_title": {
+          "type": "string",
+          "description": "Title or description of the contract"
+        },
+        "contract_type": {
+          "type": "string",
+          "description": "Type of contract instrument"
+        },
+        "description_of_requirement": {
+          "type": "string",
+          "description": "Detailed description of contract requirements"
+        }
+      },
+      "required": ["piid"]
+    },
+    "agency_info": {
+      "type": "object",
+      "description": "Agency or department information",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Agency or Department Code"
+        },
+        "name": {
+          "type": "string",
+          "description": "Agency or Department Name"
+        }
+      }
+    },
+    "organization_info": {
+      "type": "object",
+      "description": "Organization information for contracts",
+      "properties": {
+        "contracting_agency": {
+          "all_of": [
+            {
+              "$ref": "#/$defs/agency_info"
+            },
+            {
+              "required": ["code"]
+            }
+          ],
+          "description": "Contracting agency information"
+        },
+
+        "contracting_department": {
+          "$ref": "#/$defs/agency_info",
+          "description": "Contracting department information"
+        },
+        "funding_agency": {
+          "$ref": "#/$defs/agency_info",
+          "description": "Funding agency information"
+        },
+        "funding_department": {
+          "$ref": "#/$defs/agency_info",
+          "description": "Funding department information"
+        }
+      },
+      "required": ["contracting_agency"]
+    },
+    "vendor_info": {
+      "type": "object",
+      "description": "Vendor information",
+      "properties": {
+        "vendor_name": {
+          "type": "string",
+          "description": "Name of the vendor providing goods/services"
+        },
+        "vendor_uei": {
+          "type": "string",
+          "description": "Vendor Unique Entity Identifier"
+        }
+      }
+    },
+    "place_of_performance": {
+      "type": "object",
+      "description": "Place of performance location details",
+      "properties": {
+        "street_address": {
+          "type": "string",
+          "description": "Street address"
+        },
+        "city": {
+          "type": "string",
+          "description": "City"
+        },
+        "county": {
+          "type": "string",
+          "description": "County"
+        },
+        "state": {
+          "type": "string",
+          "description": "State code"
+        },
+        "zip": {
+          "type": "string",
+          "description": "ZIP code"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country code"
+        },
+        "congressional_district": {
+          "type": "string",
+          "description": "Congressional district"
+        }
+      }
+    },
+    "financial_info": {
+      "type": "object",
+      "description": "Financial information and values",
+      "properties": {
+        "total_contract_value": {
+          "type": "number",
+          "description": "Total contract value including all modifications",
+          "x-graphql-scalar": "Decimal"
+        },
+        "base_and_all_options_value": {
+          "type": "number",
+          "description": "Base contract value plus all option periods",
+          "x-graphql-scalar": "Decimal"
+        },
+        "independent_government_estimate": {
+          "type": "number",
+          "description": "IGE amount",
+          "x-graphql-scalar": "Decimal"
+        },
+        "amount_spent_on_product": {
+          "type": "number",
+          "description": "Amount spent on specific products",
+          "x-graphql-scalar": "Decimal"
+        },
+        "contract_fiscal_year": {
+          "type": "string",
+          "description": "Fiscal year when contract was awarded"
+        }
+      }
+    },
+    "business_classification": {
+      "type": "object",
+      "description": "Business classification codes and categories",
+      "properties": {
+        "naics_code": {
+          "type": "string",
+          "description": "NAICS classification code"
+        },
+        "naics_description": {
+          "type": "string",
+          "description": "NAICS description"
+        },
+        "psc_code": {
+          "type": "string",
+          "description": "Product Service Code"
+        },
+        "psc_description": {
+          "type": "string",
+          "description": "Product Service Code Description"
+        },
+        "category_of_product": {
+          "type": "string",
+          "description": "General category under which the product falls"
+        },
+        "type_of_product": {
+          "type": "string",
+          "description": "Specific type of product being contracted"
+        },
+        "set_aside_type": {
+          "type": "string",
+          "description": "Type of set-aside program"
+        },
+        "local_area_set_aside": {
+          "type": "boolean",
+          "description": "Local area set-aside flag"
+        },
+        "co_size_determination": {
+          "type": "string",
+          "description": "Contracting Officer size determination"
+        }
+      }
+    },
+    "contract_characteristics": {
+      "type": "object",
+      "description": "Contract characteristics and flags",
+      "properties": {
+        "emergency_acquisition": {
+          "type": "string",
+          "description": "Emergency acquisition indicator"
+        },
+        "government_furnished_property": {
+          "type": "boolean",
+          "description": "Government furnished property flag"
+        },
+        "includes_cui": {
+          "type": "boolean",
+          "description": "Includes Controlled Unclassified Information"
+        },
+        "recurring_service": {
+          "type": "boolean",
+          "description": "Recurring service flag"
+        },
+        "recurring_utilities": {
+          "type": "boolean",
+          "description": "Recurring utilities flag"
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "description": "Contact information for contract personnel",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Contact name"
+        },
+        "title": {
+          "type": "string",
+          "description": "Contact title"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Contact email address",
+          "x-graphql-scalar": "Email"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number"
+        },
+        "role": {
+          "$ref": "#/$defs/contact_role"
+        }
+      }
+    },
+    "status_info": {
+      "type": "object",
+      "description": "Contract status information",
+      "properties": {
+        "is_active": {
+          "type": "boolean",
+          "description": "Active contract flag"
+        },
+        "is_latest": {
+          "type": "boolean",
+          "description": "Latest version flag"
+        },
+        "is_funded": {
+          "type": "boolean",
+          "description": "Funded contract flag"
+        },
+        "status": {
+          "$ref": "#/$defs/contract_status"
+        },
+        "published_date": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+          "description": "Date contract was published (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)",
+          "x-graphql-scalar": "DateTime"
+        },
+        "last_modified_date": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$",
+          "description": "Last modification date (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)",
+          "x-graphql-scalar": "DateTime"
+        },
+        "contract_complete_date": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date when contract was completed (ISO 8601: YYYY-MM-DD)",
+          "x-graphql-scalar": "Date"
+        },
+        "last_car_date_signed": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date when last Contract Action Report was signed (ISO 8601: YYYY-MM-DD)",
+          "x-graphql-scalar": "Date"
+        }
+      }
+    },
+    "common_elements": {
+      "type": "object",
+      "description": "Fields common across all systems",
+      "properties": {
+        "contract_identification": {
+          "$ref": "#/$defs/contract_identification"
+        },
+
+        "organization_info": {
+          "$ref": "#/$defs/organization_info"
+        },
+
+        "vendor_info": {
+          "$ref": "#/$defs/vendor_info"
+        },
+        "place_of_performance": {
+          "$ref": "#/$defs/place_of_performance"
+        },
+        "financial_info": {
+          "$ref": "#/$defs/financial_info"
+        },
+        "business_classification": {
+          "$ref": "#/$defs/business_classification"
+        },
+        "contract_characteristics": {
+          "$ref": "#/$defs/contract_characteristics"
+        },
+        "contacts": {
+          "type": "array",
+          "description": "Contract contacts",
+          "items": {
+            "$ref": "#/$defs/contact"
+          }
+        },
+        "status_info": {
+          "$ref": "#/$defs/status_info"
+        }
+      },
+      "required": ["contract_identification", "organization_info", "status_info"]
+    },
+    "system_extensions": {
+      "type": "object",
+      "description": "System-specific fields and extensions. Each system (Contract Data, Legacy Procurement, IntakeSys, Public Spending, Logistics Mgmt, etc.) can add their own extensions dynamically without modifying this schema. System schemas should use GraphQL Federation @key directives to declare join fields.",
+      "x-graphql-type": {
+        "name": "SystemExtensions",
+        "description": "Dynamic system-specific extensions"
+      },
+      "properties": {
+        "contract_data": {
+          "description": "Contract Data-specific extensions",
+          "$ref": "contract_data.schema.json"
+        },
+        "legacy_procurement": {
+          "description": "Legacy Procurement-specific extensions",
+          "$ref": "legacy_procurement.schema.json"
+        },
+        "intake_process": {
+          "description": "Intake-system-specific extensions",
+          "$ref": "intake_process.schema.json"
+        },
+        "logistics_mgmt": {
+          "description": "Logistics Mgmt-specific extensions",
+          "$ref": "logistics_mgmt.schema.json"
+        },
+        "public_spending": {
+          "description": "Public Spending-specific extensions",
+          "$ref": "public_spending.schema.json"
+        }
+      },
+      "additionalProperties": {
+        "description": "Any other system can add extensions dynamically. Key is the system_id (e.g., 'public_spending'), value is system-specific data.",
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "System extension as structured object"
+          },
+          {
+            "type": "array",
+            "description": "System extension as array of field objects",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field_name": { "type": "string" },
+                "field_type": { "type": "string" },
+                "value": { "description": "Field value (any type)" },
+                "category": { "type": "string" }
+              },
+              "required": ["field_name", "value"]
+            }
+          }
+        ]
+      }
+    },
+    "contract": {
+      "type": "object",
+      "title": "Enhanced Government Contract Management Normalized Schema",
+      "description": "Unified schema for Contract Data, Legacy Procurement, and IntakeSys systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure",
+      "x-graphql-type": {
+        "name": "Contract",
+        "description": "Federal contract record with system metadata and lineage",
+        "implements": ["Node"]
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Alias for globalRecordId for GraphQL Node interface",
+          "x-graphql-field": {
+            "type": "ID!",
+            "description": "Global unique identifier (Node interface)",
+            "resolver": "Contract.id"
+          }
+        },
+        "system_metadata": {
+          "$ref": "#/$defs/system_metadata"
+        },
+        "common_elements": {
+          "$ref": "#/$defs/common_elements"
+        },
+        "system_extensions": {
+          "$ref": "#/$defs/system_extensions"
+        },
+        "related_contracts": {
+          "description": "Related contracts via referencedPiid",
+          "x-graphql-field": {
+            "type": "[Contract!]",
+            "description": "Fetch related contracts by referencedPiid",
+            "args": {
+              "first": {
+                "type": "Int",
+                "description": "Number of contracts to return",
+                "default": 10
+              }
+            },
+            "resolver": "Contract.relatedContracts"
+          }
+        },
+        "piid": {
+          "type": "string",
+          "description": "Procurement Instrument Identifier",
+          "x-graphql-field": {
+            "type": "String",
+            "description": "PIID for contract record"
+          }
+        },
+        "vendor_info": {
+          "$ref": "#/$defs/vendor_info",
+          "description": "Vendor information structure",
+          "x-graphql-field": {
+            "type": "VendorInfo",
+            "description": "Vendor information"
+          }
+        },
+        "place_of_performance": {
+          "$ref": "#/$defs/place_of_performance",
+          "description": "Location data",
+          "x-graphql-field": {
+            "type": "PlaceOfPerformance",
+            "description": "Place of performance"
+          }
+        }
+      },
+      "required": ["system_metadata", "common_elements"]
+    }
+  },
+  "type": "object",
+  "x-graphql-type": {
+    "name": "Contract",
+    "description": "Federal contract record with system metadata and lineage",
+    "implements": ["Node"]
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Alias for globalRecordId for GraphQL Node interface",
+      "x-graphql-field": {
+        "type": "ID!",
+        "description": "Global unique identifier (Node interface)",
+        "resolver": "Contract.id"
+      }
+    },
+    "system_metadata": {
+      "$ref": "#/$defs/system_metadata"
+    },
+    "common_elements": {
+      "$ref": "#/$defs/common_elements"
+    },
+    "system_extensions": {
+      "$ref": "#/$defs/system_extensions"
+    },
+    "related_contracts": {
+      "description": "Related contracts via referencedPiid",
+      "x-graphql-field": {
+        "type": "[Contract!]",
+        "description": "Fetch related contracts by referencedPiid",
+        "args": {
+          "first": {
+            "type": "Int",
+            "description": "Number of contracts to return",
+            "default": 10
+          }
+        },
+        "resolver": "Contract.relatedContracts"
+      }
+    },
+    "piid": {
+      "type": "string",
+      "description": "Procurement Instrument Identifier",
+      "x-graphql-field": {
+        "type": "String",
+        "description": "PIID for contract record"
+      }
+    },
+    "vendor_info": {
+      "$ref": "#/$defs/vendor_info",
+      "description": "Vendor information structure",
+      "x-graphql-field": {
+        "type": "VendorInfo",
+        "description": "Vendor information"
+      }
+    },
+    "place_of_performance": {
+      "$ref": "#/$defs/place_of_performance",
+      "description": "Location data",
+      "x-graphql-field": {
+        "type": "PlaceOfPerformance",
+        "description": "Place of performance"
+      }
+    }
+  },
+  "required": ["system_metadata", "common_elements"]
+}

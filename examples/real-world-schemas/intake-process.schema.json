@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "intake_process.schema.json",
+  "title": "Intake Process Canonical Schema",
+  "description": "Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics.",
+  "type": "object",
+
+  "x-graphql-enums": {
+    "SystemName": {
+      "description": "Enumeration of system identifiers",
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "ExternalERP"]
+    }
+  },
+
+  "x-graphql-scalars": {
+    "date_time": {
+      "description": "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)",
+      "serialize": "String"
+    },
+    "date": {
+      "description": "ISO 8601 date string (YYYY-MM-DD)",
+      "serialize": "String"
+    },
+    "decimal": {
+      "description": "High-precision decimal number",
+      "serialize": "Float"
+    },
+    "json": {
+      "description": "Arbitrary JSON value",
+      "serialize": "JSON"
+    },
+    "email": {
+      "description": "Valid email address",
+      "serialize": "String"
+    },
+    "uri": {
+      "description": "Valid URI/URL",
+      "serialize": "String"
+    }
+  },
+
+  "x-graphql-operations": {
+    "queries": {
+      "intake_process_record": {
+        "type": "IntakeRecord",
+        "description": "Fetch a single Intake Process record by composite key (business_owner + system_owner) or source_record_id.",
+        "args": {
+          "business_owner": {
+            "type": "String",
+            "description": "Business owner identifier or name."
+          },
+          "system_owner": {
+            "type": "String",
+            "description": "System owner identifier or name."
+          },
+          "source_record_id": {
+            "type": "ID",
+            "description": "Direct source record identifier for precise lookup."
+          }
+        }
+      },
+      "intake_process_records": {
+        "type": "[IntakeRecord!]!",
+        "description": "Return a list of Intake Process records (non-paginated snapshot)."
+      }
+    }
+  },
+
+  "properties": {
+    "intake_process_record": {
+      "$ref": "#/$defs/intake_process_record",
+      "description": "Root Intake Process entity."
+    }
+  },
+
+  "$defs": {
+    "intake_process_record": {
+      "type": "object",
+      "x-graphql-type-name": "IntakeRecord",
+      "description": "Root Intake Process entity combining system metadata and Intake Process-specific extension data.",
+      "x-graphql-federation": {
+        "keys": ["business_owner system_owner", "source_record_id"]
+      },
+      "properties": {
+        "system_metadata": {
+          "$ref": "#/$defs/system_metadata",
+          "description": "System-level lineage and ingestion metadata."
+        },
+        "intake_process_specific": {
+          "$ref": "#/$defs/intake_process_specific_data",
+          "description": "Domain-specific fields unique to Intake Process."
+        },
+        "business_owner": {
+          "type": "string",
+          "description": "Mirror of intake_process_specific.business_owner for federated key selection.",
+          "x-source-field": "intake_process_specific.business_owner"
+        },
+        "system_owner": {
+          "type": "string",
+          "description": "Mirror of intake_process_specific.system_owner for federated key selection.",
+          "x-source-field": "intake_process_specific.system_owner"
+        }
+      },
+      "required": ["system_metadata", "intake_process_specific"]
+    },
+
+    "system_metadata": {
+      "type": "object",
+      "x-graphql-type-name": "SystemMetadata",
+      "x-graphql-federation-shareable": true,
+      "description": "Metadata describing origin system, identifiers, and lifecycle timestamps.",
+      "properties": {
+        "system_name": {
+          "type": "string",
+          "description": "Constant system identifier string.",
+          "enum": ["Intake Process"],
+          "x-graphql-field-type": "SystemName"
+        },
+        "source_record_id": {
+          "type": "string",
+          "description": "Primary identifier of the record within Intake Process."
+        },
+        "schema_version": {
+          "type": "string",
+          "description": "Version of the canonical Intake Process schema."
+        },
+        "ingested_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this record was ingested into the data fabric."
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this record was last modified at source."
+        }
+      },
+      "required": ["system_name", "source_record_id"]
+    },
+
+    "intake_process_specific_data": {
+      "type": "object",
+      "x-graphql-type-name": "IntakeSpecificData",
+      "description": "Primary business and pricing attributes specific to Intake Process.",
+      "properties": {
+        "business_owner": {
+          "type": "string",
+          "description": "Business owner name or identifier."
+        },
+        "system_owner": {
+          "type": "string",
+          "description": "System owner name or identifier."
+        },
+        "unit_price": {
+          "type": "number",
+          "description": "Unit price as stored in Intake Process.",
+          "x-original-type": "decimal"
+        },
+        "unit_of_measure": {
+          "type": "string",
+          "description": "Unit of measure description or code."
+        },
+        "optional": {
+          "type": "string",
+          "description": "Optional flag or descriptor captured as string in original system."
+        },
+        "not_to_exceed": {
+          "type": "string",
+          "description": "NTE value (raw string representation)."
+        },
+        "not_separately_priced": {
+          "type": "string",
+          "description": "Indicates items not separately priced (raw representation)."
+        },
+        "pricing_terms": {
+          "$ref": "#/$defs/intake_process_pricing_terms",
+          "description": "Structured pricing term attributes."
+        },
+        "performance_periods": {
+          "type": "array",
+          "description": "Ordered list of performance periods (base + options if present).",
+          "items": {
+            "$ref": "#/$defs/period_of_performance"
+          }
+        }
+      },
+      "required": ["business_owner", "system_owner"]
+    },
+
+    "intake_process_pricing_terms": {
+      "type": "object",
+      "x-graphql-type-name": "IntakePricingTerms",
+      "description": "Pricing term grouping (derived abstraction, non-structural change).",
+      "properties": {
+        "pricing_model": {
+          "type": "string",
+          "description": "Pricing model or strategy label."
+        },
+        "escalation_method": {
+          "type": "string",
+          "description": "Method used for price escalation (if any)."
+        },
+        "billing_cycle": {
+          "type": "string",
+          "description": "Billing cycle descriptor (monthly, quarterly, annual, etc.)."
+        }
+      }
+    },
+
+    "period_of_performance": {
+      "type": "object",
+      "x-graphql-type-name": "PeriodOfPerformance",
+      "description": "Start and end dates defining a performance interval.",
+      "properties": {
+        "start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Start date (YYYY-MM-DD)."
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date",
+          "description": "End date (YYYY-MM-DD)."
+        }
+      }
+    }
+  },
+
+  "x-schema-version": "1.0.0",
+  "x-last-updated": "2025-11-07",
+  "x-update-note": "Initial canonical Intake Process schema with x-graphql hints for automated subgraph SDL generation."
+}

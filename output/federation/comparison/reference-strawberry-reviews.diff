@@ -1,0 +1,70 @@
+--- /home/john/json-schema-x-graphql/examples/federation/sdl/strawberry/reviews-service.graphql	2025-12-31 15:31:13.081237471 -0500
++++ /home/john/json-schema-x-graphql/output/federation/node/strawberry-reviews.graphql	2025-12-31 16:19:04.859729384 -0500
+@@ -1,47 +1,28 @@
+-# Reviews Service - Strawberry GraphQL Federation Example
+-# This service extends the Book entity and owns the Review entity
+-
+-extend schema
+-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external"])
++"Extended Book type with reviews"
++type Book @key(fields: "isbn") {
++  "International Standard Book Number"
++  isbn: ID!
++  "Reviews for this book"
++  reviews: [Review!]!
++}
+ 
+-"""
+-Review of a book with rating and comment
+-"""
+-type Review {
+-  """
+-  Unique review identifier
+-  """
++"Book review by a user"
++type Review @key(fields: "id") {
++  "Review ID (primary key)"
+   id: ID!
+-
+-  """
+-  Rating from 1 to 5
+-  """
++  "Foreign key to Book (ISBN)"
++  bookIsbn: ID!
++  "Rating from 1-5"
+   rating: Int!
+-
+-  """
+-  Optional review comment
+-  """
+-  comment: String
+-}
+-
+-"""
+-Extended Book type with reviews
+-"""
+-type Book @key(fields: "id") {
+-  """
+-  Book ID (from Books service)
+-  """
+-  id: ID! @external
+-
+-  """
+-  Reviews for this book
+-  """
+-  reviews: [Review!]!
++  "Review text content"
++  content: String
++  "Book being reviewed"
++  book: Book!
+ }
+ 
+ type Query {
+-  """
+-  Get all reviews
+-  """
++  "Get a review by ID"
++  review(id: ID!): Review
++  "Get all reviews"
+   reviews: [Review!]!
+ }

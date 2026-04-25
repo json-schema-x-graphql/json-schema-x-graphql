@@ -1,0 +1,126 @@
+"""
+Union type representing possible search results
+"""
+union SearchResult = User | Product | Article
+
+"""
+A user entity
+"""
+type User {
+  id: ID!
+  username: String!
+  email: String!
+}
+
+"""
+A product entity
+"""
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+}
+
+"""
+An article entity
+"""
+type Article {
+  id: ID!
+  title: String!
+  content: String!
+  author: User
+}
+
+"""
+Union type for different media types
+"""
+union MediaItem = Image | Video | Audio
+
+"""
+An image file
+"""
+type Image {
+  id: ID!
+  url: String!
+  width: Int!
+  height: Int!
+  altText: String
+}
+
+"""
+A video file
+"""
+type Video {
+  id: ID!
+  url: String!
+  """
+  Duration in seconds
+  """
+  duration: Int!
+  thumbnail: String
+}
+
+"""
+An audio file
+"""
+type Audio {
+  id: ID!
+  url: String!
+  """
+  Duration in seconds
+  """
+  duration: Int!
+  """
+  Audio bitrate in kbps
+  """
+  bitrate: Int
+}
+
+"""
+Target for a notification - can be a user or team
+"""
+union NotificationTarget = User | Team
+
+"""
+A team entity
+"""
+type Team {
+  id: ID!
+  name: String!
+  members: [User!]
+}
+
+"""
+Different payment method types
+"""
+union PaymentMethod = CreditCard | BankAccount | DigitalWallet
+
+"""
+Credit card payment method
+"""
+type CreditCard {
+  id: ID!
+  lastFour: String!
+  brand: String!
+  expiryMonth: Int!
+  expiryYear: Int!
+}
+
+"""
+Bank account payment method
+"""
+type BankAccount {
+  id: ID!
+  accountNumberLastFour: String!
+  routingNumber: String!
+  accountType: String
+}
+
+"""
+Digital wallet payment method
+"""
+type DigitalWallet {
+  id: ID!
+  provider: String!
+  email: String
+}

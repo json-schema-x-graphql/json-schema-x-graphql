@@ -1,0 +1,78 @@
+"""
+JSON Schema description that should be overridden
+"""
+interface Node {
+  """
+  Fallback description
+  """
+  id: ID!
+}
+
+"""
+JSON Schema description for User
+"""
+type User implements Node {
+  id: ID!
+  username: String!
+  email: String!
+  displayName: String
+  emailVerified: Boolean!
+  """
+  User's age (uses JSON Schema description as fallback)
+  """
+  age: Int
+  bio: String
+  avatarUrl: String
+  roles: [String!]
+  permissions: [String!]!
+  tags: [String]
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  lastLoginAt: DateTime
+  profile: UserProfile
+  posts: [Post!]!
+}
+
+type UserProfile {
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  dateOfBirth: Date
+  address: Address
+}
+
+type Address {
+  street: String!
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String!
+  apartment: String
+}
+
+type Post implements Node {
+  id: ID!
+  title: String!
+  slug: String!
+  content: String!
+  excerpt: String
+  published: Boolean!
+  publishedAt: DateTime
+  author: User!
+  tags: [String!]
+  viewCount: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Comment implements Node {
+  id: ID!
+  post: Post!
+  author: User!
+  content: String!
+  parentComment: Comment
+  replies: [Comment!]!
+  createdAt: DateTime!
+  editedAt: DateTime
+}

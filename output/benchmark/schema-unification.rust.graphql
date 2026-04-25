@@ -1,0 +1,463 @@
+"""
+Agency or department information
+"""
+type AgencyInfo {
+  """
+Agency or Department Code
+"""
+code: String
+  """
+Agency or Department Name
+"""
+name: String
+}
+
+"""
+Business classification codes and categories
+"""
+type BusinessClassification {
+  """
+General category under which the product falls
+"""
+categoryOfProduct: String
+  """
+Contracting Officer size determination
+"""
+coSizeDetermination: String
+  """
+Local area set-aside flag
+"""
+localAreaSetAside: Boolean
+  """
+NAICS classification code
+"""
+naicsCode: String
+  """
+NAICS description
+"""
+naicsDescription: String
+  """
+Product Service Code
+"""
+pscCode: String
+  """
+Product Service Code Description
+"""
+pscDescription: String
+  """
+Type of set-aside program
+"""
+setAsideType: String
+  """
+Specific type of product being contracted
+"""
+typeOfProduct: String
+}
+
+"""
+Fields common across all systems
+"""
+type CommonElements {
+  businessClassification: BusinessClassification
+  """
+Contract contacts
+"""
+contacts: [Contact]
+  contractCharacteristics: ContractCharacteristics
+  contractIdentification: ContractIdentification!
+  financialInfo: FinancialInfo
+  organizationInfo: OrganizationInfo!
+  placeOfPerformance: PlaceOfPerformance
+  statusInfo: StatusInfo!
+  vendorInfo: VendorInfo
+}
+
+"""
+Contact information for contract personnel
+"""
+type Contact {
+  """
+Contact email address
+"""
+email: Email
+  """
+Contact name
+"""
+name: String
+  """
+Contact phone number
+"""
+phone: String
+  role: ContactRole
+  """
+Contact title
+"""
+title: String
+}
+
+"""
+Role classification for contract contacts
+"""
+enum ContactRole {
+  primary
+  technical
+  administrative
+  contracting_officer
+}
+
+"""
+Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure
+"""
+type Contract implements Node {
+  commonElements: CommonElements!
+  """
+Alias for globalRecordId for GraphQL Node interface
+"""
+id: String
+  """
+Procurement Instrument Identifier
+"""
+piid: String
+  """
+Location data
+"""
+placeOfPerformance: PlaceOfPerformance
+  """
+Related contracts via referencedPiid
+"""
+relatedContracts: JSON
+  systemExtensions: SystemExtensions
+  systemMetadata: SystemMetadata!
+  """
+Vendor information structure
+"""
+vendorInfo: VendorInfo
+}
+
+"""
+Contract characteristics and flags
+"""
+type ContractCharacteristics {
+  """
+Emergency acquisition indicator
+"""
+emergencyAcquisition: String
+  """
+Government furnished property flag
+"""
+governmentFurnishedProperty: Boolean
+  """
+Includes Controlled Unclassified Information
+"""
+includesCui: Boolean
+  """
+Recurring service flag
+"""
+recurringService: Boolean
+  """
+Recurring utilities flag
+"""
+recurringUtilities: Boolean
+}
+
+"""
+Contract identification information
+"""
+type ContractIdentification {
+  """
+Title or description of the contract
+"""
+contractTitle: String
+  """
+Type of contract instrument
+"""
+contractType: String
+  """
+Detailed description of contract requirements
+"""
+descriptionOfRequirement: String
+  """
+Original Award PIID (Preceding Reference Info)
+"""
+originalAwardPiid: String
+  """
+Procurement Instrument Identifier
+"""
+piid: String!
+  """
+Referenced PIID for related contracts
+"""
+referencedPiid: String
+}
+
+"""
+Contract lifecycle status
+"""
+enum ContractStatus {
+  draft
+  published
+  awarded
+  completed
+  cancelled
+}
+
+"""
+Data quality metrics for system chain entry
+"""
+type DataQuality {
+  """
+Data completeness score (0-1)
+"""
+completenessScore: Float
+  """
+Last validation timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)
+"""
+lastValidated: DateTime
+  """
+List of validation errors
+"""
+validationErrors: [String]
+}
+
+"""
+Financial information and values
+"""
+type FinancialInfo {
+  """
+Amount spent on specific products
+"""
+amountSpentOnProduct: Float
+  """
+Base contract value plus all option periods
+"""
+baseAndAllOptionsValue: Float
+  """
+Fiscal year when contract was awarded
+"""
+contractFiscalYear: String
+  """
+IGE amount
+"""
+independentGovernmentEstimate: Float
+  """
+Total contract value including all modifications
+"""
+totalContractValue: Float
+}
+
+"""
+Organization information for contracts
+"""
+type OrganizationInfo {
+  """
+Contracting agency information
+"""
+contractingAgency: JSON!
+  """
+Contracting department information
+"""
+contractingDepartment: AgencyInfo
+  """
+Funding agency information
+"""
+fundingAgency: AgencyInfo
+  """
+Funding department information
+"""
+fundingDepartment: AgencyInfo
+}
+
+"""
+Place of performance location details
+"""
+type PlaceOfPerformance {
+  """
+City
+"""
+city: String
+  """
+Congressional district
+"""
+congressionalDistrict: String
+  """
+Country code
+"""
+country: String
+  """
+County
+"""
+county: String
+  """
+State code
+"""
+state: String
+  """
+Street address
+"""
+streetAddress: String
+  """
+ZIP code
+"""
+zip: String
+}
+
+"""
+Contract status information
+"""
+type StatusInfo {
+  """
+Date when contract was completed (ISO 8601: YYYY-MM-DD)
+"""
+contractCompleteDate: Date
+  """
+Active contract flag
+"""
+isActive: Boolean
+  """
+Funded contract flag
+"""
+isFunded: Boolean
+  """
+Latest version flag
+"""
+isLatest: Boolean
+  """
+Date when last Contract Action Report was signed (ISO 8601: YYYY-MM-DD)
+"""
+lastCarDateSigned: Date
+  """
+Last modification date (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)
+"""
+lastModifiedDate: DateTime
+  """
+Date contract was published (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)
+"""
+publishedDate: DateTime
+  status: ContractStatus
+}
+
+"""
+Entry in the system chain showing data flow
+"""
+type SystemChainEntry {
+  dataQuality: DataQuality
+  """
+When this record was processed (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)
+"""
+processedDate: DateTime!
+  """
+Record ID in the source system
+"""
+recordId: String!
+  systemName: SystemType!
+  """
+Rules applied during transformation
+"""
+transformationRules: [String]
+}
+
+"""
+System-specific fields and extensions. Each system (Contract Data, Legacy Procurement, EASi, Public Spending, Logistics Mgmt, etc.) can add their own extensions dynamically without modifying this schema. System schemas should use GraphQL Federation @key directives to declare join fields.
+"""
+type SystemExtensions {
+  """
+Contract Data-specific extensions
+"""
+contractData: ContractData.schema.json
+  """
+EASi-specific extensions
+"""
+intakeProcess: IntakeProcess.schema.json
+  """
+Legacy Procurement-specific extensions
+"""
+legacyProcurement: LegacyProcurement.schema.json
+  """
+Logistics Mgmt-specific extensions
+"""
+logisticsMgmt: LogisticsMgmt.schema.json
+  """
+Public Spending-specific extensions
+"""
+publicSpending: PublicSpending.schema.json
+}
+
+"""
+Metadata supporting multiple nested systems
+"""
+type SystemMetadata {
+  """
+Global unique identifier across all systems
+"""
+globalRecordId: String!
+  """
+Last modification timestamp (ISO 8601: YYYY-MM-DDTHH:mm:ss.sssZ)
+"""
+lastModified: DateTime
+  """
+Primary source system
+"""
+primarySystem: SystemType!
+  """
+Schema version
+"""
+schemaVersion: String
+  """
+Chain of systems data has flowed through
+"""
+systemChain: [SystemChainEntry]!
+}
+
+"""
+Source system type
+"""
+enum SystemType {
+  Contract Data
+  Legacy Procurement
+  Intake Process
+  Logistics Mgmt
+}
+
+"""
+Vendor information
+"""
+type VendorInfo {
+  """
+Name of the vendor providing goods/services
+"""
+vendorName: String
+  """
+Vendor Unique Entity Identifier
+"""
+vendorUei: String
+}
+
+"""
+Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation
+"""
+type FederalProcurementDataFabric(FPDF)V2.0BySchemaUnificationForestProjectWithGraphQLExtensions implements Node {
+  commonElements: CommonElements!
+  """
+Alias for globalRecordId for GraphQL Node interface
+"""
+id: String
+  """
+Procurement Instrument Identifier
+"""
+piid: String
+  """
+Location data
+"""
+placeOfPerformance: PlaceOfPerformance
+  """
+Related contracts via referencedPiid
+"""
+relatedContracts: JSON
+  systemExtensions: SystemExtensions
+  systemMetadata: SystemMetadata!
+  """
+Vendor information structure
+"""
+vendorInfo: VendorInfo
+}
+

@@ -1,0 +1,280 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Comprehensive X-GraphQL Features Test Schema",
+  "description": "Demonstrates all x-graphql extensions across types, fields, interfaces, unions, and federation",
+  "type": "object",
+  "definitions": {
+    "Node": {
+      "type": "object",
+      "x-graphql-type-kind": "INTERFACE",
+      "x-graphql-type-name": "Node",
+      "x-graphql-description": "Global unique identifier interface",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Globally unique identifier"
+        }
+      },
+      "required": ["id"]
+    },
+    "Timestamped": {
+      "type": "object",
+      "x-graphql-type-kind": "INTERFACE",
+      "x-graphql-type-name": "Timestamped",
+      "x-graphql-description": "Entity with creation and modification timestamps",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true
+        }
+      },
+      "required": ["created_at"]
+    },
+    "UserRole": {
+      "type": "string",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "x-graphql-type-name": "UserRole",
+      "x-graphql-description": "User authorization role"
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node", "Timestamped"],
+      "x-graphql-description": "User account entity with full metadata",
+      "x-graphql-federation-keys": ["id", "email"],
+      "x-graphql-federation-shareable": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User unique identifier"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "x-graphql-field-type": "Email",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User email address"
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User display name"
+        },
+        "password_hash": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Internal password hash - excluded from GraphQL"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["ADMIN", "USER", "GUEST"],
+          "x-graphql-field-name": "role",
+          "x-graphql-field-type": "UserRole",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User authorization level"
+        },
+        "profile_image_url": {
+          "type": ["string", "null"],
+          "x-graphql-field-name": "profileImage",
+          "x-graphql-field-type": "URL",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Optional profile image URL"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "tags",
+          "x-graphql-field-list-item-non-null": true,
+          "x-graphql-description": "User tags for categorization"
+        },
+        "metadata": {
+          "type": "object",
+          "x-graphql-field-name": "metadata",
+          "x-graphql-field-type": "JSON",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Arbitrary metadata object"
+        }
+      },
+      "required": ["id", "email", "username", "role", "created_at"]
+    },
+    "Product": {
+      "type": "object",
+      "x-graphql-type-name": "Product",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node"],
+      "x-graphql-description": "Product entity for e-commerce",
+      "x-graphql-federation-keys": "id",
+      "x-graphql-federation-shareable": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string",
+          "x-graphql-field-name": "name",
+          "x-graphql-field-non-null": true
+        },
+        "price": {
+          "type": "number",
+          "x-graphql-field-name": "price",
+          "x-graphql-field-type": "Float",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Product price in USD"
+        },
+        "seller_id": {
+          "type": "string",
+          "x-graphql-field-name": "seller",
+          "x-graphql-field-type": "User",
+          "x-graphql-field-non-null": true,
+          "x-graphql-federation-provides": "email username",
+          "x-graphql-description": "The user who is selling this product"
+        },
+        "inventory_count": {
+          "type": "integer",
+          "x-graphql-field-name": "inventoryCount",
+          "x-graphql-field-type": "Int",
+          "x-graphql-federation-external": true,
+          "x-graphql-description": "Stock count from inventory service"
+        }
+      },
+      "required": ["id", "name", "price", "seller_id"]
+    },
+    "Order": {
+      "type": "object",
+      "x-graphql-type-name": "Order",
+      "x-graphql-description": "Customer order with extended user information",
+      "x-graphql-federation-keys": "id",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "customer_id": {
+          "type": "string",
+          "x-graphql-field-name": "customer",
+          "x-graphql-field-type": "User",
+          "x-graphql-field-non-null": true,
+          "x-graphql-federation-requires": "email username"
+        },
+        "total_amount": {
+          "type": "number",
+          "x-graphql-field-name": "totalAmount",
+          "x-graphql-field-type": "Float",
+          "x-graphql-field-non-null": true
+        }
+      },
+      "required": ["id", "customer_id", "total_amount"]
+    },
+    "SearchResult": {
+      "type": "object",
+      "x-graphql-type-kind": "UNION",
+      "x-graphql-type-name": "SearchResult",
+      "x-graphql-union-types": ["User", "Product"],
+      "x-graphql-description": "Union type for search results",
+      "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Product" }]
+    },
+    "EntityType": {
+      "type": "string",
+      "enum": ["USER", "PRODUCT", "ORDER"],
+      "x-graphql-type-name": "EntityType"
+    },
+    "DeletePayload": {
+      "type": "object",
+      "x-graphql-type-name": "DeletePayload",
+      "x-graphql-description": "Standard delete operation result",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "x-graphql-field-name": "success",
+          "x-graphql-field-non-null": true
+        },
+        "deleted_id": {
+          "type": "string",
+          "x-graphql-field-name": "deletedId",
+          "x-graphql-field-type": "ID",
+          "x-graphql-nullable": true
+        },
+        "message": {
+          "type": "string",
+          "x-graphql-field-name": "message",
+          "x-graphql-nullable": true
+        }
+      },
+      "required": ["success"]
+    },
+    "OverriddenType": {
+      "type": "object",
+      "x-graphql-type-name": "OverriddenType",
+      "x-graphql-description": "Type demonstrating field override from another service",
+      "x-graphql-federation-keys": "id",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "legacy_field": {
+          "type": "string",
+          "x-graphql-field-name": "legacyField",
+          "x-graphql-federation-override-from": "legacy-service",
+          "x-graphql-description": "Field migrated from legacy service"
+        }
+      },
+      "required": ["id"]
+    },
+    "InternalType": {
+      "type": "object",
+      "x-graphql-skip": true,
+      "description": "Internal type excluded from GraphQL schema",
+      "properties": {
+        "internal_id": {
+          "type": "string"
+        },
+        "secret_data": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

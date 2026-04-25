@@ -1,0 +1,56 @@
+--- /home/john/json-schema-x-graphql/examples/federation/sdl/apollo-classic/products-service.graphql	2025-12-31 15:30:11.143026906 -0500
++++ /home/john/json-schema-x-graphql/output/federation/node/apollo-classic-products.graphql	2025-12-31 16:19:04.454725120 -0500
+@@ -1,42 +1,18 @@
+-# Products Service - Apollo Federation Classic Example
+-# This service owns the Product entity
+-
+-extend schema
+-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external"])
+-
+-"""
+-Product in the catalog
+-"""
++"Product in the catalog"
+ type Product @key(fields: "upc") {
+-  """
+-  Universal Product Code (primary key)
+-  """
+-  upc: String!
+-
+-  """
+-  Product name
+-  """
+-  name: String
+-
+-  """
+-  Product price in cents
+-  """
+-  price: Int
+-
+-  """
+-  Product weight in grams
+-  """
++  "Universal Product Code (primary key)"
++  upc: ID!
++  "Product name"
++  name: String!
++  "Product price"
++  price: Float
++  "Product weight in grams"
+   weight: Int
+ }
+ 
+ type Query {
+-  """
+-  Get a product by UPC
+-  """
+-  product(upc: String!): Product
+-
+-  """
+-  Get all products
+-  """
++  "Get a product by UPC"
++  product(upc: ID!): Product
++  "Get all products"
+   products: [Product!]!
+ }

@@ -1,0 +1,38 @@
+name: Build Docs Site
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "website/**"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "website/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Nextra Site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build docs
+        run: pnpm --filter @json-schema-x-graphql/website build
+        env:
+          BASE_PATH: "/json-schema-x-graphql"
+
+      - name: Type check
+        run: pnpm --filter @json-schema-x-graphql/website typecheck

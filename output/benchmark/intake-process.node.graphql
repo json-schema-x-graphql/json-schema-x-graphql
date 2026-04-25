@@ -1,0 +1,101 @@
+# Custom Scalars
+"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
+scalar DateTime
+
+"ISO 8601 date string (YYYY-MM-DD)"
+scalar Date
+
+"High-precision decimal number"
+scalar Decimal
+
+"Arbitrary JSON value"
+scalar Json
+
+"Valid email address"
+scalar Email
+
+"Valid URI/URL"
+scalar Uri
+
+"Pricing term grouping (derived abstraction, non-structural change)."
+type IntakePricingTerms {
+  "Billing cycle descriptor (monthly, quarterly, annual, etc.)."
+  billing_cycle: String
+  "Method used for price escalation (if any)."
+  escalation_method: String
+  "Pricing model or strategy label."
+  pricing_model: String
+}
+
+"Start and end dates defining a performance interval."
+type PeriodOfPerformance {
+  "End date (YYYY-MM-DD)."
+  end_date: Date
+  "Start date (YYYY-MM-DD)."
+  start_date: Date
+}
+
+"Primary business and pricing attributes specific to Intake Process."
+type IntakeSpecificData {
+  "Business owner name or identifier."
+  business_owner: String!
+  "Indicates items not separately priced (raw representation)."
+  not_separately_priced: String
+  "NTE value (raw string representation)."
+  not_to_exceed: String
+  "Optional flag or descriptor captured as string in original system."
+  optional: String
+  "Ordered list of performance periods (base + options if present)."
+  performance_periods: [PeriodOfPerformance]
+  "Structured pricing term attributes."
+  pricing_terms: IntakePricingTerms
+  "System owner name or identifier."
+  system_owner: String!
+  "Unit of measure description or code."
+  unit_of_measure: String
+  "Unit price as stored in Intake Process."
+  unit_price: Float
+}
+
+"Metadata describing origin system, identifiers, and lifecycle timestamps."
+type SystemMetadata {
+  "Timestamp when this record was ingested into the data fabric."
+  ingested_at: DateTime
+  "Timestamp when this record was last modified at source."
+  last_modified: DateTime
+  "Version of the canonical Intake Process schema."
+  schema_version: String
+  "Primary identifier of the record within Intake Process."
+  source_record_id: String!
+  "Constant system identifier string."
+  system_name: String!
+}
+
+"Root Intake Process entity combining system metadata and Intake Process-specific extension data."
+type IntakeRecord {
+  "Mirror of intake_process_specific.business_owner for federated key selection."
+  business_owner: String
+  "Domain-specific fields unique to Intake Process."
+  intake_process_specific: IntakeSpecificData!
+  "System-level lineage and ingestion metadata."
+  system_metadata: SystemMetadata!
+  "Mirror of intake_process_specific.system_owner for federated key selection."
+  system_owner: String
+}
+
+"Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics."
+type IntakeProcessCanonicalSchema {
+  "Root Intake Process entity."
+  intake_process_record: IntakeRecord
+}
+
+type Query {
+  "Fetch a single Intake Process record by composite key (business_owner + system_owner) or source_record_id."
+  intake_process_record(
+    business_owner: String
+    system_owner: String
+    source_record_id: ID
+  ): IntakeRecord
+  "Return a list of Intake Process records (non-paginated snapshot)."
+  intake_process_records: [IntakeRecord!]!
+}

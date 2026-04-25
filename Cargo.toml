@@ -1,0 +1,25 @@
+# Workspace manifest for json-schema-x-graphql
+# This root Cargo.toml is intentionally a virtual manifest that defines the workspace members.
+# Individual crates live in subdirectories (for example: converters/rust).
+#
+# To build or run a specific crate, `cd` into the crate directory or use:
+#   cargo build -p <package-name> --manifest-path converters/rust/Cargo.toml
+#
+# Add additional workspace members here as new Rust crates are added.
+
+[workspace]
+resolver = "2"
+members = ["converters/rust"]
+
+[profile.release]
+opt-level = "z" # Optimize for size
+lto = true # Enable Link Time Optimization
+codegen-units = 1 # Reduce number of codegen units to increase optimizations
+strip = true # Strip symbols from binary
+
+[profile.release.package."*"]
+opt-level = "z"
+
+# Optional: workspace-wide metadata or configuration can be placed under workspace.metadata
+[workspace.metadata]
+description = "Workspace for JSON Schema ↔ GraphQL project. Contains the Rust converter and related crates."

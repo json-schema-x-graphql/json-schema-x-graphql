@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "User",
+  "description": "A comprehensive example schema demonstrating JSON Schema to GraphQL conversion with Federation support",
+  "type": "object",
+  "x-graphql-type-name": "User",
+  "x-graphql-type-kind": "OBJECT",
+  "x-graphql-federation-keys": [
+    {
+      "fields": "id",
+      "resolvable": true
+    }
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the user",
+      "x-graphql-field-name": "id",
+      "x-graphql-field-type": "ID",
+      "x-graphql-field-non-null": true
+    },
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50,
+      "description": "User's unique username",
+      "x-graphql-field-name": "username",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true,
+      "x-graphql-federation-shareable": true
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address",
+      "x-graphql-field-name": "email",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true,
+      "x-graphql-federation-authenticated": true
+    },
+    "role": {
+      "$ref": "#/$defs/user_role",
+      "description": "User's role in the system",
+      "x-graphql-field-name": "role",
+      "x-graphql-field-non-null": true
+    },
+    "tier": {
+      "type": "string",
+      "description": "User's subscription tier (external field)",
+      "x-graphql-field-name": "tier",
+      "x-graphql-field-type": "String",
+      "x-graphql-federation-external": true
+    },
+    "premiumFeatures": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Features available to the user based on tier (requires 'tier' field)",
+      "x-graphql-field-name": "premiumFeatures",
+      "x-graphql-field-type": "[String!]!",
+      "x-graphql-federation-requires": "tier"
+    },
+    "shippingAddress": {
+      "$ref": "#/$defs/address",
+      "description": "User's shipping address",
+      "x-graphql-field-name": "shippingAddress",
+      "x-graphql-federation-provides": "zipCode"
+    },
+    "preferences": {
+      "$ref": "#/$defs/user_preferences",
+      "description": "User preferences (migrated from legacy service)",
+      "x-graphql-field-name": "preferences",
+      "x-graphql-federation-override-from": "legacy-user-service"
+    },
+    "internalId": {
+      "type": "string",
+      "description": "Internal database ID, not exposed to subgraph",
+      "x-graphql-field-name": "internalId",
+      "x-graphql-field-type": "ID",
+      "x-graphql-federation-inaccessible": true
+    }
+  },
+  "required": ["id", "username", "email", "role"],
+  "$defs": {
+    "user_role": {
+      "type": "string",
+      "enum": ["ADMIN", "USER", "GUEST"],
+      "description": "Available user roles",
+      "x-graphql-type-name": "UserRole",
+      "x-graphql-type-kind": "ENUM"
+    },
+    "address": {
+      "type": "object",
+      "description": "Physical address",
+      "x-graphql-type-name": "Address",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "street": {
+          "type": "string",
+          "x-graphql-field-name": "street",
+          "x-graphql-field-type": "String"
+        },
+        "city": {
+          "type": "string",
+          "x-graphql-field-name": "city",
+          "x-graphql-field-type": "String"
+        },
+        "zipCode": {
+          "type": "string",
+          "x-graphql-field-name": "zipCode",
+          "x-graphql-field-type": "String",
+          "x-graphql-federation-external": true
+        }
+      }
+    },
+    "user_preferences": {
+      "type": "object",
+      "description": "User UI preferences",
+      "x-graphql-type-name": "UserPreferences",
+      "x-graphql-type-kind": "OBJECT",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "x-graphql-field-name": "theme",
+          "x-graphql-field-type": "String"
+        },
+        "notifications": {
+          "type": "boolean",
+          "x-graphql-field-name": "notifications",
+          "x-graphql-field-type": "Boolean"
+        }
+      }
+    },
+    "user_input": {
+      "type": "object",
+      "description": "Input for creating a user",
+      "x-graphql-type-name": "UserInput",
+      "x-graphql-type-kind": "INPUT_OBJECT",
+      "properties": {
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username",
+          "x-graphql-field-type": "String",
+          "x-graphql-field-non-null": true
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "x-graphql-field-type": "String",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  }
+}

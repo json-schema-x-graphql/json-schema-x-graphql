@@ -1,0 +1,40 @@
+{
+  "quickstart": "Quick Start",
+  "installation": "Installation",
+  "-- getting-started": {
+    "type": "separator",
+    "title": "Tutorials"
+  },
+  "tutorials": "Tutorials",
+  "-- guides": {
+    "type": "separator",
+    "title": "Guides"
+  },
+  "guides": "Guides",
+  "-- recipes": {
+    "type": "separator",
+    "title": "Recipes"
+  },
+  "recipes": "Recipes",
+  "-- reference": {
+    "type": "separator",
+    "title": "Reference"
+  },
+  "api": "API Reference",
+  "x-graphql": "x-graphql Extensions",
+  "reference": "x-graphql Reference",
+  "federation": "Apollo Federation",
+  "cli": "CLI",
+  "-- concepts": {
+    "type": "separator",
+    "title": "Concepts"
+  },
+  "concepts": "Concepts",
+  "-- project": {
+    "type": "separator",
+    "title": "Project"
+  },
+  "contributing": "Contributing",
+  "adr": "Architecture Decisions",
+  "internals": "Demo Internals"
+}

@@ -1,0 +1,92 @@
+{
+  "name": "json-schema-x-graphql",
+  "version": "0.1.0",
+  "description": "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support",
+  "keywords": [
+    "apollo-federation",
+    "bidirectional",
+    "graphql",
+    "json-schema",
+    "schema-conversion",
+    "type-system",
+    "validation",
+    "wasm"
+  ],
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "JJediny and Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJediny/json-schema-x-graphql.git"
+  },
+  "workspaces": [
+    "converters/node"
+  ],
+  "files": [
+    "converters/rust/pkg",
+    "schema",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "module": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "types": "converters/rust/pkg/json_schema_graphql_converter.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm run build:wasm",
+    "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/schema-authoring/src/wasm --release",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "oxlint check --fix --config .oxlint/config.json .",
+    "format": "pnpm run format:prettier",
+    "format:oxfmt": "oxfmt check converters/node/src",
+    "format:oxfmt:fix": "oxfmt --write converters/node/src",
+    "format:prettier": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:prettier:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "prepublishOnly": "pnpm run build",
+    "docs": "typedoc src/index.ts",
+    "converters:node:install": "pnpm -C converters/node install",
+    "converters:node:build": "pnpm -C converters/node run build",
+    "converters:node:test": "pnpm -C converters/node test",
+    "converters:rust:build": "cd converters/rust && cargo build --release",
+    "converters:rust:test": "cd converters/rust && cargo test",
+    "converters:test": "pnpm run converters:node:test && pnpm run converters:rust:test",
+    "converters:compare": "node scripts/test-both-converters.js",
+    "test:parity": "jest converters/node/src/parity.test.ts",
+    "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
+    "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
+    "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "@typescript-eslint/eslint-plugin": "^8.58.2",
+    "@typescript-eslint/parser": "^8.58.2",
+    "eslint": "^8.57.1",
+    "graphql": "^16.13.2",
+    "jest": "^30.3.0",
+    "oxlint": "^1.60.0",
+    "prettier": "^3.8.3",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "graphql": "^16.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "overrides": {
+      "ws@>=8.0.0 <8.17.1": ">=8.17.1",
+      "esbuild@<=0.24.2": ">=0.25.0",
+      "lodash@>=4.0.0 <=4.17.22": ">=4.17.23"
+    }
+  }
+}

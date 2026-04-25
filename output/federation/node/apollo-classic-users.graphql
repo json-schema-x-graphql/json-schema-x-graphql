@@ -1,0 +1,18 @@
+"User account in the system"
+type User @key(fields: "email") {
+  "User's email address (primary key)"
+  email: ID!
+  "User's display name"
+  name: String
+  "Unique username for the account"
+  username: String
+  "User's date of birth"
+  birthDate: String
+}
+
+type Query {
+  "Get a user by email"
+  user(email: ID!): User
+  "Get all users"
+  users: [User!]!
+}

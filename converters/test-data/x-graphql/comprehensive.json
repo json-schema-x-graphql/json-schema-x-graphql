@@ -1,0 +1,476 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Comprehensive X-GraphQL Test Schema",
+  "description": "Comprehensive test schema covering all P0 x-graphql attributes: skip, nullable, description, type/field mapping, nullability",
+  "type": "object",
+  "definitions": {
+    "Node": {
+      "type": "object",
+      "x-graphql-type-name": "Node",
+      "x-graphql-type-kind": "INTERFACE",
+      "x-graphql-description": "Global node interface for entities with unique identifiers",
+      "description": "JSON Schema description that should be overridden",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Globally unique identifier",
+          "description": "Fallback description"
+        }
+      },
+      "required": ["id"]
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-type-name": "User",
+      "x-graphql-type-kind": "OBJECT",
+      "x-graphql-implements": ["Node"],
+      "x-graphql-description": "User entity with comprehensive field examples",
+      "description": "JSON Schema description for User",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User's unique identifier"
+        },
+        "username": {
+          "type": "string",
+          "x-graphql-field-name": "username",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Unique username for login"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "x-graphql-field-name": "email",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "User's email address"
+        },
+        "display_name": {
+          "type": "string",
+          "x-graphql-field-name": "displayName",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Optional display name (explicitly nullable)"
+        },
+        "password_hash": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Password hash - should never appear in GraphQL"
+        },
+        "password_salt": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Password salt - should never appear in GraphQL"
+        },
+        "email_verified": {
+          "type": "boolean",
+          "x-graphql-field-name": "emailVerified",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Whether the user has verified their email"
+        },
+        "age": {
+          "type": "integer",
+          "x-graphql-field-name": "age",
+          "description": "User's age (uses JSON Schema description as fallback)"
+        },
+        "bio": {
+          "type": "string",
+          "x-graphql-field-name": "bio",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "User biography (optional)"
+        },
+        "avatar_url": {
+          "type": "string",
+          "format": "uri",
+          "x-graphql-field-name": "avatarUrl",
+          "x-graphql-description": "URL to user's avatar image"
+        },
+        "_internal_score": {
+          "type": "number",
+          "x-graphql-skip": true,
+          "description": "Internal scoring metric"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "roles",
+          "x-graphql-field-list-item-non-null": true,
+          "x-graphql-description": "User's roles (nullable list of non-null strings)"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "permissions",
+          "x-graphql-field-non-null": true,
+          "x-graphql-field-list-item-non-null": true,
+          "x-graphql-description": "User's permissions (non-null list of non-null strings)"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "tags",
+          "x-graphql-description": "User tags (nullable list of nullable strings)"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Account creation timestamp"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-description": "Last update timestamp"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "deletedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Soft deletion timestamp (null if not deleted)"
+        },
+        "last_login_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "lastLoginAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Last login timestamp"
+        },
+        "metadata": {
+          "type": "object",
+          "x-graphql-skip": true,
+          "description": "Internal metadata object"
+        },
+        "profile": {
+          "type": "object",
+          "x-graphql-field-name": "profile",
+          "x-graphql-field-type": "UserProfile",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "User's profile information"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "x-graphql-field-name": "posts",
+          "x-graphql-field-type": "[Post!]!",
+          "x-graphql-description": "Posts created by this user"
+        }
+      },
+      "required": ["id", "username", "email", "email_verified", "permissions", "created_at"]
+    },
+    "UserProfile": {
+      "type": "object",
+      "x-graphql-type-name": "UserProfile",
+      "x-graphql-description": "Extended user profile information",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "x-graphql-field-name": "firstName",
+          "x-graphql-description": "User's first name"
+        },
+        "last_name": {
+          "type": "string",
+          "x-graphql-field-name": "lastName",
+          "x-graphql-description": "User's last name"
+        },
+        "phone_number": {
+          "type": "string",
+          "x-graphql-field-name": "phoneNumber",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "User's phone number (optional)"
+        },
+        "ssn": {
+          "type": "string",
+          "x-graphql-skip": true,
+          "description": "Social Security Number - private data"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date",
+          "x-graphql-field-name": "dateOfBirth",
+          "x-graphql-field-type": "Date",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "User's date of birth"
+        },
+        "address": {
+          "type": "object",
+          "x-graphql-field-name": "address",
+          "x-graphql-field-type": "Address",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "User's mailing address"
+        },
+        "_internal_flags": {
+          "type": "object",
+          "x-graphql-skip": true
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "x-graphql-type-name": "Address",
+      "x-graphql-description": "Physical mailing address",
+      "properties": {
+        "street": {
+          "type": "string",
+          "x-graphql-field-name": "street",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Street address"
+        },
+        "city": {
+          "type": "string",
+          "x-graphql-field-name": "city",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "City name"
+        },
+        "state": {
+          "type": "string",
+          "x-graphql-field-name": "state",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "State or province"
+        },
+        "postal_code": {
+          "type": "string",
+          "x-graphql-field-name": "postalCode",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Postal/ZIP code"
+        },
+        "country": {
+          "type": "string",
+          "x-graphql-field-name": "country",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Country code (ISO 3166-1 alpha-2)"
+        },
+        "apartment": {
+          "type": "string",
+          "x-graphql-field-name": "apartment",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Apartment, suite, or unit number"
+        },
+        "geo_coordinates": {
+          "type": "object",
+          "x-graphql-skip": true,
+          "description": "Internal geocoding data"
+        }
+      },
+      "required": ["street", "city", "state", "postal_code", "country"]
+    },
+    "Post": {
+      "type": "object",
+      "x-graphql-type-name": "Post",
+      "x-graphql-implements": ["Node"],
+      "x-graphql-description": "Blog post or article",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "title": {
+          "type": "string",
+          "x-graphql-field-name": "title",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Post title"
+        },
+        "slug": {
+          "type": "string",
+          "x-graphql-field-name": "slug",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "URL-friendly post identifier"
+        },
+        "content": {
+          "type": "string",
+          "x-graphql-field-name": "content",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Post content (Markdown or HTML)"
+        },
+        "excerpt": {
+          "type": "string",
+          "x-graphql-field-name": "excerpt",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Short excerpt or summary"
+        },
+        "draft": {
+          "type": "boolean",
+          "x-graphql-skip": true,
+          "description": "Draft status - internal only"
+        },
+        "published": {
+          "type": "boolean",
+          "x-graphql-field-name": "published",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Whether the post is published"
+        },
+        "published_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "publishedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Publication timestamp"
+        },
+        "author": {
+          "type": "object",
+          "x-graphql-field-name": "author",
+          "x-graphql-field-type": "User",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Post author"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-graphql-field-name": "tags",
+          "x-graphql-field-list-item-non-null": true,
+          "x-graphql-description": "Post tags"
+        },
+        "view_count": {
+          "type": "integer",
+          "x-graphql-field-name": "viewCount",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Number of views"
+        },
+        "_analytics": {
+          "type": "object",
+          "x-graphql-skip": true,
+          "description": "Internal analytics data"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "updatedAt",
+          "x-graphql-field-type": "DateTime"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "slug",
+        "content",
+        "published",
+        "author",
+        "view_count",
+        "created_at"
+      ]
+    },
+    "InternalType": {
+      "type": "object",
+      "x-graphql-type-name": "InternalType",
+      "x-graphql-skip": true,
+      "description": "This entire type should be skipped from GraphQL schema generation",
+      "properties": {
+        "internal_field_1": {
+          "type": "string"
+        },
+        "internal_field_2": {
+          "type": "integer"
+        },
+        "internal_field_3": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "x-graphql-type-name": "Comment",
+      "x-graphql-implements": ["Node"],
+      "x-graphql-description": "User comment on a post",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-graphql-field-name": "id",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
+        "post": {
+          "type": "object",
+          "x-graphql-field-name": "post",
+          "x-graphql-field-type": "Post",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "The post this comment belongs to"
+        },
+        "author": {
+          "type": "object",
+          "x-graphql-field-name": "author",
+          "x-graphql-field-type": "User",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Comment author"
+        },
+        "content": {
+          "type": "string",
+          "x-graphql-field-name": "content",
+          "x-graphql-field-non-null": true,
+          "x-graphql-description": "Comment text content"
+        },
+        "parent_comment": {
+          "type": "object",
+          "x-graphql-field-name": "parentComment",
+          "x-graphql-field-type": "Comment",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Parent comment for threaded discussions"
+        },
+        "replies": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "x-graphql-field-name": "replies",
+          "x-graphql-field-type": "[Comment!]!",
+          "x-graphql-description": "Replies to this comment"
+        },
+        "flagged": {
+          "type": "boolean",
+          "x-graphql-skip": true,
+          "description": "Moderation flag - internal only"
+        },
+        "spam_score": {
+          "type": "number",
+          "x-graphql-skip": true,
+          "description": "Spam detection score - internal only"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "createdAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-field-non-null": true
+        },
+        "edited_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-graphql-field-name": "editedAt",
+          "x-graphql-field-type": "DateTime",
+          "x-graphql-nullable": true,
+          "x-graphql-description": "Last edit timestamp"
+        }
+      },
+      "required": ["id", "post", "author", "content", "created_at"]
+    }
+  }
+}

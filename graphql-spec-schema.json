@@ -1,0 +1,554 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://graphql.org/schema/graphql-spec-definitions.json",
+  "title": "GraphQL Specification Type System Schema",
+  "description": "GraphQL schema definition generated from the GraphQL specification Appendix D with all built-in and introspection types",
+  "type": "object",
+  "x-graphql": {
+    "type": "object",
+    "typeName": "Query"
+  },
+  "properties": {
+    "introspectionQuery": {
+      "$ref": "#/$defs/IntrospectionQuery",
+      "title": "introspectionQuery",
+      "description": "Query for schema introspection",
+      "x-graphql": {
+        "type": "IntrospectionQuery!"
+      }
+    }
+  },
+  "$defs": {
+    "IntrospectionQuery": {
+      "type": "object",
+      "title": "IntrospectionQuery",
+      "description": "Root type for GraphQL introspection queries",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "IntrospectionQuery"
+      },
+      "properties": {
+        "__schema": {
+          "$ref": "#/$defs/Schema",
+          "title": "__schema",
+          "description": "Access the current type schema of this server",
+          "x-graphql": {
+            "type": "__Schema!"
+          }
+        },
+        "__type": {
+          "$ref": "#/$defs/Type",
+          "title": "__type",
+          "description": "Request the definition of the specified type",
+          "x-graphql": {
+            "type": "__Type",
+            "args": {
+              "name": {
+                "type": "string",
+                "x-graphql": { "type": "String!" }
+              }
+            }
+          }
+        }
+      },
+      "required": ["__schema"]
+    },
+    "Schema": {
+      "type": "object",
+      "title": "__Schema",
+      "description": "A GraphQL Schema is in essence a grouping of type definitions and the types that serve as the roots of each type of operation.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__Schema"
+      },
+      "properties": {
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the schema",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "types": {
+          "type": "array",
+          "title": "types",
+          "description": "All types defined in this schema",
+          "items": {
+            "$ref": "#/$defs/Type"
+          },
+          "x-graphql": {
+            "type": "[__Type!]!"
+          }
+        },
+        "queryType": {
+          "$ref": "#/$defs/Type",
+          "title": "queryType",
+          "description": "The root type of all query operations",
+          "x-graphql": {
+            "type": "__Type!"
+          }
+        },
+        "mutationType": {
+          "$ref": "#/$defs/Type",
+          "title": "mutationType",
+          "description": "The root type of all mutation operations",
+          "x-graphql": {
+            "type": "__Type"
+          }
+        },
+        "subscriptionType": {
+          "$ref": "#/$defs/Type",
+          "title": "subscriptionType",
+          "description": "The root type of all subscription operations",
+          "x-graphql": {
+            "type": "__Type"
+          }
+        },
+        "directives": {
+          "type": "array",
+          "title": "directives",
+          "description": "All directives defined in this schema",
+          "items": {
+            "$ref": "#/$defs/Directive"
+          },
+          "x-graphql": {
+            "type": "[__Directive!]!"
+          }
+        }
+      },
+      "required": ["types", "queryType", "directives"]
+    },
+    "Type": {
+      "type": "object",
+      "title": "__Type",
+      "description": "The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the __TypeKind enum.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__Type"
+      },
+      "properties": {
+        "kind": {
+          "type": "string",
+          "title": "kind",
+          "description": "The kind of type this is",
+          "enum": [
+            "SCALAR",
+            "OBJECT",
+            "INTERFACE",
+            "UNION",
+            "ENUM",
+            "INPUT_OBJECT",
+            "LIST",
+            "NON_NULL"
+          ],
+          "x-graphql": {
+            "type": "__TypeKind!"
+          }
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "The name of the type",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the type",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "fields": {
+          "type": "array",
+          "title": "fields",
+          "description": "A list of the fields of this type",
+          "items": {
+            "$ref": "#/$defs/Field"
+          },
+          "x-graphql": {
+            "type": "[__Field!]",
+            "args": {
+              "includeDeprecated": {
+                "type": "boolean",
+                "default": false,
+                "x-graphql": { "type": "Boolean!" }
+              }
+            }
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "title": "interfaces",
+          "description": "A list of interfaces that this object type implements",
+          "items": {
+            "$ref": "#/$defs/Type"
+          },
+          "x-graphql": {
+            "type": "[__Type!]"
+          }
+        },
+        "possibleTypes": {
+          "type": "array",
+          "title": "possibleTypes",
+          "description": "The possible types of a union or interface type",
+          "items": {
+            "$ref": "#/$defs/Type"
+          },
+          "x-graphql": {
+            "type": "[__Type!]"
+          }
+        },
+        "enumValues": {
+          "type": "array",
+          "title": "enumValues",
+          "description": "The enum values of an enum type",
+          "items": {
+            "$ref": "#/$defs/EnumValue"
+          },
+          "x-graphql": {
+            "type": "[__EnumValue!]",
+            "args": {
+              "includeDeprecated": {
+                "type": "boolean",
+                "default": false,
+                "x-graphql": { "type": "Boolean!" }
+              }
+            }
+          }
+        },
+        "inputFields": {
+          "type": "array",
+          "title": "inputFields",
+          "description": "The input fields of an input type",
+          "items": {
+            "$ref": "#/$defs/InputValue"
+          },
+          "x-graphql": {
+            "type": "[__InputValue!]"
+          }
+        },
+        "ofType": {
+          "$ref": "#/$defs/Type",
+          "title": "ofType",
+          "description": "The type wrapped by this type (if list or non-null)",
+          "x-graphql": {
+            "type": "__Type"
+          }
+        },
+        "isOneOf": {
+          "type": "boolean",
+          "title": "isOneOf",
+          "description": "Whether this type is marked with the @oneOf directive",
+          "default": false,
+          "x-graphql": {
+            "type": "Boolean!"
+          }
+        }
+      },
+      "required": ["kind"]
+    },
+    "Field": {
+      "type": "object",
+      "title": "__Field",
+      "description": "Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__Field"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "The name of the field",
+          "x-graphql": {
+            "type": "String!"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the field",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "args": {
+          "type": "array",
+          "title": "args",
+          "description": "A list of arguments accepted by this field",
+          "items": {
+            "$ref": "#/$defs/InputValue"
+          },
+          "x-graphql": {
+            "type": "[__InputValue!]!"
+          }
+        },
+        "type": {
+          "$ref": "#/$defs/Type",
+          "title": "type",
+          "description": "The type of the value returned by this field",
+          "x-graphql": {
+            "type": "__Type!"
+          }
+        },
+        "isDeprecated": {
+          "type": "boolean",
+          "title": "isDeprecated",
+          "description": "Whether this field is deprecated",
+          "default": false,
+          "x-graphql": {
+            "type": "Boolean!"
+          }
+        },
+        "deprecationReason": {
+          "type": "string",
+          "title": "deprecationReason",
+          "description": "The reason this field is deprecated, or null if not deprecated",
+          "x-graphql": {
+            "type": "String"
+          }
+        }
+      },
+      "required": ["name", "args", "type"]
+    },
+    "InputValue": {
+      "type": "object",
+      "title": "__InputValue",
+      "description": "A Directive can accept arguments to modify its behavior. An Input Value is a definition of a positional or named argument accepted by a Field, Directive, or other input value.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__InputValue"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "The name of the argument or input field",
+          "x-graphql": {
+            "type": "String!"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the argument or input field",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "type": {
+          "$ref": "#/$defs/Type",
+          "title": "type",
+          "description": "The input type of the argument or field",
+          "x-graphql": {
+            "type": "__Type!"
+          }
+        },
+        "defaultValue": {
+          "type": "string",
+          "title": "defaultValue",
+          "description": "The default value of the argument or field",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "isDeprecated": {
+          "type": "boolean",
+          "title": "isDeprecated",
+          "description": "Whether this input value is deprecated",
+          "default": false,
+          "x-graphql": {
+            "type": "Boolean!"
+          }
+        },
+        "deprecationReason": {
+          "type": "string",
+          "title": "deprecationReason",
+          "description": "The reason this input value is deprecated",
+          "x-graphql": {
+            "type": "String"
+          }
+        }
+      },
+      "required": ["name", "type"]
+    },
+    "EnumValue": {
+      "type": "object",
+      "title": "__EnumValue",
+      "description": "One possible value of a GraphQL Enum Type.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__EnumValue"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "The name of the enum value",
+          "x-graphql": {
+            "type": "String!"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the enum value",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "isDeprecated": {
+          "type": "boolean",
+          "title": "isDeprecated",
+          "description": "Whether this enum value is deprecated",
+          "default": false,
+          "x-graphql": {
+            "type": "Boolean!"
+          }
+        },
+        "deprecationReason": {
+          "type": "string",
+          "title": "deprecationReason",
+          "description": "The reason this enum value is deprecated",
+          "x-graphql": {
+            "type": "String"
+          }
+        }
+      },
+      "required": ["name"]
+    },
+    "TypeKind": {
+      "type": "string",
+      "title": "__TypeKind",
+      "description": "The kinds of possible types of a GraphQL type system.",
+      "enum": [
+        "SCALAR",
+        "OBJECT",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "INPUT_OBJECT",
+        "LIST",
+        "NON_NULL"
+      ],
+      "x-graphql": {
+        "type": "enum",
+        "typeName": "__TypeKind"
+      }
+    },
+    "Directive": {
+      "type": "object",
+      "title": "__Directive",
+      "description": "A Directive is used to annotate various parts of a GraphQL document as an instruction for execution by a GraphQL server.",
+      "x-graphql": {
+        "type": "object",
+        "typeName": "__Directive"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "The name of the directive",
+          "x-graphql": {
+            "type": "String!"
+          }
+        },
+        "description": {
+          "type": "string",
+          "title": "description",
+          "description": "The description of the directive",
+          "x-graphql": {
+            "type": "String"
+          }
+        },
+        "locations": {
+          "type": "array",
+          "title": "locations",
+          "description": "The locations where the directive may be applied",
+          "items": {
+            "type": "string",
+            "enum": [
+              "QUERY",
+              "MUTATION",
+              "SUBSCRIPTION",
+              "FIELD",
+              "FRAGMENT_DEFINITION",
+              "FRAGMENT_SPREAD",
+              "INLINE_FRAGMENT",
+              "VARIABLE_DEFINITION",
+              "SCHEMA",
+              "SCALAR",
+              "OBJECT",
+              "FIELD_DEFINITION",
+              "ARGUMENT_DEFINITION",
+              "INTERFACE",
+              "UNION",
+              "ENUM",
+              "ENUM_VALUE",
+              "INPUT_OBJECT",
+              "INPUT_FIELD_DEFINITION"
+            ]
+          },
+          "x-graphql": {
+            "type": "[__DirectiveLocation!]!"
+          }
+        },
+        "args": {
+          "type": "array",
+          "title": "args",
+          "description": "The arguments accepted by the directive",
+          "items": {
+            "$ref": "#/$defs/InputValue"
+          },
+          "x-graphql": {
+            "type": "[__InputValue!]!"
+          }
+        },
+        "isRepeatable": {
+          "type": "boolean",
+          "title": "isRepeatable",
+          "description": "Whether this directive may be applied multiple times to the same definition",
+          "default": false,
+          "x-graphql": {
+            "type": "Boolean!"
+          }
+        }
+      },
+      "required": ["name", "locations", "args"]
+    },
+    "DirectiveLocation": {
+      "type": "string",
+      "title": "__DirectiveLocation",
+      "description": "The locations where a directive may be applied.",
+      "enum": [
+        "QUERY",
+        "MUTATION",
+        "SUBSCRIPTION",
+        "FIELD",
+        "FRAGMENT_DEFINITION",
+        "FRAGMENT_SPREAD",
+        "INLINE_FRAGMENT",
+        "VARIABLE_DEFINITION",
+        "SCHEMA",
+        "SCALAR",
+        "OBJECT",
+        "FIELD_DEFINITION",
+        "ARGUMENT_DEFINITION",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "ENUM_VALUE",
+        "INPUT_OBJECT",
+        "INPUT_FIELD_DEFINITION"
+      ],
+      "x-graphql": {
+        "type": "enum",
+        "typeName": "__DirectiveLocation"
+      }
+    }
+  }
+}

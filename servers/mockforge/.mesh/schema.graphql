@@ -1,0 +1,145 @@
+schema {
+  query: Query
+}
+
+directive @external on FIELD_DEFINITION | OBJECT
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @link(url: String!, as: String, for: link__Purpose, import: [String]) repeatable on SCHEMA
+
+directive @shareable repeatable on OBJECT | FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @tag(
+  name: String!
+) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+directive @composeDirective(name: String!) repeatable on SCHEMA
+
+directive @extends on OBJECT | INTERFACE
+
+directive @interfaceObject on OBJECT
+
+type Query {
+  """
+  Get a product by UPC
+  """
+  product(upc: String!): Product
+  """
+  Get all products
+  """
+  products: [Product!]!
+  """
+  Get a review by ID
+  """
+  review(id: ID!): Review
+  """
+  Get all reviews
+  """
+  reviews: [Review!]!
+  """
+  Get a user by email
+  """
+  user(email: ID!): User
+  """
+  Get all users
+  """
+  users: [User!]!
+}
+
+scalar _Any
+
+scalar _FieldSet
+
+scalar link__Import
+
+enum link__Purpose {
+  SECURITY
+  EXECUTION
+}
+
+type _Service {
+  sdl: String!
+}
+
+"""
+Extended Product type with reviews
+"""
+type Product {
+  """
+  Universal Product Code (from Products service)
+  """
+  upc: String!
+  """
+  Product name
+  """
+  name: String
+  """
+  Product price in cents
+  """
+  price: Int
+  """
+  Product weight in grams
+  """
+  weight: Int
+  """
+  Reviews for this product
+  """
+  reviews: [Review]
+}
+
+"""
+Product review entity
+"""
+type Review {
+  """
+  Review unique identifier
+  """
+  id: ID!
+  """
+  Review body text
+  """
+  body: String
+  """
+  Review author (provides username field)
+  """
+  author: User
+  """
+  Product being reviewed
+  """
+  product: Product
+}
+
+"""
+User account in the system
+"""
+type User {
+  """
+  User's email address (primary key)
+  """
+  email: ID!
+  """
+  Reviews written by this user
+  """
+  reviews: [Review]
+  """
+  User's display name
+  """
+  name: String
+  """
+  Unique username for the account
+  """
+  username: String
+  """
+  User's date of birth
+  """
+  birthDate: String
+}

@@ -1,0 +1,97 @@
+   Compiling syn v2.0.111
+   Compiling strsim v0.11.1
+   Compiling percent-encoding v2.3.2
+   Compiling futures-sink v0.3.31
+   Compiling clap_builder v4.5.53
+   Compiling form_urlencoded v1.2.2
+   Compiling clap v4.5.53
+   Compiling wasm-bindgen-macro-support v0.2.105
+   Compiling darling_core v0.20.11
+   Compiling pest_generator v2.8.4
+   Compiling serde_derive v1.0.228
+   Compiling zerocopy-derive v0.8.28
+   Compiling thiserror-impl v1.0.69
+   Compiling strum_macros v0.26.4
+   Compiling futures-macro v0.3.31
+   Compiling pest_derive v2.8.4
+   Compiling async-stream-impl v0.3.6
+   Compiling futures-util v0.3.31
+   Compiling async-stream v0.3.6
+   Compiling thiserror v1.0.69
+   Compiling async-trait v0.1.89
+   Compiling zerocopy v0.8.28
+   Compiling strum v0.26.3
+   Compiling darling_macro v0.20.11
+   Compiling wasm-bindgen-macro v0.2.105
+   Compiling darling v0.20.11
+   Compiling wasm-bindgen v0.2.105
+   Compiling serde v1.0.228
+   Compiling js-sys v0.3.82
+   Compiling console_error_panic_hook v0.1.7
+   Compiling bytes v1.11.0
+   Compiling handlebars v5.1.2
+   Compiling serde_urlencoded v0.7.1
+   Compiling tinytemplate v1.2.1
+   Compiling half v2.7.1
+   Compiling ciborium-ll v0.2.2
+   Compiling async-graphql-value v7.0.17
+   Compiling http v1.4.0
+   Compiling ciborium v0.2.2
+   Compiling async-graphql-parser v7.0.17
+   Compiling criterion v0.5.1
+   Compiling multer v3.1.0
+   Compiling async-graphql-derive v7.0.17
+   Compiling serde-wasm-bindgen v0.6.5
+   Compiling async-graphql v7.0.17
+   Compiling json-schema-graphql-converter v0.1.0 (/Users/johnhjediny/Documents/GitHub/json-schema-x-graphql/converters/rust)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 36s
+     Running `target/debug/examples/json_to_sdl /Users/johnhjediny/Documents/GitHub/json-schema-x-graphql/examples/user-service.schema.json`
+# Physical address
+type Address {
+  city: String
+  street: String
+  zipCode: String @external
+}
+
+# Input for creating a user
+input UserInput {
+  email: Email
+  username: String
+}
+
+# User UI preferences
+type UserPreferences {
+  notifications: Boolean
+  theme: String
+}
+
+# Available user roles
+enum UserRole {
+  ADMIN
+  USER
+  GUEST
+}
+
+# A comprehensive example schema demonstrating JSON Schema to GraphQL conversion with Federation support
+type User @key(fields: "id") {
+  # User's email address
+email: Email! @authenticated
+  # Unique identifier for the user
+id: String!
+  # Internal database ID, not exposed to subgraph
+internalId: String @inaccessible
+  # User preferences (migrated from legacy service)
+preferences: UserPreferences @override(from: "legacy-user-service")
+  # Features available to the user based on tier (requires 'tier' field)
+premiumFeatures: [String] @requires(fields: "tier")
+  # User's role in the system
+role: UserRole!
+  # User's shipping address
+shippingAddress: Address @provides(fields: "zipCode")
+  # User's subscription tier (external field)
+tier: String @external
+  # User's unique username
+username: String! @shareable
+}
+
+
