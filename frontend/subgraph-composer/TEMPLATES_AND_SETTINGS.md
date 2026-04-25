@@ -302,8 +302,7 @@ const template = getTemplate("ecommerce");
 import { useSettings } from "./hooks/useSettings";
 
 function MyComponent() {
-  const { settings, updateSetting, saveSettings, getConverterOptions } =
-    useSettings();
+  const { settings, updateSetting, saveSettings, getConverterOptions } = useSettings();
 
   // Update a setting
   updateSetting("validate", false);

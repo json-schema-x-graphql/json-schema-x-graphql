@@ -14,4 +14,3 @@ type Product {
 
 # Implied Scalars
 scalar Email
-

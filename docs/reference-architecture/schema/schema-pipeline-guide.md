@@ -977,11 +977,7 @@ For large schemas:
 
 3. **Parallel generation**
    ```javascript
-   await Promise.all([
-     generateFromJSON(),
-     generateFromSDL(),
-     generateFieldMapping(),
-   ]);
+   await Promise.all([generateFromJSON(), generateFromSDL(), generateFieldMapping()]);
    ```
 
 ---

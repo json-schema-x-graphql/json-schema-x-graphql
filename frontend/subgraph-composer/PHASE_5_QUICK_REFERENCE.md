@@ -187,8 +187,7 @@ const suggestions = generateDirectiveSuggestions(subgraphs, supergraphSdl);
 ### useDirectiveSuggestions()
 
 ```javascript
-const { suggestions, generateSuggestions, applySuggestions } =
-  useDirectiveSuggestions();
+const { suggestions, generateSuggestions, applySuggestions } = useDirectiveSuggestions();
 
 await generateSuggestions(subgraphs, sdl);
 const newSdl = applySuggestions(selected, currentSdl);

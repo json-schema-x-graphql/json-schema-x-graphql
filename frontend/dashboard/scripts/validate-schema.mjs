@@ -30,9 +30,8 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
     const maybeAjv2020 = require("ajv/dist/2020.js");
     if (maybeAjv2020) {
       AjvFactory = maybeAjv2020.default || maybeAjv2020.Ajv2020 || maybeAjv2020;
-      console.debug("Using Ajv 2020 build for draft-2020-12 support");
     }
-  } catch (e) {
+  } catch {
     // ignore - we'll use the base Ajv import
   }
 
@@ -41,11 +40,26 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
 
   // Load external schema files that are referenced in schema_unification.schema.json
   const externalSchemas = [
-    { path: path.join(repoRoot, "src/data/contract_data.schema.json"), name: "contract_data.schema.json" },
-    { path: path.join(repoRoot, "src/data/legacy_procurement.schema.json"), name: "legacy_procurement.schema.json" },
-    { path: path.join(repoRoot, "src/data/intake_process.schema.json"), name: "intake_process.schema.json" },
-    { path: path.join(repoRoot, "src/data/logistics_mgmt.schema.json"), name: "logistics_mgmt.schema.json" },
-    { path: path.join(repoRoot, "src/data/public_spending.schema.json"), name: "public_spending.schema.json" },
+    {
+      path: path.join(repoRoot, "src/data/contract_data.schema.json"),
+      name: "contract_data.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/legacy_procurement.schema.json"),
+      name: "legacy_procurement.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/intake_process.schema.json"),
+      name: "intake_process.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/logistics_mgmt.schema.json"),
+      name: "logistics_mgmt.schema.json",
+    },
+    {
+      path: path.join(repoRoot, "src/data/public_spending.schema.json"),
+      name: "public_spending.schema.json",
+    },
   ];
 
   for (const extSchema of externalSchemas) {
@@ -54,8 +68,11 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
         const schemaContent = JSON.parse(fs.readFileSync(extSchema.path, "utf8"));
         ajv.addSchema(schemaContent, extSchema.name);
         console.debug(`Loaded external schema: ${extSchema.name}`);
-      } catch (e) {
-        console.warn(`Warning: Could not load external schema ${extSchema.name}:`, e.message);
+      } catch (error) {
+        console.warn(
+          `Warning: Could not load external schema ${extSchema.name}:`,
+          error instanceof Error ? error.message : String(error),
+        );
       }
     }
   }
@@ -93,8 +110,10 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
   let validate;
   try {
     validate = ajv.compile(schema);
-  } catch (e) {
-    const errorMsg = `Ajv failed to compile the schema: ${e && e.message ? e.message : e}`;
+  } catch (error) {
+    const errorMsg = `Ajv failed to compile the schema: ${
+      error instanceof Error ? error.message : String(error)
+    }`;
     console.error(errorMsg);
     try {
       const refs = Array.from(collectRefs(schema)).sort();
@@ -104,7 +123,7 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
     }
     console.error("Top-level schema $id:", schema.$id || schema.id || "(none)");
     console.error(
-      "Hint: ensure all internal $ref targets exist in $defs or are absolute URIs resolvable by Ajv. If you use remote references, add them to Ajv via ajv.addSchema()."
+      "Hint: ensure all internal $ref targets exist in $defs or are absolute URIs resolvable by Ajv. If you use remote references, add them to Ajv via ajv.addSchema().",
     );
     // Throw error instead of process.exit for testability
     throw new Error(errorMsg);
@@ -124,17 +143,24 @@ export function validateFiles({ schemaFile = schemaPath, files = dataFiles } = {
         results.fileResults[dataFile.name] = valid;
         if (!valid) {
           results.totalErrors += (validate.errors || []).length;
-          if (dataFile.name === "schema_unification.json" || dataFile.name === "schema_unification.v2.json")
+          if (
+            dataFile.name === "schema_unification.json" ||
+            dataFile.name === "schema_unification.v2.json"
+          )
             results.mainFileValid = false;
         }
       } else {
         results.fileResults[dataFile.name] = "skipped";
       }
-    } catch (e) {
+    } catch (error) {
       results.fileResults[dataFile.name] = false;
       results.totalErrors++;
-      if (dataFile.name === "schema_unification.json" || dataFile.name === "schema_unification.v2.json")
+      if (
+        dataFile.name === "schema_unification.json" ||
+        dataFile.name === "schema_unification.v2.json"
+      ) {
         results.mainFileValid = false;
+      }
     }
   }
 

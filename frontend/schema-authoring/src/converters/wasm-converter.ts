@@ -98,23 +98,16 @@ export class WasmConverter {
         try {
           // Try to import from the wasm directory
           // Use dynamic import with error handling for missing module
-          const wasmModule = await import("@wasm/json_schema_x_graphql").catch(
-            () => null,
-          );
+          const wasmModule = await import("@wasm/json_schema_x_graphql").catch(() => null);
 
           if (!wasmModule) {
-            throw new Error(
-              "WASM module not found at @wasm/json_schema_x_graphql",
-            );
+            throw new Error("WASM module not found at @wasm/json_schema_x_graphql");
           }
 
           await wasmModule.default();
           module = wasmModule as unknown as WasmModule;
         } catch (error) {
-          console.warn(
-            "Failed to load WASM from @wasm, trying alternative path:",
-            error,
-          );
+          console.warn("Failed to load WASM from @wasm, trying alternative path:", error);
 
           // Fallback: try to load from public directory
           const response = await fetch(this.config.wasmPath);
@@ -130,10 +123,7 @@ export class WasmConverter {
         this.state = { status: "ready", module };
         console.info("✓ WASM converter initialized successfully");
       } catch (error) {
-        const err =
-          error instanceof Error
-            ? error
-            : new Error("Unknown WASM initialization error");
+        const err = error instanceof Error ? error : new Error("Unknown WASM initialization error");
         this.state = { status: "error", error: err };
         console.warn("✗ WASM converter initialization failed:", err.message);
         console.info("💡 To enable WASM converter, run: pnpm run build:wasm");
@@ -157,9 +147,7 @@ export class WasmConverter {
 
     // If already errored, throw immediately
     if (preCheckState.status === "error") {
-      throw new Error(
-        "WASM converter failed to initialize: " + preCheckState.error.message,
-      );
+      throw new Error("WASM converter failed to initialize: " + preCheckState.error.message);
     }
 
     // Otherwise, need to initialize
@@ -174,9 +162,7 @@ export class WasmConverter {
     }
 
     if (postInitState.status === "error") {
-      throw new Error(
-        "WASM converter initialization failed: " + postInitState.error.message,
-      );
+      throw new Error("WASM converter initialization failed: " + postInitState.error.message);
     }
 
     // If still uninitialized or loading, something went wrong
@@ -199,8 +185,7 @@ export class WasmConverter {
         parsedSchema = JSON.parse(jsonSchema);
       } catch (error) {
         return this.createErrorResult(
-          "Invalid JSON Schema: " +
-            (error instanceof Error ? error.message : "Parse error"),
+          "Invalid JSON Schema: " + (error instanceof Error ? error.message : "Parse error"),
           startTime,
           1,
           1,
@@ -211,8 +196,7 @@ export class WasmConverter {
 
       // Prepare options for WASM
       const wasmOptions = {
-        include_federation_directives:
-          options.includeFederationDirectives ?? false,
+        include_federation_directives: options.includeFederationDirectives ?? false,
         include_schema_link: options.includeSchemaLink ?? false,
         include_descriptions: options.includeDescriptions ?? true,
         custom_scalars: options.customScalars,
@@ -275,28 +259,21 @@ export class WasmConverter {
 
     try {
       if (!graphqlSchema.trim()) {
-        return this.createErrorResult(
-          "GraphQL schema cannot be empty",
-          startTime,
-        );
+        return this.createErrorResult("GraphQL schema cannot be empty", startTime);
       }
 
       const module = await this.ensureInitialized();
 
       // Prepare options for WASM
       const wasmOptions = {
-        schema_version:
-          options.schemaVersion ?? "http://json-schema.org/draft-07/schema#",
+        schema_version: options.schemaVersion ?? "http://json-schema.org/draft-07/schema#",
         include_descriptions: options.includeDescriptions ?? true,
         include_deprecated: options.includeDeprecated ?? true,
         custom_scalar_mappings: options.customScalarMappings,
       };
 
       // Call WASM function
-      const resultJson = module.convert_sdl_to_json(
-        graphqlSchema,
-        JSON.stringify(wasmOptions),
-      );
+      const resultJson = module.convert_sdl_to_json(graphqlSchema, JSON.stringify(wasmOptions));
 
       const result = JSON.parse(resultJson);
       const duration = performance.now() - startTime;
@@ -347,8 +324,7 @@ export class WasmConverter {
         valid: false,
         errors: [
           {
-            message:
-              error instanceof Error ? error.message : "Validation failed",
+            message: error instanceof Error ? error.message : "Validation failed",
           },
         ],
       };
@@ -371,8 +347,7 @@ export class WasmConverter {
         valid: false,
         errors: [
           {
-            message:
-              error instanceof Error ? error.message : "Validation failed",
+            message: error instanceof Error ? error.message : "Validation failed",
           },
         ],
       };

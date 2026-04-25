@@ -43,7 +43,7 @@ function getDescription(schema) {
   const raw = schema["x-graphql-description"] || schema.description || "";
   if (typeof raw !== "string" || !raw) return "";
   // Escape embedded triple quotes to keep SDL valid
-  return raw.replace(/\"\"\"/g, '\\"\\"\\"');
+  return raw.replace(/"""/g, '\\"\\"\\"');
 }
 
 /**
@@ -96,7 +96,7 @@ function formatDirectives(directives) {
   if (!directives || directives.length === 0) return "";
 
   return directives
-    .map(dir => {
+    .map((dir) => {
       if (!dir.args || Object.keys(dir.args).length === 0) {
         return `@${dir.name}`;
       }
@@ -198,14 +198,14 @@ function mapTypeToGraphQL(propDef, propName, definitions = {}, nullable = true) 
   // Resolve effective JSON Schema type when it's a union like ["string","null"]
   let effectiveType = propDef.type;
   if (Array.isArray(effectiveType)) {
-    effectiveType = effectiveType.find(t => t !== "null") || effectiveType[0];
+    effectiveType = effectiveType.find((t) => t !== "null") || effectiveType[0];
   }
 
   // Name- and metadata-based decimal inference
   const nameHint = typeof propName === "string" ? propName : "";
   const decimalNameHint =
     /amount|fee|price|cost|fund|credit|debit|total|balance|obligat|committed|awarded|ceiling|unit_?price|rate|percent|percentage|quantity|qty/i.test(
-      nameHint
+      nameHint,
     );
   const originalType =
     typeof propDef["x-original-type"] === "string" ? propDef["x-original-type"].toLowerCase() : "";
@@ -289,7 +289,7 @@ function generateEnum(name, definition) {
   }
 
   graphql += `enum ${typeName}${directives ? " " + directives : ""} {\n`;
-  safeValues.forEach(val => {
+  safeValues.forEach((val) => {
     graphql += `  ${val}\n`;
   });
   graphql += "}\n";
@@ -386,7 +386,7 @@ function generateObjectType(name, definition, definitions = {}) {
     definition["x-graphql-federation"].keys.length
   ) {
     federationDirectives = definition["x-graphql-federation"].keys
-      .map(k => `@key(fields: "${k}")`)
+      .map((k) => `@key(fields: "${k}")`)
       .join(" ");
   }
 
@@ -571,7 +571,7 @@ function generateDirectives(schema, definitions) {
   }
 
   // Add federation key directive if any definition declares x-graphql-federation
-  if (Object.values(definitions).some(d => d && d["x-graphql-federation"])) {
+  if (Object.values(definitions).some((d) => d && d["x-graphql-federation"])) {
     directives.add("key");
   }
 
@@ -646,7 +646,7 @@ function collectInlineEnums(definitions) {
       if (propDef.type === "array" && propDef.items?.enum) {
         const enumName = getTypeName(
           propDef.items,
-          propName.charAt(0).toUpperCase() + propName.slice(1)
+          propName.charAt(0).toUpperCase() + propName.slice(1),
         );
         if (!inlineEnums.has(enumName)) {
           inlineEnums.set(enumName, propDef.items);
@@ -801,7 +801,8 @@ export async function convertJSONSchemaToGraphQL(schema) {
 export async function main(argv) {
   const args = argv ? argv : process.argv.slice(2);
   const inputPath = args[0] || path.join(repoRoot, "src/data/schema_unification.schema.json");
-  const outputPath = args[1] || path.join(repoRoot, "public/data/schema_unification-v2-enhanced.graphql");
+  const outputPath =
+    args[1] || path.join(repoRoot, "public/data/schema_unification-v2-enhanced.graphql");
 
   console.log("🚀 Enhanced GraphQL Generator (shared graphql-hints)\n");
   console.log(`📥 Input:  ${path.relative(repoRoot, inputPath)}`);

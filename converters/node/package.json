@@ -1,15 +1,43 @@
 {
   "name": "@json-schema-x-graphql/core",
   "version": "2.0.0",
-  "type": "module",
   "description": "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support",
-  "main": "dist/converter.js",
-  "types": "dist/converter.d.ts",
+  "keywords": [
+    "apollo",
+    "apollo-federation",
+    "converter",
+    "federation",
+    "graphql",
+    "graphql-federation",
+    "json-schema",
+    "schema-conversion",
+    "sdl",
+    "typescript",
+    "validation",
+    "x-graphql"
+  ],
+  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "JJediny and Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJediny/json-schema-x-graphql.git",
+    "directory": "converters/node"
+  },
+  "bin": {
+    "json-schema-x-graphql": "dist/cli.js"
+  },
   "files": [
     "dist"
   ],
-  "bin": {
-    "json-schema-x-graphql": "dist/cli.js"
+  "type": "module",
+  "main": "dist/converter.js",
+  "types": "dist/converter.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -36,58 +64,30 @@
     "ci:benchmark": "pnpm run benchmark:full",
     "precommit": "pnpm run lint && pnpm run validate:all"
   },
-  "keywords": [
-    "graphql",
-    "json-schema",
-    "converter",
-    "federation",
-    "apollo",
-    "x-graphql",
-    "schema-conversion",
-    "graphql-federation",
-    "apollo-federation",
-    "sdl",
-    "typescript",
-    "validation"
-  ],
-  "author": "JJediny and Contributors",
-  "license": "MIT",
-  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JJediny/json-schema-x-graphql.git",
-    "directory": "converters/node"
+  "dependencies": {
+    "graphql": "^16.13.2"
   },
-  "bugs": {
-    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+  "devDependencies": {
+    "@apollo/subgraph": "^2.13.3",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@graphql-codegen/cli": "^6.3.1",
+    "@graphql-codegen/typescript": "^5.0.10",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.6.0",
+    "ajv": "8.18.0",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^10.2.1",
+    "graphql-tag": "^2.12.6",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.58.2"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "packageManager": "pnpm@10.13.1",
-  "devDependencies": {
-    "@apollo/subgraph": "^2.13.3",
-    "@eslint/eslintrc": "^3.3.5",
-    "@eslint/js": "^10.0.1",
-    "@graphql-codegen/cli": "^6.2.1",
-    "@graphql-codegen/typescript": "^5.0.9",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.19.39",
-    "ajv": "8.18.0",
-    "ajv-formats": "^3.0.1",
-    "eslint": "^10.2.0",
-    "graphql-tag": "^2.12.6",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.4.9",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.58.0"
-  },
-  "dependencies": {
-    "graphql": "^16.13.2"
-  }
+  "packageManager": "pnpm@10.13.1"
 }

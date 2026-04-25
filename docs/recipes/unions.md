@@ -14,10 +14,7 @@ Use `oneOf` to create a Union. Ensure `x-graphql-type: "union"` is implicit or e
   "definitions": {
     "SearchResult": {
       "title": "SearchResult",
-      "oneOf": [
-        { "$ref": "#/definitions/Author" },
-        { "$ref": "#/definitions/Book" }
-      ]
+      "oneOf": [{ "$ref": "#/definitions/Author" }, { "$ref": "#/definitions/Book" }]
     },
     "Author": {
       "type": "object",

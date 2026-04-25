@@ -123,11 +123,7 @@
       "eligibility": {
         "code": "21",
         "description": "Small Business",
-        "eligibleApplicants": [
-          "Small Business",
-          "8(a) Certified",
-          "Woman-Owned Small Business"
-        ]
+        "eligibleApplicants": ["Small Business", "8(a) Certified", "Woman-Owned Small Business"]
       },
       "usage": {
         "reportingPeriod": "Q1-FY2024",

@@ -6,7 +6,9 @@ type Introspectionquery {
   type: Type
 }
 
-"""A GraphQL Schema is in essence a grouping of type definitions and the types that serve as the roots of each type of operation."""
+"""
+A GraphQL Schema is in essence a grouping of type definitions and the types that serve as the roots of each type of operation.
+"""
 type Schema {
   "The description of the schema"
   description: JSON
@@ -22,7 +24,9 @@ type Schema {
   directives: [Directive]!
 }
 
-"""The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the __TypeKind enum."""
+"""
+The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the __TypeKind enum.
+"""
 type Type {
   "The kind of type this is"
   kind: String!
@@ -46,7 +50,9 @@ type Type {
   isOneOf: Boolean
 }
 
-"""Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type."""
+"""
+Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.
+"""
 type Field {
   "The name of the field"
   name: String!
@@ -62,7 +68,9 @@ type Field {
   deprecationReason: JSON
 }
 
-"""A Directive can accept arguments to modify its behavior. An Input Value is a definition of a positional or named argument accepted by a Field, Directive, or other input value."""
+"""
+A Directive can accept arguments to modify its behavior. An Input Value is a definition of a positional or named argument accepted by a Field, Directive, or other input value.
+"""
 type Inputvalue {
   "The name of the argument or input field"
   name: String!
@@ -102,7 +110,9 @@ enum Typekind {
   NON_NULL
 }
 
-"""A Directive is used to annotate various parts of a GraphQL document as an instruction for execution by a GraphQL server."""
+"""
+A Directive is used to annotate various parts of a GraphQL document as an instruction for execution by a GraphQL server.
+"""
 type Directive {
   "The name of the directive"
   name: String!
@@ -139,7 +149,9 @@ enum Directivelocation {
   INPUT_FIELD_DEFINITION
 }
 
-"""GraphQL schema definition generated from the GraphQL specification Appendix D with all built-in and introspection types"""
+"""
+GraphQL schema definition generated from the GraphQL specification Appendix D with all built-in and introspection types
+"""
 type GraphqlSpecificationTypeSystemSchema {
   "Query for schema introspection"
   introspectionQuery: Introspectionquery

@@ -17,17 +17,17 @@
  */
 import { ValidationResult } from "./x-graphql-validator";
 interface CliOptions {
-    failOnWarning: boolean;
-    json: boolean;
-    quiet: boolean;
-    verbose: boolean;
-    files: string[];
+  failOnWarning: boolean;
+  json: boolean;
+  quiet: boolean;
+  verbose: boolean;
+  files: string[];
 }
 declare function parseArgs(args: string[]): CliOptions;
 declare function validateFile(filePath: string, options: CliOptions): ValidationResult;
 interface FileValidationResult {
-    file: string;
-    result: ValidationResult;
+  file: string;
+  result: ValidationResult;
 }
 declare function validateFiles(files: string[], options: CliOptions): FileValidationResult[];
 declare function main(): void;

@@ -229,13 +229,7 @@ interface SupportMatrix {
 export interface XGraphQLExtensions {
   // Type-level
   typeName?: string;
-  typeKind?:
-    | "OBJECT"
-    | "INTERFACE"
-    | "UNION"
-    | "ENUM"
-    | "INPUT_OBJECT"
-    | "SCALAR";
+  typeKind?: "OBJECT" | "INTERFACE" | "UNION" | "ENUM" | "INPUT_OBJECT" | "SCALAR";
   implements?: string[];
   unionTypes?: string[];
   typeDirectives?: string[];
@@ -1093,18 +1087,12 @@ class XGraphQLValidator {
   constructor() {
     this.ajv = new Ajv({ allErrors: true, strict: true });
     this.metaSchema = JSON.parse(
-      readFileSync(
-        resolve(__dirname, "../schema/x-graphql-extensions.schema.json"),
-        "utf-8",
-      ),
+      readFileSync(resolve(__dirname, "../schema/x-graphql-extensions.schema.json"), "utf-8"),
     );
     this.ajv.addMetaSchema(this.metaSchema);
   }
 
-  validate(
-    schemaPath: string,
-    options: ValidationOptions = {},
-  ): ValidationResult {
+  validate(schemaPath: string, options: ValidationOptions = {}): ValidationResult {
     const schema = JSON.parse(readFileSync(schemaPath, "utf-8"));
     const errors: ValidationError[] = [];
 
@@ -1184,10 +1172,7 @@ class XGraphQLValidator {
       }
 
       // union-types requires type-kind: UNION
-      if (
-        obj["x-graphql-union-types"] &&
-        obj["x-graphql-type-kind"] !== "UNION"
-      ) {
+      if (obj["x-graphql-union-types"] && obj["x-graphql-type-kind"] !== "UNION") {
         errors.push({
           path,
           message: 'union-types requires type-kind: "UNION"',
@@ -1234,9 +1219,7 @@ if (result.valid) {
 } else {
   console.error("❌ Validation failed:");
   result.errors.forEach((err) => {
-    console.error(
-      `  ${err.severity.toUpperCase()}: ${err.path} - ${err.message}`,
-    );
+    console.error(`  ${err.severity.toUpperCase()}: ${err.path} - ${err.message}`);
   });
   process.exit(1);
 }
@@ -1343,6 +1326,7 @@ echo "✅ All x-graphql attributes validated"
    ```
 
 3. **Real-world API Conversion**
+
    ```typescript
    test("converts real-world API schemas", () => {
      const schemas = ["github-api.json", "stripe-api.json", "shopify-api.json"];
@@ -1499,13 +1483,7 @@ pnpm run docs:deploy
   "name": "@json-schema-x-graphql/converter",
   "version": "2.0.0",
   "description": "JSON Schema ↔ GraphQL converter with full x-graphql support",
-  "keywords": [
-    "json-schema",
-    "graphql",
-    "converter",
-    "x-graphql",
-    "federation"
-  ],
+  "keywords": ["json-schema", "graphql", "converter", "x-graphql", "federation"],
   "files": ["dist/", "schema/x-graphql-extensions.schema.json", "README.md"]
 }
 ```

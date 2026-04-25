@@ -180,14 +180,16 @@ function extractDefinitions(schema) {
 
     // Contract DataExtension
     if (extensions.contract_data?.items) {
-      definitions.Contract DataExtension = {
+      definitions.ContractDataExtension = {
         type: "object",
         description: "Contract Data-specific fields and extensions",
         properties: {
           fieldName: { type: "string" },
           fieldType: { type: "string" },
           value: {},
-          contract_dataSpecific: extensions.contract_data.items.properties?.contract_dataSpecific || {},
+          contract_dataSpecific:
+            extensions.contract_data.items.properties?.contract_dataSpecific ||
+            {},
         },
       };
     }

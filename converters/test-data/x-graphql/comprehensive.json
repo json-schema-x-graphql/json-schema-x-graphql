@@ -174,14 +174,7 @@
           "x-graphql-description": "Posts created by this user"
         }
       },
-      "required": [
-        "id",
-        "username",
-        "email",
-        "email_verified",
-        "permissions",
-        "created_at"
-      ]
+      "required": ["id", "username", "email", "email_verified", "permissions", "created_at"]
     },
     "UserProfile": {
       "type": "object",

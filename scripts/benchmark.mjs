@@ -86,7 +86,7 @@ for (const schema of schemas) {
   // Node Benchmark
   const nodeOut = path.join(
     PATHS.outputDir,
-    `${schema.name}.node.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
+    `${schema.name}.node.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`,
   );
   const nodeArgs = [
     PATHS.nodeConverter,
@@ -111,7 +111,7 @@ for (const schema of schemas) {
   // Rust Benchmark
   const rustOut = path.join(
     PATHS.outputDir,
-    `${schema.name}.rust.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
+    `${schema.name}.rust.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`,
   );
   const rustArgs = [
     "--input",
@@ -143,10 +143,7 @@ for (const schema of schemas) {
 // Print Results
 console.log("\nBenchmark Results (Average Time in ms):");
 console.log(
-  "Schema".padEnd(30) +
-    "Node (ms)".padEnd(15) +
-    "Rust (ms)".padEnd(15) +
-    "Speedup (x)".padEnd(15)
+  "Schema".padEnd(30) + "Node (ms)".padEnd(15) + "Rust (ms)".padEnd(15) + "Speedup (x)".padEnd(15),
 );
 console.log("-".repeat(75));
 
@@ -155,7 +152,7 @@ for (const res of results) {
     res.schema.padEnd(30) +
       res.node.avg.toFixed(2).padEnd(15) +
       res.rust.avg.toFixed(2).padEnd(15) +
-      res.speedup.toFixed(2).padEnd(15)
+      res.speedup.toFixed(2).padEnd(15),
   );
 }
 

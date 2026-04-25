@@ -142,7 +142,7 @@ ${subgraphs.map((s) => `#   - ${s.name}`).join("\n")}
  */
 function composeSubgraphsSimple(subgraphs) {
   console.log("⚠️  Using simple concatenation (no conflict resolution)...");
-  
+
   const output = [];
 
   // Add supergraph header
@@ -155,7 +155,9 @@ ${subgraphs.map((s) => `#   - ${s.name}`).join("\n")}
 `);
 
   // Add federation schema directive (only once for supergraph)
-  output.push('extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@override", "@inaccessible", "@tag"])');
+  output.push(
+    'extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@override", "@inaccessible", "@tag"])',
+  );
   output.push("");
 
   // Collect all custom scalars with their descriptions (deduplicate)
@@ -198,12 +200,15 @@ ${subgraphs.map((s) => `#   - ${s.name}`).join("\n")}
 
     // Remove duplicate scalar definitions (including descriptions)
     // Match: """description"""\nscalar Name or scalar Name
-    content = content.replace(/("""[\s\S]*?"""\s*)?scalar\s+(\w+)\s*/g, (match, description, scalarName) => {
-      if (customScalars.has(scalarName)) {
-        return ""; // Already defined at top
-      }
-      return match;
-    });
+    content = content.replace(
+      /("""[\s\S]*?"""\s*)?scalar\s+(\w+)\s*/g,
+      (match, description, scalarName) => {
+        if (customScalars.has(scalarName)) {
+          return ""; // Already defined at top
+        }
+        return match;
+      },
+    );
 
     output.push(content.trim());
     output.push("");

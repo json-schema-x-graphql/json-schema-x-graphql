@@ -94,9 +94,7 @@ function analyzeDependencies(sdl) {
     const fieldsBlock = match[2];
 
     // Extract field definitions
-    const fieldMatches = fieldsBlock.matchAll(
-      /(\w+)\s*(?:\([^)]*\))?:\s*([!\[\w$]+)*/g,
-    );
+    const fieldMatches = fieldsBlock.matchAll(/(\w+)\s*(?:\([^)]*\))?:\s*([![\w$]+)*/g);
 
     for (const fieldMatch of fieldMatches) {
       const fieldName = fieldMatch[1];
@@ -270,7 +268,7 @@ function isComplexType(typeStr) {
  * @returns {string} Base type name
  */
 function extractBaseType(typeStr) {
-  return typeStr.replace(/[!\[\]]/g, "");
+  return typeStr.replace(/[![\]]/g, "");
 }
 
 /**
@@ -308,9 +306,7 @@ export function applySuggestionsToSdl(sdl, suggestions) {
 
       // If we're in the right type, look for the field
       if (inType && lines[i].includes(fieldName)) {
-        const fieldPattern = new RegExp(
-          `(${fieldName}\\s*(?:\\([^)]*\\))?:\\s*[!\\[\\w$]+)`,
-        );
+        const fieldPattern = new RegExp(`(${fieldName}\\s*(?:\\([^)]*\\))?:\\s*[!\\[\\w$]+)`);
         if (fieldPattern.test(lines[i]) && !lines[i].includes("@requires")) {
           lines[i] = lines[i].replace(fieldPattern, `$1 ${directive}`);
         }
@@ -333,8 +329,7 @@ export function filterSuggestions(suggestions, filters = {}) {
   return suggestions.filter((s) => {
     if (filters.severity && s.severity !== filters.severity) return false;
     if (filters.type && s.type !== filters.type) return false;
-    if (filters.applicable !== undefined && s.applicable !== filters.applicable)
-      return false;
+    if (filters.applicable !== undefined && s.applicable !== filters.applicable) return false;
     return true;
   });
 }
@@ -348,8 +343,7 @@ export function rankSuggestions(suggestions) {
   const severityOrder = { error: 0, warning: 1, info: 2 };
 
   return [...suggestions].sort((a, b) => {
-    const severityDiff =
-      (severityOrder[a.severity] ?? 3) - (severityOrder[b.severity] ?? 3);
+    const severityDiff = (severityOrder[a.severity] ?? 3) - (severityOrder[b.severity] ?? 3);
     if (severityDiff !== 0) return severityDiff;
 
     // Secondary sort: by type importance
@@ -407,13 +401,9 @@ export function validateSuggestion(suggestion, sdl) {
 
   // Check if field exists (for requires suggestions)
   if (suggestion.type === "requires" && suggestion.fieldName) {
-    const fieldRegex = new RegExp(
-      `${suggestion.fieldName}\\s*(?:\\([^)]*\\))?:\\s*`,
-    );
+    const fieldRegex = new RegExp(`${suggestion.fieldName}\\s*(?:\\([^)]*\\))?:\\s*`);
     if (!sdl.includes(`${suggestion.typeName}`)) {
-      errors.push(
-        `Field ${suggestion.fieldName} not found in type ${suggestion.typeName}`,
-      );
+      errors.push(`Field ${suggestion.fieldName} not found in type ${suggestion.typeName}`);
     }
   }
 
@@ -435,9 +425,7 @@ export function validateSuggestion(suggestion, sdl) {
  * @returns {string} Modified SDL
  */
 export function mergeSuggestionsIntoSdl(baseSdl, suggestions) {
-  const validated = suggestions.filter(
-    (s) => validateSuggestion(s, baseSdl).valid,
-  );
+  const validated = suggestions.filter((s) => validateSuggestion(s, baseSdl).valid);
   return applySuggestionsToSdl(baseSdl, validated);
 }
 
@@ -466,9 +454,7 @@ export function analyzeDirectiveRequirements(suggestions) {
   // Calculate complexity score (0-100)
   analysis.complexityScore = Math.min(
     100,
-    analysis.typeCount * 10 +
-      analysis.fieldCount * 5 +
-      analysis.externalReferences.size * 8,
+    analysis.typeCount * 10 + analysis.fieldCount * 5 + analysis.externalReferences.size * 8,
   );
 
   return analysis;

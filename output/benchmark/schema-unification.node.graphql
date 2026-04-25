@@ -301,13 +301,17 @@ type Systemmetadata {
 "Source system type"
 enum SystemType {
   "Federal Procurement Data System - Next Generation"
-  Contract Data
+  Contract
+  Data
   "Award System for Streamlined IT Transactions"
-  Legacy Procurement
+  Legacy
+  Procurement
   "Enterprise Acquisition System for Infrastructure"
-  Intake Process
+  Intake
+  Process
   "Contract Award Lifecycle Management"
-  Logistics Mgmt
+  Logistics
+  Mgmt
 }
 
 type Query {
@@ -316,7 +320,12 @@ type Query {
   "Fetch a contract by PIID"
   contract_by_piid(piid: String!): Contract
   "Paginated list of contracts with filtering"
-  contracts(first: Int = 10, after: String, filter: ContractFilter, order_by: ContractOrderBy): ContractConnection!
+  contracts(
+    first: Int = 10
+    after: String
+    filter: ContractFilter
+    order_by: ContractOrderBy
+  ): ContractConnection!
   "Full-text search for contracts"
   search_contracts(query: String!, limit: Int = 20): [Contract!]!
 }

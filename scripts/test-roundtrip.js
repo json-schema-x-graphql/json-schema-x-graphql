@@ -35,9 +35,7 @@ try {
   console.log("📖 Step 1: Reading JSON Schema...");
   const jsonSchemaContent = readFileSync(inputFile, "utf-8");
   const jsonSchema = JSON.parse(jsonSchemaContent);
-  console.log(
-    `✅ Successfully loaded JSON Schema (${jsonSchemaContent.length} bytes)`,
-  );
+  console.log(`✅ Successfully loaded JSON Schema (${jsonSchemaContent.length} bytes)`);
   console.log(`   Schema title: ${jsonSchema.title || "N/A"}`);
   console.log(`   Schema ID: ${jsonSchema.$id || "N/A"}\n`);
 
@@ -56,17 +54,12 @@ try {
   console.log(`   Lines of SDL: ${graphqlSdl.split("\n").length}\n`);
 
   // Save intermediate GraphQL SDL
-  const graphqlFile = join(
-    outputDir,
-    `${basename(inputFile, ".json")}.graphql`,
-  );
+  const graphqlFile = join(outputDir, `${basename(inputFile, ".json")}.graphql`);
   writeFileSync(graphqlFile, graphqlSdl, "utf-8");
   console.log(`💾 Saved GraphQL SDL to: ${graphqlFile}\n`);
 
   // Convert GraphQL back to JSON Schema
-  console.log(
-    "🔄 Step 3: Converting GraphQL SDL → JSON Schema (round-trip)...",
-  );
+  console.log("🔄 Step 3: Converting GraphQL SDL → JSON Schema (round-trip)...");
   const startTime2 = Date.now();
   const roundTripJsonSchema = converter.graphqlToJsonSchema(graphqlSdl, {
     validate: false,
@@ -78,15 +71,8 @@ try {
   console.log(`   JSON Schema size: ${roundTripJsonSchema.length} bytes\n`);
 
   // Save round-trip JSON Schema
-  const roundTripFile = join(
-    outputDir,
-    `${basename(inputFile, ".json")}.roundtrip.json`,
-  );
-  const roundTripPretty = JSON.stringify(
-    JSON.parse(roundTripJsonSchema),
-    null,
-    2,
-  );
+  const roundTripFile = join(outputDir, `${basename(inputFile, ".json")}.roundtrip.json`);
+  const roundTripPretty = JSON.stringify(JSON.parse(roundTripJsonSchema), null, 2);
   writeFileSync(roundTripFile, roundTripPretty, "utf-8");
   console.log(`💾 Saved round-trip JSON Schema to: ${roundTripFile}\n`);
 
@@ -115,15 +101,9 @@ try {
   console.log("=".repeat(70));
   console.log("📊 SUMMARY");
   console.log("=".repeat(70));
-  console.log(
-    `Original JSON Schema:     ${jsonSchemaContent.length.toLocaleString()} bytes`,
-  );
-  console.log(
-    `GraphQL SDL:              ${graphqlSdl.length.toLocaleString()} bytes`,
-  );
-  console.log(
-    `Round-trip JSON Schema:   ${roundTripJsonSchema.length.toLocaleString()} bytes`,
-  );
+  console.log(`Original JSON Schema:     ${jsonSchemaContent.length.toLocaleString()} bytes`);
+  console.log(`GraphQL SDL:              ${graphqlSdl.length.toLocaleString()} bytes`);
+  console.log(`Round-trip JSON Schema:   ${roundTripJsonSchema.length.toLocaleString()} bytes`);
   console.log(`Total time:               ${duration1 + duration2}ms`);
   console.log(
     `Schema preservation:      ${differences.length === 0 ? "100%" : `~${Math.max(0, 100 - differences.length * 2).toFixed(1)}%`}`,
@@ -131,13 +111,9 @@ try {
   console.log("=".repeat(70));
 
   if (differences.length === 0) {
-    console.log(
-      "\n✅ Round-trip conversion successful! The schema is fully preserved.",
-    );
+    console.log("\n✅ Round-trip conversion successful! The schema is fully preserved.");
   } else {
-    console.log(
-      "\n⚠️  Round-trip completed with minor differences (this may be expected).",
-    );
+    console.log("\n⚠️  Round-trip completed with minor differences (this may be expected).");
     console.log("   Check the output files for details.");
   }
 
@@ -179,17 +155,13 @@ function compareObjects(obj1, obj2, path = "") {
     const val2 = obj2[key];
 
     if (typeof val1 !== typeof val2) {
-      differences.push(
-        `Type mismatch at ${currentPath}: ${typeof val1} vs ${typeof val2}`,
-      );
+      differences.push(`Type mismatch at ${currentPath}: ${typeof val1} vs ${typeof val2}`);
       continue;
     }
 
     if (val1 === null || val2 === null) {
       if (val1 !== val2) {
-        differences.push(
-          `Value mismatch at ${currentPath}: ${val1} vs ${val2}`,
-        );
+        differences.push(`Value mismatch at ${currentPath}: ${val1} vs ${val2}`);
       }
       continue;
     }
@@ -217,9 +189,7 @@ function compareObjects(obj1, obj2, path = "") {
     } else if (val1 !== val2) {
       // Ignore some expected differences
       if (!shouldIgnoreDifference(currentPath, val1, val2)) {
-        differences.push(
-          `Value mismatch at ${currentPath}: "${val1}" vs "${val2}"`,
-        );
+        differences.push(`Value mismatch at ${currentPath}: "${val1}" vs "${val2}"`);
       }
     }
   }
@@ -230,11 +200,7 @@ function compareObjects(obj1, obj2, path = "") {
 // Helper to ignore expected differences
 function shouldIgnoreDifference(path, val1, val2) {
   // Ignore minor formatting differences in descriptions
-  if (
-    path.includes("description") &&
-    typeof val1 === "string" &&
-    typeof val2 === "string"
-  ) {
+  if (path.includes("description") && typeof val1 === "string" && typeof val2 === "string") {
     return val1.trim() === val2.trim();
   }
 

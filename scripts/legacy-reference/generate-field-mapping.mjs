@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import { snakeToCamel } from "./helpers/case-conversion.mjs";
 
-const repoRoot = path.resolve(new URL(import.meta.url).pathname, '..', '..');
+const repoRoot = path.resolve(new URL(import.meta.url).pathname, "..", "..");
 const schemaPath = path.join(repoRoot, "src", "data", "schema_unification.schema.json");
 const outDir = path.join(repoRoot, "generated-schemas");
 const generatedDir = path.join(repoRoot, "src", "data", "generated");
@@ -14,13 +14,13 @@ function canonicalCamel(s) {
   return snakeToCamel(s);
 }
 
-function findKeyLocations(obj, targetKey, basePath = '') {
+function findKeyLocations(obj, targetKey, basePath = "") {
   const results = [];
-  if (obj && typeof obj === 'object') {
+  if (obj && typeof obj === "object") {
     for (const [k, v] of Object.entries(obj)) {
       const currentPath = basePath ? `${basePath}/${k}` : k;
       if (k === targetKey) results.push(currentPath);
-      if (v && typeof v === 'object') {
+      if (v && typeof v === "object") {
         results.push(...findKeyLocations(v, targetKey, currentPath));
       }
     }
@@ -29,7 +29,7 @@ function findKeyLocations(obj, targetKey, basePath = '') {
 }
 
 async function loadSchema() {
-  const text = await fs.readFile(schemaPath, 'utf8');
+  const text = await fs.readFile(schemaPath, "utf8");
   return JSON.parse(text);
 }
 
@@ -40,7 +40,7 @@ async function main() {
 
   // Collect keys from $defs and top-level properties
   const collectKeys = (obj, basePath) => {
-    if (!obj || typeof obj !== 'object') return;
+    if (!obj || typeof obj !== "object") return;
     for (const [k, v] of Object.entries(obj)) {
       const p = basePath ? `${basePath}/${k}` : k;
       // Create mapping entry for this key
@@ -49,8 +49,8 @@ async function main() {
       mapping[camel].locations.push(p);
 
       // If this value has properties, include those too
-      if (v && typeof v === 'object') {
-        if (v.properties && typeof v.properties === 'object') {
+      if (v && typeof v === "object") {
+        if (v.properties && typeof v.properties === "object") {
           for (const prop of Object.keys(v.properties)) {
             const propCamel = canonicalCamel(prop);
             mapping[propCamel] = mapping[propCamel] || { snake: prop, locations: [] };
@@ -63,7 +63,7 @@ async function main() {
     }
   };
 
-  collectKeys(defs, '$defs');
+  collectKeys(defs, "$defs");
   if (schema.properties) {
     for (const prop of Object.keys(schema.properties)) {
       const propCamel = canonicalCamel(prop);
@@ -81,11 +81,11 @@ async function main() {
   await fs.mkdir(outDir, { recursive: true });
   await fs.mkdir(generatedDir, { recursive: true });
 
-  const outPath = path.join(outDir, 'field-name-mapping.json');
-  const generatedOutPath = path.join(generatedDir, 'field-name-mapping.json');
+  const outPath = path.join(outDir, "field-name-mapping.json");
+  const generatedOutPath = path.join(generatedDir, "field-name-mapping.json");
   const text = JSON.stringify(mapping, null, 2);
-  await fs.writeFile(outPath, text, 'utf8');
-  await fs.writeFile(generatedOutPath, text, 'utf8');
+  await fs.writeFile(outPath, text, "utf8");
+  await fs.writeFile(generatedOutPath, text, "utf8");
 
   console.log(`Wrote mapping for ${Object.keys(mapping).length} fields to:`);
   console.log(` - ${outPath}`);
@@ -93,5 +93,8 @@ async function main() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(err => { console.error(err); process.exit(1); });
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }

@@ -6,45 +6,42 @@ export function useSubgraphGenerator() {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState(new Map());
 
-  const generateSubgraph = useCallback(
-    async (jsonSchema, schemaId, options = {}) => {
-      setIsLoading(true);
-      try {
-        const result = await convertSchema(jsonSchema, {
-          validate: options.validate ?? true,
-          descriptions: options.descriptions ?? true,
-          federation: options.federation ?? true,
-          federationVersion: options.federationVersion ?? "AUTO",
-          naming: options.naming ?? "GRAPHQL_IDIOMATIC",
-          ...options, // Allow additional options
+  const generateSubgraph = useCallback(async (jsonSchema, schemaId, options = {}) => {
+    setIsLoading(true);
+    try {
+      const result = await convertSchema(jsonSchema, {
+        validate: options.validate ?? true,
+        descriptions: options.descriptions ?? true,
+        federation: options.federation ?? true,
+        federationVersion: options.federationVersion ?? "AUTO",
+        naming: options.naming ?? "GRAPHQL_IDIOMATIC",
+        ...options, // Allow additional options
+      });
+
+      if (result.success) {
+        setSubgraphs((prev) => new Map(prev).set(schemaId, result.sdl));
+        setErrors((prev) => {
+          const next = new Map(prev);
+          next.delete(schemaId);
+          return next;
         });
-
-        if (result.success) {
-          setSubgraphs((prev) => new Map(prev).set(schemaId, result.sdl));
-          setErrors((prev) => {
-            const next = new Map(prev);
-            next.delete(schemaId);
-            return next;
-          });
-        } else {
-          setErrors((prev) => new Map(prev).set(schemaId, result.error));
-        }
-
-        return result;
-      } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        setErrors((prev) => new Map(prev).set(schemaId, errorMsg));
-        return {
-          success: false,
-          error: errorMsg,
-          sdl: null,
-        };
-      } finally {
-        setIsLoading(false);
+      } else {
+        setErrors((prev) => new Map(prev).set(schemaId, result.error));
       }
-    },
-    [],
-  );
+
+      return result;
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      setErrors((prev) => new Map(prev).set(schemaId, errorMsg));
+      return {
+        success: false,
+        error: errorMsg,
+        sdl: null,
+      };
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const clearSubgraph = useCallback((schemaId) => {
     setSubgraphs((prev) => {

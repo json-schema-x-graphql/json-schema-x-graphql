@@ -1,19 +1,21 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { camelToSnake } from './helpers/case-conversion.mjs';
+import fs from "fs/promises";
+import path from "path";
+import { camelToSnake } from "./helpers/case-conversion.mjs";
 
-const repoRoot = path.resolve(new URL(import.meta.url).pathname, '..', '..');
-const mappingPath = path.join(repoRoot, 'generated-schemas', 'field-name-mapping.json');
+const repoRoot = path.resolve(new URL(import.meta.url).pathname, "..", "..");
+const mappingPath = path.join(repoRoot, "generated-schemas", "field-name-mapping.json");
 
 let _mapping = null;
 export async function loadMapping() {
   if (_mapping) return _mapping;
   try {
-    const text = await fs.readFile(mappingPath, 'utf8');
+    const text = await fs.readFile(mappingPath, "utf8");
     _mapping = JSON.parse(text);
     return _mapping;
   } catch (err) {
-    throw new Error(`Field mapping not found; please run 'node scripts/generate-field-mapping.mjs' to generate it. Error: ${err.message}`);
+    throw new Error(
+      `Field mapping not found; please run 'node scripts/generate-field-mapping.mjs' to generate it. Error: ${err.message}`,
+    );
   }
 }
 

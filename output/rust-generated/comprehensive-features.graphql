@@ -51,5 +51,3 @@ type OverriddenType {
   id: ID!
   legacyField: String @override(from: "legacy-service")
 }
-
-

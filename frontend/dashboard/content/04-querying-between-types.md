@@ -486,16 +486,7 @@ type Query {
   "$defs": {
     "Post": {
       "type": "object",
-      "required": [
-        "id",
-        "title",
-        "content",
-        "author",
-        "category",
-        "tags",
-        "comments",
-        "createdAt"
-      ],
+      "required": ["id", "title", "content", "author", "category", "tags", "comments", "createdAt"],
       "properties": {
         "id": { "type": "string" },
         "title": { "type": "string" },

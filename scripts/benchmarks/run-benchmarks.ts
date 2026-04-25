@@ -7,13 +7,7 @@
  * Outputs benchmark results in JSON format for CI/CD integration.
  */
 
-import {
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-  existsSync,
-} from "fs";
+import { readFileSync, readdirSync, statSync, writeFileSync, existsSync } from "fs";
 import { join, relative, basename } from "path";
 import { jsonSchemaToGraphQL } from "../../converters/node/src/converter";
 import { parse as parseGraphQL, buildSchema, validate } from "graphql";
@@ -201,12 +195,9 @@ class BenchmarkRunner {
     const mean = sum / len;
 
     const median =
-      len % 2 === 0
-        ? (sorted[len / 2 - 1] + sorted[len / 2]) / 2
-        : sorted[Math.floor(len / 2)];
+      len % 2 === 0 ? (sorted[len / 2 - 1] + sorted[len / 2]) / 2 : sorted[Math.floor(len / 2)];
 
-    const variance =
-      values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / len;
+    const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / len;
     const stdDev = Math.sqrt(variance);
 
     const p95Index = Math.ceil(len * 0.95) - 1;
@@ -340,9 +331,7 @@ class BenchmarkRunner {
   /**
    * Run all benchmarks
    */
-  async runAll(
-    iterations: number = DEFAULT_ITERATIONS,
-  ): Promise<BenchmarkReport> {
+  async runAll(iterations: number = DEFAULT_ITERATIONS): Promise<BenchmarkReport> {
     const files = this.discoverBenchmarkFiles();
     const results: BenchmarkResult[] = [];
 
@@ -370,27 +359,18 @@ class BenchmarkRunner {
     const fastest =
       results.length > 0
         ? results.reduce((prev, curr) =>
-            curr.metrics.conversionTimeMs.mean <
-            prev.metrics.conversionTimeMs.mean
-              ? curr
-              : prev,
+            curr.metrics.conversionTimeMs.mean < prev.metrics.conversionTimeMs.mean ? curr : prev,
           )
         : null;
 
     const slowest =
       results.length > 0
         ? results.reduce((prev, curr) =>
-            curr.metrics.conversionTimeMs.mean >
-            prev.metrics.conversionTimeMs.mean
-              ? curr
-              : prev,
+            curr.metrics.conversionTimeMs.mean > prev.metrics.conversionTimeMs.mean ? curr : prev,
           )
         : null;
 
-    const totalTypes = results.reduce(
-      (sum, r) => sum + r.metadata.typesGenerated,
-      0,
-    );
+    const totalTypes = results.reduce((sum, r) => sum + r.metadata.typesGenerated, 0);
     const totalIterations = results.reduce((sum, r) => sum + r.iterations, 0);
 
     const report: BenchmarkReport = {
@@ -421,8 +401,7 @@ async function main() {
   const args = process.argv.slice(2);
   const flags = {
     iterations: parseInt(
-      args.find((arg) => arg.startsWith("--iterations="))?.split("=")[1] ||
-        `${DEFAULT_ITERATIONS}`,
+      args.find((arg) => arg.startsWith("--iterations="))?.split("=")[1] || `${DEFAULT_ITERATIONS}`,
     ),
     json: args.includes("--json"),
     output: args.find((arg) => arg.startsWith("--output="))?.split("=")[1],
@@ -436,16 +415,12 @@ async function main() {
   console.log("\n" + "=".repeat(60));
   console.log("BENCHMARK SUMMARY");
   console.log("=".repeat(60));
-  console.log(
-    `Environment:       ${report.environment.platform} ${report.environment.arch}`,
-  );
+  console.log(`Environment:       ${report.environment.platform} ${report.environment.arch}`);
   console.log(`Node version:      ${report.environment.nodeVersion}`);
   console.log(`CPUs:              ${report.environment.cpus}`);
   console.log(`Total benchmarks:  ${report.totalBenchmarks}`);
   console.log(`Total iterations:  ${report.summary.totalIterations}`);
-  console.log(
-    `Avg conversion:    ${report.summary.averageConversionMs.toFixed(2)}ms`,
-  );
+  console.log(`Avg conversion:    ${report.summary.averageConversionMs.toFixed(2)}ms`);
   console.log(`Fastest:           ${report.summary.fastest}`);
   console.log(`Slowest:           ${report.summary.slowest}`);
   console.log(`Total types gen:   ${report.summary.totalTypesGenerated}`);
@@ -489,9 +464,7 @@ async function main() {
     const previousReport = JSON.parse(readFileSync(flags.compare, "utf-8"));
 
     for (const result of report.results) {
-      const previous = previousReport.results?.find(
-        (r: any) => r.name === result.name,
-      );
+      const previous = previousReport.results?.find((r: any) => r.name === result.name);
       if (previous) {
         const currentTime = result.metrics.conversionTimeMs.mean;
         const previousTime = previous.metrics.conversionTimeMs.mean;

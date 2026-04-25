@@ -68,7 +68,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
             </Box>
             <Editor
               value={originalContent}
-              onChange={value => setOriginalContent(value || "")}
+              onChange={(value) => setOriginalContent(value || "")}
               language={from}
               height={500}
               options={editorOptions}
@@ -86,7 +86,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
                 ...editorOptions,
                 readOnly: true,
               }}
-              onMount={editor => {
+              onMount={(editor) => {
                 editorRef.current = editor;
               }}
             />

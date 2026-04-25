@@ -1,0 +1,25 @@
+{
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/pkg/**",
+    "**/coverage/**",
+    "**/reports/**",
+    "**/generated-metadata/**",
+    "**/frontend/demos/loro-monaco/src/wasm/**",
+    "**/converters/node/dist/**",
+    "**/converters/node/src/**/*.test.ts",
+    "**/converters/node/src/generated/**",
+    "**/frontend/dashboard/src/compat/**",
+    "**/frontend/dashboard/src/pages-disabled/**",
+    "**/frontend/dashboard/scripts/generate-*.mjs",
+    "**/frontend/dashboard/scripts/lib/**",
+    "**/frontend/dashboard/scripts/linkinator/**",
+    "**/frontend/dashboard/scripts/generate-canonical-to-unified-model-coverage.mjs",
+    "**/frontend/subgraph-composer/src/lib/**",
+    "**/frontend/subgraph-composer/src/hooks/**",
+    "**/scripts/legacy-reference/**",
+    "**/scripts/**/*.mjs",
+    "**/scripts/**/*.js"
+  ]
+}

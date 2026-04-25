@@ -48,37 +48,20 @@ const config = {
     // package provides a different entry. This alias maps those imports to
     // the installed CJS entry point under the project root.
     config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      "js-yaml/dist/js-yaml.mjs": path.resolve(
-        projectRoot,
-        "node_modules",
-        "js-yaml",
-        "index.js",
-      ),
-      "js-yaml": path.resolve(
-        projectRoot,
-        "node_modules",
-        "js-yaml",
-        "index.js",
-      ),
+      ...config.resolve.alias,
+      "js-yaml/dist/js-yaml.mjs": path.resolve(projectRoot, "node_modules", "js-yaml", "index.js"),
+      "js-yaml": path.resolve(projectRoot, "node_modules", "js-yaml", "index.js"),
     };
 
     // When building on the server, some packages import Monaco CSS via exact paths
     // which Next's CSS handling inspects too early. Provide server-only aliases that
     // map those CSS imports to a tiny CommonJS shim so the server build won't fail.
     if (isServer) {
-      const serverShim = path.resolve(
-        projectRoot,
-        "src",
-        "compat",
-        "server",
-        "empty-css.cjs",
-      );
+      const serverShim = path.resolve(projectRoot, "src", "compat", "server", "empty-css.cjs");
       config.resolve.alias = {
-        ...(config.resolve.alias || {}),
+        ...config.resolve.alias,
         "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": serverShim,
-        "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css":
-          serverShim,
+        "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css": serverShim,
         "monaco-editor/esm/vs/editor/editor.main.css": serverShim,
         "monaco-editor/esm/vs/editor/edcore.main.css": serverShim,
         "graphql-editor/dist/style.css": serverShim,
@@ -94,15 +77,19 @@ const config = {
     // Redirect specific monaco and editor CSS imports to a small compat shim so Next.js
     // doesn't try to process global CSS from node_modules during the server build.
     config.resolve.alias = {
-      ...(config.resolve.alias || {}),
+      ...config.resolve.alias,
       "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": path.resolve(
         projectRoot,
         "src",
         "compat",
         "monaco-css-shim.js",
       ),
-      "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css":
-        path.resolve(projectRoot, "src", "compat", "monaco-css-shim.js"),
+      "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css": path.resolve(
+        projectRoot,
+        "src",
+        "compat",
+        "monaco-css-shim.js",
+      ),
       "monaco-editor/esm/vs/editor/editor.main.css": path.resolve(
         projectRoot,
         "src",
@@ -217,7 +204,7 @@ const config = {
       // that some packages use. This helps when a package requires a CSS file by exact path
       // (e.g. monaco-editor/esm/vs/base/browser/ui/aria/aria.css) and bypasses the loader rules.
       config.resolve.alias = {
-        ...(config.resolve.alias || {}),
+        ...config.resolve.alias,
         "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": emptyCss,
         "monaco-editor/esm/vs/editor/editor.main.css": emptyCss,
       };
@@ -242,28 +229,19 @@ const config = {
       }
 
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
-          /monaco-editor[\\/].*\\.css$/i,
-          (resource) => {
-            resource.request = emptyCss;
-          },
-        ),
+        new webpack.NormalModuleReplacementPlugin(/monaco-editor[\\/].*\\.css$/i, (resource) => {
+          resource.request = emptyCss;
+        }),
       );
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
-          /graphql-editor[\\/].*\\.css$/i,
-          (resource) => {
-            resource.request = emptyCss;
-          },
-        ),
+        new webpack.NormalModuleReplacementPlugin(/graphql-editor[\\/].*\\.css$/i, (resource) => {
+          resource.request = emptyCss;
+        }),
       );
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
-          /@monaco-editor[\\/].*\\.css$/i,
-          (resource) => {
-            resource.request = emptyCss;
-          },
-        ),
+        new webpack.NormalModuleReplacementPlugin(/@monaco-editor[\\/].*\\.css$/i, (resource) => {
+          resource.request = emptyCss;
+        }),
       );
       config.plugins.push(
         new webpack.NormalModuleReplacementPlugin(
@@ -277,10 +255,7 @@ const config = {
       // If webpack isn't available or plugin fails, continue without plugin — the earlier rules should help.
       // We intentionally do not throw here to avoid breaking Next.js startup.
       // eslint-disable-next-line no-console
-      console.warn(
-        "Could not register NormalModuleReplacementPlugin for editor CSS:",
-        e,
-      );
+      console.warn("Could not register NormalModuleReplacementPlugin for editor CSS:", e);
     }
 
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";

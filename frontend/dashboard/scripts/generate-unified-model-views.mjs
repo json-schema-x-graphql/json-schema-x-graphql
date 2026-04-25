@@ -119,7 +119,7 @@ function resolveCanonicalNode(canonicalSchema, canonicalPath) {
     const parts = ref
       .slice(2)
       .split("/")
-      .map(p => p.replace(/~1/g, "/").replace(/~0/g, "~")); // unescape per JSON Pointer
+      .map((p) => p.replace(/~1/g, "/").replace(/~0/g, "~")); // unescape per JSON Pointer
     let cur = root;
     for (const p of parts) {
       if (cur && typeof cur === "object" && Object.prototype.hasOwnProperty.call(cur, p)) {
@@ -156,7 +156,7 @@ function resolveCanonicalNode(canonicalSchema, canonicalPath) {
           ? cur.all_of
           : null;
       if (allOf && allOf.length) {
-        const candidate = allOf.find(s => s && (s.properties || s.$ref || s.items)) || allOf[0];
+        const candidate = allOf.find((s) => s && (s.properties || s.$ref || s.items)) || allOf[0];
         if (candidate) {
           cur = unwrapNode(candidate) || candidate;
           continue;
@@ -256,7 +256,7 @@ function inferGraphQLScalarFromJSONSchema(node) {
 
   if (Array.isArray(t)) {
     // remove null to infer main type
-    const types = t.filter(x => x !== "null");
+    const types = t.filter((x) => x !== "null");
     if (types.length === 1) return inferGraphQLScalarFromJSONSchema({ type: types[0], format });
     // fallback
     return "JSON";
@@ -350,7 +350,7 @@ function mergeLeafTypeFromCanonical(leafNode, canonicalNode) {
   } else {
     // Use canonical type; simplify union with null
     const t = Array.isArray(canonicalNode.type)
-      ? canonicalNode.type.filter(x => x !== "null")
+      ? canonicalNode.type.filter((x) => x !== "null")
       : canonicalNode.type;
 
     if (t === "array") {
@@ -358,7 +358,7 @@ function mergeLeafTypeFromCanonical(leafNode, canonicalNode) {
       leafNode.type = "array";
       if (!leafNode.items) leafNode.items = {};
       const itemType = Array.isArray(canonicalNode.items?.type)
-        ? canonicalNode.items.type.filter(x => x !== "null")
+        ? canonicalNode.items.type.filter((x) => x !== "null")
         : canonicalNode.items?.type;
       if (itemType === "object" || canonicalNode.items?.properties) {
         leafNode.items.type = "object";
@@ -492,12 +492,12 @@ function toPascalCase(s) {
     .replace(/[^a-zA-Z0-9]+/g, " ")
     .split(" ")
     .filter(Boolean)
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join("");
 }
 
 function toSafeTypeName(parts) {
-  const name = parts.map(p => toPascalCase(p)).join("");
+  const name = parts.map((p) => toPascalCase(p)).join("");
   return /^[A-Za-z_]/.test(name) ? name : `T${name}`;
 }
 
@@ -597,7 +597,7 @@ function printSDLFromTypes(types) {
 
     lines.push(`type ${name} {`);
     for (const [field, cfg] of Array.from(node.fields.entries()).sort((a, b) =>
-      a[0].localeCompare(b[0])
+      a[0].localeCompare(b[0]),
     )) {
       const t = cfg.list ? `[${cfg.type}]` : cfg.type;
       lines.push(`  ${field}: ${t}`);
@@ -607,7 +607,7 @@ function printSDLFromTypes(types) {
   }
 
   // Root query exposing a Unified Model root if available
-  const rootType = names.find(n => n === "Gsdm") || names[0];
+  const rootType = names.find((n) => n === "Gsdm") || names[0];
   if (rootType) {
     lines.push(`type Query {`);
     lines.push(`  unified_model: ${rootType}`);
@@ -660,7 +660,8 @@ export async function main(argv = process.argv.slice(2)) {
   } = buildGsdmSchema(canonicalSchema, mappingDoc);
 
   // Annotate top-level metadata
-  unified_modelSchema.$id = unified_modelSchema.$id || "https://example.org/unified_model/schema.json";
+  unified_modelSchema.$id =
+    unified_modelSchema.$id || "https://example.org/unified_model/schema.json";
   unified_modelSchema["x-provenance"] = {
     canonical_source: path.relative(repoRoot, canonicalPath),
     mapping_source: path.relative(repoRoot, mappingPath),
@@ -669,7 +670,10 @@ export async function main(argv = process.argv.slice(2)) {
   };
 
   // Write outputs
-  const writtenSchema = await writeJson(path.join(outBase, "unified_model.schema.json"), unified_modelSchema);
+  const writtenSchema = await writeJson(
+    path.join(outBase, "unified_model.schema.json"),
+    unified_modelSchema,
+  );
   const writtenResolved = await writeJson(path.join(outBase, "mapping-resolved.json"), {
     ...resolvedMapping,
     diagnostics,
@@ -687,13 +691,15 @@ export async function main(argv = process.argv.slice(2)) {
     written: {
       schema: path.relative(repoRoot, writtenSchema),
       mapping: path.relative(repoRoot, writtenResolved),
-      sdl: opts.noSDL ? null : path.relative(repoRoot, path.join(outSDLDir, "unified_model.graphql")),
+      sdl: opts.noSDL
+        ? null
+        : path.relative(repoRoot, path.join(outSDLDir, "unified_model.graphql")),
     },
     diagnostics: {
       counts: {
-        warn: diagnostics.filter(d => d.level === "warn").length,
-        info: diagnostics.filter(d => d.level === "info").length,
-        error: diagnostics.filter(d => d.level === "error").length,
+        warn: diagnostics.filter((d) => d.level === "warn").length,
+        info: diagnostics.filter((d) => d.level === "info").length,
+        error: diagnostics.filter((d) => d.level === "error").length,
       },
     },
   };
@@ -710,7 +716,7 @@ export async function main(argv = process.argv.slice(2)) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("❌ generate-unified_model-views:", err?.stack || err?.message || err);
     process.exit(1);
   });

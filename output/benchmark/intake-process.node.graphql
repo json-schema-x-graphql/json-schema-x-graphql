@@ -91,7 +91,11 @@ type IntakeProcessCanonicalSchema {
 
 type Query {
   "Fetch a single Intake Process record by composite key (business_owner + system_owner) or source_record_id."
-  intake_process_record(business_owner: String, system_owner: String, source_record_id: ID): EasiRecord
+  intake_process_record(
+    business_owner: String
+    system_owner: String
+    source_record_id: ID
+  ): EasiRecord
   "Return a list of Intake Process records (non-paginated snapshot)."
   intake_process_records: [EasiRecord!]!
 }

@@ -544,8 +544,10 @@ const typeConfigs = [
       },
       {
         name: "legacy_procurementanceTypes",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes",
-        itemsPointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes",
+        itemsPointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items",
         graphqlType: "[AssistanceType!]",
       },
       {
@@ -562,21 +564,25 @@ const typeConfigs = [
   },
   {
     name: "AssistanceType",
-    pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items",
+    pointer:
+      "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items",
     fields: [
       {
         name: "code",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/code",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/code",
         graphqlType: "String",
       },
       {
         name: "value",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/value",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/value",
         graphqlType: "String",
       },
       {
         name: "level",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/level",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/legacy_procurementanceTypes/items/level",
         graphqlType: "Int",
       },
     ],
@@ -587,36 +593,43 @@ const typeConfigs = [
     fields: [
       {
         name: "applicantTypes",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes",
-        itemsPointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes",
+        itemsPointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items",
         graphqlType: "[EligibilityType!]",
       },
       {
         name: "beneficiaryTypes",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/beneficiaryTypes",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/beneficiaryTypes",
         itemsPointer:
           "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/beneficiaryTypes/items",
         graphqlType: "[EligibilityType!]",
       },
       {
         name: "additionalInfo",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/additionalInfo",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/additionalInfo",
         graphqlType: "String",
       },
     ],
   },
   {
     name: "EligibilityType",
-    pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items",
+    pointer:
+      "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items",
     fields: [
       {
         name: "value",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items/value",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items/value",
         graphqlType: "String",
       },
       {
         name: "code",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items/code",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/eligibility/applicantTypes/items/code",
         graphqlType: "String",
       },
     ],
@@ -642,7 +655,8 @@ const typeConfigs = [
       },
       {
         name: "discretionaryFund",
-        pointer: "/systemExtensions/contract_data/items/contract_dataSpecific/usage/discretionaryFund",
+        pointer:
+          "/systemExtensions/contract_data/items/contract_dataSpecific/usage/discretionaryFund",
         graphqlType: "String",
       },
     ],
@@ -661,7 +675,11 @@ const typeConfigs = [
         pointer: "/systemExtensions/legacy_procurement/items/fieldType",
         graphqlType: "String",
       },
-      { name: "value", pointer: "/systemExtensions/legacy_procurement/items/value", graphqlType: "JSON" },
+      {
+        name: "value",
+        pointer: "/systemExtensions/legacy_procurement/items/value",
+        graphqlType: "JSON",
+      },
       {
         name: "legacy_procurementSpecific",
         pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific",
@@ -675,7 +693,8 @@ const typeConfigs = [
     fields: [
       {
         name: "acquisitionData",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData",
         graphqlType: "AssistAcquisitionData",
       },
       {
@@ -692,11 +711,13 @@ const typeConfigs = [
   },
   {
     name: "AssistAcquisitionData",
-    pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData",
+    pointer:
+      "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData",
     fields: [
       {
         name: "iaPiidOrUniqueId",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData/iaPiidOrUniqueId",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/acquisitionData/iaPiidOrUniqueId",
         graphqlType: "String!",
       },
       {
@@ -713,19 +734,22 @@ const typeConfigs = [
     fields: [
       {
         name: "clientOrganizationName",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/clientOrganizationName",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/clientOrganizationName",
         graphqlType: "String!",
       },
       {
         name: "officeAddress",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress",
         graphqlType: "AssistOfficeAddress!",
       },
     ],
   },
   {
     name: "AssistOfficeAddress",
-    pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress",
+    pointer:
+      "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress",
     fields: [
       {
         name: "streetAddress1",
@@ -735,12 +759,14 @@ const typeConfigs = [
       },
       {
         name: "city",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress/city",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress/city",
         graphqlType: "String",
       },
       {
         name: "state",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress/state",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/clientData/officeAddress/state",
         graphqlType: "String",
       },
     ],
@@ -751,12 +777,14 @@ const typeConfigs = [
     fields: [
       {
         name: "typeOfIdc",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/typeOfIdc",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/typeOfIdc",
         graphqlType: "String",
       },
       {
         name: "whoCanUseIdc",
-        pointer: "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/whoCanUseIdc",
+        pointer:
+          "/systemExtensions/legacy_procurement/items/legacy_procurementSpecific/awardData/whoCanUseIdc",
         graphqlType: "String",
       },
     ],
@@ -775,7 +803,11 @@ const typeConfigs = [
         pointer: "/systemExtensions/intake_process/items/fieldType",
         graphqlType: "String",
       },
-      { name: "value", pointer: "/systemExtensions/intake_process/items/value", graphqlType: "JSON" },
+      {
+        name: "value",
+        pointer: "/systemExtensions/intake_process/items/value",
+        graphqlType: "JSON",
+      },
       {
         name: "intake_processSpecific",
         pointer: "/systemExtensions/intake_process/items/intake_processSpecific",
@@ -819,7 +851,8 @@ const typeConfigs = [
       },
       {
         name: "notSeparatelyPriced",
-        pointer: "/systemExtensions/intake_process/items/intake_processSpecific/notSeparatelyPriced",
+        pointer:
+          "/systemExtensions/intake_process/items/intake_processSpecific/notSeparatelyPriced",
         graphqlType: "String",
       },
     ],

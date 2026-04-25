@@ -286,11 +286,7 @@
   },
   "enum": {
     "snake": "enum",
-    "locations": [
-      "$defs/system_type/enum",
-      "$defs/contact_role/enum",
-      "$defs/contract_status/enum"
-    ]
+    "locations": ["$defs/system_type/enum", "$defs/contact_role/enum", "$defs/contract_status/enum"]
   },
   "x-graphql-enum": {
     "snake": "x-graphql-enum",
@@ -380,9 +376,7 @@
   },
   "contractingOfficer": {
     "snake": "contracting_officer",
-    "locations": [
-      "$defs/contact_role/x-graphql-enum/values/contracting_officer"
-    ]
+    "locations": ["$defs/contact_role/x-graphql-enum/values/contracting_officer"]
   },
   "contractStatus": {
     "snake": "contract_status",
@@ -410,10 +404,7 @@
   },
   "dataQuality": {
     "snake": "data_quality",
-    "locations": [
-      "$defs/data_quality",
-      "$defs/system_chain_entry/properties/data_quality"
-    ]
+    "locations": ["$defs/data_quality", "$defs/system_chain_entry/properties/data_quality"]
   },
   "completenessScore": {
     "snake": "completeness_score",
@@ -644,9 +635,7 @@
   },
   "originalAwardPiid": {
     "snake": "original_award_piid",
-    "locations": [
-      "$defs/contract_identification/properties/original_award_piid"
-    ]
+    "locations": ["$defs/contract_identification/properties/original_award_piid"]
   },
   "referencedPiid": {
     "snake": "referenced_piid",
@@ -662,9 +651,7 @@
   },
   "descriptionOfRequirement": {
     "snake": "description_of_requirement",
-    "locations": [
-      "$defs/contract_identification/properties/description_of_requirement"
-    ]
+    "locations": ["$defs/contract_identification/properties/description_of_requirement"]
   },
   "maxLength": {
     "snake": "max_length",
@@ -684,10 +671,7 @@
   },
   "organizationInfo": {
     "snake": "organization_info",
-    "locations": [
-      "$defs/organization_info",
-      "$defs/common_elements/properties/organization_info"
-    ]
+    "locations": ["$defs/organization_info", "$defs/common_elements/properties/organization_info"]
   },
   "contractingAgency": {
     "snake": "contracting_agency",
@@ -707,9 +691,7 @@
   },
   "allOf": {
     "snake": "all_of",
-    "locations": [
-      "$defs/organization_info/properties/contracting_agency/all_of"
-    ]
+    "locations": ["$defs/organization_info/properties/contracting_agency/all_of"]
   },
   "vendorInfo": {
     "snake": "vendor_info",
@@ -763,16 +745,11 @@
   },
   "congressionalDistrict": {
     "snake": "congressional_district",
-    "locations": [
-      "$defs/place_of_performance/properties/congressional_district"
-    ]
+    "locations": ["$defs/place_of_performance/properties/congressional_district"]
   },
   "financialInfo": {
     "snake": "financial_info",
-    "locations": [
-      "$defs/financial_info",
-      "$defs/common_elements/properties/financial_info"
-    ]
+    "locations": ["$defs/financial_info", "$defs/common_elements/properties/financial_info"]
   },
   "totalContractValue": {
     "snake": "total_contract_value",
@@ -784,9 +761,7 @@
   },
   "independentGovernmentEstimate": {
     "snake": "independent_government_estimate",
-    "locations": [
-      "$defs/financial_info/properties/independent_government_estimate"
-    ]
+    "locations": ["$defs/financial_info/properties/independent_government_estimate"]
   },
   "amountSpentOnProduct": {
     "snake": "amount_spent_on_product",
@@ -821,9 +796,7 @@
   },
   "categoryOfProduct": {
     "snake": "category_of_product",
-    "locations": [
-      "$defs/business_classification/properties/category_of_product"
-    ]
+    "locations": ["$defs/business_classification/properties/category_of_product"]
   },
   "typeOfProduct": {
     "snake": "type_of_product",
@@ -835,15 +808,11 @@
   },
   "localAreaSetAside": {
     "snake": "local_area_set_aside",
-    "locations": [
-      "$defs/business_classification/properties/local_area_set_aside"
-    ]
+    "locations": ["$defs/business_classification/properties/local_area_set_aside"]
   },
   "coSizeDetermination": {
     "snake": "co_size_determination",
-    "locations": [
-      "$defs/business_classification/properties/co_size_determination"
-    ]
+    "locations": ["$defs/business_classification/properties/co_size_determination"]
   },
   "contractCharacteristics": {
     "snake": "contract_characteristics",
@@ -854,15 +823,11 @@
   },
   "emergencyAcquisition": {
     "snake": "emergency_acquisition",
-    "locations": [
-      "$defs/contract_characteristics/properties/emergency_acquisition"
-    ]
+    "locations": ["$defs/contract_characteristics/properties/emergency_acquisition"]
   },
   "governmentFurnishedProperty": {
     "snake": "government_furnished_property",
-    "locations": [
-      "$defs/contract_characteristics/properties/government_furnished_property"
-    ]
+    "locations": ["$defs/contract_characteristics/properties/government_furnished_property"]
   },
   "includesCui": {
     "snake": "includes_cui",
@@ -874,9 +839,7 @@
   },
   "recurringUtilities": {
     "snake": "recurring_utilities",
-    "locations": [
-      "$defs/contract_characteristics/properties/recurring_utilities"
-    ]
+    "locations": ["$defs/contract_characteristics/properties/recurring_utilities"]
   },
   "contact": {
     "snake": "contact",
@@ -900,10 +863,7 @@
   },
   "statusInfo": {
     "snake": "status_info",
-    "locations": [
-      "$defs/status_info",
-      "$defs/common_elements/properties/status_info"
-    ]
+    "locations": ["$defs/status_info", "$defs/common_elements/properties/status_info"]
   },
   "isActive": {
     "snake": "is_active",
@@ -983,15 +943,11 @@
   },
   "value": {
     "snake": "value",
-    "locations": [
-      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/value"
-    ]
+    "locations": ["$defs/system_extensions/additionalProperties/oneOf/1/items/properties/value"]
   },
   "category": {
     "snake": "category",
-    "locations": [
-      "$defs/system_extensions/additionalProperties/oneOf/1/items/properties/category"
-    ]
+    "locations": ["$defs/system_extensions/additionalProperties/oneOf/1/items/properties/category"]
   },
   "contract": {
     "snake": "contract",
@@ -1003,10 +959,7 @@
   },
   "relatedContracts": {
     "snake": "related_contracts",
-    "locations": [
-      "$defs/contract/properties/related_contracts",
-      "properties/related_contracts"
-    ]
+    "locations": ["$defs/contract/properties/related_contracts", "properties/related_contracts"]
   },
   "implements": {
     "snake": "implements",
@@ -1031,14 +984,10 @@
   },
   "args": {
     "snake": "args",
-    "locations": [
-      "$defs/contract/properties/related_contracts/x-graphql-field/args"
-    ]
+    "locations": ["$defs/contract/properties/related_contracts/x-graphql-field/args"]
   },
   "first": {
     "snake": "first",
-    "locations": [
-      "$defs/contract/properties/related_contracts/x-graphql-field/args/first"
-    ]
+    "locations": ["$defs/contract/properties/related_contracts/x-graphql-field/args/first"]
   }
 }

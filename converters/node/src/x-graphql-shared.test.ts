@@ -203,14 +203,11 @@ describe("X-GraphQL Shared Test Data", () => {
           results.push({ file, success: true });
         } catch (error) {
           // Some schemas might be intentionally invalid for error testing
-          const errorMsg =
-            error instanceof Error ? error.message : String(error);
+          const errorMsg = error instanceof Error ? error.message : String(error);
           results.push({ file, success: false, error: errorMsg });
 
           if (!file.includes("invalid") && !file.includes("error")) {
-            throw new Error(
-              `Expected ${file} to convert successfully but got: ${errorMsg}`,
-            );
+            throw new Error(`Expected ${file} to convert successfully but got: ${errorMsg}`);
           }
         }
       }
@@ -347,14 +344,7 @@ describe("X-GraphQL Shared Test Data", () => {
         const expectedNorm = normalizeWhitespace(expected);
 
         // Check for presence of key types
-        const keyTypes = [
-          "Node",
-          "Timestamped",
-          "User",
-          "Product",
-          "Order",
-          "SearchResult",
-        ];
+        const keyTypes = ["Node", "Timestamped", "User", "Product", "Order", "SearchResult"];
         keyTypes.forEach((typeName) => {
           if (expectedNorm.includes(typeName)) {
             expect(resultNorm).toContain(typeName);

@@ -16,4 +16,7 @@ export declare function convertObjectKeys(obj: any, converter: (key: string) => 
 /**
  * Convert GraphQL field names in SDL string using a converter
  */
-export declare function convertGraphQLFields(sdl: string, converter: (field: string) => string): string;
+export declare function convertGraphQLFields(
+  sdl: string,
+  converter: (field: string) => string,
+): string;

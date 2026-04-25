@@ -346,10 +346,7 @@ enum UserRole {
   "title": "Product",
   "type": "object",
   "x-graphql-type-name": "Product",
-  "x-graphql-federation-keys": [
-    { "fields": "id" },
-    { "fields": "sku organizationId" }
-  ],
+  "x-graphql-federation-keys": [{ "fields": "id" }, { "fields": "sku organizationId" }],
   "properties": {
     "id": {
       "type": "string",

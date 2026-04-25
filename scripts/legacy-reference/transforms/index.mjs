@@ -193,7 +193,10 @@ export const transforms = {
   join(value, args = {}) {
     const sep = typeof args.sep === "string" ? args.sep : " ";
     if (Array.isArray(value)) {
-      return value.map(v => (v == null ? "" : String(v))).filter(s => s.trim() !== "").join(sep);
+      return value
+        .map((v) => (v == null ? "" : String(v)))
+        .filter((s) => s.trim() !== "")
+        .join(sep);
     }
     return value;
   },
@@ -210,23 +213,20 @@ export const transforms = {
    * args: { table: Record<string, string>, caseInsensitive?: boolean, default?: any }
    */
   map_enum(value, args = {}, context = {}) {
-    const table =
-      args.table ||
-      context.enumTable ||
-      {}; // allow table to come from context
+    const table = args.table || context.enumTable || {}; // allow table to come from context
     const ci = !!args.caseInsensitive;
 
     if (value == null) return args.default ?? value;
 
     const key = String(value);
     if (!ci) {
-      return table.hasOwnProperty(key) ? table[key] : args.default ?? value;
+      return table.hasOwnProperty(key) ? table[key] : (args.default ?? value);
     }
     // case-insensitive: build a normalized map
     const norm = {};
     for (const [k, v] of Object.entries(table)) norm[String(k).toLowerCase()] = v;
     const hit = norm[key.toLowerCase()];
-    return hit !== undefined ? hit : args.default ?? value;
+    return hit !== undefined ? hit : (args.default ?? value);
   },
 
   /**
@@ -410,7 +410,7 @@ function applyMappingEntry(input, output, entry, context, diagnostics) {
 
       if (terminalKey) {
         const containerPath = gPath.slice(0, -(terminalKey.length + 1)); // strip ".terminalKey"
-        const arr = mappedArr.map(v => ({ [terminalKey]: v }));
+        const arr = mappedArr.map((v) => ({ [terminalKey]: v }));
         const ok2 = setByPath(output, containerPath, arr);
         if (!ok2) {
           diagnostics.push({ level: "warn", msg: `${noteBase} failed to set array at ${gPath}` });
@@ -505,7 +505,7 @@ export function translateRecords(inputs, mappingEntries, options = {}) {
     const r = translateRecord(inputs[i], mappingEntries, options);
     outputs.push(r.output);
     if (r.diagnostics && r.diagnostics.length) {
-      diagnostics.push(...r.diagnostics.map(d => ({ ...d, index: i })));
+      diagnostics.push(...r.diagnostics.map((d) => ({ ...d, index: i })));
     }
   }
   return { outputs, diagnostics };

@@ -226,9 +226,7 @@ import fs from "fs";
 import { compareSchemas } from "../../scripts/validate-schema-sync.mjs";
 
 const sdl = fs.readFileSync("src/data/schema_unification.graphql", "utf8");
-const jsonSchema = JSON.parse(
-  fs.readFileSync("src/data/schema_unification.schema.json", "utf8"),
-);
+const jsonSchema = JSON.parse(fs.readFileSync("src/data/schema_unification.schema.json", "utf8"));
 
 // Non-strict parity
 const basic = compareSchemas(sdl, jsonSchema);

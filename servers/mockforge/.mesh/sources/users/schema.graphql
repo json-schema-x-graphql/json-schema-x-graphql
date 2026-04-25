@@ -10,13 +10,20 @@ directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
 
-directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+directive @link(
+  url: String!
+  as: String
+  for: link__Purpose
+  import: [link__Import]
+) repeatable on SCHEMA
 
 directive @shareable repeatable on OBJECT | FIELD_DEFINITION
 
 directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
-directive @tag(name: String!) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @tag(
+  name: String!
+) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
 directive @override(from: String!) on FIELD_DEFINITION
 
@@ -34,7 +41,9 @@ directive @external on FIELD_DEFINITION | OBJECT
 
 directive @shareable on OBJECT | FIELD_DEFINITION
 
-directive @tag(name: String!) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @tag(
+  name: String!
+) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
 directive @extends on OBJECT | INTERFACE
 
@@ -64,20 +73,34 @@ type _Service {
 }
 
 type Query {
-  """Get a user by email"""
+  """
+  Get a user by email
+  """
   user(email: ID!): User
-  """Get all users"""
+  """
+  Get all users
+  """
   users: [User!]!
 }
 
-"""User account in the system"""
+"""
+User account in the system
+"""
 type User {
-  """User's email address (primary key)"""
+  """
+  User's email address (primary key)
+  """
   email: ID!
-  """User's display name"""
+  """
+  User's display name
+  """
   name: String
-  """Unique username for the account"""
+  """
+  Unique username for the account
+  """
   username: String
-  """User's date of birth"""
+  """
+  User's date of birth
+  """
   birthDate: String
 }

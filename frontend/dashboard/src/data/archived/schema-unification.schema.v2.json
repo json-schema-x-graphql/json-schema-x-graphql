@@ -31,12 +31,7 @@
       "properties": {
         "systemName": {
           "type": "string",
-          "enum": [
-            "Contract Data",
-            "Legacy Procurement",
-            "Intake Process",
-            "Logistics Mgmt"
-          ]
+          "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"]
         },
         "recordId": {
           "type": "string"
@@ -63,12 +58,7 @@
       "properties": {
         "primarySystem": {
           "type": "string",
-          "enum": [
-            "Contract Data",
-            "Legacy Procurement",
-            "Intake Process",
-            "Logistics Mgmt"
-          ]
+          "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"]
         },
         "systemChain": {
           "type": "array",
@@ -314,12 +304,7 @@
         },
         "role": {
           "type": "string",
-          "enum": [
-            "primary",
-            "technical",
-            "administrative",
-            "contracting_officer"
-          ]
+          "enum": ["primary", "technical", "administrative", "contracting_officer"]
         }
       }
     },

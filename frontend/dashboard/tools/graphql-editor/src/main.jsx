@@ -35,7 +35,7 @@ if (import.meta.hot) {
       root.render(
         <React.StrictMode>
           <NextApp />
-        </React.StrictMode>
+        </React.StrictMode>,
       );
     }
   });

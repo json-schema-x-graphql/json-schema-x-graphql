@@ -42,30 +42,18 @@ for (const key of Object.keys(summary)) {
   const item = summary[key];
   const fullPath = key === "total" ? null : key;
   const name = key === "total" ? "All files" : path.basename(key);
-  const stm =
-    item.statements && item.statements.pct !== undefined
-      ? item.statements.pct
-      : "";
-  const br =
-    item.branches && item.branches.pct !== undefined ? item.branches.pct : "";
-  const fn =
-    item.functions && item.functions.pct !== undefined
-      ? item.functions.pct
-      : "";
+  const stm = item.statements && item.statements.pct !== undefined ? item.statements.pct : "";
+  const br = item.branches && item.branches.pct !== undefined ? item.branches.pct : "";
+  const fn = item.functions && item.functions.pct !== undefined ? item.functions.pct : "";
   const ln = item.lines && item.lines.pct !== undefined ? item.lines.pct : "";
   let uncovered = "";
-  if (fullPath && uncoveredMap.has(fullPath))
-    uncovered = uncoveredMap.get(fullPath).join(",");
+  if (fullPath && uncoveredMap.has(fullPath)) uncovered = uncoveredMap.get(fullPath).join(",");
   else if (uncoveredMap.has(name)) uncovered = uncoveredMap.get(name).join(",");
   rows.push({ name, stm, br, fn, ln, uncovered });
 }
 
-console.log(
-  "| File | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |",
-);
+console.log("| File | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |");
 console.log("| --- | ---: | ---: | ---: | ---: | --- |");
 for (const r of rows) {
-  console.log(
-    `| ${r.name} | ${r.stm} | ${r.br} | ${r.fn} | ${r.ln} | ${r.uncovered} |`,
-  );
+  console.log(`| ${r.name} | ${r.stm} | ${r.br} | ${r.fn} | ${r.ln} | ${r.uncovered} |`);
 }

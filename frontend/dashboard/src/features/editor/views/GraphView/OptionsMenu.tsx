@@ -32,23 +32,23 @@ const rotateLayout = (direction: LayoutDirection) => {
 };
 
 export const OptionsMenu = () => {
-  const toggleGestures = useConfig(state => state.toggleGestures);
-  const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
-  const toggleRulers = useConfig(state => state.toggleRulers);
-  const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
-  const toggleImagePreview = useConfig(state => state.toggleImagePreview);
-  const gesturesEnabled = useConfig(state => state.gesturesEnabled);
-  const childrenCountVisible = useConfig(state => state.childrenCountVisible);
-  const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
-  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
+  const toggleGestures = useConfig((state) => state.toggleGestures);
+  const toggleChildrenCount = useConfig((state) => state.toggleChildrenCount);
+  const toggleRulers = useConfig((state) => state.toggleRulers);
+  const toggleCollapseButton = useConfig((state) => state.toggleCollapseButton);
+  const toggleImagePreview = useConfig((state) => state.toggleImagePreview);
+  const gesturesEnabled = useConfig((state) => state.gesturesEnabled);
+  const childrenCountVisible = useConfig((state) => state.childrenCountVisible);
+  const rulersEnabled = useConfig((state) => state.rulersEnabled);
+  const collapseButtonVisible = useConfig((state) => state.collapseButtonVisible);
+  const imagePreviewEnabled = useConfig((state) => state.imagePreviewEnabled);
   const { validateHiddenNodes } = useToggleHide();
-  const setDirection = useGraph(state => state.setDirection);
-  const direction = useGraph(state => state.direction);
-  const expandGraph = useGraph(state => state.expandGraph);
-  const collapseGraph = useGraph(state => state.collapseGraph);
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
-  const setVisible = useModal(state => state.setVisible);
+  const setDirection = useGraph((state) => state.setDirection);
+  const direction = useGraph((state) => state.direction);
+  const expandGraph = useGraph((state) => state.expandGraph);
+  const collapseGraph = useGraph((state) => state.collapseGraph);
+  const graphCollapsed = useGraph((state) => state.graphCollapsed);
+  const setVisible = useModal((state) => state.setVisible);
   const [coreKey, setCoreKey] = React.useState("CTRL");
 
   const toggleDirection = () => {
@@ -75,7 +75,7 @@ export const OptionsMenu = () => {
         },
       ],
     ],
-    []
+    [],
   );
 
   React.useEffect(() => {

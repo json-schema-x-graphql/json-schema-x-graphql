@@ -128,12 +128,12 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
       <TextInput
         label="File Name"
         value={fileDetails.filename}
-        onChange={e => updateDetails("filename", e.target.value)}
+        onChange={(e) => updateDetails("filename", e.target.value)}
         mb="lg"
       />
       <SegmentedControl
         value={extension}
-        onChange={e => setExtension(e as Extensions)}
+        onChange={(e) => setExtension(e as Extensions)}
         fullWidth
         data={[
           { label: "PNG", value: Extensions.PNG },
@@ -145,14 +145,14 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
       <ColorInput
         label="Background Color"
         value={fileDetails.backgroundColor}
-        onChange={color => updateDetails("backgroundColor", color)}
+        onChange={(color) => updateDetails("backgroundColor", color)}
         withEyeDropper={false}
         mb="lg"
       />
       <ColorPicker
         format="rgba"
         value={fileDetails.backgroundColor}
-        onChange={color => updateDetails("backgroundColor", color)}
+        onChange={(color) => updateDetails("backgroundColor", color)}
         swatches={swatches}
         withPicker={false}
         fullWidth

@@ -30,4 +30,3 @@ type Query {
   """
   users: [User!]!
 }
-

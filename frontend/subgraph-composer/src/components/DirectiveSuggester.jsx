@@ -24,10 +24,9 @@ export function DirectiveSuggester({
 
   // Filter suggestions
   const filteredSuggestions = useMemo(() => {
-    return suggestions.filter((s, i) => {
+    return suggestions.filter((s, _i) => {
       if (filterType !== "all" && s.type !== filterType) return false;
-      if (filterSeverity !== "all" && s.severity !== filterSeverity)
-        return false;
+      if (filterSeverity !== "all" && s.severity !== filterSeverity) return false;
       return true;
     });
   }, [suggestions, filterType, filterSeverity]);
@@ -59,9 +58,7 @@ export function DirectiveSuggester({
 
   // Select all filtered suggestions
   const selectAll = () => {
-    const indices = filteredSuggestions.map((_, i) =>
-      suggestions.indexOf(filteredSuggestions[i]),
-    );
+    const indices = filteredSuggestions.map((_, i) => suggestions.indexOf(filteredSuggestions[i]));
     setSelectedSuggestions(new Set(indices));
   };
 
@@ -98,9 +95,7 @@ export function DirectiveSuggester({
         <div className="empty-message">
           <span className="icon">✓</span>
           <p>No directive suggestions at this time</p>
-          <p className="hint">
-            Compose multiple schemas to generate federation directives
-          </p>
+          <p className="hint">Compose multiple schemas to generate federation directives</p>
         </div>
       </div>
     );
@@ -173,18 +168,14 @@ export function DirectiveSuggester({
           {isLoading ? "Applying..." : `Apply (${selectedCount})`}
         </button>
 
-        <button
-          onClick={dismissAll}
-          disabled={selectedCount === 0}
-          className="btn-tertiary"
-        >
+        <button onClick={dismissAll} disabled={selectedCount === 0} className="btn-tertiary">
           Dismiss
         </button>
       </div>
 
       {/* Suggestions list */}
       <div className="suggestions-list">
-        {filteredSuggestions.map((suggestion, displayIdx) => {
+        {filteredSuggestions.map((suggestion, _displayIdx) => {
           const actualIndex = suggestions.indexOf(suggestion);
           const isSelected = selectedSuggestions.has(actualIndex);
           const isExpanded = expandedIndex === actualIndex;
@@ -216,9 +207,7 @@ export function DirectiveSuggester({
                 </div>
 
                 <button
-                  onClick={() =>
-                    setExpandedIndex(isExpanded ? null : actualIndex)
-                  }
+                  onClick={() => setExpandedIndex(isExpanded ? null : actualIndex)}
                   className="expand-btn"
                   aria-label="Toggle details"
                 >
@@ -239,19 +228,18 @@ export function DirectiveSuggester({
                     <code>{suggestion.directive}</code>
                   </div>
 
-                  {suggestion.dependencies &&
-                    suggestion.dependencies.length > 0 && (
-                      <div className="detail-row">
-                        <label>Dependencies:</label>
-                        <div className="dependency-list">
-                          {suggestion.dependencies.map((dep) => (
-                            <span key={dep} className="dependency-tag">
-                              {dep}
-                            </span>
-                          ))}
-                        </div>
+                  {suggestion.dependencies && suggestion.dependencies.length > 0 && (
+                    <div className="detail-row">
+                      <label>Dependencies:</label>
+                      <div className="dependency-list">
+                        {suggestion.dependencies.map((dep) => (
+                          <span key={dep} className="dependency-tag">
+                            {dep}
+                          </span>
+                        ))}
                       </div>
-                    )}
+                    </div>
+                  )}
 
                   {suggestion.schemas && (
                     <div className="detail-row">

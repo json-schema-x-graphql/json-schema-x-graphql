@@ -7,10 +7,7 @@
       name="description"
       content="JSON Schema authoring UI with live GraphQL SDL conversion, intelligent validation, and AI-accessible APIs"
     />
-    <meta
-      name="keywords"
-      content="JSON Schema, GraphQL, SDL, converter, validation, authoring"
-    />
+    <meta name="keywords" content="JSON Schema, GraphQL, SDL, converter, validation, authoring" />
     <meta name="author" content="JSON Schema ↔ GraphQL Team" />
 
     <!-- Preconnect to improve performance -->
@@ -188,8 +185,8 @@
         <div class="error-icon">⚠️</div>
         <div class="error-title">JavaScript Required</div>
         <div class="error-message">
-          This application requires JavaScript to run. Please enable JavaScript
-          in your browser settings.
+          This application requires JavaScript to run. Please enable JavaScript in your browser
+          settings.
         </div>
       </div>
     </noscript>
@@ -234,14 +231,9 @@
 
         window.addEventListener("load", function () {
           window.performance.mark("app-loaded");
-          window.performance.measure(
-            "app-load-time",
-            "app-start",
-            "app-loaded",
-          );
+          window.performance.measure("app-load-time", "app-start", "app-loaded");
 
-          const loadTime =
-            window.performance.getEntriesByName("app-load-time")[0];
+          const loadTime = window.performance.getEntriesByName("app-load-time")[0];
           if (loadTime) {
             console.info("App load time:", loadTime.duration.toFixed(2), "ms");
           }

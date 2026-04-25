@@ -21,10 +21,10 @@
  *  - Only files marked validateSchema: true are validated (all positional JSONs are treated that way).
  */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { validateFiles } from '../../scripts/validate-schema.mjs';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { validateFiles } from "../../scripts/validate-schema.mjs";
 
 // -- Helpers -----------------------------------------------------------------
 
@@ -32,10 +32,10 @@ function parseArgs(argv = process.argv.slice(2)) {
   const out = { schema: null, files: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--schema') {
+    if (a === "--schema") {
       out.schema = argv[i + 1];
       i++;
-    } else if (a.startsWith('--')) {
+    } else if (a.startsWith("--")) {
       // Ignore unknown flags for this example
     } else {
       out.files.push(a);
@@ -55,11 +55,11 @@ function resolvePathMaybe(p) {
 
 // Simple color helpers (avoid external deps)
 const colors = {
-  red: s => `\x1b[31m${s}\x1b[0m`,
-  yellow: s => `\x1b[33m${s}\x1b[0m`,
-  green: s => `\x1b[32m${s}\x1b[0m`,
-  cyan: s => `\x1b[36m${s}\x1b[0m`,
-  dim: s => `\x1b[2m${s}\x1b[0m`,
+  red: (s) => `\x1b[31m${s}\x1b[0m`,
+  yellow: (s) => `\x1b[33m${s}\x1b[0m`,
+  green: (s) => `\x1b[32m${s}\x1b[0m`,
+  cyan: (s) => `\x1b[36m${s}\x1b[0m`,
+  dim: (s) => `\x1b[2m${s}\x1b[0m`,
 };
 
 // -- Main --------------------------------------------------------------------
@@ -68,10 +68,10 @@ async function main() {
   const { schema, files } = parseArgs();
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
-  const repoRoot = path.resolve(__dirname, '..', '..');
+  const repoRoot = path.resolve(__dirname, "..", "..");
 
   const schemaFile = resolvePathMaybe(
-    schema || path.join(repoRoot, 'src', 'data', 'schema_unification.schema.json')
+    schema || path.join(repoRoot, "src", "data", "schema_unification.schema.json"),
   );
 
   if (!fs.existsSync(schemaFile)) {
@@ -89,7 +89,7 @@ async function main() {
             validateSchema: true,
           },
         ]
-      : files.map(f => {
+      : files.map((f) => {
           const full = resolvePathMaybe(f);
           return {
             name: path.basename(full),
@@ -115,9 +115,9 @@ async function main() {
   }
 
   // Output summary
-  console.log(colors.cyan('Schema Validation Summary'));
-  console.log(colors.dim('Schema:'), schemaFile);
-  console.log('');
+  console.log(colors.cyan("Schema Validation Summary"));
+  console.log(colors.dim("Schema:"), schemaFile);
+  console.log("");
 
   let failures = 0;
   for (const fd of fileDescriptors) {
@@ -127,27 +127,27 @@ async function main() {
     } else if (status === false) {
       console.log(colors.red(`✖ ${fd.name} invalid`));
       failures++;
-    } else if (status === 'missing') {
+    } else if (status === "missing") {
       console.log(colors.yellow(`⚠ ${fd.name} missing (not found on disk)`));
       failures++;
-    } else if (status === 'skipped') {
+    } else if (status === "skipped") {
       console.log(colors.dim(`⏭ ${fd.name} skipped`));
     } else {
       console.log(colors.dim(`? ${fd.name} status: ${String(status)}`));
     }
   }
 
-  console.log('');
+  console.log("");
   console.log(
-    `Total errors reported by validator: ${results.totalErrors} (critical failures: ${failures})`
+    `Total errors reported by validator: ${results.totalErrors} (critical failures: ${failures})`,
   );
 
   if (results.totalErrors > 0 || failures > 0) {
-    console.error(colors.red('Validation failed.'));
+    console.error(colors.red("Validation failed."));
     process.exit(1);
   }
 
-  console.log(colors.green('All validations passed.'));
+  console.log(colors.green("All validations passed."));
   process.exit(0);
 }
 

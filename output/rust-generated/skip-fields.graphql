@@ -40,5 +40,3 @@ Tests skipping within arrays
 type SkipListItems {
   visibleItems: [String]
 }
-
-

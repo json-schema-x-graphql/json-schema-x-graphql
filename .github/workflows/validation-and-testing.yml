@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '24'
-  RUST_VERSION: 'stable'
+  NODE_VERSION: "24"
+  RUST_VERSION: "stable"
 
 jobs:
   # Job 1: JSON Schema Validation
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -62,7 +62,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -98,7 +98,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -138,7 +138,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -172,19 +172,19 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
 
       - name: Cache Cargo index
         uses: actions/cache@v4
         with:
           path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
 
       - name: Cache Cargo build
         uses: actions/cache@v4
         with:
           path: converters/rust/target
-          key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-build-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
 
       - name: Run Rust tests
         run: |
@@ -223,7 +223,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -299,7 +299,14 @@ jobs:
   summary:
     name: Test Summary
     runs-on: ubuntu-latest
-    needs: [validate-schemas, validate-graphql, integration-tests, unit-tests-node, unit-tests-rust]
+    needs:
+      [
+        validate-schemas,
+        validate-graphql,
+        integration-tests,
+        unit-tests-node,
+        unit-tests-rust,
+      ]
     if: always()
     steps:
       - name: Download all reports

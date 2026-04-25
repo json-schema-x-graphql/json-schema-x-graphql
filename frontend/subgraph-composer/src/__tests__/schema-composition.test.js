@@ -3,13 +3,7 @@
  * Tests cover: schema toggling, collapsible sections, SDL generation, and composition
  */
 
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
 
 describe("Schema Composition Features", () => {
@@ -18,9 +12,7 @@ describe("Schema Composition Features", () => {
       render(<App />);
 
       await waitFor(() => {
-        const checkboxes = document.querySelectorAll(
-          'input[type="checkbox"].schema-toggle',
-        );
+        const checkboxes = document.querySelectorAll('input[type="checkbox"].schema-toggle');
         expect(checkboxes.length).toBeGreaterThan(0);
       });
     });
@@ -57,9 +49,7 @@ describe("Schema Composition Features", () => {
       // Check if generation happened by looking for SDL display or message
       const sdlDisplay = document.querySelector(".sdl-display");
       const statsDisplay = document.querySelector(".stats-display");
-      expect(
-        sdlDisplay || statsDisplay || screen.queryByText(/generate/i),
-      ).toBeTruthy();
+      expect(sdlDisplay || statsDisplay || screen.queryByText(/generate/i)).toBeTruthy();
     }, 10000);
   });
 
@@ -101,9 +91,7 @@ describe("Schema Composition Features", () => {
 
             // After collapse, preview should be hidden or not rendered
             const preview = document.querySelector(".sdl-display");
-            const style = window.getComputedStyle(
-              preview || document.createElement("div"),
-            );
+            const style = window.getComputedStyle(preview || document.createElement("div"));
             expect(style.display === "none" || !preview).toBeTruthy();
           }
         },
@@ -218,9 +206,7 @@ describe("Schema Composition Features", () => {
 
       // Stats display should exist or app should be functional
       const statsDisplay = document.querySelector(".stats-display");
-      expect(
-        statsDisplay || document.querySelector(".schema-manager"),
-      ).toBeTruthy();
+      expect(statsDisplay || document.querySelector(".schema-manager")).toBeTruthy();
     }, 10000);
 
     test("should show type and field statistics", async () => {
@@ -315,9 +301,7 @@ describe("Schema Composition Features", () => {
           const sdlDisplay = document.querySelector(".sdl-display");
           if (sdlDisplay) {
             const style = window.getComputedStyle(sdlDisplay);
-            expect(
-              style.overflow === "auto" || style.overflowY === "auto",
-            ).toBe(true);
+            expect(style.overflow === "auto" || style.overflowY === "auto").toBe(true);
           }
         },
         { timeout: 5000 },
@@ -371,8 +355,7 @@ describe("Schema Composition Features", () => {
             if (sdlContent && firstPreview) {
               // Should remain consistent
               expect(
-                sdlContent.textContent === firstPreview ||
-                  sdlContent.textContent.length > 0,
+                sdlContent.textContent === firstPreview || sdlContent.textContent.length > 0,
               ).toBe(true);
             }
           },
@@ -424,9 +407,7 @@ describe("Schema Composition Features", () => {
       // Check if any display element exists
       const sdlDisplay = document.querySelector(".sdl-display");
       const statsDisplay = document.querySelector(".stats-display");
-      expect(
-        sdlDisplay || statsDisplay || document.querySelector(".schema-manager"),
-      ).toBeTruthy();
+      expect(sdlDisplay || statsDisplay || document.querySelector(".schema-manager")).toBeTruthy();
     }, 10000);
 
     test("should update statistics when generation completes", async () => {

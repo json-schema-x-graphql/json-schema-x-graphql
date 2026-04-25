@@ -2,8 +2,8 @@
   "name": "schema_unification-graphql-editor",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "description": "Standalone Vite-powered GraphQL Editor app for the Schema Unification Forest project",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,10 +17,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "vite": "^5.1.0",
     "@vitejs/plugin-react": "^4.0.0",
     "prettier": "^3.6.2",
-    "rimraf": "^5.0.0"
+    "rimraf": "^5.0.0",
+    "vite": "^5.1.0"
   },
   "engines": {
     "node": ">=18"

@@ -10,14 +10,7 @@
  *   tsx debug-browser.ts
  */
 
-import {
-  chromium,
-  Browser,
-  Page,
-  ConsoleMessage,
-  Request,
-  Response,
-} from "playwright";
+import { chromium, Browser, Page, ConsoleMessage, Request, Response } from "playwright";
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 
@@ -129,13 +122,7 @@ async function main() {
 
       // Also print to our console with color coding
       const icon =
-        type === "error"
-          ? "❌"
-          : type === "warning"
-            ? "⚠️"
-            : type === "info"
-              ? "ℹ️"
-              : "📝";
+        type === "error" ? "❌" : type === "warning" ? "⚠️" : type === "info" ? "ℹ️" : "📝";
       console.log(`${icon} [${type.toUpperCase()}] ${text}`);
 
       if (type === "error") {
@@ -189,15 +176,12 @@ async function main() {
       const url = response.url();
       const status = response.status();
       const statusText = response.statusText();
-      const request = response.request();
 
       const icon = status >= 400 ? "❌" : status >= 300 ? "🔄" : "✅";
       console.log(`${icon} ${status} ${statusText} ${url}`);
 
       // Find the matching request entry
-      const requestEntry = report.networkRequests.find(
-        (r) => r.url === url && !r.status,
-      );
+      const requestEntry = report.networkRequests.find((r) => r.url === url && !r.status);
 
       if (requestEntry) {
         requestEntry.status = status;
@@ -238,9 +222,7 @@ async function main() {
       report.pageMetrics.loadTime = loadTime;
       console.log(`✅ Page loaded in ${loadTime}ms\n`);
     } catch (error) {
-      console.log(
-        `❌ Navigation failed: ${error instanceof Error ? error.message : error}\n`,
-      );
+      console.log(`❌ Navigation failed: ${error instanceof Error ? error.message : error}\n`);
     }
 
     // Wait for React to mount
@@ -274,13 +256,10 @@ async function main() {
       return {
         hasSchemaAuthoringAPI: !!win.__schemaAuthoringAPI__,
         hasMonaco: !!win.monaco,
-        reactVersion:
-          typeof win.React !== "undefined" ? "loaded" : "not loaded",
+        reactVersion: typeof win.React !== "undefined" ? "loaded" : "not loaded",
       };
     });
-    console.log(
-      `   Schema Authoring API: ${appState.hasSchemaAuthoringAPI ? "✅" : "❌"}`,
-    );
+    console.log(`   Schema Authoring API: ${appState.hasSchemaAuthoringAPI ? "✅" : "❌"}`);
     console.log(`   Monaco: ${appState.hasMonaco ? "✅" : "❌"}`);
     console.log(`   React: ${appState.reactVersion}`);
 
@@ -311,17 +290,12 @@ async function main() {
       await page.waitForTimeout(2000);
 
       // Take screenshot after conversion
-      const screenshotPath2 = join(
-        outputDir,
-        "screenshot-after-conversion.png",
-      );
+      const screenshotPath2 = join(outputDir, "screenshot-after-conversion.png");
       await page.screenshot({ path: screenshotPath2, fullPage: true });
       report.screenshots.push(screenshotPath2);
       console.log(`📸 Screenshot saved: ${screenshotPath2}`);
     } catch (error) {
-      console.log(
-        `⚠️ Conversion test failed: ${error instanceof Error ? error.message : error}`,
-      );
+      console.log(`⚠️ Conversion test failed: ${error instanceof Error ? error.message : error}`);
     }
 
     // Get converter status
@@ -342,10 +316,7 @@ async function main() {
       }
       return { hasState: false };
     });
-    console.log(
-      "   Converter state:",
-      JSON.stringify(converterStatus, null, 2),
-    );
+    console.log("   Converter state:", JSON.stringify(converterStatus, null, 2));
 
     // Wait a bit more to catch any delayed messages
     console.log("\n⏳ Waiting for delayed messages...");
@@ -445,17 +416,13 @@ function generateSummary(report: DebugReport): string {
   if (report.summary.failedRequests > 0) {
     lines.push("FAILED NETWORK REQUESTS");
     lines.push("-".repeat(60));
-    const failed = report.networkRequests.filter(
-      (r) => r.status && r.status >= 400,
-    );
+    const failed = report.networkRequests.filter((r) => r.status && r.status >= 400);
     failed.forEach((req, i) => {
       lines.push(`${i + 1}. ${req.method} ${req.url}`);
       lines.push(`   Status: ${req.status} ${req.statusText}`);
       if (req.responseBody) {
         const body = req.responseBody.slice(0, 200);
-        lines.push(
-          `   Response: ${body}${req.responseBody.length > 200 ? "..." : ""}`,
-        );
+        lines.push(`   Response: ${body}${req.responseBody.length > 200 ? "..." : ""}`);
       }
     });
     lines.push("");
@@ -463,17 +430,13 @@ function generateSummary(report: DebugReport): string {
 
   lines.push("API CALLS");
   lines.push("-".repeat(60));
-  const apiCalls = report.networkRequests.filter((r) =>
-    r.url.includes("/api/"),
-  );
+  const apiCalls = report.networkRequests.filter((r) => r.url.includes("/api/"));
   if (apiCalls.length === 0) {
     lines.push("No API calls detected");
   } else {
     apiCalls.forEach((req, i) => {
       lines.push(`${i + 1}. ${req.method} ${req.url}`);
-      lines.push(
-        `   Status: ${req.status || "pending"} ${req.statusText || ""}`,
-      );
+      lines.push(`   Status: ${req.status || "pending"} ${req.statusText || ""}`);
       if (req.postData) {
         lines.push(`   Request: ${req.postData.slice(0, 100)}...`);
       }

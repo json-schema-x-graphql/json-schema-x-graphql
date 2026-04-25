@@ -597,11 +597,7 @@ All exported functions must have:
  * @property {string} sdl - Generated GraphQL SDL
  * @property {string[]} [errors] - Error messages if generation failed
  */
-export async function generateFromJSONSchema(
-  inputPath,
-  outputPath,
-  options = {},
-) {
+export async function generateFromJSONSchema(inputPath, outputPath, options = {}) {
   // Implementation
 }
 ```

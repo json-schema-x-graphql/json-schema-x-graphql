@@ -50,16 +50,32 @@ function parseArgs(argv = process.argv.slice(2)) {
   const args = {
     logistics_mgmt: path.join(repoRoot, "src", "data", "logistics_mgmt.schema.json"),
     schema_unification: path.join(repoRoot, "src", "data", "schema_unification.schema.json"),
-    out: path.join(repoRoot, "generated-schemas", "coverage", "logistics_mgmt-to-schema_unification-coverage.json"),
-    csv: path.join(repoRoot, "generated-schemas", "coverage", "logistics_mgmt-to-schema_unification-coverage.csv"),
-    md: path.join(repoRoot, "generated-schemas", "coverage", "logistics_mgmt-to-schema_unification-coverage.md"),
+    out: path.join(
+      repoRoot,
+      "generated-schemas",
+      "coverage",
+      "logistics_mgmt-to-schema_unification-coverage.json",
+    ),
+    csv: path.join(
+      repoRoot,
+      "generated-schemas",
+      "coverage",
+      "logistics_mgmt-to-schema_unification-coverage.csv",
+    ),
+    md: path.join(
+      repoRoot,
+      "generated-schemas",
+      "coverage",
+      "logistics_mgmt-to-schema_unification-coverage.md",
+    ),
     mapping: null,
     verbose: false,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--logistics_mgmt" && argv[i + 1]) args.logistics_mgmt = toAbs(argv[++i]);
-    else if (a === "--schema_unification" && argv[i + 1]) args.schema_unification = toAbs(argv[++i]);
+    else if (a === "--schema_unification" && argv[i + 1])
+      args.schema_unification = toAbs(argv[++i]);
     else if (a === "--out" && argv[i + 1]) args.out = toAbs(argv[++i]);
     else if (a === "--csv" && argv[i + 1]) args.csv = toAbs(argv[++i]);
     else if (a === "--md" && argv[i + 1]) args.md = toAbs(argv[++i]);
@@ -247,7 +263,9 @@ function collectSchemaFields(schema) {
 /* -------------------------------------------------------------------------- */
 
 function normalizeName(name) {
-  return String(name || "").toLowerCase().replace(/[_\W]+/g, "");
+  return String(name || "")
+    .toLowerCase()
+    .replace(/[_\W]+/g, "");
 }
 
 function buildGlobalLeafIndex(typeMap) {
@@ -348,7 +366,7 @@ function toCsv(rows) {
   ];
   const out = [headers.join(",")];
   for (const r of rows) {
-    const vals = headers.map(h => csvEscape(r[h]));
+    const vals = headers.map((h) => csvEscape(r[h]));
     out.push(vals.join(","));
   }
   return out.join("\n") + "\n";
@@ -384,7 +402,7 @@ function toMarkdown(summary) {
     const covered = stats.mappedExplicit + stats.matchedHeuristic;
     const pct = stats.total ? ((covered / stats.total) * 100).toFixed(1) : "0.0";
     lines.push(
-      `| ${type} | ${stats.total} | ${stats.mappedExplicit} | ${stats.matchedHeuristic} | ${stats.unmatched} | ${pct}% |`
+      `| ${type} | ${stats.total} | ${stats.mappedExplicit} | ${stats.matchedHeuristic} | ${stats.unmatched} | ${pct}% |`,
     );
   }
   lines.push("");
@@ -448,9 +466,11 @@ async function main() {
     console.log(
       `  Coverage: ${summary.totals.mappedExplicit + summary.totals.matchedHeuristic}/${
         summary.totals.logistics_mgmtFields
-      } (${((summary.totals.mappedExplicit + summary.totals.matchedHeuristic) /
-        Math.max(summary.totals.logistics_mgmtFields, 1)) *
-        100}%)`
+      } (${
+        ((summary.totals.mappedExplicit + summary.totals.matchedHeuristic) /
+          Math.max(summary.totals.logistics_mgmtFields, 1)) *
+        100
+      }%)`,
     );
   }
 
@@ -459,10 +479,10 @@ async function main() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("Error:", err?.stack || String(err));
     process.exit(1);
   });
 }
 
-export { main, collectSchemaFields, analyzeCoverage }
+export { main, collectSchemaFields, analyzeCoverage };

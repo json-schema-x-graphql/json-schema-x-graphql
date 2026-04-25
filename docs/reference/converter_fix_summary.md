@@ -45,8 +45,7 @@ compose(subgraphs); // ❌ Passes array to composer expecting Map
 **After:**
 
 ```jsx
-const { generateSubgraph, subgraphs, subgraphsMap, isLoading } =
-  useSubgraphGenerator();
+const { generateSubgraph, subgraphs, subgraphsMap, isLoading } = useSubgraphGenerator();
 // ...
 compose(subgraphsMap); // ✅ Passes Map to composer
 ```

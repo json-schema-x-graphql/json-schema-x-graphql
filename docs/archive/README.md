@@ -23,7 +23,7 @@ These documents provide context and history but are no longer actively maintaine
 
 ## Organization
 
-All files have been renamed from generic names (PHASE*\*, IMPLEMENTATION*_, SESSION\__) to concept-based names for better discoverability.
+All files have been renamed from generic names (PHASE*\*, IMPLEMENTATION*\_, SESSION\_\_) to concept-based names for better discoverability.
 
 ### Core Implementation
 

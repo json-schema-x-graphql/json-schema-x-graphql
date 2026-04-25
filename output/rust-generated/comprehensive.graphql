@@ -76,5 +76,3 @@ type Comment implements Node {
   createdAt: DateTime!
   editedAt: DateTime
 }
-
-

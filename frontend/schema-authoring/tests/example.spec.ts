@@ -8,9 +8,7 @@ test.describe("Schema Authoring - smoke", () => {
     // Wait for root element to mount
     await page.waitForSelector("#root");
 
-    const hasAPI = await page.evaluate(
-      () => !!(window as any).__schemaAuthoringAPI__,
-    );
+    const hasAPI = await page.evaluate(() => !!(window as any).__schemaAuthoringAPI__);
     expect(hasAPI).toBe(true);
 
     const apiSnapshot = await page.evaluate(async () => {
@@ -67,11 +65,7 @@ test.describe("Schema Authoring - smoke", () => {
     const convertResult = await page.evaluate(async () => {
       const api = (window as any).__schemaAuthoringAPI__.getAPI();
       await api.setJsonSchema(
-        JSON.stringify(
-          { type: "object", properties: { id: { type: "string" } } },
-          null,
-          2,
-        ),
+        JSON.stringify({ type: "object", properties: { id: { type: "string" } } }, null, 2),
       );
       const result = await api.convert();
       return result;

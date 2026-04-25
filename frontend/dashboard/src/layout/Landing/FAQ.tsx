@@ -4,7 +4,8 @@ import { Container, Title, Accordion } from "@mantine/core";
 const Questions: Array<{ title: string; content: string }> = [
   {
     title: "What is Schema Unification Forest?",
-    content: "Schema Unification Forest is a unified data model for federal procurement and grants data.",
+    content:
+      "Schema Unification Forest is a unified data model for federal procurement and grants data.",
   },
   {
     title: "How do I get started?",

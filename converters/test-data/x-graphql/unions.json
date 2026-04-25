@@ -215,10 +215,7 @@
       "x-graphql-type-kind": "UNION",
       "x-graphql-union-types": ["User", "Team"],
       "description": "Target for a notification - can be a user or team",
-      "oneOf": [
-        { "$ref": "#/definitions/User" },
-        { "$ref": "#/definitions/Team" }
-      ]
+      "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Team" }]
     },
     "Team": {
       "type": "object",

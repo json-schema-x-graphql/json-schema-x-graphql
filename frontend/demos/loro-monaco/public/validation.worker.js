@@ -1,12 +1,7 @@
 import { ElkApi } from "../elk-api";
 import { calcDimensions, sortNodesTs } from "../tsAlgo";
 import { catchSchemaErrors } from "../validation";
-import {
-  Parser,
-  TreeToGraphQL,
-  TypeSystemDefinition,
-  mergeTrees,
-} from "graphql-js-tree";
+import { Parser, TreeToGraphQL, TypeSystemDefinition, mergeTrees } from "graphql-js-tree";
 import { getTokenAtPosition } from "graphql-language-service";
 const ctx = self;
 const receive = (key, fn) => (message) => {
@@ -40,9 +35,7 @@ const receive = (key, fn) => (message) => {
     }
 };
 ctx.addEventListener("message", (message) => {
-  receive("validate", (args) => catchSchemaErrors(args.schema, args.libraries))(
-    message,
-  );
+  receive("validate", (args) => catchSchemaErrors(args.schema, args.libraries))(message);
   receive("parse", (args) =>
     TreeToGraphQL.parse({
       nodes: args.tree.nodes
@@ -63,18 +56,16 @@ ctx.addEventListener("message", (message) => {
       if (args.cutSchemaDefinition) {
         return {
           ...mtress,
-          nodes: mtress.nodes.filter(
-            (n) => n.data.type !== TypeSystemDefinition.SchemaDefinition,
-          ),
+          nodes: mtress.nodes.filter((n) => n.data.type !== TypeSystemDefinition.SchemaDefinition),
         };
       }
       return mtress;
     }
     throw new Error("No nodes to parse");
   })(message);
-  receive("token", (args) =>
-    JSON.stringify(getTokenAtPosition(args.document, args.position)),
-  )(message);
+  receive("token", (args) => JSON.stringify(getTokenAtPosition(args.document, args.position)))(
+    message,
+  );
   receive("simulateSort", (args) => {
     const sorted = sortNodesTs(args);
     const elk = new ElkApi();
@@ -110,12 +101,8 @@ ctx.addEventListener("message", (message) => {
       .then((v) => {
         const elkNodes = sorted.numberNodes.map((nn) => ({
           ...nn,
-          x:
-            (v.children?.find((c) => c.id === nn.id)?.x || nn.x) +
-            nn.width / 2.0,
-          y:
-            (v.children?.find((c) => c.id === nn.id)?.y || nn.y) +
-            nn.height / 2.0,
+          x: (v.children?.find((c) => c.id === nn.id)?.x || nn.x) + nn.width / 2.0,
+          y: (v.children?.find((c) => c.id === nn.id)?.y || nn.y) + nn.height / 2.0,
         }));
         const relativeConnections = sorted.connections.map((connection) => {
           return {

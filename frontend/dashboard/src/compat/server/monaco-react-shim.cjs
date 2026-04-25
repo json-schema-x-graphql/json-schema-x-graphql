@@ -27,7 +27,7 @@ try {
   // Try to require React if it is available in node_modules. If it's not, fall back
   // to null and return plain `null` from the component.
   React = require("react");
-} catch (e) {
+} catch {
   React = null;
 }
 
@@ -35,7 +35,7 @@ try {
  * A minimal no-op React component to act as the editor on the server.
  * It renders `null` (no DOM) and accepts any props so consumer code can call it.
  */
-function NoopEditor(props) {
+function NoopEditor(_props) {
   // If React is available, return a lightweight React element (null is fine).
   // Returning `null` is safe either way.
   return null;

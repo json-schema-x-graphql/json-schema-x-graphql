@@ -25,7 +25,7 @@ import { LuCheck, LuGitCompareArrows, LuInfinity, LuPencilRuler } from "react-ic
 import useConfig from "../../../store/useConfig";
 
 export const UpgradeContent = (props: FlexProps) => {
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
 
   return (
     <Flex direction="column" gap="0" {...props}>

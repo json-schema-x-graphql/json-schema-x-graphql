@@ -25,7 +25,7 @@ const repoRoot = path.resolve(__dirname, "..");
 const args = process.argv.slice(2);
 if (args.length < 2) {
   console.error(
-    "Usage: node generate-graphql-with-extensions.mjs <input-schema.json> <output.graphql>"
+    "Usage: node generate-graphql-with-extensions.mjs <input-schema.json> <output.graphql>",
   );
   process.exit(1);
 }
@@ -235,7 +235,7 @@ function applyCustomScalars(graphql, schema) {
         if (typeName === currentType) {
           // Match: fieldName: Type (with optional ! or array brackets)
           const fieldPattern = new RegExp(
-            `^(\\s*"[^"]*"\\s*)?\\s*(${fieldName}):\\s*(String|Float|Int|Boolean)([!\\[\\]\\s]*)`
+            `^(\\s*"[^"]*"\\s*)?\\s*(${fieldName}):\\s*(String|Float|Int|Boolean)([!\\[\\]\\s]*)`,
           );
           const match = line.match(fieldPattern);
 
@@ -305,7 +305,7 @@ function applyRequiredOverrides(graphql, schema) {
         if (typeName === currentType) {
           // Match: fieldName: Type (without !)
           const fieldPattern = new RegExp(
-            `^(\\s*(?:"[^"]*"\\s*)?)\\s*(${fieldName}):\\s*([\\w\\[\\]]+?)(?!!)\\s*$`
+            `^(\\s*(?:"[^"]*"\\s*)?)\\s*(${fieldName}):\\s*([\\w\\[\\]]+?)(?!!)\\s*$`,
           );
           const match = line.match(fieldPattern);
 
@@ -519,7 +519,7 @@ type IngestionResult {
 }
 
 // Run the generator
-generateGraphQL().catch(err => {
+generateGraphQL().catch((err) => {
   console.error("❌ Error:", err.message);
   console.error(err.stack);
   process.exit(1);

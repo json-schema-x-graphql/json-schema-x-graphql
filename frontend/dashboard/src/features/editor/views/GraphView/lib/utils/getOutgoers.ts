@@ -18,12 +18,9 @@ export const getOutgoers = (
   }
 
   const findOutgoers = (currentNodeId: string) => {
-    const outgoerIds = edges
-      .filter((e) => e.from === currentNodeId)
-      .map((e) => e.to);
+    const outgoerIds = edges.filter((e) => e.from === currentNodeId).map((e) => e.to);
     const nodeList = nodes.filter((n) => {
-      if (parent.includes(n.id) && !matchingNodes.includes(n.id))
-        matchingNodes.push(n.id);
+      if (parent.includes(n.id) && !matchingNodes.includes(n.id)) matchingNodes.push(n.id);
       return outgoerIds.includes(n.id) && !parent.includes(n.id);
     });
 

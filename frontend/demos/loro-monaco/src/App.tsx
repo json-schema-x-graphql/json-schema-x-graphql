@@ -13,7 +13,7 @@ import { twMerge } from "tailwind-merge";
 
 // Lazy load GraphQLEditor to avoid worker loading issues
 const GraphQLEditor = lazy(() =>
-  import("graphql-editor").then(mod => ({ default: mod.GraphQLEditor || mod.default }))
+  import("graphql-editor").then((mod) => ({ default: mod.GraphQLEditor || mod.default })),
 );
 
 function cn(...inputs: any[]) {
@@ -43,9 +43,7 @@ const App = () => {
   } = useStore();
 
   const [docId, setDocId] = useState("loro-collaboration-doc");
-  const [username, setUsername] = useState(
-    `User-${Math.random().toString(36).substring(7)}`,
-  );
+  const [username, setUsername] = useState(`User-${Math.random().toString(36).substring(7)}`);
   const [isConnected, setIsConnected] = useState(false);
   const [showConnectionDialog, setShowConnectionDialog] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -71,8 +69,7 @@ const App = () => {
   const resize = useCallback(
     (mouseMoveEvent: MouseEvent) => {
       if (isResizing) {
-        const newWidth =
-          (mouseMoveEvent.clientX / document.body.offsetWidth) * 100;
+        const newWidth = (mouseMoveEvent.clientX / document.body.offsetWidth) * 100;
         if (newWidth >= 20 && newWidth <= 80) {
           setLeftPaneWidth(newWidth);
         }
@@ -102,8 +99,7 @@ const App = () => {
           });
 
           if (!result.success) {
-            const errorMsg =
-              result.diagnostics[0]?.message || "Conversion failed";
+            const errorMsg = result.diagnostics[0]?.message || "Conversion failed";
             addError(errorMsg);
             useStore.setState({ isConverting: false });
             return;
@@ -139,18 +135,13 @@ const App = () => {
           });
 
           if (!result.success) {
-            const errorMsg =
-              result.diagnostics[0]?.message || "Conversion failed";
+            const errorMsg = result.diagnostics[0]?.message || "Conversion failed";
             addError(errorMsg);
             useStore.setState({ isConverting: false });
             return;
           }
 
-          const jsonSchemaOutput = formatOutput(
-            result.output,
-            "SDL",
-            options.prettyPrint,
-          );
+          const jsonSchemaOutput = formatOutput(result.output, "SDL", options.prettyPrint);
 
           if (loroDoc) {
             const jsonText = loroDoc.getText("jsonSchema");
@@ -172,8 +163,7 @@ const App = () => {
         }
       } catch (error) {
         console.error(`❌ Conversion failed:`, error);
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
         addError(errorMessage);
       } finally {
         useStore.setState({ isConverting: false });
@@ -258,33 +248,24 @@ const App = () => {
       handleConvert("json-to-graphql");
     }, 1000);
     return () => clearTimeout(timer);
-  }, [
-    jsonSchema,
-    isAutoSyncEnabled,
-    activeEditor,
-    isConverting,
-    handleConvert,
-  ]);
+  }, [jsonSchema, isAutoSyncEnabled, activeEditor, isConverting, handleConvert]);
 
   // Auto-sync GraphQL -> JSON
   useEffect(() => {
-    if (!isAutoSyncEnabled || activeEditor !== "graphql" || isConverting)
-      return;
+    if (!isAutoSyncEnabled || activeEditor !== "graphql" || isConverting) return;
     const timer = setTimeout(() => {
       handleConvert("graphql-to-json");
     }, 1000);
     return () => clearTimeout(timer);
-  }, [
-    graphqlSdl,
-    isAutoSyncEnabled,
-    activeEditor,
-    isConverting,
-    handleConvert,
-  ]);
+  }, [graphqlSdl, isAutoSyncEnabled, activeEditor, isConverting, handleConvert]);
 
   return (
-    <div className={`flex flex-col h-screen font-sans ${isDarkTheme ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      <header className={`flex items-center justify-between p-2 ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-b`}>
+    <div
+      className={`flex flex-col h-screen font-sans ${isDarkTheme ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
+    >
+      <header
+        className={`flex items-center justify-between p-2 ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-b`}
+      >
         <h1 className="text-xl font-bold">JSON Schema ⇋ GraphQL CRDT Demo</h1>
         <div className="flex gap-2 items-center">
           <button
@@ -330,10 +311,7 @@ const App = () => {
         <ErrorBanner errors={errors} onClear={() => useStore.setState({ errors: [] })} />
       )}
 
-      <ConverterSettingsPanel
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-      />
+      <ConverterSettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
 
       {showConnectionDialog && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -439,7 +417,13 @@ const App = () => {
         >
           {useGraphQLEditor ? (
             // GraphQL Visual Editor
-            <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-500">Loading GraphQL Editor...</div>}>
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  Loading GraphQL Editor...
+                </div>
+              }
+            >
               <GraphQLEditor
                 schema={{ code: graphqlSdl }}
                 setSchema={(schema) => {
@@ -462,9 +446,14 @@ const App = () => {
           )}
         </div>
       </main>
-      <footer className={`p-3 text-sm ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-t flex flex-col md:flex-row md:items-center md:justify-between gap-2`}>
+      <footer
+        className={`p-3 text-sm ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-t flex flex-col md:flex-row md:items-center md:justify-between gap-2`}
+      >
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
-          <StatusBadge label={`Status: ${connectionStatus.status}`} variant={connectionStatus.status === "connected" ? "success" : "warning"} />
+          <StatusBadge
+            label={`Status: ${connectionStatus.status}`}
+            variant={connectionStatus.status === "connected" ? "success" : "warning"}
+          />
           <span className="text-xs">Users: {connectedUsers.length}</span>
           {lastConversion && (
             <span className="text-xs">

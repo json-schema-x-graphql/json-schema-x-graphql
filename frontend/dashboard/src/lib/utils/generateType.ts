@@ -1,11 +1,7 @@
 import { type FileFormat, TypeLanguage } from "../../enums/file.enum";
 import { contentToJson } from "./jsonAdapter";
 
-export const generateType = async (
-  input: string,
-  format: FileFormat,
-  output: TypeLanguage,
-) => {
+export const generateType = async (input: string, format: FileFormat, output: TypeLanguage) => {
   try {
     const inputToJson = await contentToJson(input, format);
     const jsonString = JSON.stringify(inputToJson);

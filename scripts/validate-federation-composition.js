@@ -215,16 +215,12 @@ async function main() {
       totalSuccess++;
 
       // Write supergraph schema
-      const supergraphPath = path.join(
-        supergraphOutput,
-        `${example.name}-supergraph.graphql`,
-      );
+      const supergraphPath = path.join(supergraphOutput, `${example.name}-supergraph.graphql`);
       writeSupergraphSchema(supergraphPath, compositionResult.supergraphSdl);
 
       // Show some stats
       const lines = compositionResult.supergraphSdl.split("\n").length;
-      const types = (compositionResult.supergraphSdl.match(/type\s+\w+/g) || [])
-        .length;
+      const types = (compositionResult.supergraphSdl.match(/type\s+\w+/g) || []).length;
       log(`\n  Stats:`, "blue");
       console.log(`    Lines: ${lines}`);
       console.log(`    Types: ${types}`);

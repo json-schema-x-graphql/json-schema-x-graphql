@@ -1,675 +1,675 @@
 // @ts-nocheck
-import { buildASTSchema } from 'graphql';
+import { buildASTSchema } from "graphql";
 
 const schemaAST = {
-  "kind": "Document",
-  "definitions": [
+  kind: "Document",
+  definitions: [
     {
-      "kind": "SchemaDefinition",
-      "operationTypes": [
+      kind: "SchemaDefinition",
+      operationTypes: [
         {
-          "kind": "OperationTypeDefinition",
-          "operation": "query",
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "Query"
-            }
-          }
-        }
+          kind: "OperationTypeDefinition",
+          operation: "query",
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "Query",
+            },
+          },
+        },
       ],
-      "directives": []
+      directives: [],
     },
     {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "key"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "key",
       },
-      "arguments": [
+      arguments: [
         {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "fields"
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "fields",
           },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
           },
-          "directives": []
+          directives: [],
         },
         {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "resolvable"
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "resolvable",
           },
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "Boolean"
-            }
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "Boolean",
+            },
           },
-          "defaultValue": {
-            "kind": "BooleanValue",
-            "value": true
+          defaultValue: {
+            kind: "BooleanValue",
+            value: true,
           },
-          "directives": []
-        }
+          directives: [],
+        },
       ],
-      "repeatable": false,
-      "locations": [
+      repeatable: false,
+      locations: [
         {
-          "kind": "Name",
-          "value": "OBJECT"
+          kind: "Name",
+          value: "OBJECT",
         },
         {
-          "kind": "Name",
-          "value": "INTERFACE"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "requires"
-      },
-      "arguments": [
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "fields"
-          },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        }
+          kind: "Name",
+          value: "INTERFACE",
+        },
       ],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
-        }
-      ]
     },
     {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "provides"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "requires",
       },
-      "arguments": [
+      arguments: [
         {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "fields"
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "fields",
           },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
           },
-          "directives": []
-        }
+          directives: [],
+        },
       ],
-      "repeatable": false,
-      "locations": [
+      repeatable: false,
+      locations: [
         {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "external"
-      },
-      "arguments": [],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
+          kind: "Name",
+          value: "FIELD_DEFINITION",
         },
-        {
-          "kind": "Name",
-          "value": "OBJECT"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "shareable"
-      },
-      "arguments": [],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "OBJECT"
-        },
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "tag"
-      },
-      "arguments": [
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "name"
-          },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        }
       ],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
-        },
-        {
-          "kind": "Name",
-          "value": "INTERFACE"
-        },
-        {
-          "kind": "Name",
-          "value": "OBJECT"
-        },
-        {
-          "kind": "Name",
-          "value": "UNION"
-        },
-        {
-          "kind": "Name",
-          "value": "ARGUMENT_DEFINITION"
-        },
-        {
-          "kind": "Name",
-          "value": "SCALAR"
-        },
-        {
-          "kind": "Name",
-          "value": "ENUM"
-        },
-        {
-          "kind": "Name",
-          "value": "ENUM_VALUE"
-        },
-        {
-          "kind": "Name",
-          "value": "INPUT_OBJECT"
-        },
-        {
-          "kind": "Name",
-          "value": "INPUT_FIELD_DEFINITION"
-        }
-      ]
     },
     {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "extends"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "provides",
       },
-      "arguments": [],
-      "repeatable": false,
-      "locations": [
+      arguments: [
         {
-          "kind": "Name",
-          "value": "OBJECT"
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "fields",
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
+          },
+          directives: [],
         },
-        {
-          "kind": "Name",
-          "value": "INTERFACE"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "link"
-      },
-      "arguments": [
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "url"
-          },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        },
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "as"
-          },
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "String"
-            }
-          },
-          "directives": []
-        },
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "import"
-          },
-          "type": {
-            "kind": "ListType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        }
       ],
-      "repeatable": false,
-      "locations": [
+      repeatable: false,
+      locations: [
         {
-          "kind": "Name",
-          "value": "SCHEMA"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "inaccessible"
-      },
-      "arguments": [],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
+          kind: "Name",
+          value: "FIELD_DEFINITION",
         },
-        {
-          "kind": "Name",
-          "value": "OBJECT"
-        },
-        {
-          "kind": "Name",
-          "value": "INTERFACE"
-        },
-        {
-          "kind": "Name",
-          "value": "UNION"
-        },
-        {
-          "kind": "Name",
-          "value": "ARGUMENT_DEFINITION"
-        },
-        {
-          "kind": "Name",
-          "value": "SCALAR"
-        },
-        {
-          "kind": "Name",
-          "value": "ENUM"
-        },
-        {
-          "kind": "Name",
-          "value": "ENUM_VALUE"
-        },
-        {
-          "kind": "Name",
-          "value": "INPUT_OBJECT"
-        },
-        {
-          "kind": "Name",
-          "value": "INPUT_FIELD_DEFINITION"
-        }
-      ]
-    },
-    {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "override"
-      },
-      "arguments": [
-        {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "from"
-          },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        }
       ],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "FIELD_DEFINITION"
-        }
-      ]
     },
     {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "composeDirective"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "external",
       },
-      "arguments": [
+      arguments: [],
+      repeatable: false,
+      locations: [
         {
-          "kind": "InputValueDefinition",
-          "name": {
-            "kind": "Name",
-            "value": "name"
-          },
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "String"
-              }
-            }
-          },
-          "directives": []
-        }
+          kind: "Name",
+          value: "FIELD_DEFINITION",
+        },
+        {
+          kind: "Name",
+          value: "OBJECT",
+        },
       ],
-      "repeatable": false,
-      "locations": [
-        {
-          "kind": "Name",
-          "value": "SCHEMA"
-        }
-      ]
     },
     {
-      "kind": "DirectiveDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "interfaceObject"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "shareable",
       },
-      "arguments": [],
-      "repeatable": false,
-      "locations": [
+      arguments: [],
+      repeatable: false,
+      locations: [
         {
-          "kind": "Name",
-          "value": "OBJECT"
-        }
-      ]
-    },
-    {
-      "kind": "ScalarTypeDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "_FieldSet"
-      },
-      "directives": []
-    },
-    {
-      "kind": "ObjectTypeDefinition",
-      "description": {
-        "kind": "StringValue",
-        "value": "User account in the system",
-        "block": true
-      },
-      "name": {
-        "kind": "Name",
-        "value": "User"
-      },
-      "fields": [
-        {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "User's email address (primary key)",
-            "block": true
-          },
-          "name": {
-            "kind": "Name",
-            "value": "email"
-          },
-          "arguments": [],
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "ID"
-              }
-            }
-          },
-          "directives": []
+          kind: "Name",
+          value: "OBJECT",
         },
         {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "User's display name",
-            "block": true
-          },
-          "name": {
-            "kind": "Name",
-            "value": "name"
-          },
-          "arguments": [],
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "String"
-            }
-          },
-          "directives": []
+          kind: "Name",
+          value: "FIELD_DEFINITION",
         },
-        {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "Unique username for the account",
-            "block": true
-          },
-          "name": {
-            "kind": "Name",
-            "value": "username"
-          },
-          "arguments": [],
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "String"
-            }
-          },
-          "directives": []
-        },
-        {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "User's date of birth",
-            "block": true
-          },
-          "name": {
-            "kind": "Name",
-            "value": "birthDate"
-          },
-          "arguments": [],
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "String"
-            }
-          },
-          "directives": []
-        }
       ],
-      "interfaces": [],
-      "directives": []
     },
     {
-      "kind": "ObjectTypeDefinition",
-      "name": {
-        "kind": "Name",
-        "value": "Query"
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "tag",
       },
-      "fields": [
+      arguments: [
         {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "Get a user by email",
-            "block": true
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "name",
           },
-          "name": {
-            "kind": "Name",
-            "value": "user"
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
           },
-          "arguments": [
+          directives: [],
+        },
+      ],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "FIELD_DEFINITION",
+        },
+        {
+          kind: "Name",
+          value: "INTERFACE",
+        },
+        {
+          kind: "Name",
+          value: "OBJECT",
+        },
+        {
+          kind: "Name",
+          value: "UNION",
+        },
+        {
+          kind: "Name",
+          value: "ARGUMENT_DEFINITION",
+        },
+        {
+          kind: "Name",
+          value: "SCALAR",
+        },
+        {
+          kind: "Name",
+          value: "ENUM",
+        },
+        {
+          kind: "Name",
+          value: "ENUM_VALUE",
+        },
+        {
+          kind: "Name",
+          value: "INPUT_OBJECT",
+        },
+        {
+          kind: "Name",
+          value: "INPUT_FIELD_DEFINITION",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "extends",
+      },
+      arguments: [],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "OBJECT",
+        },
+        {
+          kind: "Name",
+          value: "INTERFACE",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "link",
+      },
+      arguments: [
+        {
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "url",
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "as",
+          },
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "String",
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "import",
+          },
+          type: {
+            kind: "ListType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "SCHEMA",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "inaccessible",
+      },
+      arguments: [],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "FIELD_DEFINITION",
+        },
+        {
+          kind: "Name",
+          value: "OBJECT",
+        },
+        {
+          kind: "Name",
+          value: "INTERFACE",
+        },
+        {
+          kind: "Name",
+          value: "UNION",
+        },
+        {
+          kind: "Name",
+          value: "ARGUMENT_DEFINITION",
+        },
+        {
+          kind: "Name",
+          value: "SCALAR",
+        },
+        {
+          kind: "Name",
+          value: "ENUM",
+        },
+        {
+          kind: "Name",
+          value: "ENUM_VALUE",
+        },
+        {
+          kind: "Name",
+          value: "INPUT_OBJECT",
+        },
+        {
+          kind: "Name",
+          value: "INPUT_FIELD_DEFINITION",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "override",
+      },
+      arguments: [
+        {
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "from",
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "FIELD_DEFINITION",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "composeDirective",
+      },
+      arguments: [
+        {
+          kind: "InputValueDefinition",
+          name: {
+            kind: "Name",
+            value: "name",
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "String",
+              },
+            },
+          },
+          directives: [],
+        },
+      ],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "SCHEMA",
+        },
+      ],
+    },
+    {
+      kind: "DirectiveDefinition",
+      name: {
+        kind: "Name",
+        value: "interfaceObject",
+      },
+      arguments: [],
+      repeatable: false,
+      locations: [
+        {
+          kind: "Name",
+          value: "OBJECT",
+        },
+      ],
+    },
+    {
+      kind: "ScalarTypeDefinition",
+      name: {
+        kind: "Name",
+        value: "_FieldSet",
+      },
+      directives: [],
+    },
+    {
+      kind: "ObjectTypeDefinition",
+      description: {
+        kind: "StringValue",
+        value: "User account in the system",
+        block: true,
+      },
+      name: {
+        kind: "Name",
+        value: "User",
+      },
+      fields: [
+        {
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "User's email address (primary key)",
+            block: true,
+          },
+          name: {
+            kind: "Name",
+            value: "email",
+          },
+          arguments: [],
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: {
+                kind: "Name",
+                value: "ID",
+              },
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "User's display name",
+            block: true,
+          },
+          name: {
+            kind: "Name",
+            value: "name",
+          },
+          arguments: [],
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "String",
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "Unique username for the account",
+            block: true,
+          },
+          name: {
+            kind: "Name",
+            value: "username",
+          },
+          arguments: [],
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "String",
+            },
+          },
+          directives: [],
+        },
+        {
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "User's date of birth",
+            block: true,
+          },
+          name: {
+            kind: "Name",
+            value: "birthDate",
+          },
+          arguments: [],
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "String",
+            },
+          },
+          directives: [],
+        },
+      ],
+      interfaces: [],
+      directives: [],
+    },
+    {
+      kind: "ObjectTypeDefinition",
+      name: {
+        kind: "Name",
+        value: "Query",
+      },
+      fields: [
+        {
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "Get a user by email",
+            block: true,
+          },
+          name: {
+            kind: "Name",
+            value: "user",
+          },
+          arguments: [
             {
-              "kind": "InputValueDefinition",
-              "name": {
-                "kind": "Name",
-                "value": "email"
+              kind: "InputValueDefinition",
+              name: {
+                kind: "Name",
+                value: "email",
               },
-              "type": {
-                "kind": "NonNullType",
-                "type": {
-                  "kind": "NamedType",
-                  "name": {
-                    "kind": "Name",
-                    "value": "ID"
-                  }
-                }
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: {
+                    kind: "Name",
+                    value: "ID",
+                  },
+                },
               },
-              "directives": []
-            }
+              directives: [],
+            },
           ],
-          "type": {
-            "kind": "NamedType",
-            "name": {
-              "kind": "Name",
-              "value": "User"
-            }
+          type: {
+            kind: "NamedType",
+            name: {
+              kind: "Name",
+              value: "User",
+            },
           },
-          "directives": []
+          directives: [],
         },
         {
-          "kind": "FieldDefinition",
-          "description": {
-            "kind": "StringValue",
-            "value": "Get all users",
-            "block": true
+          kind: "FieldDefinition",
+          description: {
+            kind: "StringValue",
+            value: "Get all users",
+            block: true,
           },
-          "name": {
-            "kind": "Name",
-            "value": "users"
+          name: {
+            kind: "Name",
+            value: "users",
           },
-          "arguments": [],
-          "type": {
-            "kind": "NonNullType",
-            "type": {
-              "kind": "ListType",
-              "type": {
-                "kind": "NonNullType",
-                "type": {
-                  "kind": "NamedType",
-                  "name": {
-                    "kind": "Name",
-                    "value": "User"
-                  }
-                }
-              }
-            }
+          arguments: [],
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: {
+                    kind: "Name",
+                    value: "User",
+                  },
+                },
+              },
+            },
           },
-          "directives": []
-        }
+          directives: [],
+        },
       ],
-      "interfaces": [],
-      "directives": []
-    }
-  ]
+      interfaces: [],
+      directives: [],
+    },
+  ],
 };
 
 export default buildASTSchema(schemaAST, {
   assumeValid: true,
-  assumeValidSDL: true
+  assumeValidSDL: true,
 });

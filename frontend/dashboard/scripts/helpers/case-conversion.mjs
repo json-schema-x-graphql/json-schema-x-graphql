@@ -5,7 +5,10 @@
  * Convert CamelCase or camelCase to snake_case
  */
 export function camelToSnake(str) {
-  return str.replace(/([a-z0-9])([A-Z])/g, '$1_$2').replace(/([A-Z])([A-Z][a-z])/g, '$1_$2').toLowerCase();
+  return str
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
+    .toLowerCase();
 }
 
 /**
@@ -21,9 +24,12 @@ export function snakeToCamel(str) {
 export function convertObjectKeys(obj, converter) {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertObjectKeys(item, converter));
-  } else if (obj !== null && typeof obj === 'object') {
+  } else if (obj !== null && typeof obj === "object") {
     return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [converter(key), convertObjectKeys(value, converter)])
+      Object.entries(obj).map(([key, value]) => [
+        converter(key),
+        convertObjectKeys(value, converter),
+      ]),
     );
   }
   return obj;
@@ -35,5 +41,8 @@ export function convertObjectKeys(obj, converter) {
  */
 export function convertGraphQLFields(sdl, converter) {
   // This is a simple regex-based approach; for robust conversion, use a GraphQL parser
-  return sdl.replace(/(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g, (match, ws, field) => `${ws}${converter(field)}:`);
+  return sdl.replace(
+    /(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g,
+    (match, ws, field) => `${ws}${converter(field)}:`,
+  );
 }

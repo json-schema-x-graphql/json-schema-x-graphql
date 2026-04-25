@@ -18,7 +18,6 @@ directive @currency(
   code: String!
 ) on FIELD_DEFINITION
 
-
 """
 Base contract interface implemented by all contract types
 """
@@ -276,11 +275,21 @@ type Query {
   """
   Search for contract records with complete data
   """
-  contractRecords(piid: String, vendorDuns: String, status: ContractStatus, limit: Int = 100): [ContractRecord!]
+  contractRecords(
+    piid: String
+    vendorDuns: String
+    status: ContractStatus
+    limit: Int = 100
+  ): [ContractRecord!]
   """
   Search for contracts by various criteria
   """
-  contracts(piid: String, vendorDuns: String, status: ContractStatus, limit: Int = 100): [ContractSearchResult!]
+  contracts(
+    piid: String
+    vendorDuns: String
+    status: ContractStatus
+    limit: Int = 100
+  ): [ContractSearchResult!]
   """
   Get a single contract by ID
   """

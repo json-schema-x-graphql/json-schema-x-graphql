@@ -15,7 +15,6 @@ export default function GraphQLEditorPage(): JSX.Element {
   // during the server build (which causes the "Global CSS cannot be imported from within node_modules" error).
   const [EditorComponent, setEditorComponent] = useState<React.ComponentType<any> | null>(null);
   const [editorLoading, setEditorLoading] = useState<boolean>(false);
-  const [editorLoadError, setEditorLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let canceled = false;
@@ -34,15 +33,14 @@ export default function GraphQLEditorPage(): JSX.Element {
     // server build from attempting to process monaco-editor's CSS during compilation.
     const runtimeImporter = new Function('return import("graphql-editor")');
     runtimeImporter()
-      .then(mod => {
+      .then((mod) => {
         if (canceled) return;
         // Prefer named export `GraphQLEditor`, fall back to default or module itself
         const Comp = (mod && (mod.GraphQLEditor ?? mod.default)) || mod;
         setEditorComponent(() => Comp as React.ComponentType<any>);
       })
-      .catch(err => {
+      .catch(() => {
         if (canceled) return;
-        setEditorLoadError(String(err?.message ?? err));
       })
       .finally(() => {
         if (!canceled) setEditorLoading(false);

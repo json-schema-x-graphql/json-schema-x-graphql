@@ -21,7 +21,7 @@ describe("Relay Features", () => {
     it("should add PageInfo to output and generatedTypes if not present", () => {
       ensurePageInfo(mockContext);
       expect(mockContext.generatedTypes.has("PageInfo")).toBe(true);
-      expect(mockContext.output.some(str => str.includes("type PageInfo {"))).toBe(true);
+      expect(mockContext.output.some((str) => str.includes("type PageInfo {"))).toBe(true);
     });
 
     it("should not duplicate PageInfo if already present", () => {
@@ -37,7 +37,7 @@ describe("Relay Features", () => {
       expect(mockContext.generatedTypes.has("PageInfo")).toBe(true);
       expect(mockContext.generatedTypes.has("UserEdge")).toBe(true);
       expect(mockContext.generatedTypes.has("UserConnection")).toBe(true);
-      
+
       const combinedOutput = mockContext.output.join("\\n");
       expect(combinedOutput).toContain("type PageInfo {");
       expect(combinedOutput).toContain("type UserEdge {");
@@ -56,7 +56,7 @@ describe("Relay Features", () => {
       ensureConnectionType("User", mockContext);
       expect(mockContext.generatedTypes.has("PageInfo")).toBe(true);
       expect(mockContext.generatedTypes.has("UserConnection")).toBe(true);
-      
+
       const combinedOutput = mockContext.output.join("\\n");
       expect(combinedOutput).toContain("type PageInfo {");
       expect(combinedOutput).toContain("type UserConnection {");

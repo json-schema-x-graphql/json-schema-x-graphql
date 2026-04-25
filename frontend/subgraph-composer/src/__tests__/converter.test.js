@@ -3,7 +3,7 @@
  * Tests conversion, validation, and formatting functionality
  */
 
-import { describe, it, expect } from "@jest/globals";
+import { describe, it, expect, jest, afterEach } from "@jest/globals";
 import {
   convertSchema,
   validateJsonSchema,
@@ -13,6 +13,12 @@ import {
 } from "../lib/converter";
 
 describe("Converter Library", () => {
+  let consoleErrorSpy;
+
+  afterEach(() => {
+    consoleErrorSpy?.mockRestore();
+    consoleErrorSpy = undefined;
+  });
   describe("convertSchema", () => {
     it("should convert valid JSON Schema to GraphQL SDL", async () => {
       const schema = {
@@ -50,11 +56,16 @@ describe("Converter Library", () => {
     });
 
     it("should return error for invalid schema", async () => {
+      consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
       const result = await convertSchema(null);
 
       expect(result.success).toBe(false);
       expect(result.error).toBeDefined();
       expect(result.sdl).toBeNull();
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "convertSchema error:",
+        "Invalid JSON Schema: must be an object",
+      );
     });
 
     it("should support conversion options", async () => {
@@ -187,9 +198,7 @@ describe("Converter Library", () => {
       const enhanced = enhanceSchemaWithIdMetadata(schema);
 
       expect(enhanced.properties.user_id["x-graphql-type"]).toBe("ID!");
-      expect(enhanced.properties.user_id["x-graphql-field-type-name"]).toBe(
-        "ID",
-      );
+      expect(enhanced.properties.user_id["x-graphql-field-type-name"]).toBe("ID");
       expect(enhanced.properties.user_id["x-graphql-is-entity-key"]).toBe(true);
       expect(enhanced.properties.name["x-graphql-type"]).toBeUndefined();
     });
@@ -246,14 +255,10 @@ describe("Converter Library", () => {
       const enhanced = enhanceSchemaWithIdMetadata(schema);
 
       expect(enhanced.properties.user_id["x-graphql-is-entity-key"]).toBe(true);
-      expect(
-        enhanced.properties.profile.properties.profile_id[
-          "x-graphql-is-entity-key"
-        ],
-      ).toBe(true);
-      expect(
-        enhanced.properties.profile.properties.bio["x-graphql-is-entity-key"],
-      ).toBeUndefined();
+      expect(enhanced.properties.profile.properties.profile_id["x-graphql-is-entity-key"]).toBe(
+        true,
+      );
+      expect(enhanced.properties.profile.properties.bio["x-graphql-is-entity-key"]).toBeUndefined();
     });
 
     it("should not modify non-ID fields", () => {

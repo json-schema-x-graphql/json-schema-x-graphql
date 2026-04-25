@@ -123,9 +123,7 @@ describe("Federation Directive Generator", () => {
 
     test("identifies @requires suggestions for external type references", () => {
       const suggestions = generateDirectiveSuggestions(subgraphs, composedSdl);
-      const requiresSuggestions = suggestions.filter(
-        (s) => s.type === "requires",
-      );
+      const requiresSuggestions = suggestions.filter((s) => s.type === "requires");
 
       // Should either find requires suggestions or have extension suggestions
       expect(suggestions.length).toBeGreaterThan(0);
@@ -134,9 +132,7 @@ describe("Federation Directive Generator", () => {
 
     test("identifies extension suggestions", () => {
       const suggestions = generateDirectiveSuggestions(subgraphs, composedSdl);
-      const extensionSuggestions = suggestions.filter(
-        (s) => s.type === "extension",
-      );
+      const extensionSuggestions = suggestions.filter((s) => s.type === "extension");
 
       // Should find some suggestions (extension or other types)
       expect(suggestions.length).toBeGreaterThan(0);
@@ -382,14 +378,9 @@ describe("Federation Directive Generator", () => {
   describe("mergeSuggestionsIntoSdl", () => {
     test("merges valid suggestions into SDL", () => {
       const suggestions = generateDirectiveSuggestions(subgraphs, composedSdl);
-      const validSuggestions = suggestions.filter(
-        (s) => validateSuggestion(s, composedSdl).valid,
-      );
+      const validSuggestions = suggestions.filter((s) => validateSuggestion(s, composedSdl).valid);
 
-      const result = mergeSuggestionsIntoSdl(
-        composedSdl,
-        validSuggestions.slice(0, 1),
-      );
+      const result = mergeSuggestionsIntoSdl(composedSdl, validSuggestions.slice(0, 1));
       expect(typeof result).toBe("string");
       expect(result.length).toBeGreaterThan(0);
     });
@@ -484,9 +475,7 @@ describe("Federation Directive Generator", () => {
       expect(ranked.length).toBe(filtered.length);
 
       // Step 4: Validate
-      const validated = ranked.filter(
-        (s) => validateSuggestion(s, composedSdl).valid,
-      );
+      const validated = ranked.filter((s) => validateSuggestion(s, composedSdl).valid);
       expect(validated.length).toBeLessThanOrEqual(ranked.length);
 
       // Step 5: Apply
@@ -509,10 +498,7 @@ describe("Federation Directive Generator", () => {
         },
       ];
 
-      const suggestions = generateDirectiveSuggestions(
-        manySchemas,
-        composedSdl,
-      );
+      const suggestions = generateDirectiveSuggestions(manySchemas, composedSdl);
       expect(suggestions).toBeDefined();
       expect(Array.isArray(suggestions)).toBe(true);
     });
@@ -522,30 +508,20 @@ describe("Federation Directive Generator", () => {
       const suggestions2 = generateDirectiveSuggestions(subgraphs, composedSdl);
 
       expect(suggestions1.length).toBe(suggestions2.length);
-      expect(
-        suggestions1.every((s, i) => s.type === suggestions2[i].type),
-      ).toBe(true);
+      expect(suggestions1.every((s, i) => s.type === suggestions2[i].type)).toBe(true);
     });
   });
 
   describe("Edge cases", () => {
     test("handles SDL with no types", () => {
       const emptySubgraphs = [{ name: "empty", sdl: "" }];
-      const suggestions = generateDirectiveSuggestions(
-        emptySubgraphs,
-        composedSdl,
-      );
+      const suggestions = generateDirectiveSuggestions(emptySubgraphs, composedSdl);
       expect(Array.isArray(suggestions)).toBe(true);
     });
 
     test("handles SDL with only scalars", () => {
-      const scalarOnly = [
-        { name: "scalars", sdl: "scalar DateTime\nscalar JSON" },
-      ];
-      const suggestions = generateDirectiveSuggestions(
-        scalarOnly,
-        "type Query { hello: String }",
-      );
+      const scalarOnly = [{ name: "scalars", sdl: "scalar DateTime\nscalar JSON" }];
+      const suggestions = generateDirectiveSuggestions(scalarOnly, "type Query { hello: String }");
       expect(Array.isArray(suggestions)).toBe(true);
     });
 

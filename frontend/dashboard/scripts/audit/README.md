@@ -206,11 +206,7 @@ Example:
  *   'generated-schemas/schema_unification.sdl.graphql'
  * );
  */
-export async function generateFromJSONSchema(
-  inputPath,
-  outputPath,
-  options = {},
-) {
+export async function generateFromJSONSchema(inputPath, outputPath, options = {}) {
   // Implementation
 }
 ```

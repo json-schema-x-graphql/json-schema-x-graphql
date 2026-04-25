@@ -80,9 +80,9 @@ describe("jsonSchemaToGraphQL - nested $ref resolution", () => {
       "x-graphql-type-name": "Node",
       properties: {
         id: { type: "string" },
-        next: { $ref: "#" }
+        next: { $ref: "#" },
       },
-      required: ["id"]
+      required: ["id"],
     };
 
     const sdl = jsonSchemaToGraphQL(JSON.stringify(schema));
@@ -102,19 +102,19 @@ describe("jsonSchemaToGraphQL - nested $ref resolution", () => {
           type: "array",
           items: {
             type: "array",
-            items: { $ref: "#/$defs/Cell" }
-          }
-        }
+            items: { $ref: "#/$defs/Cell" },
+          },
+        },
       },
       $defs: {
         Cell: {
           type: "object",
           "x-graphql-type-name": "Cell",
           properties: {
-            value: { type: "number" }
-          }
-        }
-      }
+            value: { type: "number" },
+          },
+        },
+      },
     };
 
     const sdl = jsonSchemaToGraphQL(JSON.stringify(schema));

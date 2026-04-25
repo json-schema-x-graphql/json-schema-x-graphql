@@ -23,12 +23,12 @@ const outputDir = path.join(repoRoot, "generated-schemas");
 const outputPath = path.join(outputDir, "schema_unification.from-graphql.json");
 
 // Simplified script to detect and convert CamelCase to snake_case
-const convertKeysToSnakeCase = obj => {
+const convertKeysToSnakeCase = (obj) => {
   if (Array.isArray(obj)) {
     return obj.map(convertKeysToSnakeCase);
   } else if (obj && typeof obj === "object") {
     return Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [camelToSnake(key), convertKeysToSnakeCase(value)])
+      Object.entries(obj).map(([key, value]) => [camelToSnake(key), convertKeysToSnakeCase(value)]),
     );
   }
   return obj;
@@ -37,20 +37,20 @@ const convertKeysToSnakeCase = obj => {
 // Generic object key converter
 function convertObjectKeys(obj, keyConverter) {
   if (Array.isArray(obj)) {
-    return obj.map(item => convertObjectKeys(item, keyConverter));
+    return obj.map((item) => convertObjectKeys(item, keyConverter));
   } else if (obj && typeof obj === "object") {
     return Object.fromEntries(
       Object.entries(obj).map(([key, value]) => [
         keyConverter(key),
         convertObjectKeys(value, keyConverter),
-      ])
+      ]),
     );
   }
   return obj;
 }
 
 // Preprocess the schema to rename $schema to avoid conflicts
-const preprocessSchema = schema => {
+const preprocessSchema = (schema) => {
   const schemaCopy = { ...schema };
   if (schemaCopy["$schema"]) {
     schemaCopy["_schema"] = schemaCopy["$schema"];
@@ -60,13 +60,13 @@ const preprocessSchema = schema => {
 };
 
 // Completely strip out $schema from all processing steps
-const stripSchemaProperty = obj => {
+const stripSchemaProperty = (obj) => {
   if (Array.isArray(obj)) {
     return obj.map(stripSchemaProperty);
   } else if (obj && typeof obj === "object") {
     const { $schema, ...rest } = obj; // Remove $schema property
     return Object.fromEntries(
-      Object.entries(rest).map(([key, value]) => [key, stripSchemaProperty(value)])
+      Object.entries(rest).map(([key, value]) => [key, stripSchemaProperty(value)]),
     );
   }
   return obj;
@@ -107,7 +107,7 @@ export async function generateFromSDL(
   jsonSchemaFilePath = jsonSchemaPath,
   outPath = outputPath,
   inputCase = "camel",
-  outputCase = "camel"
+  outputCase = "camel",
 ) {
   // Read SDL file as string and parse using buildSchema
   const sdl = await fs.readFile(sdlFilePath, "utf8");
@@ -124,7 +124,7 @@ export async function generateFromSDL(
     const { convertGraphQLFields } = await import("./helpers/case-conversion.mjs");
     convertedSDL = convertGraphQLFields(
       cleanedSDL,
-      outputCase === "snake" ? camelToSnake : snakeToCamel
+      outputCase === "snake" ? camelToSnake : snakeToCamel,
     );
   }
   let schema, ctx;
@@ -198,10 +198,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     outputCase,
   });
   generateFromSDL(sdlFilePath, jsonSchemaFilePath, outPath, inputCase, outputCase)
-    .then(p => {
+    .then((p) => {
       process.stdout.write(`JSON Schema written to ${path.relative(process.cwd(), p)}\n`);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("[generate-graphql-json-schema]", error);
       process.exit(1);
     });

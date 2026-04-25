@@ -2,7 +2,10 @@
 # This service owns the Product entity
 
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external"])
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.3"
+    import: ["@key", "@shareable", "@external"]
+  )
 
 """
 Product in the catalog

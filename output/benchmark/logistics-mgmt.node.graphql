@@ -421,11 +421,13 @@ type Solicitation {
   workspace_number: String
 }
 
-"""JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.
+"""
+JSON Schema for Solicitation and Requisition data, including mappings from source fields for GraphQL SDL translation.
 
 NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.
 
-NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations."""
+NOTE: This schema has been updated to accept flexible types. Numeric and boolean fields accept both their strict type and string representations to accommodate API response variations.
+"""
 type ProcurementDataSchema {
   requisition: Requisition
   solicitation: Solicitation

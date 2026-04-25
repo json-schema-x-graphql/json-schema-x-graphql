@@ -19,13 +19,22 @@ type UserInput {
 
 "A comprehensive example schema demonstrating JSON Schema to GraphQL conversion with Federation support"
 type User {
-  "Unique identifier for the user" id: String!
-  "User's unique username" username: String!
-  "User's email address" email: Email!
-  "User's role in the system" role: UserRole!
-  "User's subscription tier (external field)" tier: String
-  "Features available to the user based on tier (requires 'tier' field)" premiumFeatures: [String]
-  "User's shipping address" shippingAddress: Address
-  "User preferences (migrated from legacy service)" preferences: UserPreferences
-  "Internal database ID, not exposed to subgraph" internalId: String
+  "Unique identifier for the user"
+  id: String!
+  "User's unique username"
+  username: String!
+  "User's email address"
+  email: Email!
+  "User's role in the system"
+  role: UserRole!
+  "User's subscription tier (external field)"
+  tier: String
+  "Features available to the user based on tier (requires 'tier' field)"
+  premiumFeatures: [String]
+  "User's shipping address"
+  shippingAddress: Address
+  "User preferences (migrated from legacy service)"
+  preferences: UserPreferences
+  "Internal database ID, not exposed to subgraph"
+  internalId: String
 }

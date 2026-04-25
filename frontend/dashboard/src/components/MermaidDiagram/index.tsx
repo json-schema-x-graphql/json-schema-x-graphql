@@ -140,7 +140,7 @@ export const MermaidDiagram = ({ definition }: MermaidDiagramProps) => {
       } catch (error) {
         console.error("Error rendering Mermaid diagram:", error);
         setSvgContent(
-          '<div style="padding: 20px; text-align: center; color: #666;">Error rendering diagram</div>'
+          '<div style="padding: 20px; text-align: center; color: #666;">Error rendering diagram</div>',
         );
       }
     };
@@ -179,7 +179,7 @@ export const MermaidDiagram = ({ definition }: MermaidDiagramProps) => {
     <>
       {!isFullscreen && <DiagramContent />}
       <ModalOverlay $isOpen={isFullscreen} onClick={() => setIsFullscreen(false)}>
-        <ModalContent onClick={e => e.stopPropagation()}>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
           <CloseButton onClick={() => setIsFullscreen(false)}>✕ Close</CloseButton>
           <DiagramContent />
         </ModalContent>

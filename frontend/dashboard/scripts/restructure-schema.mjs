@@ -19,7 +19,7 @@ const backupPath = path.join(
   "src",
   "data",
   "archived",
-  "schema_unification.schema.v1-backup.json"
+  "schema_unification.schema.v1-backup.json",
 );
 
 async function restructureSchema() {
@@ -57,7 +57,7 @@ async function restructureSchema() {
     extractDefinition(
       "DataQuality",
       systemMetadata.properties.systemChain.items.properties.dataQuality,
-      "Data quality metrics for system chain entry"
+      "Data quality metrics for system chain entry",
     );
   }
 
@@ -100,7 +100,7 @@ async function restructureSchema() {
   extractDefinition(
     "ContractIdentification",
     commonElements.properties.contractIdentification,
-    "Contract identification information"
+    "Contract identification information",
   );
 
   // AgencyInfo (reusable for multiple agencies)
@@ -137,28 +137,28 @@ async function restructureSchema() {
   extractDefinition(
     "PlaceOfPerformance",
     commonElements.properties.placeOfPerformance,
-    "Place of performance location details"
+    "Place of performance location details",
   );
 
   // FinancialInfo
   extractDefinition(
     "FinancialInfo",
     commonElements.properties.financialInfo,
-    "Financial information and values"
+    "Financial information and values",
   );
 
   // BusinessClassification
   extractDefinition(
     "BusinessClassification",
     commonElements.properties.businessClassification,
-    "Business classification codes and categories"
+    "Business classification codes and categories",
   );
 
   // ContractCharacteristics
   extractDefinition(
     "ContractCharacteristics",
     commonElements.properties.contractCharacteristics,
-    "Contract characteristics and flags"
+    "Contract characteristics and flags",
   );
 
   // Contact
@@ -173,7 +173,7 @@ async function restructureSchema() {
   extractDefinition(
     "StatusInfo",
     commonElements.properties.statusInfo,
-    "Contract status information"
+    "Contract status information",
   );
 
   // CommonElements
@@ -465,13 +465,13 @@ async function restructureSchema() {
   console.log("\n✨ Next steps:");
   console.log("   1. Review the new schema: cat src/data/schema_unification.schema.json");
   console.log(
-    "   2. Test with typeconv: npx typeconv -f jsc -t gql -o test.graphql src/data/schema_unification.schema.json"
+    "   2. Test with typeconv: npx typeconv -f jsc -t gql -o test.graphql src/data/schema_unification.schema.json",
   );
   console.log("   3. Validate: node scripts/validate-schema.js");
   console.log("   4. If satisfied, commit src/data/schema_unification.schema.json");
 }
 
-restructureSchema().catch(err => {
+restructureSchema().catch((err) => {
   console.error("\n❌ Error:", err.message);
   console.error(err.stack);
   process.exit(1);

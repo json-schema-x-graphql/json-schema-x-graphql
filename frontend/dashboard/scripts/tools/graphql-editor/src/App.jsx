@@ -13,7 +13,7 @@ const GraphQLEditor = React.lazy(async () => {
   } catch (err) {
     console.warn("⚠️ Failed to load graphql-editor, using fallback:", err.message);
   }
-  
+
   // Fallback to a simple editor
   return {
     default: ({ schema, setSchema }) => (
@@ -54,13 +54,21 @@ const GraphQLEditor = React.lazy(async () => {
  */
 
 const MODES = [
-  { key: "canonical", label: "Canonical (schema-unification.graphql)", path: "/data/schema-unification.graphql" },
+  {
+    key: "canonical",
+    label: "Canonical (schema-unification.graphql)",
+    path: "/data/schema-unification.graphql",
+  },
   {
     key: "hinted",
     label: "Hinted (schema-unification-contract-data-hinted.graphql)",
     path: "/data/schema-unification-contract-data-hinted.graphql",
   },
-  { key: "v2", label: "V2 (schema-unification-v2.graphql)", path: "/data/schema-unification-v2.graphql" },
+  {
+    key: "v2",
+    label: "V2 (schema-unification-v2.graphql)",
+    path: "/data/schema-unification-v2.graphql",
+  },
 ];
 
 export default function App() {
@@ -74,7 +82,7 @@ export default function App() {
       setLoading(true);
       setError(null);
       try {
-        const candidate = MODES.find(x => x.key === m) || MODES[0];
+        const candidate = MODES.find((x) => x.key === m) || MODES[0];
         const res = await fetch(candidate.path);
         if (!res.ok) {
           throw new Error(`Failed to fetch ${candidate.path} (HTTP ${res.status})`);
@@ -89,7 +97,7 @@ export default function App() {
         setLoading(false);
       }
     },
-    [mode]
+    [mode],
   );
 
   useEffect(() => {
@@ -97,13 +105,13 @@ export default function App() {
     loadSDL(mode);
   }, [mode, loadSDL]);
 
-  const handleModeChange = async e => {
+  const handleModeChange = async (e) => {
     const next = e.target.value;
     setMode(next);
   };
 
   const openRaw = () => {
-    const candidate = MODES.find(x => x.key === mode) || MODES[0];
+    const candidate = MODES.find((x) => x.key === mode) || MODES[0];
     window.open(candidate.path, "_blank", "noopener,noreferrer");
   };
 
@@ -134,7 +142,7 @@ export default function App() {
           <label style={styles.label}>
             Mode
             <select value={mode} onChange={handleModeChange} style={styles.select}>
-              {MODES.map(m => (
+              {MODES.map((m) => (
                 <option key={m.key} value={m.key}>
                   {m.label}
                 </option>
@@ -181,7 +189,7 @@ export default function App() {
             <Suspense fallback={<div style={styles.loading}>Loading editor…</div>}>
               <GraphQLEditor
                 schema={schema}
-                setSchema={next => {
+                setSchema={(next) => {
                   // GraphQLEditor calls setSchema while editing; store the latest in state
                   setSchema(next);
                 }}

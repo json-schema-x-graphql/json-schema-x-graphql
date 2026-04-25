@@ -11,7 +11,7 @@ declare global {
         options: {
           introspection: unknown;
           displayOptions?: Record<string, unknown>;
-        }
+        },
       ) => void;
     };
   }
@@ -54,7 +54,7 @@ const VoyagerPage: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors.map(graphqlError => graphqlError.message).join("\n")
+            introspectionResult.errors.map((graphqlError) => graphqlError.message).join("\n"),
           );
         }
 

@@ -67,9 +67,9 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
 
 const SchemaUnificationSchemaViewer = () => {
   const { setColorScheme } = useMantineColorScheme();
-  const setContents = useFile(state => state.setContents);
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const setContents = useFile((state) => state.setContents);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const fullscreen = useGraph((state) => state.fullscreen);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {

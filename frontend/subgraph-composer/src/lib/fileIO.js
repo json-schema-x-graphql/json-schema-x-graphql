@@ -113,9 +113,7 @@ export async function importSchemaFile(file) {
         },
       };
     } else {
-      throw new Error(
-        "Invalid schema format. Expected exported schema or JSON schema",
-      );
+      throw new Error("Invalid schema format. Expected exported schema or JSON schema");
     }
   } catch (error) {
     return {

@@ -2,13 +2,7 @@ import React from "react";
 import SplitPane from "react-split-pane";
 import "./SchemaEditor.css";
 
-export default function SupergraphPreview({
-  sdl,
-  stats,
-  errors,
-  schemas,
-  subgraphs,
-}) {
+export default function SupergraphPreview({ sdl, stats, errors, schemas: _schemas, subgraphs }) {
   const [expandedSections, setExpandedSections] = React.useState({
     preview: true,
     errors: errors?.length > 0,
@@ -33,10 +27,7 @@ export default function SupergraphPreview({
     if (!sdl) return;
 
     const element = document.createElement("a");
-    element.setAttribute(
-      "href",
-      `data:text/plain;charset=utf-8,${encodeURIComponent(sdl)}`,
-    );
+    element.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(sdl)}`);
     element.setAttribute("download", "supergraph.graphql");
     element.style.display = "none";
     document.body.appendChild(element);
@@ -57,25 +48,13 @@ export default function SupergraphPreview({
         <div className="preview-controls">
           {sdl && (
             <>
-              <button
-                onClick={copyToClipboard}
-                className="btn-icon"
-                title="Copy SDL"
-              >
+              <button onClick={copyToClipboard} className="btn-icon" title="Copy SDL">
                 📋
               </button>
-              <button
-                onClick={downloadSDL}
-                className="btn-icon"
-                title="Download SDL"
-              >
+              <button onClick={downloadSDL} className="btn-icon" title="Download SDL">
                 ⬇️
               </button>
-              <button
-                onClick={openInEditor}
-                className="btn-icon"
-                title="Open in GraphQL Editor"
-              >
+              <button onClick={openInEditor} className="btn-icon" title="Open in GraphQL Editor">
                 🔗
               </button>
             </>
@@ -118,9 +97,7 @@ export default function SupergraphPreview({
               }}
             >
               <span className="section-title">
-                <span style={{ width: "20px" }}>
-                  {expandedSections.preview ? "▼" : "▶"}
-                </span>
+                <span style={{ width: "20px" }}>{expandedSections.preview ? "▼" : "▶"}</span>
                 SDL Preview
               </span>
             </div>
@@ -170,9 +147,7 @@ export default function SupergraphPreview({
                   }}
                 >
                   <span className="section-title">
-                    <span style={{ width: "20px" }}>
-                      {expandedSections.stats ? "▼" : "▶"}
-                    </span>
+                    <span style={{ width: "20px" }}>{expandedSections.stats ? "▼" : "▶"}</span>
                     Statistics
                   </span>
                 </div>
@@ -194,23 +169,17 @@ export default function SupergraphPreview({
                       <>
                         <div className="stat-item warning">
                           <span className="stat-label">Conflicts:</span>
-                          <span className="stat-value">
-                            {stats.conflicts.length}
-                          </span>
+                          <span className="stat-value">{stats.conflicts.length}</span>
                         </div>
                         <div className="conflicts-details">
-                          <div className="conflicts-title">
-                            Conflicting Types:
-                          </div>
+                          <div className="conflicts-title">Conflicting Types:</div>
                           {stats.conflicts.map((conflict, idx) => (
                             <div key={idx} className="conflict-item">
                               <div className="conflict-type">
                                 <strong>{conflict.type}</strong>
                               </div>
                               <div className="conflict-sources">
-                                <small>
-                                  Found in: {conflict.sources.join(", ")}
-                                </small>
+                                <small>Found in: {conflict.sources.join(", ")}</small>
                               </div>
                               {conflict.fieldCount > 0 && (
                                 <div className="conflict-fields">
@@ -244,9 +213,7 @@ export default function SupergraphPreview({
                   }}
                 >
                   <span className="section-title">
-                    <span style={{ width: "20px" }}>
-                      {expandedSections.errors ? "▼" : "▶"}
-                    </span>
+                    <span style={{ width: "20px" }}>{expandedSections.errors ? "▼" : "▶"}</span>
                     Errors ({errors.length})
                   </span>
                 </div>

@@ -13,9 +13,7 @@ test.describe("Editor Smoke Tests", () => {
   });
 
   test("should have the settings button visible", async ({ page }) => {
-    const settingsButton = page
-      .locator("button")
-      .filter({ hasText: "Settings" });
+    const settingsButton = page.locator("button").filter({ hasText: "Settings" });
     await expect(settingsButton).toBeVisible();
   });
 
@@ -24,12 +22,8 @@ test.describe("Editor Smoke Tests", () => {
     await expect(themeButton).toBeVisible();
   });
 
-  test("should open settings panel on Settings button click", async ({
-    page,
-  }) => {
-    const settingsButton = page
-      .locator("button")
-      .filter({ hasText: "Settings" });
+  test("should open settings panel on Settings button click", async ({ page }) => {
+    const settingsButton = page.locator("button").filter({ hasText: "Settings" });
     await settingsButton.click();
 
     // Wait for the settings panel to appear - look for heading or label
@@ -38,9 +32,7 @@ test.describe("Editor Smoke Tests", () => {
   });
 
   test("should close settings panel with Done button", async ({ page }) => {
-    const settingsButton = page
-      .locator("button")
-      .filter({ hasText: "Settings" });
+    const settingsButton = page.locator("button").filter({ hasText: "Settings" });
     await settingsButton.click();
 
     // Wait for Done button and click it
@@ -60,9 +52,7 @@ test.describe("Settings Panel Interaction", () => {
     await page.waitForSelector("h1", { timeout: 5000 });
 
     // Open settings
-    const settingsButton = page
-      .locator("button")
-      .filter({ hasText: "Settings" });
+    const settingsButton = page.locator("button").filter({ hasText: "Settings" });
     await settingsButton.click();
     await page.waitForSelector("text=Converter Settings");
   });
@@ -122,9 +112,7 @@ test.describe("Keyboard Shortcuts", () => {
 
   test("should close settings with Escape", async ({ page }) => {
     // Open settings first
-    const settingsButton = page
-      .locator("button")
-      .filter({ hasText: "Settings" });
+    const settingsButton = page.locator("button").filter({ hasText: "Settings" });
     await settingsButton.click();
 
     // Press Escape
@@ -138,16 +126,12 @@ test.describe("Keyboard Shortcuts", () => {
 
   test("should toggle theme with Ctrl+T", async ({ page }) => {
     const rootElement = page.locator("html");
-    const isDarkBefore = await rootElement.evaluate((el) =>
-      el.classList.contains("dark"),
-    );
+    const isDarkBefore = await rootElement.evaluate((el) => el.classList.contains("dark"));
 
     await page.keyboard.press("Control+T");
     await page.waitForTimeout(200); // Wait for state update
 
-    const isDarkAfter = await rootElement.evaluate((el) =>
-      el.classList.contains("dark"),
-    );
+    const isDarkAfter = await rootElement.evaluate((el) => el.classList.contains("dark"));
 
     // Theme should have toggled (if it was dark, now should not be, or vice versa)
     expect(isDarkAfter).not.toBe(isDarkBefore);
@@ -162,9 +146,7 @@ test.describe("Theme Toggle", () => {
 
   test("should have dark theme by default", async ({ page }) => {
     const rootElement = page.locator("html");
-    const isDark = await rootElement.evaluate((el) =>
-      el.classList.contains("dark"),
-    );
+    const isDark = await rootElement.evaluate((el) => el.classList.contains("dark"));
     expect(isDark).toBeTruthy();
   });
 
@@ -179,9 +161,7 @@ test.describe("Theme Toggle", () => {
     await page.waitForSelector("h1", { timeout: 5000 });
 
     // Check that light theme is persisted
-    const isDark = await page
-      .locator("html")
-      .evaluate((el) => el.classList.contains("dark"));
+    const isDark = await page.locator("html").evaluate((el) => el.classList.contains("dark"));
     expect(isDark).toBeFalsy();
   });
 });

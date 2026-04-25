@@ -101,9 +101,7 @@ Options:
 }
 
 if (values.version) {
-  const packageJson = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"),
-  );
+  const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
   console.log(packageJson.version);
   process.exit(0);
 }
@@ -111,19 +109,14 @@ if (values.version) {
 const inputPath = values.input || positionals[0];
 
 if (!inputPath) {
-  console.error(
-    "Error: Input file is required. Use --input <file> or provide it as an argument.",
-  );
+  console.error("Error: Input file is required. Use --input <file> or provide it as an argument.");
   process.exit(1);
 }
 
 try {
   const schemaContent = fs.readFileSync(inputPath, "utf-8");
   const schema = JSON.parse(schemaContent);
-  const toEnum = <T extends string>(
-    value: string | undefined,
-    fallback: T,
-  ): T => {
+  const toEnum = <T extends string>(value: string | undefined, fallback: T): T => {
     return (value ? value.toUpperCase() : fallback) as T;
   };
 
@@ -135,15 +128,9 @@ try {
     includeDescriptions: values.descriptions,
     preserveFieldOrder: values["preserve-order"],
     includeFederationDirectives: values["include-federation-directives"],
-    federationVersion: toEnum<FederationVersion>(
-      values["federation-version"],
-      "V2",
-    ),
+    federationVersion: toEnum<FederationVersion>(values["federation-version"], "V2"),
     namingConvention: values["naming-convention"]
-      ? toEnum<NamingConvention>(
-          values["naming-convention"],
-          "GRAPHQL_IDIOMATIC",
-        )
+      ? toEnum<NamingConvention>(values["naming-convention"], "GRAPHQL_IDIOMATIC")
       : undefined,
     inferIds: values["infer-ids"],
     idStrategy: values["id-strategy"]
@@ -160,10 +147,7 @@ try {
   let sdl = jsonSchemaToGraphQL(schema, converterOptions);
 
   // Add Federation schema link if requested
-  if (
-    values["include-schema-link"] &&
-    converterOptions.includeFederationDirectives
-  ) {
+  if (values["include-schema-link"] && converterOptions.includeFederationDirectives) {
     const schemaLink = `extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@extends"])
 

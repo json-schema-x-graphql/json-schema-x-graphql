@@ -8,14 +8,8 @@
  * Outputs test results in JSON format for CI/CD integration.
  */
 
-import {
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-  existsSync,
-} from "fs";
-import { join, relative, basename, extname } from "path";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { join, relative, basename } from "path";
 import { jsonSchemaToGraphQL } from "../../converters/node/src/converter";
 import { parse as parseGraphQL } from "graphql";
 
@@ -111,7 +105,7 @@ class IntegrationTestHarness {
       try {
         const content = readFileSync(optionsPath, "utf-8");
         return JSON.parse(content);
-      } catch (err) {
+      } catch {
         // Invalid options file, use defaults
         return {};
       }
@@ -156,7 +150,7 @@ class IntegrationTestHarness {
         }
       }
       return count;
-    } catch (err) {
+    } catch {
       return 0;
     }
   }

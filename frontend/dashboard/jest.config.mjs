@@ -11,5 +11,5 @@ export default {
   // Include .mjs and .cjs test files so our integration tests are discovered
   testMatch: ["**/*.test.[jt]s?(x)", "**/*.test.mjs", "**/*.test.cjs"],
   setupFilesAfterEnv: [],
-  transformIgnorePatterns: ["/node_modules/(?!.*\.mjs$)", "\.pnp\.[^/]+$"],
+  transformIgnorePatterns: ["/node_modules/(?!.*.mjs$)", ".pnp.[^/]+$"],
 };

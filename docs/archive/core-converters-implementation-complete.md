@@ -215,10 +215,7 @@ converter.clear_cache();
 ### Node.js
 
 ```typescript
-import {
-  Converter,
-  ConversionDirection,
-} from "@json-schema-x-graphql/node-converter";
+import { Converter, ConversionDirection } from "@json-schema-x-graphql/node-converter";
 
 // Create converter with options and cache
 const converter = new Converter(

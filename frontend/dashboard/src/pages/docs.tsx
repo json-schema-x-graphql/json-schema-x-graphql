@@ -100,7 +100,7 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
           </Title>
           <Text mb="sm">Active Docs</Text>
           <Stack mb="lg">
-            {active.map(d => (
+            {active.map((d) => (
               <a key={d.href} href={d.href}>
                 {d.title}
               </a>
@@ -112,7 +112,7 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
             Archived Docs
           </Text>
           <Stack>
-            {archived.map(d => (
+            {archived.map((d) => (
               <a key={d.href} href={d.href}>
                 {d.title}
               </a>
@@ -214,7 +214,7 @@ export const getStaticProps: GetStaticProps<DocsProps> = async () => {
   const active: DocLink[] = [];
   const archived: DocLink[] = [];
 
-  files.forEach(f => {
+  files.forEach((f) => {
     const fullPath = path.join(docsDir, f);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);

@@ -16,7 +16,9 @@ directive @shareable repeatable on OBJECT | FIELD_DEFINITION
 
 directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
-directive @tag(name: String!) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @tag(
+  name: String!
+) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
 
 directive @override(from: String!) on FIELD_DEFINITION
 
@@ -27,17 +29,29 @@ directive @extends on OBJECT | INTERFACE
 directive @interfaceObject on OBJECT
 
 type Query {
-  """Get a product by UPC"""
+  """
+  Get a product by UPC
+  """
   product(upc: String!): Product
-  """Get all products"""
+  """
+  Get all products
+  """
   products: [Product!]!
-  """Get a review by ID"""
+  """
+  Get a review by ID
+  """
   review(id: ID!): Review
-  """Get all reviews"""
+  """
+  Get all reviews
+  """
   reviews: [Review!]!
-  """Get a user by email"""
+  """
+  Get a user by email
+  """
   user(email: ID!): User
-  """Get all users"""
+  """
+  Get all users
+  """
   users: [User!]!
 }
 
@@ -56,42 +70,76 @@ type _Service {
   sdl: String!
 }
 
-"""Extended Product type with reviews"""
+"""
+Extended Product type with reviews
+"""
 type Product {
-  """Universal Product Code (from Products service)"""
+  """
+  Universal Product Code (from Products service)
+  """
   upc: String!
-  """Product name"""
+  """
+  Product name
+  """
   name: String
-  """Product price in cents"""
+  """
+  Product price in cents
+  """
   price: Int
-  """Product weight in grams"""
+  """
+  Product weight in grams
+  """
   weight: Int
-  """Reviews for this product"""
+  """
+  Reviews for this product
+  """
   reviews: [Review]
 }
 
-"""Product review entity"""
+"""
+Product review entity
+"""
 type Review {
-  """Review unique identifier"""
+  """
+  Review unique identifier
+  """
   id: ID!
-  """Review body text"""
+  """
+  Review body text
+  """
   body: String
-  """Review author (provides username field)"""
+  """
+  Review author (provides username field)
+  """
   author: User
-  """Product being reviewed"""
+  """
+  Product being reviewed
+  """
   product: Product
 }
 
-"""User account in the system"""
+"""
+User account in the system
+"""
 type User {
-  """User's email address (primary key)"""
+  """
+  User's email address (primary key)
+  """
   email: ID!
-  """Reviews written by this user"""
+  """
+  Reviews written by this user
+  """
   reviews: [Review]
-  """User's display name"""
+  """
+  User's display name
+  """
   name: String
-  """Unique username for the account"""
+  """
+  Unique username for the account
+  """
   username: String
-  """User's date of birth"""
+  """
+  User's date of birth
+  """
   birthDate: String
 }

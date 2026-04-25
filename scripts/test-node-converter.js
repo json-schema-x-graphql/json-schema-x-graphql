@@ -57,10 +57,7 @@ async function runTest() {
       console.log(reference.substring(0, 500) + "...");
 
       // Write generated output for manual inspection
-      const debugPath = path.join(
-        __dirname,
-        `../output/${SCHEMA_NAME}.debug.graphql`,
-      );
+      const debugPath = path.join(__dirname, `../output/${SCHEMA_NAME}.debug.graphql`);
       fs.mkdirSync(path.dirname(debugPath), { recursive: true });
       fs.writeFileSync(debugPath, result);
       console.log(`Debug output written to: ${debugPath}`);

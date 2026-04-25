@@ -27,35 +27,49 @@
 directive @mapFrom(path: String!) on FIELD_DEFINITION
 directive @mapHint(note: String) on FIELD_DEFINITION
 
-""" Contract Data subgraph: minimal set of mapped fields """
-type Contract Data_Contract {
+"""
+Contract Data subgraph: minimal set of mapped fields
+"""
+type ContractData_Contract {
   piid: String @mapFrom(path: "commonElements.contractIdentification.piid")
-  originalAwardPiid: String @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
+  originalAwardPiid: String
+    @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
   contractTitle: String @mapFrom(path: "commonElements.contractIdentification.contractTitle")
   contractType: String @mapFrom(path: "commonElements.contractIdentification.contractType")
-  descriptionOfRequirement: String @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
-  contractingAgencyCode: String @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
-  contractingAgencyName: String @mapFrom(path: "commonElements.organizationInfo.contractingAgency.name")
+  descriptionOfRequirement: String
+    @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
+  contractingAgencyCode: String
+    @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
+  contractingAgencyName: String
+    @mapFrom(path: "commonElements.organizationInfo.contractingAgency.name")
   vendorName: String @mapFrom(path: "commonElements.vendorInfo.vendorName")
   vendorUei: String @mapFrom(path: "commonElements.vendorInfo.vendorUei")
   placeOfPerformanceCity: String @mapFrom(path: "commonElements.placeOfPerformance.city")
   placeOfPerformanceState: String @mapFrom(path: "commonElements.placeOfPerformance.state")
   totalContractValue: String @mapFrom(path: "commonElements.financialInfo.totalContractValue")
-  baseAndAllOptionsValue: String @mapFrom(path: "commonElements.financialInfo.baseAndAllOptionsValue")
-  independentGovernmentEstimate: String @mapFrom(path: "commonElements.financialInfo.independentGovernmentEstimate")
+  baseAndAllOptionsValue: String
+    @mapFrom(path: "commonElements.financialInfo.baseAndAllOptionsValue")
+  independentGovernmentEstimate: String
+    @mapFrom(path: "commonElements.financialInfo.independentGovernmentEstimate")
   effectiveDate: String @mapFrom(path: "commonElements.contractCharacteristics.effectiveDate")
   expirationDate: String @mapFrom(path: "commonElements.contractCharacteristics.expirationDate")
   status: String @mapFrom(path: "commonElements.statusInfo.status")
 }
 
-""" Legacy Procurement subgraph: minimal set of mapped fields """
-type Legacy Procurement_Contract {
-  piid: String @mapFrom(path: "systemExtensions.legacy_procurement.acquisitionData.iaPiidOrUniqueId")
-  originalAwardPiid: String @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
+"""
+Legacy Procurement subgraph: minimal set of mapped fields
+"""
+type LegacyProcurement_Contract {
+  piid: String
+    @mapFrom(path: "systemExtensions.legacy_procurement.acquisitionData.iaPiidOrUniqueId")
+  originalAwardPiid: String
+    @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
   contractTitle: String @mapFrom(path: "commonElements.contractIdentification.contractTitle")
   contractType: String @mapFrom(path: "commonElements.contractIdentification.contractType")
-  descriptionOfRequirement: String @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
-  contractingAgencyCode: String @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
+  descriptionOfRequirement: String
+    @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
+  contractingAgencyCode: String
+    @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
   vendorName: String @mapFrom(path: "commonElements.vendorInfo.vendorName")
   vendorUei: String @mapFrom(path: "commonElements.vendorInfo.vendorUei")
   totalContractValue: String @mapFrom(path: "commonElements.financialInfo.totalContractValue")
@@ -64,47 +78,65 @@ type Legacy Procurement_Contract {
   expirationDate: String @mapFrom(path: "commonElements.contractCharacteristics.expirationDate")
   status: String @mapFrom(path: "commonElements.statusInfo.status")
   # Example of an Legacy Procurement-specific extension mapping
-  iaPiidOrUniqueId: String @mapFrom(path: "systemExtensions.legacy_procurement[0].legacy_procurementSpecific.acquisitionData.iaPiidOrUniqueId")
+  iaPiidOrUniqueId: String
+    @mapFrom(
+      path: "systemExtensions.legacy_procurement[0].legacy_procurementSpecific.acquisitionData.iaPiidOrUniqueId"
+    )
 }
 
-""" Intake Process subgraph: minimal set of mapped fields """
-type Intake Process_Contract {
+"""
+Intake Process subgraph: minimal set of mapped fields
+"""
+type IntakeProcess_Contract {
   piid: String @mapFrom(path: "commonElements.contractIdentification.piid")
-  originalAwardPiid: String @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
+  originalAwardPiid: String
+    @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
   contractTitle: String @mapFrom(path: "commonElements.contractIdentification.contractTitle")
   contractType: String @mapFrom(path: "commonElements.contractIdentification.contractType")
-  descriptionOfRequirement: String @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
-  contractingAgencyCode: String @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
+  descriptionOfRequirement: String
+    @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
+  contractingAgencyCode: String
+    @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
   vendorName: String @mapFrom(path: "commonElements.vendorInfo.vendorName")
   vendorUei: String @mapFrom(path: "commonElements.vendorInfo.vendorUei")
   totalContractValue: String @mapFrom(path: "commonElements.financialInfo.totalContractValue")
-  clinUnitPrice: String @mapFrom(path: "systemExtensions.intake_process[0].intake_processSpecific.unitPrice")
+  clinUnitPrice: String
+    @mapFrom(path: "systemExtensions.intake_process[0].intake_processSpecific.unitPrice")
   effectiveDate: String @mapFrom(path: "commonElements.contractCharacteristics.effectiveDate")
   expirationDate: String @mapFrom(path: "commonElements.contractCharacteristics.expirationDate")
   status: String @mapFrom(path: "commonElements.statusInfo.status")
 }
 
-""" Logistics Mgmt subgraph: minimal set of mapped fields (uses Logistics Mgmt-specific pointers where applicable) """
-type Logistics Mgmt_Contract {
+"""
+Logistics Mgmt subgraph: minimal set of mapped fields (uses Logistics Mgmt-specific pointers where applicable)
+"""
+type LogisticsMgmt_Contract {
   piid: String @mapFrom(path: "systemMetadata.systemChain[0].recordId")
-  originalAwardPiid: String @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
+  originalAwardPiid: String
+    @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
   contractTitle: String @mapFrom(path: "commonElements.contractIdentification.contractTitle")
   contractType: String @mapFrom(path: "commonElements.contractIdentification.contractType")
-  descriptionOfRequirement: String @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
-  contractingAgencyCode: String @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
+  descriptionOfRequirement: String
+    @mapFrom(path: "commonElements.contractIdentification.descriptionOfRequirement")
+  contractingAgencyCode: String
+    @mapFrom(path: "commonElements.organizationInfo.contractingAgency.code")
   vendorName: String @mapFrom(path: "commonElements.vendorInfo.vendorName")
   vendorUei: String @mapFrom(path: "commonElements.vendorInfo.vendorUei")
   totalContractValue: String @mapFrom(path: "commonElements.financialInfo.totalContractValue")
   effectiveDate: String @mapFrom(path: "commonElements.contractCharacteristics.effectiveDate")
   expirationDate: String @mapFrom(path: "commonElements.contractCharacteristics.expirationDate")
   status: String @mapFrom(path: "commonElements.statusInfo.status")
-  logistics_mgmtLegacyNote: String @mapFrom(path: "systemExtensions.logistics_mgmt[0].logistics_mgmtSpecific.legacyNote") @mapHint(note: "Logistics Mgmt-specific legacy field placeholder")
+  logistics_mgmtLegacyNote: String
+    @mapFrom(path: "systemExtensions.logistics_mgmt[0].logistics_mgmtSpecific.legacyNote")
+    @mapHint(note: "Logistics Mgmt-specific legacy field placeholder")
 }
 
-""" Root Query exposes one entrypoint per system for generation convenience """
+"""
+Root Query exposes one entrypoint per system for generation convenience
+"""
 type Query {
-  contract_dataContract: Contract Data_Contract
-  legacy_procurementContract: Legacy Procurement_Contract
-  intake_processContract: Intake Process_Contract
-  logistics_mgmtContract: Logistics Mgmt_Contract
+  contract_dataContract: ContractData_Contract
+  legacy_procurementContract: LegacyProcurement_Contract
+  intake_processContract: IntakeProcess_Contract
+  logistics_mgmtContract: LogisticsMgmt_Contract
 }

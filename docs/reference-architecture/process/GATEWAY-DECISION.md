@@ -487,8 +487,8 @@ cf logs schema_unification-mesh --recent
 
 **Decision:** Proceed with GraphQL Mesh for development phase
 
-**Approved By:** ********\_\_\_********  
-**Date:** ********\_\_\_********
+**Approved By:** **\*\*\*\***\_\_\_**\*\*\*\***  
+**Date:** **\*\*\*\***\_\_\_**\*\*\*\***
 
 **Next Review:** After 3 months of usage (March 2025)
 

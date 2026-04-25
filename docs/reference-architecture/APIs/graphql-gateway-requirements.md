@@ -582,11 +582,7 @@ sources:
 ```graphql
 # Test federated entity resolution
 query {
-  _entities(
-    representations: [
-      { __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }
-    ]
-  ) {
+  _entities(representations: [{ __typename: "AssistRecord", ia_piid_or_unique_id: "TEST123" }]) {
     ... on AssistRecord {
       iaPiidOrUniqueId
       systemMetadata {
@@ -1148,11 +1144,7 @@ const typeDefs = readFileSync("./schema.graphql", "utf-8");
 
 const resolvers = {
   Query: {
-    solicitationById: async (
-      _: any,
-      { id }: { id: string },
-      { dataSources }: any,
-    ) => {
+    solicitationById: async (_: any, { id }: { id: string }, { dataSources }: any) => {
       return dataSources.solicitationAPI.getSolicitationById(id);
     },
   },

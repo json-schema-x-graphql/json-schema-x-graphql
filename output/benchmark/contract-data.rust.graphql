@@ -3,41 +3,41 @@ Physical address structure.
 """
 type Address {
   """
-City
-"""
-city: String
+  City
   """
-Country code
-"""
-countryCode: String
+  city: String
   """
-Country name
-"""
-countryName: String
+  Country code
   """
-Address line 1
-"""
-line1: String
+  countryCode: String
   """
-Address line 2
-"""
-line2: String
+  Country name
   """
-Address line 3
-"""
-line3: String
+  countryName: String
   """
-State code
-"""
-stateCode: String
+  Address line 1
   """
-State name
-"""
-stateName: String
+  line1: String
   """
-ZIP/postal code
-"""
-zipCode: String
+  Address line 2
+  """
+  line2: String
+  """
+  Address line 3
+  """
+  line3: String
+  """
+  State code
+  """
+  stateCode: String
+  """
+  State name
+  """
+  stateName: String
+  """
+  ZIP/postal code
+  """
+  zipCode: String
 }
 
 """
@@ -45,57 +45,57 @@ Agency and organizational information.
 """
 type Agency {
   """
-Contracting agency ID
-"""
-contractingAgencyId: String
+  Contracting agency ID
   """
-Contracting agency name
-"""
-contractingAgencyName: String
+  contractingAgencyId: String
   """
-Contracting office ID
-"""
-contractingOfficeId: String
+  Contracting agency name
   """
-Contracting office name
-"""
-contractingOfficeName: String
+  contractingAgencyName: String
   """
-Department ID
-"""
-departmentId: String
+  Contracting office ID
   """
-Department name
-"""
-departmentName: String
+  contractingOfficeId: String
   """
-Funding agency code
-"""
-fundingAgencyCode: String
+  Contracting office name
   """
-Funding agency name
-"""
-fundingAgencyName: String
+  contractingOfficeName: String
   """
-Funding department ID
-"""
-fundingDepartmentId: String
+  Department ID
   """
-Funding department name
-"""
-fundingDepartmentName: String
+  departmentId: String
   """
-Funding office code
-"""
-fundingOfficeCode: String
+  Department name
   """
-Funding office name
-"""
-fundingOfficeName: String
+  departmentName: String
   """
-Regional code
-"""
-regionCode: String
+  Funding agency code
+  """
+  fundingAgencyCode: String
+  """
+  Funding agency name
+  """
+  fundingAgencyName: String
+  """
+  Funding department ID
+  """
+  fundingDepartmentId: String
+  """
+  Funding department name
+  """
+  fundingDepartmentName: String
+  """
+  Funding office code
+  """
+  fundingOfficeCode: String
+  """
+  Funding office name
+  """
+  fundingOfficeName: String
+  """
+  Regional code
+  """
+  regionCode: String
 }
 
 """
@@ -103,57 +103,57 @@ Business classification flags for vendor categories.
 """
 type BusinessClassifications {
   """
-Educational institution
-"""
-educationalInstitutionFlag: String
+  Educational institution
   """
-Economically disadvantaged WOSB
-"""
-edwosbFlag: String
+  educationalInstitutionFlag: String
   """
-8(a) program participant
-"""
-eightAFlag: String
+  Economically disadvantaged WOSB
   """
-Hospital
-"""
-hospitalFlag: String
+  edwosbFlag: String
   """
-HUBZone certified indicator
-"""
-hubzoneFlag: String
+  8(a) program participant
   """
-Minority-owned indicator
-"""
-minorityOwnedBusinessFlag: String
+  eightAFlag: String
   """
-Nonprofit organization
-"""
-nonprofitOrganizationFlag: String
+  Hospital
   """
-Small disadvantaged business
-"""
-sdbFlag: String
+  hospitalFlag: String
   """
-Small business indicator
-"""
-smallBusinessFlag: String
+  HUBZone certified indicator
   """
-Service-disabled veteran-owned
-"""
-srdvobFlag: String
+  hubzoneFlag: String
   """
-Veteran-owned indicator
-"""
-veteranOwnedFlag: String
+  Minority-owned indicator
   """
-Women-owned indicator
-"""
-womenOwnedFlag: String
+  minorityOwnedBusinessFlag: String
   """
-Women-owned small business
-"""
-wosbFlag: String
+  Nonprofit organization
+  """
+  nonprofitOrganizationFlag: String
+  """
+  Small disadvantaged business
+  """
+  sdbFlag: String
+  """
+  Small business indicator
+  """
+  smallBusinessFlag: String
+  """
+  Service-disabled veteran-owned
+  """
+  srdvobFlag: String
+  """
+  Veteran-owned indicator
+  """
+  veteranOwnedFlag: String
+  """
+  Women-owned indicator
+  """
+  womenOwnedFlag: String
+  """
+  Women-owned small business
+  """
+  wosbFlag: String
 }
 
 """
@@ -161,41 +161,41 @@ Contract classification codes and categories.
 """
 type Classification {
   """
-Commercial item acquisition indicator
-"""
-commercialItemAcquisition: String
+  Commercial item acquisition indicator
   """
-Contract financing type
-"""
-contractFinancing: String
+  commercialItemAcquisition: String
   """
-NAICS industry classification code
-"""
-naicsCode: String
+  Contract financing type
   """
-NAICS description
-"""
-naicsDescription: String
+  contractFinancing: String
   """
-Product or service code (PSC)
-"""
-productOrServiceCode: String
+  NAICS industry classification code
   """
-PSC description
-"""
-productOrServiceDescription: String
+  naicsCode: String
   """
-System equipment code
-"""
-systemEquipmentCode: String
+  NAICS description
   """
-System equipment description
-"""
-systemEquipmentDesc: String
+  naicsDescription: String
   """
-Contract pricing type
-"""
-typeOfContractPricing: String
+  Product or service code (PSC)
+  """
+  productOrServiceCode: String
+  """
+  PSC description
+  """
+  productOrServiceDescription: String
+  """
+  System equipment code
+  """
+  systemEquipmentCode: String
+  """
+  System equipment description
+  """
+  systemEquipmentDesc: String
+  """
+  Contract pricing type
+  """
+  typeOfContractPricing: String
 }
 
 """
@@ -203,33 +203,33 @@ Competition and procurement procedure information.
 """
 type Competition {
   """
-Evaluated preference applied
-"""
-evaluatedPreference: String
+  Evaluated preference applied
   """
-Extent of competition
-"""
-extentCompeted: String
+  evaluatedPreference: String
   """
-Fair opportunity explanation
-"""
-fairOpportunityDescription: String
+  Extent of competition
   """
-Number of offers received
-"""
-numberOfOffersReceived: Int
+  extentCompeted: String
   """
-Reason for non-competition
-"""
-reasonNotCompeted: String
+  Fair opportunity explanation
   """
-Solicitation procedures used
-"""
-solicitationProcedures: String
+  fairOpportunityDescription: String
   """
-Type of set-aside
-"""
-typeOfSetAside: String
+  Number of offers received
+  """
+  numberOfOffersReceived: Int
+  """
+  Reason for non-competition
+  """
+  reasonNotCompeted: String
+  """
+  Solicitation procedures used
+  """
+  solicitationProcedures: String
+  """
+  Type of set-aside
+  """
+  typeOfSetAside: String
 }
 
 """
@@ -237,37 +237,37 @@ Compliance and regulatory information.
 """
 type Compliance {
   """
-Cost accounting standards
-"""
-costAcctStandards: String
+  Cost accounting standards
   """
-Cost or pricing data requirement
-"""
-costOrPricingData: String
+  costAcctStandards: String
   """
-Davis-Bacon Act applicability
-"""
-davisBaconAct: String
+  Cost or pricing data requirement
   """
-Recovered material clauses
-"""
-recoveredMaterialClauses: String
+  costOrPricingData: String
   """
-Service Contract Act applicability
-"""
-serviceContractAct: String
+  Davis-Bacon Act applicability
   """
-Subcontracting plan
-"""
-subcontractPlan: String
+  davisBaconAct: String
   """
-Use of EPA products
-"""
-useOfEpaProducts: String
+  Recovered material clauses
   """
-Walsh-Healey Act applicability
-"""
-walshHealeyAct: String
+  recoveredMaterialClauses: String
+  """
+  Service Contract Act applicability
+  """
+  serviceContractAct: String
+  """
+  Subcontracting plan
+  """
+  subcontractPlan: String
+  """
+  Use of EPA products
+  """
+  useOfEpaProducts: String
+  """
+  Walsh-Healey Act applicability
+  """
+  walshHealeyAct: String
 }
 
 """
@@ -275,37 +275,37 @@ Timeline and date information.
 """
 type Dates {
   """
-Cancellation date
-"""
-cancellationDate: DateTime
+  Cancellation date
   """
-Expected completion date
-"""
-currentCompletionDate: DateTime
+  cancellationDate: DateTime
   """
-Contract signature date
-"""
-dateSigned: DateTime
+  Expected completion date
   """
-Effective date
-"""
-effectiveDate: DateTime
+  currentCompletionDate: DateTime
   """
-Last modification date
-"""
-lastModifiedDate: DateTime
+  Contract signature date
   """
-Record preparation date
-"""
-preparedDate: DateTime
+  dateSigned: DateTime
   """
-Public reveal date
-"""
-revealDate: DateTime
+  Effective date
   """
-Ultimate completion deadline
-"""
-ultimateCompletionDate: DateTime
+  effectiveDate: DateTime
+  """
+  Last modification date
+  """
+  lastModifiedDate: DateTime
+  """
+  Record preparation date
+  """
+  preparedDate: DateTime
+  """
+  Public reveal date
+  """
+  revealDate: DateTime
+  """
+  Ultimate completion deadline
+  """
+  ultimateCompletionDate: DateTime
 }
 
 """
@@ -313,57 +313,57 @@ Financial information including obligations, values, and fees.
 """
 type Financial {
   """
-Base obligation amount
-"""
-baseDollarsObligated: Float
+  Base obligation amount
   """
-Current contract value
-"""
-currentContractValue: Float
+  baseDollarsObligated: Float
   """
-Total dollars obligated
-"""
-dollarsObligated: Float
+  Current contract value
   """
-Dollars obligated per action
-"""
-dollarsObligatedPerAction: Float
+  currentContractValue: Float
   """
-Service fee paid
-"""
-feePaidForUseOfService: Float
+  Total dollars obligated
   """
-Lower fee range value
-"""
-feeRangeLowerValue: Float
+  dollarsObligated: Float
   """
-Upper fee range value
-"""
-feeRangeUpperValue: Float
+  Dollars obligated per action
   """
-Fixed fee amount
-"""
-fixedFeeValue: Float
+  dollarsObligatedPerAction: Float
   """
-Maximum order limit
-"""
-maxOrderLimit: Float
+  Service fee paid
   """
-Non-federal funding amount
-"""
-nonFederalFundingAmount: Float
+  feePaidForUseOfService: Float
   """
-Non-government contribution
-"""
-nonGovernmentValue: Float
+  Lower fee range value
   """
-Total non-government value
-"""
-totalNonGovernmentValue: Float
+  feeRangeLowerValue: Float
   """
-Ultimate expected contract value
-"""
-ultimateContractValue: Float
+  Upper fee range value
+  """
+  feeRangeUpperValue: Float
+  """
+  Fixed fee amount
+  """
+  fixedFeeValue: Float
+  """
+  Maximum order limit
+  """
+  maxOrderLimit: Float
+  """
+  Non-federal funding amount
+  """
+  nonFederalFundingAmount: Float
+  """
+  Non-government contribution
+  """
+  nonGovernmentValue: Float
+  """
+  Total non-government value
+  """
+  totalNonGovernmentValue: Float
+  """
+  Ultimate expected contract value
+  """
+  ultimateContractValue: Float
 }
 
 """
@@ -376,9 +376,9 @@ type FpdsRecord {
   compliance: Compliance
   dates: Dates
   """
-Description of requirement
-"""
-description: String
+  Description of requirement
+  """
+  description: String
   financial: Financial
   identifiers: Identifiers!
   idvReference: IdvReference
@@ -392,57 +392,57 @@ Core contract identifiers and reference numbers.
 """
 type Identifiers {
   """
-Code for the agency involved
-"""
-agencyCode: String
+  Code for the agency involved
   """
-Fiscal year of the award
-"""
-awardFiscalYear: String
+  agencyCode: String
   """
-Indicates whether record is an award or IDV
-"""
-awardOrIdv: String
+  Fiscal year of the award
   """
-Unique identifier for each record in the dataset
-"""
-id: Int
+  awardFiscalYear: String
   """
-Contract modification number
-"""
-modificationNumber: String
+  Indicates whether record is an award or IDV
   """
-Legacy PIID from previous system
-"""
-oldPiid: String
+  awardOrIdv: String
   """
-Original PIID for reference
-"""
-originalPiid: String
+  Unique identifier for each record in the dataset
   """
-Procurement Instrument Identifier - unique contract identifier
-"""
-piid: String!
+  id: Int
   """
-Name of the agency associated with PIID
-"""
-piidAgencyName: String
+  Contract modification number
   """
-Reference to parent contract
-"""
-referencePiid: String
+  modificationNumber: String
   """
-Solicitation identifier
-"""
-solicitationId: String
+  Legacy PIID from previous system
   """
-Transaction sequence number
-"""
-transactionNumber: Int
+  oldPiid: String
   """
-Record version number
-"""
-version: String
+  Original PIID for reference
+  """
+  originalPiid: String
+  """
+  Procurement Instrument Identifier - unique contract identifier
+  """
+  piid: String!
+  """
+  Name of the agency associated with PIID
+  """
+  piidAgencyName: String
+  """
+  Reference to parent contract
+  """
+  referencePiid: String
+  """
+  Solicitation identifier
+  """
+  solicitationId: String
+  """
+  Transaction sequence number
+  """
+  transactionNumber: Int
+  """
+  Record version number
+  """
+  version: String
 }
 
 """
@@ -450,21 +450,21 @@ IDV (Indefinite Delivery Vehicle) reference information for orders under parent 
 """
 type IdvReference {
   """
-IDV last date
-"""
-idvLastDate: DateTime
+  IDV last date
   """
-Multiple or single award IDC
-"""
-multipleOrSingleAwardIdc: String
+  idvLastDate: DateTime
   """
-Type of indefinite delivery contract
-"""
-typeOfIdc: String
+  Multiple or single award IDC
   """
-Who can use the IDV
-"""
-whoCanUse: String
+  multipleOrSingleAwardIdc: String
+  """
+  Type of indefinite delivery contract
+  """
+  typeOfIdc: String
+  """
+  Who can use the IDV
+  """
+  whoCanUse: String
 }
 
 """
@@ -472,17 +472,17 @@ Parent organization information.
 """
 type ParentOrganization {
   """
-Parent DUNS
-"""
-parentDunsNumber: String
+  Parent DUNS
   """
-Parent UEI
-"""
-parentUei: String
+  parentDunsNumber: String
   """
-Parent name
-"""
-parentVendorName: String
+  Parent UEI
+  """
+  parentUei: String
+  """
+  Parent name
+  """
+  parentVendorName: String
 }
 
 """
@@ -490,41 +490,41 @@ Place of performance location details.
 """
 type PlaceOfPerformance {
   """
-Performance country code
-"""
-popCountryCode: String
+  Performance country code
   """
-Performance country name
-"""
-popCountryName: String
+  popCountryCode: String
   """
-Performance county code
-"""
-popCountyCode: String
+  Performance country name
   """
-Performance county name
-"""
-popCountyName: String
+  popCountryName: String
   """
-Performance location code
-"""
-popLocationCode: String
+  Performance county code
   """
-Performance location name
-"""
-popLocationName: String
+  popCountyCode: String
   """
-Performance state code
-"""
-popLocationStateCd: String
+  Performance county name
   """
-Performance state name
-"""
-popLocationStateName: String
+  popCountyName: String
   """
-Performance ZIP code
-"""
-popZipCode: String
+  Performance location code
+  """
+  popLocationCode: String
+  """
+  Performance location name
+  """
+  popLocationName: String
+  """
+  Performance state code
+  """
+  popLocationStateCd: String
+  """
+  Performance state name
+  """
+  popLocationStateName: String
+  """
+  Performance ZIP code
+  """
+  popZipCode: String
 }
 
 """
@@ -532,25 +532,25 @@ System-level metadata for record tracking, versioning, and lineage.
 """
 type SystemMetadata @shareable {
   """
-Timestamp when record was ingested
-"""
-ingestedAt: DateTime
+  Timestamp when record was ingested
   """
-Timestamp when record was last modified at source
-"""
-lastModified: DateTime
+  ingestedAt: DateTime
   """
-Version of the canonical Contract Data schema
-"""
-schemaVersion: String
+  Timestamp when record was last modified at source
   """
-Primary identifier of the record within Contract Data
-"""
-sourceRecordId: String!
+  lastModified: DateTime
   """
-Constant system identifier
-"""
-systemName: String!
+  Version of the canonical Contract Data schema
+  """
+  schemaVersion: String
+  """
+  Primary identifier of the record within Contract Data
+  """
+  sourceRecordId: String!
+  """
+  Constant system identifier
+  """
+  systemName: String!
 }
 
 """
@@ -558,56 +558,56 @@ Vendor information including identity, address, contact, and business classifica
 """
 type Vendor {
   """
-Annual revenue
-"""
-annualRevenue: Float
+  Annual revenue
+  """
+  annualRevenue: Float
   businessClassifications: BusinessClassifications
   """
-Commercial and Government Entity code
-"""
-cageCode: String
+  Commercial and Government Entity code
   """
-Incorporation country
-"""
-countryOfIncorporation: String
+  cageCode: String
   """
-DBA name
-"""
-doingBusinessAsName: String
+  Incorporation country
   """
-Vendor email
-"""
-emailAddress: Email
+  countryOfIncorporation: String
   """
-Employee count
-"""
-numberOfEmployees: Int
+  DBA name
   """
-Organization type
-"""
-organizationalType: String
+  doingBusinessAsName: String
+  """
+  Vendor email
+  """
+  emailAddress: Email
+  """
+  Employee count
+  """
+  numberOfEmployees: Int
+  """
+  Organization type
+  """
+  organizationalType: String
   parent: ParentOrganization
   """
-Incorporation state
-"""
-stateOfIncorporation: String
+  Incorporation state
+  """
+  stateOfIncorporation: String
   vendorAddress: Address
   """
-DUNS number (deprecated)
-"""
-vendorDunsNumber: String
+  DUNS number (deprecated)
   """
-Legal vendor name
-"""
-vendorName: String
+  vendorDunsNumber: String
   """
-Vendor phone
-"""
-vendorPhoneNumber: String
+  Legal vendor name
   """
-Unique Entity Identifier (Entity Management.gov)
-"""
-vendorUei: String
+  vendorName: String
+  """
+  Vendor phone
+  """
+  vendorPhoneNumber: String
+  """
+  Unique Entity Identifier (Entity Management.gov)
+  """
+  vendorUei: String
 }
 
 """
@@ -616,4 +616,3 @@ Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contr
 type ContractDataCanonicalSchema {
   contractDataRecord: FpdsRecord
 }
-

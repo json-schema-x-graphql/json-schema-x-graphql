@@ -21,15 +21,15 @@ function readFile(p) {
 
 function collectJsonSchemaKeys(schema, out = new Set(), basePath = null, visited = new Set()) {
   if (!schema || typeof schema !== "object") return out;
-  
+
   // Handle $ref to external files
   if (schema.$ref && typeof schema.$ref === "string" && !schema.$ref.startsWith("#")) {
     const refPath = schema.$ref;
-    
+
     // Avoid circular references
     if (visited.has(refPath)) return out;
     visited.add(refPath);
-    
+
     // Try to load the external schema file
     if (basePath) {
       try {
@@ -44,7 +44,7 @@ function collectJsonSchemaKeys(schema, out = new Set(), basePath = null, visited
     }
     return out;
   }
-  
+
   if (schema.properties && typeof schema.properties === "object") {
     for (const key of Object.keys(schema.properties)) {
       out.add(key);
@@ -52,9 +52,9 @@ function collectJsonSchemaKeys(schema, out = new Set(), basePath = null, visited
     }
   }
   if (schema.items) collectJsonSchemaKeys(schema.items, out, basePath, visited);
-  if (schema.anyOf) schema.anyOf.forEach(s => collectJsonSchemaKeys(s, out, basePath, visited));
-  if (schema.oneOf) schema.oneOf.forEach(s => collectJsonSchemaKeys(s, out, basePath, visited));
-  if (schema.allOf) schema.allOf.forEach(s => collectJsonSchemaKeys(s, out, basePath, visited));
+  if (schema.anyOf) schema.anyOf.forEach((s) => collectJsonSchemaKeys(s, out, basePath, visited));
+  if (schema.oneOf) schema.oneOf.forEach((s) => collectJsonSchemaKeys(s, out, basePath, visited));
+  if (schema.allOf) schema.allOf.forEach((s) => collectJsonSchemaKeys(s, out, basePath, visited));
   if (schema.$defs && typeof schema.$defs === "object") {
     // $defs is an object of schemas, iterate through each one
     for (const [defName, defSchema] of Object.entries(schema.$defs)) {
@@ -92,7 +92,7 @@ function collectGraphQLFieldNames(sdl) {
     "startCursor",
     "endCursor",
   ]);
-  excludeFieldNames.forEach(n => names.delete(n));
+  excludeFieldNames.forEach((n) => names.delete(n));
   return names;
 }
 
@@ -151,7 +151,7 @@ function getJsonSchemaAtPath(schema, jsonPointer) {
     return n;
   }
 
-    for (const seg of parts) {
+  for (const seg of parts) {
     if (!node || typeof node !== "object") return null;
     // Direct property
     if (node.properties && node.properties[seg]) {
@@ -192,7 +192,7 @@ function collectGraphQLTypeFieldsMap(sdl) {
   for (const def of ast.definitions) {
     if (def.kind === "ObjectTypeDefinition") {
       const name = def.name.value;
-      const fields = new Set((def.fields || []).map(f => f.name.value));
+      const fields = new Set((def.fields || []).map((f) => f.name.value));
       map.set(name, fields);
     }
   }
@@ -227,11 +227,11 @@ function isLowercase(str) {
  */
 function validateJsonSchemaNaming(schema, path = "", violations = []) {
   if (!schema || typeof schema !== "object") return violations;
-  
+
   if (schema.properties && typeof schema.properties === "object") {
     for (const key of Object.keys(schema.properties)) {
       const currentPath = path ? `${path}.${key}` : key;
-      
+
       // Check if property name is camelCase (violation)
       if (isCamelCase(key)) {
         violations.push({
@@ -239,32 +239,35 @@ function validateJsonSchemaNaming(schema, path = "", violations = []) {
           field: key,
           issue: "camelCase",
           expected: "snake_case",
-          suggestion: camelToSnake(key)
+          suggestion: camelToSnake(key),
         });
       }
-      
+
       // Recursively check nested properties
       validateJsonSchemaNaming(schema.properties[key], currentPath, violations);
     }
   }
-  
+
   // Check $defs
   if (schema.$defs && typeof schema.$defs === "object") {
     for (const [key, value] of Object.entries(schema.$defs)) {
       validateJsonSchemaNaming(value, `$defs.${key}`, violations);
     }
   }
-  
+
   // Check items (for arrays)
   if (schema.items) {
     validateJsonSchemaNaming(schema.items, `${path}.items`, violations);
   }
-  
+
   // Check anyOf, oneOf, allOf
-  if (schema.anyOf) schema.anyOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.anyOf[${i}]`, violations));
-  if (schema.oneOf) schema.oneOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.oneOf[${i}]`, violations));
-  if (schema.allOf) schema.allOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.allOf[${i}]`, violations));
-  
+  if (schema.anyOf)
+    schema.anyOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.anyOf[${i}]`, violations));
+  if (schema.oneOf)
+    schema.oneOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.oneOf[${i}]`, violations));
+  if (schema.allOf)
+    schema.allOf.forEach((s, i) => validateJsonSchemaNaming(s, `${path}.allOf[${i}]`, violations));
+
   return violations;
 }
 
@@ -273,14 +276,14 @@ function validateJsonSchemaNaming(schema, path = "", violations = []) {
  */
 function validateGraphQLNaming(sdl, violations = []) {
   const ast = parse(sdl);
-  
+
   for (const def of ast.definitions) {
     if (def.kind === "ObjectTypeDefinition") {
       const typeName = def.name.value;
-      
+
       for (const field of def.fields || []) {
         const fieldName = field.name.value;
-        
+
         // Check if field name is snake_case (violation)
         if (isSnakeCase(fieldName)) {
           violations.push({
@@ -288,7 +291,7 @@ function validateGraphQLNaming(sdl, violations = []) {
             field: fieldName,
             issue: "snake_case",
             expected: "camelCase",
-            suggestion: snakeToCamel(fieldName)
+            suggestion: snakeToCamel(fieldName),
           });
         }
         // Also check for all lowercase multi-word fields (should be camelCase)
@@ -299,13 +302,13 @@ function validateGraphQLNaming(sdl, violations = []) {
             field: fieldName,
             issue: "lowercase (possibly should be camelCase)",
             expected: "camelCase",
-            suggestion: `Consider: ${fieldName.replace(/([a-z])([a-z]{3,})/g, (m, p1, p2) => p1 + p2.charAt(0).toUpperCase() + p2.slice(1))}`
+            suggestion: `Consider: ${fieldName.replace(/([a-z])([a-z]{3,})/g, (m, p1, p2) => p1 + p2.charAt(0).toUpperCase() + p2.slice(1))}`,
           });
         }
       }
     }
   }
-  
+
   return violations;
 }
 
@@ -338,14 +341,20 @@ function snakeToCamel(str) {
  * @throws {Error} When strict mode is enabled and config is missing/invalid
  */
 export function compareSchemas(sdl, jsonSchema, options = {}) {
-  const { strict = false, config = null, repoRoot = process.cwd(), enforceNamingConventions = true, jsonSchemaPath = null } = options;
+  const {
+    strict = false,
+    config = null,
+    repoRoot = process.cwd(),
+    enforceNamingConventions = true,
+    jsonSchemaPath = null,
+  } = options;
 
   // First, validate naming conventions
   let namingViolations = {
     jsonSchema: [],
-    graphql: []
+    graphql: [],
   };
-  
+
   if (enforceNamingConventions) {
     namingViolations.jsonSchema = validateJsonSchemaNaming(jsonSchema);
     namingViolations.graphql = validateGraphQLNaming(sdl);
@@ -360,23 +369,23 @@ export function compareSchemas(sdl, jsonSchema, options = {}) {
   }
 
   // Create a map of snake_case versions of both sets for lenient comparison
-  const gqlFieldsSnake = new Set(Array.from(gqlFields).map(f => camelToSnakeLocal(f)));
-  const jsonKeysSnake = new Set(Array.from(jsonKeys).map(k => camelToSnakeLocal(k)));
+  const gqlFieldsSnake = new Set(Array.from(gqlFields).map((f) => camelToSnakeLocal(f)));
+  const jsonKeysSnake = new Set(Array.from(jsonKeys).map((k) => camelToSnakeLocal(k)));
 
   // Find fields that don't match even after case conversion
-  const missingInJson = Array.from(gqlFields).filter(f => {
+  const missingInJson = Array.from(gqlFields).filter((f) => {
     const snake = camelToSnakeLocal(f);
     return !jsonKeys.has(f) && !jsonKeysSnake.has(snake);
   });
-  
-  const missingInGraphQL = Array.from(jsonKeys).filter(k => {
+
+  const missingInGraphQL = Array.from(jsonKeys).filter((k) => {
     const snake = camelToSnakeLocal(k);
     return !gqlFields.has(k) && !gqlFieldsSnake.has(snake);
   });
 
   // Critical checks (project-specific)
   const critical = ["piid", "vendor_info", "place_of_performance"];
-  const missingCritical = critical.filter(c => {
+  const missingCritical = critical.filter((c) => {
     const snake = camelToSnakeLocal(c);
     return !jsonKeys.has(c) && !jsonKeysSnake.has(snake);
   });
@@ -394,7 +403,7 @@ export function compareSchemas(sdl, jsonSchema, options = {}) {
   if (strict && missingInJson.length) {
     exitCode = 1;
   }
-  
+
   if (missingCritical.length) {
     exitCode = 1;
   }
@@ -441,7 +450,7 @@ export function compareSchemas(sdl, jsonSchema, options = {}) {
     function mapJsonPointer(ptr) {
       if (!ptr || ptr === "/") return ptr;
       const parts = ptr.split("/").filter(Boolean);
-      const mapped = parts.map(p => {
+      const mapped = parts.map((p) => {
         // If mapping exists for the exact token, use it
         if (fieldNameMap && Object.prototype.hasOwnProperty.call(fieldNameMap, p)) {
           const entry = fieldNameMap[p];
@@ -467,10 +476,12 @@ export function compareSchemas(sdl, jsonSchema, options = {}) {
         // Map the configured jsonPointer (often camelCase) into the canonical
         // JSON Schema path (snake_case) using the generated mapping where available.
         const mappedPointer = mapJsonPointer(jsonPointer);
-        const target = getJsonSchemaAtPath(jsonSchema, mappedPointer) || getJsonSchemaAtPath(jsonSchema, jsonPointer);
+        const target =
+          getJsonSchemaAtPath(jsonSchema, mappedPointer) ||
+          getJsonSchemaAtPath(jsonSchema, jsonPointer);
         if (!target) {
           strictIssues.push(
-            `[${typeName}] JSON Schema path missing: ${fieldName} -> ${jsonPointer} (tried ${mappedPointer})`
+            `[${typeName}] JSON Schema path missing: ${fieldName} -> ${jsonPointer} (tried ${mappedPointer})`,
           );
         }
       }
@@ -494,14 +505,18 @@ function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const repoRoot = path.resolve(__dirname, "..");
-  const graphqlSDLPath = path.join(repoRoot, "generated-schemas", "schema_unification.supergraph.graphql");
+  const graphqlSDLPath = path.join(
+    repoRoot,
+    "generated-schemas",
+    "schema_unification.supergraph.graphql",
+  );
   const jsonSchemaPath = path.join(repoRoot, "src", "data", "schema_unification.schema.json");
 
   if (!fs.existsSync(graphqlSDLPath)) {
     console.error("❌ GraphQL supergraph not found. Run: pnpm run generate:schemas");
     process.exit(1);
   }
-  
+
   if (!fs.existsSync(jsonSchemaPath)) {
     console.error("❌ JSON Schema not found at:", jsonSchemaPath);
     process.exit(1);
@@ -513,12 +528,17 @@ function main() {
   const strict = getArgFlag("--strict");
   const configPath = getArgValue(
     "--config",
-    path.join(repoRoot, "scripts", "schema-sync.config.json")
+    path.join(repoRoot, "scripts", "schema-sync.config.json"),
   );
 
   let result;
   try {
-    result = compareSchemas(sdl, jsonSchema, { strict, config: configPath, repoRoot, jsonSchemaPath });
+    result = compareSchemas(sdl, jsonSchema, {
+      strict,
+      config: configPath,
+      repoRoot,
+      jsonSchemaPath,
+    });
   } catch (e) {
     console.error(`\n❌ ${e.message}`);
     process.exit(1);
@@ -526,7 +546,7 @@ function main() {
 
   if (result.missingInJson.length) {
     console.log("\n❌ GraphQL fields missing in JSON Schema:");
-    result.missingInJson.sort().forEach(n => console.log("  -", n));
+    result.missingInJson.sort().forEach((n) => console.log("  -", n));
   } else {
     console.log("\n✅ All GraphQL fields are represented in the JSON Schema (by name).");
   }
@@ -536,7 +556,7 @@ function main() {
     result.missingInGraphQL
       .sort()
       .slice(0, 50)
-      .forEach(n => console.log("  -", n));
+      .forEach((n) => console.log("  -", n));
     if (result.missingInGraphQL.length > 50) {
       console.log(`  ...and ${result.missingInGraphQL.length - 50} more`);
     }
@@ -551,28 +571,32 @@ function main() {
   // Report naming convention violations
   if (result.namingViolations.jsonSchema.length > 0) {
     console.log("\n❌ JSON Schema naming violations (camelCase found, should be snake_case):");
-    result.namingViolations.jsonSchema.forEach(violation => {
+    result.namingViolations.jsonSchema.forEach((violation) => {
       console.log(`  - Field '${violation.field}' at path '${violation.path}'`);
       console.log(`    → Should be: '${violation.suggestion}'`);
     });
-    console.log("\n  Fix: Update the JSON Schema canonical source (src/data/schema_unification.schema.json)");
+    console.log(
+      "\n  Fix: Update the JSON Schema canonical source (src/data/schema_unification.schema.json)",
+    );
     console.log("       to use snake_case naming convention for all field names.");
   }
 
   if (result.namingViolations.graphql.length > 0) {
     console.log("\n❌ GraphQL SDL naming violations (snake_case found, should be camelCase):");
-    result.namingViolations.graphql.forEach(violation => {
+    result.namingViolations.graphql.forEach((violation) => {
       console.log(`  - Field '${violation.field}' in type '${violation.type}'`);
       console.log(`    → Should be: '${violation.suggestion}'`);
     });
     console.log("\n  Fix: Update the GraphQL generation logic or source to use camelCase naming");
-    console.log("       convention for all field names. Check scripts/generate-from-json-schema.mjs");
+    console.log(
+      "       convention for all field names. Check scripts/generate-from-json-schema.mjs",
+    );
   }
 
   if (strict) {
     if (result.strictIssues.length) {
       console.log("\n❌ Strict sync issues:");
-      result.strictIssues.forEach(i => console.log("  -", i));
+      result.strictIssues.forEach((i) => console.log("  -", i));
     } else {
       console.log("\n✅ Strict sync check passed for configured types.");
     }

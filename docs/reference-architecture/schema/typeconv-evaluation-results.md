@@ -61,15 +61,9 @@ But your schema is structured like:
 The `core-types` library has the correct function names:
 
 ```javascript
-import {
-  convertJsonSchemaToCoreTypes,
-  convertCoreTypesToJsonSchema,
-} from "core-types-json-schema";
+import { convertJsonSchemaToCoreTypes, convertCoreTypesToJsonSchema } from "core-types-json-schema";
 
-import {
-  convertCoreTypesToGraphQL,
-  convertGraphQLToCoreTypes,
-} from "core-types-graphql";
+import { convertCoreTypesToGraphQL, convertGraphQLToCoreTypes } from "core-types-graphql";
 ```
 
 **However**, it will face the same challenge - it expects named type definitions.

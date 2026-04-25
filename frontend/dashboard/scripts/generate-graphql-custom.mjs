@@ -53,15 +53,15 @@ async function convertJSONSchemaToGraphQL(schema) {
   // Step 1: Process custom scalars
   if (schema["x-graphql-scalars"]) {
     console.log(
-      `  ├─ Processing ${Object.keys(schema["x-graphql-scalars"]).length} custom scalars...`
+      `  ├─ Processing ${Object.keys(schema["x-graphql-scalars"]).length} custom scalars...`,
     );
     for (const [name, config] of Object.entries(schema["x-graphql-scalars"])) {
       scalars[name] = new GraphQLScalarType({
         name,
         description: config.description,
-        serialize: value => value, // Identity function - just pass through
-        parseValue: value => value,
-        parseLiteral: ast => ast.value,
+        serialize: (value) => value, // Identity function - just pass through
+        parseValue: (value) => value,
+        parseLiteral: (ast) => ast.value,
       });
     }
   }
@@ -93,7 +93,7 @@ async function convertJSONSchemaToGraphQL(schema) {
   // Step 3: Process unions
   if (schema.definitions) {
     const unionDefs = Object.entries(schema.definitions).filter(
-      ([, def]) => def["x-graphql-union"]
+      ([, def]) => def["x-graphql-union"],
     );
     console.log(`  ├─ Processing ${unionDefs.length} unions...`);
 
@@ -170,7 +170,7 @@ async function convertJSONSchemaToGraphQL(schema) {
         return GraphQLBoolean;
       default:
         console.warn(
-          `    ⚠️  Unknown type ${propDef.type} in ${parentName}.${propName}, using String`
+          `    ⚠️  Unknown type ${propDef.type} in ${parentName}.${propName}, using String`,
         );
         return GraphQLString;
     }
@@ -179,7 +179,7 @@ async function convertJSONSchemaToGraphQL(schema) {
   // Step 4: Process object types
   if (schema.definitions) {
     const objectDefs = Object.entries(schema.definitions).filter(
-      ([, def]) => def.type === "object" && !def["x-graphql-enum"] && !def["x-graphql-union"]
+      ([, def]) => def.type === "object" && !def["x-graphql-enum"] && !def["x-graphql-union"],
     );
     console.log(`  ├─ Processing ${objectDefs.length} object types...`);
 
@@ -214,8 +214,8 @@ async function convertJSONSchemaToGraphQL(schema) {
   const unionTypes = {};
   for (const [name, config] of Object.entries(unions)) {
     const unionTypeList = config.types
-      .map(typeName => types[typeName])
-      .filter(t => t !== undefined);
+      .map((typeName) => types[typeName])
+      .filter((t) => t !== undefined);
 
     if (unionTypeList.length > 0) {
       unionTypes[name] = new GraphQLUnionType({
@@ -231,7 +231,7 @@ async function convertJSONSchemaToGraphQL(schema) {
 
   if (schema["x-graphql-operations"]?.queries) {
     console.log(
-      `  ├─ Processing ${Object.keys(schema["x-graphql-operations"].queries).length} queries...`
+      `  ├─ Processing ${Object.keys(schema["x-graphql-operations"].queries).length} queries...`,
     );
 
     for (const [name, config] of Object.entries(schema["x-graphql-operations"].queries)) {
@@ -261,7 +261,7 @@ async function convertJSONSchemaToGraphQL(schema) {
   let mutationType = null;
   if (schema["x-graphql-operations"]?.mutations) {
     console.log(
-      `  ├─ Processing ${Object.keys(schema["x-graphql-operations"].mutations).length} mutations...`
+      `  ├─ Processing ${Object.keys(schema["x-graphql-operations"].mutations).length} mutations...`,
     );
 
     const mutationFields = {};
@@ -289,7 +289,7 @@ async function convertJSONSchemaToGraphQL(schema) {
 
   // Debug: Check all type collections
   console.log(
-    `    📊 Debug: types=${Object.keys(types).length}, enums=${Object.keys(enums).length}, scalars=${Object.keys(scalars).length}, unions=${Object.keys(unionTypes).length}`
+    `    📊 Debug: types=${Object.keys(types).length}, enums=${Object.keys(enums).length}, scalars=${Object.keys(scalars).length}, unions=${Object.keys(unionTypes).length}`,
   );
   console.log(`    📊 Query type name: ${queryType.name}`);
   console.log(`    📊 Mutation type: ${mutationType ? mutationType.name : "null"}`);
@@ -308,7 +308,7 @@ async function convertJSONSchemaToGraphQL(schema) {
     if (!t.name) {
       console.error(
         `    ❌  Type missing name at index ${idx}:`,
-        Object.keys(t).slice(0, 5).join(", ")
+        Object.keys(t).slice(0, 5).join(", "),
       );
       return false;
     }
@@ -319,8 +319,8 @@ async function convertJSONSchemaToGraphQL(schema) {
   console.log(
     `    📦 Registered type names: ${allTypes
       .slice(0, 10)
-      .map(t => t.name)
-      .join(", ")}...`
+      .map((t) => t.name)
+      .join(", ")}...`,
   );
 
   const graphqlSchema = new GraphQLSchema({

@@ -40,25 +40,48 @@ const __dirname = path.dirname(__filename);
 // Resolve project-root relative files
 const ROOT = path.resolve(__dirname, "..");
 const CANONICAL_SCHEMA_PATH = path.join(ROOT, "src", "data", "schema_unification.schema.json");
-const Contract Data_TO_Unified Model_PATH = path.join(ROOT, "resources", "USASPENDING", "Contract Data-to-Unified Model.json");
-const Contract Data_TO_Unified Model_MAPPINGS_PATH = path.join(
+const CONTRACT_DATA_TO_UNIFIED_MODEL_PATH = path.join(
   ROOT,
   "resources",
   "USASPENDING",
-  "Contract Data-to-Unified Model-mappings.json"
+  "Contract Data-to-Unified Model.json",
 );
-const SEEDED_MAPPING_PATH = path.join(ROOT, "resources", "USASPENDING", "canonical-to-unified_model.json");
+const CONTRACT_DATA_TO_UNIFIED_MODEL_MAPPINGS_PATH = path.join(
+  ROOT,
+  "resources",
+  "USASPENDING",
+  "Contract Data-to-Unified Model-mappings.json",
+);
+const SEEDED_MAPPING_PATH = path.join(
+  ROOT,
+  "resources",
+  "USASPENDING",
+  "canonical-to-unified_model.json",
+);
 
 const OUTPUT_MAPPING_PATH = path.join(
   ROOT,
   "resources",
   "USASPENDING",
-  "canonical-to-unified_model.resolved.json"
+  "canonical-to-unified_model.resolved.json",
 );
-const COVERAGE_JSON_PATH = path.join(ROOT, "generated-metadata", "unified_model-mapping-coverage.json");
+const COVERAGE_JSON_PATH = path.join(
+  ROOT,
+  "generated-metadata",
+  "unified_model-mapping-coverage.json",
+);
 const COVERAGE_MD_PATH = path.join(ROOT, "generated-metadata", "unified_model-mapping-coverage.md");
-const PRIORITY_REVIEW_CSV_PATH = path.join(ROOT, "generated-metadata", "unified_model-priority-review.csv");
-const Contract Data_ATOM_PATH = path.join(ROOT, "resources", "USASPENDING", "Contract Data-atom-transformation.json");
+const PRIORITY_REVIEW_CSV_PATH = path.join(
+  ROOT,
+  "generated-metadata",
+  "unified_model-priority-review.csv",
+);
+const CONTRACT_DATA_ATOM_PATH = path.join(
+  ROOT,
+  "resources",
+  "USASPENDING",
+  "Contract Data-atom-transformation.json",
+);
 
 function safeReadJsonSync(p) {
   try {
@@ -195,7 +218,11 @@ function findBestCanonicalMatch(unified_modelElementName, canonicalPaths, option
     };
   }
   if (keyToPaths[lastToken] && keyToPaths[lastToken].length > 0) {
-    return { path: keyToPaths[lastToken][0], confidence: "exact", reason: "exact_last_token" };
+    return {
+      path: keyToPaths[lastToken][0],
+      confidence: "exact",
+      reason: "exact_last_token",
+    };
   }
 
   // 2) token overlap scoring
@@ -210,9 +237,17 @@ function findBestCanonicalMatch(unified_modelElementName, canonicalPaths, option
   }
 
   if (best && bestScore >= 0.6)
-    return { path: best, confidence: "high", reason: `token_overlap_${bestScore.toFixed(2)}` };
+    return {
+      path: best,
+      confidence: "high",
+      reason: `token_overlap_${bestScore.toFixed(2)}`,
+    };
   if (best && bestScore >= 0.3)
-    return { path: best, confidence: "heuristic", reason: `token_overlap_${bestScore.toFixed(2)}` };
+    return {
+      path: best,
+      confidence: "heuristic",
+      reason: `token_overlap_${bestScore.toFixed(2)}`,
+    };
 
   // 3) substring fallbacks on normalized strings
   for (const p of canonicalPaths) {
@@ -231,7 +266,10 @@ function findBestCanonicalMatch(unified_modelElementName, canonicalPaths, option
 function mergeMappings(seedEntries = [], suggestions = []) {
   const index = new Map();
   for (const e of seedEntries) {
-    index.set(e.canonical_path + "||" + (e.unified_model_path || ""), { ...e, source: e.source || "seed" });
+    index.set(e.canonical_path + "||" + (e.unified_model_path || ""), {
+      ...e,
+      source: e.source || "seed",
+    });
   }
   for (const s of suggestions) {
     const key = s.canonical_path + "||" + (s.unified_model_path || "");
@@ -264,16 +302,20 @@ async function main() {
 
   // Load Contract Data->Unified Model reference (optional).
   // Try primary file first, then an alternate detailed mappings file if present.
-  const contract_dataMapping = safeReadJsonSync(Contract Data_TO_Unified Model_PATH);
-  const contract_dataMappingAlt = safeReadJsonSync(Contract Data_TO_Unified Model_MAPPINGS_PATH);
+  const contract_dataMapping = safeReadJsonSync(CONTRACT_DATA_TO_UNIFIED_MODEL_PATH);
+  const contract_dataMappingAlt = safeReadJsonSync(CONTRACT_DATA_TO_UNIFIED_MODEL_MAPPINGS_PATH);
   if (!contract_dataMapping && !contract_dataMappingAlt) {
     console.warn(
-      `Warning: Contract Data->Unified Model reference not found at ${Contract Data_TO_Unified Model_PATH} nor ${Contract Data_TO_Unified Model_MAPPINGS_PATH} — heuristic matching will be used.`
+      `Warning: Contract Data->Unified Model reference not found at ${CONTRACT_DATA_TO_UNIFIED_MODEL_PATH} nor ${CONTRACT_DATA_TO_UNIFIED_MODEL_MAPPINGS_PATH} — heuristic matching will be used.`,
     );
   } else if (!contract_dataMapping && contract_dataMappingAlt) {
-    console.log(`Info: Using alternate Contract Data mapping file at ${Contract Data_TO_Unified Model_MAPPINGS_PATH}`);
+    console.log(
+      `Info: Using alternate Contract Data mapping file at ${CONTRACT_DATA_TO_UNIFIED_MODEL_MAPPINGS_PATH}`,
+    );
   } else if (contract_dataMapping && contract_dataMappingAlt) {
-    console.log(`Info: Loaded both Contract Data mapping files; merging candidates from both sources.`);
+    console.log(
+      `Info: Loaded both Contract Data mapping files; merging candidates from both sources.`,
+    );
   }
 
   // Load seeded mapping if present
@@ -290,9 +332,15 @@ async function main() {
   // Support loading candidates from both the primary and alternate mapping files (when available).
   const mappingSources = [];
   if (contract_dataMapping && contract_dataMapping.$defs)
-    mappingSources.push({ src: Contract Data_TO_Unified Model_PATH, obj: contract_dataMapping });
+    mappingSources.push({
+      src: CONTRACT_DATA_TO_UNIFIED_MODEL_PATH,
+      obj: contract_dataMapping,
+    });
   if (contract_dataMappingAlt && contract_dataMappingAlt.$defs)
-    mappingSources.push({ src: Contract Data_TO_Unified Model_MAPPINGS_PATH, obj: contract_dataMappingAlt });
+    mappingSources.push({
+      src: CONTRACT_DATA_TO_UNIFIED_MODEL_MAPPINGS_PATH,
+      obj: contract_dataMappingAlt,
+    });
 
   if (mappingSources.length > 0) {
     function traverseFpdsDef(obj, prefix = "") {
@@ -307,7 +355,11 @@ async function main() {
           const key = normalizeName(propName) + "||" + unified_modelPath;
           // Prefer first seen candidate for a given key (do not clobber)
           if (!unified_modelCandidates.has(key))
-            unified_modelCandidates.set(key, { label: propName, unified_modelPath, xSource });
+            unified_modelCandidates.set(key, {
+              label: propName,
+              unified_modelPath,
+              xSource,
+            });
           // descend
           traverseFpdsDef(propDef, unified_modelPath);
         }
@@ -369,7 +421,11 @@ async function main() {
   ];
   if (unified_modelCandidates.size === 0) {
     for (const f of commonFallbacks) {
-      unified_modelCandidates.set(normalizeName(f) + "||" + f, { label: f, unified_modelPath: f, xSource: null });
+      unified_modelCandidates.set(normalizeName(f) + "||" + f, {
+        label: f,
+        unified_modelPath: f,
+        xSource: null,
+      });
     }
   }
 
@@ -385,13 +441,21 @@ async function main() {
       const cleaned = xSource.replace(/^\$\//, "").replace(/\//g, ".").replace(/^\./, "");
       // Try find canonical path that ends with the same segment
       if (canonicalPaths.includes(cleaned)) {
-        matched = { path: cleaned, confidence: "exact", reason: "x-source-path_exact" };
+        matched = {
+          path: cleaned,
+          confidence: "exact",
+          reason: "x-source-path_exact",
+        };
       } else {
         // try loose match by suffix
         const candidateLast = cleaned.split(".").slice(-1)[0];
-        const found = canonicalPaths.find(p => p.endsWith(candidateLast));
+        const found = canonicalPaths.find((p) => p.endsWith(candidateLast));
         if (found)
-          matched = { path: found, confidence: "heuristic", reason: "x-source-path_suffix" };
+          matched = {
+            path: found,
+            confidence: "heuristic",
+            reason: "x-source-path_suffix",
+          };
       }
     }
 
@@ -400,7 +464,10 @@ async function main() {
       const attemptLabel = findBestCanonicalMatch(label, canonicalPaths);
       if (attemptLabel.path) matched = attemptLabel;
       else {
-        const attemptGsdmName = findBestCanonicalMatch(candidate.unified_modelPath || label, canonicalPaths);
+        const attemptGsdmName = findBestCanonicalMatch(
+          candidate.unified_modelPath || label,
+          canonicalPaths,
+        );
         matched = attemptGsdmName;
       }
     }
@@ -469,9 +536,9 @@ async function main() {
         entries: merged,
       },
       null,
-      2
+      2,
     ),
-    "utf8"
+    "utf8",
   );
   console.log(`Wrote resolved mapping to ${OUTPUT_MAPPING_PATH} (${merged.length} entries)`);
 
@@ -500,7 +567,7 @@ async function main() {
   const mappedCount = mappedCanonicals.size;
   const unmappedCount = totalCanonical - mappedCount;
 
-  const unmapped = canonicalPaths.filter(p => !mappedCanonicals.has(p));
+  const unmapped = canonicalPaths.filter((p) => !mappedCanonicals.has(p));
 
   // Derive quality coverage metrics (best confidence per canonical path)
   const scoreMap = { none: 0, low: 1, heuristic: 2, high: 3, exact: 4 };
@@ -510,7 +577,12 @@ async function main() {
     const conf = (e.confidence || "").toLowerCase();
     const score = scoreMap[conf] ?? 0;
     if (!canonicalBest[e.canonical_path] || score > canonicalBest[e.canonical_path].score) {
-      canonicalBest[e.canonical_path] = { score, conf, source: e.source || "suggestion", entry: e };
+      canonicalBest[e.canonical_path] = {
+        score,
+        conf,
+        source: e.source || "suggestion",
+        entry: e,
+      };
     }
   }
   let exactOrHigh = 0;
@@ -529,15 +601,17 @@ async function main() {
   }
 
   // Contract Data Atom ingestion coverage (how many Atom properties are represented by any mapping)
-  const contract_dataAtom = safeReadJsonSync(Contract Data_ATOM_PATH);
+  const contract_dataAtom = safeReadJsonSync(CONTRACT_DATA_ATOM_PATH);
   const contract_dataAtomProps =
-    contract_dataAtom && contract_dataAtom.properties && typeof contract_dataAtom.properties === "object"
+    contract_dataAtom &&
+    contract_dataAtom.properties &&
+    typeof contract_dataAtom.properties === "object"
       ? Object.keys(contract_dataAtom.properties)
       : [];
   let contract_dataAtomCovered = 0;
   const contract_dataAtomUncovered = [];
   for (const prop of contract_dataAtomProps) {
-    const isCovered = merged.some(e => {
+    const isCovered = merged.some((e) => {
       if (!e || !e.unified_model_path) return false;
       const pathStr = String(e.unified_model_path);
       const segments = pathStr.split(".");
@@ -548,7 +622,9 @@ async function main() {
     else contract_dataAtomUncovered.push(prop);
   }
   const contract_dataAtomTotal = contract_dataAtomProps.length;
-  const contract_dataAtomPercent = contract_dataAtomTotal ? +(contract_dataAtomCovered / contract_dataAtomTotal).toFixed(4) : 0;
+  const contract_dataAtomPercent = contract_dataAtomTotal
+    ? +(contract_dataAtomCovered / contract_dataAtomTotal).toFixed(4)
+    : 0;
 
   const coverage = {
     generated_at: new Date().toISOString(),
@@ -599,7 +675,7 @@ async function main() {
   function quoteCsv(val) {
     if (val == null) return "";
     const s = String(val);
-    if (/[\",\\n]/.test(s)) return '\"' + s.replace(/\"/g, '\"\"') + '\"';
+    if (/[",\\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
     return s;
   }
 
@@ -624,9 +700,9 @@ async function main() {
   for (const cp of priorityCanonical) {
     const best = canonicalBest[cp];
     const seed = seedIndex.get(cp);
-    const allEntries = merged.filter(e => e.canonical_path === cp);
+    const allEntries = merged.filter((e) => e.canonical_path === cp);
     const suggestionsSummary = allEntries
-      .map(e => `${e.unified_model_path}|${e.confidence}|${e.source || "suggestion"}`)
+      .map((e) => `${e.unified_model_path}|${e.confidence}|${e.source || "suggestion"}`)
       .join(";;");
     rows.push([
       cp,
@@ -644,8 +720,8 @@ async function main() {
   ensureDir(path.dirname(PRIORITY_REVIEW_CSV_PATH));
   fs.writeFileSync(
     PRIORITY_REVIEW_CSV_PATH,
-    rows.map(r => r.map(quoteCsv).join(",")).join("\n"),
-    "utf8"
+    rows.map((r) => r.map(quoteCsv).join(",")).join("\n"),
+    "utf8",
   );
   console.log(`Wrote priority review CSV to ${PRIORITY_REVIEW_CSV_PATH}`);
 
@@ -658,7 +734,7 @@ async function main() {
   mdLines.push("");
   mdLines.push(`- Total canonical leaf paths discovered: **${coverage.total_canonical_paths}**`);
   mdLines.push(
-    `- Canonical paths with at least one mapping suggestion: **${coverage.mapped_canonical_paths}**`
+    `- Canonical paths with at least one mapping suggestion: **${coverage.mapped_canonical_paths}**`,
   );
   mdLines.push(`- Canonical paths without suggestion: **${coverage.unmapped_canonical_paths}**`);
   mdLines.push("");
@@ -679,13 +755,13 @@ async function main() {
   mdLines.push("Next recommended actions:");
   mdLines.push("");
   mdLines.push(
-    '- Manually review entries in `resources/USASPENDING/canonical-to-unified_model.resolved.json` especially those with `confidence: \"none\" or \"heuristic\"`.'
+    '- Manually review entries in `resources/USASPENDING/canonical-to-unified_model.resolved.json` especially those with `confidence: "none" or "heuristic"`.',
   );
   mdLines.push(
-    '- For high-value fields (IDs, dollar values, dates), ensure `confidence: \"exact\" or \"high\"` and add `transform` rules where units differ.'
+    '- For high-value fields (IDs, dollar values, dates), ensure `confidence: "exact" or "high"` and add `transform` rules where units differ.',
   );
   mdLines.push(
-    "- Convert reviewed suggestions into authoritative entries in `resources/USASPENDING/canonical-to-unified_model.json` and rerun this script to produce an updated resolved mapping and coverage."
+    "- Convert reviewed suggestions into authoritative entries in `resources/USASPENDING/canonical-to-unified_model.json` and rerun this script to produce an updated resolved mapping and coverage.",
   );
   mdLines.push("");
   mdLines.push("Generated by `scripts/generate-canonical-to-unified_model-coverage.mjs`");
@@ -698,7 +774,7 @@ async function main() {
 // Run main when executed directly (ES module compatible)
 // Compare the resolved file path of this module to the invoked script path (process.argv[1])
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
-  main().catch(err => {
+  main().catch((err) => {
     console.error("Fatal error during mapping generation:", err);
     process.exitCode = 1;
   });
