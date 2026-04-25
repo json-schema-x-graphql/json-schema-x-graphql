@@ -10,6 +10,9 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+env:
+  NODE_VERSION: "24"
+
 jobs:
   security-audit-rust:
     name: Rust Security Audit
@@ -68,18 +71,14 @@ jobs:
     name: Node.js Security Audit
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [24.x]
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -101,64 +100,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run npm audit
+      - name: Run pnpm audit
         run: |
-          pnpm audit --audit-level=moderate
-        continue-on-error: true
+          pnpm audit --audit-level=high
+        continue-on-error: false
 
       - name: Check for outdated packages with known vulnerabilities
         working-directory: converters/node
         run: |
           pnpm outdated || true
 
-  codeql-analysis:
-    name: CodeQL Security Analysis
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ["javascript", "typescript"]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-          queries: security-and-quality
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-        with:
-          upload: false
-          output: sarif-results
-        continue-on-error: true
-
-      - name: Log CodeQL Findings
-        run: |
-          echo "=== CodeQL Analysis Results ===" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -d "sarif-results" ]; then
-            echo "**SARIF Results Generated**" >> $GITHUB_STEP_SUMMARY
-            find sarif-results -name "*.sarif" | while read f; do
-              echo "- Found: $f" >> $GITHUB_STEP_SUMMARY
-            done
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Note: Advanced Security is not enabled for this repository." >> $GITHUB_STEP_SUMMARY
-            echo "To enable code scanning uploads, enable Advanced Security in repository settings." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "No SARIF results generated" >> $GITHUB_STEP_SUMMARY
-          fi
+  # CodeQL is handled by GitHub's default setup (repo Settings → Security → Code scanning).
+  # Running an advanced workflow config simultaneously conflicts with the default setup,
+  # producing: "CodeQL analyses from advanced configurations cannot be processed when
+  # the default setup is enabled". Removed to avoid that conflict.
 
   dependency-review:
     name: Dependency Review
@@ -179,7 +134,8 @@ jobs:
   security-summary:
     name: Security Audit Summary
     runs-on: ubuntu-latest
-    needs: [security-audit-rust, security-audit-node, codeql-analysis]
+    # CodeQL is informational only — not a required gate for CI
+    needs: [security-audit-rust, security-audit-node]
     if: always()
 
     steps:
@@ -188,11 +144,9 @@ jobs:
           echo "Security Audit Results:"
           echo "Rust Security: ${{ needs.security-audit-rust.result }}"
           echo "Node Security: ${{ needs.security-audit-node.result }}"
-          echo "CodeQL Analysis: ${{ needs.codeql-analysis.result }}"
 
           if [ "${{ needs.security-audit-rust.result }}" != "success" ] || \
-             [ "${{ needs.security-audit-node.result }}" != "success" ] || \
-             [ "${{ needs.codeql-analysis.result }}" != "success" ]; then
+             [ "${{ needs.security-audit-node.result }}" != "success" ]; then
             echo "❌ Security audit failed"
             exit 1
           else

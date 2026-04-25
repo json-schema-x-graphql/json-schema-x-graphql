@@ -1,4 +1,4 @@
-{
+export default {
   "0001-use-async-graphql-for-parsing": "ADR 0001: async-graphql for Parsing",
   "0002-use-loro-for-state-management": "ADR 0002: Loro for State",
   "0003-use-boon-for-json-schema-validation": "ADR 0003: Boon for Validation",

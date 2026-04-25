@@ -15,7 +15,7 @@ scalar Email
 scalar Uri
 
 """Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."""
-type Fpdsrecord {
+type Contractrecord {
   systemMetadata: SystemMetadata!
   identifiers: Identifiers!
   financial: Financial
@@ -342,7 +342,7 @@ type Compliance {
   walshHealeyAct: String
 }
 
-"""Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
+"""Canonical, snake_case JSON Schema for the Contract Data System. This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
 type ContractDataCanonicalSchema {
-  contractDataRecord: Fpdsrecord
+  contractDataRecord: Contractrecord
 }

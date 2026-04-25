@@ -566,7 +566,9 @@ function convertTypeDefinition(
   ) {
     const r = renderObject(typeName, schema, context);
     if (r) context.output.push(r);
-  } else if (schema["x-graphql-type"] === "scalar") {
+  } else if (schema["x-graphql-scalar"] || schema["x-graphql-type"] === "scalar") {
+    // Emit scalar declaration for custom scalar types, including $defs entries
+    // produced by graphqlToJsonSchema (which annotates scalars with x-graphql-scalar).
     context.output.push(`scalar ${typeName}\n`);
   }
 
@@ -1297,7 +1299,12 @@ function getTypeName(
     // If explicit type is "scalar", don't treat it as the name.
     // This allows x-graphql-type: "scalar" to indicate kind only.
     if (typeOverride.trim() !== "scalar") {
-      return sanitizeTypeName(typeOverride, namingConvention);
+      const name = typeOverride.trim();
+      // Trust x-graphql-type as-is when it's already a valid GraphQL identifier
+      // (only letters, digits, underscores). This prevents toPascalCase from
+      // mangling internal capitalisation such as "DateTime" → "Datetime".
+      if (/^[_a-zA-Z][_a-zA-Z0-9]*$/.test(name)) return name;
+      return sanitizeTypeName(name, namingConvention);
     }
   }
   if (
