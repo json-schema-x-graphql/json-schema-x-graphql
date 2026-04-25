@@ -320,7 +320,7 @@ jobs:
         run: pnpm run test:coverage
 
       - name: Upload Node coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v6
         with:
           files: ./converters/node/coverage/lcov.info
           flags: node
@@ -334,7 +334,7 @@ jobs:
         run: cargo tarpaulin --all-features --workspace --timeout 300 --out Xml
 
       - name: Upload Rust coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v6
         with:
           files: ./converters/rust/cobertura.xml
           flags: rust
