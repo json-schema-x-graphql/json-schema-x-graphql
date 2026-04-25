@@ -80,7 +80,7 @@
     "graphql": "^16.0.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=24.0.0"
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
