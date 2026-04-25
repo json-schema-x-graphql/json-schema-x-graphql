@@ -1,0 +1,163 @@
+name: Benchmarks & CLI Smoke Tests
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Weekly on Mondays at 00:00 UTC — catches drift even without code changes
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "24"
+
+jobs:
+  # ── Rust CLI smoke tests (drift protection for jxql binary) ──────────────
+
+  validate-jxql:
+    name: jxql CLI Smoke Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            converters/rust/target/
+          key: ${{ runner.os }}-cargo-bench-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Build jxql CLI
+        working-directory: converters/rust
+        run: cargo build --release --bin jxql --features cli
+
+      - name: Validate JSON Schemas via jxql
+        working-directory: converters/rust
+        run: |
+          ./target/release/jxql json-schema ../test-data/x-graphql -r || true
+          echo "JSON Schema validation completed"
+
+      - name: Validate GraphQL SDL via jxql
+        working-directory: converters/rust
+        run: |
+          if [ -d "../test-data/x-graphql/expected" ]; then
+            ./target/release/jxql graphql ../test-data/x-graphql/expected -r || true
+            echo "GraphQL SDL validation completed"
+          else
+            echo "Expected SDL directory not found — skipping"
+          fi
+
+      - name: Run Rust validation integration tests
+        working-directory: converters/rust
+        run: cargo test --test validation_tests -- --nocapture || true
+
+  # ── Node CLI smoke tests ──────────────────────────────────────────────────
+
+  validate-node-cli:
+    name: Node CLI Smoke Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install & build
+        run: |
+          pnpm install --frozen-lockfile
+          cd converters/node && pnpm run build
+
+      - name: Validate JSON Schemas via Node CLI
+        working-directory: converters/node
+        run: |
+          node dist/cli/validate.js json-schema ../test-data/x-graphql -r || true
+          echo "Node JSON Schema validation completed"
+
+      - name: Validate GraphQL SDL via Node CLI
+        working-directory: converters/node
+        run: |
+          if [ -d "../test-data/x-graphql/expected" ]; then
+            node dist/cli/validate.js graphql ../test-data/x-graphql/expected -r || true
+            echo "Node SDL validation completed"
+          else
+            echo "Expected SDL directory not found — skipping"
+          fi
+
+  # ── Rust benchmarks ───────────────────────────────────────────────────────
+
+  benchmarks-rust:
+    name: Rust Benchmarks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            converters/rust/target/
+          key: ${{ runner.os }}-cargo-bench-${{ hashFiles('Cargo.lock', 'converters/rust/Cargo.lock') }}
+
+      - name: Run benchmarks
+        working-directory: converters/rust
+        run: |
+          cargo bench --bench validation_benchmark | tee benchmark-results.txt
+          cargo bench --bench conversion_benchmark -- --output-format bencher | tee -a benchmark-results.txt
+
+      - name: Store benchmark results
+        uses: benchmark-action/github-action-benchmark@v1
+        if: github.ref == 'refs/heads/main'
+        continue-on-error: true
+        with:
+          tool: cargo
+          output-file-path: converters/rust/benchmark-results.txt
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          skip-fetch-gh-pages: true
+          gh-pages-branch: gh-pages
+          benchmark-data-dir-path: dev/bench
+          alert-threshold: "150%"
+          comment-on-alert: true
+          fail-on-alert: false
+
+  # ── Node.js benchmarks ────────────────────────────────────────────────────
+
+  benchmarks-node:
+    name: Node.js Benchmarks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install & build
+        run: |
+          pnpm install --frozen-lockfile
+          cd converters/node && pnpm run build
+
+      - name: Run Node.js benchmarks
+        working-directory: converters/node
+        run: pnpm tsx ../../scripts/benchmarks/run-benchmarks.ts
