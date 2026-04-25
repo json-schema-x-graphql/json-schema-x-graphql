@@ -1,0 +1,136 @@
+---
+title: Rust Converter — Testing & Security Guide
+---
+
+# Rust Converter — Testing & Security Guide
+
+Quick reference for building, testing, and auditing the Rust converter in `converters/rust/`.
+
+---
+
+## Prerequisites
+
+```bash
+rustc --version
+cargo --version
+
+# If not available:
+source ~/.cargo/env
+```
+
+---
+
+## Quick Commands
+
+| Command                                      | Purpose                   |
+| -------------------------------------------- | ------------------------- |
+| `cargo build`                                | Compile the project       |
+| `cargo test --lib`                           | Run unit tests only       |
+| `cargo test --all-features`                  | Run all tests             |
+| `cargo check --all-features`                 | Fast validation (no link) |
+| `cargo clippy --all-features -- -D warnings` | Lint with Clippy          |
+| `cargo fmt`                                  | Format code               |
+| `cargo doc --open`                           | Generate and view docs    |
+| `cargo clean`                                | Remove build artifacts    |
+
+---
+
+## Security Testing
+
+### Full Security Audit
+
+```bash
+# From project root:
+./scripts/rust-security-audit.sh
+```
+
+This runs:
+- `cargo check` — compilation validation
+- `cargo audit` — dependency vulnerability scan
+- `cargo geiger` — unsafe code detection
+- `cargo deny` — license and security compliance
+
+Reports are saved to `converters/rust/security-reports/`.
+
+### Manual Commands
+
+```bash
+cd converters/rust
+
+cargo audit          # Vulnerability scan
+cargo geiger --all-features  # Unsafe code detection
+cargo deny check     # License checking (requires deny.toml)
+```
+
+### Installing Security Tools (one-time)
+
+```bash
+cargo install cargo-audit
+cargo install cargo-geiger
+cargo install cargo-deny
+cargo install cargo-fuzz   # optional
+```
+
+---
+
+## Development Workflow
+
+### Before Every Commit
+
+```bash
+cargo fmt
+cargo clippy --all-features -- -D warnings
+cargo test --all-features
+cargo audit
+cargo geiger --all-features
+```
+
+### CI Pipeline
+
+The `.github/workflows/ci.yml` runs all of the above automatically on every push, plus:
+
+- Rust stable and beta channels
+- Tarpaulin coverage (cobertura format → Codecov)
+
+---
+
+## Advanced Testing
+
+### Fuzzing
+
+```bash
+cargo fuzz init
+cargo fuzz add json_to_graphql
+cargo fuzz run json_to_graphql
+```
+
+### Code Coverage
+
+```bash
+cargo install cargo-tarpaulin
+cargo tarpaulin --out Html
+```
+
+### Benchmarks
+
+```bash
+cargo bench
+```
+
+---
+
+## Common Issues
+
+| Problem                     | Solution                                     |
+| --------------------------- | -------------------------------------------- |
+| `rustc: command not found`  | `source ~/.cargo/env`                        |
+| Security tools not found    | `cargo install cargo-audit cargo-geiger cargo-deny` |
+| Tests fail to compile       | `cd converters/rust && cargo clean && cargo build` |
+
+---
+
+## Related
+
+- [Converter README](https://github.com/json-schema-x-graphql/json-schema-x-graphql/blob/main/converters/rust/README.md)
+- [CI workflow](.github/workflows/ci.yml) — automated test/audit pipeline
+- [Security Audit script](https://github.com/json-schema-x-graphql/json-schema-x-graphql/blob/main/scripts/rust-security-audit.sh)
