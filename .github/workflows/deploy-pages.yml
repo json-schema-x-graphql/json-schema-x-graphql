@@ -63,7 +63,7 @@ jobs:
           cp -r frontend/subgraph-composer/dist/. _site/editor/
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
