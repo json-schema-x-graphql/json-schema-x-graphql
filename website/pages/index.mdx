@@ -2,60 +2,19 @@
 title: json-schema-x-graphql
 ---
 
-import { Cards, Card, Steps } from 'nextra/components'
+import { Cards, Card } from 'nextra/components'
 
 # json-schema-x-graphql
 
 **Bidirectional, lossless conversion between JSON Schema and GraphQL SDL** with full Apollo Federation v2 support — available as a Node.js library, a Rust crate, a WebAssembly module, and an interactive browser editor.
 
-## Key features
-
-- **Bidirectional** — JSON Schema → GraphQL SDL and GraphQL SDL → JSON Schema
-- **Lossless** — all semantics round-trip without data loss via `x-graphql-*` extension fields
-- **Apollo Federation v2** — `@key`, `@shareable`, `@external`, `@requires`, `@provides` and more
-- **x-graphql extensions** — carry custom directives, deprecation, descriptions through the conversion
-- **WASM** — run the Rust converter entirely in the browser, no server needed
-- **CLI** — pipe schemas through the converter from your terminal
-
-## Get started
+## Documentation
 
 <Cards>
-  <Card title="Quick start →" href="/docs/quickstart" />
-  <Card title="Live editor →" href="https://json-schema-x-graphql.github.io/editor" />
-  <Card title="API reference →" href="/docs/api" />
-  <Card title="x-graphql extensions →" href="/docs/x-graphql" />
+  <Card title="Quick start" href="/docs/quickstart" />
+  <Card title="x-graphql extensions" href="/docs/x-graphql" />
+  <Card title="API reference" href="/docs/api" />
+  <Card title="Recipes & guides" href="/docs/recipes" />
 </Cards>
 
-## Install
-
-```bash
-# Node.js / TypeScript
-npm install @json-schema-x-graphql/core
-```
-
-```toml
-# Rust
-[dependencies]
-json-schema-x-graphql = "2"
-```
-
-## Example
-
-```ts
-import { convertJsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
-
-const schema = {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "User",
-  "type": "object",
-  "properties": {
-    "id":    { "type": "string" },
-    "name":  { "type": "string" },
-    "email": { "type": "string", "format": "email" }
-  },
-  "required": ["id", "name"]
-};
-
-const sdl = convertJsonSchemaToGraphQL(schema);
-// type User { id: String! name: String! email: String }
-```
+[Open the live editor →](https://json-schema-x-graphql.github.io/editor)

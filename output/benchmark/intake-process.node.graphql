@@ -18,7 +18,7 @@ scalar Email
 scalar Uri
 
 "Pricing term grouping (derived abstraction, non-structural change)."
-type EasiPricingTerms {
+type IntakePricingTerms {
   "Billing cycle descriptor (monthly, quarterly, annual, etc.)."
   billing_cycle: String
   "Method used for price escalation (if any)."
@@ -36,7 +36,7 @@ type PeriodOfPerformance {
 }
 
 "Primary business and pricing attributes specific to Intake Process."
-type EasiSpecificData {
+type IntakeSpecificData {
   "Business owner name or identifier."
   business_owner: String!
   "Indicates items not separately priced (raw representation)."
@@ -48,7 +48,7 @@ type EasiSpecificData {
   "Ordered list of performance periods (base + options if present)."
   performance_periods: [PeriodOfPerformance]
   "Structured pricing term attributes."
-  pricing_terms: EasiPricingTerms
+  pricing_terms: IntakePricingTerms
   "System owner name or identifier."
   system_owner: String!
   "Unit of measure description or code."
@@ -72,11 +72,11 @@ type SystemMetadata {
 }
 
 "Root Intake Process entity combining system metadata and Intake Process-specific extension data."
-type EasiRecord {
+type IntakeRecord {
   "Mirror of intake_process_specific.business_owner for federated key selection."
   business_owner: String
   "Domain-specific fields unique to Intake Process."
-  intake_process_specific: EasiSpecificData!
+  intake_process_specific: IntakeSpecificData!
   "System-level lineage and ingestion metadata."
   system_metadata: SystemMetadata!
   "Mirror of intake_process_specific.system_owner for federated key selection."
@@ -86,7 +86,7 @@ type EasiRecord {
 "Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics."
 type IntakeProcessCanonicalSchema {
   "Root Intake Process entity."
-  intake_process_record: EasiRecord
+  intake_process_record: IntakeRecord
 }
 
 type Query {
@@ -95,7 +95,7 @@ type Query {
     business_owner: String
     system_owner: String
     source_record_id: ID
-  ): EasiRecord
+  ): IntakeRecord
   "Return a list of Intake Process records (non-paginated snapshot)."
-  intake_process_records: [EasiRecord!]!
+  intake_process_records: [IntakeRecord!]!
 }

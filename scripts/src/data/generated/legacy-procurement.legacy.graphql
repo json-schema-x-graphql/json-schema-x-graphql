@@ -37,7 +37,7 @@ enum SystemName {
 """
 Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data.
 """
-type AssistRecord @key(fields: "ia_piid_or_unique_id") @key(fields: "source_record_id") {
+type ProcurementRecord @key(fields: "ia_piid_or_unique_id") @key(fields: "source_record_id") {
   """
   System-level metadata for lineage, versioning, and ingestion.
   """
@@ -81,7 +81,7 @@ type SystemMetadata @shareable {
 """
 Container for Legacy Procurement-specific data slices.
 """
-type AssistSpecificData {
+type ProcurementSpecificData {
   """
   Acquisition-related data coming from Legacy Procurement.
   """
@@ -99,7 +99,7 @@ type AssistSpecificData {
 """
 Acquisition data including agreement identifiers and acquisition nature.
 """
-type AssistAcquisitionData {
+type ProcurementAcquisitionData {
   """
   Interagency agreement PIID or unique identifier within Legacy Procurement
   """
@@ -113,7 +113,7 @@ type AssistAcquisitionData {
 """
 Client organization identity and related information.
 """
-type AssistClientData {
+type ProcurementClientData {
   """
   Name of the client organization
   """
@@ -135,7 +135,7 @@ type AssistClientData {
 """
 Address structure for client organizations in Legacy Procurement.
 """
-type AssistOfficeAddress {
+type ProcurementOfficeAddress {
   """
   Primary street address line
   """
@@ -165,7 +165,7 @@ type AssistOfficeAddress {
 """
 Award-related settings and timelines within Legacy Procurement.
 """
-type AssistAwardData {
+type ProcurementAwardData {
   """
   Type of indefinite delivery contract (if applicable)
   """
@@ -199,7 +199,7 @@ type PeriodOfPerformance {
 }
 
 """
-Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields.
+Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields.
 """
 type LegacyProcurementCanonicalSchema {
   """
@@ -217,9 +217,9 @@ type Query {
     ia_piid_or_unique_id: String!
     "Optional source record identifier for disambiguation"
     source_record_id: ID
-  ): AssistRecord
+  ): ProcurementRecord
   """
   Return a list of Legacy Procurement records (non-paginated)
   """
-  legacyProcurementRecords: [AssistRecord!]!
+  legacyProcurementRecords: [ProcurementRecord!]!
 }

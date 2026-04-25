@@ -369,7 +369,7 @@ type Financial {
 """
 Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.
 """
-type FpdsRecord {
+type ContractRecord {
   agency: Agency
   classification: Classification
   competition: Competition
@@ -614,5 +614,5 @@ type Vendor {
 Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.
 """
 type ContractDataCanonicalSchema {
-  contractDataRecord: FpdsRecord
+  contractDataRecord: ContractRecord
 }

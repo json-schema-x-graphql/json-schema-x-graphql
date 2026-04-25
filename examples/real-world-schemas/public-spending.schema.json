@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "public_spending.schema.json",
   "title": "Public Spending Procurement Schema",
-  "description": "Canonical schema for Public Spending (GDSM) procurement contract data from award_procurement table",
+  "description": "Canonical schema for Public Spending (ExternalDB) procurement contract data from award_procurement table",
   "x-graphql-scalars": {
     "DateTime": {
       "description": "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"

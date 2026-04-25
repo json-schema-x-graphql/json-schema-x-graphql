@@ -29,7 +29,7 @@ type Site {
   site_code: Int! # The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map.
   site_description: String # - type: string
 type Person {
-  prism_user_id: String # - type: string
+  ext_user_id: String # - type: string
   first_name: String # - type: string
   last_name: String # - type: string
   email: Email # - type: string

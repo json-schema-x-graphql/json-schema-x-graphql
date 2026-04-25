@@ -5,7 +5,7 @@
   "description": "Nextra documentation site for json-schema-x-graphql",
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 5175",
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",

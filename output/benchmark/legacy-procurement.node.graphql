@@ -18,7 +18,7 @@ scalar Email
 scalar Uri
 
 "Acquisition data including agreement identifiers and acquisition nature."
-type AssistAcquisitionData {
+type ProcurementAcquisitionData {
   "Interagency agreement PIID or unique identifier within Legacy Procurement"
   ia_piid_or_unique_id: String!
   "Nature of acquisition (taxonomy specific to Legacy Procurement)"
@@ -34,7 +34,7 @@ type PeriodOfPerformance {
 }
 
 "Award-related settings and timelines within Legacy Procurement."
-type AssistAwardData {
+type ProcurementAwardData {
   "Base period of performance"
   base_period: PeriodOfPerformance
   "Option periods of performance"
@@ -46,7 +46,7 @@ type AssistAwardData {
 }
 
 "Address structure for client organizations in Legacy Procurement."
-type AssistOfficeAddress {
+type ProcurementOfficeAddress {
   "City"
   city: String
   "Country"
@@ -62,11 +62,11 @@ type AssistOfficeAddress {
 }
 
 "Client organization identity and related information."
-type AssistClientData {
+type ProcurementClientData {
   "Name of the client organization"
   client_organization_name: String!
   "Client office address"
-  office_address: AssistOfficeAddress
+  office_address: ProcurementOfficeAddress
   "Primary client point-of-contact email"
   primary_contact_email: Email
   "Primary client point-of-contact phone"
@@ -74,13 +74,13 @@ type AssistClientData {
 }
 
 "Container for Legacy Procurement-specific data slices."
-type AssistSpecificData {
+type ProcurementSpecificData {
   "Acquisition-related data coming from Legacy Procurement."
-  acquisition_data: AssistAcquisitionData
+  acquisition_data: ProcurementAcquisitionData
   "Award-related metadata specific to Legacy Procurement."
-  award_data: AssistAwardData
+  award_data: ProcurementAwardData
   "Client organization data associated with the Legacy Procurement record."
-  client_data: AssistClientData
+  client_data: ProcurementClientData
 }
 
 "Metadata describing the source system, identifiers, and lifecycle timestamps."
@@ -98,24 +98,24 @@ type SystemMetadata {
 }
 
 "Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."
-type AssistRecord {
+type ProcurementRecord {
   "Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."
   ia_piid_or_unique_id: String
   "Legacy Procurement-specific domain fields."
-  legacy_procurement_specific: AssistSpecificData!
+  legacy_procurement_specific: ProcurementSpecificData!
   "System-level metadata for lineage, versioning, and ingestion."
   system_metadata: SystemMetadata!
 }
 
-"Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields."
+"Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields."
 type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
-  legacy_procurement_record: AssistRecord
+  legacy_procurement_record: ProcurementRecord
 }
 
 type Query {
   "Fetch a single Legacy Procurement record by IA PIID or unique ID"
-  legacy_procurement_record(ia_piid_or_unique_id: String!, source_record_id: ID): AssistRecord
+  legacy_procurement_record(ia_piid_or_unique_id: String!, source_record_id: ID): ProcurementRecord
   "Return a list of Legacy Procurement records (non-paginated)"
-  legacy_procurement_records: [AssistRecord!]!
+  legacy_procurement_records: [ProcurementRecord!]!
 }

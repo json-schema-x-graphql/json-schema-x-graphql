@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "contract_data.schema.json",
   "title": "Contract Data Canonical Schema",
-  "description": "Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.",
+  "description": "Canonical, snake_case JSON Schema for the Contract Data System. This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.",
   "type": "object",
   "x-graphql-enums": {
     "SystemName": {
       "description": "Enumeration of system identifiers",
-      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "ExternalERP"]
     }
   },
   "x-graphql-scalars": {
@@ -41,21 +41,21 @@
             "description": "Agency code for disambiguation"
           }
         },
-        "type": "FpdsRecord"
+        "type": "ContractRecord"
       },
       "contract_dataRecords": {
         "description": "Return a list of Contract Data records (non-paginated)",
-        "type": "[FpdsRecord!]!"
+        "type": "[ContractRecord!]!"
       }
     }
   },
   "properties": {
     "contract_data_record": {
-      "$ref": "#/$defs/FpdsRecord"
+      "$ref": "#/$defs/ContractRecord"
     }
   },
   "$defs": {
-    "FpdsRecord": {
+    "ContractRecord": {
       "type": "object",
       "description": "Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.",
       "x-graphql-type-directives": "@key(fields: \"piid\") @key(fields: \"id\")",

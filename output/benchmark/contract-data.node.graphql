@@ -349,7 +349,7 @@ type ContractDataCanonicalSchema {
 
 type Query {
   "Fetch a single Contract Data record by PIID and agency code"
-  contract_dataRecord(piid: String!, agency_code: String): FpdsRecord
+  contract_dataRecord(piid: String!, agency_code: String): ContractRecord
   "Return a list of Contract Data records (non-paginated)"
-  contract_dataRecords: [FpdsRecord!]!
+  contract_dataRecords: [ContractRecord!]!
 }

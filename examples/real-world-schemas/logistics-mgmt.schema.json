@@ -7,7 +7,7 @@
   "x-graphql-enums": {
     "SystemName": {
       "description": "Enumeration of system identifiers",
-      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "ExternalERP"]
     },
     "UnipricedFlag": {
       "description": "Indicates whether items are unpriced",
@@ -70,7 +70,7 @@
       "x-graphql-type-name": "Person",
       "x-graphql-type-directives": "@shareable",
       "properties": {
-        "prism_user_id": {
+        "ext_user_id": {
           "type": "string"
         },
         "first_name": {
@@ -512,7 +512,7 @@
         "owner": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "owner_userid",
+            "ext_user_id": "owner_userid",
             "first_name": "owner_firstname",
             "last_name": "owner_lastname",
             "email": "owner_email"
@@ -522,7 +522,7 @@
           "$ref": "#/$defs/Person",
           "description": "NOTE: Per engineering comment on 8/30/2023, the source field 'buyerr_email' is a temporary typo from the source system.",
           "x-source-field-map": {
-            "prism_user_id": "buyer_userid",
+            "ext_user_id": "buyer_userid",
             "first_name": "buyer_firstname",
             "last_name": "buyer_lastname",
             "email": ["buyerr_email", "buyer_email"]
@@ -531,7 +531,7 @@
         "contracting_officer": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "co_userid",
+            "ext_user_id": "co_userid",
             "first_name": "co_firstname",
             "last_name": "co_lastname",
             "email": "co_email"
@@ -540,7 +540,7 @@
         "agreements_officer": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "agreementsofficer_userid",
+            "ext_user_id": "agreementsofficer_userid",
             "first_name": "agreementsofficer_firstname",
             "last_name": "agreementsofficer_lastname",
             "email": "agreementsofficer_email"
@@ -549,7 +549,7 @@
         "contracting_officer_representative": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "cor_userid",
+            "ext_user_id": "cor_userid",
             "first_name": "cor_firstname",
             "last_name": "cor_lastname",
             "email": "cor_email"
@@ -558,7 +558,7 @@
         "admin_contracting_officer": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "acofficer_userid",
+            "ext_user_id": "acofficer_userid",
             "first_name": "acofficer_firstname",
             "last_name": "acofficer_lastname",
             "email": "acofficer_email"
@@ -1383,7 +1383,7 @@
         "owner": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "owner_userid",
+            "ext_user_id": "owner_userid",
             "first_name": "owner_firstname",
             "last_name": "owner_lastname",
             "email": "owner_email"
@@ -1392,7 +1392,7 @@
         "requisitioner": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "requisitioner_userid",
+            "ext_user_id": "requisitioner_userid",
             "first_name": "requisitioner_firstname",
             "last_name": "requisitioner_lastname",
             "email": "requisitioner_email"
@@ -1401,7 +1401,7 @@
         "buyer": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "buyer_userid",
+            "ext_user_id": "buyer_userid",
             "first_name": "buyer_firstname",
             "last_name": "buyer_lastname",
             "email": "buyer_email"
@@ -1410,7 +1410,7 @@
         "technical_point_of_contact": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "tpoc_userid",
+            "ext_user_id": "tpoc_userid",
             "first_name": "tpoc_firstname",
             "last_name": "tpoc_lastname",
             "email": "tpoc_email"
@@ -1527,7 +1527,7 @@
         "approver_user": {
           "$ref": "#/$defs/Person",
           "x-source-field-map": {
-            "prism_user_id": "appr_userid",
+            "ext_user_id": "appr_userid",
             "first_name": "appr_firstname",
             "last_name": "appr_lastname",
             "email": "appr_email"
@@ -1994,5 +1994,5 @@
   },
   "x-schema-version": "2.0-flexible",
   "x-last-updated": "2025-11-07",
-  "x-update-note": "Updated to accept string representations of numbers and booleans to match actual PRISM API response format"
+  "x-update-note": "Updated to accept string representations of numbers and booleans to match actual external API response format"
 }

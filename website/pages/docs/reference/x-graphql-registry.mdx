@@ -7,7 +7,7 @@ title: x-graphql Attribute Registry
 **Last Updated**: December 18, 2025  
 **Version**: 2.0 (Post Phase-6 Consolidation)  
 **Status**: Stable  
-**Purpose**: Complete reference for all `x-graphql-*` attributes used across the petrified-forest codebase
+**Purpose**: Complete reference for all `x-graphql-*` attributes used across the core-supergraph codebase
 
 ---
 
@@ -70,9 +70,9 @@ title: x-graphql Attribute Registry
   }
   ```
 - **Locations**: 13 uses
-  - petrified-supergraph.schema.json (shared type definitions)
-  - usaspending.schema.json (Vendor, Address fields marked as shareable)
-  - easi.schema.json (vendor fields marked as shareable)
+  - core-supergraph.schema.json (shared type definitions)
+  - public-spending.schema.json (Vendor, Address fields marked as shareable)
+  - intake.schema.json (vendor fields marked as shareable)
 
 #### `x-graphql-federation-keys`
 
@@ -116,7 +116,7 @@ title: x-graphql Attribute Registry
 
 - **Type**: String
 - **Scope**: Object type
-- **Usage**: Maps JSON Schema object to specific GraphQL type name (e.g., "FpdsVendor" instead of generic "Vendor")
+- **Usage**: Maps JSON Schema object to specific GraphQL type name (e.g., "ContractVendor" instead of generic "Vendor")
 - **Generator**: Schema author or converter
 - **Converter Expectation**: Required for camelCase GraphQL SDL generation
 - **Example**:
@@ -124,7 +124,7 @@ title: x-graphql Attribute Registry
   {
     "Vendor": {
       "type": "object",
-      "x-graphql-type-name": "FpdsVendor"
+      "x-graphql-type-name": "ContractVendor"
     }
   }
   ```
@@ -168,7 +168,7 @@ title: x-graphql Attribute Registry
 - **Example**:
   ```json
   {
-    "x-graphql-union-types": ["FpdsVendor", "EasiVendor"]
+    "x-graphql-union-types": ["ContractVendor", "IntakeVendor"]
   }
   ```
 
@@ -211,10 +211,10 @@ title: x-graphql Attribute Registry
 #### `x-graphql-field-name`
 
 - **Type**: String
-- **Scope**: Field property in source schemas (usaspending, etc.)
+- **Scope**: Field property in source schemas (public-spending, etc.)
 - **Usage**: Maps source field name to GraphQL field name (e.g., "awardingSubTierAgencyCode")
 - **Purpose**: Used for name transformation during GraphQL generation
-- **Locations**: 49 uses (primarily usaspending.schema.json)
+- **Locations**: 49 uses (primarily public-spending.schema.json)
 - **Important**: This is **distinct from** `x-graphql-field` - it's a simple string name reference
 - **Example**:
   ```json
@@ -267,10 +267,10 @@ title: x-graphql Attribute Registry
 #### `x-graphql-field`
 
 - **Type**: Object (complex definition structure)
-- **Scope**: Field property in managed schemas (petrified.schema.json)
+- **Scope**: Field property in managed schemas (core-supergraph.schema.json)
 - **Usage**: Container for complete field-level metadata and schema definition
 - **Purpose**: Defines full GraphQL field with type, description, resolver, and args
-- **Locations**: 111 uses (primarily petrified.schema.json - generated/managed)
+- **Locations**: 111 uses (primarily core-supergraph.schema.json - generated/managed)
 - **Important**: This is **distinct from** `x-graphql-field-name` - it's a complex object structure
 - **Example**:
   ```json
@@ -335,13 +335,13 @@ title: x-graphql Attribute Registry
 
 - **Type**: Object with `shared` and `local` arrays
 - **Scope**: Schema root
-- **Usage**: Declares which shared scalars from petrified-supergraph are available
+- **Usage**: Declares which shared scalars from core-supergraph are available
 - **Location**: Schema root level
 - **Example**:
   ```json
   {
     "x-graphql-scalar-references": {
-      "description": "Scalars inherited from petrified-supergraph.schema.json",
+      "description": "Scalars inherited from core-supergraph.schema.json",
       "shared": ["Date", "DateTime", "Email", "URI", "UEI", "PIID"],
       "local": []
     }
@@ -357,7 +357,7 @@ title: x-graphql Attribute Registry
 #### `x-graphql-shared-scalars`
 
 - **Type**: Object (scalar definitions)
-- **Scope**: Schema root (petrified-supergraph.schema.json only)
+- **Scope**: Schema root (core-supergraph.schema.json only)
 - **Usage**: Defines all shared scalars available to all subgraphs
 - **Example**:
   ```json
@@ -408,7 +408,7 @@ title: x-graphql Attribute Registry
     }
   }
   ```
-- **Location**: fpds.schema.json, other domain schemas
+- **Location**: contract-data.schema.json, other domain schemas
 
 #### `x-graphql-arg-directives`
 
@@ -438,8 +438,8 @@ title: x-graphql Attribute Registry
   ```json
   {
     "x-graphql-operations": {
-      "Query": "FpdsQuery",
-      "Mutation": "FpdsMutation"
+      "Query": "ContractQuery",
+      "Mutation": "ContractMutation"
     }
   }
   ```
@@ -487,7 +487,7 @@ title: x-graphql Attribute Registry
     "x-graphql-enums": {
       "SystemName": {
         "description": "Enumeration of system identifiers",
-        "values": ["ASSIST", "EASI", "CALM", "FPDS", "PRISM"]
+        "values": ["ProcSys", "IntakeSys", "AssetMgmt", "ContractData", "ExternalERP"]
       }
     }
   }
@@ -501,11 +501,11 @@ title: x-graphql Attribute Registry
 
 - **Type**: String (filename)
 - **Scope**: Schema root
-- **Usage**: References the petrified-supergraph schema for cross-schema lookups
+- **Usage**: References the core-supergraph schema for cross-schema lookups
 - **Example**:
   ```json
   {
-    "x-graphql-schema-reference": "petrified-supergraph.schema.json"
+    "x-graphql-schema-reference": "core-supergraph.schema.json"
   }
   ```
 
@@ -517,7 +517,7 @@ title: x-graphql Attribute Registry
 - **Example**:
   ```json
   {
-    "x-graphql-system": "FPDS"
+    "x-graphql-system": "ContractData"
   }
   ```
 
@@ -532,32 +532,32 @@ title: x-graphql Attribute Registry
 - **Type**: String (reference path)
 - **Scope**: Field property
 - **Usage**: Specifies the source field/path in the original data system
-- **Generator**: generate-fpds-mapping.mjs
+- **Generator**: generate-contract-mapping.mjs
 - **Converter Expectation**: Used to track field lineage and document data provenance
 - **Locations**: 94 uses
-  - usaspending.schema.json (field source mappings to FPDS)
+  - public-spending.schema.json (field source mappings to ContractData)
 - **Example**:
   ```json
   {
     "vendor_name": {
       "type": "string",
       "x-graphql-source-reference": "Vendor.name",
-      "description": "Vendor company name from FPDS"
+      "description": "Vendor company name from contract data"
     }
   }
   ```
-- **Replaced**: `x-fpds-source` (Phase 5)
-- **Format**: `[System].[Path.To.Field]` (e.g., "FPDS:Vendor.name", "EASI:ES_VENDOR.VENDOR_NAME")
+- **Replaced**: `x-graphql-source-reference` (Phase 5)
+- **Format**: `[System].[Path.To.Field]` (e.g., "ContractData:Vendor.name", "IntakeSys:ES_VENDOR.VENDOR_NAME")
 
 #### `x-graphql-source-mapping-type` ⭐ (New in Phase 6)
 
 - **Type**: Enum ("direct", "derived", "native", "legacy", "computed")
 - **Scope**: Field property
 - **Usage**: Indicates how this field maps to the source system
-- **Generator**: generate-fpds-mapping.mjs
+- **Generator**: generate-contract-mapping.mjs
 - **Converter Expectation**: Determines resolver strategy
 - **Locations**: 134 uses
-  - usaspending.schema.json (mapping type for each field)
+  - public-spending.schema.json (mapping type for each field)
 - **Values**:
   - `"direct"`: One-to-one mapping from source field
   - `"derived"`: Computed from one or more source fields
@@ -574,17 +574,17 @@ title: x-graphql Attribute Registry
     }
   }
   ```
-- **Replaced**: `x-fpds-mapping-type` (Phase 5)
+- **Replaced**: `x-graphql-source-mapping-type` (Phase 5)
 
 #### `x-graphql-mapping-notes` ⭐ (New in Phase 6)
 
 - **Type**: String
 - **Scope**: Field property
 - **Usage**: Human-readable documentation of how field is mapped/transformed
-- **Generator**: generate-fpds-mapping.mjs, generate-shareable-directives.mjs
+- **Generator**: generate-contract-mapping.mjs, generate-shareable-directives.mjs
 - **Converter Expectation**: Used in documentation generation and SDL comments
 - **Locations**: 89 uses
-  - usaspending.schema.json (notes for each field)
+  - public-spending.schema.json (notes for each field)
 - **Example**:
   ```json
   {
@@ -734,10 +734,10 @@ title: x-graphql Attribute Registry
 
 ### How Converters Use X-GraphQL Attributes
 
-#### 1. generate-fpds-mapping.mjs
+#### 1. generate-contract-mapping.mjs
 
-**Input**: fpds-usaspending-mapping.json  
-**Output**: usaspending.schema.json with added attributes
+**Input**: contract-public-spending-mapping.json  
+**Output**: public-spending.schema.json with added attributes
 
 **Attributes Generated**:
 
@@ -820,7 +820,7 @@ type Vendor {
 {
   "Vendor": {
     "type": "object",
-    "x-graphql-type-name": "FpdsVendor",
+    "x-graphql-type-name": "ContractVendor",
     "x-graphql-type-kind": "OBJECT",
     "x-graphql-federation-keys": ["vendor_id"],
     "x-graphql-federation-shareable": true,
@@ -846,7 +846,7 @@ type Vendor {
     "x-graphql-field-type": "Date",
     "x-graphql-source-reference": "Award.date",
     "x-graphql-source-mapping-type": "direct",
-    "x-graphql-mapping-notes": "Award execution date from FPDS database"
+    "x-graphql-mapping-notes": "Award execution date from contract database"
   }
 }
 ```
@@ -915,11 +915,11 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 ```javascript
 // ✅ PASS
-"x-graphql-type-name": "FpdsVendor"
+"x-graphql-type-name": "ContractVendor"
 "x-graphql-source-reference": "Vendor.name"
 
 // ❌ FAIL
-"x-typeName": "FpdsVendor"
+"x-typeName": "ContractVendor"
 "x-source": "Vendor.name"
 "custom-attr": "value"
 ```
@@ -957,7 +957,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 **Patterns**:
 
-- Type names: PascalCase (e.g., `FpdsVendor`, `SharedAddress`)
+- Type names: PascalCase (e.g., `ContractVendor`, `SharedAddress`)
 - Field names in schema: snake_case (e.g., `vendor_name`, `created_at`)
 - x-graphql-field-name: camelCase (e.g., `vendorName`, `createdAt`)
 
@@ -967,8 +967,8 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 **Deprecated Attributes** (will fail linting):
 
-- ❌ `x-fpds-source` → use `x-graphql-source-reference`
-- ❌ `x-fpds-mapping-type` → use `x-graphql-source-mapping-type`
+- ❌ `x-graphql-source-reference` → use `x-graphql-source-reference`
+- ❌ `x-graphql-source-mapping-type` → use `x-graphql-source-mapping-type`
 - ❌ `x-mapping-notes` → use `x-graphql-mapping-notes`
 - ❌ `x-source-table` → use `x-graphql-source-table`
 - ❌ `x-sensitive` → use `x-graphql-sensitive-data`
@@ -984,7 +984,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 ```json
 {
-  "x-graphql-type-name": "FpdsVendor",
+  "x-graphql-type-name": "ContractVendor",
   "x-graphql-federation-shareable": true
 }
 ```
@@ -993,8 +993,8 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 ```json
 {
-  "x-type-name": "FpdsVendor",
-  "typeName": "FpdsVendor"
+  "x-type-name": "ContractVendor",
+  "typeName": "ContractVendor"
 }
 ```
 
@@ -1114,7 +1114,7 @@ See [eslint-rules-x-graphql.mjs](#) for implementation.
 
 ✅ **DO**: Use attributes that converters expect
 
-**generate-fpds-mapping.mjs expects**:
+**generate-contract-mapping.mjs expects**:
 
 - ✅ `x-graphql-source-reference` for data source
 - ✅ `x-graphql-source-mapping-type` for transformation type
@@ -1142,7 +1142,7 @@ When adding a new attribute:
 
 ```json
 // ❌ Wrong
-"x-petrified-new-attr": "value"
+"x-core-new-attr": "value"
 "x-forest-config": "value"
 
 // ✅ Correct

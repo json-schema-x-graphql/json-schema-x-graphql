@@ -56,7 +56,7 @@ type Person {
   email: Email
   first_name: String
   last_name: String
-  prism_user_id: String
+  ext_user_id: String
 }
 
 type RequisitionApprovalHistory {

@@ -18,11 +18,11 @@ scalar Email
 scalar Uri
 
 """Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
-type AssistRecord {
+type ProcurementRecord {
   "System-level metadata for lineage, versioning, and ingestion."
   systemMetadata: SystemMetadata!
   "Legacy Procurement-specific domain fields."
-  legacyProcurementSpecific: AssistSpecificData!
+  legacyProcurementSpecific: ProcurementSpecificData!
   """Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."""
   iaPiidOrUniqueId: String
 }
@@ -42,17 +42,17 @@ type SystemMetadata @shareable {
 }
 
 "Container for Legacy Procurement-specific data slices."
-type AssistSpecificData {
+type ProcurementSpecificData {
   "Acquisition-related data coming from Legacy Procurement."
-  acquisitionData: AssistAcquisitionData
+  acquisitionData: ProcurementAcquisitionData
   "Client organization data associated with the Legacy Procurement record."
-  clientData: AssistClientData
+  clientData: ProcurementClientData
   "Award-related metadata specific to Legacy Procurement."
-  awardData: AssistAwardData
+  awardData: ProcurementAwardData
 }
 
 "Acquisition data including agreement identifiers and acquisition nature."
-type AssistAcquisitionData {
+type ProcurementAcquisitionData {
   "Interagency agreement PIID or unique identifier within Legacy Procurement"
   iaPiidOrUniqueId: String!
   "Nature of acquisition (taxonomy specific to Legacy Procurement)"
@@ -60,11 +60,11 @@ type AssistAcquisitionData {
 }
 
 "Client organization identity and related information."
-type AssistClientData {
+type ProcurementClientData {
   "Name of the client organization"
   clientOrganizationName: String!
   "Client office address"
-  officeAddress: AssistOfficeAddress
+  officeAddress: ProcurementOfficeAddress
   "Primary client point-of-contact email"
   primaryContactEmail: Email
   "Primary client point-of-contact phone"
@@ -72,7 +72,7 @@ type AssistClientData {
 }
 
 "Address structure for client organizations in Legacy Procurement."
-type AssistOfficeAddress {
+type ProcurementOfficeAddress {
   "Primary street address line"
   streetAddress1: String
   "Secondary street address line"
@@ -88,7 +88,7 @@ type AssistOfficeAddress {
 }
 
 "Award-related settings and timelines within Legacy Procurement."
-type AssistAwardData {
+type ProcurementAwardData {
   "Type of indefinite delivery contract (if applicable)"
   typeOfIdc: String
   "Authorized users of the IDC"
@@ -107,10 +107,10 @@ type PeriodOfPerformance {
   endDate: Date
 }
 
-"""Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields."""
+"""Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields."""
 type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
-  legacyProcurementRecord: AssistRecord
+  legacyProcurementRecord: ProcurementRecord
 }
 
 # Implied Scalars

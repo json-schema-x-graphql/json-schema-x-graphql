@@ -1,7 +1,7 @@
 """
 Acquisition data including agreement identifiers and acquisition nature.
 """
-type AssistAcquisitionData {
+type ProcurementAcquisitionData {
   """
   Interagency agreement PIID or unique identifier within Legacy Procurement
   """
@@ -15,7 +15,7 @@ type AssistAcquisitionData {
 """
 Award-related settings and timelines within Legacy Procurement.
 """
-type AssistAwardData {
+type ProcurementAwardData {
   """
   Base period of performance
   """
@@ -37,7 +37,7 @@ type AssistAwardData {
 """
 Client organization identity and related information.
 """
-type AssistClientData {
+type ProcurementClientData {
   """
   Name of the client organization
   """
@@ -45,7 +45,7 @@ type AssistClientData {
   """
   Client office address
   """
-  officeAddress: AssistOfficeAddress
+  officeAddress: ProcurementOfficeAddress
   """
   Primary client point-of-contact email
   """
@@ -59,7 +59,7 @@ type AssistClientData {
 """
 Address structure for client organizations in Legacy Procurement.
 """
-type AssistOfficeAddress {
+type ProcurementOfficeAddress {
   """
   City
   """
@@ -89,7 +89,7 @@ type AssistOfficeAddress {
 """
 Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data.
 """
-type AssistRecord {
+type ProcurementRecord {
   """
   Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups.
   """
@@ -97,7 +97,7 @@ type AssistRecord {
   """
   Legacy Procurement-specific domain fields.
   """
-  legacyProcurementSpecific: AssistSpecificData!
+  legacyProcurementSpecific: ProcurementSpecificData!
   """
   System-level metadata for lineage, versioning, and ingestion.
   """
@@ -107,19 +107,19 @@ type AssistRecord {
 """
 Container for Legacy Procurement-specific data slices.
 """
-type AssistSpecificData {
+type ProcurementSpecificData {
   """
   Acquisition-related data coming from Legacy Procurement.
   """
-  acquisitionData: AssistAcquisitionData
+  acquisitionData: ProcurementAcquisitionData
   """
   Award-related metadata specific to Legacy Procurement.
   """
-  awardData: AssistAwardData
+  awardData: ProcurementAwardData
   """
   Client organization data associated with the Legacy Procurement record.
   """
-  clientData: AssistClientData
+  clientData: ProcurementClientData
 }
 
 """
@@ -163,11 +163,11 @@ type SystemMetadata @shareable {
 }
 
 """
-Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields.
+Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields.
 """
 type LegacyProcurementCanonicalSchema {
   """
   Root Legacy Procurement entity
   """
-  legacyProcurementRecord: AssistRecord
+  legacyProcurementRecord: ProcurementRecord
 }

@@ -32,7 +32,7 @@ enum SystemName {
 """
 Root Intake Process entity combining system metadata and Intake Process-specific extension data.
 """
-type EasiRecord @key(fields: "business_owner system_owner") @key(fields: "source_record_id") {
+type IntakeRecord @key(fields: "business_owner system_owner") @key(fields: "source_record_id") {
   """
   System-level lineage and ingestion metadata.
   """
@@ -80,7 +80,7 @@ type SystemMetadata @shareable {
 """
 Primary business and pricing attributes specific to Intake Process.
 """
-type EasiSpecificData {
+type IntakeSpecificData {
   """
   Business owner name or identifier.
   """
@@ -122,7 +122,7 @@ type EasiSpecificData {
 """
 Pricing term grouping (derived abstraction, non-structural change).
 """
-type EasiPricingTerms {
+type IntakePricingTerms {
   """
   Pricing model or strategy label.
   """
@@ -172,9 +172,9 @@ type Query {
     system_owner: String
     "Direct source record identifier for precise lookup."
     source_record_id: ID
-  ): EasiRecord
+  ): IntakeRecord
   """
   Return a list of Intake Process records (non-paginated snapshot).
   """
-  intakeProcessRecords: [EasiRecord!]!
+  intakeProcessRecords: [IntakeRecord!]!
 }

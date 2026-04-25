@@ -2,13 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "legacy_procurement.schema.json",
   "title": "Legacy Procurement Canonical Schema",
-  "description": "Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields.",
+  "description": "Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root ProcurementRecord entity with associated metadata and Legacy Procurement-specific domain fields.",
   "type": "object",
 
   "x-graphql-enums": {
     "SystemName": {
       "description": "Enumeration of system identifiers",
-      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "PRISM"]
+      "values": ["Legacy Procurement", "Intake Process", "Logistics Mgmt", "Contract Data", "ExternalERP"]
     }
   },
 
@@ -42,7 +42,7 @@
   "x-graphql-operations": {
     "queries": {
       "legacy_procurement_record": {
-        "type": "AssistRecord",
+        "type": "ProcurementRecord",
         "description": "Fetch a single Legacy Procurement record by IA PIID or unique ID",
         "args": {
           "ia_piid_or_unique_id": {
@@ -56,7 +56,7 @@
         }
       },
       "legacy_procurement_records": {
-        "type": "[AssistRecord!]!",
+        "type": "[ProcurementRecord!]!",
         "description": "Return a list of Legacy Procurement records (non-paginated)"
       }
     }
@@ -72,7 +72,7 @@
   "$defs": {
     "legacy_procurement_record": {
       "type": "object",
-      "x-graphql-type-name": "AssistRecord",
+      "x-graphql-type-name": "ProcurementRecord",
       "description": "Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data.",
       "x-graphql-federation": {
         "keys": ["ia_piid_or_unique_id", "source_record_id"]
@@ -131,7 +131,7 @@
 
     "legacy_procurement_specific_data": {
       "type": "object",
-      "x-graphql-type-name": "AssistSpecificData",
+      "x-graphql-type-name": "ProcurementSpecificData",
       "description": "Container for Legacy Procurement-specific data slices.",
       "properties": {
         "acquisition_data": {
@@ -151,7 +151,7 @@
 
     "legacy_procurement_acquisition_data": {
       "type": "object",
-      "x-graphql-type-name": "AssistAcquisitionData",
+      "x-graphql-type-name": "ProcurementAcquisitionData",
       "description": "Acquisition data including agreement identifiers and acquisition nature.",
       "properties": {
         "ia_piid_or_unique_id": {
@@ -168,7 +168,7 @@
 
     "legacy_procurement_client_data": {
       "type": "object",
-      "x-graphql-type-name": "AssistClientData",
+      "x-graphql-type-name": "ProcurementClientData",
       "description": "Client organization identity and related information.",
       "properties": {
         "client_organization_name": {
@@ -194,7 +194,7 @@
 
     "legacy_procurement_office_address": {
       "type": "object",
-      "x-graphql-type-name": "AssistOfficeAddress",
+      "x-graphql-type-name": "ProcurementOfficeAddress",
       "description": "Address structure for client organizations in Legacy Procurement.",
       "properties": {
         "street_address1": {
@@ -226,7 +226,7 @@
 
     "legacy_procurement_award_data": {
       "type": "object",
-      "x-graphql-type-name": "AssistAwardData",
+      "x-graphql-type-name": "ProcurementAwardData",
       "description": "Award-related settings and timelines within Legacy Procurement.",
       "properties": {
         "type_of_idc": {

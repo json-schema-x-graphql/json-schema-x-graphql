@@ -18,11 +18,11 @@ scalar Email
 scalar Uri
 
 """Root Intake Process entity combining system metadata and Intake Process-specific extension data."""
-type EasiRecord {
+type IntakeRecord {
   "System-level lineage and ingestion metadata."
   systemMetadata: SystemMetadata!
   "Domain-specific fields unique to Intake Process."
-  intakeProcessSpecific: EasiSpecificData!
+  intakeProcessSpecific: IntakeSpecificData!
   "Mirror of intake_process_specific.business_owner for federated key selection."
   businessOwner: String
   "Mirror of intake_process_specific.system_owner for federated key selection."
@@ -44,7 +44,7 @@ type SystemMetadata @shareable {
 }
 
 "Primary business and pricing attributes specific to Intake Process."
-type EasiSpecificData {
+type IntakeSpecificData {
   "Business owner name or identifier."
   businessOwner: String!
   "System owner name or identifier."
@@ -60,13 +60,13 @@ type EasiSpecificData {
   "Indicates items not separately priced (raw representation)."
   notSeparatelyPriced: String
   "Structured pricing term attributes."
-  pricingTerms: EasiPricingTerms
+  pricingTerms: IntakePricingTerms
   "Ordered list of performance periods (base + options if present)."
   performancePeriods: [PeriodOfPerformance]
 }
 
 "Pricing term grouping (derived abstraction, non-structural change)."
-type EasiPricingTerms {
+type IntakePricingTerms {
   "Pricing model or strategy label."
   pricingModel: String
   "Method used for price escalation (if any)."
@@ -86,7 +86,7 @@ type PeriodOfPerformance {
 """Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics."""
 type IntakeProcessCanonicalSchema {
   "Root Intake Process entity."
-  intakeProcessRecord: EasiRecord
+  intakeProcessRecord: IntakeRecord
 }
 
 # Implied Scalars

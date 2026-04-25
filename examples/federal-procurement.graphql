@@ -1,5 +1,5 @@
 # Common Core GraphQL Schema
-# Version 2.0 - Federal Procurement Data Fabric (FPDF) by Schema Unification Forest Project
+# Version 2.0 - Data Integration Fabric (DIF) by Data Integration Project
 
 scalar DateTime
 scalar Date
@@ -18,8 +18,8 @@ type Query {
 
   # System-Specific Queries
   contract_dataPrograms(filter: Contract DataFilter): [Contract DataProgram!]!
-  legacy_procurementContracts(filter: AssistFilter): [AssistContract!]!
-  intake_processContracts(filter: EasiFilter): [EasiContract!]!
+  legacy_procurementContracts(filter: ProcurementFilter): [ProcurementContract!]!
+  intake_processContracts(filter: IntakeFilter): [IntakeContract!]!
 
   # Analytics and Reporting
   contractAnalytics(timeRange: TimeRangeInput!, groupBy: [AnalyticsGroupBy!]!): [AnalyticsResult!]!
@@ -145,7 +145,7 @@ input Contract DataFilter {
   objectiveContains: String
 }
 
-input AssistFilter {
+input ProcurementFilter {
   originalAwardPiid: String
   iaPiidOrUniqueId: String
   natureOfAcquisition: String
@@ -155,7 +155,7 @@ input AssistFilter {
   totalContractValueRange: DecimalRange
 }
 
-input EasiFilter {
+input IntakeFilter {
   piid: String
   businessOwner: String
   systemOwner: String
@@ -229,7 +229,7 @@ type Contract DataProgram {
   lastModifiedDate: DateTime
 }
 
-type AssistContract {
+type ProcurementContract {
   recordId: ID!
   templateName: String!
   originalAwardPiid: String
@@ -238,13 +238,13 @@ type AssistContract {
   clientOrganizationName: String
   agencyCode: String
   placeOfPerformance: PlaceOfPerformance
-  awardData: AssistAwardData
-  lineItemData: [AssistLineItem!]!
+  awardData: ProcurementAwardData
+  lineItemData: [ProcurementLineItem!]!
   ingestedAt: DateTime!
   templateVersion: String
 }
 
-type AssistLineItem {
+type ProcurementLineItem {
   clinNumber: String!
   unitPrice: Decimal
   quantity: Int
@@ -252,7 +252,7 @@ type AssistLineItem {
   unitOfMeasure: String
 }
 
-type EasiContract {
+type IntakeContract {
   contractId: ID!
   piid: String!
   businessOwner: String
@@ -794,7 +794,7 @@ type OptionPeriod {
 }
 
 # System Extensions (Union Types)
-union SystemExtension = Contract DataExtension | AssistExtension | EasiExtension
+union SystemExtension = Contract DataExtension | ProcurementExtension | IntakeExtension
 
 type Contract DataExtension {
   fieldName: String!
@@ -869,31 +869,31 @@ type HistoricalIndexEntry {
   createdDate: DateTime!
 }
 
-type AssistExtension {
+type ProcurementExtension {
   fieldName: String!
   fieldType: String!
   value: JSON
-  legacy_procurementSpecific: AssistSpecificData!
+  legacy_procurementSpecific: ProcurementSpecificData!
 }
 
-type AssistSpecificData {
-  acquisitionData: AssistAcquisitionData!
-  clientData: AssistClientData!
-  awardData: AssistAwardData
-  templates: [AssistTemplate!]!
+type ProcurementSpecificData {
+  acquisitionData: ProcurementAcquisitionData!
+  clientData: ProcurementClientData!
+  awardData: ProcurementAwardData
+  templates: [ProcurementTemplate!]!
 }
 
-type AssistAcquisitionData {
+type ProcurementAcquisitionData {
   iaPiidOrUniqueId: String!
   natureOfAcquisition: String!
 }
 
-type AssistClientData {
+type ProcurementClientData {
   clientOrganizationName: String!
   officeAddress: Address!
 }
 
-type AssistAwardData {
+type ProcurementAwardData {
   typeOfIdc: String
   whoCanUseIdc: String
   independentGovernmentEstimate: Decimal
@@ -908,21 +908,21 @@ type AssistAwardData {
   setAsideForLocalFirms: Boolean
 }
 
-type AssistTemplate {
+type ProcurementTemplate {
   templateName: String!
   templateVersion: String!
   processedDate: DateTime!
   recordCount: Int!
 }
 
-type EasiExtension {
+type IntakeExtension {
   fieldName: String!
   fieldType: String!
   value: JSON
-  intake_processSpecific: EasiSpecificData!
+  intake_processSpecific: IntakeSpecificData!
 }
 
-type EasiSpecificData {
+type IntakeSpecificData {
   businessOwner: String
   systemOwner: String
   unitPrice: Decimal

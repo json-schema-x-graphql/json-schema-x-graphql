@@ -1,7 +1,7 @@
 """
 Pricing term grouping (derived abstraction, non-structural change).
 """
-type EasiPricingTerms {
+type IntakePricingTerms {
   """
   Billing cycle descriptor (monthly, quarterly, annual, etc.).
   """
@@ -19,7 +19,7 @@ type EasiPricingTerms {
 """
 Root Intake Process entity combining system metadata and Intake Process-specific extension data.
 """
-type EasiRecord {
+type IntakeRecord {
   """
   Mirror of intake_process_specific.business_owner for federated key selection.
   """
@@ -27,7 +27,7 @@ type EasiRecord {
   """
   Domain-specific fields unique to Intake Process.
   """
-  intakeProcessSpecific: EasiSpecificData!
+  intakeProcessSpecific: IntakeSpecificData!
   """
   System-level lineage and ingestion metadata.
   """
@@ -41,7 +41,7 @@ type EasiRecord {
 """
 Primary business and pricing attributes specific to Intake Process.
 """
-type EasiSpecificData {
+type IntakeSpecificData {
   """
   Business owner name or identifier.
   """
@@ -65,7 +65,7 @@ type EasiSpecificData {
   """
   Structured pricing term attributes.
   """
-  pricingTerms: EasiPricingTerms
+  pricingTerms: IntakePricingTerms
   """
   System owner name or identifier.
   """
@@ -127,5 +127,5 @@ type IntakeProcessCanonicalSchema {
   """
   Root Intake Process entity.
   """
-  intakeProcessRecord: EasiRecord
+  intakeProcessRecord: IntakeRecord
 }

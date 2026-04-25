@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "schema_unification.schema.json",
-  "title": "Federal Procurement Data Fabric (FPDF) v2.0 by Schema Unification Forest Project with GraphQL Extensions",
+  "title": "Data Integration Fabric (DIF) v2.0 by Data Integration Project with GraphQL Extensions",
   "description": "Restructured schema with definitions for compatibility with standard tooling (typeconv, core-types) and x-graphql-* extensions for automated GraphQL SDL generation",
   "x-graphql-scalars": {
     "date_time": {
@@ -128,7 +128,7 @@
         "values": {
           "contract_data": {
             "name": "Contract Data",
-            "description": "Federal Procurement Data System - Next Generation"
+            "description": "Contract Data System - Next Generation"
           },
           "legacy_procurement": {
             "name": "Legacy Procurement",
@@ -644,7 +644,7 @@
     },
     "system_extensions": {
       "type": "object",
-      "description": "System-specific fields and extensions. Each system (Contract Data, Legacy Procurement, EASi, Public Spending, Logistics Mgmt, etc.) can add their own extensions dynamically without modifying this schema. System schemas should use GraphQL Federation @key directives to declare join fields.",
+      "description": "System-specific fields and extensions. Each system (Contract Data, Legacy Procurement, IntakeSys, Public Spending, Logistics Mgmt, etc.) can add their own extensions dynamically without modifying this schema. System schemas should use GraphQL Federation @key directives to declare join fields.",
       "x-graphql-type": {
         "name": "SystemExtensions",
         "description": "Dynamic system-specific extensions"
@@ -659,7 +659,7 @@
           "$ref": "legacy_procurement.schema.json"
         },
         "intake_process": {
-          "description": "EASi-specific extensions",
+          "description": "Intake-system-specific extensions",
           "$ref": "intake_process.schema.json"
         },
         "logistics_mgmt": {
@@ -698,7 +698,7 @@
     "contract": {
       "type": "object",
       "title": "Enhanced Government Contract Management Normalized Schema",
-      "description": "Unified schema for Contract Data, Legacy Procurement, and EASi systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure",
+      "description": "Unified schema for Contract Data, Legacy Procurement, and IntakeSys systems with common elements and system-specific extensions, enhanced with procurement lifecycle and organizational structure",
       "x-graphql-type": {
         "name": "Contract",
         "description": "Federal contract record with system metadata and lineage",

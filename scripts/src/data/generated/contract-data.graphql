@@ -32,7 +32,7 @@ enum SystemName {
 """
 Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.
 """
-type FpdsRecord @key(fields: "piid") @key(fields: "id") {
+type ContractRecord @key(fields: "piid") @key(fields: "id") {
   systemMetadata: SystemMetadata!
   identifiers: Identifiers!
   financial: Financial
@@ -645,7 +645,7 @@ type Compliance {
 Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.
 """
 type ContractDataCanonicalSchema {
-  contractDataRecord: FpdsRecord
+  contractDataRecord: ContractRecord
 }
 
 type Query {
@@ -657,9 +657,9 @@ type Query {
     piid: String!
     "Agency code for disambiguation"
     agency_code: String
-  ): FpdsRecord
+  ): ContractRecord
   """
   Return a list of Contract Data records (non-paginated)
   """
-  contractDataRecords: [FpdsRecord!]!
+  contractDataRecords: [ContractRecord!]!
 }
