@@ -1,4 +1,4 @@
-name: Deploy Schema Authoring to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -38,23 +38,34 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build WASM
+      # ── Editor (subgraph-composer) → /editor ──────────────────────────
+      - name: Build WASM for editor
         run: |
           chmod +x scripts/build-wasm.sh
           ./scripts/build-wasm.sh
 
-      - name: Build Schema Authoring App
-        run: |
-          cd frontend/schema-authoring
-          pnpm install
-          pnpm build
+      - name: Build editor app
+        run: pnpm --filter subgraph-composer build
         env:
-          VITE_BASE_URL: "/json-schema-x-graphql/" # Adjust if repo name differs or custom domain used
+          VITE_BASE_URL: "/json-schema-x-graphql/editor/"
+
+      # ── Docs site (Nextra) → / ─────────────────────────────────────────
+      - name: Build docs site
+        run: pnpm --filter @json-schema-x-graphql/website build
+        env:
+          BASE_PATH: "/json-schema-x-graphql"
+
+      # ── Assemble pages artifact ────────────────────────────────────────
+      - name: Assemble site
+        run: |
+          mkdir -p _site/editor
+          cp -r website/out/. _site/
+          cp -r frontend/subgraph-composer/dist/. _site/editor/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./frontend/schema-authoring/dist
+          path: ./_site
 
   deploy:
     environment:

@@ -1,5 +1,4 @@
 import React from "react";
-import SplitPane from "react-split-pane";
 import "./SchemaEditor.css";
 
 export default function SupergraphPreview({ sdl, stats, errors, schemas: _schemas, subgraphs }) {
@@ -63,27 +62,9 @@ export default function SupergraphPreview({ sdl, stats, errors, schemas: _schema
       </div>
 
       {sdl ? (
-        <SplitPane
-          split="horizontal"
-          minSize={80}
-          defaultSize={180}
-          allowResize
-          paneStyle={{ minHeight: 0, display: "flex", flexDirection: "column" }}
-          style={{
-            height: "100%",
-            minHeight: 0,
-            display: "flex",
-            flexDirection: "column",
-          }}
-          resizerStyle={{
-            background: "#eee",
-            height: "6px",
-            cursor: "row-resize",
-            zIndex: 2,
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, overflow: "hidden" }}>
           {/* SDL Preview Section */}
-          <div className="preview-section">
+          <div className="preview-section" style={{ flex: expandedSections.preview ? 2 : "none", minHeight: 0, overflow: "hidden" }}>
             <div
               className="section-header"
               onClick={() => toggleSection("preview")}
@@ -107,30 +88,8 @@ export default function SupergraphPreview({ sdl, stats, errors, schemas: _schema
               </div>
             )}
           </div>
-          {/* Nested SplitPane for Stats and Errors */}
-          <SplitPane
-            split="horizontal"
-            minSize={60}
-            defaultSize={120}
-            allowResize
-            paneStyle={{
-              minHeight: 0,
-              display: "flex",
-              flexDirection: "column",
-            }}
-            style={{
-              height: "100%",
-              minHeight: 0,
-              display: "flex",
-              flexDirection: "column",
-            }}
-            resizerStyle={{
-              background: "#eee",
-              height: "6px",
-              cursor: "row-resize",
-              zIndex: 2,
-            }}
-          >
+          {/* Stats and Errors sections */}
+          <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflow: "auto" }}>
             {/* Stats Section */}
             {stats ? (
               <div className="preview-section">
@@ -195,7 +154,7 @@ export default function SupergraphPreview({ sdl, stats, errors, schemas: _schema
                 )}
               </div>
             ) : (
-              <div />
+              null
             )}
             {/* Errors Section */}
             {errors && errors.length > 0 ? (
@@ -229,10 +188,10 @@ export default function SupergraphPreview({ sdl, stats, errors, schemas: _schema
                 )}
               </div>
             ) : (
-              <div />
+              null
             )}
-          </SplitPane>
-        </SplitPane>
+          </div>
+        </div>
       ) : (
         <div className="empty-preview">
           <p>No supergraph generated yet</p>

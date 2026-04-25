@@ -60,43 +60,20 @@
     "test:parity": "jest converters/node/src/parity.test.ts",
     "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
     "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
-    "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary",
-    "mockforge:start": "pnpm -C servers/mockforge run start"
+    "skip-report:all": "pnpm run skip-report:run && pnpm run skip-report:summary"
   },
   "devDependencies": {
-    "@codemirror/basic-setup": "^0.20.0",
-    "@humanwhocodes/config-array": "^0.13.0",
-    "@humanwhocodes/object-schema": "^2.0.3",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@rollup/plugin-typescript": "^12.3.0",
-    "@theguild/federation-composition": "^0.22.2",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.58.2",
     "@typescript-eslint/parser": "^8.58.2",
-    "abab": "^2.0.6",
-    "domexception": "^4.0.0",
     "eslint": "^8.57.1",
-    "glob": "^13.0.6",
     "graphql": "^16.13.2",
-    "graphql-language-service-interface": "^2.10.2",
-    "graphql-language-service-parser": "^1.10.4",
-    "graphql-language-service-types": "^1.8.7",
-    "graphql-language-service-utils": "^2.7.1",
-    "inflight": "^1.0.6",
     "jest": "^30.3.0",
-    "node-domexception": "^2.0.2",
-    "oxfmt": "^0.46.0",
     "oxlint": "^1.60.0",
     "prettier": "^3.8.3",
-    "rimraf": "^6.1.3",
-    "rollup": "^4.60.2",
     "ts-jest": "^29.4.9",
-    "typedoc": "^0.28.19",
-    "typescript": "^6.0.3",
-    "wasm-pack": "^0.14.0",
-    "webpack": "5.106.2",
-    "whatwg-encoding": "^3.1.1"
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "graphql": "^16.0.0"
@@ -107,20 +84,9 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
-      "serialize-javascript": "7.0.3",
-      "webpack": "5.106.2",
-      "ws": "8.17.1",
-      "esbuild": "0.25.0",
-      "axios": "1.15.0",
-      "tar": "7.5.11",
-      "flatted": "3.4.2",
-      "dompurify": "3.4.0",
-      "picomatch": "4.0.4",
-      "brace-expansion": "5.0.5",
-      "minimatch": "4.2.5",
-      "yaml": "1.10.3",
-      "@tootallnate/once": "3.0.1",
-      "fast-json-stringify": "^5.0.0"
+      "ws@>=8.0.0 <8.17.1": ">=8.17.1",
+      "esbuild@<=0.24.2": ">=0.25.0",
+      "lodash@>=4.0.0 <=4.17.22": ">=4.17.23"
     }
   }
 }

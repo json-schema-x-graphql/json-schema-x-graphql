@@ -105,12 +105,23 @@ pre {
   min-height: 0;
 }
 
-.sidebar {
-  width: 300px;
-  min-width: 250px;
-  max-width: 400px;
+.pane-divider {
+  width: 6px;
   flex-shrink: 0;
-  flex-grow: 1;
+  background: var(--color-border);
+  cursor: col-resize;
+  transition: background 0.15s;
+  z-index: 2;
+}
+.pane-divider:hover,
+.pane-divider:active {
+  background: var(--color-primary);
+}
+
+.sidebar {
+  min-width: 180px;
+  max-width: 480px;
+  flex-shrink: 0;
   overflow-y: auto;
   background-color: white;
   border-radius: var(--radius-md);

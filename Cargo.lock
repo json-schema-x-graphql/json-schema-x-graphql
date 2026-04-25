@@ -106,37 +106,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09e0b71d829a6eec7900cab1ef14791290a3b2edf201dbc7c56cae5ef001475d"
 dependencies = [
  "ahash",
- "apollo-parser 0.8.5",
+ "apollo-parser",
  "ariadne",
  "futures",
  "indexmap",
- "rowan 0.16.1",
+ "rowan",
  "serde",
  "serde_json_bytes",
  "thiserror 2.0.18",
  "triomphe",
  "typed-arena",
-]
-
-[[package]]
-name = "apollo-encoder"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee9f27b20841d14923dd5f0714a79f86360b23492d2f98ab5d1651471a56b7a4"
-dependencies = [
- "apollo-parser 0.7.7",
- "thiserror 1.0.69",
-]
-
-[[package]]
-name = "apollo-parser"
-version = "0.7.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6bb7c8a9776825e5524b5ab3a7f478bf091a054180f244dff85814452cb87d90"
-dependencies = [
- "memchr",
- "rowan 0.15.18",
- "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -146,7 +125,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "947e21ff51879f8a40d7519dfe619268de2afba4042a8a43878276de3cb910f0"
 dependencies = [
  "memchr",
- "rowan 0.16.1",
+ "rowan",
  "thiserror 2.0.18",
 ]
 
@@ -1545,8 +1524,7 @@ version = "2.0.0"
 dependencies = [
  "anyhow",
  "apollo-compiler",
- "apollo-encoder",
- "apollo-parser 0.8.5",
+ "apollo-parser",
  "async-graphql",
  "boon",
  "clap",
@@ -1671,15 +1649,6 @@ name = "memchr"
 version = "2.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8ca58f447f06ed17d5fc4043ce1b10dd205e060fb3ce5b979b8ed8e59ff3f79"
-
-[[package]]
-name = "memoffset"
-version = "0.9.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "488016bfae457b036d996092f6cb448677611ce4449e970ceaf42695203f218a"
-dependencies = [
- "autocfg",
-]
 
 [[package]]
 name = "miette"
@@ -2282,19 +2251,6 @@ dependencies = [
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
-]
-
-[[package]]
-name = "rowan"
-version = "0.15.18"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62f509095fc8cc0c8c8564016771d458079c11a8d857e65861f045145c0d3208"
-dependencies = [
- "countme",
- "hashbrown 0.14.5",
- "memoffset",
- "rustc-hash",
- "text-size",
 ]
 
 [[package]]

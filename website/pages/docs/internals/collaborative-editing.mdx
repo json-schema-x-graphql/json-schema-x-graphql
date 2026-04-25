@@ -1,0 +1,149 @@
+---
+title: Collaborative Editing (loro-monaco demo)
+---
+
+# Collaborative Editing — loro-monaco Demo
+
+> **Status: Deferred** — This demo was removed from the active workspace during the open-source launch simplification (see [issue #7](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/7)). The approach is documented here for future reference. Source code is preserved in `frontend/demos/loro-monaco/` on the `pre-open-source-launch-v1-2026-04-25` branch.
+
+---
+
+## Overview
+
+The `loro-monaco` demo built a real-time collaborative JSON Schema ↔ GraphQL SDL editor using:
+
+| Technology | Role |
+|---|---|
+| **Loro CRDT** | Conflict-free state document for real-time collaboration |
+| **Zustand** | React state management bound to the Loro document |
+| **Monaco Editor** | VS Code-quality code editor (JSON + GraphQL) |
+| **@json-schema-x-graphql/core** | Converter API (Node.js) |
+
+---
+
+## Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  App.tsx                                                         │
+│   ├── MonacoEditor (JSON side)                                   │
+│   ├── MonacoEditor (GraphQL side)                                │
+│   ├── ConverterSettingsPanel                                     │
+│   └── GraphQLEditor (lazy, visual SDL view)                      │
+│                                                                  │
+│  store.ts  ──── Zustand store ──── Loro document                 │
+│                                     └── loroDoc.getText("json")  │
+│                                     └── loroDoc.getText("graphql")│
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Loro CRDT integration (`store.ts`)
+
+The Zustand store embedded a `Loro` document as a state field:
+
+```ts
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { Loro } from "loro-crdt";
+
+export interface EditorState {
+  loroDoc: Loro | null;
+  jsonSchema: string;
+  graphqlSdl: string;
+  // …collaboration, conversion, and UI state
+}
+```
+
+Key design points:
+- The `Loro` document holds two `LoroText` containers: `"json"` and `"graphql"`.
+- All editor mutations go through the Loro document and are re-broadcast to peers via `loroDoc.exportUpdates()`.
+- Presence (cursor positions and user colour) is propagated separately as ephemeral awareness messages rather than as persistent document state.
+- The store uses `zustand/middleware/persist` for local storage backup, but the Loro binary is **not** persisted — only the plain string values are.
+
+---
+
+## Converter API abstraction (`converter-api.ts`)
+
+The converter API wraps `@json-schema-x-graphql/core` (Node.js) with a normalised `ConversionResult` type:
+
+```ts
+export interface ConversionResult {
+  output: string | null;
+  success: boolean;
+  errorCount: number;
+  warningCount: number;
+  diagnostics: Array<{
+    severity: "error" | "warning" | "info";
+    message: string;
+    path?: string;
+    code?: string;
+  }>;
+}
+
+export async function convertJsonSchemaToGraphQL(
+  jsonSchema: string,
+  options: ConverterOptions,
+): Promise<ConversionResult> { … }
+
+export async function convertGraphQLToJsonSchema(
+  sdl: string,
+  options: ConverterOptions,
+): Promise<ConversionResult> { … }
+```
+
+The full `ConverterOptions` type mirrors the server-side `ConversionOptions` schema exactly, making it easy to pass options from a settings panel directly to the converter without manual mapping at the call site.
+
+---
+
+## Lazy-loaded GraphQL visual editor (`App.tsx`)
+
+The graphql-editor package was loaded lazily to avoid a broken WASM worker at startup:
+
+```tsx
+const GraphQLEditor = lazy(() =>
+  import("graphql-editor").then((mod) => ({
+    default: mod.GraphQLEditor || mod.default,
+  })),
+);
+
+// Rendered with Suspense fallback inside a toggle:
+{useGraphQLEditor && (
+  <Suspense fallback={<div>Loading visual editor…</div>}>
+    <GraphQLEditor schema={graphqlSdl} />
+  </Suspense>
+)}
+```
+
+The toggle (`useGraphQLEditor` state) let users switch between Monaco text editing and the visual node canvas without paying the bundle cost upfront.
+
+---
+
+## Converter options panel (`ConverterSettingsPanel.tsx`)
+
+The settings panel exposed all conversion options through a modal:
+
+- **Validation & Processing**: validate, includeDescriptions, preserveFieldOrder, failOnWarning
+- **Apollo Federation**: federationVersion (NONE / V1 / V2 / AUTO), includeFederationDirectives
+- **Naming & IDs**: namingConvention (PRESERVE / GRAPHQL_IDIOMATIC), idStrategy (NONE / COMMON_PATTERNS / ALL_STRINGS)
+- **Output**: outputFormat (SDL / SDL_WITH_FEDERATION_METADATA / AST_JSON)
+
+---
+
+## Federation directive constants (`federation-directives.ts`)
+
+A static SDL string exported as `federationDirectives` contains all Apollo Federation v2 directives (`@key`, `@shareable`, `@inaccessible`, `@requiresScopes`, etc.) plus common custom scalars. This string is prepended to any SDL sent to the visual editor so the graphql-editor tool can resolve federation directive symbols during its schema introspection.
+
+---
+
+## Re-implementing in the future
+
+To re-implement the collaborative editor:
+
+1. Restore `frontend/demos/loro-monaco` from git history or create a new Vite app.
+2. Add `loro-crdt` and `zustand` to dependencies.
+3. Bootstrap the Loro document in a Zustand store (see `store.ts` above).
+4. Wire Monaco's `onDidChangeModelContent` to update the Loro text container.
+5. Use `loroDoc.export({ mode: "update", from: lastVersion })` to produce delta bytes for transport.
+6. See [issue #7](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/7) for context.

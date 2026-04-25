@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { SplitPane } from "react-split-pane";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
 import SchemaEditor from "./components/SchemaEditor.jsx";
@@ -16,6 +15,34 @@ import { getTemplate } from "./lib/templates.js";
 
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(260);
+  const [editorWidth, setEditorWidth] = useState(50); // percent of remaining space
+  const containerRef = useRef(null);
+  const draggingDivider = useRef(null); // 'sidebar' | 'editor'
+
+  const startDrag = useCallback((divider) => (e) => {
+    e.preventDefault();
+    draggingDivider.current = divider;
+    const onMove = (ev) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      if (draggingDivider.current === "sidebar") {
+        const w = Math.min(Math.max(ev.clientX - rect.left, 180), 480);
+        setSidebarWidth(w);
+      } else if (draggingDivider.current === "editor") {
+        const remaining = rect.width - sidebarWidth;
+        const pct = ((ev.clientX - rect.left - sidebarWidth) / remaining) * 100;
+        setEditorWidth(Math.min(Math.max(pct, 25), 75));
+      }
+    };
+    const onUp = () => {
+      draggingDivider.current = null;
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  }, [sidebarWidth]);
 
   const {
     schemas,
@@ -204,27 +231,9 @@ export default function App() {
           </div>
         </header>
 
-        <main className="app-main">
-          <SplitPane
-            split="vertical"
-            minSize={220}
-            defaultSize={300}
-            maxSize={500}
-            allowResize
-            paneStyle={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-            }}
-            style={{ display: "flex", flex: 1, height: "100%" }}
-            resizerStyle={{
-              background: "#eee",
-              width: "6px",
-              cursor: "col-resize",
-              zIndex: 2,
-            }}
-          >
-            <div className="sidebar">
+        <main className="app-main" ref={containerRef}>
+          {/* Sidebar */}
+          <div className="sidebar" style={{ width: sidebarWidth, flexShrink: 0 }}>
               <SchemaManager
                 schemas={schemas}
                 activeSchemaId={activeSchemaId}
@@ -239,33 +248,19 @@ export default function App() {
                 isLoading={isLoading}
               />
             </div>
-            <SplitPane
-              split="vertical"
-              minSize={350}
-              defaultSize={700}
-              maxSize={-300}
-              allowResize
-              paneStyle={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
-              style={{ display: "flex", flex: 1, height: "100%" }}
-              resizerStyle={{
-                background: "#eee",
-                width: "6px",
-                cursor: "col-resize",
-                zIndex: 2,
-              }}
-            >
-              <div
-                className="editor-and-directives"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
-                }}
-              >
+
+          {/* Divider: sidebar / editor */}
+          <div
+            className="pane-divider"
+            onMouseDown={startDrag("sidebar")}
+            title="Drag to resize"
+          />
+
+          {/* Editor + directives */}
+          <div
+            className="editor-and-directives"
+            style={{ flex: editorWidth, minWidth: 220, display: "flex", flexDirection: "column", height: "100%" }}
+          >
                 <div className="editor-section">
                   {activeSchema ? (
                     <SchemaEditor
@@ -296,8 +291,19 @@ export default function App() {
                   </div>
                 )}
               </div>
-              <div className="editor-section">
-                {/* Subgraph Editor for the active subgraph with SDL/Stats */}
+
+          {/* Divider: editor / preview */}
+          <div
+            className="pane-divider"
+            onMouseDown={startDrag("editor")}
+            title="Drag to resize"
+          />
+
+          {/* Preview pane */}
+          <div
+            className="editor-section"
+            style={{ flex: 100 - editorWidth, minWidth: 220, display: "flex", flexDirection: "column", height: "100%" }}
+          >
                 {subgraphs && subgraphs.length > 0 ? (
                   <SubgraphEditor
                     subgraph={{
@@ -338,13 +344,11 @@ export default function App() {
                   </div>
                 )}
               </div>
-            </SplitPane>
-          </SplitPane>
         </main>
 
         <footer className="app-footer">
           <p>
-            Powered by <code>@json-schema-x-graphql/core</code> & graphql-editor
+            Powered by <code>@json-schema-x-graphql/core</code>
           </p>
         </footer>
 

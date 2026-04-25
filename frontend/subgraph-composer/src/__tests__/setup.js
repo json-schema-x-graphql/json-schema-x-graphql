@@ -1,35 +1,6 @@
 // Jest setup file for DOM testing
 import "@testing-library/jest-dom";
 
-jest.mock("react-split-pane", () => {
-  const React = require("react");
-
-  const SplitPane = ({ children, className = "", style = {}, split = "vertical" }) =>
-    React.createElement(
-      "div",
-      {
-        className: `split-pane ${split} ${className}`.trim(),
-        style: {
-          display: "flex",
-          flexDirection: split === "vertical" ? "row" : "column",
-          height: "100%",
-          width: "100%",
-          overflow: "hidden",
-          position: "relative",
-          flex: "1 1 0%",
-          ...style,
-        },
-      },
-      children,
-    );
-
-  return {
-    __esModule: true,
-    SplitPane,
-    default: SplitPane,
-  };
-});
-
 // Mock localStorage
 const localStorageMock = {
   getItem: jest.fn(),

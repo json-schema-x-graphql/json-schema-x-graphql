@@ -1,0 +1,7 @@
+{
+  "x-graphql-quick-start": "Quick Start",
+  "x-graphql-attributes": "Attribute Reference",
+  "x-graphql-patterns": "Common Patterns",
+  "x-graphql-migration": "Migration Guide",
+  "x-graphql-registry": "Attribute Registry"
+}

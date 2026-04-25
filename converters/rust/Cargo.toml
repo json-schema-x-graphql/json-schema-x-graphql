@@ -52,18 +52,19 @@ jsonschema = { version = "0.18", default-features = false }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 jsonschema = { version = "0.18", features = ["reqwest"] }
-boon = "0.6"
 
 # GraphQL SDL and Federation validation
 apollo-parser = "0.8"
-apollo-encoder = "0.8"
 apollo-compiler = "1.0"
-graphql-composition = "0.1"
-graphql-schema-validation = "0.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4"
 criterion = "0.5"
+# Test-only: JSON Schema validation (native only)
+boon = "0.6"
+# Test-only: GraphQL composition and schema validation
+graphql-composition = "0.1"
+graphql-schema-validation = "0.1"
 
 
 [features]

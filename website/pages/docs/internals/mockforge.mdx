@@ -1,0 +1,58 @@
+---
+title: MockForge (mock server demo)
+---
+
+# MockForge — Mock Federation Server
+
+> **Status: Deferred** — The mockforge server was removed from the active workspace during open-source launch simplification (see [issue #9](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/9)). Source is preserved at `servers/mockforge/` in the repository.
+
+---
+
+## Overview
+
+MockForge was a local development server that let you spin up a mock Apollo Federation gateway + subgraph servers from a set of converted SDL schemas. It was useful for:
+
+- Testing the full federation composition flow locally without a real API backend
+- Verifying that converted SDL schemas are compatible with the Apollo Router / Gateway
+- Rapid prototyping of cross-subgraph queries before writing resolver logic
+
+---
+
+## What it provided
+
+- Auto-register converted SDL schemas as individual subgraph services  
+- Run an Apollo Gateway (or Apollo Router) instance that composed them into a supergraph  
+- Return plausible mock data for any query using a configurable faker strategy  
+- Hot-reload subgraphs when converted SDL changes on disk  
+
+---
+
+## Architecture sketch
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  CLI (mockforge start --schemas ./output/)                 │
+│   ↓                                                        │
+│  Schema Loader — reads *.graphql files from output dir     │
+│   ↓                                                        │
+│  Subgraph Servers (one per file, random port)              │
+│   ↓                                                        │
+│  Apollo Gateway — composes & serves supergraph at :4000    │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Re-implementing in the future
+
+The simplest path is to use the official Apollo Federation local development tooling:
+
+```bash
+# Install Apollo Router for local dev
+npm install -D @apollo/router
+
+# Or use Hive Gateway
+npm install -D @graphql-hive/gateway
+```
+
+Combined with the `@json-schema-x-graphql/core` Node converter to generate SDL schemas on the fly. See [issue #9](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/9).

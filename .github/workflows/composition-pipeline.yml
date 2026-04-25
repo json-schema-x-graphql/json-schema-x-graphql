@@ -33,7 +33,6 @@ jobs:
 
       - name: Build Composer App
         run: pnpm --filter subgraph-composer build
-
   supergraph-integrity-check:
     name: Supergraph Generation Integrity
     runs-on: ubuntu-latest
