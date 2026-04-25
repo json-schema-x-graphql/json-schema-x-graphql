@@ -40,42 +40,6 @@ updates:
         patterns:
           - "@apollo/*"
 
-  - package-ecosystem: npm
-    directory: "/converters/node"
-    schedule:
-      interval: weekly
-      day: monday
-    labels:
-      - dependencies
-      - javascript
-
-  - package-ecosystem: npm
-    directory: "/frontend/subgraph-composer"
-    schedule:
-      interval: weekly
-      day: monday
-    labels:
-      - dependencies
-      - javascript
-
-  - package-ecosystem: npm
-    directory: "/frontend/schema-authoring"
-    schedule:
-      interval: weekly
-      day: monday
-    labels:
-      - dependencies
-      - javascript
-
-  - package-ecosystem: npm
-    directory: "/website"
-    schedule:
-      interval: weekly
-      day: monday
-    labels:
-      - dependencies
-      - javascript
-
   # ── Cargo ─────────────────────────────────────────────────────────────────
   - package-ecosystem: cargo
     directory: "/converters/rust"

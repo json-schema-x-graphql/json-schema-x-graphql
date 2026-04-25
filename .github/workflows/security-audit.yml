@@ -101,7 +101,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run npm audit
+      - name: Run pnpm audit
         run: |
           pnpm audit --audit-level=high
         continue-on-error: false
