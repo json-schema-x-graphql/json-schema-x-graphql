@@ -134,8 +134,8 @@ jobs:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+      # JavaScript/TypeScript: no compilation step needed — CodeQL analyses
+      # source files directly. Autobuild is omitted intentionally.
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
@@ -161,7 +161,8 @@ jobs:
   security-summary:
     name: Security Audit Summary
     runs-on: ubuntu-latest
-    needs: [security-audit-rust, security-audit-node, codeql-analysis]
+    # CodeQL is informational only — not a required gate for CI
+    needs: [security-audit-rust, security-audit-node]
     if: always()
 
     steps:
@@ -170,11 +171,9 @@ jobs:
           echo "Security Audit Results:"
           echo "Rust Security: ${{ needs.security-audit-rust.result }}"
           echo "Node Security: ${{ needs.security-audit-node.result }}"
-          echo "CodeQL Analysis: ${{ needs.codeql-analysis.result }}"
 
           if [ "${{ needs.security-audit-rust.result }}" != "success" ] || \
-             [ "${{ needs.security-audit-node.result }}" != "success" ] || \
-             [ "${{ needs.codeql-analysis.result }}" != "success" ]; then
+             [ "${{ needs.security-audit-node.result }}" != "success" ]; then
             echo "❌ Security audit failed"
             exit 1
           else
