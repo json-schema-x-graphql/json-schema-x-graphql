@@ -99,56 +99,9 @@ dependencies = [
 
 [[package]]
 name = "anyhow"
-version = "1.0.102"
+version = "1.0.100"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
-
-[[package]]
-name = "apollo-compiler"
-version = "1.31.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09e0b71d829a6eec7900cab1ef14791290a3b2edf201dbc7c56cae5ef001475d"
-dependencies = [
- "ahash",
- "apollo-parser",
- "ariadne",
- "futures",
- "indexmap",
- "rowan",
- "serde",
- "serde_json_bytes",
- "thiserror 2.0.18",
- "triomphe",
- "typed-arena",
-]
-
-[[package]]
-name = "apollo-parser"
-version = "0.8.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "947e21ff51879f8a40d7519dfe619268de2afba4042a8a43878276de3cb910f0"
-dependencies = [
- "memchr",
- "rowan",
- "thiserror 2.0.18",
-]
-
-[[package]]
-name = "appendlist"
-version = "1.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e149dc73cd30538307e7ffa2acd3d2221148eaeed4871f246657b1c3eaa1cbd2"
-
-[[package]]
-name = "ariadne"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8454c8a44ce2cb9cc7e7fae67fc6128465b343b92c6631e94beca3c8d1524ea5"
-dependencies = [
- "concolor",
- "unicode-width 0.2.2",
- "yansi",
-]
+checksum = "a23eb6b1614318a8071c9b2521f36b424b2c83db5eb3a0fead4a6c0809af6e61"
 
 [[package]]
 name = "apollo-compiler"
@@ -1476,7 +1429,7 @@ dependencies = [
  "serde",
  "serde-wasm-bindgen",
  "serde_json",
- "thiserror 1.0.69",
+ "thiserror 2.0.18",
  "tokio",
  "wasm-bindgen",
 ]
@@ -2278,31 +2231,16 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.149"
+version = "1.0.145"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83fc039473c5595ace860d8c4fafa220ff474b3fc6bfdb4293327f1a37e94d86"
+checksum = "402a6f66d8c709116cf22f558eab210f5a50187f702eb4d7e5ef38d9a7f1c79c"
 dependencies = [
  "indexmap",
  "itoa",
  "memchr",
+ "ryu",
  "serde",
  "serde_core",
- "zmij",
-]
-
-[[package]]
-name = "serde_json_bytes"
-version = "0.2.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6a27c10711f94d1042b4c96d483556ec84371864e25d0e1cf3dc1024b0880b1"
-dependencies = [
- "ahash",
- "bytes",
- "indexmap",
- "jsonpath-rust",
- "regex",
- "serde",
- "serde_json",
 ]
 
 [[package]]
@@ -3384,9 +3322,3 @@ dependencies = [
  "quote",
  "syn",
 ]
-
-[[package]]
-name = "zmij"
-version = "1.0.21"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
