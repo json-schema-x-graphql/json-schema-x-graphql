@@ -1,4 +1,4 @@
-{
+export default {
   "federation": "Federation",
   "federation-patterns": "Federation Design Patterns",
   "unions": "Unions",

@@ -1,4 +1,4 @@
-{
+export default {
   "features": "Features Guide",
   "cli-guide": "CLI Guide",
   "testing": "Testing Guide",

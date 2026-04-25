@@ -1,4 +1,4 @@
-{
+export default {
   "getting-started": "Getting Started",
   "voyage-crosswalk": "Voyage / Crosswalk Tutorial"
 }

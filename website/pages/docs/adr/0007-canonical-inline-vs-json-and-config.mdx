@@ -1,5 +1,5 @@
 ---
-title: 0007: Canonical rules for object inlining, naming, and converter options
+title: "0007: Canonical rules for object inlining, naming, and converter options"
 ---
 
 # 0007: Canonical rules for object inlining, naming, and converter options
@@ -97,7 +97,9 @@ Output SDL (canonical):
 This is a very long description...
 It contains additional lines.
 """
+```graphql
 type Foo { ... }
+```
 
 2. Small anonymous object -> `JSON`
 
@@ -109,7 +111,9 @@ Input:
 
 Output (canonical):
 
+```graphql
 type Foo { data: JSON }
+```
 
 3. Larger or referenced object -> named type
 
@@ -117,8 +121,10 @@ Input (referenced or > threshold):
 
 Output:
 
+```graphql
 type Parent { nested: NestedObject }
 type NestedObject { a: String b: Int }
+```
 
 ## Consequences
 

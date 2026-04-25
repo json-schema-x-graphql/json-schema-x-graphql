@@ -1,4 +1,4 @@
-{
+export default {
   "x-graphql-quick-start": "Quick Start",
   "x-graphql-attributes": "Attribute Reference",
   "x-graphql-patterns": "Common Patterns",

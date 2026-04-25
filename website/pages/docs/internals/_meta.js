@@ -1,4 +1,4 @@
-{
+export default {
   "index": "Overview",
   "collaborative-editing": "Collaborative Editing",
   "crdt-comparison": "Yjs vs Loro (CRDT)",
