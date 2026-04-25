@@ -5,8 +5,9 @@
 ![Project Status](https://img.shields.io/badge/status-beta-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Version](https://img.shields.io/badge/version-0.4.0-green)
-[![Validation & Testing](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/validation-and-testing.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/validation-and-testing.yml)
-[![Comprehensive Tests](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml)
+[![CI](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/ci.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/ci.yml)
+[![Security Audit](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/security-audit.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/security-audit.yml)
+[![Build Docs Site](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/docs.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/docs.yml)
 [![codecov](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql/branch/main/graph/badge.svg)](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql)
 
 ## Overview

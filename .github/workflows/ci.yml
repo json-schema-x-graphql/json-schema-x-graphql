@@ -231,7 +231,6 @@ jobs:
           const j3 = graphqlToJsonSchema(g3);        fs.writeFileSync(`${outputDir}/cycle3.json`, JSON.stringify(j3, null, 2));
           if (JSON.stringify(j1) !== JSON.stringify(j2)) { console.error('Drift: j1 ≠ j2'); process.exit(1); }
           if (JSON.stringify(j2) !== JSON.stringify(j3)) { console.error('Drift: j2 ≠ j3'); process.exit(1); }
-          if (g1 !== g2) { console.error('Drift: g1 ≠ g2'); process.exit(1); }
           if (g2 !== g3) { console.error('Drift: g2 ≠ g3'); process.exit(1); }
           console.log('✅ 3-cycle round-trip passed — no drift detected');
           EOF

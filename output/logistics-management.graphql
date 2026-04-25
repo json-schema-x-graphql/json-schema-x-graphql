@@ -27,7 +27,7 @@ type Site {
 }
 
 type Person {
-  prismUserId: String
+  extUserId: String
   firstName: String
   lastName: String
   email: Email
