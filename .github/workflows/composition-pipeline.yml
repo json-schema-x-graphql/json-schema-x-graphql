@@ -53,16 +53,12 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
 
-      - name: Generate Supergraph from Examples
-        # This step simulates a pipeline: JSON Schemas -> Subgraphs -> Supergraph
-        # We assume there is a script or we use the CLI to demonstrate integrity.
-        # If no specific script exists, we check if the composition logic is testable via CLI.
-        # For now, we will run the integration tests in node converter which cover this,
-        # but specifically targeting federation scenarios if available.
+      - name: Validate Federation SDL Examples
+        # Runs the GraphQL SDL validator over all test-data to ensure
+        # federation subgraph schemas remain syntactically valid.
+        working-directory: converters/node
         run: |
-          cd converters/node
-          # Validate that we can generate federation-ready SDL from example schemas
-          pnpm tsx ../../scripts/validation/validate-graphql.ts --federation
+          pnpm tsx ../../scripts/validation/validate-graphql.ts --fail-on-error
 
       - name: Composition Validation
         # If we had a composition script (e.g. using @apollo/composition or graphql-tools), we would run it here.

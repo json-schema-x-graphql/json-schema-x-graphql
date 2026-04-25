@@ -103,8 +103,8 @@ jobs:
 
       - name: Run npm audit
         run: |
-          pnpm audit --audit-level=moderate
-        continue-on-error: true
+          pnpm audit --audit-level=high
+        continue-on-error: false
 
       - name: Check for outdated packages with known vulnerabilities
         working-directory: converters/node
@@ -122,7 +122,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript", "typescript"]
+        language: ["javascript"]
 
     steps:
       - name: Checkout code
@@ -140,25 +140,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          upload: false
-          output: sarif-results
-        continue-on-error: true
-
-      - name: Log CodeQL Findings
-        run: |
-          echo "=== CodeQL Analysis Results ===" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -d "sarif-results" ]; then
-            echo "**SARIF Results Generated**" >> $GITHUB_STEP_SUMMARY
-            find sarif-results -name "*.sarif" | while read f; do
-              echo "- Found: $f" >> $GITHUB_STEP_SUMMARY
-            done
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Note: Advanced Security is not enabled for this repository." >> $GITHUB_STEP_SUMMARY
-            echo "To enable code scanning uploads, enable Advanced Security in repository settings." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "No SARIF results generated" >> $GITHUB_STEP_SUMMARY
-          fi
+          category: "/language:${{ matrix.language }}"
 
   dependency-review:
     name: Dependency Review

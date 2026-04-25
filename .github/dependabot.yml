@@ -1,0 +1,87 @@
+version: 2
+updates:
+  # ── GitHub Actions ────────────────────────────────────────────────────────
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - github-actions
+
+  # ── npm / pnpm (root + all workspace packages) ───────────────────────────
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - javascript
+    groups:
+      eslint:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+      vitest:
+        patterns:
+          - "vitest*"
+          - "@vitest/*"
+      vite:
+        patterns:
+          - "vite*"
+          - "@vitejs/*"
+      nextra:
+        patterns:
+          - "nextra*"
+          - "next"
+      apollo:
+        patterns:
+          - "@apollo/*"
+
+  - package-ecosystem: npm
+    directory: "/converters/node"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - javascript
+
+  - package-ecosystem: npm
+    directory: "/frontend/subgraph-composer"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - javascript
+
+  - package-ecosystem: npm
+    directory: "/frontend/schema-authoring"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - javascript
+
+  - package-ecosystem: npm
+    directory: "/website"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - javascript
+
+  # ── Cargo ─────────────────────────────────────────────────────────────────
+  - package-ecosystem: cargo
+    directory: "/converters/rust"
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - rust
