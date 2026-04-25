@@ -219,7 +219,7 @@ jobs:
           fi
 
           cat > converters/node/roundtrip-ci.mjs << 'EOF'
-          import { jsonSchemaToGraphQL, graphqlToJsonSchema } from './dist/index.js';
+          import { jsonSchemaToGraphQL, graphqlToJsonSchema } from './dist/converter.js';
           import fs from 'fs';
           const [,, testFile, outputDir] = process.argv;
           const initial = JSON.parse(fs.readFileSync(testFile, 'utf8'));

@@ -5,38 +5,28 @@
  * Ensures correct usage of x-graphql attributes and provides helpful error messages.
  */
 export interface ValidationError {
-  path: string;
-  message: string;
-  severity: "error" | "warning";
-  attribute?: string;
+    path: string;
+    message: string;
+    severity: "error" | "warning";
+    attribute?: string;
 }
 export interface ValidationResult {
-  valid: boolean;
-  errors: ValidationError[];
-  warnings: ValidationError[];
+    valid: boolean;
+    errors: ValidationError[];
+    warnings: ValidationError[];
 }
 /**
  * Validate all x-graphql extensions in a JSON Schema
  */
-export declare function validateSchema(
-  schema: Record<string, unknown>,
-  path?: string,
-): ValidationResult;
+export declare function validateSchema(schema: Record<string, unknown>, path?: string): ValidationResult;
 /**
  * Validate x-graphql extensions at a single schema level
  */
-export declare function validateExtensions(
-  schema: Record<string, unknown>,
-  path: string,
-): ValidationError[];
+export declare function validateExtensions(schema: Record<string, unknown>, path: string): ValidationError[];
 /**
  * Validate a single extension value
  */
-export declare function validateExtensionValue(
-  attribute: string,
-  value: unknown,
-  context?: Record<string, unknown>,
-): ValidationError[];
+export declare function validateExtensionValue(attribute: string, value: unknown, context?: Record<string, unknown>): ValidationError[];
 /**
  * Format validation errors as human-readable messages
  */

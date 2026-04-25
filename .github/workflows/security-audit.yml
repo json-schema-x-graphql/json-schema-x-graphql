@@ -132,7 +132,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-          queries: security-and-quality
+          queries: security-extended
 
       # JavaScript/TypeScript: no compilation step needed — CodeQL analyses
       # source files directly. Autobuild is omitted intentionally.
