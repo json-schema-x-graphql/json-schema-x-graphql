@@ -37,3 +37,4 @@ type Casemismatchtest {
 scalar DateTime
 scalar Email
 scalar URI
+

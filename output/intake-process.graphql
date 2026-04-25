@@ -17,9 +17,7 @@ scalar Email
 "Valid URI/URL"
 scalar Uri
 
-"""
-Root Intake Process entity combining system metadata and Intake Process-specific extension data.
-"""
+"""Root Intake Process entity combining system metadata and Intake Process-specific extension data."""
 type EasiRecord {
   "System-level lineage and ingestion metadata."
   systemMetadata: SystemMetadata!
@@ -85,9 +83,7 @@ type PeriodOfPerformance {
   endDate: Date
 }
 
-"""
-Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics.
-"""
+"""Canonical, snake_case JSON Schema for the Intake Process system. Provides x-graphql-* hints for automatic GraphQL SDL subgraph generation without altering the underlying structural semantics."""
 type IntakeProcessCanonicalSchema {
   "Root Intake Process entity."
   intakeProcessRecord: EasiRecord

@@ -69,9 +69,7 @@ type ReservedWordsCollision {
   else: String
 }
 
-"""
-A schema designed to test edge cases, unusual characters, and potential parsing pitfalls.
-"""
+"""A schema designed to test edge cases, unusual characters, and potential parsing pitfalls."""
 type Fuzzedgecases {
   emptyObjectDef: EmptyObjectDef!
   emptyArrayDef: [String]
@@ -83,3 +81,4 @@ type Fuzzedgecases {
   arrayEdgeCases: ArrayEdgeCases
   reservedWordsCollision: ReservedWordsCollision
 }
+

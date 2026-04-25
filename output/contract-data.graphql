@@ -14,9 +14,7 @@ scalar Email
 "Uniform Resource Identifier or URL string"
 scalar Uri
 
-"""
-Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields.
-"""
+"""Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."""
 type Fpdsrecord {
   systemMetadata: SystemMetadata!
   identifiers: Identifiers!
@@ -107,9 +105,7 @@ type Financial {
   totalNonGovernmentValue: Float
 }
 
-"""
-Vendor information including identity, address, contact, and business classifications.
-"""
+"""Vendor information including identity, address, contact, and business classifications."""
 type Vendor {
   "Legal vendor name"
   vendorName: String
@@ -314,9 +310,7 @@ type Placeofperformance {
   popZipCode: String
 }
 
-"""
-IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts.
-"""
+"""IDV (Indefinite Delivery Vehicle) reference information for orders under parent contracts."""
 type Idvreference {
   "Type of indefinite delivery contract"
   typeOfIdc: String
@@ -348,9 +342,7 @@ type Compliance {
   walshHealeyAct: String
 }
 
-"""
-Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints.
-"""
+"""Canonical, snake_case JSON Schema for the Federal Procurement Data System (Contract Data). This schema represents the complete Contract Data dataset with 600+ fields organized by functional domain. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints."""
 type ContractDataCanonicalSchema {
   contractDataRecord: Fpdsrecord
 }

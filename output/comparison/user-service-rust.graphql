@@ -43,3 +43,4 @@ type User @key(fields: "\"id\"") @extends {
   "Additional user metadata"
   metadata: JSONObject
 }
+

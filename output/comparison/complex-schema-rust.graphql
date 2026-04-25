@@ -58,9 +58,7 @@ type Conditionalfield {
   taxId: ID
 }
 
-"""
-A comprehensive test schema covering all JSON Schema features for round-trip validation
-"""
+"""A comprehensive test schema covering all JSON Schema features for round-trip validation"""
 type Complextestschema @auth {
   "Unique identifier"
   id: ID!
@@ -102,3 +100,4 @@ type Complextestschema @auth {
 scalar Date
 scalar DateTime
 scalar Email
+

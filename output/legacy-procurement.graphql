@@ -17,17 +17,13 @@ scalar Email
 "Valid URI/URL"
 scalar Uri
 
-"""
-Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data.
-"""
+"""Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
 type AssistRecord {
   "System-level metadata for lineage, versioning, and ingestion."
   systemMetadata: SystemMetadata!
   "Legacy Procurement-specific domain fields."
   legacyProcurementSpecific: AssistSpecificData!
-  """
-  Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups.
-  """
+  """Convenience mirror of acquisition_data.ia_piid_or_unique_id for federated lookups."""
   iaPiidOrUniqueId: String
 }
 
@@ -111,9 +107,7 @@ type PeriodOfPerformance {
   endDate: Date
 }
 
-"""
-Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields.
-"""
+"""Canonical, snake_case JSON Schema for the Legacy Procurement system. Designed to auto-generate a valid GraphQL SDL subgraph via x-graphql-* hints without changing the structure. This schema defines a root AssistRecord entity with associated metadata and Legacy Procurement-specific domain fields."""
 type LegacyProcurementCanonicalSchema {
   "Root Legacy Procurement entity"
   legacyProcurementRecord: AssistRecord

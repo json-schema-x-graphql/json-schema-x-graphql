@@ -15,9 +15,7 @@ type ReservedKeywords {
   input: String
 }
 
-"""
-Schema to test naming convention application (PRESERVE vs GRAPHQL_IDIOMATIC) and identifier sanitization.
-"""
+"""Schema to test naming convention application (PRESERVE vs GRAPHQL_IDIOMATIC) and identifier sanitization."""
 type Sanitizationcoverage {
   "Already camelCase"
   standardField: String
@@ -43,3 +41,4 @@ type Sanitizationcoverage {
   complexTypeRef: ComplexTypeName123
   numericTypeRef: _123numerictype
 }
+

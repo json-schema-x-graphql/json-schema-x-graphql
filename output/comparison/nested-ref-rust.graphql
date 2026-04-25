@@ -11,3 +11,4 @@ type Root {
   simple: String
   deep: DeepData
 }
+
