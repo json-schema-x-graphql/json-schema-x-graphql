@@ -36,6 +36,16 @@ updates:
         patterns:
           - "nextra*"
           - "next"
+        # nextra v4 requires App Router; site uses Pages Router — stay on v3
+        update-types:
+          - "patch"
+          - "minor"
+    ignore:
+      # nextra v4 incompatible with Pages Router — pin to ^3.x until App Router migration
+      - dependency-name: "nextra"
+        versions: [">=4"]
+      - dependency-name: "nextra-theme-docs"
+        versions: [">=4"]
       apollo:
         patterns:
           - "@apollo/*"
