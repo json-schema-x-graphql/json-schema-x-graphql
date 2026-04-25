@@ -15,7 +15,7 @@ echo "✅ WASM module built."
 echo ""
 
 # Navigate to the Node.js converter directory for the rest of the script.
-cd ../node
+cd converters/node
 
 echo "→ Running comprehensive test suite for Node.js converter..."
 echo ""
@@ -39,20 +39,8 @@ echo ""
 echo "4. Running WASM tests..."
 pnpm run test:wasm
 echo "✅ WASM tests completed."
-echo "  ✅ ALL CHECKS PASSED"
-echo "======================================================================"
-=======
-echo "→ Building frontend demo: loro-monaco..."
-echo ""
-cd ../../frontend/demos/loro-monaco
-npm run build
-echo "✅ Demo build successful."
-echo ""
 
-echo "======================================================================"
-echo "  ✅ ALL CHECKS PASSED"
-echo "======================================================================"
-
+echo ""
 echo "======================================================================"
 echo "  ✅ ALL CHECKS PASSED"
 echo "======================================================================"
