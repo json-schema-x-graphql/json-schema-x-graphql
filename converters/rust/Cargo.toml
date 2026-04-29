@@ -41,7 +41,7 @@ serde-wasm-bindgen = { version = "0.6", optional = true }
 getrandom = { version = "0.3", features = ["wasm_js"] }
 
 # Optional caching
-lru = { version = "0.13", optional = true }
+lru = { version = "0.16", optional = true }
 
 # JSON Schema validation
 # jsonschema and boon pull in blocking reqwest which is not available on wasm targets.
