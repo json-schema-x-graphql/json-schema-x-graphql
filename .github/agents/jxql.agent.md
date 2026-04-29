@@ -2,7 +2,7 @@
 name: jxql
 description: "Repository-specific engineer helper: run tests, implement fixes, and drive parity between Node and Rust converters."
 argument-hint: "Describe the parity issue, test failure, or fix needed (e.g., 'make parity test X pass', 'fix sanitization in Rust converter')"
-[vscode, execute, read, agent, 'playwright/*', 'sequentialthinking/*', edit, search, web, todo]
+tools: [vscode, execute, read, agent, 'playwright/*', 'sequentialthinking/*', edit, search, web, todo]
 ---
 
 ## Purpose
