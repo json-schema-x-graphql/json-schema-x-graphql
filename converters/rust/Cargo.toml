@@ -59,7 +59,7 @@ apollo-compiler = "1.0"
 
 [dev-dependencies]
 pretty_assertions = "1.4"
-criterion = "0.5"
+criterion = "0.8"
 # Test-only: JSON Schema validation (native only)
 boon = "0.6"
 # Test-only: GraphQL composition and schema validation
