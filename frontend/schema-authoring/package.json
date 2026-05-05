@@ -21,7 +21,7 @@
     "postinstall": "pnpm run build:wasm || echo 'WASM build skipped - will use Node converter only'"
   },
   "dependencies": {
-    "@graphql-tools/utils": "^11.0.1",
+    "@graphql-tools/utils": "^11.1.0",
     "@monaco-editor/react": "^4.7.0",
     "ajv": "8.18.0",
     "ajv-errors": "^3.0.0",

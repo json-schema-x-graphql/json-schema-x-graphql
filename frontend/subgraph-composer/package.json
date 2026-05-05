@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.32",
-    "@graphql-tools/utils": "^11.0.1",
+    "@graphql-tools/utils": "^11.1.0",
     "@json-schema-x-graphql/core": "file:../../converters/node",
     "graphql": "^16.13.2",
     "react": "^19.2.5",
