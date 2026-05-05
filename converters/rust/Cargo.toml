@@ -38,7 +38,7 @@ serde-wasm-bindgen = { version = "0.6", optional = true }
 
 # Ensure getrandom compiles for wasm32-unknown-unknown using the wasm_js backend.
 # This enables Web Crypto (via wasm-bindgen) as the entropy source when building for web.
-getrandom = { version = "0.3", features = ["wasm_js"] }
+getrandom = { version = "0.4", features = ["wasm_js"] }
 
 # Optional caching
 lru = { version = "0.16", optional = true }
