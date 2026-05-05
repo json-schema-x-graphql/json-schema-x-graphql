@@ -65,9 +65,9 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^25.6.0",
-    "@typescript-eslint/eslint-plugin": "^8.59.1",
-    "@typescript-eslint/parser": "^8.59.1",
-    "eslint": "^10.2.1",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "eslint": "^10.3.0",
     "graphql": "^16.13.2",
     "jest": "^30.3.0",
     "oxfmt": "^0.47.0",
