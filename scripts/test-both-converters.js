@@ -16,7 +16,7 @@ import {
 } from "fs";
 import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { execSync } from "child_process";
+import { execFileSync, execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -204,10 +204,13 @@ async function testRustConverter(inputFile, outputFile) {
     const rustDir = rustConverterRoot;
     const startTime = Date.now();
 
+    const args = buildRustArgs(EFFECTIVE_OPTIONS, inputFile, outputFile);
+
     if (existsSync(rustBinaryPath)) {
-      const args = buildRustArgs(EFFECTIVE_OPTIONS, inputFile, outputFile);
-      const cmd = [rustBinaryPath, ...args].join(" ");
-      execSync(cmd, { encoding: "utf-8", stdio: "inherit" });
+      execFileSync(rustBinaryPath, args, {
+        encoding: "utf-8",
+        stdio: "inherit",
+      });
 
       const duration = Date.now() - startTime;
       const result = readFileSync(outputFile, "utf-8");
@@ -219,9 +222,17 @@ async function testRustConverter(inputFile, outputFile) {
       return { success: true, sdl: result, duration };
     }
 
-    // Fallback: use cargo example with defaults (may differ from STANDARD_OPTIONS)
-    const cmdFallback = `cd "${rustDir}" && cargo run -q --example json_to_sdl -- "${inputFile}" > "${outputFile}"`;
-    execSync(cmdFallback, { encoding: "utf-8", stdio: "inherit" });
+    // Fallback: invoke the CLI via cargo with the same flags used by the
+    // prebuilt binary so parity tests don't drift from missing defaults.
+    execFileSync(
+      "cargo",
+      ["run", "-q", "--features", "cli", "--bin", "jxql", "--", ...args],
+      {
+        cwd: rustDir,
+        encoding: "utf-8",
+        stdio: "inherit",
+      },
+    );
 
     const duration = Date.now() - startTime;
     const result = readFileSync(outputFile, "utf-8");
