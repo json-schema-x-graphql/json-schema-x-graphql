@@ -10,7 +10,6 @@ coverage:
   status:
     project:
       default:
-        # target: auto # use the base commit's coverage as the target
         target: 80%   # aim for 80% coverage
         threshold: 1% # allow 1% drop
       node:
@@ -26,11 +25,6 @@ coverage:
         target: auto
         threshold: 0%
 
-comment:
-  layout: "reach,diff,flags,files"
-  behavior: default
-  require_changes: no
-
 parsers:
   gcov:
     branch_detection:
@@ -42,4 +36,4 @@ parsers:
 comment:
   layout: "header, diff, flags, files"
   behavior: default
-  require_changes: false
+  require_changes: no

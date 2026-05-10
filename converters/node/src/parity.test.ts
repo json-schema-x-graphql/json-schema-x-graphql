@@ -212,19 +212,14 @@ describe("Parity: Node vs Rust converter outputs", () => {
   for (const file of files) {
     const basename = file.replace(/\.json$/, "");
 
-    test(`fixture: ${basename}`, () => {
-      if (basename === "case-mismatch.schema" || basename === "complex-schema") {
-        return;
-      }
-      const inputPath = join(testDataDir, file);
-      const optionsPath = join(testDataDir, `${basename}.options.json`);
-      const env = { ...process.env };
+    const isStandardFixture = !existsSync(join(testDataDir, `${basename}.options.json`));
+    const isKnownMismatched = basename === "case-mismatch.schema" || basename === "complex-schema";
+    
+    const testFn = (isKnownMismatched || !isStandardFixture) ? test.skip : test;
 
-      if (existsSync(optionsPath)) {
-        // Skip option-driven fixtures until Rust CLI exposes the standardized flags.
-        // This keeps the base parity suite green while advanced option support is wired up.
-        return;
-      }
+    testFn(`fixture: ${basename}`, () => {
+      const inputPath = join(testDataDir, file);
+      const env = { ...process.env };
 
       // run comparison script which writes outputs to output/comparison
       execSync(`node "${scriptPath}" "${inputPath}"`, {
@@ -252,8 +247,14 @@ describe("Parity: Node vs Rust converter outputs", () => {
       const nodeSDL = readFileSync(nodeOut, "utf-8");
       const rustSDL = readFileSync(rustOut, "utf-8");
 
+      expect(nodeSDL.trim().length).toBeGreaterThan(0);
+      expect(rustSDL.trim().length).toBeGreaterThan(0);
+
       const normNode = normalizeSDL(nodeSDL);
       const normRust = normalizeSDL(rustSDL);
+
+      expect(normNode).not.toBeNull();
+      expect(normRust).not.toBeNull();
 
       const finalNode =
         basename === "case-mismatch.schema" && normNode

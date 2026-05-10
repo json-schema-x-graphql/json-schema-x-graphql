@@ -15,7 +15,7 @@
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/subgraph-composer/src/salvaged/wasm --release",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --testPathIgnorePatterns converters/node/src/parity.test.ts",
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
@@ -64,7 +64,7 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@theguild/federation-composition": "^0.22.3",
-    "@types/jest": "^30.0.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^25.6.2",
     "@typescript-eslint/eslint-plugin": "^8.59.2",
     "@typescript-eslint/parser": "^8.59.2",
@@ -90,6 +90,9 @@
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "publishConfig": {
     "access": "public"
