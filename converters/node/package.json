@@ -50,16 +50,16 @@
     "typescript",
     "validation"
   ],
-  "author": "JJediny and Contributors",
+  "author": "json-schema-x-graphql Contributors",
   "license": "MIT",
-  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JJediny/json-schema-x-graphql.git",
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git",
     "directory": "converters/node"
   },
   "bugs": {
-    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
   },
   "engines": {
     "node": ">=18.0.0",
