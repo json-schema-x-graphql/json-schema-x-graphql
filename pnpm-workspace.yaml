@@ -1,19 +1,37 @@
 packages:
   - converters/node
   - frontend/subgraph-composer
-  - frontend/demos/yjs-monaco
-  - frontend/demos/loro-monaco
-  - frontend/schema-authoring
   - external/visual-json
   - external/visual-json/packages/*
+
+allowBuilds:
+  esbuild: false
+  unrs-resolver: false
+  wasm-pack: false
 
 onlyBuiltDependencies:
   - "visual-json"
 
 overrides:
-  diff@>=5.0.0 <5.2.2: '>=5.2.2'
-  esbuild@<=0.24.2: '>=0.25.0'
-  lodash@>=4.0.0 <=4.17.22: '>=4.17.23'
-  webpack@>=5.49.0 <5.104.0: '>=5.104.0'
-  webpack@>=5.49.0 <=5.104.0: '>=5.104.1'
-  ws@>=8.0.0 <8.17.1: '>=8.17.1'
+  minimatch: ^10.2.5
+  serialize-javascript: ^7.0.3
+  webpack: ^5.106.0
+  ws: ^8.18.0
+  esbuild: ^0.25.0
+  ajv: ^8.18.0
+  axios: 1.15.2
+  tar: 7.5.11
+  flatted: ^3.4.2
+  dompurify: 3.4.2
+  picomatch: ^4.0.4
+  brace-expansion: ^5.0.5
+  yaml: ^2.7.0
+  "@tootallnate/once": 3.0.1
+  fast-uri: ^3.1.2
+  postcss: ^8.5.10
+  vite: 7.3.2
+  diff: ^5.2.2
+  lodash: ^4.17.23
+  tar@<7: 7.5.11
+  axios@<1.15.1: 1.15.2
+  dompurify@<3.4.2: 3.4.2

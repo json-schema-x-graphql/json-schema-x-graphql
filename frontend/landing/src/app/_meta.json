@@ -1,0 +1,11 @@
+{
+  "index": "Home",
+  "viewer": {
+    "title": "JSON Schema Viewer",
+    "href": "/petrified-schema-viewer"
+  },
+  "graphql": {
+    "title": "GraphQL Voyager",
+    "href": "/graphql"
+  }
+}
