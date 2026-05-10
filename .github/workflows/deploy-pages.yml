@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -16,29 +14,32 @@ concurrency:
 
 jobs:
   build:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: "24"
           cache: "pnpm"
 
       - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.4.0
+        uses: jetli/wasm-pack-action@0d096b08b4e5a7de8c28de67e11e945404e9eefa # v0.4.0
         with:
           version: "latest"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # ── Editor (subgraph-composer) → /editor ──────────────────────────
       - name: Build WASM for editor
         run: |
           chmod +x scripts/build-wasm.sh
@@ -49,13 +50,11 @@ jobs:
         env:
           VITE_BASE_URL: "/editor/"
 
-      # ── Docs site (Nextra) → / ─────────────────────────────────────────
       - name: Build docs site
         run: pnpm --filter @json-schema-x-graphql/website build
         env:
           BASE_PATH: "/json-schema-x-graphql"
 
-      # ── Assemble pages artifact ────────────────────────────────────────
       - name: Assemble site
         run: |
           mkdir -p _site/editor
@@ -63,11 +62,15 @@ jobs:
           cp -r frontend/subgraph-composer/dist/. _site/editor/
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: ./_site
 
   deploy:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -76,4 +79,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
