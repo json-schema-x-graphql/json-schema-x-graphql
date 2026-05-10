@@ -26,6 +26,7 @@
 pub mod api_types;
 pub mod case_conversion;
 pub mod error;
+pub mod graphql_ast_json;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
 pub mod schema;
@@ -105,7 +106,10 @@ impl Converter {
         }
 
         let graphql_sdl = json_to_graphql::convert(&schema, &self.options)?;
-        Ok(graphql_sdl)
+        match self.options.output_format {
+            types::OutputFormat::AstJson => graphql_ast_json::sdl_to_ast_json(&graphql_sdl),
+            _ => Ok(graphql_sdl),
+        }
     }
 
     /// Convert GraphQL SDL to JSON Schema

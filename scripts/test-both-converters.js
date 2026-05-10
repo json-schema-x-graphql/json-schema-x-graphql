@@ -16,7 +16,7 @@ import {
 } from "fs";
 import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { execFileSync, execSync } from "child_process";
+import { execFileSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -140,13 +140,47 @@ const EFFECTIVE_OPTIONS = { ...STANDARD_OPTIONS, ...OPTION_OVERRIDES };
 
 function buildRustArgs(options, inputFile, outputFile) {
   const args = ["--input", inputFile, "--output", outputFile];
-  // The current Rust CLI supports a minimal flag set; advanced options are not yet exposed.
+
+  if (options.outputFormat) {
+    args.push("--output-format", String(options.outputFormat));
+  }
+
+  if (options.idStrategy) {
+    args.push("--id-strategy", String(options.idStrategy));
+    if (options.idStrategy !== "NONE") {
+      args.push("--infer-ids");
+    }
+  }
+
+  if (options.failOnWarning) {
+    args.push("--fail-on-warning");
+  }
+
+  if (options.namingConvention) {
+    args.push("--naming-convention", String(options.namingConvention));
+  }
+
+  const federationVersion =
+    options.federationVersion === "AUTO"
+      ? "2"
+      : String(options.federationVersion || "2");
+  args.push("--federation-version", federationVersion.replace(/^V/i, ""));
+
+  for (const typeName of options.excludeTypes || []) {
+    args.push("--exclude-types", String(typeName));
+  }
+  for (const pattern of options.excludePatterns || []) {
+    args.push("--exclude-patterns", String(pattern));
+  }
+  for (const suffix of options.excludeTypeSuffixes || []) {
+    args.push("--exclude-type-suffixes", String(suffix));
+  }
+
+  // The current CLI defaults already align with the shared parity defaults for
+  // descriptions/preserve-order, but keep them explicit for readability.
   args.push("--descriptions");
   args.push("--preserve-order");
-  // Legacy infer-ids fallback when idStrategy is set and not NONE.
-  if (options.idStrategy && options.idStrategy !== "NONE") {
-    args.push("--infer-ids");
-  }
+
   return args;
 }
 

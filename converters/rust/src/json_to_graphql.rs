@@ -55,26 +55,6 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                             })
                         });
 
-                    // Prioritize x-graphql-description over description
-                    let description = def_schema
-                        .get("x-graphql-description")
-                        .and_then(|v| v.as_str())
-                        .or_else(|| def_schema.get("description").and_then(|v| v.as_str()));
-
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
-
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
-
                     let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
                         .unwrap_or(def_key);
@@ -599,7 +579,6 @@ fn convert_type_definition(
     // Generate SDL based on kind
     match kind {
         "enum" => {
-            output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             // Description for enum
             if context.options.include_descriptions {
                 if let Some(description) = obj
@@ -610,6 +589,7 @@ fn convert_type_definition(
                     output.push_str(&format_description(description, context.options));
                 }
             }
+            output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
