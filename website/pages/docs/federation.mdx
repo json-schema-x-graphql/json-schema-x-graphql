@@ -1,0 +1,63 @@
+---
+title: Apollo Federation
+---
+
+# Apollo Federation
+
+The converter has first-class support for Apollo Federation v2 — you can generate production-ready subgraph SDL directly from JSON Schema.
+
+## Enable federation output
+
+```ts
+import { convertJsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+
+const sdl = convertJsonSchemaToGraphQL(schema, {
+  federation: {
+    enabled: true,
+    version: 2,
+    serviceName: 'users',
+  }
+});
+```
+
+## Marking entity keys
+
+Use `x-graphql-federation` on the property that is your entity's `@key`:
+
+```json
+{
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-graphql-type": "ID",
+      "x-graphql-federation": { "key": true }
+    }
+  }
+}
+```
+
+Generates:
+
+```graphql
+type User @key(fields: "id") {
+  id: ID!
+}
+```
+
+## Supported Federation directives
+
+| Directive | How to use |
+|---|---|
+| `@key` | `"x-graphql-federation": { "key": "id" }` or `{ "key": true }` on the key field |
+| `@shareable` | `"x-graphql-federation": { "shareable": true }` on the type |
+| `@external` | `"x-graphql-federation": { "external": true }` on the field |
+| `@requires` | `"x-graphql-federation": { "requires": "shippingAddress { zip }" }` |
+| `@provides` | `"x-graphql-federation": { "provides": "name" }` |
+| `@inaccessible` | `"x-graphql-federation": { "inaccessible": true }` |
+| `@override` | `"x-graphql-federation": { "override": "legacy-users" }` |
+
+## Auto-detection mode
+
+Pass `federation: { autoDetect: true }` to let the converter infer federation annotations from `$id` fields and naming conventions without adding extension keys to every schema.

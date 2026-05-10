@@ -1,6 +1,7 @@
 packages:
   - converters/node
   - frontend/subgraph-composer
+  - website
   - external/visual-json
   - external/visual-json/packages/*
 

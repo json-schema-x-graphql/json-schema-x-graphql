@@ -1,0 +1,4 @@
+# Nextra website build artifacts
+.next/
+out/
+node_modules/

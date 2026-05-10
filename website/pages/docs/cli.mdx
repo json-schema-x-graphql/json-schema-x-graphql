@@ -1,0 +1,59 @@
+---
+title: CLI
+---
+
+# CLI
+
+The package ships a CLI (`json-schema-x-graphql`) that can be used directly with `npx` or installed globally.
+
+## Usage
+
+```bash
+npx @json-schema-x-graphql/core <command> [options]
+```
+
+## Commands
+
+### `convert`
+
+Convert a JSON Schema file to GraphQL SDL (or vice-versa).
+
+```bash
+# JSON Schema → GraphQL SDL
+npx @json-schema-x-graphql/core convert schema.json
+
+# Specify output file
+npx @json-schema-x-graphql/core convert schema.json -o schema.graphql
+
+# Pipe via stdin
+cat schema.json | npx @json-schema-x-graphql/core convert -
+
+# GraphQL SDL → JSON Schema (reverse)
+npx @json-schema-x-graphql/core convert schema.graphql --reverse
+
+# Enable Federation v2 output
+npx @json-schema-x-graphql/core convert schema.json --federation
+```
+
+### `validate`
+
+Validate a JSON Schema or GraphQL SDL file.
+
+```bash
+npx @json-schema-x-graphql/core validate schema.json
+npx @json-schema-x-graphql/core validate schema.graphql
+```
+
+### `help`
+
+```bash
+npx @json-schema-x-graphql/core --help
+npx @json-schema-x-graphql/core convert --help
+```
+
+## Global install
+
+```bash
+npm install -g @json-schema-x-graphql/core
+json-schema-x-graphql convert schema.json
+```

@@ -1,0 +1,164 @@
+---
+title: Federation Quick Reference
+---
+
+# Apollo Federation Quick Reference
+
+Quick directive mapping and common patterns for `x-graphql` federation extensions.
+
+---
+
+## Directive Mapping
+
+| GraphQL Federation              | JSON Schema `x-graphql` Extension                           |
+| ------------------------------- | ----------------------------------------------------------- |
+| `@key(fields: "id")`            | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }` |
+| `@external`                     | `"x-graphql-federation": { "external": true }`             |
+| `@provides(fields: "username")` | `"x-graphql-federation": { "provides": "username" }`       |
+| `@requires(fields: "email")`    | `"x-graphql-federation": { "requires": "email" }`          |
+| `extend type User`              | `"x-graphql-federation": { "extends": true }`              |
+| `@shareable`                    | `"x-graphql-federation": { "shareable": true }`            |
+| `@override(from: "old")`        | `"x-graphql-federation": { "override": { "from": "old" } }`|
+
+---
+
+## Common Patterns
+
+### 1. Simple Entity with Key
+
+```json
+{
+  "User": {
+    "type": "object",
+    "x-graphql-type-name": "User",
+    "x-graphql-federation": { "keys": [{ "fields": "id" }] },
+    "properties": {
+      "id": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "name": { "type": "string" }
+    }
+  }
+}
+```
+
+Generated: `type User @key(fields: "id") { id: ID! name: String }`
+
+### 2. Entity Extension with @external
+
+```json
+{
+  "UserExtension": {
+    "x-graphql-type-name": "User",
+    "x-graphql-federation": { "extends": true, "keys": [{ "fields": "id" }] },
+    "properties": {
+      "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true, "x-graphql-federation": { "external": true } },
+      "reviews": { "x-graphql-field-type": "[Review]" }
+    }
+  }
+}
+```
+
+Generated: `type User @key(fields: "id") { id: ID! @external reviews: [Review] }`
+
+### 3. @provides
+
+```json
+{
+  "author": {
+    "x-graphql-field-type": "User",
+    "x-graphql-federation": { "provides": "username" }
+  }
+}
+```
+
+Generated: `author: User @provides(fields: "username")`
+
+### 4. @requires
+
+```json
+{
+  "full_name": {
+    "x-graphql-field-name": "fullName",
+    "x-graphql-federation": { "requires": "firstName lastName" }
+  }
+}
+```
+
+Generated: `fullName: String @requires(fields: "firstName lastName")`
+
+### 5. Composite Key
+
+```json
+{
+  "Product": {
+    "x-graphql-federation": { "keys": [{ "fields": "sku storeId" }] }
+  }
+}
+```
+
+Generated: `type Product @key(fields: "sku storeId") { ... }`
+
+### 6. Multiple Keys
+
+```json
+{
+  "User": {
+    "x-graphql-federation": { "keys": [{ "fields": "id" }, { "fields": "email" }] }
+  }
+}
+```
+
+Generated: `type User @key(fields: "id") @key(fields: "email") { ... }`
+
+### 7. @shareable
+
+```json
+{
+  "name": { "type": "string", "x-graphql-federation": { "shareable": true } }
+}
+```
+
+Generated: `name: String @shareable`
+
+### 8. @override
+
+```json
+{
+  "price": { "x-graphql-federation": { "override": { "from": "legacy-service" } } }
+}
+```
+
+Generated: `price: Float @override(from: "legacy-service")`
+
+---
+
+## Common Mistakes
+
+| Mistake | Fix |
+| ------- | --- |
+| Forgetting `"extends": true` when extending a type | Add `"x-graphql-federation": { "extends": true }` |
+| Forgetting `"external": true` on key field in extension | Add `"x-graphql-federation": { "external": true }` to the key property |
+| Wrong key fields in extension (don't match original) | Key fields in extensions must exactly match the owning service's `@key` fields |
+
+---
+
+## Convert & Validate
+
+```bash
+# Convert schema to SDL (Node.js)
+node converters/node/dist/cli.js --input your-schema.json
+
+# Convert schema to SDL (Rust)
+./converters/rust/target/release/jxql --input your-schema.json
+
+# Compose supergraph (requires Rover)
+rover supergraph compose --config supergraph.yaml
+```
+
+---
+
+## Related
+
+- [Federation Patterns](../recipes/federation-patterns) — detailed patterns with full examples
+- [Supergraph Entity Design](./supergraph-entity-design) — explicit entity ownership metadata
+- [x-graphql Attribute Reference](./x-graphql-attributes)
+- [Examples](https://github.com/json-schema-x-graphql/json-schema-x-graphql/tree/main/examples/federation)

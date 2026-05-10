@@ -1,0 +1,58 @@
+---
+title: x-graphql Extensions
+---
+
+# x-graphql Extensions
+
+JSON Schema supports arbitrary extension keywords prefixed with `x-`. This library uses the `x-graphql-*` namespace to carry GraphQL-specific semantics through the conversion pipeline so nothing is lost on round-trips.
+
+## Supported extensions
+
+| Extension key | Purpose | Example |
+|---|---|---|
+| `x-graphql-type` | Override the inferred GraphQL scalar | `"x-graphql-type": "ID"` |
+| `x-graphql-directives` | Attach arbitrary GraphQL directives | `"x-graphql-directives": ["@deprecated(reason: \"use newId\")"]` |
+| `x-graphql-federation` | Federation v2 directives for the field or type | `"x-graphql-federation": { "key": "id" }` |
+| `x-graphql-description` | Override the description in GraphQL SDL | `"x-graphql-description": "Primary key"` |
+| `x-graphql-nullable` | Force a field to be nullable even if listed in `required` | `"x-graphql-nullable": true` |
+| `x-graphql-skip` | Exclude a property from the generated SDL | `"x-graphql-skip": true` |
+
+## Example
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-graphql-type": "ID",
+      "x-graphql-federation": { "key": true }
+    },
+    "legacyRef": {
+      "type": "string",
+      "x-graphql-skip": true
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "x-graphql-directives": ["@deprecated(reason: \"use createdAtIso\")"]
+    }
+  },
+  "required": ["id"]
+}
+```
+
+Produces:
+
+```graphql
+type User @key(fields: "id") {
+  id: ID!
+  createdAt: String @deprecated(reason: "use createdAtIso")
+}
+```
+
+## Round-trip guarantee
+
+When converting GraphQL SDL back to JSON Schema, all extension fields are preserved so a subsequent SDL conversion produces identical output.

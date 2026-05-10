@@ -1,0 +1,66 @@
+---
+title: Quick Start
+---
+
+import { Steps, Tabs } from 'nextra/components'
+
+# Quick Start
+
+<Steps>
+
+### Install the package
+
+```bash npm2yarn
+npm install @json-schema-x-graphql/core
+```
+
+### Convert JSON Schema → GraphQL SDL
+
+```ts
+import { convertJsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+
+const sdl = convertJsonSchemaToGraphQL({
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Product",
+  "type": "object",
+  "properties": {
+    "id":    { "type": "string" },
+    "name":  { "type": "string" },
+    "price": { "type": "number" }
+  },
+  "required": ["id", "name"]
+});
+
+console.log(sdl);
+// type Product {
+//   id: String!
+//   name: String!
+//   price: Float
+// }
+```
+
+### Convert GraphQL SDL → JSON Schema
+
+```ts
+import { convertGraphQLToJsonSchema } from '@json-schema-x-graphql/core';
+
+const schema = convertGraphQLToJsonSchema(`
+  type Product {
+    id: String!
+    name: String!
+    price: Float
+  }
+`);
+```
+
+### Use the interactive editor
+
+Open the **[Live Editor →](https://json-schema-x-graphql.github.io/editor)** to author schemas visually with real-time bidirectional conversion and Apollo Federation support.
+
+</Steps>
+
+## Next steps
+
+- [Installation options](/docs/installation) — Node.js, Rust, WASM, CLI
+- [x-graphql extensions](/docs/x-graphql) — carry custom semantics through conversion
+- [Apollo Federation](/docs/federation) — generate Federation v2 subgraph SDL

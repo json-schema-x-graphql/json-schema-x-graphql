@@ -1,0 +1,7 @@
+export default {
+  "features": "Features Guide",
+  "cli-guide": "CLI Guide",
+  "testing": "Testing Guide",
+  "graphql-spec-schema": "GraphQL Spec Schema",
+  "rust-testing": "Rust Testing & Security"
+}

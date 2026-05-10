@@ -1,0 +1,70 @@
+---
+title: Contributing
+---
+
+# Contributing
+
+We welcome contributions! This project has two main packages — a Node.js/TypeScript converter and a Rust converter — plus a browser editor and this documentation site.
+
+## Repository structure
+
+```
+converters/
+  node/          @json-schema-x-graphql/core  (TypeScript, published to npm)
+  rust/          json-schema-x-graphql        (Rust, published to crates.io)
+frontend/
+  subgraph-composer/   Interactive browser editor (React + Vite)
+website/               This documentation site (Nextra)
+converters/test-data/  Shared test fixtures
+scripts/               Build and validation utilities
+```
+
+## Getting started
+
+```bash
+# 1. Clone
+git clone https://github.com/json-schema-x-graphql/json-schema-x-graphql.git
+cd json-schema-x-graphql
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Run converter tests
+pnpm converters:test
+
+# 4. Run editor locally
+pnpm --filter subgraph-composer dev
+
+# 5. Run docs site locally
+pnpm --filter @json-schema-x-graphql/website dev
+```
+
+## Running tests
+
+```bash
+# Node.js converter tests
+pnpm --filter @json-schema-x-graphql/core test
+
+# Rust converter tests
+cd converters/rust && cargo test
+
+# Parity tests (Node vs Rust)
+pnpm test:parity
+```
+
+## Submitting changes
+
+1. Fork the repository and create a branch from `main`
+2. Make your changes with tests
+3. Run `pnpm converters:test` and `cargo test` — both must pass
+4. Open a pull request describing what changed and why
+
+## Issue labels
+
+| Label | Meaning |
+|---|---|
+| `good first issue` | Suitable for new contributors |
+| `enhancement` | New feature or improvement |
+| `bug` | Something isn't working |
+| `future` | Deferred work, tracked for post-launch |
+| `deferred-package` | npm/crate package removed but worth revisiting |

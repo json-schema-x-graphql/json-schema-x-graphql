@@ -1,0 +1,70 @@
+---
+title: Visual SDL Editor (graphql-editor demo)
+---
+
+# Visual SDL Editor — graphql-editor Demo
+
+> **Status: Deferred** — The `graphql-editor` package was removed from the active workspace during open-source launch simplification (see [issue #8](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/8)). Source is preserved on the `pre-open-source-launch-v1-2026-04-25` branch.
+
+---
+
+## Overview
+
+The visual SDL editor provided a node-canvas view of a GraphQL schema using the [`graphql-editor`](https://github.com/graphql-editor/graphql-editor) package. It let users:
+
+- Drag and connect types visually, rather than editing SDL text
+- See live type relationships in a graph canvas
+- Supplement or replace the Monaco text editor for users who prefer a visual authoring workflow
+
+---
+
+## Integration pattern
+
+The editor was lazy-loaded inside the loro-monaco demo (`App.tsx`) using a React `Suspense` boundary:
+
+```tsx
+import { lazy, Suspense } from "react";
+
+const GraphQLEditor = lazy(() =>
+  import("graphql-editor").then((mod) => ({
+    default: mod.GraphQLEditor ?? mod.default,
+  })),
+);
+
+// Toggled by a button in the toolbar:
+{useGraphQLEditor && (
+  <Suspense fallback={<div className="loading">Loading visual editor…</div>}>
+    <GraphQLEditor
+      schema={graphqlSdl}
+      setSchema={(newSdl) => setGraphqlSdl(newSdl)}
+      theme={isDarkTheme ? "Dark" : "Light"}
+      // Federation directives must be prepended so the editor
+      // can resolve @key, @shareable, etc.
+      schemaToResolve={federationDirectives + "\n" + graphqlSdl}
+    />
+  </Suspense>
+)}
+```
+
+Key integration choices:
+- **Lazy loading** was mandatory — graphql-editor initialises a WASM worker on import that fails when loaded eagerly before the DOM is ready.
+- **Federation directives prepended** — the `federationDirectives` SDL string (all Apollo Federation v2 directives + common scalars) is injected as `schemaToResolve` so the visual canvas does not display unknown-directive errors.
+- **Controlled component** — the `setSchema` callback syncs visual edits back to the Zustand store, keeping Monaco and the canvas in sync.
+
+---
+
+## Why it was deferred
+
+- Large bundle impact (includes monaco worker scripts and graphql-editor's own WASM binary)
+- Worker initialisation issues in CI and during server-side rendering
+- The subgraph-composer's CodeMirror editor + SDL preview covers the primary use case for the public launch
+
+---
+
+## Re-implementing in the future
+
+1. Install `graphql-editor@^7.3.0`.
+2. Create a `GraphQLVisualEditor.tsx` component that lazy-loads the import.
+3. Prepend `federationDirectives` to the SDL before passing to `schemaToResolve`.
+4. Add an error boundary around the `Suspense` block — graphql-editor can throw during hydration if WebGL is not available.
+5. See [issue #8](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/8) for context and dependency version tracking.
