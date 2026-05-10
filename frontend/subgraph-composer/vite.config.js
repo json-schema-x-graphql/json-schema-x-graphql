@@ -15,16 +15,6 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       external: ["@visual-json/react"],
-      output: {
-        manualChunks: {
-          // Lazy load heavy libraries
-          codemirror: [
-            "@codemirror/lang-json",
-            "@codemirror/view",
-            "@codemirror/state",
-          ],
-        },
-      },
     },
   },
   define: {
