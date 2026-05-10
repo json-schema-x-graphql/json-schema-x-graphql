@@ -15,7 +15,7 @@
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/subgraph-composer/src/salvaged/wasm --release",
-    "test": "jest --runInBand --testPathIgnorePatterns=converters/node/src/parity.test.ts",
+    "test": "jest --runInBand",
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",
