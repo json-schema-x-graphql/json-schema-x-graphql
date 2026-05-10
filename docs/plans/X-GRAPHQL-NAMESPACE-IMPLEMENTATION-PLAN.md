@@ -1343,6 +1343,7 @@ echo "✅ All x-graphql attributes validated"
    ```
 
 3. **Real-world API Conversion**
+
    ```typescript
    test("converts real-world API schemas", () => {
      const schemas = ["github-api.json", "stripe-api.json", "shopify-api.json"];

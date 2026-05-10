@@ -356,8 +356,8 @@ Last Updated: December 2024
 **Active Blockers:**
 
 1. [BLOCKER] `generate-graphql-json-schema.mjs` function signature mismatch
-   - Owner: ****\_\_\_****
-   - Status: ****\_\_\_****
+   - Owner: \***\*\_\_\_\*\***
+   - Status: \***\*\_\_\_\*\***
    - ETA: Week 1
 
 **Resolved:**

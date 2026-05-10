@@ -185,21 +185,11 @@ Below are the scripts available via `pnpm run` and what they do.
      - Action: ensure it handles failing child processes with readable error messages and adds the expected artifacts to `git` in CI.
      - Reason: orchestrator failure causes CI to fail with minimal context.
 
-  High priority (developer UX & maintainability):
-  4. Document each `scripts/` helper file with top-of-file comments and list them in this README (automate if possible).
-  5. Add `--help` output to long-running scripts or create a `scripts/cli.js` central entry so commands can be discovered programmatically.
-  6. Standardize on `pnpm` in script bodies (replace `npm` calls in `analyze` / `federalist`).
-  7. Make scripts idempotent and safe for CI runs (no side-effectful global git commits unless explicitly intended).
+  High priority (developer UX & maintainability): 4. Document each `scripts/` helper file with top-of-file comments and list them in this README (automate if possible). 5. Add `--help` output to long-running scripts or create a `scripts/cli.js` central entry so commands can be discovered programmatically. 6. Standardize on `pnpm` in script bodies (replace `npm` calls in `analyze` / `federalist`). 7. Make scripts idempotent and safe for CI runs (no side-effectful global git commits unless explicitly intended).
 
-  Medium priority (cleanup & tests):
-  8. Add unit/integration tests for critical scripts (generators and validators) — harness can use Node + temporary dirs.
-  9. Add a script `scripts/check-generated` that validates the presence and rough validity of `generated-schemas/*.json` (AJV quick-check).
-  10. Normalize ESM/CJS usage or document why some scripts are `.mjs` and others are `.js`.
+  Medium priority (cleanup & tests): 8. Add unit/integration tests for critical scripts (generators and validators) — harness can use Node + temporary dirs. 9. Add a script `scripts/check-generated` that validates the presence and rough validity of `generated-schemas/*.json` (AJV quick-check). 10. Normalize ESM/CJS usage or document why some scripts are `.mjs` and others are `.js`.
 
-  Low priority (polish):
-  11. Consider adding `make` targets or GitHub Actions workflow snippets for running these scripts locally in a consistent environment.
-  12. Add a troubleshooting section with common errors (example: GraphQL parse errors due to leftover diff markers; missing helper imports).
-  13. Provide a small CONTRIBUTING note for how to regenerate and commit `generated-schemas/` artifacts when making schema changes.
+  Low priority (polish): 11. Consider adding `make` targets or GitHub Actions workflow snippets for running these scripts locally in a consistent environment. 12. Add a troubleshooting section with common errors (example: GraphQL parse errors due to leftover diff markers; missing helper imports). 13. Provide a small CONTRIBUTING note for how to regenerate and commit `generated-schemas/` artifacts when making schema changes.
 
   ## Suggested immediate next commands (local checks)
 

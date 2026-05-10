@@ -350,6 +350,7 @@ Comprehensive GitHub Actions workflow with **6 jobs**:
    - Scaling behavior analysis
 
 6. **Real-World Benchmarks**
+
    ```rust
    bench_real_world_schemas()
    ```
