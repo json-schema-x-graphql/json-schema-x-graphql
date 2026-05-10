@@ -7,7 +7,7 @@ on:
     branches: [main, develop]
 
 env:
-  NODE_VERSION: '24'
+  NODE_VERSION: "24"
 
 jobs:
   build-and-test-composer:
@@ -58,7 +58,7 @@ jobs:
         # This step simulates a pipeline: JSON Schemas -> Subgraphs -> Supergraph
         # We assume there is a script or we use the CLI to demonstrate integrity.
         # If no specific script exists, we check if the composition logic is testable via CLI.
-        # For now, we will run the integration tests in node converter which cover this, 
+        # For now, we will run the integration tests in node converter which cover this,
         # but specifically targeting federation scenarios if available.
         run: |
           cd converters/node

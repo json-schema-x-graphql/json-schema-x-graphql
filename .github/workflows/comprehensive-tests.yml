@@ -2,9 +2,9 @@ name: Comprehensive Tests
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
   workflow_dispatch:
 
 env:
@@ -424,7 +424,8 @@ jobs:
   test-summary:
     name: Test Summary
     runs-on: ubuntu-latest
-    needs: [rust-tests, node-tests, rust-coverage, node-coverage, round-trip-tests]
+    needs:
+      [rust-tests, node-tests, rust-coverage, node-coverage, round-trip-tests]
     if: always()
 
     steps:

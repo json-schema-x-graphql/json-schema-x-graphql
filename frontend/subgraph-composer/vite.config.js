@@ -14,6 +14,7 @@ export default defineConfig({
     minify: "esbuild",
     sourcemap: false,
     rollupOptions: {
+      external: ["@visual-json/react"],
       output: {
         manualChunks: {
           // Lazy load heavy libraries

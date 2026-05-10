@@ -6,3 +6,12 @@ out/
 external/
 reports/
 target/
+scripts/legacy-reference/
+frontend/dashboard/scripts/mappings/
+examples/
+frontend/dashboard/public/data/
+output.graphql
+output/
+frontend/dashboard/scripts/
+**/generated/
+frontend/dashboard/src/data/
