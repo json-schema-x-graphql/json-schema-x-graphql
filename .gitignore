@@ -112,3 +112,6 @@ frontend/**/*.zip
 *.swp
 *.swo
 *~
+
+# Node lock (we use PNPM)
+package-lock.json

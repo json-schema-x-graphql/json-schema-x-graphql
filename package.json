@@ -45,16 +45,16 @@
     "validation",
     "type-system"
   ],
-  "author": "JJediny and Contributors",
+  "author": "json-schema-x-graphql contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JJediny/json-schema-x-graphql.git"
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git"
   },
   "bugs": {
-    "url": "https://github.com/JJediny/json-schema-x-graphql/issues"
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
   },
-  "homepage": "https://github.com/JJediny/json-schema-x-graphql#readme",
+  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
   "dependencies": {
     "ajv": "^8.18.0",
     "graphql": "^16.14.0",
@@ -90,9 +90,6 @@
   },
   "engines": {
     "node": ">=16.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "publishConfig": {
     "access": "public"
