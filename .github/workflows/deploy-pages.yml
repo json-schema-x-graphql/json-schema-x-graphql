@@ -53,7 +53,7 @@ jobs:
       - name: Build docs site
         run: pnpm --filter @json-schema-x-graphql/website build
         env:
-          BASE_PATH: ""
+          BASE_PATH: "/json-schema-x-graphql"
 
       # ── Assemble pages artifact ────────────────────────────────────────
       - name: Assemble site
