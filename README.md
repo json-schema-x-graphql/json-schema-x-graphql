@@ -5,9 +5,12 @@
 ![Project Status](https://img.shields.io/badge/status-beta-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Version](https://img.shields.io/badge/version-0.4.0-green)
-[![Validation & Testing](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/validation-and-testing.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/validation-and-testing.yml)
-[![Comprehensive Tests](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml/badge.svg)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml)
-[![codecov](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql/branch/main/graph/badge.svg)](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql)
+[![Comprehensive Tests](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml/badge.svg?branch=main)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/comprehensive-tests.yml)
+[![Security Audit](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/security-audit.yml/badge.svg?branch=main)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/security-audit.yml)
+[![Docs Site](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/docs.yml)
+[![Deploy to GitHub Pages](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/deploy-pages.yml)
+[![Composition Pipeline](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/composition-pipeline.yml/badge.svg?branch=main)](https://github.com/json-schema-x-graphql/json-schema-x-graphql/actions/workflows/composition-pipeline.yml)
+[![codecov](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql/graph/badge.svg?token=502P8OW59D)](https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql)
 
 ## Overview
 

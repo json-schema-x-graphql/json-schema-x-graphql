@@ -42,13 +42,56 @@ pub use types::{
     ConversionDirection, ConversionOptions, IdInferenceStrategy, NamingConvention, OutputFormat,
 };
 
+#[cfg(feature = "caching")]
+use indexmap::IndexMap;
 use serde_json::Value as JsonValue;
+
+#[cfg(feature = "caching")]
+struct SimpleLruCache {
+    capacity: usize,
+    entries: IndexMap<String, String>,
+}
+
+#[cfg(feature = "caching")]
+impl SimpleLruCache {
+    fn new(capacity: usize) -> Self {
+        assert!(capacity > 0, "cache capacity must be greater than zero");
+        Self {
+            capacity,
+            entries: IndexMap::new(),
+        }
+    }
+
+    fn get(&mut self, key: &str) -> Option<String> {
+        let value = self.entries.shift_remove(key)?;
+        let cached = value.clone();
+        self.entries.insert(key.to_string(), value);
+        Some(cached)
+    }
+
+    fn put(&mut self, key: String, value: String) {
+        self.entries.shift_remove(&key);
+        self.entries.insert(key, value);
+
+        while self.entries.len() > self.capacity {
+            if let Some(oldest_key) = self.entries.keys().next().cloned() {
+                self.entries.shift_remove(&oldest_key);
+            } else {
+                break;
+            }
+        }
+    }
+
+    fn clear(&mut self) {
+        self.entries.clear();
+    }
+}
 
 /// Main converter struct
 pub struct Converter {
     options: ConversionOptions,
     #[cfg(feature = "caching")]
-    cache: std::sync::Mutex<lru::LruCache<String, String>>,
+    cache: std::sync::Mutex<SimpleLruCache>,
 }
 
 impl Converter {
@@ -62,9 +105,7 @@ impl Converter {
         Self {
             options,
             #[cfg(feature = "caching")]
-            cache: std::sync::Mutex::new(lru::LruCache::new(
-                std::num::NonZeroUsize::new(100).unwrap(),
-            )),
+            cache: std::sync::Mutex::new(SimpleLruCache::new(100)),
         }
     }
 
@@ -75,7 +116,7 @@ impl Converter {
             let cache_key = format!("{:?}:{}", direction, input);
             if let Ok(mut cache) = self.cache.lock() {
                 if let Some(cached) = cache.get(&cache_key) {
-                    return Ok(cached.clone());
+                    return Ok(cached);
                 }
             }
         }

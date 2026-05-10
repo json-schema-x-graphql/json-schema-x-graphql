@@ -41,8 +41,7 @@ serde-wasm-bindgen = { version = "0.6", optional = true }
 # This enables Web Crypto (via wasm-bindgen) as the entropy source when building for web.
 getrandom = { version = "0.3", features = ["wasm_js"] }
 
-# Optional caching
-lru = { version = "0.13", optional = true }
+# Optional caching is implemented in-crate to avoid pulling in an external LRU dependency.
 
 # JSON Schema validation
 # jsonschema and boon pull in blocking reqwest which is not available on wasm targets.
@@ -70,7 +69,7 @@ criterion = "0.5"
 [features]
 default = ["wasm"]
 wasm = ["wasm-bindgen", "console_error_panic_hook", "serde-wasm-bindgen"]
-caching = ["lru"]
+caching = []
 cli = ["clap", "reqwest", "bytes", "tokio", "anyhow"]
 
 

@@ -6,9 +6,11 @@ on:
   pull_request:
     branches: [main, develop]
   schedule:
-    # Run security audit daily at 2 AM UTC
     - cron: "0 2 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   security-audit-rust:
@@ -17,22 +19,24 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
         with:
           toolchain: stable
           components: rustfmt, clippy
 
       - name: Cache cargo registry
-        uses: actions/cache@v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
           path: ~/.cargo/registry
           key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache cargo index
-        uses: actions/cache@v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
           path: ~/.cargo/git
           key: ${{ runner.os }}-cargo-git-${{ hashFiles('**/Cargo.lock') }}
@@ -41,19 +45,17 @@ jobs:
         run: cargo install cargo-audit --locked
 
       - name: Run cargo audit
-        run: |
-          cargo audit --file Cargo.lock --deny warnings --deny unmaintained --deny unsound --deny yanked
-        continue-on-error: false
+        run: cargo audit --file Cargo.lock --deny warnings --deny unmaintained --deny unsound --deny yanked
 
       - name: Install cargo-deny
         run: cargo install cargo-deny --locked
 
       - name: Run cargo deny
         run: |
-          cargo deny check advisories
-          cargo deny check licenses
-          cargo deny check bans
-          cargo deny check sources
+          cargo deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml advisories
+          cargo deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml licenses
+          cargo deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml bans
+          cargo deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml sources
 
   security-audit-node:
     name: Node.js Security Audit
@@ -61,19 +63,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [24.x]
+        node-version: [24]
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -82,7 +86,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
-        uses: actions/cache@v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -94,14 +98,11 @@ jobs:
 
       - name: Run npm audit
         working-directory: converters/node
-        run: |
-          pnpm audit --audit-level=moderate
-        continue-on-error: false
+        run: pnpm audit --audit-level=moderate
 
       - name: Check for outdated packages with known vulnerabilities
         working-directory: converters/node
-        run: |
-          pnpm outdated || true
+        run: pnpm outdated || true
 
   codeql-analysis:
     name: CodeQL Security Analysis
@@ -118,19 +119,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@7fd177fa680c9881b53cdab4d346d32574c9f7f4 # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+        uses: github/codeql-action/autobuild@7fd177fa680c9881b53cdab4d346d32574c9f7f4 # v3
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@7fd177fa680c9881b53cdab4d346d32574c9f7f4 # v3
         with:
           upload: false
           output: sarif-results
@@ -159,10 +162,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
         continue-on-error: true
         with:
           fail-on-severity: moderate

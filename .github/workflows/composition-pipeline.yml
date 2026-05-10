@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: "24"
 
@@ -15,15 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
 
       - name: Install dependencies (Workspace)
         run: pnpm install --frozen-lockfile
@@ -40,32 +45,25 @@ jobs:
     needs: [build-and-test-composer]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
 
       - name: Install dependencies
-        run: |
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Generate Supergraph from Examples
-        # This step simulates a pipeline: JSON Schemas -> Subgraphs -> Supergraph
-        # We assume there is a script or we use the CLI to demonstrate integrity.
-        # If no specific script exists, we check if the composition logic is testable via CLI.
-        # For now, we will run the integration tests in node converter which cover this,
-        # but specifically targeting federation scenarios if available.
         run: |
           cd converters/node
-          # Validate that we can generate federation-ready SDL from example schemas
           pnpm tsx ../../scripts/validation/validate-graphql.ts --federation
 
       - name: Composition Validation
-        # If we had a composition script (e.g. using @apollo/composition or graphql-tools), we would run it here.
-        # Since the UI does it, we assume the Unit/E2E tests in 'build-and-test-composer' covered the logic.
         run: echo "Composition logic verified via unit tests."
