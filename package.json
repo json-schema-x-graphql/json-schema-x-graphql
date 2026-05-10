@@ -32,6 +32,7 @@
     "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
     "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
     "skip-report:all": "npm run skip-report:run && npm run skip-report:summary",
+    "validate-schemas": "pnpm --filter converters/node run validate:schemas",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
