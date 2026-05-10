@@ -47,13 +47,13 @@ jobs:
       - name: Build editor app
         run: pnpm --filter subgraph-composer build
         env:
-          VITE_BASE_URL: "/json-schema-x-graphql/editor/"
+          VITE_BASE_URL: "/editor/"
 
       # ── Docs site (Nextra) → / ─────────────────────────────────────────
       - name: Build docs site
         run: pnpm --filter @json-schema-x-graphql/website build
         env:
-          BASE_PATH: "/json-schema-x-graphql"
+          BASE_PATH: ""
 
       # ── Assemble pages artifact ────────────────────────────────────────
       - name: Assemble site

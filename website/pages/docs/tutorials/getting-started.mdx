@@ -56,7 +56,7 @@ If you want to contribute to the project:
 
 ```bash
 # Clone the repository
-git clone https://github.com/JJediny/json-schema-x-graphql.git
+git clone https://github.com/json-schema-x-graphql/json-schema-x-graphql.git
 cd json-schema-x-graphql
 
 # Install dependencies
@@ -152,7 +152,7 @@ Make sure you have these installed:
 
 ```bash
 # Clone the repository
-git clone https://github.com/JJediny/json-schema-x-graphql.git
+git clone https://github.com/json-schema-x-graphql/json-schema-x-graphql.git
 cd json-schema-x-graphql
 
 # Install Rust dependencies
@@ -213,9 +213,9 @@ The intake_processest way to contribute!
 
 **Files to check**:
 
-- README.md
-- CONTEXT.md
-- CONTRIBUTING.md
+- index
+- /docs/concepts/json-schema-graphql-gaps
+- /docs/contributing
 - examples/\*.schema.json
 
 ### Option 2: Add a Test Case
@@ -259,7 +259,7 @@ mod tests {
 
 Ready for more?
 
-1. Check [Good First Issues](https://github.com/JJediny/json-schema-x-graphql/labels/good%20first%20issue)
+1. Check [Good First Issues](https://github.com/json-schema-x-graphql/json-schema-x-graphql/labels/good%20first%20issue)
 2. Comment on the issue to claim it
 3. Create a branch: `git checkout -b feature/your-feature`
 4. Implement the feature
@@ -340,7 +340,7 @@ If you need to add a new `x-graphql-*` extension:
 1. Add the pattern to `schema/x-graphql-extensions.schema.json`
 2. Add validation rules (type, pattern, etc.)
 3. Update `examples/user-service.schema.json` to demonstrate usage
-4. Update `docs/SPECIFICATION.md` with documentation
+4. Update `/docs/reference/sdl-linter` with documentation
 5. Add tests for the new extension
 
 ---
@@ -413,10 +413,10 @@ cargo clippy
 
 ### Learn More
 
-- **Read the specs**: [docs/SPECIFICATION.md](docs/SPECIFICATION.md)
+- **Read the specs**: [/docs/reference/sdl-linter](/docs/reference/sdl-linter)
 - **Study examples**: Look at files in `examples/`
-- **Explore architecture**: Read [CONTEXT.md](CONTEXT.md)
-- **API reference**: [docs/API.md](docs/API.md)
+- **Explore architecture**: Read [/docs/concepts/json-schema-graphql-gaps](/docs/concepts/json-schema-graphql-gaps)
+- **API reference**: [/docs/api](/docs/api)
 
 ### Join the Community
 
@@ -474,9 +474,9 @@ git push origin feature/name   # Push to GitHub
 
 ### Getting Help
 
-- 📖 Read: [CONTRIBUTING.md](CONTRIBUTING.md)
-- 💬 Ask: [GitHub Discussions](https://github.com/JJediny/json-schema-x-graphql/discussions)
-- 🐛 Report: [GitHub Issues](https://github.com/JJediny/json-schema-x-graphql/issues)
+- 📖 Read: [/docs/contributing](/docs/contributing)
+- 💬 Ask: [GitHub Discussions](https://github.com/json-schema-x-graphql/json-schema-x-graphql/discussions)
+- 🐛 Report: [GitHub Issues](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues)
 - 👥 Chat: Discord server (link in README)
 
 ---
