@@ -8,7 +8,7 @@
     "dev": "next dev -p 5175",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export",
+    "export": "next build",
     "check-links": "linkinator http://localhost:5175 --recurse --internal --allow-local --concurrency 10",
     "typecheck": "tsc --noEmit"
   },
