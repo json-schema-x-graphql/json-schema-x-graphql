@@ -30,7 +30,9 @@ yarn.lock
 
 # Testing
 /coverage/
+/converters/node/coverage/*
 /.nyc_output/
+
 *.lcov
 
 # Environment

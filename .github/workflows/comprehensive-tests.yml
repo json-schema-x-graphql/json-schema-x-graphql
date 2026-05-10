@@ -366,7 +366,7 @@ jobs:
           NODEEOF
 
           cd converters/node
-          node roundtrip-ci.js "../../$TEST_FILE" "../../test-output" || exit 1
+          pnpm exec node roundtrip-ci.js "../../$TEST_FILE" "../../test-output" || exit 1
           cd ../..
 
           echo ""
@@ -406,8 +406,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
-        with:
-          version: 8
 
       - name: Build converters
         run: |
