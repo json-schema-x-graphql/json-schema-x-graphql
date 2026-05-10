@@ -76,7 +76,7 @@
     "@graphql-codegen/typescript": "^5.0.10",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.19.40",
-    "ajv": "8.17.1",
+    "ajv": "8.18.0",
     "ajv-formats": "^3.0.1",
     "eslint": "9.20.0",
     "graphql-tag": "^2.12.6",
