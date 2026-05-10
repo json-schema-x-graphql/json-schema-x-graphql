@@ -616,7 +616,13 @@ function convertTypeDefinition(
   } else if (schema.type === "object" || schema.properties || schema.allOf) {
     const r = renderObject(typeName, schema, context);
     if (r) context.output.push(r);
-  } else if (schema["x-graphql-type"] === "scalar") {
+  } else if (
+    schema["x-graphql-type"] === "scalar" ||
+    typeof schema["x-graphql-scalar"] === "string"
+  ) {
+    if (options.includeDescriptions && schema.description) {
+      context.output.push(formatDescription(schema.description, options));
+    }
     context.output.push(`scalar ${typeName}\n`);
   }
 
@@ -1397,6 +1403,11 @@ function getTypeName(
   const explicitName = schema["x-graphql-type-name"];
   if (typeof explicitName === "string" && explicitName.trim()) {
     return explicitName.trim();
+  }
+
+  const explicitScalar = schema["x-graphql-scalar"];
+  if (typeof explicitScalar === "string" && explicitScalar.trim()) {
+    return explicitScalar.trim();
   }
 
   const typeOverride = schema["x-graphql-type"];
