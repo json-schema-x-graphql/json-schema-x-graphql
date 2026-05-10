@@ -1,0 +1,866 @@
+(node:1816398) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/adr_description_block-rust.graphql"
+(node:1816446) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: adr_description_block[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/adr_description_block.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_description_block-node.graphql[0m
+[0m   Size: 257 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_description_block-rust.graphql[0m
+[0m   Size: 259 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 5
+Rust lines: 7
+Node size: 257 bytes
+Rust size: 259 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: adr_ref_naming_collision[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/adr_ref_naming_collision.json[0m
+[32m🟢 Testing Node Converter...[0m
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/adr_ref_naming_collision-rust.graphql"
+(node:1816501) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_ref_naming_collision-node.graphql[0m
+[0m   Size: 107 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_ref_naming_collision-rust.graphql[0m
+[0m   Size: 109 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 12
+Rust lines: 14
+Node size: 107 bytes
+Rust size: 109 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: adr_small_inline[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/adr_small_inline.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_small_inline-node.graphql[0m
+[0m   Size: 71 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/adr_small_inline-rust.graphql"
+(node:1816550) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/adr_small_inline_override-rust.graphql"
+(node:1816606) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32m✅ Success (9ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_small_inline-rust.graphql[0m
+[0m   Size: 73 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 8
+Rust lines: 10
+Node size: 71 bytes
+Rust size: 73 bytes
+Node time: 1ms
+Rust time: 9ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: adr_small_inline_override[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/adr_small_inline_override.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_small_inline_override-node.graphql[0m
+[0m   Size: 79 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/adr_small_inline_override-rust.graphql[0m
+[0m   Size: 81 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 8
+Rust lines: 10
+Node size: 79 bytes
+Rust size: 81 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: circular-refs.schema[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/circular-refs.schema.json[0m
+[32m🟢 Testing Node Converter...[0m
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/circular-refs.schema-rust.graphql"
+FAIL src/x-graphql-extensions.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts: minimatch is not a function
+
+       6 |  */
+       7 |
+    >  8 | import {
+         | ^
+       9 |   extractExtensions,
+      10 |   shouldSkip,
+      11 |   getEffectiveDescription,
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/x-graphql-extensions.test.ts:8:1)
+
+(node:1816658) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/deep_nesting-rust.graphql"
+[32m✅ Success (2ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/circular-refs.schema-node.graphql[0m
+[0m   Size: 398 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (7ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/circular-refs.schema-rust.graphql[0m
+[0m   Size: 400 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 26
+Rust lines: 28
+Node size: 398 bytes
+Rust size: 400 bytes
+Node time: 2ms
+Rust time: 7ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: deep_nesting[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/deep_nesting.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/deep_nesting-node.graphql[0m
+[0m   Size: 1151 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/deep_nesting-rust.graphql[0m
+[0m   Size: 1153 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 124
+Rust lines: 126
+Node size: 1151 bytes
+Rust size: 1153 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+FAIL src/roundtrip.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+    > 1 | import { jsonSchemaToGraphQL, graphqlToJsonSchema } from "./converter.js";
+        | ^
+      2 | import { JsonSchema } from "./interfaces.js";
+      3 |
+      4 | describe("Roundtrip Integrity", () => {
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/roundtrip.test.ts:1:1)
+
+FAIL src/real-world.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+      1 | import * as fs from "fs";
+      2 | import * as path from "path";
+    > 3 | import { jsonSchemaToGraphQL } from "./converter";
+        | ^
+      4 |
+      5 | const EXAMPLES_DIR = path.resolve(
+      6 |   __dirname,
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/real-world.test.ts:3:1)
+
+(node:1816708) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL src/x-graphql-shared.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+       8 | import * as fs from "fs";
+       9 | import * as path from "path";
+    > 10 | import { jsonSchemaToGraphQL } from "./converter";
+         | ^
+      11 |
+      12 | const TEST_DATA_DIR = path.join(__dirname, "../../test-data/x-graphql");
+      13 | const EXPECTED_DIR = path.join(TEST_DATA_DIR, "expected");
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/x-graphql-shared.test.ts:10:1)
+
+FAIL src/improvements.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+    > 1 | import { jsonSchemaToGraphQL } from "./converter";
+        | ^
+      2 | import { ConverterOptions } from "./generated/types";
+      3 | import {
+      4 |   camelToSnake,
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/improvements.test.ts:1:1)
+
+FAIL src/adr.options.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+      1 | import { readFileSync } from "fs";
+      2 | import { join } from "path";
+    > 3 | import { jsonSchemaToGraphQL } from "./converter";
+        | ^
+      4 |
+      5 | describe("ADR: ConverterOptions canonical behaviors", () => {
+      6 |   const fixtures = join(__dirname, "..", "..", "test-data");
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/adr.options.test.ts:3:1)
+
+FAIL src/converter.test.ts
+  ● Test suite failed to run
+
+    TypeError: /home/john/json-schema-x-graphql/converters/node/src/converter.ts: minimatch is not a function
+
+    > 1 | import { jsonSchemaToGraphQL } from "./converter";
+        | ^
+      2 |
+      3 | describe("jsonSchemaToGraphQL - nested $ref resolution", () => {
+      4 |   it("resolves chained $ref entries inside $defs", () => {
+
+      at matches (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:99:36)
+          at Array.some (<anonymous>)
+      at TestExclude.shouldInstrument (../../node_modules/.pnpm/test-exclude@6.0.0/node_modules/test-exclude/index.js:102:28)
+      at shouldSkip (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:108:21)
+      at PluginPass.enter (../../node_modules/.pnpm/babel-plugin-istanbul@6.1.1/node_modules/babel-plugin-istanbul/lib/index.js:124:15)
+      at call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/visitors.ts:299:14)
+      at NodePath.call [as _call] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:161:16)
+      at TraversalContext.visitQueue [as visitSingle] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:119:19)
+      at TraversalContext.visitSingle [as visit] (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/context.ts:194:19)
+      at visit (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (../../node_modules/.pnpm/@babel+traverse@7.29.0/node_modules/@babel/traverse/src/index.ts:84:15)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:120:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transformation/index.ts:50:12)
+          at run.next (<anonymous>)
+      at transform (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:251:28)
+      at sync (../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js:89:14)
+      at fn (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (../../node_modules/.pnpm/@babel+core@7.29.0/node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer._instrumentFile (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:389:46)
+      at ScriptTransformer._buildTransformResult (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:491:33)
+      at ScriptTransformer.transformSource (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:554:17)
+      at ScriptTransformer._transformAndBuildScript (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../../node_modules/.pnpm/@jest+transform@29.7.0/node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+      at Object.<anonymous> (src/converter.test.ts:1:1)
+
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/directives_coverage-rust.graphql"
+(node:1816764) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/fuzz_edge_cases-rust.graphql"
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: directives_coverage[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/directives_coverage.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (2ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/directives_coverage-node.graphql[0m
+[0m   Size: 459 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/directives_coverage-rust.graphql[0m
+[0m   Size: 461 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 29
+Rust lines: 31
+Node size: 459 bytes
+Rust size: 461 bytes
+Node time: 2ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: fuzz_edge_cases[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/fuzz_edge_cases.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/fuzz_edge_cases-node.graphql[0m
+[0m   Size: 1481 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (5ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/fuzz_edge_cases-rust.graphql[0m
+(node:1816819) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/nested-ref-rust.graphql"
+(node:1816875) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[0m   Size: 1483 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 83
+Rust lines: 85
+Node size: 1481 bytes
+Rust size: 1483 bytes
+Node time: 1ms
+Rust time: 5ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: nested-ref[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/nested-ref.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/nested-ref-node.graphql[0m
+[0m   Size: 164 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/nested-ref-rust.graphql[0m
+[0m   Size: 166 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 13
+Rust lines: 15
+Node size: 164 bytes
+Rust size: 166 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: ref_main[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/ref_main.json[0m
+[32m🟢 Testing Node Converter...[0m
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/ref_main-rust.graphql"
+(node:1816931) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/ref_target-rust.graphql"
+(node:1816983) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/john/json-schema-x-graphql/scripts/test-both-converters.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/john/json-schema-x-graphql/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/ref_main-node.graphql[0m
+[0m   Size: 535 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/ref_main-rust.graphql[0m
+[0m   Size: 537 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 20
+Rust lines: 22
+Node size: 535 bytes
+Rust size: 537 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: ref_target[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/ref_target.json[0m
+[32m🟢 Testing Node Converter...[0m
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/ref_target-node.graphql[0m
+[0m   Size: 195 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/ref_target-rust.graphql[0m
+[0m   Size: 197 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 11
+Rust lines: 13
+Node size: 195 bytes
+Rust size: 197 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m
+
+======================================================================
+[36m🔄 JSON Schema to GraphQL Converter Comparison Test[0m
+======================================================================
+
+
+======================================================================
+[36m📁 Testing: user-service[0m
+======================================================================
+
+[34mInput: /home/john/json-schema-x-graphql/converters/test-data/user-service.json[0m
+[32m🟢 Testing Node Converter...[0m
+Successfully converted and saved to "/home/john/json-schema-x-graphql/output/comparison/user-service-rust.graphql"
+PASS src/parity.test.ts
+----------|---------|----------|---------|---------|-------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+----------|---------|----------|---------|---------|-------------------
+All files |       0 |        0 |       0 |       0 |                   
+----------|---------|----------|---------|---------|-------------------
+
+Test Suites: 7 failed, 1 passed, 8 total
+Tests:       11 skipped, 12 passed, 23 total
+Snapshots:   0 total
+Time:        1.909 s, estimated 2 s
+Ran all test suites.
+[32m✅ Success (1ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/user-service-node.graphql[0m
+[0m   Size: 1241 bytes[0m
+
+[35m🦀 Testing Rust Converter...[0m
+[32m✅ Success (6ms)[0m
+[0m   Output: /home/john/json-schema-x-graphql/output/comparison/user-service-rust.graphql[0m
+[0m   Size: 1243 bytes[0m
+
+
+======================================================================
+[36m📊 Comparison Results[0m
+======================================================================
+
+[32m✅ Perfect Match! Both converters produce identical SDL[0m
+
+--- Statistics ---
+Node lines: 45
+Rust lines: 47
+Node size: 1241 bytes
+Rust size: 1243 bytes
+Node time: 1ms
+Rust time: 6ms
+
+======================================================================
+[36m✅ Comparison Complete[0m
+======================================================================
+
+[34mOutput files saved to: /home/john/json-schema-x-graphql/output/comparison[0m

@@ -186,6 +186,7 @@ Enhance `scripts/diff-sdl-schema.mjs` to:
    ```
 
 3. **Report mapping details**
+
    ```markdown
    ## Field Mappings
 

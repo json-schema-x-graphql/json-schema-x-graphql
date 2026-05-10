@@ -6,5 +6,5 @@ export default {
   "x-graphql-registry": "Attribute Registry",
   "federation-quick-reference": "Federation Quick Reference",
   "sdl-linter": "SDL Linter & Naming",
-  "supergraph-entity-design": "Supergraph Entity Design"
-}
+  "supergraph-entity-design": "Supergraph Entity Design",
+};

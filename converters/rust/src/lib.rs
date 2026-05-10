@@ -26,6 +26,7 @@
 pub mod api_types;
 pub mod case_conversion;
 pub mod error;
+pub mod graphql_ast_json;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
 pub mod schema;
@@ -97,7 +98,6 @@ impl Converter {
 
     /// Convert JSON Schema to GraphQL SDL
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String> {
-        println!("Debug: Input JSON Schema: {}", json_schema);
         let schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
 
@@ -106,8 +106,10 @@ impl Converter {
         }
 
         let graphql_sdl = json_to_graphql::convert(&schema, &self.options)?;
-        println!("Debug: Output GraphQL SDL: {}", graphql_sdl);
-        Ok(graphql_sdl)
+        match self.options.output_format {
+            types::OutputFormat::AstJson => graphql_ast_json::sdl_to_ast_json(&graphql_sdl),
+            _ => Ok(graphql_sdl),
+        }
     }
 
     /// Convert GraphQL SDL to JSON Schema

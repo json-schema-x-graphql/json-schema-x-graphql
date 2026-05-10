@@ -53,27 +53,14 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                                 v.as_str()
                                     .or_else(|| v.get("name").and_then(|n| n.as_str()))
                             })
+                        })
+                        .or_else(|| {
+                            def_schema
+                                .get("x-graphql")
+                                .and_then(|v| v.as_object())
+                                .and_then(|x| x.get("typeName"))
+                                .and_then(|v| v.as_str())
                         });
-
-                    // Prioritize x-graphql-description over description
-                    let description = def_schema
-                        .get("x-graphql-description")
-                        .and_then(|v| v.as_str())
-                        .or_else(|| def_schema.get("description").and_then(|v| v.as_str()));
-
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
-
-                    // Add descriptions to the output if available
-                    if let Some(description) = description {
-                        context
-                            .output
-                            .push(format_description(description, options));
-                    }
 
                     let raw_type_name = explicit_type_name
                         .or_else(|| def_schema.get("title").and_then(|v| v.as_str()))
@@ -132,10 +119,26 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
         let root_type_name = obj
             .get("x-graphql-type-name")
             .and_then(|v| v.as_str())
+            .or_else(|| {
+                obj.get("x-graphql")
+                    .and_then(|v| v.as_object())
+                    .and_then(|x| x.get("typeName"))
+                    .and_then(|v| v.as_str())
+            })
             .or_else(|| obj.get("title").and_then(|v| v.as_str()));
 
         if let Some(name) = root_type_name {
-            let sanitized_name = sanitize_type_name(name, options.naming_convention);
+            let sanitized_name = if obj
+                .get("x-graphql")
+                .and_then(|v| v.as_object())
+                .and_then(|x| x.get("typeName"))
+                .and_then(|v| v.as_str())
+                .is_some()
+            {
+                sanitize_type_name(name, NamingConvention::Preserve)
+            } else {
+                sanitize_type_name(name, options.naming_convention)
+            };
 
             if should_include_type(&sanitized_name, options) {
                 convert_type_definition(schema, &sanitized_name, &mut context)?;
@@ -425,6 +428,7 @@ fn convert_type_definition(
 
     let explicit_kind = x_graphql
         .and_then(|x| x.get("type").and_then(|v| v.as_str()))
+        .or_else(|| x_graphql.and_then(|x| x.get("kind").and_then(|v| v.as_str())))
         .or_else(|| {
             obj.get("x-graphql-type").and_then(|v| {
                 v.as_str()
@@ -599,7 +603,6 @@ fn convert_type_definition(
     // Generate SDL based on kind
     match kind {
         "enum" => {
-            output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             // Description for enum
             if context.options.include_descriptions {
                 if let Some(description) = obj
@@ -610,6 +613,7 @@ fn convert_type_definition(
                     output.push_str(&format_description(description, context.options));
                 }
             }
+            output.push_str(&format!("enum {}{} {{\n", type_name, directives_str));
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
@@ -1116,6 +1120,22 @@ fn infer_graphql_type(
             // Clone schema to avoid borrow checker issues
             let schema_clone = schema.clone();
 
+            let x_graphql = schema_clone.get("x-graphql").and_then(|v| v.as_object());
+            let is_custom_scalar = x_graphql
+                .and_then(|x| x.get("kind").and_then(|v| v.as_str()))
+                .map(|kind| kind.eq_ignore_ascii_case("scalar"))
+                .unwrap_or(false)
+                || schema_clone
+                    .get("x-graphql-type-kind")
+                    .and_then(|v| v.as_str())
+                    .map(|kind| kind.eq_ignore_ascii_case("SCALAR"))
+                    .unwrap_or(false)
+                || schema_clone
+                    .get("x-graphql-type")
+                    .and_then(|v| v.as_str())
+                    .map(|kind| kind.eq_ignore_ascii_case("scalar"))
+                    .unwrap_or(false);
+
             // Check if it's a primitive
             let is_primitive = schema_clone
                 .get("type")
@@ -1123,7 +1143,7 @@ fn infer_graphql_type(
                 .map(|t| matches!(t, "string" | "integer" | "number" | "boolean"))
                 .unwrap_or(false);
 
-            if is_primitive {
+            if is_primitive && !is_custom_scalar {
                 // If it's a primitive, infer its type directly
                 if let Ok(primitive_type) =
                     infer_graphql_type(&schema_clone, false, context, name_hint)
@@ -1624,6 +1644,18 @@ fn extract_type_name_from_ref(
 
     // strip common suffix
     raw = raw.replace(".schema.json", "");
+
+    let looks_like_pascal_graphql_name = raw
+        .chars()
+        .next()
+        .map(|c| c.is_ascii_uppercase())
+        .unwrap_or(false)
+        && raw.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+        && !raw.contains('_');
+
+    if looks_like_pascal_graphql_name {
+        return Some(sanitize_type_name(&raw, NamingConvention::Preserve));
+    }
 
     Some(sanitize_type_name(&raw, convention))
 }

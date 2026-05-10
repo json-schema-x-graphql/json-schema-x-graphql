@@ -1,7 +1,7 @@
 export default {
-  "features": "Features Guide",
+  features: "Features Guide",
   "cli-guide": "CLI Guide",
-  "testing": "Testing Guide",
+  testing: "Testing Guide",
   "graphql-spec-schema": "GraphQL Spec Schema",
-  "rust-testing": "Rust Testing & Security"
-}
+  "rust-testing": "Rust Testing & Security",
+};

@@ -287,8 +287,8 @@ The converters will be considered production-ready when:
 - [ ] **NO** - Document reason and alternative approach
 - [ ] **DEFER** - Revisit on [date]
 
-**Approved By:** ******\_\_\_\_******  
-**Date:** ******\_\_\_\_******
+**Approved By:** **\*\***\_\_\_\_**\*\***  
+**Date:** **\*\***\_\_\_\_**\*\***
 
 ---
 

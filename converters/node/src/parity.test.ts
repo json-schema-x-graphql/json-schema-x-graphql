@@ -61,17 +61,8 @@ function sortDefinitions(ast: DocumentNode): DocumentNode {
   return { ...ast, definitions: defs } as DocumentNode;
 }
 
-function normalizeSDL(sdl: string): DocumentNode | null {
-  if (!sdl || sdl.trim() === "") return null;
+function normalizeAstDocument(ast: DocumentNode): DocumentNode {
   const BLOCK_THRESHOLD = 80;
-  let ast: DocumentNode;
-  try {
-    ast = parse(sdl);
-  } catch (err) {
-    throw new Error(
-      `Failed to parse SDL:\n${String(err)}\n--- SDL Preview ---\n${sdl.slice(0, 1000)}`,
-    );
-  }
 
   // Normalize string literal block flag to be consistent across converters
   const visited = new WeakSet<object>();
@@ -147,6 +138,36 @@ function normalizeSDL(sdl: string): DocumentNode | null {
   return sorted as DocumentNode;
 }
 
+function normalizeSDL(sdl: string): DocumentNode | null {
+  if (!sdl || sdl.trim() === "") return null;
+  let ast: DocumentNode;
+  try {
+    ast = parse(sdl);
+  } catch (err) {
+    throw new Error(
+      `Failed to parse SDL:\n${String(err)}\n--- SDL Preview ---\n${sdl.slice(0, 1000)}`,
+    );
+  }
+  return normalizeAstDocument(ast);
+}
+
+function normalizeAstJson(astJson: string): DocumentNode | null {
+  if (!astJson || astJson.trim() === "" || astJson.trim() === "null") {
+    return null;
+  }
+
+  let ast: DocumentNode;
+  try {
+    ast = JSON.parse(astJson) as DocumentNode;
+  } catch (err) {
+    throw new Error(
+      `Failed to parse AST JSON:\n${String(err)}\n--- JSON Preview ---\n${astJson.slice(0, 1000)}`,
+    );
+  }
+
+  return normalizeAstDocument(ast);
+}
+
 function normalizeCaseMismatchAst(ast: DocumentNode): DocumentNode {
   const cloned = JSON.parse(JSON.stringify(ast));
   const nameMap = new Map<string, string>([
@@ -213,17 +234,19 @@ describe("Parity: Node vs Rust converter outputs", () => {
     const basename = file.replace(/\.json$/, "");
 
     test(`fixture: ${basename}`, () => {
-      if (basename === "case-mismatch.schema") {
-        return;
-      }
       const inputPath = join(testDataDir, file);
       const optionsPath = join(testDataDir, `${basename}.options.json`);
+      const fixtureOptions = existsSync(optionsPath)
+        ? JSON.parse(readFileSync(optionsPath, "utf-8"))
+        : null;
+      const outputExt =
+        fixtureOptions?.outputFormat === "AST_JSON" ? "json" : "graphql";
       const env = { ...process.env };
-
-      if (existsSync(optionsPath)) {
-        // Skip option-driven fixtures until Rust CLI exposes the standardized flags.
-        // This keeps the base parity suite green while advanced option support is wired up.
-        return;
+      if (fixtureOptions) {
+        env.JXQL_OPTIONS_PATH = optionsPath;
+      } else {
+        delete env.JXQL_OPTIONS_PATH;
+        delete env.JXQL_OPTIONS_JSON;
       }
 
       // run comparison script which writes outputs to output/comparison
@@ -237,13 +260,13 @@ describe("Parity: Node vs Rust converter outputs", () => {
         repoRoot,
         "output",
         "comparison",
-        `${basename}-node.graphql`,
+        `${basename}-node.${outputExt}`,
       );
       const rustOut = join(
         repoRoot,
         "output",
         "comparison",
-        `${basename}-rust.graphql`,
+        `${basename}-rust.${outputExt}`,
       );
 
       expect(existsSync(nodeOut)).toBe(true);
@@ -252,8 +275,19 @@ describe("Parity: Node vs Rust converter outputs", () => {
       const nodeSDL = readFileSync(nodeOut, "utf-8");
       const rustSDL = readFileSync(rustOut, "utf-8");
 
-      const normNode = normalizeSDL(nodeSDL);
-      const normRust = normalizeSDL(rustSDL);
+      const normNode =
+        outputExt === "json"
+          ? normalizeAstJson(nodeSDL)
+          : normalizeSDL(nodeSDL);
+      const normRust =
+        outputExt === "json"
+          ? normalizeAstJson(rustSDL)
+          : normalizeSDL(rustSDL);
+
+      if (normNode == null || normRust == null) {
+        expect(normNode).toEqual(normRust);
+        return;
+      }
 
       const finalNode =
         basename === "case-mismatch.schema" && normNode

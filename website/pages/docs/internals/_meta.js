@@ -1,8 +1,8 @@
 export default {
-  "index": "Overview",
+  index: "Overview",
   "collaborative-editing": "Collaborative Editing",
   "crdt-comparison": "Yjs vs Loro (CRDT)",
   "visual-sdl-editor": "Visual SDL Editor",
-  "mockforge": "MockForge",
-  "subgraph-composer-spec": "Subgraph Composer Spec"
-}
+  mockforge: "MockForge",
+  "subgraph-composer-spec": "Subgraph Composer Spec",
+};

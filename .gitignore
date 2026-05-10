@@ -30,7 +30,9 @@ yarn.lock
 
 # Testing
 /coverage/
+/converters/node/coverage/*
 /.nyc_output/
+
 *.lcov
 
 # Environment
@@ -112,3 +114,6 @@ frontend/**/*.zip
 *.swp
 *.swo
 *~
+
+# Node lock (we use PNPM)
+package-lock.json

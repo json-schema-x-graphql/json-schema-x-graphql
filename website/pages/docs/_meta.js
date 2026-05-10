@@ -1,40 +1,40 @@
 export default {
-  "quickstart": "Quick Start",
-  "installation": "Installation",
+  quickstart: "Quick Start",
+  installation: "Installation",
   "-- getting-started": {
-    "type": "separator",
-    "title": "Tutorials"
+    type: "separator",
+    title: "Tutorials",
   },
-  "tutorials": "Tutorials",
+  tutorials: "Tutorials",
   "-- guides": {
-    "type": "separator",
-    "title": "Guides"
+    type: "separator",
+    title: "Guides",
   },
-  "guides": "Guides",
+  guides: "Guides",
   "-- recipes": {
-    "type": "separator",
-    "title": "Recipes"
+    type: "separator",
+    title: "Recipes",
   },
-  "recipes": "Recipes",
+  recipes: "Recipes",
   "-- reference": {
-    "type": "separator",
-    "title": "Reference"
+    type: "separator",
+    title: "Reference",
   },
-  "api": "API Reference",
+  api: "API Reference",
   "x-graphql": "x-graphql Extensions",
-  "reference": "x-graphql Reference",
-  "federation": "Apollo Federation",
-  "cli": "CLI",
+  reference: "x-graphql Reference",
+  federation: "Apollo Federation",
+  cli: "CLI",
   "-- concepts": {
-    "type": "separator",
-    "title": "Concepts"
+    type: "separator",
+    title: "Concepts",
   },
-  "concepts": "Concepts",
+  concepts: "Concepts",
   "-- project": {
-    "type": "separator",
-    "title": "Project"
+    type: "separator",
+    title: "Project",
   },
-  "contributing": "Contributing",
-  "adr": "Architecture Decisions",
-  "internals": "Demo Internals"
-}
+  contributing: "Contributing",
+  adr: "Architecture Decisions",
+  internals: "Demo Internals",
+};

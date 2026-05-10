@@ -210,7 +210,12 @@ export function jsonSchemaToGraphQL(
   // If no types are generated, return empty string instead of throwing,
   // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
   if (!finalSDL) {
-    return "";
+    return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
+  }
+
+  if (resolvedOptions.outputFormat === "AST_JSON") {
+    const ast = parse(finalSDL, { noLocation: true });
+    return JSON.stringify(ast);
   }
 
   return finalSDL;
@@ -611,7 +616,13 @@ function convertTypeDefinition(
   } else if (schema.type === "object" || schema.properties || schema.allOf) {
     const r = renderObject(typeName, schema, context);
     if (r) context.output.push(r);
-  } else if (schema["x-graphql-type"] === "scalar") {
+  } else if (
+    schema["x-graphql-type"] === "scalar" ||
+    typeof schema["x-graphql-scalar"] === "string"
+  ) {
+    if (options.includeDescriptions && schema.description) {
+      context.output.push(formatDescription(schema.description, options));
+    }
     context.output.push(`scalar ${typeName}\n`);
   }
 
@@ -1392,6 +1403,11 @@ function getTypeName(
   const explicitName = schema["x-graphql-type-name"];
   if (typeof explicitName === "string" && explicitName.trim()) {
     return explicitName.trim();
+  }
+
+  const explicitScalar = schema["x-graphql-scalar"];
+  if (typeof explicitScalar === "string" && explicitScalar.trim()) {
+    return explicitScalar.trim();
   }
 
   const typeOverride = schema["x-graphql-type"];
