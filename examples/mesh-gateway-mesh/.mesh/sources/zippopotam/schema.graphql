@@ -1,0 +1,33 @@
+schema {
+  query: Query
+}
+
+type ZipPlace {
+  placeName: String
+  latitude: String
+  longitude: String
+  state: String
+  stateAbbreviation: String
+  details: GeocodedLocation
+}
+
+type GeocodedLocation {
+  city: String
+  countryName: String
+  principalSubdivision: String
+  name: String
+  displayName: String
+  latitude: String!
+  longitude: String!
+}
+
+type ZipLocation {
+  postcode: String
+  country: String
+  places: [ZipPlace]
+}
+
+type Query {
+  """Geocodes a ZIP code to coordinates and place details."""
+  geocodeZip(zip: String!, countryCode: String!): ZipLocation
+}

@@ -1,0 +1,31 @@
+schema {
+  query: Query
+}
+
+type GeocodedLocation {
+  city: String
+  countryName: String
+  principalSubdivision: String
+  postcode: String
+  name: String
+  displayName: String
+  latitude: String!
+  longitude: String!
+}
+
+type IpLocation {
+  ip: String
+  status: String
+  latitude: String
+  longitude: String
+  isp: String
+  org: String
+  autonomousSystem: String
+  timezone: String
+  details: GeocodedLocation
+}
+
+type Query {
+  """Geocodes an IP address to coordinates and ISP details."""
+  geocodeIP(ip: String!): IpLocation
+}

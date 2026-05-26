@@ -1,0 +1,50 @@
+schema {
+  query: Query
+}
+
+type Query {
+  """Geocodes an address or query into coordinates and location details."""
+  geocode(q: String!): [GeocodedLocation!]
+  """Geocodes an IP address to coordinates and ISP details."""
+  geocodeIP(ip: String!): IpLocation
+  """Geocodes a ZIP code to coordinates and place details."""
+  geocodeZip(zip: String!, countryCode: String!): ZipLocation
+}
+
+type GeocodedLocation {
+  city: String
+  countryName: String
+  principalSubdivision: String
+  postcode: String
+  latitude: String!
+  longitude: String!
+  name: String
+  displayName: String
+}
+
+type IpLocation {
+  ip: String
+  status: String
+  latitude: String
+  longitude: String
+  isp: String
+  org: String
+  autonomousSystem: String
+  timezone: String
+  details: GeocodedLocation
+}
+
+type ZipPlace {
+  placeName: String
+  latitude: String
+  longitude: String
+  state: String
+  stateAbbreviation: String
+  details: GeocodedLocation
+}
+
+type ZipLocation {
+  postcode: String
+  country: String
+  places: [ZipPlace]
+}
