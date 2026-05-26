@@ -1,0 +1,8 @@
+version: 2
+updates:
+  # Manage the entire pnpm workspace dependencies from the root
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
