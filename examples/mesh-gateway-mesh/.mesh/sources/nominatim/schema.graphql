@@ -1,0 +1,19 @@
+schema {
+  query: Query
+}
+
+type GeocodedLocation {
+  city: String
+  countryName: String
+  principalSubdivision: String
+  postcode: String
+  latitude: String!
+  longitude: String!
+  name: String
+  displayName: String
+}
+
+type Query {
+  """Geocodes an address or query into coordinates and location details."""
+  geocode(q: String!): [GeocodedLocation!]
+}

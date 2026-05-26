@@ -1,6 +1,6 @@
 {
   "name": "json-schema-x-graphql",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "description": "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support",
   "main": "converters/rust/pkg/json_schema_graphql_converter.js",
   "module": "converters/rust/pkg/json_schema_graphql_converter.js",
