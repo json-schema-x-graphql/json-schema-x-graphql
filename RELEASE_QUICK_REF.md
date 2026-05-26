@@ -12,12 +12,13 @@
 # 6. Create GitHub Release
 ```
 
-## Trigger Release (3 Steps)
+## Trigger Release (4 Steps)
 
 1. **Go to**: GitHub → Actions → "Release and Publish"
 2. **Click**: "Run workflow"
 3. **Select**: version bump type (patch/minor/major)
-4. **Done**: Workflow handles the rest!
+4. **Click**: "Run workflow"
+5. **Done**: Workflow handles the rest!
 
 ## Before Each Release
 

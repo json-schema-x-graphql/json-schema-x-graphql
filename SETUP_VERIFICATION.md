@@ -33,18 +33,22 @@ All GitHub Actions workflows and configuration files have been successfully crea
 
 ---
 
-## 🔐 Repository Secrets Verified
+## 🔐 Repository Secrets Checklist
 
-Your GitHub repository has the following secrets configured:
+Ensure your GitHub repository has the following secrets configured in **Settings → Secrets and variables → Actions**:
 
-| Secret | Status | Used By |
+| Secret | Source | Purpose |
 |--------|--------|---------|
-| `NPM_TOKEN` | ✅ Set (now) | npm publishing |
-| `CARGO_TOKEN` | ✅ Set (6 min ago) | Cargo/crates.io publishing |
-| `CODECOV_TOKEN` | ✅ Set (2 weeks ago) | Codecov coverage reporting |
-| `GITHUB_TOKEN` | ✅ Auto-provided | GitHub release creation |
+| `NPM_TOKEN` | https://www.npmjs.com/settings/~/tokens | npm publishing |
+| `CARGO_TOKEN` | https://crates.io/me → API Tokens | Cargo/crates.io publishing |
+| `CODECOV_TOKEN` | https://codecov.io/settings | Codecov coverage reporting |
+| `GITHUB_TOKEN` | Auto-provided by GitHub | GitHub release creation |
 
-All secrets are ready to use!
+**Setup Instructions:**
+1. Go to GitHub repo → **Settings → Secrets and variables → Actions**
+2. For each secret above, click **New repository secret**
+3. Enter the secret name and value from the source URL
+4. Verify all 3 secrets (GITHUB_TOKEN is auto-provided)
 
 ---
 

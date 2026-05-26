@@ -48,6 +48,12 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - name: Cache cargo registry
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
@@ -63,8 +69,10 @@ jobs:
       - name: Cache pnpm store
         uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
         with:
-          path: ~/.pnpm-store
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Rust - Check formatting
         working-directory: converters/rust
@@ -77,6 +85,10 @@ jobs:
       - name: Rust - Run tests
         working-directory: converters/rust
         run: cargo test --all-features --verbose
+
+      - name: Rust - Run doc tests
+        working-directory: converters/rust
+        run: cargo test --doc --all-features --verbose
 
       - name: Node - Install dependencies
         working-directory: converters/node
@@ -93,6 +105,16 @@ jobs:
       - name: Node - Run tests
         working-directory: converters/node
         run: pnpm test
+
+      - name: Node - Type check
+        working-directory: converters/node
+        run: npx tsc --noEmit
+
+      - name: Install root dependencies
+        run: pnpm -w install --frozen-lockfile
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
 
       - name: Build WASM
         run: npm run build:wasm
@@ -237,7 +259,7 @@ jobs:
         run: |
           TAG="v${{ steps.new-version.outputs.new_version }}"
           git tag -a "$TAG" -m "Release $TAG"
-          git push origin main
+          git push origin HEAD:${{ github.ref_name }}
           git push origin "$TAG"
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
 
@@ -245,6 +267,9 @@ jobs:
         id: get-version
         run: |
           echo "version=${{ steps.new-version.outputs.new_version }}" >> $GITHUB_OUTPUT
+
+      - name: Install root dependencies for publishing
+        run: pnpm -w install --frozen-lockfile
 
       - name: Build WASM for npm
         run: npm run build:wasm

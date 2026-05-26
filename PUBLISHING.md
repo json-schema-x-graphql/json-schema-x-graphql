@@ -68,9 +68,9 @@ Trigger the workflow via GitHub Actions UI:
 1. Go to: **Actions** → **Release and Publish**
 2. Click **Run workflow**
 3. Select version bump type:
-   - `patch` - Bug fixes (0.1.0 → 0.1.1)
-   - `minor` - New features (0.1.0 → 0.2.0)
-   - `major` - Breaking changes (0.1.0 → 1.0.0)
+    - `patch` - Bug fixes (2.0.0 → 2.0.1)
+    - `minor` - New features (2.0.0 → 2.1.0)
+    - `major` - Breaking changes (2.0.0 → 3.0.0)
 4. Click **Run workflow**
 
 **What happens:**
@@ -351,7 +351,7 @@ A: Yes, follow the same process for each release.
 A: Create a new patch release with the revert commit.
 
 **Q: How do I release a pre-release (alpha, beta)?**
-A: Release-Please supports pre-release branches (develop, beta). See `.github/release-please.json`.
+A: Pre-releases are not currently configured in the documented Release-Please setup. If you need one, use the manual release process or add and document prerelease branch/workflow configuration before relying on it.
 
 **Q: Can I manually push to npm without using the workflow?**
 A: Not recommended. Use the workflow to ensure:
