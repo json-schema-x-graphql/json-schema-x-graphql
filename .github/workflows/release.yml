@@ -1,0 +1,326 @@
+name: Release and Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - 'major'
+          - 'minor'
+          - 'patch'
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+env:
+  RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+  NODE_VERSION: '24'
+
+jobs:
+  validate:
+    name: Validate and Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0  # Full history for changelog generation
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+
+      - name: Cache cargo registry
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache cargo build
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: converters/rust/target
+          key: ${{ runner.os }}-cargo-build-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache pnpm store
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Rust - Check formatting
+        working-directory: converters/rust
+        run: cargo fmt -- --check
+
+      - name: Rust - Run clippy
+        working-directory: converters/rust
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Rust - Run tests
+        working-directory: converters/rust
+        run: cargo test --all-features --verbose
+
+      - name: Node - Install dependencies
+        working-directory: converters/node
+        run: pnpm install --frozen-lockfile
+
+      - name: Node - Check formatting
+        working-directory: converters/node
+        run: pnpm run format:check
+
+      - name: Node - Run linter
+        working-directory: converters/node
+        run: pnpm run lint
+
+      - name: Node - Run tests
+        working-directory: converters/node
+        run: pnpm test
+
+      - name: Build WASM
+        run: npm run build:wasm
+
+      - name: Rust - Install tarpaulin for coverage
+        run: cargo install cargo-tarpaulin
+
+      - name: Rust - Generate coverage report
+        working-directory: converters/rust
+        run: cargo tarpaulin --all-features --workspace --timeout 300 --out Xml
+
+      - name: Node - Generate coverage report
+        working-directory: converters/node
+        run: pnpm run test:coverage || pnpm test -- --coverage
+
+      - name: Upload Rust coverage to Codecov
+        uses: codecov/codecov-action@0f8570b1a125f4937846a11fcfa3bcd548bd8c97 # v4.6.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./converters/rust/cobertura.xml
+          flags: rust
+          name: rust-coverage-release
+          fail_ci_if_error: false
+
+      - name: Upload Node.js coverage to Codecov
+        uses: codecov/codecov-action@0f8570b1a125f4937846a11fcfa3bcd548bd8c97 # v4.6.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./converters/node/coverage/lcov.info
+          flags: node
+          name: node-coverage-release
+          fail_ci_if_error: false
+
+  release:
+    name: Publish to npm and Cargo
+    runs-on: ubuntu-latest
+    needs: validate
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+      tag: ${{ steps.create-tag.outputs.tag }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+        with:
+          toolchain: stable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@91ab88e2619ed1f46221f0ba42d1492c02baf788 # v6
+
+      - name: Get current version
+        id: current-version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+          echo "Current version: ${CURRENT_VERSION}"
+
+      - name: Calculate new version
+        id: new-version
+        env:
+          CURRENT_VERSION: ${{ steps.current-version.outputs.version }}
+          BUMP_TYPE: ${{ github.event.inputs.version_bump }}
+        run: |
+          # Parse current version
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          
+          # Calculate new version based on bump type
+          case "$BUMP_TYPE" in
+            major)
+              NEW_MAJOR=$((MAJOR + 1))
+              NEW_MINOR=0
+              NEW_PATCH=0
+              ;;
+            minor)
+              NEW_MAJOR=$MAJOR
+              NEW_MINOR=$((MINOR + 1))
+              NEW_PATCH=0
+              ;;
+            patch)
+              NEW_MAJOR=$MAJOR
+              NEW_MINOR=$MINOR
+              NEW_PATCH=$((PATCH + 1))
+              ;;
+            *)
+              echo "Invalid bump type: $BUMP_TYPE"
+              exit 1
+              ;;
+          esac
+          
+          NEW_VERSION="${NEW_MAJOR}.${NEW_MINOR}.${NEW_PATCH}"
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+          echo "New version: ${NEW_VERSION}"
+
+      - name: Update package.json version
+        run: |
+          npm version ${{ steps.new-version.outputs.new_version }} --no-git-tag-version
+
+      - name: Update Cargo.toml version
+        run: |
+          sed -i 's/^version = .*/version = "${{ steps.new-version.outputs.new_version }}"/' Cargo.toml
+          sed -i 's/^version = .*/version = "${{ steps.new-version.outputs.new_version }}"/' converters/rust/Cargo.toml
+
+      - name: Generate CHANGELOG
+        uses: TriPSs/conventional-changelog-action@e83c92fda3e80b7a4e07eb4e6dc4dd00aa05a9a8 # v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version-file: ./package.json
+          version-path: version
+          fallback-version: ${{ steps.new-version.outputs.new_version }}
+          skip-version-file: false
+          skip-commit: true  # We'll commit manually
+
+      - name: Stage changes
+        run: |
+          git add package.json Cargo.toml converters/rust/Cargo.toml CHANGELOG.md
+          git diff --cached --quiet || echo "HAS_CHANGES=true" >> $GITHUB_ENV
+
+      - name: Commit version bump and changelog
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          git commit -m "chore(release): v${{ steps.new-version.outputs.new_version }}"
+
+      - name: Create and push tag
+        id: create-tag
+        run: |
+          TAG="v${{ steps.new-version.outputs.new_version }}"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin main
+          git push origin "$TAG"
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Store version output
+        id: get-version
+        run: |
+          echo "version=${{ steps.new-version.outputs.new_version }}" >> $GITHUB_OUTPUT
+
+      - name: Build WASM for npm
+        run: npm run build:wasm
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public
+
+      - name: Publish to crates.io
+        working-directory: converters/rust
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
+        run: |
+          cargo publish --token "$CARGO_REGISTRY_TOKEN"
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: release
+    if: success()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ needs.release.outputs.tag }}
+
+      - name: Extract changelog
+        id: changelog
+        run: |
+          # Extract the changelog for this release from CHANGELOG.md
+          # Using sed to extract content between version markers
+          VERSION="${{ needs.release.outputs.version }}"
+          CHANGELOG=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$ d' | sed '1d')
+          
+          # Handle multiline output for GitHub Actions
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v2
+        with:
+          tag_name: ${{ needs.release.outputs.tag }}
+          name: Release ${{ needs.release.outputs.tag }}
+          body: ${{ steps.changelog.outputs.content }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  post-release:
+    name: Post-Release Notifications
+    runs-on: ubuntu-latest
+    needs: [release, create-release]
+    if: success()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Display Release Summary
+        run: |
+          echo "✅ Release Completed Successfully!"
+          echo ""
+          echo "📦 Published Package Information:"
+          echo "  Version: ${{ needs.release.outputs.version }}"
+          echo "  Tag: ${{ needs.release.outputs.tag }}"
+          echo ""
+          echo "📋 Release Artifacts:"
+          echo "  - npm: https://www.npmjs.com/package/json-schema-x-graphql"
+          echo "  - Cargo: https://crates.io/crates/json-schema-x-graphql"
+          echo "  - GitHub: https://github.com/${{ github.repository }}/releases/tag/${{ needs.release.outputs.tag }}"
+          echo ""
+          echo "📚 Next Steps:"
+          echo "  1. Verify the npm package: npm info json-schema-x-graphql"
+          echo "  2. Verify the crate: cargo search json-schema-x-graphql"
+          echo "  3. Check GitHub Release: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.release.outputs.tag }}"

@@ -1,0 +1,35 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Create/Update Release PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run release-please
+        uses: googleapis/release-please-action@7987652d64b8ac408b6aaf940628a6d1f6ed58e6 # v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          package-name: json-schema-x-graphql
+          target-branch: main
+          changelog-types: |
+            [
+              {"type": "feat", "section": "🎉 Features", "hidden": false},
+              {"type": "fix", "section": "🐛 Bug Fixes", "hidden": false},
+              {"type": "perf", "section": "⚡ Performance", "hidden": false},
+              {"type": "refactor", "section": "♻️ Refactoring", "hidden": false},
+              {"type": "docs", "section": "📚 Documentation", "hidden": false},
+              {"type": "style", "section": "🎨 Styling", "hidden": false},
+              {"type": "chore", "section": "🏗️ Build System", "hidden": false},
+              {"type": "ci", "section": "🔄 CI/CD", "hidden": false}
+            ]
