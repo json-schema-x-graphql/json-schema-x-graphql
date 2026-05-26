@@ -46,7 +46,7 @@ function getReverseDetails(parent) {
 }
 
 function mapRestToGraphQL(data, schema, rootSchema = schema) {
-  if (!data) return null;
+  if (data == null) return null;
   
   if (schema && schema.$ref) {
     const refPath = schema.$ref.replace('#/', '').split('/');

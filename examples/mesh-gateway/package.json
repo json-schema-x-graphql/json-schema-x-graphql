@@ -9,6 +9,7 @@
     "@apollo/gateway": "^2.9.0",
     "axios": "^1.7.9",
     "graphql": "^16.14.0",
+    "graphql-tag": "^2.12.6",
     "yaml": "^2.3.4",
     "@json-schema-x-graphql/core": "file:../../converters/node"
   },

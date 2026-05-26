@@ -7,13 +7,22 @@ const { startStandaloneServer } = require('@apollo/server/standalone');
 const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { ApolloGateway, IntrospectAndCompose } = require('@apollo/gateway');
 const { gql } = require('graphql-tag');
-const { Converter } = require('@json-schema-x-graphql/core');
+
+// Handle dynamic ESM imports since @json-schema-x-graphql/core is an ESM-only module
+let ConverterPromise;
+async function getConverter() {
+  if (!ConverterPromise) {
+    ConverterPromise = import('@json-schema-x-graphql/core').then(({ Converter }) => Converter);
+  }
+  return ConverterPromise;
+}
 
 // Recursive utility to map raw REST API response fields to camelCase GraphQL fields,
 // resolving local $ref schemas, remapping renames, normalising key formats (handling spaces/hyphens),
 // and enforcing type structures dynamically based on the converted JSON Schema.
 function mapRestToGraphQL(data, schema, rootSchema = schema) {
-  if (!data) return null;
+  // Fix: Only return null for null/undefined to preserve valid falsy values like 0, false, or ""
+  if (data == null) return null;
   
   if (schema && schema.$ref) {
     const refPath = schema.$ref.replace('#/', '').split('/');
@@ -100,6 +109,7 @@ async function convertSchema(schemaPath) {
   const schemaText = fs.readFileSync(schemaPath, 'utf8');
   const jsonSchema = JSON.parse(schemaText);
   
+  const Converter = await getConverter();
   const converterInstance = new Converter();
   const conversionResult = await converterInstance.convert({
     jsonSchema,
@@ -126,6 +136,55 @@ async function convertSchema(schemaPath) {
     sdl: conversionResult.output,
     jsonSchema
   };
+}
+
+// Request Translation Engine: Dynamically reads endpoints-config.yaml, interpolating
+// incoming GraphQL arguments or entity representations to perform the downstream REST fetch.
+async function executeRESTOperation(serviceConfig, operationNameOrEntity, args = {}, representations = null) {
+  const op = serviceConfig.operations.find(o => o.field === operationNameOrEntity || o.entity === operationNameOrEntity);
+  if (!op) {
+    throw new Error(`Operation or Entity config not found for ${operationNameOrEntity} in service ${serviceConfig.name}`);
+  }
+
+  // 1. Interpolate path parameters: e.g. /json/{args.ip} -> /json/8.8.8.8
+  let finalPath = op.path;
+  for (const [k, v] of Object.entries(args)) {
+    finalPath = finalPath.replace(`{args.${k}}`, encodeURIComponent(v));
+  }
+  if (representations) {
+    for (const [k, v] of Object.entries(representations)) {
+      finalPath = finalPath.replace(`{representations.${k}}`, encodeURIComponent(v));
+    }
+  }
+
+  // 2. Interpolate query parameters: e.g. latitude: "{representations.latitude}"
+  const params = {};
+  if (op.query) {
+    for (const [qKey, qValTemplate] of Object.entries(op.query)) {
+      let finalVal = String(qValTemplate);
+      for (const [k, v] of Object.entries(args)) {
+        finalVal = finalVal.replace(`{args.${k}}`, v);
+      }
+      if (representations) {
+        for (const [k, v] of Object.entries(representations)) {
+          finalVal = finalVal.replace(`{representations.${k}}`, v);
+        }
+      }
+      params[qKey] = finalVal;
+    }
+  }
+
+  const headers = serviceConfig.userAgent ? { 'User-Agent': serviceConfig.userAgent } : {};
+  const url = `${serviceConfig.baseUrl}${finalPath}`;
+  console.log(`[Proxy REST - ${serviceConfig.name}] ${op.method || 'GET'} -> ${url} with params ${JSON.stringify(params)}`);
+
+  const response = await axios({
+    method: op.method || 'GET',
+    url,
+    params,
+    headers
+  });
+  return response.data;
 }
 
 async function start() {
@@ -171,14 +230,10 @@ async function start() {
   
   const fwdResolvers = {
     Query: {
-      geocode: async (_, { q }) => {
-        console.log(`[Nominatim Subgraph] REST GET -> /search?q=${q}`);
+      geocode: async (_, args) => {
         try {
-          const response = await axios.get(`${nominatimConfig.baseUrl}/search`, {
-            params: { q, format: 'json', limit: 5 },
-            headers: { 'User-Agent': nominatimConfig.userAgent }
-          });
-          return mapRestToGraphQL(response.data, fwdSchemaObj);
+          const data = await executeRESTOperation(nominatimConfig, 'geocode', args);
+          return mapRestToGraphQL(data, fwdSchemaObj);
         } catch (err) {
           console.error('[Nominatim Subgraph] REST Error:', err.message);
           throw new Error('Failed to query Nominatim REST API');
@@ -202,15 +257,11 @@ async function start() {
   const revResolvers = {
     GeocodedLocation: {
       __resolveReference: async (representation) => {
-        const { latitude, longitude } = representation;
-        console.log(`[BigDataCloud Subgraph] REST GET -> /reverse-geocode-client?lat=${latitude}&lon=${longitude}`);
         try {
-          const response = await axios.get(`${bigDataCloudConfig.baseUrl}/reverse-geocode-client`, {
-            params: { latitude, longitude, localityLanguage: 'en' }
-          });
-          const mapped = mapRestToGraphQL(response.data, revSchemaObj);
-          mapped.latitude = latitude;
-          mapped.longitude = longitude;
+          const data = await executeRESTOperation(bigDataCloudConfig, 'GeocodedLocation', {}, representation);
+          const mapped = mapRestToGraphQL(data, revSchemaObj);
+          mapped.latitude = representation.latitude;
+          mapped.longitude = representation.longitude;
           return mapped;
         } catch (err) {
           console.error('[BigDataCloud Subgraph] REST Error:', err.message);
@@ -234,11 +285,10 @@ async function start() {
   
   const ipResolvers = {
     Query: {
-      geocodeIP: async (_, { ip }) => {
-        console.log(`[IP-API Subgraph] REST GET -> /json/${ip}`);
+      geocodeIP: async (_, args) => {
         try {
-          const response = await axios.get(`${ipConfig.baseUrl}/json/${ip}`);
-          return mapRestToGraphQL(response.data, ipSchemaObj);
+          const data = await executeRESTOperation(ipConfig, 'geocodeIP', args);
+          return mapRestToGraphQL(data, ipSchemaObj);
         } catch (err) {
           console.error('[IP-API Subgraph] REST Error:', err.message);
           throw new Error('Failed to query IP-API REST API');
@@ -246,7 +296,6 @@ async function start() {
       }
     },
     IpLocation: {
-      // Connect coordinates back to the federated GeocodedLocation entity
       details: (parent) => {
         if (parent.latitude && parent.longitude) {
           return {
@@ -274,12 +323,11 @@ async function start() {
   
   const zipResolvers = {
     Query: {
-      geocodeZip: async (_, { zip, countryCode }) => {
-        const lowerCountry = countryCode.toLowerCase();
-        console.log(`[Zippopotam Subgraph] REST GET -> /${lowerCountry}/${zip}`);
+      geocodeZip: async (_, args) => {
+        const normalizedArgs = { ...args, countryCode: args.countryCode.toLowerCase() };
         try {
-          const response = await axios.get(`${zipConfig.baseUrl}/${lowerCountry}/${zip}`);
-          return mapRestToGraphQL(response.data, zipSchemaObj);
+          const data = await executeRESTOperation(zipConfig, 'geocodeZip', normalizedArgs);
+          return mapRestToGraphQL(data, zipSchemaObj);
         } catch (err) {
           console.error('[Zippopotam Subgraph] REST Error:', err.message);
           throw new Error('Failed to query Zippopotam REST API');
@@ -287,7 +335,6 @@ async function start() {
       }
     },
     ZipPlace: {
-      // Connect coordinates back to the federated GeocodedLocation entity
       details: (parent) => {
         if (parent.latitude && parent.longitude) {
           return {
