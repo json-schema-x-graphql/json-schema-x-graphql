@@ -1,0 +1,41 @@
+endpoints:
+  - name: NominatimGeocoding
+    baseUrl: https://nominatim.openstreetmap.org
+    userAgent: "json-schema-x-graphql-gateway-demo"
+    operations:
+      - field: geocode
+        path: /search
+        method: GET
+        query:
+          q: "{args.q}"
+          format: "json"
+          limit: "5"
+        schema: ./schemas/geocoding-forward.schema.json
+
+  - name: BigDataCloudReverseGeocoding
+    baseUrl: https://api.bigdatacloud.net/data
+    operations:
+      - entity: GeocodedLocation
+        path: /reverse-geocode-client
+        method: GET
+        query:
+          latitude: "{representations.latitude}"
+          longitude: "{representations.longitude}"
+          localityLanguage: "en"
+        schema: ./schemas/geocoding-reverse.schema.json
+
+  - name: IpApiGeocoding
+    baseUrl: http://ip-api.com
+    operations:
+      - field: geocodeIP
+        path: /json/{args.ip}
+        method: GET
+        schema: ./schemas/geocoding-ip.schema.json
+
+  - name: ZippopotamGeocoding
+    baseUrl: https://api.zippopotam.us
+    operations:
+      - field: geocodeZip
+        path: /{args.countryCode}/{args.zip}
+        method: GET
+        schema: ./schemas/geocoding-zip.schema.json

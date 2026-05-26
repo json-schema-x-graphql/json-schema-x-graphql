@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ForwardGeocodingResponse",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/GeocodedLocation"
+  },
+  "$defs": {
+    "GeocodedLocation": {
+      "type": "object",
+      "x-graphql-type-name": "GeocodedLocation",
+      "x-graphql-federation-keys": [{ "fields": "latitude longitude" }],
+      "x-graphql-federation-shareable": true,
+      "properties": {
+        "lat": {
+          "type": "string",
+          "x-graphql-field-name": "latitude",
+          "x-graphql-field-non-null": true
+        },
+        "lon": {
+          "type": "string",
+          "x-graphql-field-name": "longitude",
+          "x-graphql-field-non-null": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "display_name": {
+          "type": "string"
+        }
+      },
+      "required": ["lat", "lon"]
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "geocode": {
+        "description": "Geocodes an address or query into coordinates and location details.",
+        "type": "[GeocodedLocation!]",
+        "args": {
+          "q": {
+            "type": "String!"
+          }
+        }
+      }
+    }
+  }
+}

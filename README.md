@@ -161,6 +161,17 @@ Fully supports the Apollo Federation specification:
 - **Field Directives**: `@external`, `@requires`, `@provides`, `@override`
 - **Authorization**: `@authenticated`, `@requiresScopes`, `@policy`
 
+### Federated REST Emulation & API Stitching Gateway
+
+A major production application of the `json-schema-x-graphql` standard is emulating legacy or remote REST APIs as federated subgraphs to form a stitched API gateway. By combining lightweight registration manifests (`endpoints-config.yaml`) and extended JSON Schemas, you can unify separate microservices (e.g., forward geocoding, reverse coordinates lookup, IP routing, and ZIP code services) into a single, cohesive federated schema.
+
+The emulation proxy engine performs two core translation phases during query execution:
+
+*   **Request Translation**: The engine reads the incoming GraphQL queries, fields, arguments, or federation entity representations (e.g., `{ args: { q: "Berlin" } }` or `{ representations: { latitude: "52.51", longitude: "13.39" } }`). It dynamically interpolates these parameters into the registered endpoint templates in `endpoints-config.yaml` to fire downstream requests to the remote REST endpoints.
+*   **Response Translation**: The engine intercepts raw REST JSON response payloads and routes them through a recursive adapter. The adapter leverages the `x-graphql-field-name` and `x-graphql-type-name` rules declared in our JSON Schemas (automatically applying IDIOMATIC camelCase field formatting and type conversions, and resolving local `$ref` pointers) to map raw keys into clean, typed camelCase GraphQL objects.
+
+A complete runnable implementation orchestrating four live geocoding REST microservices using this pattern is available in our [mesh-gateway workspace package](file:///home/john/json-schema-x-graphql/examples/mesh-gateway).
+
 ### Visual Editor
 
 The project includes a powerful web-based editor featuring:

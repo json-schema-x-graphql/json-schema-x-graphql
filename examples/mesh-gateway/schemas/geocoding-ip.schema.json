@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IpGeocodingResponse",
+  "type": "object",
+  "x-graphql-type-name": "IpLocation",
+  "properties": {
+    "query": {
+      "type": "string",
+      "x-graphql-field-name": "ip"
+    },
+    "status": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number",
+      "x-graphql-field-name": "latitude",
+      "x-graphql-field-type": "String"
+    },
+    "lon": {
+      "type": "number",
+      "x-graphql-field-name": "longitude",
+      "x-graphql-field-type": "String"
+    },
+    "isp": {
+      "type": "string"
+    },
+    "org": {
+      "type": "string"
+    },
+    "as": {
+      "type": "string",
+      "x-graphql-field-name": "autonomousSystem"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "locationEntity": {
+      "x-graphql-field-name": "details",
+      "$ref": "#/$defs/GeocodedLocation"
+    }
+  },
+  "$defs": {
+    "GeocodedLocation": {
+      "type": "object",
+      "x-graphql-type-name": "GeocodedLocation",
+      "x-graphql-federation-keys": [{ "fields": "latitude longitude" }],
+      "x-graphql-federation-shareable": true,
+      "properties": {
+        "latitude": {
+          "type": "string",
+          "x-graphql-field-non-null": true
+        },
+        "longitude": {
+          "type": "string",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "geocodeIP": {
+        "description": "Geocodes an IP address to coordinates and ISP details.",
+        "type": "IpLocation",
+        "args": {
+          "ip": {
+            "type": "String!"
+          }
+        }
+      }
+    }
+  }
+}
