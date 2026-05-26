@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ZipGeocodingResponse",
+  "type": "object",
+  "x-graphql-type-name": "ZipLocation",
+  "properties": {
+    "post_code": {
+      "type": "string",
+      "x-graphql-field-name": "postcode"
+    },
+    "country": {
+      "type": "string"
+    },
+    "places": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ZipPlace"
+      }
+    }
+  },
+  "$defs": {
+    "ZipPlace": {
+      "type": "object",
+      "x-graphql-type-name": "ZipPlace",
+      "properties": {
+        "place_name": {
+          "type": "string",
+          "x-graphql-field-name": "placeName"
+        },
+        "latitude": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "state_abbreviation": {
+          "type": "string",
+          "x-graphql-field-name": "stateAbbreviation"
+        },
+        "locationEntity": {
+          "x-graphql-field-name": "details",
+          "$ref": "#/$defs/GeocodedLocation"
+        }
+      }
+    },
+    "GeocodedLocation": {
+      "type": "object",
+      "x-graphql-type-name": "GeocodedLocation",
+      "x-graphql-federation-keys": [{ "fields": "latitude longitude" }],
+      "x-graphql-federation-shareable": true,
+      "properties": {
+        "latitude": {
+          "type": "string",
+          "x-graphql-field-non-null": true
+        },
+        "longitude": {
+          "type": "string",
+          "x-graphql-field-non-null": true
+        }
+      }
+    }
+  },
+  "x-graphql-operations": {
+    "queries": {
+      "geocodeZip": {
+        "description": "Geocodes a ZIP code to coordinates and place details.",
+        "type": "ZipLocation",
+        "args": {
+          "zip": {
+            "type": "String!"
+          },
+          "countryCode": {
+            "type": "String!"
+          }
+        }
+      }
+    }
+  }
+}

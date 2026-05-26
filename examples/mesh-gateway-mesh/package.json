@@ -1,0 +1,22 @@
+{
+  "name": "mesh-gateway-mesh",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-grade GraphQL Mesh implementation of the geocoding stitching gateway",
+  "main": "json-schema-x-graphql-handler.js",
+  "scripts": {
+    "start": "mesh dev",
+    "test": "node test-query.js"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "^2.9.3",
+    "@graphql-mesh/cli": "^0.100.0",
+    "@graphql-mesh/merger-federation": "^0.102.0",
+    "@graphql-mesh/merger-stitching": "^0.105.0",
+    "@graphql-tools/schema": "^10.0.3",
+    "@json-schema-x-graphql/core": "file:../../converters/node",
+    "axios": "^1.6.8",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReverseGeocodingResponse",
+  "type": "object",
+  "x-graphql-type-name": "GeocodedLocation",
+  "x-graphql-federation-keys": [{ "fields": "latitude longitude" }],
+  "x-graphql-federation-shareable": true,
+  "properties": {
+    "latitude": {
+      "type": "number",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true
+    },
+    "longitude": {
+      "type": "number",
+      "x-graphql-field-type": "String",
+      "x-graphql-field-non-null": true
+    },
+    "countryName": {
+      "type": "string"
+    },
+    "countryCode": {
+      "type": "string"
+    },
+    "principalSubdivision": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "locality": {
+      "type": "string"
+    },
+    "postcode": {
+      "type": "string"
+    },
+    "continent": {
+      "type": "string"
+    },
+    "localityInfo": {
+      "type": "object",
+      "properties": {
+        "administrative": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AdministrativeDivision"
+          }
+        }
+      }
+    }
+  },
+  "required": ["latitude", "longitude"],
+  "$defs": {
+    "AdministrativeDivision": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "isoName": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "adminLevel": {
+          "type": "integer"
+        },
+        "isoCode": {
+          "type": "string"
+        },
+        "wikidataId": {
+          "type": "string"
+        },
+        "geonameId": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+sources:
+  - name: nominatim
+    handler:
+      ./json-schema-x-graphql-handler.js:
+        name: NominatimGeocoding
+        baseUrl: https://nominatim.openstreetmap.org
+        userAgent: "json-schema-x-graphql-gateway-demo"
+        schemaPath: ../mesh-gateway/schemas/geocoding-forward.schema.json
+        operationType: query
+        operationField: geocode
+        path: /search
+        query:
+          format: json
+          limit: 5
+
+  - name: ipapi
+    handler:
+      ./json-schema-x-graphql-handler.js:
+        name: IpApiGeocoding
+        baseUrl: http://ip-api.com
+        schemaPath: ../mesh-gateway/schemas/geocoding-ip.schema.json
+        operationType: query
+        operationField: geocodeIP
+        path: /json/{ip}
+
+  - name: zippopotam
+    handler:
+      ./json-schema-x-graphql-handler.js:
+        name: ZippopotamGeocoding
+        baseUrl: https://api.zippopotam.us
+        schemaPath: ../mesh-gateway/schemas/geocoding-zip.schema.json
+        operationType: query
+        operationField: geocodeZip
+        path: /{countryCode}/{zip}
+
+merger: stitching
+
+serve:
+  port: 4000
