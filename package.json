@@ -2,24 +2,56 @@
   "name": "json-schema-x-graphql",
   "version": "2.0.0",
   "description": "Bidirectional, lossless conversion between JSON Schema and GraphQL SDL with Apollo Federation support",
-  "main": "converters/rust/pkg/json_schema_graphql_converter.js",
-  "module": "converters/rust/pkg/json_schema_graphql_converter.js",
-  "types": "converters/rust/pkg/json_schema_graphql_converter.d.ts",
+  "keywords": [
+    "apollo-federation",
+    "bidirectional",
+    "graphql",
+    "json-schema",
+    "schema-conversion",
+    "type-system",
+    "validation",
+    "wasm"
+  ],
+  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "json-schema-x-graphql contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git"
+  },
   "files": [
     "converters/rust/pkg",
     "schema",
     "README.md",
     "LICENSE"
   ],
-  "packageManager": "pnpm@11.0.9",
+  "main": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "module": "converters/rust/pkg/json_schema_graphql_converter.js",
+  "types": "converters/rust/pkg/json_schema_graphql_converter.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "npm run build:wasm",
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/subgraph-composer/src/salvaged/wasm --release",
     "test": "jest --runInBand --testPathIgnorePatterns converters/node/src/parity.test.ts",
     "test:watch": "jest --watch",
-    "lint": "eslint src/**/*.ts",
-    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "lint": "oxlint check . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
+    "lint:fix": "oxlint fix . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
+    "lint:eslint": "eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
+    "lint:eslint:fix": "eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
+    "lint:oxlint": "oxlint check . --ignore-path=.prettierignore",
+    "lint:oxlint:fix": "oxlint fix . --ignore-path=.prettierignore",
+    "format": "oxfmt check . --write && prettier --write .",
+    "format:check": "oxfmt check . && prettier --check .",
+    "format:fix": "npm run format",
+    "format:prettier": "prettier --check .",
+    "format:prettier:fix": "prettier --write .",
+    "format:oxfmt": "oxfmt check .",
+    "format:oxfmt:fix": "oxfmt check . --write",
     "docs": "typedoc src/index.ts",
     "converters:node:install": "npm install --prefix converters/node",
     "converters:node:build": "npm run build --prefix converters/node",
@@ -36,26 +68,6 @@
     "validate-schemas": "pnpm --filter converters/node run validate:schemas",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [
-    "graphql",
-    "json-schema",
-    "apollo-federation",
-    "wasm",
-    "schema-conversion",
-    "bidirectional",
-    "validation",
-    "type-system"
-  ],
-  "author": "json-schema-x-graphql contributors",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git"
-  },
-  "bugs": {
-    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
-  },
-  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
   "dependencies": {
     "ajv": "8.17.1",
     "graphql": "^16.14.0",
@@ -76,6 +88,8 @@
     "graphql": "^16.14.0",
     "graphql-language-service": "^5.5.0",
     "jest": "^29.7.0",
+    "oxfmt": "^0.52.0",
+    "oxlint": "^1.67.0",
     "prettier": "^3.8.3",
     "rimraf": "^3.0.2",
     "rollup": "^4.60.3",
@@ -92,9 +106,7 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "packageManager": "pnpm@11.0.9",
   "pnpm": {
     "overrides": {
       "minimatch": "3.1.2",

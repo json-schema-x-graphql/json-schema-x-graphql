@@ -32,7 +32,9 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
   pointer-events: all;
 `;
 
-export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>`
+export const StyledForeignObject = styled.foreignObject<{
+  $isObject?: boolean;
+}>`
   text-align: ${({ $isObject }) => !$isObject && "center"};
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
   font-family: monospace;
@@ -64,14 +66,20 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   }
 `;
 
-export const StyledKey = styled.span<{ $parent?: boolean; $type: string; $value?: string }>`
+export const StyledKey = styled.span<{
+  $parent?: boolean;
+  $type: string;
+  $value?: string;
+}>`
   display: ${({ $parent }) => ($parent ? "flex" : "inline")};
   align-items: center;
   justify-content: center; // Always center for parent nodes
   flex: 1;
   min-width: 0;
-  height: ${({ $parent }) => ($parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "auto")};
-  line-height: ${({ $parent }) => ($parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "inherit")};
+  height: ${({ $parent }) =>
+    $parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "auto"};
+  line-height: ${({ $parent }) =>
+    $parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "inherit"};
   padding: 0; // Remove padding
   color: ${({ theme, $type, $parent = false, $value = "" }) =>
     getTextColor({ $parent, $type, $value, theme })};

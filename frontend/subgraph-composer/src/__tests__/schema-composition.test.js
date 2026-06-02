@@ -3,13 +3,7 @@
  * Tests cover: schema toggling, collapsible sections, SDL generation, and composition
  */
 
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
 
 describe("Schema Composition Features", () => {

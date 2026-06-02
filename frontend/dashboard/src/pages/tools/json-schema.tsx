@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Paper,
+  Title,
+  Text,
+} from "@mantine/core";
 import type { OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
 import { NextSeo } from "next-seo";
@@ -20,10 +28,12 @@ const JSONSchemaTool = () => {
   const [jsonError, setJsonError] = React.useState(false);
   const [jsonSchemaError, setJsonSchemaError] = React.useState(false);
   const [json, setJson] = React.useState("");
-  const [jsonSchema, setJsonSchema] = React.useState(JSON.stringify(schema_unificationSchema, null, 2));
+  const [jsonSchema, setJsonSchema] = React.useState(
+    JSON.stringify(schema_unificationSchema, null, 2),
+  );
   // Keep a parsed representation so we can pass a real object to Monaco diagnostics
   const [parsedJsonSchema, setParsedJsonSchema] = React.useState<object | null>(
-    () => schema_unificationSchema || null
+    () => schema_unificationSchema || null,
   );
 
   React.useEffect(() => {
@@ -38,11 +48,11 @@ const JSONSchemaTool = () => {
         if (schemaPath) {
           // Try to fetch the requested schema path (publically served)
           fetch(schemaPath)
-            .then(res => {
+            .then((res) => {
               if (!res.ok) throw new Error("Failed to fetch schema");
               return res.json();
             })
-            .then(j => {
+            .then((j) => {
               setJsonSchema(JSON.stringify(j, null, 2));
               setParsedJsonSchema(j);
             })
@@ -78,7 +88,8 @@ const JSONSchemaTool = () => {
         monacoAny.languages &&
         monacoAny.languages.json &&
         monacoAny.languages.json.jsonDefaults &&
-        typeof monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions === "function"
+        typeof monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions ===
+          "function"
       ) {
         monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions({
           validate: true,
@@ -103,13 +114,20 @@ const JSONSchemaTool = () => {
   }, [jsonSchema, parsedJsonSchema]);
 
   const generateJsonSchema = async () => {
-    const jsonSchema = await generateType(json, FileFormat.JSON, TypeLanguage.JSON_SCHEMA);
+    const jsonSchema = await generateType(
+      json,
+      FileFormat.JSON,
+      TypeLanguage.JSON_SCHEMA,
+    );
     setJsonSchema(jsonSchema);
   };
 
   const generateJson = async () => {
     const randomJson = await JSONSchemaFaker.resolve(JSON.parse(jsonSchema));
-    const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), FileFormat.JSON);
+    const contents = await jsonToContent(
+      JSON.stringify(randomJson, null, 2),
+      FileFormat.JSON,
+    );
     setJson(contents);
   };
 
@@ -146,13 +164,17 @@ const JSONSchemaTool = () => {
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
                 <Text c="gray.3">JSON</Text>
-                {jsonError ? <LuCircleX color="red" /> : <LuCheck color="lightgreen" />}
+                {jsonError ? (
+                  <LuCircleX color="red" />
+                ) : (
+                  <LuCheck color="lightgreen" />
+                )}
               </Flex>
             </Box>
             <Editor
               value={json}
-              onChange={value => setJson(value || "")}
-              onValidate={errors => setJsonError(!!errors.length)}
+              onChange={(value) => setJson(value || "")}
+              onValidate={(errors) => setJsonError(!!errors.length)}
               language="json"
               height={500}
               options={editorOptions}
@@ -163,12 +185,16 @@ const JSONSchemaTool = () => {
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
                 <Text c="gray.3">JSON Schema</Text>
-                {jsonSchemaError ? <LuCircleX color="red" /> : <LuCheck color="lightgreen" />}
+                {jsonSchemaError ? (
+                  <LuCircleX color="red" />
+                ) : (
+                  <LuCheck color="lightgreen" />
+                )}
               </Flex>
             </Box>
             <Editor
               value={jsonSchema}
-              onChange={value => {
+              onChange={(value) => {
                 const v = value || "";
                 setJsonSchema(v);
                 // Keep a parsed object in sync when possible so Monaco gets an object
@@ -181,7 +207,7 @@ const JSONSchemaTool = () => {
                   setParsedJsonSchema(null);
                 }
               }}
-              onValidate={errors => setJsonSchemaError(!!errors.length)}
+              onValidate={(errors) => setJsonSchemaError(!!errors.length)}
               language="json"
               height={500}
               options={editorOptions}

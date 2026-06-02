@@ -12,7 +12,7 @@ declare global {
         options: {
           introspection: unknown;
           displayOptions?: Record<string, unknown>;
-        }
+        },
       ) => void;
     };
   }
@@ -42,11 +42,12 @@ const VoyagerV2HintedPage: NextPage = () => {
         }
 
         const sdl = await response.text();
-        const { buildSchema, getIntrospectionQuery, graphql } = graphqlModule as {
-          buildSchema: (sdl: string) => any;
-          getIntrospectionQuery: () => string;
-          graphql: (args: any) => Promise<any>;
-        };
+        const { buildSchema, getIntrospectionQuery, graphql } =
+          graphqlModule as {
+            buildSchema: (sdl: string) => any;
+            getIntrospectionQuery: () => string;
+            graphql: (args: any) => Promise<any>;
+          };
         const schema = buildSchema(sdl);
         const introspectionResult = await graphql({
           schema,
@@ -55,7 +56,9 @@ const VoyagerV2HintedPage: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors.map(graphqlError => graphqlError.message).join("\n")
+            introspectionResult.errors
+              .map((graphqlError) => graphqlError.message)
+              .join("\n"),
           );
         }
 
@@ -85,7 +88,10 @@ const VoyagerV2HintedPage: NextPage = () => {
           return;
         }
 
-        const message = err instanceof Error ? err.message : "Unknown error initialising Voyager";
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Unknown error initialising Voyager";
         setError(message);
 
         console.error("[VoyagerV2HintedPage]", err);
@@ -102,7 +108,10 @@ const VoyagerV2HintedPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>GraphQL Voyager - V2 x-graphql Hinted Contract Data Example | Schema Unification Forest</title>
+        <title>
+          GraphQL Voyager - V2 x-graphql Hinted Contract Data Example | Schema
+          Unification Forest
+        </title>
         <meta
           name="description"
           content="Visualise the V2 x-graphql hinted Contract Data example schema with interfaces, unions, and custom scalars as an interactive graph using GraphQL Voyager."
@@ -124,7 +133,9 @@ const VoyagerV2HintedPage: NextPage = () => {
         <div className="voyager-header">
           <div className="header-content">
             <h1>V2 x-graphql Hinted Contract Data Example</h1>
-            <p className="header-subtitle">Interfaces • Unions • Custom Scalars • Directives</p>
+            <p className="header-subtitle">
+              Interfaces • Unions • Custom Scalars • Directives
+            </p>
           </div>
           <div className="voyager-nav">
             <Link href="/voyager-v1" className="nav-link">
@@ -144,7 +155,8 @@ const VoyagerV2HintedPage: NextPage = () => {
           <div className="info-badge">
             <span className="badge-label">Features:</span>
             <span className="badge-features">
-              Contract interface • Union types • DateTime scalar • @currency directive
+              Contract interface • Union types • DateTime scalar • @currency
+              directive
             </span>
           </div>
           <div className="info-badge">

@@ -8,14 +8,14 @@ JSON Schema supports arbitrary extension keywords prefixed with `x-`. This libra
 
 ## Supported extensions
 
-| Extension key | Purpose | Example |
-|---|---|---|
-| `x-graphql-type` | Override the inferred GraphQL scalar | `"x-graphql-type": "ID"` |
-| `x-graphql-directives` | Attach arbitrary GraphQL directives | `"x-graphql-directives": ["@deprecated(reason: \"use newId\")"]` |
-| `x-graphql-federation` | Federation v2 directives for the field or type | `"x-graphql-federation": { "key": "id" }` |
-| `x-graphql-description` | Override the description in GraphQL SDL | `"x-graphql-description": "Primary key"` |
-| `x-graphql-nullable` | Force a field to be nullable even if listed in `required` | `"x-graphql-nullable": true` |
-| `x-graphql-skip` | Exclude a property from the generated SDL | `"x-graphql-skip": true` |
+| Extension key           | Purpose                                                   | Example                                                          |
+| ----------------------- | --------------------------------------------------------- | ---------------------------------------------------------------- |
+| `x-graphql-type`        | Override the inferred GraphQL scalar                      | `"x-graphql-type": "ID"`                                         |
+| `x-graphql-directives`  | Attach arbitrary GraphQL directives                       | `"x-graphql-directives": ["@deprecated(reason: \"use newId\")"]` |
+| `x-graphql-federation`  | Federation v2 directives for the field or type            | `"x-graphql-federation": { "key": "id" }`                        |
+| `x-graphql-description` | Override the description in GraphQL SDL                   | `"x-graphql-description": "Primary key"`                         |
+| `x-graphql-nullable`    | Force a field to be nullable even if listed in `required` | `"x-graphql-nullable": true`                                     |
+| `x-graphql-skip`        | Exclude a property from the generated SDL                 | `"x-graphql-skip": true`                                         |
 
 ## Example
 

@@ -17,7 +17,10 @@ import { SecureInfo } from "./SecureInfo";
 import { ZoomControl } from "./ZoomControl";
 import useGraph from "./stores/useGraph";
 
-const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
+const StyledEditorWrapper = styled.div<{
+  $widget: boolean;
+  $showRulers: boolean;
+}>`
   position: absolute;
   width: 100%;
   height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 67px)")};
@@ -79,12 +82,12 @@ interface GraphProps {
 
 const GraphCanvas = ({ isWidget }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
-  const setLoading = useGraph(state => state.setLoading);
-  const centerView = useGraph(state => state.centerView);
-  const direction = useGraph(state => state.direction);
-  const nodes = useGraph(state => state.nodes);
+  const setLoading = useGraph((state) => state.setLoading);
+  const centerView = useGraph((state) => state.centerView);
+  const direction = useGraph((state) => state.direction);
+  const nodes = useGraph((state) => state.nodes);
   const colorScheme = useComputedColorScheme();
-  const edges = useGraph(state => state.edges);
+  const edges = useGraph((state) => state.edges);
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
@@ -92,7 +95,9 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
+        const changeRatio = Math.abs(
+          (areaSize * 100) / (paneWidth * paneHeight) - 100,
+        );
 
         setPaneWidth(layout.width + 50);
         setPaneHeight((layout.height as number) + 50);
@@ -106,15 +111,22 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
         });
       }
     },
-    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes]
+    [
+      isWidget,
+      paneHeight,
+      paneWidth,
+      centerView,
+      setLoading,
+      validateHiddenNodes,
+    ],
   );
 
   return (
     <Canvas
       className="jsoncrack-canvas"
       onLayoutChange={onLayoutChange}
-      node={p => <CustomNode {...p} />}
-      edge={p => <CustomEdge {...p} />}
+      node={(p) => <CustomNode {...p} />}
+      edge={(p) => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
       arrow={null}
@@ -137,29 +149,34 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 };
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
-  const setViewPort = useGraph(state => state.setViewPort);
-  const viewPort = useGraph(state => state.viewPort);
-  const aboveSupportedLimit = useGraph(state => state.aboveSupportedLimit);
-  const loading = useGraph(state => state.loading);
-  const gesturesEnabled = useConfig(state => state.gesturesEnabled);
-  const rulersEnabled = useConfig(state => state.rulersEnabled);
+  const setViewPort = useGraph((state) => state.setViewPort);
+  const viewPort = useGraph((state) => state.viewPort);
+  const aboveSupportedLimit = useGraph((state) => state.aboveSupportedLimit);
+  const loading = useGraph((state) => state.loading);
+  const gesturesEnabled = useConfig((state) => state.gesturesEnabled);
+  const rulersEnabled = useConfig((state) => state.rulersEnabled);
   const [debouncedLoading] = useDebouncedValue(loading, 300);
 
   const callback = React.useCallback(() => {
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+    const canvas = document.querySelector(
+      ".jsoncrack-canvas",
+    ) as HTMLDivElement | null;
     canvas?.classList.add("dragging");
   }, []);
 
   const bindLongPress = useLongPress(callback, {
     threshold: 150,
     onFinish: () => {
-      const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+      const canvas = document.querySelector(
+        ".jsoncrack-canvas",
+      ) as HTMLDivElement | null;
       canvas?.classList.remove("dragging");
     },
   });
 
   const blurOnClick = React.useCallback(() => {
-    if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
+    if ("activeElement" in document)
+      (document.activeElement as HTMLElement)?.blur();
   }, []);
 
   const debouncedOnZoomChangeHandler = debounce(() => {
@@ -175,7 +192,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
       <ZoomControl />
       <StyledEditorWrapper
         $widget={isWidget}
-        onContextMenu={e => e.preventDefault()}
+        onContextMenu={(e) => e.preventDefault()}
         onClick={blurOnClick}
         key={String(gesturesEnabled)}
         $showRulers={rulersEnabled}
@@ -184,7 +201,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         <Space
           onUpdated={() => debouncedOnZoomChangeHandler()}
           onCreate={setViewPort}
-          onContextMenu={e => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
           pollForElementResizing
           className="jsoncrack-space"

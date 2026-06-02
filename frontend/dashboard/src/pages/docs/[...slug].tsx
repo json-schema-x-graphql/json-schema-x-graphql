@@ -20,7 +20,8 @@ interface DocPageProps {
 const DocPage: React.FC<DocPageProps> = ({ content, frontMatter, slug }) => {
   const title = frontMatter.title || slug.join(" / ");
   const description =
-    frontMatter.description || `Documentation for ${slug.join(" / ")} in Schema Unification Forest`;
+    frontMatter.description ||
+    `Documentation for ${slug.join(" / ")} in Schema Unification Forest`;
 
   return (
     <Layout>
@@ -40,12 +41,14 @@ const getAllMarkdownFiles = (dir: string, baseDir: string = dir): string[] => {
   const files = fs.readdirSync(dir);
   let markdownFiles: string[] = [];
 
-  files.forEach(file => {
+  files.forEach((file) => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
 
     if (stat.isDirectory()) {
-      markdownFiles = markdownFiles.concat(getAllMarkdownFiles(filePath, baseDir));
+      markdownFiles = markdownFiles.concat(
+        getAllMarkdownFiles(filePath, baseDir),
+      );
     } else if (file.endsWith(".md")) {
       const relativePath = path.relative(baseDir, filePath);
       markdownFiles.push(relativePath);
@@ -59,7 +62,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const docsDirectory = path.join(process.cwd(), "docs");
   const markdownFiles = getAllMarkdownFiles(docsDirectory);
 
-  const paths = markdownFiles.flatMap(file => {
+  const paths = markdownFiles.flatMap((file) => {
     const slug = file.replace(/\.md$/, "").split(/[/\\]/).filter(Boolean);
 
     if (!slug || slug.length === 0) {
@@ -79,7 +82,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   console.log(
     "Generated Doc Paths:",
-    paths.map(p => `/docs/${(p.params.slug as string[]).join("/")}`)
+    paths.map((p) => `/docs/${(p.params.slug as string[]).join("/")}`),
   );
 
   return {
@@ -88,7 +91,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<DocPageProps> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<DocPageProps> = async ({
+  params,
+}) => {
   const slug = params?.slug as string[];
 
   if (!slug) {

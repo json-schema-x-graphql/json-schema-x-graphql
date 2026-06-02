@@ -9,8 +9,8 @@ import useConfig from "../../../store/useConfig";
 import { StyledToolElement } from "./styles";
 
 export const ViewMenu = () => {
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const toggleDarkMode = useConfig(state => state.toggleDarkMode);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const toggleDarkMode = useConfig((state) => state.toggleDarkMode);
   const [viewMode, setViewMode] = useSessionStorage({
     key: "viewMode",
     defaultValue: ViewMode.Graph,
@@ -31,7 +31,7 @@ export const ViewMenu = () => {
           miw="120"
           w="100%"
           value={viewMode}
-          onChange={e => {
+          onChange={(e) => {
             setViewMode(e as ViewMode);
             gaEvent("change_view_mode", { label: e });
           }}
@@ -47,7 +47,9 @@ export const ViewMenu = () => {
           leftSection={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
           onClick={() => {
             toggleDarkMode(!darkmodeEnabled);
-            gaEvent("toggle_dark_mode", { label: darkmodeEnabled ? "on" : "off" });
+            gaEvent("toggle_dark_mode", {
+              label: darkmodeEnabled ? "on" : "off",
+            });
           }}
         >
           <Text size="xs">Dark Mode</Text>

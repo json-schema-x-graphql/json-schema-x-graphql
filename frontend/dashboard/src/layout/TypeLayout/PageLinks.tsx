@@ -10,12 +10,12 @@ type MappedCombinations = {
 
 function mapLanguagesToProgramming(
   languages: string[],
-  programmingLanguages: string[]
+  programmingLanguages: string[],
 ): MappedCombinations {
   const mappedCombinations: MappedCombinations = {};
 
   // Iterate over each language
-  languages.forEach(language => {
+  languages.forEach((language) => {
     // Assign the array of programming languages to each language key
     mappedCombinations[language] = programmingLanguages;
   });
@@ -23,15 +23,21 @@ function mapLanguagesToProgramming(
   return mappedCombinations;
 }
 
-const filterProgrammingLanguages = [TypeLanguage.TypeScript_Combined, TypeLanguage.JSON_SCHEMA];
+const filterProgrammingLanguages = [
+  TypeLanguage.TypeScript_Combined,
+  TypeLanguage.JSON_SCHEMA,
+];
 
-const languages = formats.map(format => format.label);
+const languages = formats.map((format) => format.label);
 
 const programmingLanguages = typeOptions
-  .filter(option => !filterProgrammingLanguages.includes(option.value))
-  .map(option => option.label);
+  .filter((option) => !filterProgrammingLanguages.includes(option.value))
+  .map((option) => option.label);
 
-const groupedLanguages = mapLanguagesToProgramming(languages, programmingLanguages);
+const groupedLanguages = mapLanguagesToProgramming(
+  languages,
+  programmingLanguages,
+);
 
 export const PageLinks = () => {
   return (
@@ -58,7 +64,7 @@ export const PageLinks = () => {
       <SimpleGrid cols={4} w="fit-content">
         {Object.entries(groupedLanguages).map(([from, tos]) => (
           <List key={from} listStyleType="none">
-            {tos.map(to => (
+            {tos.map((to) => (
               <List.Item key={to} c="black">
                 <Anchor
                   component={Link}

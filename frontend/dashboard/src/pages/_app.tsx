@@ -85,7 +85,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         defaultColorScheme="light"
         theme={theme}
       >
-        <StyleSheetManager shouldForwardProp={prop => prop !== "variant"}>
+        <StyleSheetManager shouldForwardProp={(prop) => prop !== "variant"}>
           <ThemeProvider theme={lightTheme}>
             <Toaster
               position="bottom-right"
@@ -103,7 +103,9 @@ function JsonCrack({ Component, pageProps }: AppProps) {
               }}
             />
             <GlobalStyle />
-            {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && <GoogleAnalytics trackPageViews />}
+            {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+              <GoogleAnalytics trackPageViews />
+            )}
             <Component {...pageProps} />
           </ThemeProvider>
         </StyleSheetManager>

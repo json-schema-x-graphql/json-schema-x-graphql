@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "description": "Build scripts for the Rust WASM converter.",
+  "license": "MIT",
+  "author": "The Guild",
   "scripts": {
     "clean": "rimraf pkg pkg-bundler pkg-web",
     "build": "pnpm run build:nodejs",
@@ -11,8 +13,6 @@
     "build:bundler": "wasm-pack build --target bundler --out-dir ./pkg-bundler",
     "test": "cargo test --all-features"
   },
-  "author": "The Guild",
-  "license": "MIT",
   "devDependencies": {
     "rimraf": "^5.0.5"
   }

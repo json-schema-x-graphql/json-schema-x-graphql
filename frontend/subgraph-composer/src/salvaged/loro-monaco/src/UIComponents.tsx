@@ -5,7 +5,10 @@ interface ErrorBannerProps {
   onClear: () => void;
 }
 
-export const ErrorBanner: React.FC<ErrorBannerProps> = ({ errors, onClear }) => {
+export const ErrorBanner: React.FC<ErrorBannerProps> = ({
+  errors,
+  onClear,
+}) => {
   if (errors.length === 0) return null;
 
   return (
@@ -58,7 +61,9 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   };
 
   return (
-    <span className={`px-2 py-1 rounded text-xs font-medium ${colors[variant]}`}>
+    <span
+      className={`px-2 py-1 rounded text-xs font-medium ${colors[variant]}`}
+    >
       {label}
     </span>
   );

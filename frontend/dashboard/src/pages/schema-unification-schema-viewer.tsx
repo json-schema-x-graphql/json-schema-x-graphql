@@ -19,7 +19,9 @@ import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
 
-const ModalController = dynamic(() => import("../features/modals/ModalController"));
+const ModalController = dynamic(
+  () => import("../features/modals/ModalController"),
+);
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));
 
 const queryClient = new QueryClient({
@@ -67,9 +69,9 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
 
 const SchemaUnificationSchemaViewer = () => {
   const { setColorScheme } = useMantineColorScheme();
-  const setContents = useFile(state => state.setContents);
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const setContents = useFile((state) => state.setContents);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const fullscreen = useGraph((state) => state.fullscreen);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {

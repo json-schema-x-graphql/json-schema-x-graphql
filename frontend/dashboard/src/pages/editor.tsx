@@ -19,7 +19,9 @@ import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
 
-const ModalController = dynamic(() => import("../features/modals/ModalController"));
+const ModalController = dynamic(
+  () => import("../features/modals/ModalController"),
+);
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));
 
 const queryClient = new QueryClient({
@@ -68,9 +70,9 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
 const EditorPage = () => {
   const { query, isReady } = useRouter();
   const { setColorScheme } = useMantineColorScheme();
-  const checkEditorSession = useFile(state => state.checkEditorSession);
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const checkEditorSession = useFile((state) => state.checkEditorSession);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const fullscreen = useGraph((state) => state.fullscreen);
 
   useEffect(() => {
     if (isReady) checkEditorSession(query?.json);

@@ -46,7 +46,8 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
 
   useEffect(() => {
     const scrollPositionRatio =
-      (scrollPosition / editorHeight) * (editorRef.current?.getContentHeight() || 0);
+      (scrollPosition / editorHeight) *
+      (editorRef.current?.getContentHeight() || 0);
 
     editorRef.current?.setScrollTop(scrollPositionRatio);
   }, [editorHeight, scrollPosition]);
@@ -78,16 +79,16 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
             </Box>
             <Editor
               value={originalContent}
-              onChange={value => setOriginalContent(value || "")}
+              onChange={(value) => setOriginalContent(value || "")}
               language={from}
               height={500}
               options={editorOptions}
-              onMount={editor => {
+              onMount={(editor) => {
                 editor.onDidContentSizeChange(() => {
                   setEditorHeight(editor.getContentHeight());
                 });
 
-                editor.onDidScrollChange(e => {
+                editor.onDidScrollChange((e) => {
                   setScrollPosition(e.scrollTop);
                 });
               }}
@@ -105,7 +106,7 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
                 ...editorOptions,
                 readOnly: true,
               }}
-              onMount={editor => {
+              onMount={(editor) => {
                 editorRef.current = editor;
               }}
             />

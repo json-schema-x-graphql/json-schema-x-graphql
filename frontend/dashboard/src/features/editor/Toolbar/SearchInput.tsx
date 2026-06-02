@@ -15,7 +15,7 @@ export const SearchInput = () => {
       id="search-node"
       w={180}
       value={searchValue}
-      onChange={e => setValue(e.currentTarget.value)}
+      onChange={(e) => setValue(e.currentTarget.value)}
       placeholder="Search Node"
       autoComplete="off"
       autoCorrect="off"
@@ -25,7 +25,8 @@ export const SearchInput = () => {
         searchValue && (
           <Flex h={30} align="center">
             <Text size="xs" c="dimmed" pr="md">
-              {searchValue && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
+              {searchValue &&
+                `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
             </Text>
           </Flex>
         )

@@ -97,6 +97,7 @@ Output SDL (canonical):
 This is a very long description...
 It contains additional lines.
 """
+
 ```graphql
 type Foo { ... }
 ```
@@ -112,7 +113,9 @@ Input:
 Output (canonical):
 
 ```graphql
-type Foo { data: JSON }
+type Foo {
+  data: JSON
+}
 ```
 
 3. Larger or referenced object -> named type
@@ -122,8 +125,13 @@ Input (referenced or > threshold):
 Output:
 
 ```graphql
-type Parent { nested: NestedObject }
-type NestedObject { a: String b: Int }
+type Parent {
+  nested: NestedObject
+}
+type NestedObject {
+  a: String
+  b: Int
+}
 ```
 
 ## Consequences

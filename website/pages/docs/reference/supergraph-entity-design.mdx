@@ -22,7 +22,7 @@ In Apollo Federation, base/owner subgraphs define the primary entity type with `
 | `x-graphql-supergraph-type`       | enum    | Yes      | Role: `base-entity` \| `entity-extending` \| `utility`                         |
 | `x-graphql-supergraph-entity`     | string  | Yes      | Entity type name (e.g., `"User"`). All schemas for the same entity must match. |
 | `x-graphql-supergraph-query-root` | boolean | No       | If `true`, this subgraph handles root Query fields for this entity             |
-| `x-graphql-supergraph-version`    | string  | No       | Schema version for this subgraph (e.g., `"1.0.0"`)                            |
+| `x-graphql-supergraph-version`    | string  | No       | Schema version for this subgraph (e.g., `"1.0.0"`)                             |
 
 ---
 
@@ -129,14 +129,14 @@ In Apollo Federation, base/owner subgraphs define the primary entity type with `
 
 ## Benefits
 
-| Benefit                | Description                                                         |
-| ---------------------- | ------------------------------------------------------------------- |
-| Explicit ownership     | Clear which subgraph owns each federated entity type                |
-| Better composition     | Validators understand entity relationships and dependencies         |
-| Gateway routing        | API gateways know exactly which subgraph to query for each entity   |
-| Self-documenting       | Metadata makes federation design explicit and discoverable          |
-| Early error detection  | Catch composition errors before runtime                             |
-| Backward compatible    | Schemas without this metadata fall back to @key/@extends inference  |
+| Benefit               | Description                                                        |
+| --------------------- | ------------------------------------------------------------------ |
+| Explicit ownership    | Clear which subgraph owns each federated entity type               |
+| Better composition    | Validators understand entity relationships and dependencies        |
+| Gateway routing       | API gateways know exactly which subgraph to query for each entity  |
+| Self-documenting      | Metadata makes federation design explicit and discoverable         |
+| Early error detection | Catch composition errors before runtime                            |
+| Backward compatible   | Schemas without this metadata fall back to @key/@extends inference |
 
 ---
 

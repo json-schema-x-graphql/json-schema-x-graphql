@@ -410,7 +410,7 @@ export function validateSuggestion(suggestion, sdl) {
     const fieldRegex = new RegExp(
       `${suggestion.fieldName}\\s*(?:\\([^)]*\\))?:\\s*`,
     );
-    if (!sdl.includes(`${suggestion.typeName}`)) {
+    if (!fieldRegex.test(sdl)) {
       errors.push(
         `Field ${suggestion.fieldName} not found in type ${suggestion.typeName}`,
       );

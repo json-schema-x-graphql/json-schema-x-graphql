@@ -7,7 +7,7 @@ import { FileFormat } from "../../enums/file.enum";
 import useFile from "../../store/useFile";
 
 export const FullscreenDropzone = () => {
-  const setContents = useFile(state => state.setContents);
+  const setContents = useFile((state) => state.setContents);
 
   return (
     <Dropzone.FullScreen
@@ -19,12 +19,20 @@ export const FullscreenDropzone = () => {
         "application/xml",
         "application/toml",
       ]}
-      onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
-      onDrop={async e => {
+      onReject={(files) =>
+        toast.error(`Unable to load file ${files[0].file.name}`)
+      }
+      onDrop={async (e) => {
         const fileContent = await e[0].text();
-        let fileExtension = e[0].name.split(".").pop() as FileFormat | undefined;
+        let fileExtension = e[0].name.split(".").pop() as
+          | FileFormat
+          | undefined;
         if (!fileExtension) fileExtension = FileFormat.JSON;
-        setContents({ contents: fileContent, format: fileExtension, hasChanges: false });
+        setContents({
+          contents: fileContent,
+          format: fileExtension,
+          hasChanges: false,
+        });
       }}
     >
       <Group

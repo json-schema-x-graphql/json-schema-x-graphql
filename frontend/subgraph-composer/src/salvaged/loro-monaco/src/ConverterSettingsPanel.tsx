@@ -123,7 +123,9 @@ export const ConverterSettingsPanel: React.FC<ConverterSettingsPanelProps> = ({
                   }
                   className="w-4 h-4 rounded"
                 />
-                <span className="text-gray-300">Include federation directives</span>
+                <span className="text-gray-300">
+                  Include federation directives
+                </span>
               </label>
             </div>
           </div>
@@ -227,9 +229,9 @@ export const ConverterSettingsPanel: React.FC<ConverterSettingsPanelProps> = ({
           {/* Info Panel */}
           <div className="border-t border-gray-700 pt-4 bg-gray-700 rounded p-3">
             <p className="text-sm text-gray-300">
-              <strong>Tip:</strong> Output format changes how the conversion result
-              is displayed. "SDL" shows readable GraphQL schema. "AST JSON" shows
-              the abstract syntax tree for advanced use cases.
+              <strong>Tip:</strong> Output format changes how the conversion
+              result is displayed. "SDL" shows readable GraphQL schema. "AST
+              JSON" shows the abstract syntax tree for advanced use cases.
             </p>
           </div>
 

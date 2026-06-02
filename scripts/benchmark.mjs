@@ -52,7 +52,9 @@ function runCommand(command, args) {
   const end = performance.now();
 
   if (result.status !== 0) {
-    throw new Error(`Command failed: ${command} ${args.join(" ")}\n${result.stderr}`);
+    throw new Error(
+      `Command failed: ${command} ${args.join(" ")}\n${result.stderr}`,
+    );
   }
 
   return end - start;
@@ -86,7 +88,7 @@ for (const schema of schemas) {
   // Node Benchmark
   const nodeOut = path.join(
     PATHS.outputDir,
-    `${schema.name}.node.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
+    `${schema.name}.node.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`,
   );
   const nodeArgs = [
     PATHS.nodeConverter,
@@ -111,7 +113,7 @@ for (const schema of schemas) {
   // Rust Benchmark
   const rustOut = path.join(
     PATHS.outputDir,
-    `${schema.name}.rust.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`
+    `${schema.name}.rust.${DEFAULT_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql"}`,
   );
   const rustArgs = [
     "--input",
@@ -130,7 +132,9 @@ for (const schema of schemas) {
     "--output-format",
     DEFAULT_OPTIONS.outputFormat,
   ];
-  const rustStats = benchmark("Rust", () => runCommand(PATHS.rustConverter, rustArgs));
+  const rustStats = benchmark("Rust", () =>
+    runCommand(PATHS.rustConverter, rustArgs),
+  );
 
   results.push({
     schema: schema.name,
@@ -146,7 +150,7 @@ console.log(
   "Schema".padEnd(30) +
     "Node (ms)".padEnd(15) +
     "Rust (ms)".padEnd(15) +
-    "Speedup (x)".padEnd(15)
+    "Speedup (x)".padEnd(15),
 );
 console.log("-".repeat(75));
 
@@ -155,12 +159,13 @@ for (const res of results) {
     res.schema.padEnd(30) +
       res.node.avg.toFixed(2).padEnd(15) +
       res.rust.avg.toFixed(2).padEnd(15) +
-      res.speedup.toFixed(2).padEnd(15)
+      res.speedup.toFixed(2).padEnd(15),
   );
 }
 
 console.log("-".repeat(75));
 
 // Calculate average speedup
-const avgSpeedup = results.reduce((acc, curr) => acc + curr.speedup, 0) / results.length;
+const avgSpeedup =
+  results.reduce((acc, curr) => acc + curr.speedup, 0) / results.length;
 console.log(`Average Speedup: ${avgSpeedup.toFixed(2)}x`);

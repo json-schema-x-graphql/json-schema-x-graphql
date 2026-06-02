@@ -74,7 +74,9 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
 
-      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
+      const imageElement = document.querySelector(
+        "svg[id*='ref']",
+      ) as HTMLElement;
 
       const blob = await toBlob(imageElement, {
         quality: fileDetails.quality,
@@ -103,7 +105,9 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
 
-      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
+      const imageElement = document.querySelector(
+        "svg[id*='ref']",
+      ) as HTMLElement;
 
       const dataURI = await getDownloadFormat(extension)(imageElement, {
         quality: fileDetails.quality,
@@ -120,20 +124,22 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     }
   };
 
-  const updateDetails = (key: keyof typeof fileDetails, value: string | number) =>
-    setFileDetails({ ...fileDetails, [key]: value });
+  const updateDetails = (
+    key: keyof typeof fileDetails,
+    value: string | number,
+  ) => setFileDetails({ ...fileDetails, [key]: value });
 
   return (
     <Modal opened={opened} onClose={onClose} title="Download Image" centered>
       <TextInput
         label="File Name"
         value={fileDetails.filename}
-        onChange={e => updateDetails("filename", e.target.value)}
+        onChange={(e) => updateDetails("filename", e.target.value)}
         mb="lg"
       />
       <SegmentedControl
         value={extension}
-        onChange={e => setExtension(e as Extensions)}
+        onChange={(e) => setExtension(e as Extensions)}
         fullWidth
         data={[
           { label: "PNG", value: Extensions.PNG },
@@ -145,14 +151,14 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
       <ColorInput
         label="Background Color"
         value={fileDetails.backgroundColor}
-        onChange={color => updateDetails("backgroundColor", color)}
+        onChange={(color) => updateDetails("backgroundColor", color)}
         withEyeDropper={false}
         mb="lg"
       />
       <ColorPicker
         format="rgba"
         value={fileDetails.backgroundColor}
-        onChange={color => updateDetails("backgroundColor", color)}
+        onChange={(color) => updateDetails("backgroundColor", color)}
         swatches={swatches}
         withPicker={false}
         fullWidth
@@ -162,7 +168,11 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
         <Button leftSection={<FiCopy />} onClick={clipboardImage}>
           Clipboard
         </Button>
-        <Button color="green" leftSection={<FiDownload />} onClick={exportAsImage}>
+        <Button
+          color="green"
+          leftSection={<FiDownload />}
+          onClick={exportAsImage}
+        >
           Download
         </Button>
       </Group>

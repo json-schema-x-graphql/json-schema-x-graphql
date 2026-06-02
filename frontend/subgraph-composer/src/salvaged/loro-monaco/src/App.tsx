@@ -13,7 +13,9 @@ import { twMerge } from "tailwind-merge";
 
 // Lazy load GraphQLEditor to avoid worker loading issues
 const GraphQLEditor = lazy(() =>
-  import("graphql-editor").then(mod => ({ default: mod.GraphQLEditor || mod.default }))
+  import("graphql-editor").then((mod) => ({
+    default: mod.GraphQLEditor || mod.default,
+  })),
 );
 
 function cn(...inputs: any[]) {
@@ -43,9 +45,11 @@ const App = () => {
   } = useStore();
 
   const [docId, setDocId] = useState("loro-collaboration-doc");
-  const [username, setUsername] = useState(
-    `User-${Math.random().toString(36).substring(7)}`,
-  );
+  const [username, setUsername] = useState(() => {
+    const array = new Uint32Array(1);
+    self.crypto.getRandomValues(array);
+    return `User-${array[0].toString(36).substring(0, 5)}`;
+  });
   const [isConnected, setIsConnected] = useState(false);
   const [showConnectionDialog, setShowConnectionDialog] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -221,7 +225,14 @@ const App = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showSettings, showConnectionDialog, isConverting, activeEditor, isDarkTheme, handleConvert]);
+  }, [
+    showSettings,
+    showConnectionDialog,
+    isConverting,
+    activeEditor,
+    isDarkTheme,
+    handleConvert,
+  ]);
 
   useEffect(() => {
     window.addEventListener("mousemove", resize);
@@ -283,8 +294,12 @@ const App = () => {
   ]);
 
   return (
-    <div className={`flex flex-col h-screen font-sans ${isDarkTheme ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
-      <header className={`flex items-center justify-between p-2 ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-b`}>
+    <div
+      className={`flex flex-col h-screen font-sans ${isDarkTheme ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}
+    >
+      <header
+        className={`flex items-center justify-between p-2 ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-b`}
+      >
         <h1 className="text-xl font-bold">JSON Schema ⇋ GraphQL CRDT Demo</h1>
         <div className="flex gap-2 items-center">
           <button
@@ -327,7 +342,10 @@ const App = () => {
       </header>
 
       {errors.length > 0 && (
-        <ErrorBanner errors={errors} onClear={() => useStore.setState({ errors: [] })} />
+        <ErrorBanner
+          errors={errors}
+          onClear={() => useStore.setState({ errors: [] })}
+        />
       )}
 
       <ConverterSettingsPanel
@@ -337,7 +355,9 @@ const App = () => {
 
       {showConnectionDialog && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className={`p-6 rounded-lg shadow-xl ${isDarkTheme ? "bg-gray-800" : "bg-white"}`}>
+          <div
+            className={`p-6 rounded-lg shadow-xl ${isDarkTheme ? "bg-gray-800" : "bg-white"}`}
+          >
             <h2 className="mb-4 text-2xl font-bold">Connect to a session</h2>
             <input
               type="text"
@@ -363,7 +383,9 @@ const App = () => {
         </div>
       )}
 
-      <main className={`flex flex-1 overflow-hidden gap-0 md:gap-0 ${isDarkTheme ? "" : ""}`}>
+      <main
+        className={`flex flex-1 overflow-hidden gap-0 md:gap-0 ${isDarkTheme ? "" : ""}`}
+      >
         <div
           style={{ width: `${leftPaneWidth}%` }}
           className={`border-r ${isDarkTheme ? "border-gray-700" : "border-gray-300"} hidden md:flex flex-col`}
@@ -439,7 +461,13 @@ const App = () => {
         >
           {useGraphQLEditor ? (
             // GraphQL Visual Editor
-            <Suspense fallback={<div className="flex items-center justify-center h-full text-gray-500">Loading GraphQL Editor...</div>}>
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center h-full text-gray-500">
+                  Loading GraphQL Editor...
+                </div>
+              }
+            >
               <GraphQLEditor
                 schema={{ code: graphqlSdl }}
                 setSchema={(schema) => {
@@ -462,13 +490,21 @@ const App = () => {
           )}
         </div>
       </main>
-      <footer className={`p-3 text-sm ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-t flex flex-col md:flex-row md:items-center md:justify-between gap-2`}>
+      <footer
+        className={`p-3 text-sm ${isDarkTheme ? "bg-gray-800 border-gray-700" : "bg-gray-100 border-gray-300"} border-t flex flex-col md:flex-row md:items-center md:justify-between gap-2`}
+      >
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
-          <StatusBadge label={`Status: ${connectionStatus.status}`} variant={connectionStatus.status === "connected" ? "success" : "warning"} />
+          <StatusBadge
+            label={`Status: ${connectionStatus.status}`}
+            variant={
+              connectionStatus.status === "connected" ? "success" : "warning"
+            }
+          />
           <span className="text-xs">Users: {connectedUsers.length}</span>
           {lastConversion && (
             <span className="text-xs">
-              Last conversion: {lastConversion.duration}ms, {lastConversion.outputSize} bytes
+              Last conversion: {lastConversion.duration}ms,{" "}
+              {lastConversion.outputSize} bytes
             </span>
           )}
         </div>

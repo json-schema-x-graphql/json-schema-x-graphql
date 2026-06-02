@@ -32,21 +32,24 @@ const GraphQLEditor = lazy(() =>
 );
 
 // Toggled by a button in the toolbar:
-{useGraphQLEditor && (
-  <Suspense fallback={<div className="loading">Loading visual editor…</div>}>
-    <GraphQLEditor
-      schema={graphqlSdl}
-      setSchema={(newSdl) => setGraphqlSdl(newSdl)}
-      theme={isDarkTheme ? "Dark" : "Light"}
-      // Federation directives must be prepended so the editor
-      // can resolve @key, @shareable, etc.
-      schemaToResolve={federationDirectives + "\n" + graphqlSdl}
-    />
-  </Suspense>
-)}
+{
+  useGraphQLEditor && (
+    <Suspense fallback={<div className="loading">Loading visual editor…</div>}>
+      <GraphQLEditor
+        schema={graphqlSdl}
+        setSchema={(newSdl) => setGraphqlSdl(newSdl)}
+        theme={isDarkTheme ? "Dark" : "Light"}
+        // Federation directives must be prepended so the editor
+        // can resolve @key, @shareable, etc.
+        schemaToResolve={federationDirectives + "\n" + graphqlSdl}
+      />
+    </Suspense>
+  );
+}
 ```
 
 Key integration choices:
+
 - **Lazy loading** was mandatory — graphql-editor initialises a WASM worker on import that fails when loaded eagerly before the DOM is ready.
 - **Federation directives prepended** — the `federationDirectives` SDL string (all Apollo Federation v2 directives + common scalars) is injected as `schemaToResolve` so the visual canvas does not display unknown-directive errors.
 - **Controlled component** — the `setSchema` callback syncs visual edits back to the Zustand store, keeping Monaco and the canvas in sync.

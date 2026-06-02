@@ -101,9 +101,7 @@ export default function SchemaManager({
           schemas.map((schema) => (
             <div
               key={schema.id}
-              className={`schema-item ${
-                activeSchemaId === schema.id ? "active" : ""
-              }`}
+              className={`schema-item ${activeSchemaId === schema.id ? "active" : ""}`}
               onClick={() => onSelect(schema.id)}
             >
               <div className="schema-item-content">
@@ -143,7 +141,10 @@ export default function SchemaManager({
                     <span className="schema-time">
                       {new Date(schema.lastModified).toLocaleTimeString(
                         "en-US",
-                        { hour: "2-digit", minute: "2-digit" },
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        },
                       )}
                     </span>
                   )}

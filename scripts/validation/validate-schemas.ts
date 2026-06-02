@@ -49,10 +49,6 @@ const TEST_DATA_DIRS = [
 
 // JSON Schema meta-schemas
 const DRAFT_07_META_SCHEMA = "http://json-schema.org/draft-07/schema#";
-const DRAFT_2019_09_META_SCHEMA =
-  "https://json-schema.org/draft/2019-09/schema";
-const DRAFT_2020_12_META_SCHEMA =
-  "https://json-schema.org/draft/2020-12/schema";
 
 class SchemaValidator {
   private ajv: Ajv;

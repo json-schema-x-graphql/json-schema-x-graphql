@@ -29,8 +29,8 @@ const StyledTools = styled.div`
 `;
 
 export const Toolbar = () => {
-  const setFormat = useFile(state => state.setFormat);
-  const format = useFile(state => state.format);
+  const setFormat = useFile((state) => state.setFormat);
+  const format = useFile((state) => state.format);
 
   return (
     <StyledTools>
@@ -44,7 +44,7 @@ export const Toolbar = () => {
           defaultValue="json"
           size="xs"
           value={format}
-          onChange={e => setFormat(e as FileFormat)}
+          onChange={(e) => setFormat(e as FileFormat)}
           miw={80}
           w={120}
           data={formats}

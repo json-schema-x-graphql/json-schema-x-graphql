@@ -82,7 +82,11 @@ export const Navbar = () => {
               </Button>
             </Menu.Target>
             <Menu.Dropdown maw={300} bg="white">
-              <StyledMenuItem component={Link} prefetch={false} href="/converter/json-to-yaml">
+              <StyledMenuItem
+                component={Link}
+                prefetch={false}
+                href="/converter/json-to-yaml"
+              >
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     Converter
@@ -92,7 +96,11 @@ export const Navbar = () => {
                   </Text>
                 </Stack>
               </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/type/json-to-rust">
+              <StyledMenuItem
+                component={Link}
+                prefetch={false}
+                href="/type/json-to-rust"
+              >
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     Generate Types
@@ -102,7 +110,11 @@ export const Navbar = () => {
                   </Text>
                 </Stack>
               </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/tools/json-schema">
+              <StyledMenuItem
+                component={Link}
+                prefetch={false}
+                href="/tools/json-schema"
+              >
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     JSON Schema
@@ -115,13 +127,18 @@ export const Navbar = () => {
                   </Text>
                 </Stack>
               </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/schema_unification-schema-viewer">
+              <StyledMenuItem
+                component={Link}
+                prefetch={false}
+                href="/schema_unification-schema-viewer"
+              >
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     Unified Schema Viewer
                   </Text>
                   <Text size="xs" c="gray.6" lineClamp={2}>
-                    Visualize and explore the unified Schema Unification Forest schema.
+                    Visualize and explore the unified Schema Unification Forest
+                    schema.
                   </Text>
                 </Stack>
               </StyledMenuItem>

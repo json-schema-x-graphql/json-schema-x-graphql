@@ -45,6 +45,7 @@ source ~/.cargo/env
 ```
 
 This runs:
+
 - `cargo check` — compilation validation
 - `cargo audit` — dependency vulnerability scan
 - `cargo geiger` — unsafe code detection
@@ -121,11 +122,11 @@ cargo bench
 
 ## Common Issues
 
-| Problem                     | Solution                                     |
-| --------------------------- | -------------------------------------------- |
-| `rustc: command not found`  | `source ~/.cargo/env`                        |
-| Security tools not found    | `cargo install cargo-audit cargo-geiger cargo-deny` |
-| Tests fail to compile       | `cd converters/rust && cargo clean && cargo build` |
+| Problem                    | Solution                                            |
+| -------------------------- | --------------------------------------------------- |
+| `rustc: command not found` | `source ~/.cargo/env`                               |
+| Security tools not found   | `cargo install cargo-audit cargo-geiger cargo-deny` |
+| Tests fail to compile      | `cd converters/rust && cargo clean && cargo build`  |
 
 ---
 

@@ -58,8 +58,8 @@ const ShiningButton = styled.div`
 `;
 
 export const NotSupported = () => {
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const setVisible = useModal(state => state.setVisible);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const setVisible = useModal((state) => state.setVisible);
 
   return (
     <Overlay
@@ -69,7 +69,12 @@ export const NotSupported = () => {
       center
     >
       <Stack maw="60%" align="center" justify="center" gap="sm">
-        <Image src="https://todiagram.com/logo.svg" alt="Unsupported" w={72} h={72} />
+        <Image
+          src="https://todiagram.com/logo.svg"
+          alt="Unsupported"
+          w={72}
+          h={72}
+        />
         <Text fz="48" fw={600} c="bright">
           Time to upgrade!
         </Text>
@@ -77,7 +82,12 @@ export const NotSupported = () => {
           This diagram is too large and not supported at JSON Crack.
           <br />
           Try{" "}
-          <Anchor inherit c="teal" fw="500" onClick={() => setVisible("UpgradeModal", true)}>
+          <Anchor
+            inherit
+            c="teal"
+            fw="500"
+            onClick={() => setVisible("UpgradeModal", true)}
+          >
             ToDiagram
           </Anchor>{" "}
           for larger diagrams and more features.

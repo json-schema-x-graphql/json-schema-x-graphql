@@ -26,6 +26,7 @@ Best practices and common patterns for implementing Apollo Federation with `x-gr
 Apollo Federation allows you to split your GraphQL schema across multiple services (subgraphs). Entities are types that can be referenced and extended across subgraph boundaries.
 
 **Key Concepts:**
+
 - **Entity**: A type with `@key` directive that can be referenced from other subgraphs
 - **Foreign Key**: A field storing the key value of a related entity
 - **Reference Resolution**: How the gateway fetches entity data across subgraphs
@@ -72,6 +73,7 @@ Without foreign key fields, the gateway cannot construct the query to fetch enti
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") {
   upc: ID!
@@ -89,7 +91,11 @@ type Product @key(fields: "upc") {
       "type": "object",
       "x-graphql-federation-keys": ["id"],
       "properties": {
-        "id": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+        "id": {
+          "type": "string",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
         "product_upc": {
           "type": "string",
           "x-graphql-field-name": "productUpc",
@@ -98,7 +104,11 @@ type Product @key(fields: "upc") {
         },
         "rating": { "type": "integer" },
         "body": { "type": "string" },
-        "product": { "type": "object", "x-graphql-field-type": "Product", "x-graphql-field-non-null": true }
+        "product": {
+          "type": "object",
+          "x-graphql-field-type": "Product",
+          "x-graphql-field-non-null": true
+        }
       },
       "required": ["id", "product_upc", "product"]
     }
@@ -107,6 +117,7 @@ type Product @key(fields: "upc") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Review @key(fields: "id") {
   id: ID!
@@ -134,13 +145,18 @@ Use `resolvable: false` when you only need an entity stub — no additional fiel
     "type": "object",
     "x-graphql-federation-keys": [{ "fields": "upc", "resolvable": false }],
     "properties": {
-      "upc": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true }
+      "upc": {
+        "type": "string",
+        "x-graphql-field-type": "ID",
+        "x-graphql-field-non-null": true
+      }
     }
   }
 }
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc", resolvable: false) {
   upc: ID!
@@ -172,6 +188,7 @@ type Product @key(fields: "upc", resolvable: false) {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type User @key(fields: "id organizationId") {
   id: ID!
@@ -187,13 +204,17 @@ type User @key(fields: "id organizationId") {
     "x-graphql-federation-keys": ["id organization { id }"],
     "properties": {
       "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
-      "organization": { "x-graphql-field-type": "Organization", "x-graphql-field-non-null": true }
+      "organization": {
+        "x-graphql-field-type": "Organization",
+        "x-graphql-field-non-null": true
+      }
     }
   }
 }
 ```
 
 **Generated SDL:**
+
 ```graphql
 type User @key(fields: "id organization { id }") {
   id: ID!
@@ -216,6 +237,7 @@ type User @key(fields: "id organization { id }") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") @key(fields: "sku") {
   upc: ID!
@@ -249,6 +271,7 @@ type Product @key(fields: "upc") @key(fields: "sku") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Product @key(fields: "upc") {
   upc: ID!
@@ -275,6 +298,7 @@ type Product @key(fields: "upc") {
 ```
 
 **Generated SDL:**
+
 ```graphql
 type Review {
   product: Product! @provides(fields: "name")
@@ -374,11 +398,11 @@ node scripts/validate-federation-composition.js
 
 ### Common Composition Errors
 
-| Error                       | Cause                                    | Fix                                        |
-| --------------------------- | ---------------------------------------- | ------------------------------------------ |
-| `SATISFIABILITY_ERROR`      | Missing foreign keys or @external on keys | Add foreign key fields                    |
-| `EXTERNAL_MISSING_ON_BASE`  | @external on field not in owning service  | Remove @external or add field to owner    |
-| `KEY_FIELDS_MISSING_EXTERNAL`| Extension declares new key fields        | Use same keys as owning service           |
+| Error                         | Cause                                     | Fix                                    |
+| ----------------------------- | ----------------------------------------- | -------------------------------------- |
+| `SATISFIABILITY_ERROR`        | Missing foreign keys or @external on keys | Add foreign key fields                 |
+| `EXTERNAL_MISSING_ON_BASE`    | @external on field not in owning service  | Remove @external or add field to owner |
+| `KEY_FIELDS_MISSING_EXTERNAL` | Extension declares new key fields         | Use same keys as owning service        |
 
 ### Manual Testing
 
@@ -388,7 +412,9 @@ query {
     name
     reviews {
       rating
-      author { name }
+      author {
+        name
+      }
     }
   }
 }

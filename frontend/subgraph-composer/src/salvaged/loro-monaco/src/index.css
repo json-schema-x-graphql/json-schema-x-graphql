@@ -53,7 +53,12 @@ body {
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-semibold;
   }
 }
@@ -142,7 +147,7 @@ body {
 
 .yRemoteSelectionHead::after {
   position: absolute;
-  content: ' ';
+  content: " ";
   border: 3px solid orange;
   border-radius: 4px;
   left: -4px;
@@ -150,14 +155,30 @@ body {
 }
 
 /* Collaborative User Colors */
-.user-color-0 { @apply bg-red-500; }
-.user-color-1 { @apply bg-blue-500; }
-.user-color-2 { @apply bg-green-500; }
-.user-color-3 { @apply bg-yellow-500; }
-.user-color-4 { @apply bg-purple-500; }
-.user-color-5 { @apply bg-pink-500; }
-.user-color-6 { @apply bg-indigo-500; }
-.user-color-7 { @apply bg-orange-500; }
+.user-color-0 {
+  @apply bg-red-500;
+}
+.user-color-1 {
+  @apply bg-blue-500;
+}
+.user-color-2 {
+  @apply bg-green-500;
+}
+.user-color-3 {
+  @apply bg-yellow-500;
+}
+.user-color-4 {
+  @apply bg-purple-500;
+}
+.user-color-5 {
+  @apply bg-pink-500;
+}
+.user-color-6 {
+  @apply bg-indigo-500;
+}
+.user-color-7 {
+  @apply bg-orange-500;
+}
 
 /* Status Indicators */
 .status-dot {

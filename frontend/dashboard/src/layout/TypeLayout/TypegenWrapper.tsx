@@ -4,7 +4,12 @@ import { NextSeo } from "next-seo";
 import { LuCheck, LuCircleX } from "react-icons/lu";
 import ClientMonacoEditor from "../../components/ClientMonacoEditor";
 import { SEO } from "../../constants/seo";
-import { type FileFormat, formats, type TypeLanguage, typeOptions } from "../../enums/file.enum";
+import {
+  type FileFormat,
+  formats,
+  type TypeLanguage,
+  typeOptions,
+} from "../../enums/file.enum";
 import { editorOptions } from "../../layout/ConverterLayout/options";
 import Layout from "../../layout/PageLayout";
 import { generateType } from "../../lib/utils/generateType";
@@ -68,7 +73,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
             </Box>
             <Editor
               value={originalContent}
-              onChange={value => setOriginalContent(value || "")}
+              onChange={(value) => setOriginalContent(value || "")}
               language={from}
               height={500}
               options={editorOptions}
@@ -86,7 +91,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
                 ...editorOptions,
                 readOnly: true,
               }}
-              onMount={editor => {
+              onMount={(editor) => {
                 editorRef.current = editor;
               }}
             />

@@ -20,12 +20,12 @@ interface Section1Props {
 const formatTitle = (slug: string) => {
   const parts = slug.split("/");
   const filename = parts[parts.length - 1];
-  return filename.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  return filename.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 };
 
 const getDocsByPrefix = (docs: string[], prefix: string, limit = 5) => {
   return docs
-    .filter(d => d.startsWith(prefix) && d !== prefix)
+    .filter((d) => d.startsWith(prefix) && d !== prefix)
     .sort()
     .slice(0, limit);
 };
@@ -67,8 +67,9 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
         fz={{ base: 16, sm: 18 }}
         w={{ base: "100%", md: "600" }}
       >
-        The Schema Unification Forest project transforms complex government procurement data from multiple
-        systems into a unified, interactive visualization platform for better analysis and insights.
+        The Schema Unification Forest project transforms complex government
+        procurement data from multiple systems into a unified, interactive
+        visualization platform for better analysis and insights.
       </Title>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg" mt="xl">
@@ -86,8 +87,9 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Explore Contract Data
           </Title>
           <Text ta="center" c="gray.7">
-            Access normalized contract data from Contract Data, Legacy Procurement, and EASi systems through our
-            interactive visualizations and exportable reports.
+            Access normalized contract data from Contract Data, Legacy
+            Procurement, and EASi systems through our interactive visualizations
+            and exportable reports.
           </Text>
         </Stack>
 
@@ -105,8 +107,8 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Understand Schema
           </Title>
           <Text ta="center" c="gray.7">
-            Explore the unified schema that normalizes data across government contract systems for
-            consistent analysis.
+            Explore the unified schema that normalizes data across government
+            contract systems for consistent analysis.
           </Text>
         </Stack>
 
@@ -124,14 +126,23 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Interactive Analysis
           </Title>
           <Text ta="center" c="gray.7">
-            Navigate through complex contract relationships, export visualizations, and gain
-            insights into government procurement processes.
+            Navigate through complex contract relationships, export
+            visualizations, and gain insights into government procurement
+            processes.
           </Text>
         </Stack>
       </SimpleGrid>
 
       {/* Documentation Section */}
-      <Title order={2} fw={600} c="gray.9" ta="center" mt={80} mb={30} fz={{ base: 24, sm: 32 }}>
+      <Title
+        order={2}
+        fw={600}
+        c="gray.9"
+        ta="center"
+        mt={80}
+        mb={30}
+        fz={{ base: 24, sm: 32 }}
+      >
         <FaBook style={{ display: "inline", marginRight: "12px" }} />
         Documentation & Resources
       </Title>
@@ -148,7 +159,8 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Browse all documentation and archived content generated from markdown files.
+            Browse all documentation and archived content generated from
+            markdown files.
           </Text>
           <Stack gap="xs">
             <Button
@@ -190,10 +202,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Architectural Decision Records documenting key technical choices and their rationale.
+            Architectural Decision Records documenting key technical choices and
+            their rationale.
           </Text>
           <Stack gap="xs">
-            {adrDocs.map(doc => (
+            {adrDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -208,7 +221,14 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
                 {formatTitle(doc)}
               </Button>
             ))}
-            <Button component={Link} href="/docs/adr" variant="light" size="xs" mt="xs" fullWidth>
+            <Button
+              component={Link}
+              href="/docs/adr"
+              variant="light"
+              size="xs"
+              mt="xs"
+              fullWidth
+            >
               View All ADRs
             </Button>
           </Stack>
@@ -225,10 +245,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Comprehensive guides for understanding and working with the Schema Unification Forest schemas.
+            Comprehensive guides for understanding and working with the Schema
+            Unification Forest schemas.
           </Text>
           <Stack gap="xs">
-            {schemaDocs.map(doc => (
+            {schemaDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -267,10 +288,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Documentation on how different government systems map to the Schema Unification schema.
+            Documentation on how different government systems map to the Schema
+            Unification schema.
           </Text>
           <Stack gap="xs">
-            {mappingDocs.map(doc => (
+            {mappingDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -309,10 +331,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Technical documentation on schema management, transformations, and tooling.
+            Technical documentation on schema management, transformations, and
+            tooling.
           </Text>
           <Stack gap="xs">
-            {implementationDocs.map(doc => (
+            {implementationDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -351,10 +374,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Understanding the evolution and development process of the Schema Unification Forest project.
+            Understanding the evolution and development process of the Schema
+            Unification Forest project.
           </Text>
           <Stack gap="xs">
-            {processDocs.map(doc => (
+            {processDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -396,7 +420,7 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Documentation about external government systems and data sources.
           </Text>
           <Stack gap="xs">
-            {externalDocs.map(doc => (
+            {externalDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -426,7 +450,15 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
       </SimpleGrid>
 
       {/* Category-level shortcuts (compact) */}
-      <Title order={3} fw={500} c="gray.8" ta="center" mt={60} mb={12} fz={{ base: 18, sm: 20 }}>
+      <Title
+        order={3}
+        fw={500}
+        c="gray.8"
+        ta="center"
+        mt={60}
+        mb={12}
+        fz={{ base: 18, sm: 20 }}
+      >
         Documentation Sections
       </Title>
 
@@ -438,7 +470,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             All docs generated from markdown files.
           </Text>
-          <Button component={Link} href="/docs" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View Docs Index
           </Button>
         </Card>
@@ -450,7 +488,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             Key architectural decisions and rationale.
           </Text>
-          <Button component={Link} href="/docs/adr/" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs/adr/"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View ADRs
           </Button>
         </Card>
@@ -462,7 +506,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             Guides and references for schema authors.
           </Text>
-          <Button component={Link} href="/docs/schema/" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs/schema/"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View Schema Docs
           </Button>
         </Card>
@@ -474,7 +524,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             How external systems map into the Schema Unification schema.
           </Text>
-          <Button component={Link} href="/docs/mappings/" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs/mappings/"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View Mappings
           </Button>
         </Card>
@@ -486,7 +542,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             References for external data sources and integrations.
           </Text>
-          <Button component={Link} href="/docs/external/" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs/external/"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View External Docs
           </Button>
         </Card>
@@ -516,7 +578,13 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
           <Text size="sm" c="dimmed" mb="xs">
             Project evolution, decisions, and quick-starts.
           </Text>
-          <Button component={Link} href="/docs/process/" variant="subtle" size="xs" fullWidth>
+          <Button
+            component={Link}
+            href="/docs/process/"
+            variant="subtle"
+            size="xs"
+            fullWidth
+          >
             View Process Docs
           </Button>
         </Card>

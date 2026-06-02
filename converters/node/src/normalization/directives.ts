@@ -155,9 +155,7 @@ function formatDirectiveArgs(args: Record<string, any>): string {
         return `${key}: [${value
           .map(
             (v: any) =>
-              `[${(Array.isArray(v) ? v : [v])
-                .map((s: string) => `"${s}"`)
-                .join(", ")}]`,
+              `[${(Array.isArray(v) ? v : [v]).map((s: string) => `"${s}"`).join(", ")}]`,
           )
           .join(", ")}]`;
       }

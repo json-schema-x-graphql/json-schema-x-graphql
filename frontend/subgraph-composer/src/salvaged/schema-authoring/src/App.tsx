@@ -53,15 +53,21 @@ export function App() {
 
   // Split-pane state (resizable editors) - persisted to store and keyboard-accessible
   // Read initial persisted position from the app store and keep a setter to persist changes.
-  const storeDividerPosition = useAppStore((s) => s.settings?.dividerPosition ?? 50);
+  const storeDividerPosition = useAppStore(
+    (s) => s.settings?.dividerPosition ?? 50,
+  );
   const storeSetDividerPosition = useAppStore((s) => s.setDividerPosition);
-  const [dividerPosition, setDividerPosition] = useState<number>(storeDividerPosition);
+  const [dividerPosition, setDividerPosition] =
+    useState<number>(storeDividerPosition);
   const isDraggingRef = useRef(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Ensure local state follows persisted store when it changes (e.g., restored from storage)
   useEffect(() => {
-    if (typeof storeDividerPosition === "number" && storeDividerPosition !== dividerPosition) {
+    if (
+      typeof storeDividerPosition === "number" &&
+      storeDividerPosition !== dividerPosition
+    ) {
       setDividerPosition(storeDividerPosition);
     }
   }, [storeDividerPosition]);
@@ -339,7 +345,11 @@ export function App() {
 
       {/* Main Content Area - Split Editor Layout */}
       <main className="flex-1 flex overflow-hidden">
-        <div ref={containerRef} className="flex-1 flex relative" style={{ minHeight: 0 }}>
+        <div
+          ref={containerRef}
+          className="flex-1 flex relative"
+          style={{ minHeight: 0 }}
+        >
           {/* Left Panel: JSON Schema Editor (resizable) */}
           <div
             className="flex flex-col border-r border-gray-200 dark:border-gray-700 transition-all"

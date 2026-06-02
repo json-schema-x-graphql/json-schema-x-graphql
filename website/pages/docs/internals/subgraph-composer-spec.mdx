@@ -49,12 +49,12 @@ Manages the collection of JSON schemas with minimal UI footprint.
 
 ```typescript
 interface SchemaEntry {
-  id: string;           // Unique ID for tracking
-  name: string;         // User-friendly name (e.g., "User Service")
-  content: string;      // Raw JSON Schema
+  id: string; // Unique ID for tracking
+  name: string; // User-friendly name (e.g., "User Service")
+  content: string; // Raw JSON Schema
   lastModified: number; // Timestamp
-  error?: string;       // Validation/conversion errors
-  isLoading?: boolean;  // Conversion in progress
+  error?: string; // Validation/conversion errors
+  isLoading?: boolean; // Conversion in progress
 }
 
 interface SchemaManagerState {
@@ -129,8 +129,8 @@ Merges multiple subgraphs into a unified supergraph.
 ```typescript
 interface CompositionOptions {
   mergeStrategy: "union" | "extend"; // How to handle type conflicts
-  includeRootQuery: boolean;         // Auto-create Query root
-  federationMode: boolean;           // Enable federation features
+  includeRootQuery: boolean; // Auto-create Query root
+  federationMode: boolean; // Enable federation features
 }
 
 async function composeSupergraph(

@@ -15,10 +15,10 @@ import { useModal } from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
 export const ToolsMenu = () => {
-  const setVisible = useModal(state => state.setVisible);
-  const getJson = useJson(state => state.getJson);
-  const setContents = useFile(state => state.setContents);
-  const getFormat = useFile(state => state.getFormat);
+  const setVisible = useModal((state) => state.setVisible);
+  const getJson = useJson((state) => state.getJson);
+  const setContents = useFile((state) => state.setContents);
+  const getFormat = useFile((state) => state.getFormat);
 
   const randomizeData = async () => {
     try {
@@ -29,12 +29,15 @@ export const ToolsMenu = () => {
         getJson(),
         JSON.stringify({
           output_mode: "json_schema",
-        })
+        }),
       );
 
       // generate random data
       const randomJson = JSONSchemaFaker.generate(JSON.parse(jsonSchema));
-      const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), getFormat());
+      const contents = await jsonToContent(
+        JSON.stringify(randomJson, null, 2),
+        getFormat(),
+      );
       setContents({ contents });
 
       gaEvent("randomize_data");

@@ -15,6 +15,7 @@ title: Federation vs. Composition
 ## Relevance to this project
 
 `json-schema-x-graphql` generates **subgraph-ready SDL** from JSON Schema. The generated SDL:
+
 - Uses `x-graphql-federation` extensions to annotate entity types with `@key`
 - Marks entity fields with `@external`, `@requires`, and `@provides` as directed by the JSON Schema source
 - Is compatible with both Apollo Federation v1 and v2 gateways
@@ -26,4 +27,3 @@ See the [Federation recipe](/docs/recipes/federation) for a practical example of
 - [GraphQL Composite Schemas Spec (draft)](https://graphql.github.io/composite-schemas-spec/draft/#sec-Validate-Source-Schemas)
 - [Apollo Federation Docs](https://www.apollographql.com/docs/federation/)
 - [ADR 0005: React + Rust + WASM Stack](/docs/adr/0005-use-react-rust-wasm-stack)
-

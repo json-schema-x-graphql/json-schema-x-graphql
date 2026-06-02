@@ -75,7 +75,6 @@ caching = []
 cli = ["clap", "reqwest", "bytes", "tokio", "anyhow"]
 
 
-
 [[bin]]
 name = "jxql"
 path = "src/bin/jxql.rs"

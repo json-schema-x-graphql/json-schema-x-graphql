@@ -7,7 +7,7 @@ import { Value } from "./Value";
 
 export const TreeView = () => {
   const theme = useTheme();
-  const json = useJson(state => state.json);
+  const json = useJson((state) => state.json);
 
   // Handle invalid JSON gracefully
   let parsedData;
@@ -68,8 +68,12 @@ export const TreeView = () => {
     <JSONTree
       hideRoot
       data={parsedData}
-      valueRenderer={(valueAsString, value) => <Value {...{ valueAsString, value }} />}
-      labelRenderer={(keyPath, nodeType) => <Label {...{ keyPath, nodeType }} />}
+      valueRenderer={(valueAsString, value) => (
+        <Value {...{ valueAsString, value }} />
+      )}
+      labelRenderer={(keyPath, nodeType) => (
+        <Label {...{ keyPath, nodeType }} />
+      )}
       theme={{
         extend: {
           overflow: "scroll",

@@ -1,6 +1,15 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Stack, Modal, Button, Text, Anchor, Menu, Group, Paper } from "@mantine/core";
+import {
+  Stack,
+  Modal,
+  Button,
+  Text,
+  Anchor,
+  Menu,
+  Group,
+  Paper,
+} from "@mantine/core";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { FaChevronDown } from "react-icons/fa";
@@ -13,9 +22,11 @@ import useFile from "../../../store/useFile";
 const Editor = ClientMonacoEditor;
 
 export const SchemaModal = ({ opened, onClose }: ModalProps) => {
-  const setContents = useFile(state => state.setContents);
-  const setJsonSchema = useFile(state => state.setJsonSchema);
-  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
+  const setContents = useFile((state) => state.setContents);
+  const setJsonSchema = useFile((state) => state.setJsonSchema);
+  const darkmodeEnabled = useConfig((state) =>
+    state.darkmodeEnabled ? "vs-dark" : "light",
+  );
   const [schema, setSchema] = React.useState(
     JSON.stringify(
       {
@@ -32,8 +43,8 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
         required: ["id"],
       },
       null,
-      2
-    )
+      2,
+    ),
   );
 
   const onApply = () => {
@@ -60,7 +71,10 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
     try {
       const { JSONSchemaFaker } = await import("json-schema-faker");
       const data = JSONSchemaFaker.generate(JSON.parse(schema));
-      setContents({ contents: JSON.stringify(data, null, 2), format: FileFormat.JSON });
+      setContents({
+        contents: JSON.stringify(data, null, 2),
+        format: FileFormat.JSON,
+      });
 
       gaEvent("generate_schema_mock_data");
       onClose();
@@ -71,9 +85,17 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
   };
 
   return (
-    <Modal title="JSON Schema" size="lg" opened={opened} onClose={onClose} centered>
+    <Modal
+      title="JSON Schema"
+      size="lg"
+      opened={opened}
+      onClose={onClose}
+      centered
+    >
       <Stack>
-        <Text fz="sm">Any validation failures are shown at the bottom toolbar of pane.</Text>
+        <Text fz="sm">
+          Any validation failures are shown at the bottom toolbar of pane.
+        </Text>
         <Anchor
           fz="sm"
           target="_blank"
@@ -86,7 +108,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
           <Editor
             value={schema ?? ""}
             theme={darkmodeEnabled}
-            onChange={e => setSchema(e!)}
+            onChange={(e) => setSchema(e!)}
             height={300}
             language="json"
             options={{
@@ -100,7 +122,12 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
           />
         </Paper>
         <Group p="0" justify="right">
-          <Button variant="subtle" color="gray" onClick={onClear} disabled={!schema}>
+          <Button
+            variant="subtle"
+            color="gray"
+            onClick={onClear}
+            disabled={!schema}
+          >
             Clear
           </Button>
           <Button.Group>
@@ -109,12 +136,19 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
             </Button>
             <Menu>
               <Menu.Target>
-                <Button variant="default" color="blue" px="xs" disabled={!schema}>
+                <Button
+                  variant="default"
+                  color="blue"
+                  px="xs"
+                  disabled={!schema}
+                >
                   <FaChevronDown />
                 </Button>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item onClick={generateMockData}>Generate Mock Data</Menu.Item>
+                <Menu.Item onClick={generateMockData}>
+                  Generate Mock Data
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </Button.Group>

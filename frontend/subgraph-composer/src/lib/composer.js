@@ -8,11 +8,7 @@ import { parse, printSchema, buildASTSchema, visit } from "graphql";
  * @returns {{success: boolean, sdl: string, errors: string[], stats: CompositionStats}}
  */
 export function composeSupergraph(subgraphs, options = {}) {
-  const {
-    mergeStrategy = "extend",
-    includeRootQuery = true,
-    federationMode = false,
-  } = options;
+  const { mergeStrategy = "extend", includeRootQuery = true } = options;
 
   const errors = [];
 
