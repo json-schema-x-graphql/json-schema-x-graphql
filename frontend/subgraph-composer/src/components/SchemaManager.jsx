@@ -66,10 +66,7 @@ export default function SchemaManager({
         <div className="templates-panel">
           <div className="templates-header">
             <h4>Select a Template</h4>
-            <button
-              onClick={() => setShowTemplates(false)}
-              className="btn-close"
-            >
+            <button onClick={() => setShowTemplates(false)} className="btn-close">
               ✕
             </button>
           </div>
@@ -82,9 +79,7 @@ export default function SchemaManager({
                 disabled={schemas.length >= 10}
               >
                 <div className="template-name">{template.name}</div>
-                <div className="template-description">
-                  {template.description}
-                </div>
+                <div className="template-description">{template.description}</div>
               </button>
             ))}
           </div>
@@ -139,13 +134,10 @@ export default function SchemaManager({
                 <div className="schema-meta">
                   {schema.lastModified && (
                     <span className="schema-time">
-                      {new Date(schema.lastModified).toLocaleTimeString(
-                        "en-US",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        },
-                      )}
+                      {new Date(schema.lastModified).toLocaleTimeString("en-US", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </span>
                   )}
                 </div>

@@ -30,29 +30,22 @@ export function extractExtensions(schema) {
                 break;
             case "implements":
             case "type-implements":
-                extensions.implements = Array.isArray(value)
-                    ? value
-                    : [value];
+                extensions.implements = Array.isArray(value) ? value : [value];
                 break;
             case "union-types":
-                extensions.unionTypes = Array.isArray(value)
-                    ? value
-                    : [value];
+                extensions.unionTypes = Array.isArray(value) ? value : [value];
                 break;
             case "union":
                 if (typeof value === "object" && value !== null) {
                     const u = value;
                     if (u.types) {
-                        extensions.unionTypes = Array.isArray(u.types)
-                            ? u.types
-                            : [u.types];
+                        extensions.unionTypes = Array.isArray(u.types) ? u.types : [u.types];
                     }
                 }
                 break;
             case "type-directives":
             case "directives":
-                extensions.typeDirectives =
-                    value;
+                extensions.typeDirectives = value;
                 break;
             // Field-level
             case "field-name":
@@ -68,8 +61,7 @@ export function extractExtensions(schema) {
                 extensions.fieldListItemNonNull = value;
                 break;
             case "field-directives":
-                extensions.fieldDirectives =
-                    value;
+                extensions.fieldDirectives = value;
                 break;
             case "field-arguments":
             case "arguments":
@@ -103,9 +95,7 @@ export function extractExtensions(schema) {
                         // Add to directives if not handled by interface properties
                         const directives = extensions.typeDirectives || [];
                         if (Array.isArray(directives)) {
-                            if (!directives.some((d) => typeof d === "string"
-                                ? d.includes("authenticated")
-                                : d.name === "authenticated")) {
+                            if (!directives.some((d) => typeof d === "string" ? d.includes("authenticated") : d.name === "authenticated")) {
                                 // @ts-ignore
                                 directives.push({ name: "authenticated" });
                                 extensions.typeDirectives = directives;

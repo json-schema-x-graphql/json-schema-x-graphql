@@ -178,14 +178,9 @@ export const MermaidDiagram = ({ definition }: MermaidDiagramProps) => {
   return (
     <>
       {!isFullscreen && <DiagramContent />}
-      <ModalOverlay
-        $isOpen={isFullscreen}
-        onClick={() => setIsFullscreen(false)}
-      >
+      <ModalOverlay $isOpen={isFullscreen} onClick={() => setIsFullscreen(false)}>
         <ModalContent onClick={(e) => e.stopPropagation()}>
-          <CloseButton onClick={() => setIsFullscreen(false)}>
-            ✕ Close
-          </CloseButton>
+          <CloseButton onClick={() => setIsFullscreen(false)}>✕ Close</CloseButton>
           <DiagramContent />
         </ModalContent>
       </ModalOverlay>

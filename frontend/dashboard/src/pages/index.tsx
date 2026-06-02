@@ -10,15 +10,10 @@ import { Section1 } from "../layout/Landing/Section1";
 import { Section3 } from "../layout/Landing/Section3";
 import Layout from "../layout/PageLayout";
 
-export const HomePage = (
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) => {
+export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Layout>
-      <NextSeo
-        {...SEO}
-        canonical="https://ttse-schema-unification-project.app.cloud.gov"
-      />
+      <NextSeo {...SEO} canonical="https://ttse-schema-unification-project.app.cloud.gov" />
       <HeroSection stars={props.stars} />
       {/* <HeroPreview /> */}
       <Section1 docs={props.docs} />
@@ -35,12 +30,9 @@ export const getStaticProps = (async () => {
   // Fetch repo stars as before
   let stars = 0;
   try {
-    const res = await fetch(
-      "https://api.github.com/repos/GSA-TTS/enterprise-schema-unification",
-      {
-        headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
-      },
-    );
+    const res = await fetch("https://api.github.com/repos/GSA-TTS/enterprise-schema-unification", {
+      headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
+    });
     const data = await res.json();
     stars = data?.stargazers_count || 0;
   } catch (e) {

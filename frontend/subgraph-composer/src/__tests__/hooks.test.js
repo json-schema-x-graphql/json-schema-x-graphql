@@ -137,10 +137,7 @@ describe("Hook Integrations", () => {
         lastModified: Date.now(),
       };
 
-      localStorage.setItem(
-        "subgraph-composer-schemas",
-        JSON.stringify([testSchema]),
-      );
+      localStorage.setItem("subgraph-composer-schemas", JSON.stringify([testSchema]));
 
       const { result } = renderHook(() => useSchemaManager());
 

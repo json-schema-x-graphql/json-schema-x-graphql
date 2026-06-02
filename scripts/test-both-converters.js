@@ -7,13 +7,7 @@
  * This helps identify discrepancies between implementations.
  */
 
-import {
-  readFileSync,
-  writeFileSync,
-  mkdirSync,
-  readdirSync,
-  existsSync,
-} from "fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "fs";
 import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { execFileSync } from "child_process";
@@ -29,9 +23,7 @@ let convertersManifest = null;
 
 if (existsSync(convertersManifestPath)) {
   try {
-    convertersManifest = JSON.parse(
-      readFileSync(convertersManifestPath, "utf-8"),
-    );
+    convertersManifest = JSON.parse(readFileSync(convertersManifestPath, "utf-8"));
   } catch (error) {
     console.warn(
       `Warning: Failed to parse converters manifest at ${convertersManifestPath}: ${error.message}`,
@@ -68,15 +60,11 @@ function stripLeadingDotSlash(value = "") {
 }
 
 function getConverterConfig(name) {
-  return convertersManifest?.converters?.find(
-    (converter) => converter.name === name,
-  );
+  return convertersManifest?.converters?.find((converter) => converter.name === name);
 }
 
 function resolveConverterRoot(name, fallback = name) {
-  const relativePath = stripLeadingDotSlash(
-    getConverterConfig(name)?.path ?? fallback,
-  );
+  const relativePath = stripLeadingDotSlash(getConverterConfig(name)?.path ?? fallback);
   return join(projectRoot, "converters", relativePath);
 }
 
@@ -119,10 +107,7 @@ function loadOptionOverrides() {
       const raw = readFileSync(JXQL_OPTIONS_PATH, "utf-8");
       return JSON.parse(raw);
     } catch (error) {
-      log(
-        `⚠️  Failed to read options file at ${JXQL_OPTIONS_PATH}: ${error.message}`,
-        "yellow",
-      );
+      log(`⚠️  Failed to read options file at ${JXQL_OPTIONS_PATH}: ${error.message}`, "yellow");
     }
   }
   if (JXQL_OPTIONS_JSON) {
@@ -161,9 +146,7 @@ function buildRustArgs(options, inputFile, outputFile) {
   }
 
   const federationVersion =
-    options.federationVersion === "AUTO"
-      ? "2"
-      : String(options.federationVersion || "2");
+    options.federationVersion === "AUTO" ? "2" : String(options.federationVersion || "2");
   args.push("--federation-version", federationVersion.replace(/^V/i, ""));
 
   for (const typeName of options.excludeTypes || []) {
@@ -258,15 +241,11 @@ async function testRustConverter(inputFile, outputFile) {
 
     // Fallback: invoke the CLI via cargo with the same flags used by the
     // prebuilt binary so parity tests don't drift from missing defaults.
-    execFileSync(
-      "cargo",
-      ["run", "-q", "--features", "cli", "--bin", "jxql", "--", ...args],
-      {
-        cwd: rustDir,
-        encoding: "utf-8",
-        stdio: "inherit",
-      },
-    );
+    execFileSync("cargo", ["run", "-q", "--features", "cli", "--bin", "jxql", "--", ...args], {
+      cwd: rustDir,
+      encoding: "utf-8",
+      stdio: "inherit",
+    });
 
     const duration = Date.now() - startTime;
     const result = readFileSync(outputFile, "utf-8");
@@ -306,10 +285,7 @@ function compareOutputs(nodeResult, rustResult) {
       const nodeStr = JSON.stringify(nodeJson, null, 2);
       const rustStr = JSON.stringify(rustJson, null, 2);
       if (nodeStr === rustStr) {
-        log(
-          "✅ Perfect Match! Both converters produce identical AST JSON",
-          "green",
-        );
+        log("✅ Perfect Match! Both converters produce identical AST JSON", "green");
       } else {
         log("⚠️  Differences detected between converters (AST JSON)", "yellow");
         console.log("\n--- Node Output (JSON) ---\n" + nodeStr.slice(0, 500));
@@ -339,13 +315,9 @@ function compareOutputs(nodeResult, rustResult) {
   } else {
     log("⚠️  Differences detected between converters", "yellow");
     console.log("\n--- Node Output ---");
-    console.log(
-      nodeSdl.substring(0, 500) + (nodeSdl.length > 500 ? "..." : ""),
-    );
+    console.log(nodeSdl.substring(0, 500) + (nodeSdl.length > 500 ? "..." : ""));
     console.log("\n--- Rust Output ---");
-    console.log(
-      rustSdl.substring(0, 500) + (rustSdl.length > 500 ? "..." : ""),
-    );
+    console.log(rustSdl.substring(0, 500) + (rustSdl.length > 500 ? "..." : ""));
 
     // Find specific differences
     const nodeLines = nodeSdl.split("\n");
@@ -400,10 +372,7 @@ async function main() {
         log(`Found ${jsonFiles.length} test files in ${testDataDir}`, "cyan");
       }
     } catch (error) {
-      log(
-        `Note: Could not read test data directory: ${error.message}`,
-        "yellow",
-      );
+      log(`Note: Could not read test data directory: ${error.message}`, "yellow");
     }
 
     if (inputFiles.length === 0) {
@@ -428,8 +397,7 @@ async function main() {
       readFileSync(inputFile, "utf-8");
 
       const basename = inputFile.split("/").pop().replace(".json", "");
-      const ext =
-        EFFECTIVE_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql";
+      const ext = EFFECTIVE_OPTIONS.outputFormat === "AST_JSON" ? "json" : "graphql";
 
       logSection(`📁 Testing: ${basename}`);
       log(`Input: ${inputFile}`, "blue");

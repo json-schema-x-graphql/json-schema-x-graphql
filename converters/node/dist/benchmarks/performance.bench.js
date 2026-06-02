@@ -292,10 +292,7 @@ function printSummary() {
     console.log("📊 Performance Summary\n");
     console.log("Benchmark Results:");
     console.log("-".repeat(80));
-    console.log("Name".padEnd(50) +
-        "Ops/sec".padStart(12) +
-        "Mean (ms)".padStart(12) +
-        "±".padStart(6));
+    console.log("Name".padEnd(50) + "Ops/sec".padStart(12) + "Mean (ms)".padStart(12) + "±".padStart(6));
     console.log("-".repeat(80));
     results.forEach((result) => {
         console.log(result.name.padEnd(50) +

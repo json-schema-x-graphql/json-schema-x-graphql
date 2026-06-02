@@ -1,10 +1,4 @@
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import App from "./App";
 import * as converterIntegration from "./converter-integration";
@@ -73,9 +67,7 @@ describe("App Integration", () => {
 
   it("renders correctly", () => {
     render(<App />);
-    expect(
-      screen.getByText(/JSON Schema ⇋ GraphQL CRDT Demo/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/JSON Schema ⇋ GraphQL CRDT Demo/i)).toBeInTheDocument();
   });
 
   it("allows connecting to a session", async () => {
@@ -113,9 +105,7 @@ describe("App Integration", () => {
 
   it("handles JSON -> GraphQL conversion", async () => {
     const mockSdl = "type Test { id: String }";
-    vi.mocked(converterIntegration.jsonSchemaToGraphQL).mockResolvedValue(
-      mockSdl,
-    );
+    vi.mocked(converterIntegration.jsonSchemaToGraphQL).mockResolvedValue(mockSdl);
 
     render(<App />);
 
@@ -136,18 +126,14 @@ describe("App Integration", () => {
 
     // Verify UI update (via the textarea mock)
     await waitFor(() => {
-      const graphqlInput = screen.getByTestId(
-        "textarea-graphqlSdl",
-      ) as HTMLTextAreaElement;
+      const graphqlInput = screen.getByTestId("textarea-graphqlSdl") as HTMLTextAreaElement;
       expect(graphqlInput.value).toBe(mockSdl);
     });
   });
 
   it("handles GraphQL -> JSON conversion", async () => {
     const mockJson = '{"type": "object", "title": "Converted"}';
-    vi.mocked(converterIntegration.graphqlToJsonSchema).mockResolvedValue(
-      mockJson,
-    );
+    vi.mocked(converterIntegration.graphqlToJsonSchema).mockResolvedValue(mockJson);
 
     render(<App />);
 
@@ -167,18 +153,14 @@ describe("App Integration", () => {
 
     // Verify UI update
     await waitFor(() => {
-      const jsonInput = screen.getByTestId(
-        "textarea-jsonSchema",
-      ) as HTMLTextAreaElement;
+      const jsonInput = screen.getByTestId("textarea-jsonSchema") as HTMLTextAreaElement;
       expect(jsonInput.value).toBe(mockJson);
     });
   });
 
   it("shows error when conversion fails", async () => {
     const errorMsg = "Parse Error";
-    vi.mocked(converterIntegration.jsonSchemaToGraphQL).mockRejectedValue(
-      new Error(errorMsg),
-    );
+    vi.mocked(converterIntegration.jsonSchemaToGraphQL).mockRejectedValue(new Error(errorMsg));
 
     const alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});
 

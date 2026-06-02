@@ -13,8 +13,7 @@ export default function GraphQLEditorPage(): JSX.Element {
 
   // Load the editor at runtime on the client to avoid Next.js detecting monaco/editor CSS
   // during the server build (which causes the "Global CSS cannot be imported from within node_modules" error).
-  const [EditorComponent, setEditorComponent] =
-    useState<React.ComponentType<any> | null>(null);
+  const [EditorComponent, setEditorComponent] = useState<React.ComponentType<any> | null>(null);
   const [editorLoading, setEditorLoading] = useState<boolean>(false);
   const [editorLoadError, setEditorLoadError] = useState<string | null>(null);
 
@@ -114,16 +113,11 @@ export default function GraphQLEditorPage(): JSX.Element {
     <>
       <Head>
         <title>GraphQL Editor - Schema Unification Forest</title>
-        <meta
-          name="description"
-          content="Edit and explore the generated GraphQL schema"
-        />
+        <meta name="description" content="Edit and explore the generated GraphQL schema" />
         <meta name="robots" content="noindex" />
       </Head>
 
-      <div
-        style={{ display: "flex", flexDirection: "column", height: "100vh" }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <header
           style={{
             padding: "12px 16px",
@@ -135,12 +129,9 @@ export default function GraphQLEditorPage(): JSX.Element {
             zIndex: 10,
           }}
         >
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>
-            GraphQL Editor
-          </h1>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>GraphQL Editor</h1>
           <div style={{ marginLeft: 8, color: "#666", fontSize: 13 }}>
-            Edit the schema for the site (loaded from{" "}
-            <code>/data/schema_unification.graphql</code>)
+            Edit the schema for the site (loaded from <code>/data/schema_unification.graphql</code>)
           </div>
 
           <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>

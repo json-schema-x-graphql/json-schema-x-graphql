@@ -30,14 +30,10 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
   const validationResult = useAppStore((state) => state.validationResult);
   const conversionResult = useAppStore((state) => state.conversionResult);
   const applyAutoFix = useAppStore((state) => state.applyAutoFix);
-  const clearValidationResult = useAppStore(
-    (state) => state.clearValidationResult,
-  );
+  const clearValidationResult = useAppStore((state) => state.clearValidationResult);
 
   const [isExpanded, setIsExpanded] = useState(true);
-  const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(
-    null,
-  );
+  const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
   if (!validationResult) return null;
 
@@ -101,9 +97,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
       {/* Header */}
       <div
         className={`px-4 py-3 flex items-center justify-between cursor-pointer ${
-          errors.length > 0
-            ? "bg-red-50 dark:bg-red-900/20"
-            : "bg-yellow-50 dark:bg-yellow-900/20"
+          errors.length > 0 ? "bg-red-50 dark:bg-red-900/20" : "bg-yellow-50 dark:bg-yellow-900/20"
         }`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -126,8 +120,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
             {errors.length > 0 && warnings.length > 0 && ", "}
             {warnings.length > 0 && (
               <>
-                {warnings.length}{" "}
-                {warnings.length === 1 ? "Warning" : "Warnings"}
+                {warnings.length} {warnings.length === 1 ? "Warning" : "Warnings"}
               </>
             )}
           </h3>
@@ -166,10 +159,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
 
       {/* Error list */}
       {isExpanded && (
-        <div
-          className="overflow-y-auto"
-          style={{ maxHeight: "calc(100% - 3rem)" }}
-        >
+        <div className="overflow-y-auto" style={{ maxHeight: "calc(100% - 3rem)" }}>
           <div className="p-4 space-y-2">
             {/* Errors */}
             {errors.map((error, index) => (
@@ -180,9 +170,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
                 }`}
               >
                 <div className="flex items-start space-x-3">
-                  <span className="text-lg flex-shrink-0">
-                    {getSeverityIcon("error")}
-                  </span>
+                  <span className="text-lg flex-shrink-0">{getSeverityIcon("error")}</span>
 
                   <div className="flex-1 min-w-0">
                     {/* Location and message */}
@@ -195,9 +183,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
                           Line {error.line || "?"}:{error.column || "?"}
                         </button>
                       )}
-                      <span className="text-sm font-medium">
-                        {error.message}
-                      </span>
+                      <span className="text-sm font-medium">{error.message}</span>
                     </div>
 
                     {/* Error path */}
@@ -252,9 +238,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
                 className={`border rounded-lg p-3 ${getSeverityColor("warning")}`}
               >
                 <div className="flex items-start space-x-3">
-                  <span className="text-lg flex-shrink-0">
-                    {getSeverityIcon("warning")}
-                  </span>
+                  <span className="text-lg flex-shrink-0">{getSeverityIcon("warning")}</span>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline space-x-2 mb-1">
@@ -263,9 +247,7 @@ export const ErrorPanel: React.FC<ErrorPanelProps> = ({
                           Line {warning.line || "?"}:{warning.column || "?"}
                         </span>
                       )}
-                      <span className="text-sm font-medium">
-                        {warning.message}
-                      </span>
+                      <span className="text-sm font-medium">{warning.message}</span>
                     </div>
 
                     {warning.suggestion && (

@@ -8,12 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.join(__dirname, "..");
 const outputDir = path.join(repoRoot, "test-output");
-const defaultTestFile = path.join(
-  repoRoot,
-  "converters",
-  "test-data",
-  "complex-schema.json",
-);
+const defaultTestFile = path.join(repoRoot, "converters", "test-data", "complex-schema.json");
 const testFile = process.env.ROUNDTRIP_TEST_FILE
   ? path.resolve(repoRoot, process.env.ROUNDTRIP_TEST_FILE)
   : defaultTestFile;
@@ -95,9 +90,7 @@ function sortGraphqlAst(ast) {
       for (const field of def.fields) {
         if (Array.isArray(field.arguments)) {
           field.arguments.sort((a, b) =>
-            String(a.name?.value || "").localeCompare(
-              String(b.name?.value || ""),
-            ),
+            String(a.name?.value || "").localeCompare(String(b.name?.value || "")),
           );
         }
       }
@@ -114,9 +107,7 @@ function sortGraphqlAst(ast) {
 }
 
 function stableGraphql(sdl) {
-  return JSON.stringify(
-    sortGraphqlAst(parseGraphQL(sdl, { noLocation: true })),
-  );
+  return JSON.stringify(sortGraphqlAst(parseGraphQL(sdl, { noLocation: true })));
 }
 
 function compareEqual(label, a, b) {
@@ -142,14 +133,7 @@ function getRustBinaryPath() {
 
 function runRustConvert(inputPath, outputPath) {
   const binaryPath = getRustBinaryPath();
-  const args = [
-    "--input",
-    inputPath,
-    "--output",
-    outputPath,
-    "--descriptions",
-    "--preserve-order",
-  ];
+  const args = ["--input", inputPath, "--output", outputPath, "--descriptions", "--preserve-order"];
 
   if (binaryPath) {
     execFileSync(binaryPath, args, {
@@ -162,17 +146,7 @@ function runRustConvert(inputPath, outputPath) {
 
   execFileSync(
     "cargo",
-    [
-      "run",
-      "-q",
-      "--release",
-      "--features",
-      "cli",
-      "--bin",
-      "jxql",
-      "--",
-      ...args,
-    ],
+    ["run", "-q", "--release", "--features", "cli", "--bin", "jxql", "--", ...args],
     {
       cwd: path.join(repoRoot, "converters", "rust"),
       stdio: "inherit",
@@ -202,16 +176,11 @@ async function loadNodeConverter() {
 
 async function runNodeRoundTrip() {
   console.log("Running 3-cycle round-trip test for Node.js...");
-  const { jsonSchemaToGraphQL, graphqlToJsonSchema } =
-    await loadNodeConverter();
+  const { jsonSchemaToGraphQL, graphqlToJsonSchema } = await loadNodeConverter();
   const initialSchema = JSON.parse(fs.readFileSync(testFile, "utf8"));
 
   const graphql1 = jsonSchemaToGraphQL(initialSchema);
-  fs.writeFileSync(
-    path.join(outputDir, "node-cycle1.graphql"),
-    graphql1,
-    "utf8",
-  );
+  fs.writeFileSync(path.join(outputDir, "node-cycle1.graphql"), graphql1, "utf8");
   const json1 = normalizeNodeJson(graphqlToJsonSchema(graphql1));
   fs.writeFileSync(
     path.join(outputDir, "node-cycle1.json"),
@@ -220,11 +189,7 @@ async function runNodeRoundTrip() {
   );
 
   const graphql2 = jsonSchemaToGraphQL(json1);
-  fs.writeFileSync(
-    path.join(outputDir, "node-cycle2.graphql"),
-    graphql2,
-    "utf8",
-  );
+  fs.writeFileSync(path.join(outputDir, "node-cycle2.graphql"), graphql2, "utf8");
   const json2 = normalizeNodeJson(graphqlToJsonSchema(graphql2));
   fs.writeFileSync(
     path.join(outputDir, "node-cycle2.json"),
@@ -233,11 +198,7 @@ async function runNodeRoundTrip() {
   );
 
   const graphql3 = jsonSchemaToGraphQL(json2);
-  fs.writeFileSync(
-    path.join(outputDir, "node-cycle3.graphql"),
-    graphql3,
-    "utf8",
-  );
+  fs.writeFileSync(path.join(outputDir, "node-cycle3.graphql"), graphql3, "utf8");
   const json3 = normalizeNodeJson(graphqlToJsonSchema(graphql3));
   fs.writeFileSync(
     path.join(outputDir, "node-cycle3.json"),
@@ -249,20 +210,10 @@ async function runNodeRoundTrip() {
   // across cycles (e.g. scalar refs vs explicit x-graphql type hints), so the
   // stable invariant we enforce here is the GraphQL surface that round-trips
   // back out of the converter.
-  compareEqual(
-    "Node GraphQL cycle 1 → 2",
-    stableGraphql(graphql1),
-    stableGraphql(graphql2),
-  );
-  compareEqual(
-    "Node GraphQL cycle 2 → 3",
-    stableGraphql(graphql2),
-    stableGraphql(graphql3),
-  );
+  compareEqual("Node GraphQL cycle 1 → 2", stableGraphql(graphql1), stableGraphql(graphql2));
+  compareEqual("Node GraphQL cycle 2 → 3", stableGraphql(graphql2), stableGraphql(graphql3));
 
-  console.log(
-    "✅ Node.js: 3-cycle round-trip validation passed - No drift detected",
-  );
+  console.log("✅ Node.js: 3-cycle round-trip validation passed - No drift detected");
 }
 
 function runRustRoundTrip() {
@@ -297,9 +248,7 @@ function runRustRoundTrip() {
     stableGraphql(fs.readFileSync(rustCycle3Graphql, "utf8")),
   );
 
-  console.log(
-    "✅ Rust: 3-cycle round-trip validation passed - No drift detected",
-  );
+  console.log("✅ Rust: 3-cycle round-trip validation passed - No drift detected");
 }
 
 async function main() {

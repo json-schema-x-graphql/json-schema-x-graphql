@@ -4,7 +4,7 @@ import { SimpleSpanProcessor, InMemorySpanExporter } from "@opentelemetry/sdk-tr
 let memoryExporter = null;
 let provider = null;
 // Initialize tracer provider only if in a Node/testing environment
-if (typeof process !== "undefined" && process.env) {
+if (typeof globalThis.window === "undefined" && typeof process !== "undefined" && process.versions?.node) {
     provider = new NodeTracerProvider();
     memoryExporter = new InMemorySpanExporter();
     provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));

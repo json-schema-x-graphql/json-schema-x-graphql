@@ -2,11 +2,7 @@ import { useRouter } from "next/router";
 
 /** @type {import('nextra-theme-docs').DocsThemeConfig} */
 export default {
-  logo: (
-    <span style={{ fontWeight: 700, fontSize: "1.1rem" }}>
-      json-schema-x-graphql
-    </span>
-  ),
+  logo: <span style={{ fontWeight: 700, fontSize: "1.1rem" }}>json-schema-x-graphql</span>,
   project: {
     link: "https://github.com/json-schema-x-graphql/json-schema-x-graphql",
   },
@@ -16,11 +12,7 @@ export default {
     text: (
       <span>
         MIT {new Date().getFullYear()} ©{" "}
-        <a
-          href="https://github.com/json-schema-x-graphql"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href="https://github.com/json-schema-x-graphql" target="_blank" rel="noreferrer">
           json-schema-x-graphql contributors
         </a>
       </span>
@@ -29,8 +21,7 @@ export default {
   useNextSeoProps() {
     const { asPath } = useRouter();
     return {
-      titleTemplate:
-        asPath === "/" ? "json-schema-x-graphql" : "%s – json-schema-x-graphql",
+      titleTemplate: asPath === "/" ? "json-schema-x-graphql" : "%s – json-schema-x-graphql",
     };
   },
   head: (

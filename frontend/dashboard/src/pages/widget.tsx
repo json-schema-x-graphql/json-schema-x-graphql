@@ -20,12 +20,9 @@ interface EmbedMessage {
   };
 }
 
-const ModalController = dynamic(
-  () => import("../features/modals/ModalController"),
-  {
-    ssr: false,
-  },
-);
+const ModalController = dynamic(() => import("../features/modals/ModalController"), {
+  ssr: false,
+});
 
 const GraphView = dynamic(
   () => import("../features/editor/views/GraphView").then((c) => c.GraphView),
@@ -50,23 +47,13 @@ const WidgetPage = () => {
 
       window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
     }
-  }, [
-    clearGraph,
-    checkEditorSession,
-    isReady,
-    push,
-    query.json,
-    query.partner,
-  ]);
+  }, [clearGraph, checkEditorSession, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
       try {
         if (!event.data?.json) return;
-        if (
-          event.data?.options?.theme === "light" ||
-          event.data?.options?.theme === "dark"
-        ) {
+        if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
           setTheme(event.data.options.theme);
         }
 

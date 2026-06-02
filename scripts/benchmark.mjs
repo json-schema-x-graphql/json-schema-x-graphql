@@ -52,9 +52,7 @@ function runCommand(command, args) {
   const end = performance.now();
 
   if (result.status !== 0) {
-    throw new Error(
-      `Command failed: ${command} ${args.join(" ")}\n${result.stderr}`,
-    );
+    throw new Error(`Command failed: ${command} ${args.join(" ")}\n${result.stderr}`);
   }
 
   return end - start;
@@ -132,9 +130,7 @@ for (const schema of schemas) {
     "--output-format",
     DEFAULT_OPTIONS.outputFormat,
   ];
-  const rustStats = benchmark("Rust", () =>
-    runCommand(PATHS.rustConverter, rustArgs),
-  );
+  const rustStats = benchmark("Rust", () => runCommand(PATHS.rustConverter, rustArgs));
 
   results.push({
     schema: schema.name,
@@ -147,10 +143,7 @@ for (const schema of schemas) {
 // Print Results
 console.log("\nBenchmark Results (Average Time in ms):");
 console.log(
-  "Schema".padEnd(30) +
-    "Node (ms)".padEnd(15) +
-    "Rust (ms)".padEnd(15) +
-    "Speedup (x)".padEnd(15),
+  "Schema".padEnd(30) + "Node (ms)".padEnd(15) + "Rust (ms)".padEnd(15) + "Speedup (x)".padEnd(15),
 );
 console.log("-".repeat(75));
 
@@ -166,6 +159,5 @@ for (const res of results) {
 console.log("-".repeat(75));
 
 // Calculate average speedup
-const avgSpeedup =
-  results.reduce((acc, curr) => acc + curr.speedup, 0) / results.length;
+const avgSpeedup = results.reduce((acc, curr) => acc + curr.speedup, 0) / results.length;
 console.log(`Average Speedup: ${avgSpeedup.toFixed(2)}x`);

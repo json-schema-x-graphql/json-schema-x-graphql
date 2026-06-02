@@ -193,14 +193,7 @@ export interface ConversionOptions {
 
 export const DEFAULT_OPTIONS = {
   excludeTypes: ["Query", "Mutation", "Subscription", "PageInfo"],
-  excludeTypeSuffixes: [
-    "Filter",
-    "Sort",
-    "Connection",
-    "Edge",
-    "Payload",
-    "Args",
-  ],
+  excludeTypeSuffixes: ["Filter", "Sort", "Connection", "Edge", "Payload", "Args"],
   includeOperationalTypes: false,
 };
 ```

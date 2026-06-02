@@ -217,8 +217,7 @@ contract_data_status_mapping:
   archived: "completed"
   suspended: "cancelled"
 
-common_core_status_enum:
-  ["draft", "published", "awarded", "completed", "cancelled"]
+common_core_status_enum: ["draft", "published", "awarded", "completed", "cancelled"]
 ```
 
 #### 3.3.2 Contact Role Standardization

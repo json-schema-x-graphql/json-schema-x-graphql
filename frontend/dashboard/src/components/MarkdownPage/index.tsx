@@ -180,10 +180,7 @@ interface MarkdownPageProps {
   title?: string;
 }
 
-export const MarkdownPage: React.FC<MarkdownPageProps> = ({
-  content,
-  title,
-}) => {
+export const MarkdownPage: React.FC<MarkdownPageProps> = ({ content, title }) => {
   return (
     <StyledMarkdownContainer>
       {title && (
@@ -191,10 +188,7 @@ export const MarkdownPage: React.FC<MarkdownPageProps> = ({
           {title}
         </Title>
       )}
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, rehypeSanitize]}
-      >
+      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeSanitize]}>
         {content}
       </ReactMarkdown>
     </StyledMarkdownContainer>

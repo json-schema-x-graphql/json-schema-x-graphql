@@ -9,27 +9,17 @@
 export interface XGraphQLExtensions {
   // Type-level extensions
   typeName?: string;
-  typeKind?:
-    | "OBJECT"
-    | "INTERFACE"
-    | "UNION"
-    | "ENUM"
-    | "INPUT_OBJECT"
-    | "SCALAR";
+  typeKind?: "OBJECT" | "INTERFACE" | "UNION" | "ENUM" | "INPUT_OBJECT" | "SCALAR";
   implements?: string[];
   unionTypes?: string[];
-  typeDirectives?:
-    | string[]
-    | Array<{ name: string; arguments?: Record<string, unknown> }>;
+  typeDirectives?: string[] | Array<{ name: string; arguments?: Record<string, unknown> }>;
 
   // Field-level extensions
   fieldName?: string;
   fieldType?: string;
   fieldNonNull?: boolean;
   fieldListItemNonNull?: boolean;
-  fieldDirectives?:
-    | string[]
-    | Array<{ name: string; arguments?: Record<string, unknown> }>;
+  fieldDirectives?: string[] | Array<{ name: string; arguments?: Record<string, unknown> }>;
   fieldArguments?: Record<string, FieldArgument>;
 
   // P0 Feature: Skip
@@ -101,9 +91,7 @@ export interface GraphQLScalarConfig {
 /**
  * Extracts all x-graphql-* extensions from a JSON Schema object
  */
-export function extractExtensions(
-  schema: Record<string, unknown>,
-): XGraphQLExtensions {
+export function extractExtensions(schema: Record<string, unknown>): XGraphQLExtensions {
   const extensions: XGraphQLExtensions = {};
 
   for (const [key, value] of Object.entries(schema)) {
@@ -128,29 +116,22 @@ export function extractExtensions(
         break;
       case "implements":
       case "type-implements":
-        extensions.implements = Array.isArray(value)
-          ? value
-          : [value as string];
+        extensions.implements = Array.isArray(value) ? value : [value as string];
         break;
       case "union-types":
-        extensions.unionTypes = Array.isArray(value)
-          ? value
-          : [value as string];
+        extensions.unionTypes = Array.isArray(value) ? value : [value as string];
         break;
       case "union":
         if (typeof value === "object" && value !== null) {
           const u = value as any;
           if (u.types) {
-            extensions.unionTypes = Array.isArray(u.types)
-              ? u.types
-              : [u.types];
+            extensions.unionTypes = Array.isArray(u.types) ? u.types : [u.types];
           }
         }
         break;
       case "type-directives":
       case "directives":
-        extensions.typeDirectives =
-          value as XGraphQLExtensions["typeDirectives"];
+        extensions.typeDirectives = value as XGraphQLExtensions["typeDirectives"];
         break;
 
       // Field-level
@@ -167,8 +148,7 @@ export function extractExtensions(
         extensions.fieldListItemNonNull = value as boolean;
         break;
       case "field-directives":
-        extensions.fieldDirectives =
-          value as XGraphQLExtensions["fieldDirectives"];
+        extensions.fieldDirectives = value as XGraphQLExtensions["fieldDirectives"];
         break;
       case "field-arguments":
       case "arguments":
@@ -196,17 +176,14 @@ export function extractExtensions(
           const fed = value as any;
           if (fed.keys) extensions.federationKeys = fed.keys;
           if (fed.shareable) extensions.federationShareable = fed.shareable;
-          if (fed.inaccessible)
-            extensions.federationInaccessible = fed.inaccessible;
+          if (fed.inaccessible) extensions.federationInaccessible = fed.inaccessible;
           if (fed.authenticated) {
             // Add to directives if not handled by interface properties
             const directives = extensions.typeDirectives || [];
             if (Array.isArray(directives)) {
               if (
                 !directives.some((d) =>
-                  typeof d === "string"
-                    ? d.includes("authenticated")
-                    : d.name === "authenticated",
+                  typeof d === "string" ? d.includes("authenticated") : d.name === "authenticated",
                 )
               ) {
                 // @ts-ignore
@@ -326,10 +303,7 @@ export function getEffectiveDescription(
  * Determine if a field should be nullable.
  * Priority: x-graphql-nullable > x-graphql-field-non-null > required array
  */
-export function isFieldNullable(
-  extensions: XGraphQLExtensions,
-  isRequired: boolean,
-): boolean {
+export function isFieldNullable(extensions: XGraphQLExtensions, isRequired: boolean): boolean {
   // x-graphql-nullable explicitly overrides everything
   if (extensions.nullable !== undefined) {
     return extensions.nullable;
@@ -359,20 +333,14 @@ export function getEffectiveFieldName(
  * Get the effective type name
  * Priority: x-graphql-type-name > title > definition key
  */
-export function getEffectiveTypeName(
-  extensions: XGraphQLExtensions,
-  fallbackName: string,
-): string {
+export function getEffectiveTypeName(extensions: XGraphQLExtensions, fallbackName: string): string {
   return extensions.typeName || fallbackName;
 }
 
 /**
  * Format a GraphQL description as a block or single-line comment
  */
-export function formatDescription(
-  description: string | undefined,
-  indent: string = "",
-): string {
+export function formatDescription(description: string | undefined, indent: string = ""): string {
   if (!description) {
     return "";
   }
@@ -391,9 +359,7 @@ export function formatDescription(
 /**
  * Parse federation keys into a normalized array format
  */
-export function parseFederationKeys(
-  keys: string | string[] | undefined,
-): string[] {
+export function parseFederationKeys(keys: string | string[] | undefined): string[] {
   if (!keys) {
     return [];
   }
@@ -434,9 +400,7 @@ export function buildFederationDirective(
 /**
  * Generate federation directives for a type
  */
-export function generateTypeFederationDirectives(
-  extensions: XGraphQLExtensions,
-): string[] {
+export function generateTypeFederationDirectives(extensions: XGraphQLExtensions): string[] {
   const directives: string[] = [];
 
   // @key directive
@@ -459,9 +423,7 @@ export function generateTypeFederationDirectives(
 
   // @tag directive
   if (extensions.federationTag) {
-    directives.push(
-      buildFederationDirective("tag", { name: extensions.federationTag }),
-    );
+    directives.push(buildFederationDirective("tag", { name: extensions.federationTag }));
   }
 
   return directives;
@@ -470,9 +432,7 @@ export function generateTypeFederationDirectives(
 /**
  * Generate federation directives for a field
  */
-export function generateFieldFederationDirectives(
-  extensions: XGraphQLExtensions,
-): string[] {
+export function generateFieldFederationDirectives(extensions: XGraphQLExtensions): string[] {
   const directives: string[] = [];
 
   // @external directive
@@ -516,9 +476,7 @@ export function generateFieldFederationDirectives(
 /**
  * Merge multiple extension objects (for allOf, anyOf, oneOf scenarios)
  */
-export function mergeExtensions(
-  ...extensionsList: XGraphQLExtensions[]
-): XGraphQLExtensions {
+export function mergeExtensions(...extensionsList: XGraphQLExtensions[]): XGraphQLExtensions {
   const merged: XGraphQLExtensions = {};
   const allImplements: string[] = [];
   const allUnionTypes: string[] = [];

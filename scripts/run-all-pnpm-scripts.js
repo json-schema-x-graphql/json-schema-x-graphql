@@ -32,8 +32,7 @@ const RESULTS_FILE = path.join(RESULTS_DIR, "pnpm-run-results.json");
 
 const DEFAULT_TIMEOUT_MS = 60 * 1000;
 const TRUNCATE_LEN = 10000;
-const LONG_RUNNING_REGEX =
-  /^(?:watch|serve)$|^(?:dev|start)(?:$|:)|:(?:dev|start)\b/i;
+const LONG_RUNNING_REGEX = /^(?:watch|serve)$|^(?:dev|start)(?:$|:)|:(?:dev|start)\b/i;
 
 function parseCli() {
   const args = process.argv.slice(2);
@@ -42,9 +41,7 @@ function parseCli() {
     Number.isFinite(timeoutSeconds) && timeoutSeconds > 0
       ? timeoutSeconds * 1000
       : DEFAULT_TIMEOUT_MS;
-  const includeLongRunning = args[1]
-    ? String(args[1]).toLowerCase() === "true"
-    : false;
+  const includeLongRunning = args[1] ? String(args[1]).toLowerCase() === "true" : false;
   return { timeoutMs, includeLongRunning };
 }
 
@@ -258,14 +255,9 @@ async function main() {
 
   try {
     fs.writeFileSync(RESULTS_FILE, JSON.stringify(summary, null, 2), "utf8");
-    console.log(
-      `\nResults written to: ${path.relative(repoRoot, RESULTS_FILE)}`,
-    );
+    console.log(`\nResults written to: ${path.relative(repoRoot, RESULTS_FILE)}`);
   } catch (err) {
-    console.error(
-      "Failed to write results file:",
-      err && err.message ? err.message : String(err),
-    );
+    console.error("Failed to write results file:", err && err.message ? err.message : String(err));
     process.exitCode = 2;
     return;
   }
@@ -289,10 +281,7 @@ async function main() {
 
 if (require.main === module) {
   main().catch((err) => {
-    console.error(
-      "Unexpected error:",
-      err && err.stack ? err.stack : String(err),
-    );
+    console.error("Unexpected error:", err && err.stack ? err.stack : String(err));
     process.exit(1);
   });
 }

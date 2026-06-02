@@ -1,10 +1,6 @@
 import type { NodeData, EdgeData } from "../../../../../../types/graph";
 
-export function getNodePath(
-  nodes: NodeData[],
-  edges: EdgeData[],
-  nodeId: string,
-) {
+export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string) {
   const { getParentsForNodeId } = require("reaflow");
 
   let resolvedPath = "";

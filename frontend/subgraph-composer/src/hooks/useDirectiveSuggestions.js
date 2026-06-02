@@ -34,18 +34,13 @@ export function useDirectiveSuggestions() {
         // Run generation in a timeout to avoid blocking
         const sugs = await new Promise((resolve) => {
           setTimeout(() => {
-            const results = generateDirectiveSuggestions(
-              subgraphs,
-              supergraphSdl,
-            );
+            const results = generateDirectiveSuggestions(subgraphs, supergraphSdl);
             resolve(results);
           }, 0);
         });
 
         // Filter out dismissed suggestions
-        const activeSuggestions = sugs.filter(
-          (_, i) => !dismissedSuggestions.has(i),
-        );
+        const activeSuggestions = sugs.filter((_, i) => !dismissedSuggestions.has(i));
 
         // Rank by importance
         const rankedSuggestions = rankSuggestions(activeSuggestions);
@@ -75,10 +70,7 @@ export function useDirectiveSuggestions() {
         const validSuggestions = selectedSuggestions.filter((sug) => {
           const validation = validateSuggestion(sug, newSdl);
           if (!validation.valid) {
-            console.warn(
-              `Invalid suggestion for ${sug.typeName}:`,
-              validation.errors,
-            );
+            console.warn(`Invalid suggestion for ${sug.typeName}:`, validation.errors);
           }
           return validation.valid;
         });
@@ -93,12 +85,8 @@ export function useDirectiveSuggestions() {
         setAppliedDirectives((prev) => [...prev, ...validSuggestions]);
 
         // Remove applied suggestions from list
-        const appliedIndices = selectedSuggestions.map((sug) =>
-          suggestions.indexOf(sug),
-        );
-        const remainingSuggestions = suggestions.filter(
-          (_, i) => !appliedIndices.includes(i),
-        );
+        const appliedIndices = selectedSuggestions.map((sug) => suggestions.indexOf(sug));
+        const remainingSuggestions = suggestions.filter((_, i) => !appliedIndices.includes(i));
 
         setSuggestions(remainingSuggestions);
         setShowSuggestions(remainingSuggestions.length > 0);

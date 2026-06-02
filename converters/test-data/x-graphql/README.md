@@ -214,17 +214,11 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Load test schema
-const schemaPath = path.join(
-  __dirname,
-  "../test-data/x-graphql/basic-types.json",
-);
+const schemaPath = path.join(__dirname, "../test-data/x-graphql/basic-types.json");
 const schema = JSON.parse(fs.readFileSync(schemaPath, "utf-8"));
 
 // Load expected output
-const expectedPath = path.join(
-  __dirname,
-  "../test-data/x-graphql/expected/basic-types.graphql",
-);
+const expectedPath = path.join(__dirname, "../test-data/x-graphql/expected/basic-types.graphql");
 const expected = fs.readFileSync(expectedPath, "utf-8");
 
 // Run conversion and compare

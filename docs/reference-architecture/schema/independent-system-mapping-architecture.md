@@ -1203,10 +1203,7 @@ src/data/systems/
 import Ajv from "ajv";
 import fs from "fs";
 
-async function validateSystemMapping(
-  systemSchemaPath,
-  schema_unificationSchemaPath,
-) {
+async function validateSystemMapping(systemSchemaPath, schema_unificationSchemaPath) {
   const systemSchema = JSON.parse(fs.readFileSync(systemSchemaPath, "utf-8"));
   const schema_unificationSchema = JSON.parse(
     fs.readFileSync(schema_unificationSchemaPath, "utf-8"),
@@ -1220,10 +1217,7 @@ async function validateSystemMapping(
       const mapping = obj["x-schema_unification-mapping"];
       const targetPath = mapping.target_path;
 
-      if (
-        targetPath &&
-        !resolveSchemaPath(schema_unificationSchema, targetPath)
-      ) {
+      if (targetPath && !resolveSchemaPath(schema_unificationSchema, targetPath)) {
         errors.push({
           source_path: path,
           target_path: targetPath,
@@ -1231,10 +1225,7 @@ async function validateSystemMapping(
         });
       }
 
-      if (
-        mapping.transformation &&
-        !KNOWN_TRANSFORMATIONS.includes(mapping.transformation)
-      ) {
+      if (mapping.transformation && !KNOWN_TRANSFORMATIONS.includes(mapping.transformation)) {
         errors.push({
           source_path: path,
           transformation: mapping.transformation,
@@ -1316,17 +1307,11 @@ export function generateMappingReport(systemSchema) {
     system_id: systemSchema["x-schema_unification-mapping"].system_id,
     coverage: {
       total_fields: mappings.length,
-      mapped_to_common: mappings.filter((m) =>
-        m.target_path?.startsWith("common_"),
-      ).length,
-      system_extensions: mappings.filter(
-        (m) => m.mapping_type === "system_extension",
-      ).length,
+      mapped_to_common: mappings.filter((m) => m.target_path?.startsWith("common_")).length,
+      system_extensions: mappings.filter((m) => m.mapping_type === "system_extension").length,
     },
     mappings_by_category: groupBy(mappings, "category"),
-    transformations_used: unique(
-      mappings.map((m) => m.transformation).filter(Boolean),
-    ),
+    transformations_used: unique(mappings.map((m) => m.transformation).filter(Boolean)),
   };
 
   return report;

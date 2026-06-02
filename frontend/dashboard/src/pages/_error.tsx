@@ -17,15 +17,10 @@ const Custom500 = () => {
         </Title>
         <Title order={2}>Something bad just happened...</Title>
         <Text c="dimmed" maw={800} style={{ textAlign: "center" }}>
-          Our servers could not handle your request. Don&apos;t worry, our
-          development team was already notified. Try refreshing the page.
+          Our servers could not handle your request. Don&apos;t worry, our development team was
+          already notified. Try refreshing the page.
         </Text>
-        <Button
-          size="lg"
-          color="gray"
-          type="button"
-          onClick={() => router.reload()}
-        >
+        <Button size="lg" color="gray" type="button" onClick={() => router.reload()}>
           Refresh the page
         </Button>
       </Stack>

@@ -2,13 +2,7 @@ import React from "react";
 import { Button, Container, Flex, Text } from "@mantine/core";
 import styled from "styled-components";
 import CountUp from "react-countup";
-import {
-  FaGithub,
-  FaHackerNews,
-  FaLinkedin,
-  FaProductHunt,
-  FaXTwitter,
-} from "react-icons/fa6";
+import { FaGithub, FaHackerNews, FaLinkedin, FaProductHunt, FaXTwitter } from "react-icons/fa6";
 
 interface LovedByProps {
   stars: number;
@@ -37,13 +31,7 @@ const Featured = ({ stars }: LovedByProps) => {
       >
         <FaGithub color="black" size={28} />
         <Text fz="md" fw={600} c="gray.8">
-          <CountUp
-            startVal={0}
-            end={stars}
-            enableScrollSpy
-            scrollSpyOnce
-            scrollSpyDelay={200}
-          />{" "}
+          <CountUp startVal={0} end={stars} enableScrollSpy scrollSpyOnce scrollSpyDelay={200} />{" "}
           Stars
         </Text>
       </StyledFeaturedItem>

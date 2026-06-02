@@ -53,12 +53,9 @@ export const TextRenderer = ({ children }: TextRendererProps) => {
 function isColorFormat(colorString: string) {
   const hexCodeRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
   const rgbRegex = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/;
-  const rgbaRegex =
-    /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0|1|0\.\d+)\s*\)$/;
+  const rgbaRegex = /^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(0|1|0\.\d+)\s*\)$/;
 
   return (
-    hexCodeRegex.test(colorString) ||
-    rgbRegex.test(colorString) ||
-    rgbaRegex.test(colorString)
+    hexCodeRegex.test(colorString) || rgbRegex.test(colorString) || rgbaRegex.test(colorString)
   );
 }

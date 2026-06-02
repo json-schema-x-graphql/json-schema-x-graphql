@@ -41,12 +41,11 @@ const VoyagerPage: NextPage = () => {
         }
 
         const sdl = await response.text();
-        const { buildSchema, getIntrospectionQuery, graphql } =
-          graphqlModule as {
-            buildSchema: (sdl: string) => any;
-            getIntrospectionQuery: () => string;
-            graphql: (args: any) => Promise<any>;
-          };
+        const { buildSchema, getIntrospectionQuery, graphql } = graphqlModule as {
+          buildSchema: (sdl: string) => any;
+          getIntrospectionQuery: () => string;
+          graphql: (args: any) => Promise<any>;
+        };
         const schema = buildSchema(sdl);
         const introspectionResult = await graphql({
           schema,
@@ -55,9 +54,7 @@ const VoyagerPage: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors
-              .map((graphqlError) => graphqlError.message)
-              .join("\n"),
+            introspectionResult.errors.map((graphqlError) => graphqlError.message).join("\n"),
           );
         }
 
@@ -87,10 +84,7 @@ const VoyagerPage: NextPage = () => {
           return;
         }
 
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Unknown error initialising Voyager";
+        const message = err instanceof Error ? err.message : "Unknown error initialising Voyager";
         setError(message);
 
         console.error("[VoyagerPage]", err);
