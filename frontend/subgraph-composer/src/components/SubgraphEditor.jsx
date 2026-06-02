@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import "./SchemaEditor.css";
+import { validateSchemaSDL } from "../lib/federation-validator";
 
 // Lazy load CodeMirror only when needed
 const CodeMirrorEditor = React.lazy(() =>
@@ -24,11 +25,17 @@ export default function SubgraphEditor({
   };
 
   const handleValidate = () => {
-    try {
-      JSON.parse(subgraph.content);
+    // subgraph.content is GraphQL SDL — validate it as SDL, not JSON
+    const sdlToCheck = sdl || subgraph.content;
+    if (!sdlToCheck || !sdlToCheck.trim()) {
+      setError("No SDL to validate. Click Generate first.");
+      return;
+    }
+    const result = validateSchemaSDL(sdlToCheck);
+    if (result.valid) {
       setError(null);
-    } catch (err) {
-      setError(`Invalid JSON: ${err.message}`);
+    } else {
+      setError(`SDL errors: ${result.errors.join("; ")}`);
     }
   };
 
@@ -43,7 +50,7 @@ export default function SubgraphEditor({
           <button
             onClick={handleValidate}
             className="btn btn-secondary btn-small"
-            title="Validate JSON"
+            title="Validate generated GraphQL SDL"
           >
             ✓ Validate
           </button>
@@ -67,9 +74,8 @@ export default function SubgraphEditor({
           <span>❌ {error}</span>
         </div>
       )}
-      {/* SDL and Stats Section */}
+      {/* SDL and Stats Section — no className="schema-editor" here; that class sets overflow:hidden which breaks scrolling */}
       <div
-        className="schema-editor"
         style={{
           marginTop: "16px",
           background: "white",
@@ -80,6 +86,7 @@ export default function SubgraphEditor({
           display: "flex",
           flexDirection: "column",
           gap: "var(--spacing-md)",
+          overflow: "auto",
         }}
       >
         <div>
