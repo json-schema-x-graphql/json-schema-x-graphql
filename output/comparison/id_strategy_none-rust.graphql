@@ -3,7 +3,7 @@ type Noidinference {
   id: String!
   "Should be String, not ID"
   userId: String
-  "Should be String, not ID"
+  "Should be ID because of format: uuid"
   uuid: ID
 }
 

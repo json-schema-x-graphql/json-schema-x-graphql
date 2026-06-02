@@ -14,7 +14,7 @@
     "uuid": {
       "type": "string",
       "format": "uuid",
-      "description": "Should be String, not ID"
+      "description": "Should be ID because of format: uuid"
     }
   },
   "required": ["id"]

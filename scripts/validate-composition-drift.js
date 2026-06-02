@@ -46,6 +46,48 @@ function printSection(title) {
   console.log("=".repeat(80));
 }
 
+function parseTypeString(str) {
+  str = str.trim();
+  if (str.endsWith("!")) {
+    return {
+      kind: "NON_NULL",
+      type: parseTypeString(str.slice(0, -1)),
+    };
+  }
+  if (str.startsWith("[") && str.endsWith("]")) {
+    return {
+      kind: "LIST",
+      type: parseTypeString(str.slice(1, -1)),
+    };
+  }
+  return {
+    kind: "NAMED",
+    name: str,
+  };
+}
+
+function isCompatibleOutputType(prod, dev) {
+  if (prod.kind === "NON_NULL") {
+    if (dev.kind !== "NON_NULL") {
+      return false;
+    }
+    return isCompatibleOutputType(prod.type, dev.type);
+  }
+  if (dev.kind === "NON_NULL") {
+    return isCompatibleOutputType(prod, dev.type);
+  }
+  if (prod.kind === "LIST") {
+    if (dev.kind !== "LIST") {
+      return false;
+    }
+    return isCompatibleOutputType(prod.type, dev.type);
+  }
+  if (dev.kind === "LIST") {
+    return false;
+  }
+  return prod.name === dev.name;
+}
+
 // Breaking Change Detection Class
 class DriftDetector {
   constructor(prodSdl, devSdl) {
@@ -155,10 +197,7 @@ class DriftDetector {
       const devTypeStr = devField.type.toString();
 
       if (prodTypeStr !== devTypeStr) {
-        const isBreaking = this.isOutputFieldTypeChangeBreaking(
-          prodTypeStr,
-          devTypeStr,
-        );
+        const isBreaking = this.isOutputFieldTypeChangeBreaking(prodTypeStr, devTypeStr);
         if (isBreaking) {
           this.breakingChanges.push({
             type: "FIELD_TYPE_CHANGED",
@@ -191,26 +230,9 @@ class DriftDetector {
   }
 
   isOutputFieldTypeChangeBreaking(prod, dev) {
-    // Standard GraphQL output Covariant rules:
-    // Safe: Non-null to Null? NO! That is breaking because clients expect guaranteed value.
-    // Safe: Null to Non-null? YES, clients can handle receiving values instead of null.
-    // Let's strip Non-Null '!' markers to check base type
-    const prodBase = prod.replace(/!/g, "");
-    const devBase = dev.replace(/!/g, "");
-
-    if (prodBase !== devBase) {
-      return true; // Completely different type base is always breaking
-    }
-
-    // Checking nullability transition
-    const prodNonNull = prod.endsWith("!");
-    const devNonNull = dev.endsWith("!");
-
-    if (prodNonNull && !devNonNull) {
-      return true; // Making a non-null output field nullable is BREAKING
-    }
-
-    return false; // Null to non-null output field is SAFE
+    const prodParsed = parseTypeString(prod);
+    const devParsed = parseTypeString(dev);
+    return !isCompatibleOutputType(prodParsed, devParsed);
   }
 
   compareEnumValues(typeName, prodType, devType) {
@@ -261,21 +283,11 @@ class DriftDetector {
       const devTypeStr = devField.type.toString();
 
       if (prodTypeStr !== devTypeStr) {
-        const prodNonNull = prodTypeStr.endsWith("!");
-        const devNonNull = devTypeStr.endsWith("!");
+        const prodParsed = parseTypeString(prodTypeStr);
+        const devParsed = parseTypeString(devTypeStr);
+        const isCompatibleInput = isCompatibleOutputType(devParsed, prodParsed); // Swapped for Contravariance!
 
-        if (!prodNonNull && devNonNull) {
-          // Making an input field non-null is breaking (clients don't provide it)
-          this.breakingChanges.push({
-            type: "INPUT_FIELD_TYPE_CHANGED",
-            message: `Input field '${typeName}.${fieldName}' was made non-null (changed from '${prodTypeStr}' to '${devTypeStr}').`,
-            typeName,
-            fieldName,
-          });
-        } else if (
-          prodTypeStr.replace(/!/g, "") !== devTypeStr.replace(/!/g, "")
-        ) {
-          // completely different input types is breaking
+        if (!isCompatibleInput) {
           this.breakingChanges.push({
             type: "INPUT_FIELD_TYPE_CHANGED",
             message: `Input field '${typeName}.${fieldName}' changed type from '${prodTypeStr}' to incompatible '${devTypeStr}'.`,
@@ -290,7 +302,8 @@ class DriftDetector {
     for (const [fieldName, devField] of Object.entries(devFields)) {
       if (!prodFields[fieldName]) {
         const devTypeStr = devField.type.toString();
-        if (devTypeStr.endsWith("!")) {
+        const devTypeParsed = parseTypeString(devTypeStr);
+        if (devTypeParsed.kind === "NON_NULL") {
           this.breakingChanges.push({
             type: "REQUIRED_INPUT_FIELD_ADDED",
             message: `Added new required input field '${typeName}.${fieldName}' of type '${devTypeStr}', which breaks old queries.`,
@@ -359,10 +372,7 @@ async function runCompositionAndDriftCheck() {
     }
 
     if (loadFailed || subgraphs.length === 0) {
-      log(
-        `✗ Skipping composition check due to missing subgraph files.`,
-        "yellow",
-      );
+      log(`✗ Skipping composition check due to missing subgraph files.`, "yellow");
       hasErrors = true;
       continue;
     }
@@ -377,10 +387,7 @@ async function runCompositionAndDriftCheck() {
     const compositionResult = composeServices(services);
 
     if (compositionResult.errors && compositionResult.errors.length > 0) {
-      log(
-        `✗ Composition failed with ${compositionResult.errors.length} errors:`,
-        "red",
-      );
+      log(`✗ Composition failed with ${compositionResult.errors.length} errors:`, "red");
       compositionResult.errors.forEach((err, idx) => {
         log(`  ${idx + 1}. ${err.message}`, "bold");
       });
@@ -392,18 +399,12 @@ async function runCompositionAndDriftCheck() {
     log(`✓ Composition successful!`, "green");
 
     // Output composed supergraph for local hot-reloads
-    const supergraphPath = path.join(
-      supergraphDir,
-      `${example.name}-supergraph.graphql`,
-    );
+    const supergraphPath = path.join(supergraphDir, `${example.name}-supergraph.graphql`);
     fs.mkdirSync(supergraphDir, { recursive: true });
 
     // Compare with Baseline Production Supergraph
     if (fs.existsSync(supergraphPath)) {
-      log(
-        `Comparing new composed supergraph against production baseline...`,
-        "blue",
-      );
+      log(`Comparing new composed supergraph against production baseline...`, "blue");
       const oldSupergraphSdl = fs.readFileSync(supergraphPath, "utf-8");
 
       try {
@@ -442,17 +443,23 @@ async function runCompositionAndDriftCheck() {
       );
     }
 
-    // Write supergraph to path (updates baseline or writes initial dev bundle)
-    fs.writeFileSync(supergraphPath, newSupergraphSdl, "utf-8");
-    log(`Composed Supergraph saved to: ${supergraphPath}`, "green");
+    // NOTE: Avoid overwriting an existing baseline unless explicitly requested.
+    if (!fs.existsSync(supergraphPath) || process.env.UPDATE_SUPERGRAPH_BASELINE === "1") {
+      fs.writeFileSync(supergraphPath, newSupergraphSdl, "utf-8");
+      log(`Composed Supergraph saved to: ${supergraphPath}`, "green");
+    } else {
+      const proposedPath = supergraphPath.replace(".graphql", ".proposed.graphql");
+      fs.writeFileSync(proposedPath, newSupergraphSdl, "utf-8");
+      log(
+        `Skipping baseline update for ${supergraphPath} (set UPDATE_SUPERGRAPH_BASELINE=1 to update). Proposed supergraph saved to: ${proposedPath}`,
+        "yellow",
+      );
+    }
   }
 
   printSection("Governance Review Finished");
   if (hasErrors) {
-    log(
-      `✗ Validation Failed! Composition drift or compile errors detected.`,
-      "red",
-    );
+    log(`✗ Validation Failed! Composition drift or compile errors detected.`, "red");
     process.exit(1);
   } else {
     log(`✓ All validations passed successfully!`, "green");

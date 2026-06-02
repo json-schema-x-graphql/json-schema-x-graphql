@@ -339,9 +339,9 @@ Three documentation files have been created:
 
 - Manual control (immediate release)
 - Automated PRs (with review step)
-  ✅ **Production Ready**: Used in many open-source projects
-  ✅ **Well Documented**: Three guides for different audiences
-  ✅ **Easy to Debug**: Detailed logs at every step
+- ✅ **Production Ready**: Used in many open-source projects
+- ✅ **Well Documented**: Three guides for different audiences
+- ✅ **Easy to Debug**: Detailed logs at every step
 
 ---
 
