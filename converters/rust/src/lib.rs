@@ -139,6 +139,10 @@ impl Converter {
 
     /// Convert JSON Schema to GraphQL SDL
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String> {
+        use opentelemetry::trace::Tracer;
+        let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
+        let _span = tracer.start("json_schema_to_graphql");
+
         let schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
 
@@ -155,6 +159,10 @@ impl Converter {
 
     /// Convert GraphQL SDL to JSON Schema
     pub fn graphql_to_json_schema(&self, graphql_sdl: &str) -> Result<String> {
+        use opentelemetry::trace::Tracer;
+        let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
+        let _span = tracer.start("graphql_to_json_schema");
+
         if self.options.validate {
             validator::validate_graphql_sdl(graphql_sdl)?;
         }
@@ -242,6 +250,25 @@ mod tests {
 
         let result = converter.json_schema_to_graphql(invalid_json);
         assert!(result.is_err());
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    #[test]
+    fn test_opentelemetry_instrumentation() {
+        use opentelemetry_sdk::trace::TracerProvider;
+
+        // Initialize a local trace provider
+        let provider = TracerProvider::builder().build();
+        opentelemetry::global::set_tracer_provider(provider);
+
+        let converter = Converter::new();
+        let json_schema = r#"{
+            "type": "object",
+            "x-graphql-type-name": "User"
+        }"#;
+
+        let result = converter.json_schema_to_graphql(json_schema);
+        assert!(result.is_ok());
     }
 
     #[cfg(feature = "caching")]

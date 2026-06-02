@@ -8,6 +8,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import { jsonSchemaToGraphQL } from "./converter";
+import { getOtelSpans, clearOtelSpans } from "./otel";
 
 const TEST_DATA_DIR = path.join(__dirname, "../../test-data/x-graphql");
 const EXPECTED_DIR = path.join(TEST_DATA_DIR, "expected");
@@ -381,6 +382,44 @@ describe("X-GraphQL Shared Test Data", () => {
           expect(resultNorm).toContain("@key");
         }
       }
+    });
+  });
+
+  describe("OpenTelemetry Instrumentation", () => {
+    beforeEach(() => {
+      clearOtelSpans();
+    });
+
+    it("should generate a span when converting JSON Schema to GraphQL", () => {
+      const originalSchema = {
+        type: "object",
+        "x-graphql-type-name": "TestUser",
+        properties: {
+          id: { type: "string" },
+        },
+      };
+
+      const sdl = jsonSchemaToGraphQL(originalSchema);
+      expect(sdl).toContain("type TestUser");
+
+      const spans = getOtelSpans();
+      expect(spans.length).toBeGreaterThanOrEqual(1);
+
+      const conversionSpan = spans.find((s) => s.name === "jsonSchemaToGraphQL");
+      expect(conversionSpan).toBeDefined();
+      expect(conversionSpan?.attributes["options.federationVersion"]).toBeDefined();
+    });
+
+    it("should generate a span and capture errors when conversion fails", () => {
+      expect(() => {
+        jsonSchemaToGraphQL("invalid json string {}");
+      }).toThrow();
+
+      const spans = getOtelSpans();
+      expect(spans.length).toBeGreaterThanOrEqual(1);
+      const conversionSpan = spans.find((s) => s.name === "jsonSchemaToGraphQL");
+      expect(conversionSpan).toBeDefined();
+      expect(conversionSpan?.status.code).toBe(2); // Error status
     });
   });
 });
