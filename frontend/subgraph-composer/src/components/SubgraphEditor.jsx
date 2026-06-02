@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import "./SchemaEditor.css";
 import { validateSchemaSDL } from "../lib/federation-validator";
+import { otelTracer } from "../otel";
 
 // Lazy load CodeMirror only when needed
 const CodeMirrorEditor = React.lazy(() =>
@@ -18,6 +19,7 @@ export default function SubgraphEditor({
   subgraphCount,
 }) {
   const [error, setError] = React.useState(null);
+  const [validMsg, setValidMsg] = React.useState(null);
 
   const handleChange = (newContent) => {
     onUpdate(newContent);
@@ -25,18 +27,33 @@ export default function SubgraphEditor({
   };
 
   const handleValidate = () => {
-    // subgraph.content is GraphQL SDL — validate it as SDL, not JSON
-    const sdlToCheck = sdl || subgraph.content;
-    if (!sdlToCheck || !sdlToCheck.trim()) {
-      setError("No SDL to validate. Click Generate first.");
-      return;
-    }
-    const result = validateSchemaSDL(sdlToCheck);
-    if (result.valid) {
-      setError(null);
-    } else {
-      setError(`SDL errors: ${result.errors.join("; ")}`);
-    }
+    otelTracer.startActiveSpan("validateSDL", (span) => {
+      try {
+        // subgraph.content is GraphQL SDL — validate it as SDL, not JSON
+        const sdlToCheck = sdl || subgraph.content;
+        if (!sdlToCheck || !sdlToCheck.trim()) {
+          setError("No SDL to validate. Click Generate first.");
+          setValidMsg(null);
+          span.setStatus({ code: 2, message: "empty SDL" });
+          return;
+        }
+        const result = validateSchemaSDL(sdlToCheck);
+        span.setAttribute("sdl.valid", result.valid);
+        span.setAttribute("sdl.errorCount", result.errors.length);
+        span.setAttribute("sdl.typeCount", result.typeCount ?? 0);
+        if (result.valid) {
+          setError(null);
+          setValidMsg(`✅ SDL valid — ${result.typeCount ?? 0} type(s) found`);
+          span.setStatus({ code: 1 });
+        } else {
+          setValidMsg(null);
+          setError(`SDL errors: ${result.errors.join("; ")}`);
+          span.setStatus({ code: 2, message: result.errors[0] });
+        }
+      } finally {
+        span.end();
+      }
+    });
   };
 
   return (
@@ -72,6 +89,11 @@ export default function SubgraphEditor({
       {error && (
         <div className="editor-error">
           <span>❌ {error}</span>
+        </div>
+      )}
+      {validMsg && !error && (
+        <div className="editor-error" style={{ background: "#ecfdf5", color: "#065f46", borderTop: "1px solid #6ee7b7" }}>
+          <span>{validMsg}</span>
         </div>
       )}
       {/* SDL and Stats Section — no className="schema-editor" here; that class sets overflow:hidden which breaks scrolling */}

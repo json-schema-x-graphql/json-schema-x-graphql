@@ -260,16 +260,6 @@ function typeToSDL(type) {
 }
 
 /**
- * Get sources for a type (helper for conflict detection)
- * @private
- */
-function getSourcesForType(registry, typeName) {
-  // This would track which schemas contribute to a type
-  // For now, return empty array
-  return [];
-}
-
-/**
  * Validate a supergraph SDL
  * @param {string} sdl - GraphQL SDL to validate
  * @returns {{valid: boolean, errors: string[]}}
