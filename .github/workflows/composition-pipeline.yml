@@ -65,5 +65,6 @@ jobs:
           cd converters/node
           pnpm tsx ../../scripts/validation/validate-graphql.ts --federation
 
-      - name: Composition Validation
-        run: echo "Composition logic verified via unit tests."
+      - name: Composition & Schema Drift Validation
+        run: |
+          node scripts/validate-composition-drift.js

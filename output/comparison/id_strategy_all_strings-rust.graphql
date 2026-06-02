@@ -1,0 +1,8 @@
+type Allstringsid {
+  "string-based code"
+  code: ID!
+  "uuid-ish identifier"
+  uuid: ID!
+  name: ID
+}
+

@@ -1,0 +1,15 @@
+type Commonpatternsid {
+  "Should be ID"
+  id: ID!
+  "Should be ID"
+  userId: ID
+  "Should be ID"
+  productId: ID
+  "Should be ID due to format"
+  uuid: ID
+  "Should be String"
+  name: String
+  "Should be String"
+  description: String
+}
+

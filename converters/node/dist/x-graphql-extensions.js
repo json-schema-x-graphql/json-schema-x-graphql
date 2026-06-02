@@ -139,6 +139,12 @@ export function extractExtensions(schema) {
             case "federation-tag":
                 extensions.federationTag = value;
                 break;
+            case "federation-requires-scopes":
+                extensions.federationRequiresScopes = value;
+                break;
+            case "federation-policy":
+                extensions.federationPolicy = value;
+                break;
             // Metadata
             case "scalar":
                 extensions.scalar = value;

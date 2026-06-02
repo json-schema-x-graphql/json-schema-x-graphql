@@ -9,6 +9,7 @@ import { parse, print } from "graphql";
 import { camelToSnake, snakeToCamel } from "./case-conversion.js";
 import { extractDirectives, printDirectives, } from "./normalization/directives.js";
 import { ensureConnectionType } from "./features/relay.js";
+import { otelTracer } from "./otel.js";
 // ExtendedConverterOptions and others moved to interfaces.ts
 // NormalizedConverterOptions moved to interfaces.ts
 // JsonSchema moved to interfaces.ts
@@ -69,6 +70,24 @@ function shouldExcludeType(typeName, options) {
 }
 // --- Public API ----------------------------------------------------------------
 export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
+    return otelTracer.startActiveSpan("jsonSchemaToGraphQL", (span) => {
+        try {
+            const result = jsonSchemaToGraphQLInternal(jsonSchemaInput, options);
+            span.setAttribute("options.federationVersion", options.federationVersion || "AUTO");
+            span.setStatus({ code: 1 }); // Ok
+            return result;
+        }
+        catch (error) {
+            span.recordException(error);
+            span.setStatus({ code: 2, message: error.message }); // Error
+            throw error;
+        }
+        finally {
+            span.end();
+        }
+    });
+}
+function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
     const schema = typeof jsonSchemaInput === "string"
         ? JSON.parse(jsonSchemaInput)
         : jsonSchemaInput;
@@ -145,6 +164,23 @@ export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
     return finalSDL;
 }
 export function graphqlToJsonSchema(graphqlSdl, options = {}) {
+    return otelTracer.startActiveSpan("graphqlToJsonSchema", (span) => {
+        try {
+            const result = graphqlToJsonSchemaInternal(graphqlSdl, options);
+            span.setStatus({ code: 1 }); // Ok
+            return result;
+        }
+        catch (error) {
+            span.recordException(error);
+            span.setStatus({ code: 2, message: error.message }); // Error
+            throw error;
+        }
+        finally {
+            span.end();
+        }
+    });
+}
+function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
     const normalized = normalizeOptions(options);
     try {
         // Parse GraphQL SDL into AST
@@ -1276,6 +1312,7 @@ function isFederationDirective(name) {
         name === "shareable" ||
         name === "inaccessible" ||
         name === "requiresScopes" ||
+        name === "policy" ||
         name === "authenticated" ||
         name === "interfaceObject");
 }

@@ -54,6 +54,12 @@ export function extractDirectives(
         args: { scopes: schema["x-graphql-federation-requires-scopes"] },
       });
     }
+    if (schema["x-graphql-federation-policy"]) {
+      directives.push({
+        name: "policy",
+        args: { policies: schema["x-graphql-federation-policy"] },
+      });
+    }
 
     // Only process federation-keys if it's an array (matching Rust behavior)
     if (Array.isArray(schema["x-graphql-federation-keys"])) {
@@ -144,8 +150,8 @@ export function printDirectives(directives: GeneralizedDirective[]): string {
 function formatDirectiveArgs(args: Record<string, any>): string {
   return Object.entries(args)
     .map(([key, value]) => {
-      // Handle array of scopes specially (from existing logic)
-      if (key === "scopes" && Array.isArray(value)) {
+      // Handle array of scopes/policies specially (from existing logic)
+      if ((key === "scopes" || key === "policies") && Array.isArray(value)) {
         return `${key}: [${value
           .map(
             (v: any) =>
@@ -153,7 +159,7 @@ function formatDirectiveArgs(args: Record<string, any>): string {
                 .map((s: string) => `"${s}"`)
                 .join(", ")}]`,
           )
-          .join(", ")} ]`;
+          .join(", ")}]`;
       }
 
       return `${key}: ${JSON.stringify(value)}`;

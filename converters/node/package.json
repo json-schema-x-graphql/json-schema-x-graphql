@@ -74,6 +74,8 @@
     "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "^6.3.1",
     "@graphql-codegen/typescript": "^5.0.10",
+    "@opentelemetry/sdk-trace-base": "^1.26.0",
+    "@opentelemetry/sdk-trace-node": "^1.26.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.19.40",
     "ajv": "8.17.1",
@@ -87,6 +89,7 @@
     "typescript-eslint": "^8.59.2"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
     "graphql": "^16.14.0"
   }
 }

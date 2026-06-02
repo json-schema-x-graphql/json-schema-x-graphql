@@ -50,6 +50,8 @@ export interface XGraphQLExtensions {
   federationOverrideFrom?: string;
   federationInaccessible?: boolean;
   federationTag?: string;
+  federationRequiresScopes?: string[][];
+  federationPolicy?: string[][];
 
   // Metadata extensions
   scalar?: string;
@@ -238,6 +240,12 @@ export function extractExtensions(
         break;
       case "federation-tag":
         extensions.federationTag = value as string;
+        break;
+      case "federation-requires-scopes":
+        extensions.federationRequiresScopes = value as string[][];
+        break;
+      case "federation-policy":
+        extensions.federationPolicy = value as string[][];
         break;
 
       // Metadata

@@ -1,6 +1,6 @@
 /**
  * JSON Schema to GraphQL SDL Generator Library
- * 
+ *
  * This library provides functions to convert JSON Schema (with x-graphql-* extensions)
  * into Apollo Federation-compatible GraphQL SDL.
  */
@@ -78,37 +78,33 @@ export function getScalarType(schema) {
  * Map JSON Schema type to GraphQL type
  */
 export function mapType(schema, propName, options = {}) {
-  const { 
-    parentRequired = [], 
-    rootSchema = null, 
-    supergraphSchema = null
-  } = options;
+  const { parentRequired = [], rootSchema = null, supergraphSchema = null } = options;
 
   // Handle $ref
   if (schema.$ref) {
     const refParts = schema.$ref.split("/");
     const refName = refParts[refParts.length - 1];
-    
+
     // Check if reference is to external schema
     if (refParts[0] && !refParts[0].startsWith("#")) {
       const refName = refParts[refParts.length - 1];
       let typeName = snakeToPascal(refName);
-      
+
       // Try to resolve from supergraph schema
       if (supergraphSchema && supergraphSchema.$defs && supergraphSchema.$defs[refName]) {
         typeName = getTypeName(supergraphSchema.$defs[refName], refName);
       }
-      
+
       const nullable = isNullable(schema, propName, parentRequired);
       return nullable ? typeName : `${typeName}!`;
     }
-    
+
     // Internal reference
     let typeName = snakeToPascal(refName);
     if (rootSchema && rootSchema.$defs && rootSchema.$defs[refName]) {
       typeName = getTypeName(rootSchema.$defs[refName], refName);
     }
-    
+
     const nullable = isNullable(schema, propName, parentRequired);
     return nullable ? typeName : `${typeName}!`;
   }
@@ -172,7 +168,7 @@ export function mapType(schema, propName, options = {}) {
  */
 export function formatDirectives(directives, filter = null) {
   if (!directives) return "";
-  
+
   if (typeof directives === "string") {
     if (filter) {
       const name = directives.match(/@(\w+)/)?.[1];
@@ -180,7 +176,7 @@ export function formatDirectives(directives, filter = null) {
     }
     return directives;
   }
-  
+
   if (Array.isArray(directives)) {
     return directives
       .filter((dir) => {
@@ -191,14 +187,14 @@ export function formatDirectives(directives, filter = null) {
       .map((dir) => {
         if (typeof dir === "string") return dir;
         if (!dir.args || Object.keys(dir.args).length === 0) return `@${dir.name}`;
-        
+
         const args = Object.entries(dir.args)
           .map(([key, value]) => {
             if (typeof value === "string") return `${key}: "${value}"`;
             return `${key}: ${JSON.stringify(value)}`;
           })
           .join(", ");
-          
+
         return `@${dir.name}(${args})`;
       })
       .join(" ");
@@ -217,7 +213,7 @@ export function generateFieldArgs(args, filter = null) {
     const type = argDef.type || "String";
     const defaultVal = argDef.default !== undefined ? ` = ${JSON.stringify(argDef.default)}` : "";
     const desc = argDef.description ? `"${argDef.description}" ` : "";
-    
+
     // Support arguments with directives
     let directiveStr = "";
     if (argDef["x-graphql-arg-directives"]) {
@@ -247,7 +243,11 @@ export function generateEnum(name, schema) {
   if (Array.isArray(values)) {
     values.forEach((value) => {
       if (value === null) return;
-      output.push(`  ${String(value).toUpperCase().replace(/[^A-Z0-9_]/g, "_")}`);
+      output.push(
+        `  ${String(value)
+          .toUpperCase()
+          .replace(/[^A-Z0-9_]/g, "_")}`,
+      );
     });
   } else if (typeof values === "object") {
     Object.entries(values).forEach(([snakeValue, config]) => {
@@ -270,10 +270,10 @@ export function generateEnum(name, schema) {
  */
 export function resolveSchema(schema, options = {}) {
   if (!schema || !schema.$ref) return schema;
-  
+
   const { rootSchema = null, supergraphSchema = null } = options;
   const ref = schema.$ref;
-  
+
   if (ref.startsWith("#/")) {
     // Internal ref
     if (!rootSchema) return schema;
@@ -291,9 +291,9 @@ export function resolveSchema(schema, options = {}) {
     if (file === "petrified-supergraph.schema.json") {
       base = supergraphSchema;
     }
-    
+
     if (!base) return schema;
-    
+
     const parts = fragment.split("/").slice(1);
     let current = base;
     for (const part of parts) {
@@ -302,7 +302,7 @@ export function resolveSchema(schema, options = {}) {
     }
     return resolveSchema(current, options);
   }
-  
+
   return schema;
 }
 
@@ -347,7 +347,7 @@ export function generateObjectType(name, schema, options = {}) {
 
   // Handle allOf
   if (schema.allOf) {
-    schema.allOf.forEach(subSchema => {
+    schema.allOf.forEach((subSchema) => {
       const resolved = resolveSchema(subSchema, options);
       if (resolved.properties) {
         Object.assign(properties, resolved.properties);
@@ -358,7 +358,9 @@ export function generateObjectType(name, schema, options = {}) {
     });
   }
 
-  const propertyEntries = Object.entries(properties).filter(([_, propSchema]) => !propSchema["x-graphql-skip"]);
+  const propertyEntries = Object.entries(properties).filter(
+    ([_, propSchema]) => !propSchema["x-graphql-skip"],
+  );
 
   if (propertyEntries.length === 0) {
     // GraphQL types/interfaces/inputs must have at least one field
@@ -398,9 +400,9 @@ export function generateObjectType(name, schema, options = {}) {
  */
 export function generateRelayTypes(paginationConfig) {
   if (!paginationConfig || !paginationConfig.enabled) return "";
-  
+
   const results = [];
-  
+
   // PageInfo is always the same
   results.push(`"""
 Information about pagination in a connection.
@@ -422,7 +424,7 @@ type PageInfo {
       const pascalName = snakeToPascal(typeName);
       const connName = configs.connection || `${pascalName}Connection`;
       const edgeName = configs.edge || `${pascalName}Edge`;
-      
+
       results.push(`"""
 A connection to a list of items.
 """
@@ -447,7 +449,7 @@ type ${edgeName} {
 `);
     }
   }
-  
+
   return results.join("\n");
 }
 

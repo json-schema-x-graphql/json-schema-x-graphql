@@ -52,7 +52,7 @@ https://github.com/json-schema-x-graphql/json-schema-x-graphql/releases
 ## Required Secrets (GitHub Settings)
 
 ✅ `NPM_TOKEN` - from https://www.npmjs.com/settings/~/tokens  
-✅ `CARGO_TOKEN` - from https://crates.io/me → API Tokens  
+✅ `CARGO_TOKEN` - from https://crates.io/me → API Tokens
 
 ## Conventional Commits Cheat Sheet
 
@@ -68,6 +68,7 @@ feat!: breaking change   → bump MAJOR
 ## Two Methods to Release
 
 ### Method 1: Manual (Full Control)
+
 ```
 1. Go to Actions → Release and Publish
 2. Select version bump
@@ -75,6 +76,7 @@ feat!: breaking change   → bump MAJOR
 ```
 
 ### Method 2: Automated (Recommended)
+
 ```
 1. Commits get analyzed automatically
 2. Release-Please creates PR with changelog
@@ -84,13 +86,13 @@ feat!: breaking change   → bump MAJOR
 
 ## Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| `401 Unauthorized` (npm) | Check NPM_TOKEN in secrets |
-| `403 Forbidden` (npm) | Verify account permissions |
-| `token not provided` (cargo) | Check CARGO_TOKEN in secrets |
-| Workflow hangs | Check npm/crates.io status |
-| Version mismatch | Workflow auto-syncs both files |
+| Issue                        | Solution                       |
+| ---------------------------- | ------------------------------ |
+| `401 Unauthorized` (npm)     | Check NPM_TOKEN in secrets     |
+| `403 Forbidden` (npm)        | Verify account permissions     |
+| `token not provided` (cargo) | Check CARGO_TOKEN in secrets   |
+| Workflow hangs               | Check npm/crates.io status     |
+| Version mismatch             | Workflow auto-syncs both files |
 
 ## Rollback a Bad Release
 
@@ -127,11 +129,12 @@ git push origin main
 ✅ Creates git tag  
 ✅ Publishes to npm  
 ✅ Publishes to crates.io  
-✅ Creates GitHub Release with changelog  
+✅ Creates GitHub Release with changelog
 
 ## Full Documentation
 
 See `PUBLISHING.md` for:
+
 - Detailed step-by-step process
 - How to write conventional commits
 - Troubleshooting guide

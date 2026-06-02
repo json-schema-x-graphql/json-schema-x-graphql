@@ -40,6 +40,7 @@ import {
   printDirectives,
 } from "./normalization/directives.js";
 import { ensureConnectionType } from "./features/relay.js";
+import { otelTracer } from "./otel.js";
 
 // ExtendedConverterOptions and others moved to interfaces.ts
 
@@ -123,6 +124,29 @@ function shouldExcludeType(
 // --- Public API ----------------------------------------------------------------
 
 export function jsonSchemaToGraphQL(
+  jsonSchemaInput: JsonSchemaInput,
+  options: ExtendedConverterOptions = {},
+): string {
+  return otelTracer.startActiveSpan("jsonSchemaToGraphQL", (span) => {
+    try {
+      const result = jsonSchemaToGraphQLInternal(jsonSchemaInput, options);
+      span.setAttribute(
+        "options.federationVersion",
+        options.federationVersion || "AUTO",
+      );
+      span.setStatus({ code: 1 }); // Ok
+      return result;
+    } catch (error: any) {
+      span.recordException(error);
+      span.setStatus({ code: 2, message: error.message }); // Error
+      throw error;
+    } finally {
+      span.end();
+    }
+  });
+}
+
+function jsonSchemaToGraphQLInternal(
   jsonSchemaInput: JsonSchemaInput,
   options: ExtendedConverterOptions = {},
 ): string {
@@ -222,6 +246,25 @@ export function jsonSchemaToGraphQL(
 }
 
 export function graphqlToJsonSchema(
+  graphqlSdl: string,
+  options: ConverterOptions = {},
+): string {
+  return otelTracer.startActiveSpan("graphqlToJsonSchema", (span) => {
+    try {
+      const result = graphqlToJsonSchemaInternal(graphqlSdl, options);
+      span.setStatus({ code: 1 }); // Ok
+      return result;
+    } catch (error: any) {
+      span.recordException(error);
+      span.setStatus({ code: 2, message: error.message }); // Error
+      throw error;
+    } finally {
+      span.end();
+    }
+  });
+}
+
+function graphqlToJsonSchemaInternal(
   graphqlSdl: string,
   options: ConverterOptions = {},
 ): string {
@@ -1678,6 +1721,7 @@ function isFederationDirective(name: string): boolean {
     name === "shareable" ||
     name === "inaccessible" ||
     name === "requiresScopes" ||
+    name === "policy" ||
     name === "authenticated" ||
     name === "interfaceObject"
   );
