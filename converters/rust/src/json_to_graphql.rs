@@ -571,9 +571,8 @@ fn convert_type_definition(
         .and_then(|v| v.as_array())
         .or_else(|| fed.and_then(|f| f.get("policy").and_then(|v| v.as_array())))
     {
-        directives_json.push(
-            serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }),
-        );
+        directives_json
+            .push(serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }));
     }
 
     // @composeDirective
@@ -1063,9 +1062,8 @@ fn convert_field(
         .and_then(|v| v.as_array())
         .or_else(|| fed.and_then(|f| f.get("policy").and_then(|v| v.as_array())))
     {
-        directives_json.push(
-            serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }),
-        );
+        directives_json
+            .push(serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }));
     }
 
     output.push_str(&format_directives(&JsonValue::Array(directives_json))?);
