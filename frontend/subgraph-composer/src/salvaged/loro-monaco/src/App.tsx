@@ -13,7 +13,9 @@ import { twMerge } from "tailwind-merge";
 
 // Lazy load GraphQLEditor to avoid worker loading issues
 const GraphQLEditor = lazy(() =>
-  import("graphql-editor").then((mod) => ({ default: mod.GraphQLEditor || mod.default })),
+  import("graphql-editor").then((mod) => ({
+    default: mod.GraphQLEditor || mod.default,
+  })),
 );
 
 function cn(...inputs: any[]) {
@@ -43,7 +45,11 @@ const App = () => {
   } = useStore();
 
   const [docId, setDocId] = useState("loro-collaboration-doc");
-  const [username, setUsername] = useState(`User-${Math.random().toString(36).substring(7)}`);
+  const [username, setUsername] = useState(() => {
+    const array = new Uint32Array(1);
+    self.crypto.getRandomValues(array);
+    return `User-${array[0].toString(36).substring(0, 5)}`;
+  });
   const [isConnected, setIsConnected] = useState(false);
   const [showConnectionDialog, setShowConnectionDialog] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -69,7 +75,8 @@ const App = () => {
   const resize = useCallback(
     (mouseMoveEvent: MouseEvent) => {
       if (isResizing) {
-        const newWidth = (mouseMoveEvent.clientX / document.body.offsetWidth) * 100;
+        const newWidth =
+          (mouseMoveEvent.clientX / document.body.offsetWidth) * 100;
         if (newWidth >= 20 && newWidth <= 80) {
           setLeftPaneWidth(newWidth);
         }
@@ -99,7 +106,8 @@ const App = () => {
           });
 
           if (!result.success) {
-            const errorMsg = result.diagnostics[0]?.message || "Conversion failed";
+            const errorMsg =
+              result.diagnostics[0]?.message || "Conversion failed";
             addError(errorMsg);
             useStore.setState({ isConverting: false });
             return;
@@ -135,13 +143,18 @@ const App = () => {
           });
 
           if (!result.success) {
-            const errorMsg = result.diagnostics[0]?.message || "Conversion failed";
+            const errorMsg =
+              result.diagnostics[0]?.message || "Conversion failed";
             addError(errorMsg);
             useStore.setState({ isConverting: false });
             return;
           }
 
-          const jsonSchemaOutput = formatOutput(result.output, "SDL", options.prettyPrint);
+          const jsonSchemaOutput = formatOutput(
+            result.output,
+            "SDL",
+            options.prettyPrint,
+          );
 
           if (loroDoc) {
             const jsonText = loroDoc.getText("jsonSchema");
@@ -163,7 +176,8 @@ const App = () => {
         }
       } catch (error) {
         console.error(`❌ Conversion failed:`, error);
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
         addError(errorMessage);
       } finally {
         useStore.setState({ isConverting: false });
@@ -211,7 +225,14 @@ const App = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [showSettings, showConnectionDialog, isConverting, activeEditor, isDarkTheme, handleConvert]);
+  }, [
+    showSettings,
+    showConnectionDialog,
+    isConverting,
+    activeEditor,
+    isDarkTheme,
+    handleConvert,
+  ]);
 
   useEffect(() => {
     window.addEventListener("mousemove", resize);
@@ -248,16 +269,29 @@ const App = () => {
       handleConvert("json-to-graphql");
     }, 1000);
     return () => clearTimeout(timer);
-  }, [jsonSchema, isAutoSyncEnabled, activeEditor, isConverting, handleConvert]);
+  }, [
+    jsonSchema,
+    isAutoSyncEnabled,
+    activeEditor,
+    isConverting,
+    handleConvert,
+  ]);
 
   // Auto-sync GraphQL -> JSON
   useEffect(() => {
-    if (!isAutoSyncEnabled || activeEditor !== "graphql" || isConverting) return;
+    if (!isAutoSyncEnabled || activeEditor !== "graphql" || isConverting)
+      return;
     const timer = setTimeout(() => {
       handleConvert("graphql-to-json");
     }, 1000);
     return () => clearTimeout(timer);
-  }, [graphqlSdl, isAutoSyncEnabled, activeEditor, isConverting, handleConvert]);
+  }, [
+    graphqlSdl,
+    isAutoSyncEnabled,
+    activeEditor,
+    isConverting,
+    handleConvert,
+  ]);
 
   return (
     <div
@@ -308,14 +342,22 @@ const App = () => {
       </header>
 
       {errors.length > 0 && (
-        <ErrorBanner errors={errors} onClear={() => useStore.setState({ errors: [] })} />
+        <ErrorBanner
+          errors={errors}
+          onClear={() => useStore.setState({ errors: [] })}
+        />
       )}
 
-      <ConverterSettingsPanel isOpen={showSettings} onClose={() => setShowSettings(false)} />
+      <ConverterSettingsPanel
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+      />
 
       {showConnectionDialog && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className={`p-6 rounded-lg shadow-xl ${isDarkTheme ? "bg-gray-800" : "bg-white"}`}>
+          <div
+            className={`p-6 rounded-lg shadow-xl ${isDarkTheme ? "bg-gray-800" : "bg-white"}`}
+          >
             <h2 className="mb-4 text-2xl font-bold">Connect to a session</h2>
             <input
               type="text"
@@ -341,7 +383,9 @@ const App = () => {
         </div>
       )}
 
-      <main className={`flex flex-1 overflow-hidden gap-0 md:gap-0 ${isDarkTheme ? "" : ""}`}>
+      <main
+        className={`flex flex-1 overflow-hidden gap-0 md:gap-0 ${isDarkTheme ? "" : ""}`}
+      >
         <div
           style={{ width: `${leftPaneWidth}%` }}
           className={`border-r ${isDarkTheme ? "border-gray-700" : "border-gray-300"} hidden md:flex flex-col`}
@@ -452,12 +496,15 @@ const App = () => {
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
           <StatusBadge
             label={`Status: ${connectionStatus.status}`}
-            variant={connectionStatus.status === "connected" ? "success" : "warning"}
+            variant={
+              connectionStatus.status === "connected" ? "success" : "warning"
+            }
           />
           <span className="text-xs">Users: {connectedUsers.length}</span>
           {lastConversion && (
             <span className="text-xs">
-              Last conversion: {lastConversion.duration}ms, {lastConversion.outputSize} bytes
+              Last conversion: {lastConversion.duration}ms,{" "}
+              {lastConversion.outputSize} bytes
             </span>
           )}
         </div>

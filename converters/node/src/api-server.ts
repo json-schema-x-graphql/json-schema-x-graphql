@@ -52,7 +52,11 @@ function parseRequestBody(req: http.IncomingMessage): Promise<string> {
 /**
  * Send JSON response
  */
-function sendJson(res: http.ServerResponse, statusCode: number, data: ConvertResponse) {
+function sendJson(
+  res: http.ServerResponse,
+  statusCode: number,
+  data: ConvertResponse,
+) {
   res.statusCode = statusCode;
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -64,7 +68,10 @@ function sendJson(res: http.ServerResponse, statusCode: number, data: ConvertRes
 /**
  * Handle conversion request
  */
-async function handleConvert(req: http.IncomingMessage, res: http.ServerResponse) {
+async function handleConvert(
+  req: http.IncomingMessage,
+  res: http.ServerResponse,
+) {
   const startTime = performance.now();
 
   try {
@@ -110,9 +117,15 @@ async function handleConvert(req: http.IncomingMessage, res: http.ServerResponse
       console.log("🔄 Converting JSON Schema to GraphQL...");
 
       // Convert JSON Schema to GraphQL
-      const schema = typeof request.input === "string" ? JSON.parse(request.input) : request.input;
+      const schema =
+        typeof request.input === "string"
+          ? JSON.parse(request.input)
+          : request.input;
 
-      console.log("📋 Schema to convert:", JSON.stringify(schema).substring(0, 200));
+      console.log(
+        "📋 Schema to convert:",
+        JSON.stringify(schema).substring(0, 200),
+      );
 
       try {
         output = jsonSchemaToGraphQL(schema, request.options);
@@ -123,7 +136,10 @@ async function handleConvert(req: http.IncomingMessage, res: http.ServerResponse
       }
     } else if (request.direction === "graphql-to-json") {
       // Convert GraphQL to JSON Schema
-      const sdl = typeof request.input === "string" ? request.input : JSON.stringify(request.input);
+      const sdl =
+        typeof request.input === "string"
+          ? request.input
+          : JSON.stringify(request.input);
 
       const result = graphqlToJsonSchema(sdl, request.options);
       output = JSON.stringify(result, null, 2);
@@ -149,7 +165,10 @@ async function handleConvert(req: http.IncomingMessage, res: http.ServerResponse
     });
   } catch (error) {
     console.error("💥 Conversion error:", error);
-    console.error("Stack trace:", error instanceof Error ? error.stack : "No stack");
+    console.error(
+      "Stack trace:",
+      error instanceof Error ? error.stack : "No stack",
+    );
     console.error("Error type:", error?.constructor?.name);
 
     sendJson(res, 500, {

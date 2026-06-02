@@ -22,7 +22,10 @@ export function snakeToCamel(str: string): string {
 /**
  * Recursively convert object keys using a converter function
  */
-export function convertObjectKeys(obj: any, converter: (key: string) => string): any {
+export function convertObjectKeys(
+  obj: any,
+  converter: (key: string) => string,
+): any {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertObjectKeys(item, converter));
   } else if (obj !== null && typeof obj === "object") {
@@ -39,7 +42,10 @@ export function convertObjectKeys(obj: any, converter: (key: string) => string):
 /**
  * Convert GraphQL field names in SDL string using a converter
  */
-export function convertGraphQLFields(sdl: string, converter: (field: string) => string): string {
+export function convertGraphQLFields(
+  sdl: string,
+  converter: (field: string) => string,
+): string {
   return sdl.replace(
     /(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g,
     (match, ws, field) => `${ws}${converter(field)}:`,

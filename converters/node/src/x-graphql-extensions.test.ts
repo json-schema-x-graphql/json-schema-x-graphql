@@ -79,7 +79,9 @@ describe("extractExtensions", () => {
 
     const extensions = extractExtensions(schema);
 
-    expect(extensions.description).toBe("This is a GraphQL-specific description");
+    expect(extensions.description).toBe(
+      "This is a GraphQL-specific description",
+    );
   });
 
   it("should extract union types", () => {
@@ -369,7 +371,9 @@ describe("buildFederationDirective", () => {
   });
 
   it("should build directive with string argument", () => {
-    expect(buildFederationDirective("key", { fields: "id" })).toBe('@key(fields: "id")');
+    expect(buildFederationDirective("key", { fields: "id" })).toBe(
+      '@key(fields: "id")',
+    );
   });
 
   it("should build directive with array argument", () => {
