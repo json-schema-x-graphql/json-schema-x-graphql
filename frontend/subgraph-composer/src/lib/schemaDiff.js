@@ -275,9 +275,9 @@ export function compareMultipleSchemas(schemas) {
   // Find common fields across all
   const allFields = schemas.map((s) => new Set(Object.keys(s.parsed.properties || {})));
 
-  const commonFields = allFields
-    .reduce((common, current) => new Set([...common].filter((f) => current.has(f))))
-    .then((x) => [...x]);
+  const commonFields = Array.from(
+    allFields.reduce((common, current) => new Set([...common].filter((f) => current.has(f)))),
+  );
 
   const uniqueFieldsBySchema = schemas.map((schema, idx) => {
     const schemaFields = new Set(Object.keys(schema.parsed.properties || {}));

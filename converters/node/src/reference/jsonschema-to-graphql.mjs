@@ -313,7 +313,7 @@ export function resolveSchema(schema, options = {}) {
  * Generate object type
  */
 export function generateObjectType(name, schema, options = {}) {
-  const { rootSchema = null, supergraphSchema = null, generatedTypes = new Set() } = options;
+  const { generatedTypes = new Set() } = options;
   const typeName = getTypeName(schema, name);
 
   if (generatedTypes.has(typeName)) return "";
