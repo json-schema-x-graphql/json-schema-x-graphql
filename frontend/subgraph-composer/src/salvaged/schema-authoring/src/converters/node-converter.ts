@@ -59,8 +59,7 @@ export class NodeConverter {
         parsedSchema = JSON.parse(jsonSchema);
       } catch (error) {
         return this.createErrorResult(
-          "Invalid JSON Schema: " +
-            (error instanceof Error ? error.message : "Parse error"),
+          "Invalid JSON Schema: " + (error instanceof Error ? error.message : "Parse error"),
           startTime,
           1,
           1,
@@ -80,8 +79,7 @@ export class NodeConverter {
           direction: "json-to-graphql",
           input: parsedSchema,
           options: {
-            includeFederationDirectives:
-              options.includeFederationDirectives ?? false,
+            includeFederationDirectives: options.includeFederationDirectives ?? false,
             includeDescriptions: options.includeDescriptions ?? true,
             // Map frontend options to backend ConverterOptions format
             // Note: backend doesn't support all frontend options yet
@@ -151,10 +149,7 @@ export class NodeConverter {
     try {
       // Basic validation
       if (!graphqlSchema.trim()) {
-        return this.createErrorResult(
-          "GraphQL schema cannot be empty",
-          startTime,
-        );
+        return this.createErrorResult("GraphQL schema cannot be empty", startTime);
       }
 
       // Prepare request

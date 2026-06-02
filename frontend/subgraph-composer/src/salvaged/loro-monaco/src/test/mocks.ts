@@ -33,13 +33,11 @@ export class MockLoroText {
   }
 
   insert(index: number, text: string): void {
-    this.content =
-      this.content.slice(0, index) + text + this.content.slice(index);
+    this.content = this.content.slice(0, index) + text + this.content.slice(index);
   }
 
   delete(index: number, length: number): void {
-    this.content =
-      this.content.slice(0, index) + this.content.slice(index + length);
+    this.content = this.content.slice(0, index) + this.content.slice(index + length);
   }
 }
 

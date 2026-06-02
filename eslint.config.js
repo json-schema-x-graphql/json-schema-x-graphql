@@ -17,11 +17,7 @@ module.exports = [
     ],
   },
   {
-    files: [
-      "converters/node/src/**/*.ts",
-      "scripts/**/*.js",
-      "scripts/**/*.ts",
-    ],
+    files: ["converters/node/src/**/*.ts", "scripts/**/*.js", "scripts/**/*.ts"],
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
@@ -37,10 +33,7 @@ module.exports = [
     rules: {
       "no-console": "off",
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
       "@typescript-eslint/no-explicit-any": "off",
     },
   },

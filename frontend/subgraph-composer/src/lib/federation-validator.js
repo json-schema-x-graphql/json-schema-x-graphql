@@ -69,9 +69,7 @@ export function validateFederationRules(sdl) {
 
     // Validate @key presence
     if (!hasKey) {
-      warnings.push(
-        "No @key directives found. At least owner type should have @key.",
-      );
+      warnings.push("No @key directives found. At least owner type should have @key.");
     }
 
     // Check for proper federation directive structure
@@ -203,29 +201,21 @@ export function validateSupergraphMetadata(schema) {
 
   // Validate required metadata
   if (!name) {
-    errors.push(
-      "x-graphql-supergraph-name is required when supergraph metadata is present",
-    );
+    errors.push("x-graphql-supergraph-name is required when supergraph metadata is present");
   } else if (typeof name !== "string" || name.length === 0) {
     errors.push("x-graphql-supergraph-name must be a non-empty string");
   }
 
   if (!type) {
-    errors.push(
-      "x-graphql-supergraph-type is required when supergraph metadata is present",
-    );
+    errors.push("x-graphql-supergraph-type is required when supergraph metadata is present");
   } else if (!["base-entity", "entity-extending", "utility"].includes(type)) {
-    errors.push(
-      "x-graphql-supergraph-type must be one of: base-entity, entity-extending, utility",
-    );
+    errors.push("x-graphql-supergraph-type must be one of: base-entity, entity-extending, utility");
   }
 
   // Validate entity name
   if (type === "base-entity" || type === "entity-extending") {
     if (!entity) {
-      errors.push(
-        `x-graphql-supergraph-entity is required for ${type} subgraphs`,
-      );
+      errors.push(`x-graphql-supergraph-entity is required for ${type} subgraphs`);
     } else if (typeof entity !== "string" || entity.length === 0) {
       errors.push("x-graphql-supergraph-entity must be a non-empty string");
     }
@@ -233,9 +223,7 @@ export function validateSupergraphMetadata(schema) {
 
   // Validate query-root with type
   if (queryRoot === true && type === "entity-extending") {
-    warnings.push(
-      "x-graphql-supergraph-query-root should be false for entity-extending subgraphs",
-    );
+    warnings.push("x-graphql-supergraph-query-root should be false for entity-extending subgraphs");
   }
 
   return {
@@ -504,9 +492,7 @@ export function lintSDL(sdl) {
   typeMatches.forEach((match) => {
     const typeName = match.match(/type\s+(\w+)/)[1];
     if (!/^[A-Z]/.test(typeName)) {
-      issues.errors.push(
-        `Type name "${typeName}" should start with uppercase letter (PascalCase)`,
-      );
+      issues.errors.push(`Type name "${typeName}" should start with uppercase letter (PascalCase)`);
     }
   });
 
@@ -569,9 +555,7 @@ export function lintSDL(sdl) {
     const content = typeBlock.match(/\{([^}]*)\}/)[1].trim();
     if (content === "" || content === "_empty: String") {
       const typeName = typeBlock.match(/type\s+(\w+)/)[1];
-      issues.infos.push(
-        `Type "${typeName}" appears to be empty or is a placeholder`,
-      );
+      issues.infos.push(`Type "${typeName}" appears to be empty or is a placeholder`);
     }
   });
 

@@ -4,6 +4,8 @@ packages:
   - website
   - external/visual-json
   - external/visual-json/packages/*
+  - external/visual-json/packages/@visual-json/*
+  - external/visual-json/packages/@internal/*
 
 allowBuilds:
   esbuild: false

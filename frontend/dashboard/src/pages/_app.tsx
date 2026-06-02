@@ -103,9 +103,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
               }}
             />
             <GlobalStyle />
-            {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-              <GoogleAnalytics trackPageViews />
-            )}
+            {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && <GoogleAnalytics trackPageViews />}
             <Component {...pageProps} />
           </ThemeProvider>
         </StyleSheetManager>

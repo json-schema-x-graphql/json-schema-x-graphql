@@ -26,9 +26,7 @@ function shouldExcludeType(typeName, options) {
     if (!typeName)
         return true;
     // Debug filtering
-    if (typeName === "Mutation" ||
-        typeName === "Query" ||
-        typeName === "PageInfo") {
+    if (typeName === "Mutation" || typeName === "Query" || typeName === "PageInfo") {
         console.log(`Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`);
     }
     // Always exclude introspection types
@@ -62,8 +60,7 @@ function shouldExcludeType(typeName, options) {
         }
     }
     // Check regexes
-    if (options.excludeRegexes &&
-        options.excludeRegexes.some((regex) => regex.test(typeName))) {
+    if (options.excludeRegexes && options.excludeRegexes.some((regex) => regex.test(typeName))) {
         return true;
     }
     return false;
@@ -192,8 +189,7 @@ function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
             mutation: null,
         };
         for (const def of doc.definitions) {
-            if (def.kind === "ObjectTypeDefinition" ||
-                def.kind === "InterfaceTypeDefinition") {
+            if (def.kind === "ObjectTypeDefinition" || def.kind === "InterfaceTypeDefinition") {
                 const typeName = def.name?.value;
                 if (typeName && typeName !== "Query" && typeName !== "Mutation") {
                     typeRegistry.set(typeName, {
@@ -236,8 +232,7 @@ function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
             }
             else if (def.kind === "ScalarTypeDefinition") {
                 const scalarName = def.name?.value;
-                if (scalarName &&
-                    !["String", "Int", "Float", "Boolean", "ID"].includes(scalarName)) {
+                if (scalarName && !["String", "Int", "Float", "Boolean", "ID"].includes(scalarName)) {
                     typeRegistry.set(scalarName, {
                         kind: "ScalarTypeDefinition",
                         name: scalarName,
@@ -253,8 +248,7 @@ function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
         for (const [typeName, typeDef] of typeRegistry.entries()) {
             const fieldCount = (typeDef.fields || []).length;
             if (fieldCount > maxFields &&
-                (typeDef.kind === "ObjectTypeDefinition" ||
-                    typeDef.kind === "InterfaceTypeDefinition")) {
+                (typeDef.kind === "ObjectTypeDefinition" || typeDef.kind === "InterfaceTypeDefinition")) {
                 maxFields = fieldCount;
                 rootTypeName = typeName;
             }
@@ -411,9 +405,7 @@ function fallbackGraphqlToJsonSchema(graphqlSdl, options) {
             description = line.slice(1, -1);
             continue;
         }
-        if (line.startsWith("type ") &&
-            !line.includes("Query") &&
-            !line.includes("Mutation")) {
+        if (line.startsWith("type ") && !line.includes("Query") && !line.includes("Mutation")) {
             currentType = line.split(/\s+/)[1];
             schema["x-graphql-type-name"] = currentType;
             if (description) {
@@ -427,9 +419,7 @@ function fallbackGraphqlToJsonSchema(graphqlSdl, options) {
             continue;
         }
         if (currentType && line.includes(":")) {
-            const [field, typePart] = line
-                .split(":")
-                .map((segment) => segment.trim());
+            const [field, typePart] = line.split(":").map((segment) => segment.trim());
             const fieldSchema = convertGqlTypeToJson(typePart, options.maxDepth);
             if (description) {
                 fieldSchema.description = description;
@@ -618,9 +608,7 @@ function convertField(propName, schema, isRequired, context) {
         ? `${formatDescription(schema.description, options)}\n  `
         : "";
     const fieldName = schema["x-graphql-field-name"] ||
-        (options.namingConvention === "PRESERVE"
-            ? propName
-            : toCamelCase(propName));
+        (options.namingConvention === "PRESERVE" ? propName : toCamelCase(propName));
     const safeFieldName = sanitizeFieldName(fieldName, options.namingConvention);
     const args = formatArgs(schema);
     // Skip field if x-graphql-skip is true
@@ -699,9 +687,7 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
         }
         case "object": {
             const fallback = nameHint ?? propFallbackName(schema);
-            const isAnonymous = !schema.title &&
-                !schema["x-graphql-type-name"] &&
-                !schema["x-graphql-type"];
+            const isAnonymous = !schema.title && !schema["x-graphql-type-name"] && !schema["x-graphql-type"];
             const propCount = Object.keys(schema.properties ?? {}).length;
             const inlineThreshold = typeof schema["x-graphql-inline-object-threshold"] === "number"
                 ? schema["x-graphql-inline-object-threshold"]
@@ -763,9 +749,7 @@ function resolveRef(refPath, context, visited = new Set()) {
         const rawSegments = refPath.split("/").filter(Boolean);
         let rawName = rawSegments[rawSegments.length - 1] ?? "ExternalType";
         if (strategy === "file_and_path") {
-            rawName = rawSegments
-                .slice(Math.max(0, rawSegments.length - 2))
-                .join("_");
+            rawName = rawSegments.slice(Math.max(0, rawSegments.length - 2)).join("_");
         }
         else if (strategy === "hash") {
             // FNV-1a 32-bit hash, base36 encoded for compactness
@@ -919,11 +903,7 @@ function normalizeOptions(options) {
     const namingConvention = options.namingConvention ?? "GRAPHQL_IDIOMATIC";
     const inferIds = options.inferIds ?? false;
     const requestedIdStrategy = options.idStrategy ?? "NONE";
-    const idStrategy = requestedIdStrategy !== "NONE"
-        ? requestedIdStrategy
-        : inferIds
-            ? "COMMON_PATTERNS"
-            : "NONE";
+    const idStrategy = requestedIdStrategy !== "NONE" ? requestedIdStrategy : inferIds ? "COMMON_PATTERNS" : "NONE";
     const outputFormat = options.outputFormat ?? "SDL";
     const failOnWarning = options.failOnWarning ?? false;
     const includeFederationDirectives = options.includeFederationDirectives ?? true;
@@ -1018,9 +998,7 @@ function detectFederationVersion(schema) {
 export class Converter {
     async convert(input) {
         try {
-            const jsonSchema = typeof input.jsonSchema === "string"
-                ? JSON.parse(input.jsonSchema)
-                : input.jsonSchema;
+            const jsonSchema = typeof input.jsonSchema === "string" ? JSON.parse(input.jsonSchema) : input.jsonSchema;
             const rawOptions = (input.options ?? {});
             const normalized = normalizeOptions(rawOptions);
             const resolvedFederation = normalized.federationVersion === "AUTO"
@@ -1044,8 +1022,7 @@ export class Converter {
             const diagnostics = [];
             const warningCount = diagnostics.filter((d) => d.severity === "WARNING").length;
             const errorCount = diagnostics.filter((d) => d.severity === "ERROR").length;
-            const success = errorCount === 0 &&
-                (!resolvedOptions.failOnWarning || warningCount === 0);
+            const success = errorCount === 0 && (!resolvedOptions.failOnWarning || warningCount === 0);
             return {
                 output,
                 diagnostics,
@@ -1075,8 +1052,7 @@ export class Converter {
 function getTypeName(schema, contextOrFallback, fallbackArg) {
     let context;
     let fallback;
-    if (contextOrFallback &&
-        typeof contextOrFallback.options === "object") {
+    if (contextOrFallback && typeof contextOrFallback.options === "object") {
         context = contextOrFallback;
         fallback = fallbackArg;
     }
@@ -1122,8 +1098,7 @@ function uniqueInlineTypeName(fallback, context, namingConvention = "GRAPHQL_IDI
         return base;
     let candidate = base;
     let i = 1;
-    while (context.generatedTypes.has(candidate) ||
-        context.generating.has(candidate)) {
+    while (context.generatedTypes.has(candidate) || context.generating.has(candidate)) {
         candidate = `${base}${i}`;
         i += 1;
     }
@@ -1271,7 +1246,7 @@ function shouldPromoteToId(propName, baseType, schema, options) {
         return false;
     const nameLower = propName.toLowerCase();
     if (strategy === "COMMON_PATTERNS") {
-        return (nameLower === "id" || nameLower === "_id" || nameLower.endsWith("id"));
+        return nameLower === "id" || nameLower === "_id" || nameLower.endsWith("id");
     }
     // ALL_STRINGS: any string-like field qualifies unless explicitly typed otherwise
     return (schema.type === undefined ||
@@ -1321,10 +1296,7 @@ function formatArgs(schema) {
     if (!args)
         return "";
     const entries = Object.entries(args).map(([name, def]) => {
-        const configuredType = def.type ??
-            (typeof def["x-graphql-type"] === "string"
-                ? def["x-graphql-type"]
-                : undefined);
+        const configuredType = def.type ?? (typeof def["x-graphql-type"] === "string" ? def["x-graphql-type"] : undefined);
         const argType = configuredType ?? "String";
         const defaultValue = def.default !== undefined ? ` = ${JSON.stringify(def.default)}` : "";
         return `${name}: ${argType}${defaultValue}`;
@@ -1335,10 +1307,7 @@ function formatOperationArgs(args) {
     if (!args)
         return "";
     const rendered = Object.entries(args).map(([name, def]) => {
-        const configuredType = def.type ??
-            (typeof def["x-graphql-type"] === "string"
-                ? def["x-graphql-type"]
-                : undefined);
+        const configuredType = def.type ?? (typeof def["x-graphql-type"] === "string" ? def["x-graphql-type"] : undefined);
         const type = configuredType ?? "String";
         const defaultValue = def.default !== undefined ? ` = ${JSON.stringify(def.default)}` : "";
         return `${name}: ${type}${defaultValue}`;

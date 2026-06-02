@@ -278,9 +278,7 @@ describe("E2E: Complete Workflows", () => {
 
       const compositionError = {
         success: false,
-        errors: [
-          'Entity "User" defined in multiple subgraphs with conflicting keys',
-        ],
+        errors: ['Entity "User" defined in multiple subgraphs with conflicting keys'],
       };
 
       expect(compositionError.success).toBe(false);
@@ -300,14 +298,9 @@ describe("E2E: Complete Workflows", () => {
         { id: "3", name: "Product", content: "{}" },
       ];
 
-      localStorage.setItem(
-        "subgraph-composer-schemas",
-        JSON.stringify(storedSchemas),
-      );
+      localStorage.setItem("subgraph-composer-schemas", JSON.stringify(storedSchemas));
 
-      const retrieved = JSON.parse(
-        localStorage.getItem("subgraph-composer-schemas"),
-      );
+      const retrieved = JSON.parse(localStorage.getItem("subgraph-composer-schemas"));
       expect(retrieved).toHaveLength(3);
       expect(retrieved[0].name).toBe("User");
     });

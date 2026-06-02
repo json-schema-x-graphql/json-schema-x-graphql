@@ -1,7 +1,4 @@
-import {
-  type MantineColorScheme,
-  type MantineColorSchemeManager,
-} from "@mantine/core";
+import { type MantineColorScheme, type MantineColorSchemeManager } from "@mantine/core";
 
 export interface SmartColorSchemeManagerOptions {
   /** Local storage key used to retrieve value with `localStorage.getItem(key)` */
@@ -28,9 +25,7 @@ export function smartColorSchemeManager({
   // Helper function to check if current path should use dynamic behavior
   const shouldUseDynamicBehavior = () => {
     const pathname = getPathname();
-    return dynamicPaths.some(
-      (path) => pathname === path || pathname.startsWith(`${path}/`),
-    );
+    return dynamicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
   };
 
   return {
@@ -46,8 +41,7 @@ export function smartColorSchemeManager({
 
       try {
         currentColorScheme =
-          (window.localStorage.getItem(key) as MantineColorScheme) ||
-          defaultValue;
+          (window.localStorage.getItem(key) as MantineColorScheme) || defaultValue;
         return currentColorScheme;
       } catch {
         return defaultValue;
@@ -65,10 +59,7 @@ export function smartColorSchemeManager({
       try {
         window.localStorage.setItem(key, value);
       } catch (error) {
-        console.warn(
-          "Smart color scheme manager was unable to save color scheme.",
-          error,
-        );
+        console.warn("Smart color scheme manager was unable to save color scheme.", error);
       }
     },
 

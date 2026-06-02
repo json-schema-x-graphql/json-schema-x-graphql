@@ -9,7 +9,11 @@ let memoryExporter: InMemorySpanExporter | null = null;
 let provider: NodeTracerProvider | null = null;
 
 // Initialize tracer provider only if in a Node/testing environment
-if (typeof process !== "undefined" && process.env) {
+if (
+  typeof (globalThis as any).window === "undefined" &&
+  typeof process !== "undefined" &&
+  process.versions?.node
+) {
   provider = new NodeTracerProvider();
   memoryExporter = new InMemorySpanExporter();
   provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));

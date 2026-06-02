@@ -105,11 +105,7 @@ const [converterOptions, setConverterOptions] = useState({
 });
 
 // Pass to useSubgraphGenerator:
-const result = await generateSubgraph(
-  JSON.parse(schema.content),
-  schema.id,
-  converterOptions,
-);
+const result = await generateSubgraph(JSON.parse(schema.content), schema.id, converterOptions);
 ```
 
 ---

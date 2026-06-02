@@ -24,14 +24,7 @@
       "name": "x-graphql-type-kind",
       "scope": ["type"],
       "type": "string",
-      "enum": [
-        "OBJECT",
-        "INTERFACE",
-        "UNION",
-        "ENUM",
-        "INPUT_OBJECT",
-        "SCALAR"
-      ],
+      "enum": ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"],
       "default": "OBJECT",
       "description": "Specifies the GraphQL kind to generate for this schema (e.g. OBJECT, INTERFACE). Useful when the schema shape alone is ambiguous.",
       "example": {
@@ -80,9 +73,7 @@
       "description": "Array of directives to attach to the type. Each entry may be a string (directive name) or an object with name and arguments.",
       "example": {
         "jsonSchema": {
-          "x-graphql-type-directives": [
-            { "name": "key", "args": { "fields": "id" } }
-          ]
+          "x-graphql-type-directives": [{ "name": "key", "args": { "fields": "id" } }]
         }
       },
       "recommendedUsage": "Use for federation-related directives or custom directives required by downstream tooling. Converter must render directive arguments in GraphQL syntax."

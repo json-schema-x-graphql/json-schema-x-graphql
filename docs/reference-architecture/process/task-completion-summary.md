@@ -71,9 +71,7 @@ let graphqlPlugin = null;
 try {
   graphqlPlugin = require("@graphql-eslint/eslint-plugin");
 } catch (err) {
-  console.warn(
-    "Warning: @graphql-eslint/eslint-plugin not found. GraphQL linting disabled.",
-  );
+  console.warn("Warning: @graphql-eslint/eslint-plugin not found. GraphQL linting disabled.");
 }
 ```
 

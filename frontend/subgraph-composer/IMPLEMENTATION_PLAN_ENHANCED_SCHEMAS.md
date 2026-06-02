@@ -120,9 +120,7 @@ shared_entity_id: {
 {
   "title": "User Profiles (Scalars)",
   "x-graphql-type-name": "UserProfile",
-  "x-graphql-directives": [
-    { "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }
-  ],
+  "x-graphql-directives": [{ "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }],
   "properties": {
     "shared_entity_id": { "type": "string", "x-graphql-type": "ID!" },
     "user_id": { "type": "string" },
@@ -141,9 +139,7 @@ shared_entity_id: {
 {
   "title": "User Status & Roles (Enums)",
   "x-graphql-type-name": "UserStatus",
-  "x-graphql-directives": [
-    { "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }
-  ],
+  "x-graphql-directives": [{ "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }],
   "x-graphql-enums": {
     "AccountRole": { "values": ["ADMIN", "MODERATOR", "USER", "GUEST"] },
     "StatusType": { "values": ["ACTIVE", "INACTIVE", "SUSPENDED", "PENDING"] }
@@ -170,9 +166,7 @@ shared_entity_id: {
 {
   "title": "User Details & Metadata (Nested)",
   "x-graphql-type-name": "UserDetails",
-  "x-graphql-directives": [
-    { "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }
-  ],
+  "x-graphql-directives": [{ "name": "key", "arguments": { "fields": "\"shared_entity_id\"" } }],
   "properties": {
     "shared_entity_id": { "type": "string", "x-graphql-type": "ID!" },
     "contact_information": {
@@ -426,9 +420,7 @@ export function SupergraphPreview({ composition, statistics }) {
 
 function ValidationPanel({ results }) {
   return (
-    <div
-      className={`validation-panel ${results.isValid ? "valid" : "invalid"}`}
-    >
+    <div className={`validation-panel ${results.isValid ? "valid" : "invalid"}`}>
       <h3>{results.isValid ? "✅ Valid SDL" : "❌ Invalid SDL"}</h3>
 
       {results.syntaxErrors.length > 0 && (
@@ -607,9 +599,7 @@ describe("Enhanced Federation Schemas", () => {
     templates.forEach((template) => {
       const schema = JSON.parse(template.content);
       expect(schema["x-graphql-directives"]).toBeDefined();
-      expect(schema["x-graphql-directives"].some((d) => d.name === "key")).toBe(
-        true,
-      );
+      expect(schema["x-graphql-directives"].some((d) => d.name === "key")).toBe(true);
     });
   });
 
@@ -680,9 +670,7 @@ describe("Enhanced Federation Schemas", () => {
     const { sdl } = compose(schemaMap);
     const validation = validateSDL(sdl);
 
-    expect(
-      validation.lintWarnings.filter((w) => w.severity === "error"),
-    ).toHaveLength(0);
+    expect(validation.lintWarnings.filter((w) => w.severity === "error")).toHaveLength(0);
   });
 });
 ```

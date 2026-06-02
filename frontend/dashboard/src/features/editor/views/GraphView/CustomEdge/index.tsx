@@ -11,9 +11,7 @@ const CustomEdgeWrapper = (props: EdgeProps) => {
   const [hovered, setHovered] = React.useState(false);
 
   const handeClick = () => {
-    const targetNode = document.querySelector(
-      `[data-id="node-${targetNodeId}"]`,
-    ) as HTMLElement;
+    const targetNode = document.querySelector(`[data-id="node-${targetNodeId}"]`) as HTMLElement;
     if (targetNode && targetNode.parentElement) {
       viewPort?.camera.centerFitElementIntoView(targetNode.parentElement, {
         elementExtraMarginForZoom: 150,

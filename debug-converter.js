@@ -47,10 +47,7 @@ try {
       .then((res) => {
         console.log("Async Result:", res);
         if (res && res.schema) {
-          console.log(
-            "SDL Output (first 500 chars):\n",
-            res.schema.substring(0, 500),
-          );
+          console.log("SDL Output (first 500 chars):\n", res.schema.substring(0, 500));
         }
         if (res && res.errors && res.errors.length) {
           console.log("Errors:", res.errors);
@@ -62,10 +59,7 @@ try {
   } else {
     console.log("Result:", result);
     if (result.schema) {
-      console.log(
-        "SDL Output (first 500 chars):\n",
-        result.schema.substring(0, 500),
-      );
+      console.log("SDL Output (first 500 chars):\n", result.schema.substring(0, 500));
     }
   }
 } catch (e) {

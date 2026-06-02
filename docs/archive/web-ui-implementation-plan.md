@@ -501,8 +501,7 @@ interface EditorState {
 export const useEditorStore = create<EditorState>()(
   persist(
     (set, get) => ({
-      jsonSchema:
-        '{\n  "$schema": "https://json-schema.org/draft/2020-12/schema"\n}',
+      jsonSchema: '{\n  "$schema": "https://json-schema.org/draft/2020-12/schema"\n}',
       graphqlSdl: "",
       converterMode: "wasm",
       options: {
@@ -798,10 +797,7 @@ export async function convertJsonToSdlWasm(
   try {
     await ensureWasmInit();
 
-    const result = convert_json_to_sdl(
-      JSON.stringify(jsonSchema),
-      JSON.stringify(options),
-    );
+    const result = convert_json_to_sdl(JSON.stringify(jsonSchema), JSON.stringify(options));
 
     const parsed = JSON.parse(result);
     const duration = performance.now() - startTime;
@@ -859,14 +855,8 @@ export async function convertSdlToJsonWasm(
 // src/hooks/useConverter.ts
 
 import { useEditorStore } from "@/store/editorStore";
-import {
-  convertJsonToSdlNode,
-  convertSdlToJsonNode,
-} from "@/converters/nodeConverter";
-import {
-  convertJsonToSdlWasm,
-  convertSdlToJsonWasm,
-} from "@/converters/wasmConverter";
+import { convertJsonToSdlNode, convertSdlToJsonNode } from "@/converters/nodeConverter";
+import { convertJsonToSdlWasm, convertSdlToJsonWasm } from "@/converters/wasmConverter";
 
 export function useConverter() {
   const { converterMode, options } = useEditorStore();
@@ -1100,9 +1090,7 @@ test("complete conversion workflow", async ({ page }) => {
 
   // Paste JSON Schema
   await page.click('[data-testid="json-editor"]');
-  await page.keyboard.type(
-    '{"$schema": "https://json-schema.org/draft/2020-12/schema"}',
-  );
+  await page.keyboard.type('{"$schema": "https://json-schema.org/draft/2020-12/schema"}');
 
   // Click convert
   await page.click('[data-testid="convert-button"]');

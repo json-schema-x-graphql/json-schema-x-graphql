@@ -74,9 +74,7 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
 
-      const imageElement = document.querySelector(
-        "svg[id*='ref']",
-      ) as HTMLElement;
+      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
       const blob = await toBlob(imageElement, {
         quality: fileDetails.quality,
@@ -105,9 +103,7 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
 
-      const imageElement = document.querySelector(
-        "svg[id*='ref']",
-      ) as HTMLElement;
+      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
       const dataURI = await getDownloadFormat(extension)(imageElement, {
         quality: fileDetails.quality,
@@ -124,10 +120,8 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     }
   };
 
-  const updateDetails = (
-    key: keyof typeof fileDetails,
-    value: string | number,
-  ) => setFileDetails({ ...fileDetails, [key]: value });
+  const updateDetails = (key: keyof typeof fileDetails, value: string | number) =>
+    setFileDetails({ ...fileDetails, [key]: value });
 
   return (
     <Modal opened={opened} onClose={onClose} title="Download Image" centered>
@@ -168,11 +162,7 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
         <Button leftSection={<FiCopy />} onClick={clipboardImage}>
           Clipboard
         </Button>
-        <Button
-          color="green"
-          leftSection={<FiDownload />}
-          onClick={exportAsImage}
-        >
+        <Button color="green" leftSection={<FiDownload />} onClick={exportAsImage}>
           Download
         </Button>
       </Group>

@@ -10,15 +10,11 @@ const useToggleHide = () => {
   }, [getCollapsedEdgeIds, getCollapsedNodeIds]);
 
   return {
-    validateHiddenNodes: () =>
-      validateHiddenNodes(getCollapsedNodeIds(), getCollapsedEdgeIds()),
+    validateHiddenNodes: () => validateHiddenNodes(getCollapsedNodeIds(), getCollapsedEdgeIds()),
   };
 };
 
-function validateHiddenNodes(
-  collapsedNodeIs: string[],
-  collapsedEdgeIds: string[],
-) {
+function validateHiddenNodes(collapsedNodeIs: string[], collapsedEdgeIds: string[]) {
   const nodeList = collapsedNodeIs.map((id) => `[id$="node-${id}"]`);
   const edgeList = collapsedEdgeIds.map((id) => `[class$="edge-${id}"]`);
   const hiddenItems = document.body.querySelectorAll(".hide");

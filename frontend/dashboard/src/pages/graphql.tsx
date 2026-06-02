@@ -23,9 +23,7 @@ const GraphQLPage: NextPage = () => {
   const rightRef = useRef<HTMLDivElement | null>(null);
   const [scriptReady, setScriptReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"canonical" | "hinted" | "unified_model">(
-    "canonical",
-  );
+  const [mode, setMode] = useState<"canonical" | "hinted" | "unified_model">("canonical");
   const [compare, setCompare] = useState<boolean>(false);
   const [schemaLabel, setSchemaLabel] = useState<string>(
     "Schema Unification (canonical) - /data/schema_unification.graphql",
@@ -36,9 +34,7 @@ const GraphQLPage: NextPage = () => {
 
     let cancelled = false;
 
-    const resolveCandidates = (
-      m: "canonical" | "hinted" | "unified_model",
-    ): string[] => {
+    const resolveCandidates = (m: "canonical" | "hinted" | "unified_model"): string[] => {
       if (m === "unified_model") {
         return [
           "/data/generated/unified_model/unified_model.graphql",
@@ -67,9 +63,7 @@ const GraphQLPage: NextPage = () => {
       ];
     };
 
-    const pickFirstOk = async (
-      urls: string[],
-    ): Promise<{ url: string; text: string }> => {
+    const pickFirstOk = async (urls: string[]): Promise<{ url: string; text: string }> => {
       for (const u of urls) {
         const r = await fetch(u);
         if (r.ok) {
@@ -91,31 +85,22 @@ const GraphQLPage: NextPage = () => {
         const qpCompare = params.get("compare");
         if (!params.has("initialized")) {
           // Only set from URL once
-          if (
-            qpMode === "canonical" ||
-            qpMode === "hinted" ||
-            qpMode === "unified_model"
-          ) {
+          if (qpMode === "canonical" || qpMode === "hinted" || qpMode === "unified_model") {
             setMode(qpMode);
           }
           if (qpCompare === "1" || qpCompare === "true") {
             setCompare(true);
           }
           params.set("initialized", "1");
-          window.history.replaceState(
-            {},
-            "",
-            `${window.location.pathname}?${params.toString()}`,
-          );
+          window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
         }
 
         const graphqlModule = await import("graphql");
-        const { buildSchema, getIntrospectionQuery, graphql } =
-          graphqlModule as {
-            buildSchema: (sdl: string) => any;
-            getIntrospectionQuery: () => string;
-            graphql: (args: any) => Promise<any>;
-          };
+        const { buildSchema, getIntrospectionQuery, graphql } = graphqlModule as {
+          buildSchema: (sdl: string) => any;
+          getIntrospectionQuery: () => string;
+          graphql: (args: any) => Promise<any>;
+        };
 
         const voyager = window.GraphQLVoyager;
         if (!voyager) {
@@ -128,17 +113,12 @@ const GraphQLPage: NextPage = () => {
         if (compare) nextParams.set("compare", "1");
         else nextParams.delete("compare");
         nextParams.set("initialized", "1");
-        window.history.replaceState(
-          {},
-          "",
-          `${window.location.pathname}?${nextParams.toString()}`,
-        );
+        window.history.replaceState({}, "", `${window.location.pathname}?${nextParams.toString()}`);
 
         if (!compare) {
           // Single mode
           const cur = singleRef.current;
-          if (!cur)
-            throw new Error("Voyager container has not been initialised");
+          if (!cur) throw new Error("Voyager container has not been initialised");
           cur.innerHTML = ""; // clear
           const { url, text } = await pickFirstOk(resolveCandidates(mode));
           setSchemaLabel(
@@ -154,9 +134,7 @@ const GraphQLPage: NextPage = () => {
             source: getIntrospectionQuery(),
           });
           if (introspection.errors?.length) {
-            throw new Error(
-              introspection.errors.map((e: any) => e.message).join("\n"),
-            );
+            throw new Error(introspection.errors.map((e: any) => e.message).join("\n"));
           }
           if (cancelled) return;
           voyager.renderVoyager(cur, {
@@ -167,20 +145,16 @@ const GraphQLPage: NextPage = () => {
           // Side-by-side: canonical (left) vs Unified Model (right)
           const left = leftRef.current;
           const right = rightRef.current;
-          if (!left || !right)
-            throw new Error("Voyager panes have not been initialised");
+          if (!left || !right) throw new Error("Voyager panes have not been initialised");
           left.innerHTML = "";
           right.innerHTML = "";
 
-          const [{ url: lUrl, text: lSDL }, { url: rUrl, text: rSDL }] =
-            await Promise.all([
-              pickFirstOk(resolveCandidates("canonical")),
-              pickFirstOk(resolveCandidates("unified_model")),
-            ]);
+          const [{ url: lUrl, text: lSDL }, { url: rUrl, text: rSDL }] = await Promise.all([
+            pickFirstOk(resolveCandidates("canonical")),
+            pickFirstOk(resolveCandidates("unified_model")),
+          ]);
 
-          setSchemaLabel(
-            `Compare: canonical (${lUrl}) vs Unified Model (${rUrl})`,
-          );
+          setSchemaLabel(`Compare: canonical (${lUrl}) vs Unified Model (${rUrl})`);
 
           const [lSchema, rSchema] = [buildSchema(lSDL), buildSchema(rSDL)];
           const [lIntrospection, rIntrospection] = await Promise.all([
@@ -189,14 +163,10 @@ const GraphQLPage: NextPage = () => {
           ]);
 
           if (lIntrospection.errors?.length) {
-            throw new Error(
-              lIntrospection.errors.map((e: any) => e.message).join("\n"),
-            );
+            throw new Error(lIntrospection.errors.map((e: any) => e.message).join("\n"));
           }
           if (rIntrospection.errors?.length) {
-            throw new Error(
-              rIntrospection.errors.map((e: any) => e.message).join("\n"),
-            );
+            throw new Error(rIntrospection.errors.map((e: any) => e.message).join("\n"));
           }
           if (cancelled) return;
 
@@ -211,10 +181,7 @@ const GraphQLPage: NextPage = () => {
         }
       } catch (err) {
         if (cancelled) return;
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Unknown error initialising Voyager";
+        const message = err instanceof Error ? err.message : "Unknown error initialising Voyager";
         setError(message);
         console.error("[GraphQLPage]", err);
       }
@@ -285,11 +252,7 @@ const GraphQLPage: NextPage = () => {
               Compare canonical vs Unified Model
             </label>
 
-            <a
-              className="editor-btn"
-              href="/graphql-editor"
-              title="Open GraphQL Editor"
-            >
+            <a className="editor-btn" href="/graphql-editor" title="Open GraphQL Editor">
               Open Editor
             </a>
           </div>

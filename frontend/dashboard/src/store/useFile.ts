@@ -91,25 +91,15 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       set({ format });
       const contentJson = await contentToJson(get().contents, prevFormat);
-      const jsonContent = await jsonToContent(
-        JSON.stringify(contentJson, null, 2),
-        format,
-      );
+      const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent });
     } catch {
       get().clear();
-      console.warn(
-        "The content was unable to be converted, so it was cleared instead.",
-      );
+      console.warn("The content was unable to be converted, so it was cleared instead.");
     }
   },
-  setContents: async ({
-    contents,
-    hasChanges = true,
-    skipUpdate = false,
-    format,
-  }) => {
+  setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
     try {
       set({
         ...(contents && { contents }),
@@ -123,13 +113,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       if (!useConfig.getState().liveTransformEnabled && skipUpdate) return;
 
-      if (
-        get().hasChanges &&
-        contents &&
-        contents.length < 80_000 &&
-        !isIframe() &&
-        !isFetchURL
-      ) {
+      if (get().hasChanges && contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
         set({ hasChanges: true });

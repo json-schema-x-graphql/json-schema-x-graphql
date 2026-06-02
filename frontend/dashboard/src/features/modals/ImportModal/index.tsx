@@ -1,14 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import {
-  Modal,
-  Group,
-  Button,
-  TextInput,
-  Stack,
-  Paper,
-  Text,
-} from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Paper, Text } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -76,9 +68,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         <Paper radius="md" style={{ cursor: "pointer" }}>
           <Dropzone
             onDrop={(files) => setFile(files[0])}
-            onReject={(files) =>
-              toast.error(`Unable to load file ${files[0].file.name}`)
-            }
+            onReject={(files) => toast.error(`Unable to load file ${files[0].file.name}`)}
             maxSize={500 * 1024}
             maxFiles={1}
             p="md"

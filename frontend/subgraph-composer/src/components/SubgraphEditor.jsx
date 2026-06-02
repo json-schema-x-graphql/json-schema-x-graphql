@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import "./SchemaEditor.css";
+import { validateSchemaSDL } from "../lib/federation-validator";
+import { otelTracer } from "../otel";
 
 // Lazy load CodeMirror only when needed
 const CodeMirrorEditor = React.lazy(() =>
@@ -17,6 +19,7 @@ export default function SubgraphEditor({
   subgraphCount,
 }) {
   const [error, setError] = React.useState(null);
+  const [validMsg, setValidMsg] = React.useState(null);
 
   const handleChange = (newContent) => {
     onUpdate(newContent);
@@ -24,12 +27,33 @@ export default function SubgraphEditor({
   };
 
   const handleValidate = () => {
-    try {
-      JSON.parse(subgraph.content);
-      setError(null);
-    } catch (err) {
-      setError(`Invalid JSON: ${err.message}`);
-    }
+    otelTracer.startActiveSpan("validateSDL", (span) => {
+      try {
+        // subgraph.content is GraphQL SDL — validate it as SDL, not JSON
+        const sdlToCheck = sdl || subgraph.content;
+        if (!sdlToCheck || !sdlToCheck.trim()) {
+          setError("No SDL to validate. Click Generate first.");
+          setValidMsg(null);
+          span.setStatus({ code: 2, message: "empty SDL" });
+          return;
+        }
+        const result = validateSchemaSDL(sdlToCheck);
+        span.setAttribute("sdl.valid", result.valid);
+        span.setAttribute("sdl.errorCount", result.errors.length);
+        span.setAttribute("sdl.typeCount", result.typeCount ?? 0);
+        if (result.valid) {
+          setError(null);
+          setValidMsg(`✅ SDL valid — ${result.typeCount ?? 0} type(s) found`);
+          span.setStatus({ code: 1 });
+        } else {
+          setValidMsg(null);
+          setError(`SDL errors: ${result.errors.join("; ")}`);
+          span.setStatus({ code: 2, message: result.errors[0] });
+        }
+      } finally {
+        span.end();
+      }
+    });
   };
 
   return (
@@ -43,7 +67,7 @@ export default function SubgraphEditor({
           <button
             onClick={handleValidate}
             className="btn btn-secondary btn-small"
-            title="Validate JSON"
+            title="Validate generated GraphQL SDL"
           >
             ✓ Validate
           </button>
@@ -58,9 +82,7 @@ export default function SubgraphEditor({
           flexDirection: "column",
         }}
       >
-        <Suspense
-          fallback={<div className="editor-loading">Loading editor...</div>}
-        >
+        <Suspense fallback={<div className="editor-loading">Loading editor...</div>}>
           <CodeMirrorEditor value={subgraph.content} onChange={handleChange} />
         </Suspense>
       </div>
@@ -69,9 +91,13 @@ export default function SubgraphEditor({
           <span>❌ {error}</span>
         </div>
       )}
-      {/* SDL and Stats Section */}
+      {validMsg && !error && (
+        <div className="editor-error" style={{ background: "#ecfdf5", color: "#065f46", borderTop: "1px solid #6ee7b7" }}>
+          <span>{validMsg}</span>
+        </div>
+      )}
+      {/* SDL and Stats Section — no className="schema-editor" here; that class sets overflow:hidden which breaks scrolling */}
       <div
-        className="schema-editor"
         style={{
           marginTop: "16px",
           background: "white",
@@ -82,6 +108,7 @@ export default function SubgraphEditor({
           display: "flex",
           flexDirection: "column",
           gap: "var(--spacing-md)",
+          overflow: "auto",
         }}
       >
         <div>
@@ -110,9 +137,7 @@ export default function SubgraphEditor({
             {sdl ? (
               <pre style={{ margin: 0 }}>{sdl}</pre>
             ) : (
-              <span style={{ color: "var(--color-text-light)" }}>
-                No SDL available
-              </span>
+              <span style={{ color: "var(--color-text-light)" }}>No SDL available</span>
             )}
           </div>
         </div>
@@ -210,9 +235,7 @@ export default function SubgraphEditor({
                           Found in: {conflict.sources.join(", ")}
                         </div>
                         {conflict.fieldCount > 0 && (
-                          <div
-                            style={{ color: "#92400e", fontStyle: "italic" }}
-                          >
+                          <div style={{ color: "#92400e", fontStyle: "italic" }}>
                             {conflict.fieldCount} field(s)
                           </div>
                         )}
@@ -222,9 +245,7 @@ export default function SubgraphEditor({
                 )}
               </div>
             ) : (
-              <span style={{ color: "var(--color-text-light)" }}>
-                No statistics available
-              </span>
+              <span style={{ color: "var(--color-text-light)" }}>No statistics available</span>
             )}
           </div>
         </div>

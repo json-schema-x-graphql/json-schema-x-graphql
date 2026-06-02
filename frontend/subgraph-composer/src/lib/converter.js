@@ -116,7 +116,6 @@ export async function convertSchema(jsonSchema, options = {}) {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     // Log error for test runs to aid debugging
-    // eslint-disable-next-line no-console
     console.error("convertSchema error:", errorMessage);
     return {
       success: false,
@@ -180,9 +179,7 @@ export function formatJsonSchema(jsonString) {
     const parsed = JSON.parse(jsonString);
     return JSON.stringify(parsed, null, 2);
   } catch (error) {
-    throw new Error(
-      `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
-    );
+    throw new Error(`Invalid JSON: ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 

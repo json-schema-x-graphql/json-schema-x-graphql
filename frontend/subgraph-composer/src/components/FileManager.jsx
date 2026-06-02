@@ -126,9 +126,7 @@ export default function FileManager({
         </div>
 
         {importPreview && (
-          <div
-            className={`import-preview ${importPreview.success ? "success" : "error"}`}
-          >
+          <div className={`import-preview ${importPreview.success ? "success" : "error"}`}>
             {importPreview.success ? (
               <>
                 <div className="preview-header">
@@ -139,8 +137,7 @@ export default function FileManager({
                     <strong>File:</strong> {importPreview.filename}
                   </p>
                   <p>
-                    <strong>Size:</strong>{" "}
-                    {(importPreview.size / 1024).toFixed(2)} KB
+                    <strong>Size:</strong> {(importPreview.size / 1024).toFixed(2)} KB
                   </p>
                   <p>
                     <strong>Schemas:</strong> {importPreview.count}
@@ -209,9 +206,7 @@ export default function FileManager({
         {supergraphSDL && (
           <div className="stat-item">
             <span className="stat-label">Supergraph:</span>
-            <span className="stat-value">
-              {(supergraphSDL.length / 1024).toFixed(1)} KB
-            </span>
+            <span className="stat-value">{(supergraphSDL.length / 1024).toFixed(1)} KB</span>
           </div>
         )}
       </div>

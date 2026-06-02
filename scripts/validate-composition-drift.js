@@ -197,10 +197,7 @@ class DriftDetector {
       const devTypeStr = devField.type.toString();
 
       if (prodTypeStr !== devTypeStr) {
-        const isBreaking = this.isOutputFieldTypeChangeBreaking(
-          prodTypeStr,
-          devTypeStr,
-        );
+        const isBreaking = this.isOutputFieldTypeChangeBreaking(prodTypeStr, devTypeStr);
         if (isBreaking) {
           this.breakingChanges.push({
             type: "FIELD_TYPE_CHANGED",
@@ -375,10 +372,7 @@ async function runCompositionAndDriftCheck() {
     }
 
     if (loadFailed || subgraphs.length === 0) {
-      log(
-        `✗ Skipping composition check due to missing subgraph files.`,
-        "yellow",
-      );
+      log(`✗ Skipping composition check due to missing subgraph files.`, "yellow");
       hasErrors = true;
       continue;
     }
@@ -393,10 +387,7 @@ async function runCompositionAndDriftCheck() {
     const compositionResult = composeServices(services);
 
     if (compositionResult.errors && compositionResult.errors.length > 0) {
-      log(
-        `✗ Composition failed with ${compositionResult.errors.length} errors:`,
-        "red",
-      );
+      log(`✗ Composition failed with ${compositionResult.errors.length} errors:`, "red");
       compositionResult.errors.forEach((err, idx) => {
         log(`  ${idx + 1}. ${err.message}`, "bold");
       });
@@ -408,18 +399,12 @@ async function runCompositionAndDriftCheck() {
     log(`✓ Composition successful!`, "green");
 
     // Output composed supergraph for local hot-reloads
-    const supergraphPath = path.join(
-      supergraphDir,
-      `${example.name}-supergraph.graphql`,
-    );
+    const supergraphPath = path.join(supergraphDir, `${example.name}-supergraph.graphql`);
     fs.mkdirSync(supergraphDir, { recursive: true });
 
     // Compare with Baseline Production Supergraph
     if (fs.existsSync(supergraphPath)) {
-      log(
-        `Comparing new composed supergraph against production baseline...`,
-        "blue",
-      );
+      log(`Comparing new composed supergraph against production baseline...`, "blue");
       const oldSupergraphSdl = fs.readFileSync(supergraphPath, "utf-8");
 
       try {
@@ -459,17 +444,11 @@ async function runCompositionAndDriftCheck() {
     }
 
     // NOTE: Avoid overwriting an existing baseline unless explicitly requested.
-    if (
-      !fs.existsSync(supergraphPath) ||
-      process.env.UPDATE_SUPERGRAPH_BASELINE === "1"
-    ) {
+    if (!fs.existsSync(supergraphPath) || process.env.UPDATE_SUPERGRAPH_BASELINE === "1") {
       fs.writeFileSync(supergraphPath, newSupergraphSdl, "utf-8");
       log(`Composed Supergraph saved to: ${supergraphPath}`, "green");
     } else {
-      const proposedPath = supergraphPath.replace(
-        ".graphql",
-        ".proposed.graphql",
-      );
+      const proposedPath = supergraphPath.replace(".graphql", ".proposed.graphql");
       fs.writeFileSync(proposedPath, newSupergraphSdl, "utf-8");
       log(
         `Skipping baseline update for ${supergraphPath} (set UPDATE_SUPERGRAPH_BASELINE=1 to update). Proposed supergraph saved to: ${proposedPath}`,
@@ -480,10 +459,7 @@ async function runCompositionAndDriftCheck() {
 
   printSection("Governance Review Finished");
   if (hasErrors) {
-    log(
-      `✗ Validation Failed! Composition drift or compile errors detected.`,
-      "red",
-    );
+    log(`✗ Validation Failed! Composition drift or compile errors detected.`, "red");
     process.exit(1);
   } else {
     log(`✓ All validations passed successfully!`, "green");

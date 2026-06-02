@@ -127,8 +127,7 @@ try {
     };
     let sdl = jsonSchemaToGraphQL(schema, converterOptions);
     // Add Federation schema link if requested
-    if (values["include-schema-link"] &&
-        converterOptions.includeFederationDirectives) {
+    if (values["include-schema-link"] && converterOptions.includeFederationDirectives) {
         const schemaLink = `extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires", "@extends"])
 

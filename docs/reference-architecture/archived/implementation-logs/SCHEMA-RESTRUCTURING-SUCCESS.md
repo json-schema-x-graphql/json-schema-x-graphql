@@ -284,31 +284,17 @@ Create `scripts/generate-schema-with-core-types.mjs`:
 ```javascript
 #!/usr/bin/env node
 import fs from "fs/promises";
-import {
-  convertJsonSchemaToCoreTypes,
-  convertCoreTypesToJsonSchema,
-} from "core-types-json-schema";
-import {
-  convertCoreTypesToGraphQL,
-  convertGraphQLToCoreTypes,
-} from "core-types-graphql";
+import { convertJsonSchemaToCoreTypes, convertCoreTypesToJsonSchema } from "core-types-json-schema";
+import { convertCoreTypesToGraphQL, convertGraphQLToCoreTypes } from "core-types-graphql";
 
 // JSON Schema → GraphQL
-const jsonSchema = JSON.parse(
-  await fs.readFile("src/data/schema_unification.schema.json", "utf8"),
-);
+const jsonSchema = JSON.parse(await fs.readFile("src/data/schema_unification.schema.json", "utf8"));
 const coreTypes = convertJsonSchemaToCoreTypes(jsonSchema);
 const graphql = convertCoreTypesToGraphQL(coreTypes);
-await fs.writeFile(
-  "generated-schemas/schema_unification.from-json.graphql",
-  graphql,
-);
+await fs.writeFile("generated-schemas/schema_unification.from-json.graphql", graphql);
 
 // GraphQL → JSON Schema
-const graphqlSdl = await fs.readFile(
-  "src/data/schema_unification.graphql",
-  "utf8",
-);
+const graphqlSdl = await fs.readFile("src/data/schema_unification.graphql", "utf8");
 const coreTypesFromGql = convertGraphQLToCoreTypes(graphqlSdl);
 const jsonSchemaFromGql = convertCoreTypesToJsonSchema(coreTypesFromGql);
 await fs.writeFile(

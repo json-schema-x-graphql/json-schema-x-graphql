@@ -40,9 +40,7 @@ In Apollo Federation, base/owner subgraphs define the primary entity type with `
   "x-graphql-supergraph-query-root": true,
   "type": "object",
   "x-graphql-type-name": "User",
-  "x-graphql-directives": [
-    { "name": "key", "arguments": { "fields": "\"user_id\"" } }
-  ],
+  "x-graphql-directives": [{ "name": "key", "arguments": { "fields": "\"user_id\"" } }],
   "properties": {
     "user_id": { "type": "string", "x-graphql-type": "ID!" }
   }

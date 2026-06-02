@@ -34,9 +34,7 @@ const wasmReady = init().catch((err) => {
  * @param {string} jsonSchemaStr - The JSON Schema provided as a string.
  * @returns {Promise<string>} A promise that resolves to the generated GraphQL SDL string.
  */
-export async function jsonSchemaToGraphQL(
-  jsonSchemaStr: string,
-): Promise<string> {
+export async function jsonSchemaToGraphQL(jsonSchemaStr: string): Promise<string> {
   // Ensure the WASM module is initialized before proceeding.
   await wasmReady;
 
@@ -49,9 +47,7 @@ export async function jsonSchemaToGraphQL(
 
     if (typeof sdlOutput !== "string") {
       // This is a sanity check in case the WASM interface changes unexpectedly.
-      throw new Error(
-        "Unexpected return type from WASM. Expected a GraphQL SDL string.",
-      );
+      throw new Error("Unexpected return type from WASM. Expected a GraphQL SDL string.");
     }
 
     return sdlOutput;
@@ -64,9 +60,7 @@ export async function jsonSchemaToGraphQL(
         : typeof error === "object"
           ? JSON.stringify(error)
           : String(error);
-    throw new Error(
-      `Failed to convert JSON Schema to GraphQL: ${errorMessage}`,
-    );
+    throw new Error(`Failed to convert JSON Schema to GraphQL: ${errorMessage}`);
   }
 }
 
@@ -88,9 +82,7 @@ export async function graphqlToJsonSchema(graphqlSdl: string): Promise<string> {
 
     if (typeof schemaString !== "string") {
       // Sanity check for the return type.
-      throw new Error(
-        "Unexpected return type from WASM. Expected a JSON Schema string.",
-      );
+      throw new Error("Unexpected return type from WASM. Expected a JSON Schema string.");
     }
 
     return schemaString;
@@ -102,8 +94,6 @@ export async function graphqlToJsonSchema(graphqlSdl: string): Promise<string> {
         : typeof error === "object"
           ? JSON.stringify(error)
           : String(error);
-    throw new Error(
-      `Failed to convert GraphQL to JSON Schema: ${errorMessage}`,
-    );
+    throw new Error(`Failed to convert GraphQL to JSON Schema: ${errorMessage}`);
   }
 }

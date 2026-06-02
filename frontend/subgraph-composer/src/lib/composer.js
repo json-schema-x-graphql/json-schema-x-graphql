@@ -20,9 +20,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         const doc = parse(sdl);
         parsedSubgraphs.set(schemaId, doc);
       } catch (parseError) {
-        errors.push(
-          `Failed to parse subgraph ${schemaId}: ${parseError.message}`,
-        );
+        errors.push(`Failed to parse subgraph ${schemaId}: ${parseError.message}`);
       }
     }
 
@@ -125,9 +123,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         typeCount++;
       } else {
         // Create Query type with merged fields
-        const fieldSDLs = queryFields
-          .map((f) => `  ${fieldToSDL(f)}`)
-          .join("\n");
+        const fieldSDLs = queryFields.map((f) => `  ${fieldToSDL(f)}`).join("\n");
         sdlLines.unshift(`type Query {\n${fieldSDLs}\n}\n`);
         typeCount++;
         fieldCount += queryFields.length;
@@ -143,9 +139,7 @@ export function composeSupergraph(subgraphs, options = {}) {
       stats: {
         totalTypes: typeCount,
         totalFields: fieldCount,
-        mergedTypes: Array.from(typeRegistry.values()).filter(
-          (d) => d && d.kind,
-        ).length,
+        mergedTypes: Array.from(typeRegistry.values()).filter((d) => d && d.kind).length,
         conflicts: conflicts, // Return full conflict objects, not just strings
       },
     };
@@ -263,16 +257,6 @@ function typeToSDL(type) {
   }
 
   return "String";
-}
-
-/**
- * Get sources for a type (helper for conflict detection)
- * @private
- */
-function getSourcesForType(registry, typeName) {
-  // This would track which schemas contribute to a type
-  // For now, return empty array
-  return [];
 }
 
 /**
