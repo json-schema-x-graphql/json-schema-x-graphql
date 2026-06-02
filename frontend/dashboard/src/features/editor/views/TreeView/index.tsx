@@ -7,7 +7,7 @@ import { Value } from "./Value";
 
 export const TreeView = () => {
   const theme = useTheme();
-  const json = useJson(state => state.json);
+  const json = useJson((state) => state.json);
 
   // Handle invalid JSON gracefully
   let parsedData;

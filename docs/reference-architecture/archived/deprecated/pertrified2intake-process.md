@@ -249,15 +249,11 @@ function filterCurrentFutureCLINs(clins, referenceDate = new Date()) {
 // Aggregation Application
 function aggregateFinancials(filteredCLINs) {
   return {
-    totalValue: filteredCLINs.reduce(
-      (sum, clin) => sum + clin.extendedAmount,
-      0,
-    ),
+    totalValue: filteredCLINs.reduce((sum, clin) => sum + clin.extendedAmount, 0),
     clinCount: filteredCLINs.length,
     averageValue:
       filteredCLINs.length > 0
-        ? filteredCLINs.reduce((sum, clin) => sum + clin.extendedAmount, 0) /
-          filteredCLINs.length
+        ? filteredCLINs.reduce((sum, clin) => sum + clin.extendedAmount, 0) / filteredCLINs.length
         : 0,
   };
 }

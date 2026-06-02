@@ -48,12 +48,12 @@ const typeOptions = [
 ];
 
 export const TypeModal = ({ opened, onClose }: ModalProps) => {
-  const getJson = useJson(state => state.getJson);
+  const getJson = useJson((state) => state.getJson);
   const [type, setType] = React.useState("");
   const [selectedType, setSelectedType] = React.useState<Language>(Language.TypeScript);
 
   const editorLanguage = React.useMemo(() => {
-    return typeOptions[typeOptions.findIndex(o => o.value === selectedType)]?.lang;
+    return typeOptions[typeOptions.findIndex((o) => o.value === selectedType)]?.lang;
   }, [selectedType]);
 
   const transformer = React.useCallback(
@@ -64,18 +64,18 @@ export const TypeModal = ({ opened, onClose }: ModalProps) => {
         value,
         JSON.stringify({
           output_mode: selectedType,
-        })
+        }),
       );
     },
-    [selectedType]
+    [selectedType],
   );
 
   React.useEffect(() => {
     if (opened) {
       try {
         if (selectedType === Language.Go) {
-          import("../../../lib/utils/json2go").then(jtg => {
-            import("gofmt.js").then(gofmt => {
+          import("../../../lib/utils/json2go").then((jtg) => {
+            import("gofmt.js").then((gofmt) => {
               const types = jtg.default(getJson());
               setType(gofmt.default(types.go));
             });
@@ -95,7 +95,7 @@ export const TypeModal = ({ opened, onClose }: ModalProps) => {
         <Select
           value={selectedType}
           data={typeOptions}
-          onChange={e => {
+          onChange={(e) => {
             setSelectedType(e as Language);
             gaEvent("generate_type", { label: e as Language });
           }}

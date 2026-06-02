@@ -25,7 +25,7 @@ const Linkify = (text: string) => {
   };
 
   const words = text.split(" ");
-  const formatedWords = words.map(w => addMarkup(w));
+  const formatedWords = words.map((w) => addMarkup(w));
   const html = formatedWords.join(" ");
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 };

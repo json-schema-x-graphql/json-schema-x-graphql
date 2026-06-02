@@ -187,9 +187,7 @@ describe("Converter Library", () => {
       const enhanced = enhanceSchemaWithIdMetadata(schema);
 
       expect(enhanced.properties.user_id["x-graphql-type"]).toBe("ID!");
-      expect(enhanced.properties.user_id["x-graphql-field-type-name"]).toBe(
-        "ID",
-      );
+      expect(enhanced.properties.user_id["x-graphql-field-type-name"]).toBe("ID");
       expect(enhanced.properties.user_id["x-graphql-is-entity-key"]).toBe(true);
       expect(enhanced.properties.name["x-graphql-type"]).toBeUndefined();
     });
@@ -246,14 +244,10 @@ describe("Converter Library", () => {
       const enhanced = enhanceSchemaWithIdMetadata(schema);
 
       expect(enhanced.properties.user_id["x-graphql-is-entity-key"]).toBe(true);
-      expect(
-        enhanced.properties.profile.properties.profile_id[
-          "x-graphql-is-entity-key"
-        ],
-      ).toBe(true);
-      expect(
-        enhanced.properties.profile.properties.bio["x-graphql-is-entity-key"],
-      ).toBeUndefined();
+      expect(enhanced.properties.profile.properties.profile_id["x-graphql-is-entity-key"]).toBe(
+        true,
+      );
+      expect(enhanced.properties.profile.properties.bio["x-graphql-is-entity-key"]).toBeUndefined();
     });
 
     it("should not modify non-ID fields", () => {

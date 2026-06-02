@@ -490,10 +490,7 @@ json-schema-x-graphql --input schema.json --output schema.graphql
 {
   "definitions": {
     "SearchResult": {
-      "oneOf": [
-        { "$ref": "#/definitions/User" },
-        { "$ref": "#/definitions/Product" }
-      ]
+      "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Product" }]
     },
     "User": {
       "properties": {

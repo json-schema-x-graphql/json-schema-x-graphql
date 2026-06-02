@@ -1,9 +1,15 @@
 type User {
-  """A user account"""
+  """
+  A user account
+  """
   id: ID!
-  """User email address"""
+  """
+  User email address
+  """
   email: String!
-  """Full name"""
+  """
+  Full name
+  """
   name: String!
   age: Int
   createdAt: DateTime

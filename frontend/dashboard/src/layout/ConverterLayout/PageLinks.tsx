@@ -4,16 +4,16 @@ import { Anchor, Button, Flex, List, SimpleGrid, Stack } from "@mantine/core";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { formats } from "../../enums/file.enum";
 
-const languages = formats.map(format => format.label);
+const languages = formats.map((format) => format.label);
 
 function groupCombinations(array: string[]): Record<string, string[]> {
   // Create an object to hold the grouped combinations
   const grouped = {};
 
   // Iterate over each item in the array
-  array.forEach(from => {
+  array.forEach((from) => {
     // Filter out the same item for the "to" array
-    const targets = array.filter(to => to !== from);
+    const targets = array.filter((to) => to !== from);
 
     // Add the "from" item as the key and the "to" items as the value array
     grouped[from] = targets;
@@ -49,7 +49,7 @@ export const PageLinks = () => {
       <SimpleGrid cols={4} w="fit-content">
         {Object.entries(groupedLanguages).map(([from, tos]) => (
           <List key={from} listStyleType="none">
-            {tos.map(to => (
+            {tos.map((to) => (
               <List.Item key={to} c="black">
                 <Anchor
                   component={Link}

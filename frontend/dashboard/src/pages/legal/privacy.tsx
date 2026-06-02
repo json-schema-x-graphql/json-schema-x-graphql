@@ -39,7 +39,7 @@ const Privacy = () => {
                 <Title order={2} mb="xl" c="gray.8">
                   {term}
                 </Title>
-                {privacy[term].map(term => (
+                {privacy[term].map((term) => (
                   <Text mt="md" c="gray.8" key={term} ml={term.startsWith("•") ? 15 : 0}>
                     {term}
                   </Text>

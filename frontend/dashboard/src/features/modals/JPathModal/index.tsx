@@ -9,8 +9,8 @@ import useFile from "../../../store/useFile";
 import useJson from "../../../store/useJson";
 
 export const JPathModal = ({ opened, onClose }: ModalProps) => {
-  const getJson = useJson(state => state.getJson);
-  const setContents = useFile(state => state.setContents);
+  const getJson = useJson((state) => state.getJson);
+  const setContents = useFile((state) => state.setContents);
   const [query, setQuery] = React.useState("");
 
   const evaluteJsonPath = () => {
@@ -45,7 +45,7 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
         </Text>
         <TextInput
           value={query}
-          onChange={e => setQuery(e.currentTarget.value)}
+          onChange={(e) => setQuery(e.currentTarget.value)}
           placeholder="Enter JSON Path..."
           data-autofocus
         />

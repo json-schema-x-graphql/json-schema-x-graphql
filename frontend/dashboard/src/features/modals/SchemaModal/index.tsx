@@ -13,9 +13,9 @@ import useFile from "../../../store/useFile";
 const Editor = ClientMonacoEditor;
 
 export const SchemaModal = ({ opened, onClose }: ModalProps) => {
-  const setContents = useFile(state => state.setContents);
-  const setJsonSchema = useFile(state => state.setJsonSchema);
-  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
+  const setContents = useFile((state) => state.setContents);
+  const setJsonSchema = useFile((state) => state.setJsonSchema);
+  const darkmodeEnabled = useConfig((state) => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const [schema, setSchema] = React.useState(
     JSON.stringify(
       {
@@ -32,8 +32,8 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
         required: ["id"],
       },
       null,
-      2
-    )
+      2,
+    ),
   );
 
   const onApply = () => {
@@ -86,7 +86,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
           <Editor
             value={schema ?? ""}
             theme={darkmodeEnabled}
-            onChange={e => setSchema(e!)}
+            onChange={(e) => setSchema(e!)}
             height={300}
             language="json"
             options={{

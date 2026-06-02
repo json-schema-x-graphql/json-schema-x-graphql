@@ -281,10 +281,7 @@ useComposition
 
 ```javascript
 // Opens GraphQL Editor with generated supergraph
-window.open(
-  `/graphql-editor?schema=${encodeURIComponent(supergraphSDL)}`,
-  "_blank",
-);
+window.open(`/graphql-editor?schema=${encodeURIComponent(supergraphSDL)}`, "_blank");
 ```
 
 ### With @json-schema-x-graphql/core

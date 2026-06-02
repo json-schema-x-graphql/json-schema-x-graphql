@@ -54,7 +54,9 @@ The SDL (Schema Definition Language) linting capabilities and subgraph/supergrap
   "x-graphql-subgraph-query-root": false,
   "properties": {
     "user_id": {
-      "type": "string", "format": "uuid", "x-graphql-type": "ID!",
+      "type": "string",
+      "format": "uuid",
+      "x-graphql-type": "ID!",
       "x-graphql-directives": [{ "name": "external" }]
     },
     "account_role": { "type": "string", "enum": ["ADMIN", "USER", "GUEST"] }
@@ -68,14 +70,14 @@ The SDL (Schema Definition Language) linting capabilities and subgraph/supergrap
 
 ### What Gets Linted
 
-| Check               | Severity | Details                                             |
-| ------------------- | -------- | --------------------------------------------------- |
-| **Type Naming**     | Error    | Types must use PascalCase (`User`, `Account`)       |
+| Check               | Severity | Details                                                |
+| ------------------- | -------- | ------------------------------------------------------ |
+| **Type Naming**     | Error    | Types must use PascalCase (`User`, `Account`)          |
 | **Field Naming**    | Warning  | Fields should use snake_case (`user_id`, `first_name`) |
-| **@extends/@key**   | Warning  | Types with @extends should have @key directive      |
-| **@external**       | Warning  | @external should only appear with @extends          |
-| **Duplicate Types** | Error    | Type name appears more than once                    |
-| **Empty Types**     | Info     | Type has no fields or only a placeholder            |
+| **@extends/@key**   | Warning  | Types with @extends should have @key directive         |
+| **@external**       | Warning  | @external should only appear with @extends             |
+| **Duplicate Types** | Error    | Type name appears more than once                       |
+| **Empty Types**     | Info     | Type has no fields or only a placeholder               |
 
 ### Using the Linter
 
@@ -90,9 +92,9 @@ const sdl = `
 `;
 
 const issues = lintSDL(sdl);
-console.log("Errors:", issues.errors);    // Critical issues (fail build)
+console.log("Errors:", issues.errors); // Critical issues (fail build)
 console.log("Warnings:", issues.warnings); // Best practice violations
-console.log("Infos:", issues.infos);      // Informational hints
+console.log("Infos:", issues.infos); // Informational hints
 ```
 
 ---
@@ -161,7 +163,7 @@ products-service (x-graphql-supergraph-type: "base-entity")
 1. Always validate before composition:
    ```javascript
    const naming = validateSubgraphNaming(schemas);
-   schemas.forEach(s => lintSDL(s.sdl));
+   schemas.forEach((s) => lintSDL(s.sdl));
    ```
 2. One owner, many extenders: 1 supergraph (base-entity) + N subgraphs (entity-extending)
 3. Use `snake_case` for fields: `user_id`, `first_name`, `account_status`

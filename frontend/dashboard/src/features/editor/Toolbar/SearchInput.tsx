@@ -15,7 +15,7 @@ export const SearchInput = () => {
       id="search-node"
       w={180}
       value={searchValue}
-      onChange={e => setValue(e.currentTarget.value)}
+      onChange={(e) => setValue(e.currentTarget.value)}
       placeholder="Search Node"
       autoComplete="off"
       autoCorrect="off"

@@ -10,7 +10,7 @@ coverage:
   status:
     project:
       default:
-        target: 80%   # aim for 80% coverage
+        target: 80% # aim for 80% coverage
         threshold: 1% # allow 1% drop
       node:
         target: 80%

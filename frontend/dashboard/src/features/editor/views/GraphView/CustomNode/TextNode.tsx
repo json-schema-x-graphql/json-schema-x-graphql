@@ -55,12 +55,12 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     data: { isParent, childrenCount, type },
   } = node;
   const { validateHiddenNodes } = useToggleHide();
-  const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
-  const childrenCountVisible = useConfig(state => state.childrenCountVisible);
-  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
-  const expandNodes = useGraph(state => state.expandNodes);
-  const collapseNodes = useGraph(state => state.collapseNodes);
-  const isExpanded = useGraph(state => state.collapsedParents.includes(id));
+  const collapseButtonVisible = useConfig((state) => state.collapseButtonVisible);
+  const childrenCountVisible = useConfig((state) => state.childrenCountVisible);
+  const imagePreviewEnabled = useConfig((state) => state.imagePreviewEnabled);
+  const expandNodes = useGraph((state) => state.expandNodes);
+  const collapseNodes = useGraph((state) => state.collapseNodes);
+  const isExpanded = useGraph((state) => state.collapsedParents.includes(id));
   const isImage = imagePreviewEnabled && isContentImage(text as string);
   const value = JSON.stringify(text).replaceAll('"', "");
 

@@ -120,10 +120,7 @@ import { graphqlToCoreTypes } from "core-types-graphql";
 import { coreTypesToJsonSchema } from "core-types-json-schema";
 
 // GraphQL → Core Types → JSON Schema
-const graphqlSdl = fs.readFileSync(
-  "src/data/schema_unification.graphql",
-  "utf8",
-);
+const graphqlSdl = fs.readFileSync("src/data/schema_unification.graphql", "utf8");
 const coreTypes = graphqlToCoreTypes(graphqlSdl, {
   // Options
 });
@@ -294,10 +291,7 @@ const gqlToJson = await convert({
 
 ```javascript
 import { graphqlToCoreTypes } from "core-types-graphql";
-import {
-  coreTypesToJsonSchema,
-  jsonSchemaToCoreTypes,
-} from "core-types-json-schema";
+import { coreTypesToJsonSchema, jsonSchemaToCoreTypes } from "core-types-json-schema";
 import { coreTypesToGraphQL } from "core-types-graphql";
 
 // Build both directions with intermediate representation

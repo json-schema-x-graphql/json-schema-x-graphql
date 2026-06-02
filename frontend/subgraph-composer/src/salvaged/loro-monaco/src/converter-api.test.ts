@@ -75,11 +75,7 @@ describe("Converter API", () => {
 
   describe("Options Mapping", () => {
     it("should support all output formats in options", () => {
-      const formats = [
-        "SDL",
-        "SDL_WITH_FEDERATION_METADATA",
-        "AST_JSON",
-      ] as const;
+      const formats = ["SDL", "SDL_WITH_FEDERATION_METADATA", "AST_JSON"] as const;
 
       formats.forEach((format) => {
         const options = { outputFormat: format };

@@ -181,12 +181,7 @@ export function convertObjectKeys(obj, converter) {
 **Implementation:**
 
 ```javascript
-const EXCLUDED_TYPE_NAMES = new Set([
-  "Query",
-  "Mutation",
-  "Subscription",
-  "PageInfo",
-]);
+const EXCLUDED_TYPE_NAMES = new Set(["Query", "Mutation", "Subscription", "PageInfo"]);
 
 const EXCLUDED_TYPE_SUFFIXES = [
   "Filter",
@@ -208,8 +203,7 @@ export const shouldIncludeType = (type) => {
   if (!name) return false;
   if (name.startsWith("__")) return false;
   if (EXCLUDED_TYPE_NAMES.has(name)) return false;
-  if (EXCLUDED_TYPE_SUFFIXES.some((suffix) => name.endsWith(suffix)))
-    return false;
+  if (EXCLUDED_TYPE_SUFFIXES.some((suffix) => name.endsWith(suffix))) return false;
   if (isInputObjectType(type)) return false;
   return true;
 };
@@ -473,9 +467,7 @@ export function emitCanonicalSDL(sdlText) {
         return { ok: true, printed: printSchema(schema) };
       } catch (mapErr) {
         // Log error but continue with original schema
-        process.stderr.write(
-          `mapSchema error: ${mapErr.stack || String(mapErr)}\n`,
-        );
+        process.stderr.write(`mapSchema error: ${mapErr.stack || String(mapErr)}\n`);
         return { ok: true, printed: printSchema(schema) };
       }
     }
@@ -586,9 +578,7 @@ let outputBaseName = path
 const argv = process.argv.slice(2);
 for (let i = 0; i < argv.length; i++) {
   if (argv[i] === "--schema" && argv[i + 1]) {
-    schemaPath = path.isAbsolute(argv[i + 1])
-      ? argv[i + 1]
-      : path.join(repoRoot, argv[i + 1]);
+    schemaPath = path.isAbsolute(argv[i + 1]) ? argv[i + 1] : path.join(repoRoot, argv[i + 1]);
 
     outputBaseName = path
       .basename(schemaPath)
@@ -891,11 +881,7 @@ class JsonSchemaToGraphQL {
 
     // Check for circular $ref
     if (visited.has(refPath)) {
-      throw new ConversionError(
-        `Circular $ref detected: ${refPath}`,
-        undefined,
-        "CIRCULAR_REF",
-      );
+      throw new ConversionError(`Circular $ref detected: ${refPath}`, undefined, "CIRCULAR_REF");
     }
 
     visited.add(refPath);
@@ -917,9 +903,7 @@ class JsonSchemaToGraphQL {
 
       // Try direct match, then case conversions
       current =
-        current[part] ||
-        current[this.camelToSnake(part)] ||
-        current[this.snakeToCamel(part)];
+        current[part] || current[this.camelToSnake(part)] || current[this.snakeToCamel(part)];
 
       if (!current) {
         return null;

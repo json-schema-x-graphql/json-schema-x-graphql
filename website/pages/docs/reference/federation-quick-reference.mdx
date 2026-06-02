@@ -12,13 +12,13 @@ Quick directive mapping and common patterns for `x-graphql` federation extension
 
 | GraphQL Federation              | JSON Schema `x-graphql` Extension                           |
 | ------------------------------- | ----------------------------------------------------------- |
-| `@key(fields: "id")`            | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }` |
-| `@external`                     | `"x-graphql-federation": { "external": true }`             |
-| `@provides(fields: "username")` | `"x-graphql-federation": { "provides": "username" }`       |
-| `@requires(fields: "email")`    | `"x-graphql-federation": { "requires": "email" }`          |
-| `extend type User`              | `"x-graphql-federation": { "extends": true }`              |
-| `@shareable`                    | `"x-graphql-federation": { "shareable": true }`            |
-| `@override(from: "old")`        | `"x-graphql-federation": { "override": { "from": "old" } }`|
+| `@key(fields: "id")`            | `"x-graphql-federation": { "keys": [{ "fields": "id" }] }`  |
+| `@external`                     | `"x-graphql-federation": { "external": true }`              |
+| `@provides(fields: "username")` | `"x-graphql-federation": { "provides": "username" }`        |
+| `@requires(fields: "email")`    | `"x-graphql-federation": { "requires": "email" }`           |
+| `extend type User`              | `"x-graphql-federation": { "extends": true }`               |
+| `@shareable`                    | `"x-graphql-federation": { "shareable": true }`             |
+| `@override(from: "old")`        | `"x-graphql-federation": { "override": { "from": "old" } }` |
 
 ---
 
@@ -50,7 +50,11 @@ Generated: `type User @key(fields: "id") { id: ID! name: String }`
     "x-graphql-type-name": "User",
     "x-graphql-federation": { "extends": true, "keys": [{ "fields": "id" }] },
     "properties": {
-      "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true, "x-graphql-federation": { "external": true } },
+      "id": {
+        "x-graphql-field-type": "ID",
+        "x-graphql-field-non-null": true,
+        "x-graphql-federation": { "external": true }
+      },
       "reviews": { "x-graphql-field-type": "[Review]" }
     }
   }
@@ -133,11 +137,11 @@ Generated: `price: Float @override(from: "legacy-service")`
 
 ## Common Mistakes
 
-| Mistake | Fix |
-| ------- | --- |
-| Forgetting `"extends": true` when extending a type | Add `"x-graphql-federation": { "extends": true }` |
-| Forgetting `"external": true` on key field in extension | Add `"x-graphql-federation": { "external": true }` to the key property |
-| Wrong key fields in extension (don't match original) | Key fields in extensions must exactly match the owning service's `@key` fields |
+| Mistake                                                 | Fix                                                                            |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Forgetting `"extends": true` when extending a type      | Add `"x-graphql-federation": { "extends": true }`                              |
+| Forgetting `"external": true` on key field in extension | Add `"x-graphql-federation": { "external": true }` to the key property         |
+| Wrong key fields in extension (don't match original)    | Key fields in extensions must exactly match the owning service's `@key` fields |
 
 ---
 

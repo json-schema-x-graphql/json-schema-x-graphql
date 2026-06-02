@@ -9,27 +9,27 @@ title: API Reference
 Converts a JSON Schema object (or JSON string) to GraphQL SDL.
 
 ```ts
-import { convertJsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+import { convertJsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
 
 const sdl = convertJsonSchemaToGraphQL(schema, options);
 ```
 
 ### Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `schema` | `object \| string` | JSON Schema (parsed or JSON string) |
-| `options` | `ConvertOptions` | Optional conversion options (see below) |
+| Parameter | Type               | Description                             |
+| --------- | ------------------ | --------------------------------------- |
+| `schema`  | `object \| string` | JSON Schema (parsed or JSON string)     |
+| `options` | `ConvertOptions`   | Optional conversion options (see below) |
 
 ### `ConvertOptions`
 
-| Option | Type | Default | Description |
-|---|---|---|---|
-| `federation` | `FederationOptions \| false` | `false` | Federation v2 generation options |
-| `useInputTypes` | `boolean` | `false` | Emit `input` types for mutation arguments |
-| `scalarMap` | `Record<string, string>` | `{}` | Override default JSON Schema format → GraphQL scalar mappings |
-| `addTypename` | `boolean` | `false` | Add `__typename: String!` to every type |
-| `enumStrategy` | `'all' \| 'common'` | `'all'` | How to handle `enum` values |
+| Option          | Type                         | Default | Description                                                   |
+| --------------- | ---------------------------- | ------- | ------------------------------------------------------------- |
+| `federation`    | `FederationOptions \| false` | `false` | Federation v2 generation options                              |
+| `useInputTypes` | `boolean`                    | `false` | Emit `input` types for mutation arguments                     |
+| `scalarMap`     | `Record<string, string>`     | `{}`    | Override default JSON Schema format → GraphQL scalar mappings |
+| `addTypename`   | `boolean`                    | `false` | Add `__typename: String!` to every type                       |
+| `enumStrategy`  | `'all' \| 'common'`          | `'all'` | How to handle `enum` values                                   |
 
 ---
 
@@ -38,17 +38,17 @@ const sdl = convertJsonSchemaToGraphQL(schema, options);
 Converts a GraphQL SDL string back to a JSON Schema object.
 
 ```ts
-import { convertGraphQLToJsonSchema } from '@json-schema-x-graphql/core';
+import { convertGraphQLToJsonSchema } from "@json-schema-x-graphql/core";
 
 const schema = convertGraphQLToJsonSchema(sdl, options);
 ```
 
 ### Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `sdl` | `string` | GraphQL SDL string |
-| `options` | `ReverseConvertOptions` | Optional options |
+| Parameter | Type                    | Description        |
+| --------- | ----------------------- | ------------------ |
+| `sdl`     | `string`                | GraphQL SDL string |
+| `options` | `ReverseConvertOptions` | Optional options   |
 
 ---
 
@@ -75,5 +75,5 @@ import type {
   FederationOptions,
   ConversionResult,
   ValidationResult,
-} from '@json-schema-x-graphql/core';
+} from "@json-schema-x-graphql/core";
 ```

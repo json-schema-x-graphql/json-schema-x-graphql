@@ -15,8 +15,8 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
-  const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
-  const path = useGraph(state => state.selectedNode?.path || "");
+  const nodeData = useGraph((state) => dataToString(state.selectedNode?.text));
+  const path = useGraph((state) => state.selectedNode?.path || "");
 
   return (
     <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>

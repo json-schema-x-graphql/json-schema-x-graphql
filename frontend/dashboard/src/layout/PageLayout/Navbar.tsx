@@ -115,7 +115,11 @@ export const Navbar = () => {
                   </Text>
                 </Stack>
               </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/schema_unification-schema-viewer">
+              <StyledMenuItem
+                component={Link}
+                prefetch={false}
+                href="/schema_unification-schema-viewer"
+              >
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     Unified Schema Viewer

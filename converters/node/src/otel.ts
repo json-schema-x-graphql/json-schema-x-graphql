@@ -1,9 +1,6 @@
 import { trace, type Tracer } from "@opentelemetry/api";
 import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import {
-  SimpleSpanProcessor,
-  InMemorySpanExporter,
-} from "@opentelemetry/sdk-trace-base";
+import { SimpleSpanProcessor, InMemorySpanExporter } from "@opentelemetry/sdk-trace-base";
 
 let memoryExporter: InMemorySpanExporter | null = null;
 let provider: NodeTracerProvider | null = null;

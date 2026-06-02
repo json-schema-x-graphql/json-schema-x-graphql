@@ -20,12 +20,12 @@ interface Section1Props {
 const formatTitle = (slug: string) => {
   const parts = slug.split("/");
   const filename = parts[parts.length - 1];
-  return filename.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  return filename.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
 };
 
 const getDocsByPrefix = (docs: string[], prefix: string, limit = 5) => {
   return docs
-    .filter(d => d.startsWith(prefix) && d !== prefix)
+    .filter((d) => d.startsWith(prefix) && d !== prefix)
     .sort()
     .slice(0, limit);
 };
@@ -67,8 +67,9 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
         fz={{ base: 16, sm: 18 }}
         w={{ base: "100%", md: "600" }}
       >
-        The Schema Unification Forest project transforms complex government procurement data from multiple
-        systems into a unified, interactive visualization platform for better analysis and insights.
+        The Schema Unification Forest project transforms complex government procurement data from
+        multiple systems into a unified, interactive visualization platform for better analysis and
+        insights.
       </Title>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="lg" mt="xl">
@@ -86,8 +87,8 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Explore Contract Data
           </Title>
           <Text ta="center" c="gray.7">
-            Access normalized contract data from Contract Data, Legacy Procurement, and EASi systems through our
-            interactive visualizations and exportable reports.
+            Access normalized contract data from Contract Data, Legacy Procurement, and EASi systems
+            through our interactive visualizations and exportable reports.
           </Text>
         </Stack>
 
@@ -193,7 +194,7 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Architectural Decision Records documenting key technical choices and their rationale.
           </Text>
           <Stack gap="xs">
-            {adrDocs.map(doc => (
+            {adrDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -225,10 +226,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Comprehensive guides for understanding and working with the Schema Unification Forest schemas.
+            Comprehensive guides for understanding and working with the Schema Unification Forest
+            schemas.
           </Text>
           <Stack gap="xs">
-            {schemaDocs.map(doc => (
+            {schemaDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -270,7 +272,7 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Documentation on how different government systems map to the Schema Unification schema.
           </Text>
           <Stack gap="xs">
-            {mappingDocs.map(doc => (
+            {mappingDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -312,7 +314,7 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Technical documentation on schema management, transformations, and tooling.
           </Text>
           <Stack gap="xs">
-            {implementationDocs.map(doc => (
+            {implementationDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -351,10 +353,11 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             </Badge>
           </Group>
           <Text size="sm" c="dimmed" mb="md">
-            Understanding the evolution and development process of the Schema Unification Forest project.
+            Understanding the evolution and development process of the Schema Unification Forest
+            project.
           </Text>
           <Stack gap="xs">
-            {processDocs.map(doc => (
+            {processDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}
@@ -396,7 +399,7 @@ export const Section1: React.FC<Section1Props> = ({ docs = [] }) => {
             Documentation about external government systems and data sources.
           </Text>
           <Stack gap="xs">
-            {externalDocs.map(doc => (
+            {externalDocs.map((doc) => (
               <Button
                 key={doc}
                 component={Link}

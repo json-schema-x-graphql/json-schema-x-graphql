@@ -34,13 +34,13 @@ export default function GraphQLEditorPage(): JSX.Element {
     // server build from attempting to process monaco-editor's CSS during compilation.
     const runtimeImporter = new Function('return import("graphql-editor")');
     runtimeImporter()
-      .then(mod => {
+      .then((mod) => {
         if (canceled) return;
         // Prefer named export `GraphQLEditor`, fall back to default or module itself
         const Comp = (mod && (mod.GraphQLEditor ?? mod.default)) || mod;
         setEditorComponent(() => Comp as React.ComponentType<any>);
       })
-      .catch(err => {
+      .catch((err) => {
         if (canceled) return;
         setEditorLoadError(String(err?.message ?? err));
       })

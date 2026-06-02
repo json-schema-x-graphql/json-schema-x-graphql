@@ -445,14 +445,7 @@ type Query {
   "$defs": {
     "OrderStatus": {
       "type": "string",
-      "enum": [
-        "PENDING",
-        "PROCESSING",
-        "SHIPPED",
-        "DELIVERED",
-        "CANCELLED",
-        "REFUNDED"
-      ]
+      "enum": ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"]
     },
     "PaymentStatus": {
       "type": "string",
@@ -526,10 +519,7 @@ type Query {
 type Mutation {
   updateUserRole(id: ID!, role: UserRole!): User!
   updateAccountStatus(id: ID!, status: AccountStatus!): User!
-  setNotificationPreferences(
-    id: ID!
-    preferences: [NotificationPreference!]!
-  ): User!
+  setNotificationPreferences(id: ID!, preferences: [NotificationPreference!]!): User!
 }
 ```
 

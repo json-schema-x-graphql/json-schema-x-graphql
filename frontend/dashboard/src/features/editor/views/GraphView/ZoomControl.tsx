@@ -7,10 +7,10 @@ import { SearchInput } from "../../Toolbar/SearchInput";
 import useGraph from "./stores/useGraph";
 
 export const ZoomControl = () => {
-  const zoomIn = useGraph(state => state.zoomIn);
-  const zoomOut = useGraph(state => state.zoomOut);
-  const centerView = useGraph(state => state.centerView);
-  const focusFirstNode = useGraph(state => state.focusFirstNode);
+  const zoomIn = useGraph((state) => state.zoomIn);
+  const zoomOut = useGraph((state) => state.zoomOut);
+  const centerView = useGraph((state) => state.centerView);
+  const focusFirstNode = useGraph((state) => state.focusFirstNode);
 
   useHotkeys(
     [
@@ -18,7 +18,7 @@ export const ZoomControl = () => {
       ["mod+[minus]", () => zoomOut],
       ["shift+Digit1", centerView],
     ],
-    []
+    [],
   );
 
   return (

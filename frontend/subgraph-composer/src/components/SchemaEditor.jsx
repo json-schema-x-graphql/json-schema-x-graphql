@@ -7,12 +7,7 @@ const CodeMirrorEditor = React.lazy(() =>
   import("./CodeMirrorEditor").then((mod) => ({ default: mod.default })),
 );
 
-export default function SchemaEditor({
-  schema,
-  onUpdate,
-  onGenerate,
-  isLoading,
-}) {
+export default function SchemaEditor({ schema, onUpdate, onGenerate, isLoading }) {
   const [error, setError] = React.useState(null);
 
   const handleChange = (newContent) => {
@@ -93,9 +88,7 @@ export default function SchemaEditor({
           flexDirection: "column",
         }}
       >
-        <Suspense
-          fallback={<div className="editor-loading">Loading editor...</div>}
-        >
+        <Suspense fallback={<div className="editor-loading">Loading editor...</div>}>
           <CodeMirrorEditor value={schema.content} onChange={handleChange} />
         </Suspense>
       </div>

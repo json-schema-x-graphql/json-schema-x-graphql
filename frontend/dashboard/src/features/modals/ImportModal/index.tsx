@@ -12,8 +12,8 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
 
-  const setContents = useFile(state => state.setContents);
-  const setFormat = useFile(state => state.setFormat);
+  const setContents = useFile((state) => state.setContents);
+  const setFormat = useFile((state) => state.setFormat);
 
   const handleImportFile = () => {
     if (url) {
@@ -23,8 +23,8 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       gaEvent("fetch_url");
 
       return fetch(url)
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           setContents({ contents: JSON.stringify(json, null, 2) });
           onClose();
         })
@@ -35,7 +35,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       const format = file.name.substring(lastIndex + 1);
       setFormat(format as FileFormat);
 
-      file.text().then(text => {
+      file.text().then((text) => {
         setContents({ contents: text });
         setFile(null);
         setURL("");
@@ -60,15 +60,15 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       <Stack py="sm">
         <TextInput
           value={url}
-          onChange={e => setURL(e.target.value)}
+          onChange={(e) => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
           data-autofocus
         />
         <Paper radius="md" style={{ cursor: "pointer" }}>
           <Dropzone
-            onDrop={files => setFile(files[0])}
-            onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
+            onDrop={(files) => setFile(files[0])}
+            onReject={(files) => toast.error(`Unable to load file ${files[0].file.name}`)}
             maxSize={500 * 1024}
             maxFiles={1}
             p="md"

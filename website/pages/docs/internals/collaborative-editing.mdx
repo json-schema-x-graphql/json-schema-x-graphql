@@ -12,12 +12,12 @@ title: Collaborative Editing (loro-monaco demo)
 
 The `loro-monaco` demo built a real-time collaborative JSON Schema ↔ GraphQL SDL editor using:
 
-| Technology | Role |
-|---|---|
-| **Loro CRDT** | Conflict-free state document for real-time collaboration |
-| **Zustand** | React state management bound to the Loro document |
-| **Monaco Editor** | VS Code-quality code editor (JSON + GraphQL) |
-| **@json-schema-x-graphql/core** | Converter API (Node.js) |
+| Technology                      | Role                                                     |
+| ------------------------------- | -------------------------------------------------------- |
+| **Loro CRDT**                   | Conflict-free state document for real-time collaboration |
+| **Zustand**                     | React state management bound to the Loro document        |
+| **Monaco Editor**               | VS Code-quality code editor (JSON + GraphQL)             |
+| **@json-schema-x-graphql/core** | Converter API (Node.js)                                  |
 
 ---
 
@@ -57,6 +57,7 @@ export interface EditorState {
 ```
 
 Key design points:
+
 - The `Loro` document holds two `LoroText` containers: `"json"` and `"graphql"`.
 - All editor mutations go through the Loro document and are re-broadcast to peers via `loroDoc.exportUpdates()`.
 - Presence (cursor positions and user colour) is propagated separately as ephemeral awareness messages rather than as persistent document state.
@@ -109,11 +110,13 @@ const GraphQLEditor = lazy(() =>
 );
 
 // Rendered with Suspense fallback inside a toggle:
-{useGraphQLEditor && (
-  <Suspense fallback={<div>Loading visual editor…</div>}>
-    <GraphQLEditor schema={graphqlSdl} />
-  </Suspense>
-)}
+{
+  useGraphQLEditor && (
+    <Suspense fallback={<div>Loading visual editor…</div>}>
+      <GraphQLEditor schema={graphqlSdl} />
+    </Suspense>
+  );
+}
 ```
 
 The toggle (`useGraphQLEditor` state) let users switch between Monaco text editing and the visual node canvas without paying the bundle cost upfront.

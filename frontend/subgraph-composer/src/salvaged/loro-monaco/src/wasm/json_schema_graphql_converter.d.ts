@@ -68,12 +68,7 @@ export class WasmConverter {
   convert(input: string, direction: string): string;
 }
 
-export type InitInput =
-  | RequestInfo
-  | URL
-  | Response
-  | BufferSource
-  | WebAssembly.Module;
+export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
@@ -89,18 +84,9 @@ export interface InitOutput {
   readonly wasmconversionoptions_include_descriptions: (a: number) => number;
   readonly wasmconversionoptions_new: () => number;
   readonly wasmconversionoptions_preserve_field_order: (a: number) => number;
-  readonly wasmconversionoptions_set_federation_version: (
-    a: number,
-    b: number,
-  ) => void;
-  readonly wasmconversionoptions_set_include_descriptions: (
-    a: number,
-    b: number,
-  ) => void;
-  readonly wasmconversionoptions_set_preserve_field_order: (
-    a: number,
-    b: number,
-  ) => void;
+  readonly wasmconversionoptions_set_federation_version: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_include_descriptions: (a: number, b: number) => void;
+  readonly wasmconversionoptions_set_preserve_field_order: (a: number, b: number) => void;
   readonly wasmconversionoptions_set_validate: (a: number, b: number) => void;
   readonly wasmconversionoptions_validate: (a: number) => number;
   readonly wasmconverter_convert: (
@@ -111,29 +97,14 @@ export interface InitOutput {
     e: number,
     f: number,
   ) => void;
-  readonly wasmconverter_graphqlToJsonSchema: (
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-  ) => void;
-  readonly wasmconverter_jsonSchemaToGraphQL: (
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-  ) => void;
+  readonly wasmconverter_graphqlToJsonSchema: (a: number, b: number, c: number, d: number) => void;
+  readonly wasmconverter_jsonSchemaToGraphQL: (a: number, b: number, c: number, d: number) => void;
   readonly wasmconverter_withOptions: (a: number) => number;
   readonly __wbg_wasmconverter_free: (a: number, b: number) => void;
   readonly wasmconverter_new: () => number;
   readonly __wbindgen_export: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export2: (a: number, b: number) => number;
-  readonly __wbindgen_export3: (
-    a: number,
-    b: number,
-    c: number,
-    d: number,
-  ) => number;
+  readonly __wbindgen_export3: (a: number, b: number, c: number, d: number) => number;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_start: () => void;
 }
@@ -147,9 +118,7 @@ export type SyncInitInput = BufferSource | WebAssembly.Module;
  *
  * @returns {InitOutput}
  */
-export function initSync(
-  module: { module: SyncInitInput } | SyncInitInput,
-): InitOutput;
+export function initSync(module: { module: SyncInitInput } | SyncInitInput): InitOutput;
 
 /**
  * If `module_or_path` is {RequestInfo} or {URL}, makes a request and

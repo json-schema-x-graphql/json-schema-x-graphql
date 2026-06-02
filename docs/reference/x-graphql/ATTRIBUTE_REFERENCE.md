@@ -932,10 +932,7 @@ When multiple attributes could affect the same behavior, they are resolved in th
 """
 User account with full metadata
 """
-type User implements Node & Timestamped
-  @key(fields: "id")
-  @key(fields: "email")
-  @shareable {
+type User implements Node & Timestamped @key(fields: "id") @key(fields: "email") @shareable {
   """
   Unique identifier
   """

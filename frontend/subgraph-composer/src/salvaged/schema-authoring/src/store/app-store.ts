@@ -52,9 +52,7 @@ const DEFAULT_SETTINGS: AppSettings = {
 /**
  * Default editor state
  */
-const createDefaultEditorState = (
-  language: "json" | "graphql",
-): EditorState => ({
+const createDefaultEditorState = (language: "json" | "graphql"): EditorState => ({
   content: "",
   language,
   cursorPosition: { line: 1, column: 1 },
@@ -124,9 +122,7 @@ interface AppActions {
   loadTemplate: (jsonSchema: string, graphql?: string) => void;
 
   // Export actions
-  exportSchemas: (
-    format: "json" | "yaml" | "typescript",
-  ) => Promise<ExportResult | null>;
+  exportSchemas: (format: "json" | "yaml" | "typescript") => Promise<ExportResult | null>;
 
   // Reset actions
   reset: () => void;
@@ -280,8 +276,7 @@ export const useAppStore = create<AppStore>()(
               state.conversionResult = {
                 success: false,
                 error: {
-                  message:
-                    error instanceof Error ? error.message : "Unknown error",
+                  message: error instanceof Error ? error.message : "Unknown error",
                 },
                 engine: state.settings.converterEngine,
                 duration: 0,
@@ -339,8 +334,7 @@ export const useAppStore = create<AppStore>()(
               state.conversionResult = {
                 success: false,
                 error: {
-                  message:
-                    error instanceof Error ? error.message : "Unknown error",
+                  message: error instanceof Error ? error.message : "Unknown error",
                 },
                 engine: state.settings.converterEngine,
                 duration: 0,
@@ -414,10 +408,7 @@ export const useAppStore = create<AppStore>()(
                 errors: [
                   {
                     severity: "error",
-                    message:
-                      error instanceof Error
-                        ? error.message
-                        : "Validation failed",
+                    message: error instanceof Error ? error.message : "Validation failed",
                     path: "",
                   },
                 ],
@@ -477,8 +468,7 @@ export const useAppStore = create<AppStore>()(
               const line = lines[change.range.startLine - 1];
               const before = line.substring(0, change.range.startColumn - 1);
               const after = line.substring(change.range.endColumn - 1);
-              lines[change.range.startLine - 1] =
-                before + change.newText + after;
+              lines[change.range.startLine - 1] = before + change.newText + after;
               newContent = lines.join("\n");
             }
           }
@@ -785,17 +775,12 @@ if (typeof window !== "undefined") {
 /**
  * Export selectors
  */
-export const selectJsonSchema = (state: AppStore) =>
-  state.jsonSchemaEditor.content;
-export const selectGraphQLSchema = (state: AppStore) =>
-  state.graphqlEditor.content;
-export const selectValidationErrors = (state: AppStore) =>
-  state.validationResult?.errors || [];
-export const selectConversionResult = (state: AppStore) =>
-  state.conversionResult;
+export const selectJsonSchema = (state: AppStore) => state.jsonSchemaEditor.content;
+export const selectGraphQLSchema = (state: AppStore) => state.graphqlEditor.content;
+export const selectValidationErrors = (state: AppStore) => state.validationResult?.errors || [];
+export const selectConversionResult = (state: AppStore) => state.conversionResult;
 export const selectIsConverting = (state: AppStore) => state.isConverting;
 export const selectIsValidating = (state: AppStore) => state.isValidating;
 export const selectSettings = (state: AppStore) => state.settings;
 export const selectTheme = (state: AppStore) => state.settings.theme;
-export const selectConverterEngine = (state: AppStore) =>
-  state.settings.converterEngine;
+export const selectConverterEngine = (state: AppStore) => state.settings.converterEngine;

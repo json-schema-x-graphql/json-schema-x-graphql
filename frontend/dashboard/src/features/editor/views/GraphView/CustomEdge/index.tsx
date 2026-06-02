@@ -6,7 +6,7 @@ import useGraph from "../stores/useGraph";
 
 const CustomEdgeWrapper = (props: EdgeProps) => {
   const colorScheme = useComputedColorScheme();
-  const viewPort = useGraph(state => state.viewPort);
+  const viewPort = useGraph((state) => state.viewPort);
   const targetNodeId = props.id.split("-")[props.id.split("-").length - 1];
   const [hovered, setHovered] = React.useState(false);
 

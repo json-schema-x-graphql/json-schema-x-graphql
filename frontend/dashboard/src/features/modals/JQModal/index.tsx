@@ -28,7 +28,7 @@ export const JQModal = ({ opened, onClose }: ModalProps) => {
           leftSection="jq"
           placeholder="Enter jq query"
           value={query}
-          onChange={e => setQuery(e.currentTarget.value)}
+          onChange={(e) => setQuery(e.currentTarget.value)}
         />
         <Group justify="right">
           <Button onClick={() => updateJson(query, onClose)}>Display on Graph</Button>

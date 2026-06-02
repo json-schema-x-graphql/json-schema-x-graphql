@@ -2,275 +2,275 @@
 Configuration options for the JSON Schema to GraphQL converter.
 """
 input ConverterOptions {
-    """
-    Whether to validate the input JSON Schema before conversion.
-    Default: true
-    """
-    validate: Boolean = true
+  """
+  Whether to validate the input JSON Schema before conversion.
+  Default: true
+  """
+  validate: Boolean = true
 
-    """
-    Whether to include descriptions (docstrings) in the output SDL.
-    Default: true
-    """
-    includeDescriptions: Boolean = true
+  """
+  Whether to include descriptions (docstrings) in the output SDL.
+  Default: true
+  """
+  includeDescriptions: Boolean = true
 
-    """
-    Whether to preserve the order of fields from the source JSON Schema.
-    If false, fields may be sorted alphabetically.
-    Default: true
-    """
-    preserveFieldOrder: Boolean = true
+  """
+  Whether to preserve the order of fields from the source JSON Schema.
+  If false, fields may be sorted alphabetically.
+  Default: true
+  """
+  preserveFieldOrder: Boolean = true
 
-    """
-    The version of Apollo Federation to target.
-    """
-    federationVersion: FederationVersion = V2
+  """
+  The version of Apollo Federation to target.
+  """
+  federationVersion: FederationVersion = V2
 
-    """
-    Whether to emit federation directives (e.g. @key, @shareable) in the output.
-    If false, federation-specific directives are stripped even if federationVersion is set.
-    Note: If federationVersion is NONE, this flag is ignored and no federation directives are emitted.
-    Default: true
-    """
-    includeFederationDirectives: Boolean = true
+  """
+  Whether to emit federation directives (e.g. @key, @shareable) in the output.
+  If false, federation-specific directives are stripped even if federationVersion is set.
+  Note: If federationVersion is NONE, this flag is ignored and no federation directives are emitted.
+  Default: true
+  """
+  includeFederationDirectives: Boolean = true
 
-    """
-    Strategy for naming GraphQL types and fields.
-    """
-    namingConvention: NamingConvention = GRAPHQL_IDIOMATIC
+  """
+  Strategy for naming GraphQL types and fields.
+  """
+  namingConvention: NamingConvention = GRAPHQL_IDIOMATIC
 
-    """
-    If true, attempts to infer the ID scalar for fields named 'id', '_id', etc.
-    Deprecated: Use idStrategy instead.
-    If both `inferIds` and `idStrategy` are provided, `idStrategy` takes precedence.
-    """
-    inferIds: Boolean = false
+  """
+  If true, attempts to infer the ID scalar for fields named 'id', '_id', etc.
+  Deprecated: Use idStrategy instead.
+  If both `inferIds` and `idStrategy` are provided, `idStrategy` takes precedence.
+  """
+  inferIds: Boolean = false
 
-    """
-    Strategy for inferring ID fields.
-    Default: NONE
-    """
-    idStrategy: IdInferenceStrategy = NONE
+  """
+  Strategy for inferring ID fields.
+  Default: NONE
+  """
+  idStrategy: IdInferenceStrategy = NONE
 
-    """
-    The format of the output.
-    Default: SDL
-    """
-    outputFormat: OutputFormat = SDL
+  """
+  The format of the output.
+  Default: SDL
+  """
+  outputFormat: OutputFormat = SDL
 
-    """
-    If true, treats warnings as errors and fails the conversion.
-    Default: false
-    """
-    failOnWarning: Boolean = false
+  """
+  If true, treats warnings as errors and fails the conversion.
+  Default: false
+  """
+  failOnWarning: Boolean = false
 
-    """
-    List of type names to exclude from generation.
-    """
-    excludeTypes: [String!]
+  """
+  List of type names to exclude from generation.
+  """
+  excludeTypes: [String!]
 
-    """
-    List of regex patterns to exclude fields or types.
-    Patterns are applied to Type names and Field names individually.
-    """
-    excludePatterns: [String!]
+  """
+  List of regex patterns to exclude fields or types.
+  Patterns are applied to Type names and Field names individually.
+  """
+  excludePatterns: [String!]
 }
 
 """
 Supported Apollo Federation versions.
 """
 enum FederationVersion {
-    """
-    No federation support. Standard GraphQL SDL.
-    """
-    NONE
-    """
-    Apollo Federation v1.
-    """
-    V1
-    """
-    Apollo Federation v2 (latest).
-    """
-    V2
-    """
-    Automatically detect federation version based on directives (e.g. @key, @shareable) present in the source schema.
-    """
-    AUTO
+  """
+  No federation support. Standard GraphQL SDL.
+  """
+  NONE
+  """
+  Apollo Federation v1.
+  """
+  V1
+  """
+  Apollo Federation v2 (latest).
+  """
+  V2
+  """
+  Automatically detect federation version based on directives (e.g. @key, @shareable) present in the source schema.
+  """
+  AUTO
 }
 
 """
 Naming conventions for generated GraphQL artifacts.
 """
 enum NamingConvention {
-    """
-    Preserve the exact casing from the JSON Schema.
-    """
-    PRESERVE
-    """
-    Enforce GraphQL idioms: PascalCase for Types, camelCase for fields.
-    """
-    GRAPHQL_IDIOMATIC
+  """
+  Preserve the exact casing from the JSON Schema.
+  """
+  PRESERVE
+  """
+  Enforce GraphQL idioms: PascalCase for Types, camelCase for fields.
+  """
+  GRAPHQL_IDIOMATIC
 }
 
 """
 Strategies for inferring ID fields from JSON Schema properties.
 """
 enum IdInferenceStrategy {
-    """
-    Do not infer IDs; use the type defined in JSON Schema (usually String).
-    """
-    NONE
-    """
-    Infer IDs for fields with common names like 'id', '_id'.
-    """
-    COMMON_PATTERNS
-    """
-    Infer IDs for any string field that looks like an identifier (e.g. UUIDs).
-    """
-    ALL_STRINGS
+  """
+  Do not infer IDs; use the type defined in JSON Schema (usually String).
+  """
+  NONE
+  """
+  Infer IDs for fields with common names like 'id', '_id'.
+  """
+  COMMON_PATTERNS
+  """
+  Infer IDs for any string field that looks like an identifier (e.g. UUIDs).
+  """
+  ALL_STRINGS
 }
 
 """
 Output formats for the conversion result.
 """
 enum OutputFormat {
-    """
-    Standard GraphQL SDL string.
-    """
-    SDL
-    """
-    GraphQL SDL with additional federation metadata comments or structures.
-    Includes federation directives which may not be valid in a standard GraphQL server without federation support.
-    """
-    SDL_WITH_FEDERATION_METADATA
-    """
-    JSON representation of the GraphQL AST.
-    The JSON format is stable and versioned according to this library's semantic version, making it suitable as an interface boundary for downstream tooling.
-    """
-    AST_JSON
+  """
+  Standard GraphQL SDL string.
+  """
+  SDL
+  """
+  GraphQL SDL with additional federation metadata comments or structures.
+  Includes federation directives which may not be valid in a standard GraphQL server without federation support.
+  """
+  SDL_WITH_FEDERATION_METADATA
+  """
+  JSON representation of the GraphQL AST.
+  The JSON format is stable and versioned according to this library's semantic version, making it suitable as an interface boundary for downstream tooling.
+  """
+  AST_JSON
 }
 
 """
 The result of a conversion operation.
 """
 type ConversionResult {
-    """
-    The generated output string.
-    This contains the SDL string if outputFormat is SDL or SDL_WITH_FEDERATION_METADATA.
-    This contains a JSON string if outputFormat is AST_JSON.
-    Null if conversion failed completely.
-    """
-    output: String
+  """
+  The generated output string.
+  This contains the SDL string if outputFormat is SDL or SDL_WITH_FEDERATION_METADATA.
+  This contains a JSON string if outputFormat is AST_JSON.
+  Null if conversion failed completely.
+  """
+  output: String
 
-    """
-    A list of warnings or errors encountered during conversion.
-    """
-    diagnostics: [Diagnostic!]!
+  """
+  A list of warnings or errors encountered during conversion.
+  """
+  diagnostics: [Diagnostic!]!
 
-    """
-    Whether the conversion was successful.
-    """
-    success: Boolean!
+  """
+  Whether the conversion was successful.
+  """
+  success: Boolean!
 
-    """
-    Total number of errors encountered.
-    """
-    errorCount: Int!
+  """
+  Total number of errors encountered.
+  """
+  errorCount: Int!
 
-    """
-    Total number of warnings encountered.
-    """
-    warningCount: Int!
+  """
+  Total number of warnings encountered.
+  """
+  warningCount: Int!
 }
 
 """
 A diagnostic message (error or warning).
 """
 type Diagnostic {
-    """
-    The severity of the diagnostic.
-    """
-    severity: DiagnosticSeverity!
+  """
+  The severity of the diagnostic.
+  """
+  severity: DiagnosticSeverity!
 
-    """
-    The category or kind of the diagnostic.
-    """
-    kind: DiagnosticKind
+  """
+  The category or kind of the diagnostic.
+  """
+  kind: DiagnosticKind
 
-    """
-    The message describing the issue.
-    """
-    message: String!
+  """
+  The message describing the issue.
+  """
+  message: String!
 
-    """
-    The path in the JSON schema where the issue occurred (if applicable).
-    """
-    path: [String!]
+  """
+  The path in the JSON schema where the issue occurred (if applicable).
+  """
+  path: [String!]
 
-    """
-    The error code or category.
-    Intended to be stable for programmatic handling (e.g. JSON_SCHEMA_INVALID_REF).
-    """
-    code: String
+  """
+  The error code or category.
+  Intended to be stable for programmatic handling (e.g. JSON_SCHEMA_INVALID_REF).
+  """
+  code: String
 }
 
 """
 Severity levels for diagnostics.
 """
 enum DiagnosticSeverity {
-    INFO
-    WARNING
-    ERROR
+  INFO
+  WARNING
+  ERROR
 }
 
 """
 Categories for diagnostics to allow filtering and grouping.
 """
 enum DiagnosticKind {
-    JSON_SCHEMA_VALIDATION
-    GRAPHQL_VALIDATION
-    FEDERATION
-    NAMING
-    TRANSFORMATION
-    INTERNAL
-    """
-    Catch-all for diagnostics that do not fit into other categories.
-    """
-    OTHER
+  JSON_SCHEMA_VALIDATION
+  GRAPHQL_VALIDATION
+  FEDERATION
+  NAMING
+  TRANSFORMATION
+  INTERNAL
+  """
+  Catch-all for diagnostics that do not fit into other categories.
+  """
+  OTHER
 }
 
 """
 Input payload for the conversion mutation.
 """
 input ConvertInput {
-    """
-    The JSON Schema to convert.
-    Must be a valid JSON string.
-    """
-    jsonSchema: String!
+  """
+  The JSON Schema to convert.
+  Must be a valid JSON string.
+  """
+  jsonSchema: String!
 
-    """
-    Optional name or identifier for the source schema (e.g. filename).
-    Useful for diagnostics.
-    """
-    sourceName: String
+  """
+  Optional name or identifier for the source schema (e.g. filename).
+  Useful for diagnostics.
+  """
+  sourceName: String
 
-    """
-    Configuration options for this conversion run.
-    """
-    options: ConverterOptions
+  """
+  Configuration options for this conversion run.
+  """
+  options: ConverterOptions
 }
 
 type Mutation {
-    """
-    Converts a JSON Schema string into GraphQL SDL.
-    """
-    convertJsonToGraphql(input: ConvertInput!): ConversionResult!
+  """
+  Converts a JSON Schema string into GraphQL SDL.
+  """
+  convertJsonToGraphql(input: ConvertInput!): ConversionResult!
 }
 
 type Query {
-    """
-    Returns the version of the converter service/library.
-    """
-    version: String!
+  """
+  Returns the version of the converter service/library.
+  """
+  version: String!
 }

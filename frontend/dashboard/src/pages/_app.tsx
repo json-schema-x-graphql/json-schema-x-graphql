@@ -85,7 +85,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         defaultColorScheme="light"
         theme={theme}
       >
-        <StyleSheetManager shouldForwardProp={prop => prop !== "variant"}>
+        <StyleSheetManager shouldForwardProp={(prop) => prop !== "variant"}>
           <ThemeProvider theme={lightTheme}>
             <Toaster
               position="bottom-right"

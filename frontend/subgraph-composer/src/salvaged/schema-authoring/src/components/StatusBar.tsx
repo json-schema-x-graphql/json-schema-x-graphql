@@ -21,9 +21,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
   const selectedEngine = useAppStore((state) => state.settings.converterEngine);
   const conversionResult = useAppStore((state) => state.conversionResult);
   const validationResult = useAppStore((state) => state.validationResult);
-  const jsonSchemaContent = useAppStore(
-    (state) => state.jsonSchemaEditor.content,
-  );
+  const jsonSchemaContent = useAppStore((state) => state.jsonSchemaEditor.content);
   const graphQLContent = useAppStore((state) => state.graphqlEditor.content);
   const mode = useAppStore((state) => state.mode);
 
@@ -33,8 +31,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
 
   // Count types in GraphQL schema (rough estimation)
   const typeCount = (graphQLContent.match(/\btype\s+\w+/g) || []).length;
-  const interfaceCount = (graphQLContent.match(/\binterface\s+\w+/g) || [])
-    .length;
+  const interfaceCount = (graphQLContent.match(/\binterface\s+\w+/g) || []).length;
   const enumCount = (graphQLContent.match(/\benum\s+\w+/g) || []).length;
 
   // Get engine status indicator
@@ -84,10 +81,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
             <span>
               Engine: <span className="font-medium">{engineStatus.label}</span>
               {selectedEngine === "auto" && conversionResult?.engine && (
-                <span className="text-gray-500 dark:text-gray-500">
-                  {" "}
-                  (auto-selected)
-                </span>
+                <span className="text-gray-500 dark:text-gray-500"> (auto-selected)</span>
               )}
             </span>
           </div>
@@ -97,9 +91,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
             <div className="flex items-center space-x-4">
               <span>
                 Conversion:{" "}
-                <span className="font-medium">
-                  {formatDuration(conversionResult.duration)}
-                </span>
+                <span className="font-medium">{formatDuration(conversionResult.duration)}</span>
               </span>
             </div>
           )}
@@ -161,10 +153,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className = "" }) => {
           <div className="flex items-center space-x-2">
             <span className="text-green-600 dark:text-green-400">●</span>
             <span className="text-gray-500 dark:text-gray-500">
-              AI API:{" "}
-              <span className="font-mono text-xs">
-                window.__schemaAuthoringAPI__
-              </span>
+              AI API: <span className="font-mono text-xs">window.__schemaAuthoringAPI__</span>
             </span>
           </div>
 

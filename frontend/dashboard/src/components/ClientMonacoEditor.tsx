@@ -69,7 +69,7 @@ export default function ClientMonacoEditor({
 
     // Kick off the runtime import.
     runtimeImporter()
-      .then(mod => {
+      .then((mod) => {
         if (!mounted) return;
 
         // Some packages export the editor as default, some as named `Editor`.
@@ -98,7 +98,7 @@ export default function ClientMonacoEditor({
 
         setEditorComp(() => Comp as React.ComponentType<any>);
       })
-      .catch(err => {
+      .catch((err) => {
         // Store error for debugging and leave EditorComp null
         loadErrorRef.current = err instanceof Error ? err : new Error(String(err));
 

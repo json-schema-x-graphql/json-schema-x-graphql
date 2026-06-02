@@ -1,15 +1,43 @@
 {
   "name": "@json-schema-x-graphql/core",
   "version": "2.0.0",
-  "type": "module",
   "description": "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support",
-  "main": "dist/converter.js",
-  "types": "dist/converter.d.ts",
+  "keywords": [
+    "apollo",
+    "apollo-federation",
+    "converter",
+    "federation",
+    "graphql",
+    "graphql-federation",
+    "json-schema",
+    "schema-conversion",
+    "sdl",
+    "typescript",
+    "validation",
+    "x-graphql"
+  ],
+  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
+  "bugs": {
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
+  },
+  "license": "MIT",
+  "author": "json-schema-x-graphql Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git",
+    "directory": "converters/node"
+  },
+  "bin": {
+    "json-schema-x-graphql": "dist/cli.js"
+  },
   "files": [
     "dist"
   ],
-  "bin": {
-    "json-schema-x-graphql": "dist/cli.js"
+  "type": "module",
+  "main": "dist/converter.js",
+  "types": "dist/converter.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -36,39 +64,10 @@
     "ci:benchmark": "npm run benchmark:full",
     "precommit": "npm run lint && npm run validate:all"
   },
-  "keywords": [
-    "graphql",
-    "json-schema",
-    "converter",
-    "federation",
-    "apollo",
-    "x-graphql",
-    "schema-conversion",
-    "graphql-federation",
-    "apollo-federation",
-    "sdl",
-    "typescript",
-    "validation"
-  ],
-  "author": "json-schema-x-graphql Contributors",
-  "license": "MIT",
-  "homepage": "https://github.com/json-schema-x-graphql/json-schema-x-graphql#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql.git",
-    "directory": "converters/node"
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "graphql": "^16.14.0"
   },
-  "bugs": {
-    "url": "https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues"
-  },
-  "engines": {
-    "node": ">=24.0.0",
-    "npm": ">=8.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@apollo/subgraph": "^2.14.0",
     "@eslint/js": "^10.0.1",
@@ -88,8 +87,9 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.2"
   },
-  "dependencies": {
-    "@opentelemetry/api": "^1.9.0",
-    "graphql": "^16.14.0"
-  }
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@10.13.1"
 }

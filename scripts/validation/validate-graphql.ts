@@ -39,10 +39,7 @@ interface SDLValidationReport {
   invalidFiles: number;
   results: SDLValidationResult[];
   summary: {
-    byDirectory: Record<
-      string,
-      { total: number; valid: number; invalid: number }
-    >;
+    byDirectory: Record<string, { total: number; valid: number; invalid: number }>;
     federationSchemas: number;
     totalTypes: number;
     totalFields: number;
@@ -223,21 +220,13 @@ class GraphQLValidator {
         let schemaSDL = sdl;
 
         // Add common scalar definitions if they are missing but used
-        const commonScalars = [
-          "DateTime",
-          "Date",
-          "Email",
-          "URL",
-          "JSON",
-          "Void",
-        ];
+        const commonScalars = ["DateTime", "Date", "Email", "URL", "JSON", "Void"];
         const missingScalars = commonScalars.filter(
           (scalar) => sdl.includes(scalar) && !sdl.includes(`scalar ${scalar}`),
         );
 
         if (missingScalars.length > 0) {
-          schemaSDL +=
-            "\n" + missingScalars.map((s) => `scalar ${s}`).join("\n");
+          schemaSDL += "\n" + missingScalars.map((s) => `scalar ${s}`).join("\n");
         }
 
         // If it's a federation schema, add directive definitions for standard validation
@@ -276,9 +265,7 @@ class GraphQLValidator {
         }
       } catch (err: any) {
         // Check if error is just missing Query type (SDL fragment)
-        const isMissingQueryType = err.message?.includes(
-          "Query root type must be provided",
-        );
+        const isMissingQueryType = err.message?.includes("Query root type must be provided");
 
         if (isMissingQueryType) {
           // This is an SDL fragment (type definitions only), not an error
@@ -301,15 +288,11 @@ class GraphQLValidator {
       if (result.metadata?.isFederation && result.valid) {
         try {
           const subgraphAst = gql(sdl);
-          const subgraphSchema = buildSubgraphSchema([
-            { typeDefs: subgraphAst },
-          ]);
+          const subgraphSchema = buildSubgraphSchema([{ typeDefs: subgraphAst }]);
 
           // Basic federation checks
           if (!subgraphSchema) {
-            result.warnings?.push(
-              "Federation subgraph schema could not be built",
-            );
+            result.warnings?.push("Federation subgraph schema could not be built");
           }
         } catch (err: any) {
           // Federation errors are warnings for v1, errors for v2
@@ -402,10 +385,7 @@ class GraphQLValidator {
   validateAll(): SDLValidationReport {
     const files = this.discoverSDLFiles();
     const results: SDLValidationResult[] = [];
-    const byDirectory: Record<
-      string,
-      { total: number; valid: number; invalid: number }
-    > = {};
+    const byDirectory: Record<string, { total: number; valid: number; invalid: number }> = {};
 
     console.log(`\n🔍 Discovered ${files.length} GraphQL SDL files\n`);
 
@@ -513,9 +493,7 @@ function main() {
   console.log("\nBy directory:");
   for (const [dir, stats] of Object.entries(report.summary.byDirectory)) {
     console.log(`  ${dir}:`);
-    console.log(
-      `    Total: ${stats.total}, Valid: ${stats.valid}, Invalid: ${stats.invalid}`,
-    );
+    console.log(`    Total: ${stats.total}, Valid: ${stats.valid}, Invalid: ${stats.invalid}`);
   }
   console.log("=".repeat(60) + "\n");
 
@@ -535,10 +513,7 @@ function main() {
     process.exit(1);
   }
 
-  const totalWarnings = report.results.reduce(
-    (sum, r) => sum + (r.warnings?.length || 0),
-    0,
-  );
+  const totalWarnings = report.results.reduce((sum, r) => sum + (r.warnings?.length || 0), 0);
   if (flags.failOnWarning && totalWarnings > 0) {
     console.error("⚠️  Validation failed: warnings found");
     process.exit(1);

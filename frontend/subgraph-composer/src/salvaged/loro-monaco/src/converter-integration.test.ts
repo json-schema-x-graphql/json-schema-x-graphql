@@ -1,8 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  jsonSchemaToGraphQL,
-  graphqlToJsonSchema,
-} from "./converter-integration";
+import { jsonSchemaToGraphQL, graphqlToJsonSchema } from "./converter-integration";
 
 // Mock the WASM module
 // We need to mock the default export (init) and the named exports
@@ -36,9 +33,7 @@ describe("Converter Integration", () => {
       // Note: Since init is called at module level, checking call count might be tricky
       // depending on when the module was loaded, but ensures the flow works.
 
-      expect(wasmModule.jsonSchemaToGraphQL).toHaveBeenCalledWith(
-        mockJsonSchema,
-      );
+      expect(wasmModule.jsonSchemaToGraphQL).toHaveBeenCalledWith(mockJsonSchema);
       expect(result).toBe(mockSdl);
     });
 
@@ -100,9 +95,7 @@ describe("Converter Integration", () => {
       // @ts-expect-error - testing invalid return type
       vi.mocked(wasmModule.graphqlToJsonSchema).mockReturnValue(null);
 
-      await expect(
-        graphqlToJsonSchema("type Query { id: ID }"),
-      ).rejects.toThrow(
+      await expect(graphqlToJsonSchema("type Query { id: ID }")).rejects.toThrow(
         "Failed to convert GraphQL to JSON Schema: Unexpected return type from WASM. Expected a JSON Schema string.",
       );
     });

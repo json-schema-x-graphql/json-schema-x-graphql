@@ -9,14 +9,14 @@ The converter has first-class support for Apollo Federation v2 — you can gener
 ## Enable federation output
 
 ```ts
-import { convertJsonSchemaToGraphQL } from '@json-schema-x-graphql/core';
+import { convertJsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
 
 const sdl = convertJsonSchemaToGraphQL(schema, {
   federation: {
     enabled: true,
     version: 2,
-    serviceName: 'users',
-  }
+    serviceName: "users",
+  },
 });
 ```
 
@@ -48,15 +48,15 @@ type User @key(fields: "id") {
 
 ## Supported Federation directives
 
-| Directive | How to use |
-|---|---|
-| `@key` | `"x-graphql-federation": { "key": "id" }` or `{ "key": true }` on the key field |
-| `@shareable` | `"x-graphql-federation": { "shareable": true }` on the type |
-| `@external` | `"x-graphql-federation": { "external": true }` on the field |
-| `@requires` | `"x-graphql-federation": { "requires": "shippingAddress { zip }" }` |
-| `@provides` | `"x-graphql-federation": { "provides": "name" }` |
-| `@inaccessible` | `"x-graphql-federation": { "inaccessible": true }` |
-| `@override` | `"x-graphql-federation": { "override": "legacy-users" }` |
+| Directive       | How to use                                                                      |
+| --------------- | ------------------------------------------------------------------------------- |
+| `@key`          | `"x-graphql-federation": { "key": "id" }` or `{ "key": true }` on the key field |
+| `@shareable`    | `"x-graphql-federation": { "shareable": true }` on the type                     |
+| `@external`     | `"x-graphql-federation": { "external": true }` on the field                     |
+| `@requires`     | `"x-graphql-federation": { "requires": "shippingAddress { zip }" }`             |
+| `@provides`     | `"x-graphql-federation": { "provides": "name" }`                                |
+| `@inaccessible` | `"x-graphql-federation": { "inaccessible": true }`                              |
+| `@override`     | `"x-graphql-federation": { "override": "legacy-users" }`                        |
 
 ## Auto-detection mode
 

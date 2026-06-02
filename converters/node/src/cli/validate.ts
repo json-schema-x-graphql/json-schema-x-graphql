@@ -105,13 +105,7 @@ class JsonSchemaValidator {
 
     // Validate x-graphql-type-kind
     if (obj["x-graphql-type-kind"]) {
-      const validKinds = [
-        "OBJECT",
-        "INTERFACE",
-        "UNION",
-        "INPUT_OBJECT",
-        "ENUM",
-      ];
+      const validKinds = ["OBJECT", "INTERFACE", "UNION", "INPUT_OBJECT", "ENUM"];
       if (!validKinds.includes(obj["x-graphql-type-kind"])) {
         errors.push({
           path: `${path}.x-graphql-type-kind`,
@@ -156,12 +150,7 @@ class JsonSchemaValidator {
       if (typeof value === "object" && value !== null) {
         if (Array.isArray(value)) {
           value.forEach((item, index) => {
-            this.validateXGraphQLExtensions(
-              item,
-              `${newPath}[${index}]`,
-              errors,
-              warnings,
-            );
+            this.validateXGraphQLExtensions(item, `${newPath}[${index}]`, errors, warnings);
           });
         } else {
           this.validateXGraphQLExtensions(value, newPath, errors, warnings);
@@ -170,21 +159,13 @@ class JsonSchemaValidator {
     }
   }
 
-  private validateNamingConventions(
-    obj: any,
-    path: string,
-    warnings: ValidationIssue[],
-  ): void {
+  private validateNamingConventions(obj: any, path: string, warnings: ValidationIssue[]): void {
     if (typeof obj !== "object" || obj === null) return;
 
     // Check for plural type names
     if (obj["x-graphql-type-name"]) {
       const typeName = obj["x-graphql-type-name"];
-      if (
-        typeName.endsWith("s") ||
-        typeName.endsWith("ies") ||
-        typeName.endsWith("es")
-      ) {
+      if (typeName.endsWith("s") || typeName.endsWith("ies") || typeName.endsWith("es")) {
         warnings.push({
           path: `${path}.x-graphql-type-name`,
           message: `Type name '${typeName}' appears to be plural. GraphQL types are typically singular.`,
@@ -398,9 +379,7 @@ function validateJsonSchemas(
       if (result.errors.length > 0) {
         console.log("  ❌ Errors:");
         result.errors.forEach((error) => {
-          console.log(
-            `    • [${error.validator}] ${error.path}: ${error.message}`,
-          );
+          console.log(`    • [${error.validator}] ${error.path}: ${error.message}`);
         });
         allValid = false;
         totalErrors += result.errors.length;
@@ -409,9 +388,7 @@ function validateJsonSchemas(
       if (result.warnings.length > 0 && !quiet) {
         console.log("  ⚠️  Warnings:");
         result.warnings.forEach((warning) => {
-          console.log(
-            `    • [${warning.validator}] ${warning.path}: ${warning.message}`,
-          );
+          console.log(`    • [${warning.validator}] ${warning.path}: ${warning.message}`);
         });
         totalWarnings += result.warnings.length;
       }
@@ -427,9 +404,7 @@ function validateJsonSchemas(
     console.log(`  Files validated: ${totalFiles}`);
     console.log(`  Total errors: ${totalErrors}`);
     console.log(`  Total warnings: ${totalWarnings}`);
-    console.log(
-      allValid ? "  ✅ All schemas valid!" : "  ❌ Some schemas have errors",
-    );
+    console.log(allValid ? "  ✅ All schemas valid!" : "  ❌ Some schemas have errors");
   }
 
   return allValid;
@@ -481,12 +456,8 @@ function validateGraphQLSDL(
       if (result.errors.length > 0) {
         console.log("  ❌ Errors:");
         result.errors.forEach((error) => {
-          const location = error.line
-            ? `${error.line}:${error.column || 0}`
-            : "";
-          console.log(
-            `    • ${location ? `[${location}] ` : ""}${error.message}`,
-          );
+          const location = error.line ? `${error.line}:${error.column || 0}` : "";
+          console.log(`    • ${location ? `[${location}] ` : ""}${error.message}`);
         });
         allValid = false;
         totalErrors += result.errors.length;
@@ -511,11 +482,7 @@ function validateGraphQLSDL(
     console.log(`  Files validated: ${totalFiles}`);
     console.log(`  Total errors: ${totalErrors}`);
     console.log(`  Total warnings: ${totalWarnings}`);
-    console.log(
-      allValid
-        ? "  ✅ All SDL files valid!"
-        : "  ❌ Some SDL files have errors",
-    );
+    console.log(allValid ? "  ✅ All SDL files valid!" : "  ❌ Some SDL files have errors");
   }
 
   return allValid;
@@ -570,13 +537,7 @@ Examples:
   switch (command) {
     case "json-schema":
     case "json":
-      isValid = validateJsonSchemas(
-        targetPath,
-        recursive,
-        strict,
-        format,
-        quiet,
-      );
+      isValid = validateJsonSchemas(targetPath, recursive, strict, format, quiet);
       break;
     case "graphql":
     case "gql":

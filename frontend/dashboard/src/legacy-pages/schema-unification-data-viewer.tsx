@@ -67,9 +67,9 @@ const LiveEditor = dynamic(() => import("../features/editor/LiveEditor"), {
 
 const SchemaUnificationDataViewer = () => {
   const { setColorScheme } = useMantineColorScheme();
-  const setContents = useFile(state => state.setContents);
-  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const setContents = useFile((state) => state.setContents);
+  const darkmodeEnabled = useConfig((state) => state.darkmodeEnabled);
+  const fullscreen = useGraph((state) => state.fullscreen);
   const [dataLoaded, setDataLoaded] = useState(false);
   useEffect(() => {
     if (!dataLoaded) {
@@ -117,8 +117,8 @@ const SchemaUnificationDataViewer = () => {
           }
           if (examplePath) {
             fetch(examplePath)
-              .then(res => res.json())
-              .then(json => {
+              .then((res) => res.json())
+              .then((json) => {
                 setContents({
                   contents: JSON.stringify(json, null, 2),
                   format: FileFormat.JSON,

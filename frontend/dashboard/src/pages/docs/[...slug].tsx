@@ -40,7 +40,7 @@ const getAllMarkdownFiles = (dir: string, baseDir: string = dir): string[] => {
   const files = fs.readdirSync(dir);
   let markdownFiles: string[] = [];
 
-  files.forEach(file => {
+  files.forEach((file) => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
 
@@ -59,7 +59,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const docsDirectory = path.join(process.cwd(), "docs");
   const markdownFiles = getAllMarkdownFiles(docsDirectory);
 
-  const paths = markdownFiles.flatMap(file => {
+  const paths = markdownFiles.flatMap((file) => {
     const slug = file.replace(/\.md$/, "").split(/[/\\]/).filter(Boolean);
 
     if (!slug || slug.length === 0) {
@@ -79,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   console.log(
     "Generated Doc Paths:",
-    paths.map(p => `/docs/${(p.params.slug as string[]).join("/")}`)
+    paths.map((p) => `/docs/${(p.params.slug as string[]).join("/")}`),
   );
 
   return {

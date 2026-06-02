@@ -2,10 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { jsonSchemaToGraphQL } from "./converter";
 
-const EXAMPLES_DIR = path.resolve(
-  __dirname,
-  "../../../examples/real-world-schemas",
-);
+const EXAMPLES_DIR = path.resolve(__dirname, "../../../examples/real-world-schemas");
 const REFERENCE_DIR = path.join(EXAMPLES_DIR, "legacy-output");
 const OUTPUT_DIR = path.resolve(__dirname, "../../../output");
 
@@ -45,9 +42,7 @@ describe("Real-world Schema Conversions", () => {
       const graphqlPath = path.join(REFERENCE_DIR, graphqlFile);
 
       if (!fs.existsSync(schemaPath)) {
-        console.warn(
-          `Skipping ${name}: Schema file not found at ${schemaPath}`,
-        );
+        console.warn(`Skipping ${name}: Schema file not found at ${schemaPath}`);
         return;
       }
 
@@ -58,10 +53,7 @@ describe("Real-world Schema Conversions", () => {
         federationVersion: "V2",
       });
 
-      const outPath = path.join(
-        OUTPUT_DIR,
-        `${name.replace(/\s+/g, "-").toLowerCase()}.graphql`,
-      );
+      const outPath = path.join(OUTPUT_DIR, `${name.replace(/\s+/g, "-").toLowerCase()}.graphql`);
       fs.writeFileSync(outPath, generatedSDL);
 
       expect(generatedSDL).toBeDefined();
@@ -82,9 +74,7 @@ describe("Real-world Schema Conversions", () => {
         expect(sizeRatio).toBeGreaterThan(0.5);
         expect(sizeRatio).toBeLessThan(1.5);
       } else {
-        console.warn(
-          `Reference GraphQL file not found for ${name} at ${graphqlPath}`,
-        );
+        console.warn(`Reference GraphQL file not found for ${name} at ${graphqlPath}`);
       }
     });
   });

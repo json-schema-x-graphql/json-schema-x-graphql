@@ -25,7 +25,11 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange 
           const Visual = m.VisualJson;
           const JsonEd = m.JsonEditor;
           Comp = function WrappedVisualJson(props) {
-            return React.createElement(Visual, { value: props.value, onChange: props.onChange }, React.createElement(JsonEd, null));
+            return React.createElement(
+              Visual,
+              { value: props.value, onChange: props.onChange },
+              React.createElement(JsonEd, null),
+            );
           };
         } else if (m.VisualJson) {
           Comp = m.VisualJson;
@@ -94,7 +98,7 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange 
       try {
         if (containerRef.current) {
           const focusable = containerRef.current.querySelector(
-            "[tabindex], button, input, textarea, [role=tree], [role=button]"
+            "[tabindex], button, input, textarea, [role=tree], [role=button]",
           );
           if (focusable && typeof focusable.focus === "function") {
             focusable.focus();

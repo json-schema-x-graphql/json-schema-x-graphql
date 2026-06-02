@@ -41,7 +41,7 @@ const View = () => {
 
 const LiveEditor = () => {
   return (
-    <StyledLiveEditor onContextMenuCapture={e => e.preventDefault()}>
+    <StyledLiveEditor onContextMenuCapture={(e) => e.preventDefault()}>
       <View />
     </StyledLiveEditor>
   );

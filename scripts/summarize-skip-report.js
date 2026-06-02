@@ -84,12 +84,7 @@ function safeReadJson(filePath) {
 
 function truncateString(s, max = 160) {
   if (s === null || s === undefined) return "";
-  const str =
-    typeof s === "string"
-      ? s
-      : typeof s === "object"
-        ? JSON.stringify(s)
-        : String(s);
+  const str = typeof s === "string" ? s : typeof s === "object" ? JSON.stringify(s) : String(s);
   if (str.length <= max) return str;
   return str.slice(0, max - 3) + "...";
 }
@@ -101,13 +96,10 @@ function summarize(report, opts) {
 
   // Basic counts from report.summary if present
   if (report.summary && typeof report.summary === "object") {
-    summary.filesScanned =
-      report.summary.filesScanned ?? (report.files ? report.files.length : 0);
+    summary.filesScanned = report.summary.filesScanned ?? (report.files ? report.files.length : 0);
     summary.entriesFound =
-      report.summary.entriesFound ??
-      (report.entries ? report.entries.length : 0);
-    summary.warnings =
-      report.summary.warnings ?? (report.warnings ? report.warnings.length : 0);
+      report.summary.entriesFound ?? (report.entries ? report.entries.length : 0);
+    summary.warnings = report.summary.warnings ?? (report.warnings ? report.warnings.length : 0);
   } else {
     summary.filesScanned = report.files ? report.files.length : 0;
     summary.entriesFound = report.entries ? report.entries.length : 0;
@@ -140,8 +132,7 @@ function summarize(report, opts) {
 
   // Top entries (global) sorted by file then pointer
   const sortedEntries = entries.slice().sort((a, b) => {
-    if (a.file === b.file)
-      return (a.pointer || "").localeCompare(b.pointer || "");
+    if (a.file === b.file) return (a.pointer || "").localeCompare(b.pointer || "");
     return a.file.localeCompare(b.file);
   });
   summary.entries = opts.top ? sortedEntries.slice(0, opts.top) : sortedEntries;
@@ -168,9 +159,7 @@ function formatText(summary) {
 
   lines.push("BY SCOPE");
   lines.push("--------");
-  const scopes = Object.entries(summary.scopeCounts || {}).sort(
-    (a, b) => b[1] - a[1],
-  );
+  const scopes = Object.entries(summary.scopeCounts || {}).sort((a, b) => b[1] - a[1]);
   if (scopes.length === 0) {
     lines.push("  (no scoped entries found)");
   } else {
@@ -208,8 +197,7 @@ function formatText(summary) {
       lines.push(`     Pointer: ${e.pointer || "(root)"}`);
       lines.push(`     Scope  : ${e.scope || "unknown"}`);
       lines.push(`     Value  : ${JSON.stringify(e.value)}`);
-      if (e.reason)
-        lines.push(`     Reason : ${truncateString(e.reason, 120)}`);
+      if (e.reason) lines.push(`     Reason : ${truncateString(e.reason, 120)}`);
       if (e.snippet)
         lines.push(
           `     Snip   : ${truncateString(typeof e.snippet === "string" ? e.snippet : JSON.stringify(e.snippet), 200)}`,
@@ -224,8 +212,7 @@ function formatText(summary) {
     lines.push("------------------------------------------------------");
     for (const w of summary.warnings) {
       const file = w.file || "(unknown)";
-      const msg =
-        w.message || (w.parseError ? w.parseError : JSON.stringify(w));
+      const msg = w.message || (w.parseError ? w.parseError : JSON.stringify(w));
       lines.push(` - ${file}: ${truncateString(msg, 200)}`);
     }
   }
@@ -265,10 +252,7 @@ function formatJson(summary) {
 
   const { data: report, error } = safeReadJson(input);
   if (error) {
-    console.error(
-      `Failed to read or parse input file "${input}":`,
-      error.message || String(error),
-    );
+    console.error(`Failed to read or parse input file "${input}":`, error.message || String(error));
     process.exit(2);
   }
 

@@ -120,11 +120,7 @@ Legacy Procurement templates are linked through common identifiers that enable d
         "links_to": ["01_Acquisition_Data"]
       },
       "03_Award_Base_Data": {
-        "provides": [
-          "financialInfo",
-          "businessClassification",
-          "contractCharacteristics"
-        ],
+        "provides": ["financialInfo", "businessClassification", "contractCharacteristics"],
         "requires": ["originalAwardPiid"],
         "links_to": ["04_Award_Line_Item_Data"]
       }

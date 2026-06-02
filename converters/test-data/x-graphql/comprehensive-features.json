@@ -211,10 +211,7 @@
       "x-graphql-type-name": "SearchResult",
       "x-graphql-union-types": ["User", "Product"],
       "x-graphql-description": "Union type for search results",
-      "oneOf": [
-        { "$ref": "#/definitions/User" },
-        { "$ref": "#/definitions/Product" }
-      ]
+      "oneOf": [{ "$ref": "#/definitions/User" }, { "$ref": "#/definitions/Product" }]
     },
     "EntityType": {
       "type": "string",

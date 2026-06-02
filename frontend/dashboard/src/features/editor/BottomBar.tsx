@@ -80,14 +80,14 @@ const StyledBottomBarItem = styled.button<{ $bg?: string }>`
 `;
 
 export const BottomBar = () => {
-  const data = useFile(state => state.fileData);
-  const toggleLiveTransform = useConfig(state => state.toggleLiveTransform);
-  const liveTransformEnabled = useConfig(state => state.liveTransformEnabled);
-  const error = useFile(state => state.error);
-  const setContents = useFile(state => state.setContents);
-  const nodeCount = useGraph(state => state.nodes.length);
-  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
-  const fullscreen = useGraph(state => state.fullscreen);
+  const data = useFile((state) => state.fileData);
+  const toggleLiveTransform = useConfig((state) => state.toggleLiveTransform);
+  const liveTransformEnabled = useConfig((state) => state.liveTransformEnabled);
+  const error = useFile((state) => state.error);
+  const setContents = useFile((state) => state.setContents);
+  const nodeCount = useGraph((state) => state.nodes.length);
+  const toggleFullscreen = useGraph((state) => state.toggleFullscreen);
+  const fullscreen = useGraph((state) => state.fullscreen);
 
   const toggleEditor = () => {
     toggleFullscreen(!fullscreen);
