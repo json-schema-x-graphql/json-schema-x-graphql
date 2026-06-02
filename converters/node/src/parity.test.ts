@@ -44,7 +44,9 @@ function sortDefinitions(ast: DocumentNode): DocumentNode {
       for (const f of def.fields) {
         if (f.arguments) {
           f.arguments.sort((a: any, b: any) =>
-            String(a.name?.value || "").localeCompare(String(b.name?.value || "")),
+            String(a.name?.value || "").localeCompare(
+              String(b.name?.value || ""),
+            ),
           );
         }
       }
@@ -69,7 +71,8 @@ function normalizeAstDocument(ast: DocumentNode): DocumentNode {
     if (visited.has(node)) return;
     visited.add(node);
     if (node.kind === "StringValue" && typeof node.value === "string") {
-      node.block = node.value.includes("\n") || node.value.length >= BLOCK_THRESHOLD;
+      node.block =
+        node.value.includes("\n") || node.value.length >= BLOCK_THRESHOLD;
     }
     for (const k of Object.keys(node)) {
       const v = node[k];
@@ -87,7 +90,11 @@ function normalizeAstDocument(ast: DocumentNode): DocumentNode {
   // inline type and the other prefers the opaque `JSON` scalar.
   const inlineTypeNames = new Set<string>();
   for (const def of (ast as any).definitions || []) {
-    if (def && def.kind === "ObjectTypeDefinition" && /^Nested/i.test(def.name?.value)) {
+    if (
+      def &&
+      def.kind === "ObjectTypeDefinition" &&
+      /^Nested/i.test(def.name?.value)
+    ) {
       inlineTypeNames.add(def.name.value);
     }
   }
@@ -98,7 +105,11 @@ function normalizeAstDocument(ast: DocumentNode): DocumentNode {
       if (!node || typeof node !== "object") return;
       if (visitedReplace.has(node)) return;
       visitedReplace.add(node);
-      if (node.kind === "NamedType" && node.name && inlineTypeNames.has(node.name.value)) {
+      if (
+        node.kind === "NamedType" &&
+        node.name &&
+        inlineTypeNames.has(node.name.value)
+      ) {
         node.name.value = "JSON";
       }
       for (const k of Object.keys(node)) {
@@ -113,7 +124,12 @@ function normalizeAstDocument(ast: DocumentNode): DocumentNode {
     replaceNamedTypes(ast as any);
     // Remove the inline type definitions themselves
     (ast as any).definitions = (ast as any).definitions.filter(
-      (d: any) => !(d && d.kind === "ObjectTypeDefinition" && inlineTypeNames.has(d.name?.value)),
+      (d: any) =>
+        !(
+          d &&
+          d.kind === "ObjectTypeDefinition" &&
+          inlineTypeNames.has(d.name?.value)
+        ),
     );
   }
 
@@ -184,7 +200,9 @@ function normalizeCaseMismatchAst(ast: DocumentNode): DocumentNode {
 
   walk(cloned);
   cloned.definitions = [...(cloned.definitions || [])].sort((a: any, b: any) =>
-    String(a.name?.value || a.kind).localeCompare(String(b.name?.value || b.kind)),
+    String(a.name?.value || a.kind).localeCompare(
+      String(b.name?.value || b.kind),
+    ),
   );
 
   return cloned as DocumentNode;
@@ -200,7 +218,9 @@ describe("Parity: Node vs Rust converter outputs", () => {
     .filter(shouldRunFixture)
     .slice(
       Number.isFinite(MAX_FIXTURES) && MAX_FIXTURES > 0 ? 0 : 0,
-      Number.isFinite(MAX_FIXTURES) && MAX_FIXTURES > 0 ? MAX_FIXTURES : undefined,
+      Number.isFinite(MAX_FIXTURES) && MAX_FIXTURES > 0
+        ? MAX_FIXTURES
+        : undefined,
     );
 
   if (files.length === 0) {
@@ -219,7 +239,8 @@ describe("Parity: Node vs Rust converter outputs", () => {
       const fixtureOptions = existsSync(optionsPath)
         ? JSON.parse(readFileSync(optionsPath, "utf-8"))
         : null;
-      const outputExt = fixtureOptions?.outputFormat === "AST_JSON" ? "json" : "graphql";
+      const outputExt =
+        fixtureOptions?.outputFormat === "AST_JSON" ? "json" : "graphql";
       const env = { ...process.env };
       if (fixtureOptions) {
         env.JXQL_OPTIONS_PATH = optionsPath;
@@ -235,8 +256,18 @@ describe("Parity: Node vs Rust converter outputs", () => {
         env,
       });
 
-      const nodeOut = join(repoRoot, "output", "comparison", `${basename}-node.${outputExt}`);
-      const rustOut = join(repoRoot, "output", "comparison", `${basename}-rust.${outputExt}`);
+      const nodeOut = join(
+        repoRoot,
+        "output",
+        "comparison",
+        `${basename}-node.${outputExt}`,
+      );
+      const rustOut = join(
+        repoRoot,
+        "output",
+        "comparison",
+        `${basename}-rust.${outputExt}`,
+      );
 
       expect(existsSync(nodeOut)).toBe(true);
       expect(existsSync(rustOut)).toBe(true);
@@ -244,8 +275,14 @@ describe("Parity: Node vs Rust converter outputs", () => {
       const nodeSDL = readFileSync(nodeOut, "utf-8");
       const rustSDL = readFileSync(rustOut, "utf-8");
 
-      const normNode = outputExt === "json" ? normalizeAstJson(nodeSDL) : normalizeSDL(nodeSDL);
-      const normRust = outputExt === "json" ? normalizeAstJson(rustSDL) : normalizeSDL(rustSDL);
+      const normNode =
+        outputExt === "json"
+          ? normalizeAstJson(nodeSDL)
+          : normalizeSDL(nodeSDL);
+      const normRust =
+        outputExt === "json"
+          ? normalizeAstJson(rustSDL)
+          : normalizeSDL(rustSDL);
 
       if (normNode == null || normRust == null) {
         expect(normNode).toEqual(normRust);

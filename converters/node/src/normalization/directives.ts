@@ -13,7 +13,8 @@ export function extractDirectives(
   const directives: GeneralizedDirective[] = [];
 
   const includeFederation =
-    (options?.includeFederationDirectives ?? true) && options?.federationVersion !== "NONE";
+    (options?.includeFederationDirectives ?? true) &&
+    options?.federationVersion !== "NONE";
 
   // 1. Process explicit x-graphql-directives
   if (Array.isArray(schema["x-graphql-directives"])) {
@@ -134,7 +135,9 @@ export function printDirectives(directives: GeneralizedDirective[]): string {
     if (dir.raw) return dir.raw;
     if (!dir.name) return "";
     const args =
-      dir.args && Object.keys(dir.args).length > 0 ? `(${formatDirectiveArgs(dir.args)})` : "";
+      dir.args && Object.keys(dir.args).length > 0
+        ? `(${formatDirectiveArgs(dir.args)})`
+        : "";
     return `@${dir.name}${args}`;
   });
 
@@ -151,7 +154,8 @@ function formatDirectiveArgs(args: Record<string, any>): string {
       if ((key === "scopes" || key === "policies") && Array.isArray(value)) {
         return `${key}: [${value
           .map(
-            (v: any) => `[${(Array.isArray(v) ? v : [v]).map((s: string) => `"${s}"`).join(", ")}]`,
+            (v: any) =>
+              `[${(Array.isArray(v) ? v : [v]).map((s: string) => `"${s}"`).join(", ")}]`,
           )
           .join(", ")}]`;
       }

@@ -1,6 +1,10 @@
 import { jsonSchemaToGraphQL } from "./converter";
 import { ConverterOptions } from "./generated/types";
-import { camelToSnake, snakeToCamel, convertObjectKeys } from "./case-conversion";
+import {
+  camelToSnake,
+  snakeToCamel,
+  convertObjectKeys,
+} from "./case-conversion";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -68,7 +72,10 @@ describe("Converter Improvements", () => {
     });
 
     test("should handle snake_case ref to camelCase definition", () => {
-      const testDataPath = path.join(__dirname, "../../../test-data/case-mismatch.schema.json");
+      const testDataPath = path.join(
+        __dirname,
+        "../../../test-data/case-mismatch.schema.json",
+      );
       if (fs.existsSync(testDataPath)) {
         const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
         const result = jsonSchemaToGraphQL(schema);
@@ -201,7 +208,10 @@ describe("Converter Improvements", () => {
     });
 
     test("should process circular-refs.schema.json without errors", () => {
-      const testDataPath = path.join(__dirname, "../../../test-data/circular-refs.schema.json");
+      const testDataPath = path.join(
+        __dirname,
+        "../../../test-data/circular-refs.schema.json",
+      );
       if (fs.existsSync(testDataPath)) {
         const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
 
@@ -423,7 +433,10 @@ describe("Converter Improvements", () => {
     });
 
     test("should process filtering.schema.json correctly", () => {
-      const testDataPath = path.join(__dirname, "../../../test-data/filtering.schema.json");
+      const testDataPath = path.join(
+        __dirname,
+        "../../../test-data/filtering.schema.json",
+      );
       if (fs.existsSync(testDataPath)) {
         const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
         const result = jsonSchemaToGraphQL(schema);
@@ -442,7 +455,10 @@ describe("Converter Improvements", () => {
     });
 
     test("should include operational types when flag is set", () => {
-      const testDataPath = path.join(__dirname, "../../../test-data/filtering.schema.json");
+      const testDataPath = path.join(
+        __dirname,
+        "../../../test-data/filtering.schema.json",
+      );
       if (fs.existsSync(testDataPath)) {
         const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
         const result = jsonSchemaToGraphQL(schema, {

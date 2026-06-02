@@ -143,7 +143,10 @@ function loadSchema(filePath: string): Record<string, unknown> | null {
     const content = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(content);
   } catch (error) {
-    console.error(`Error loading schema from ${filePath}:`, (error as Error).message);
+    console.error(
+      `Error loading schema from ${filePath}:`,
+      (error as Error).message,
+    );
     return null;
   }
 }
@@ -173,7 +176,10 @@ interface FileValidationResult {
   result: ValidationResult;
 }
 
-function validateFiles(files: string[], options: CliOptions): FileValidationResult[] {
+function validateFiles(
+  files: string[],
+  options: CliOptions,
+): FileValidationResult[] {
   const results: FileValidationResult[] = [];
 
   for (const file of files) {
@@ -188,7 +194,10 @@ function validateFiles(files: string[], options: CliOptions): FileValidationResu
   return results;
 }
 
-function outputResults(results: FileValidationResult[], options: CliOptions): number {
+function outputResults(
+  results: FileValidationResult[],
+  options: CliOptions,
+): number {
   let totalErrors = 0;
   let totalWarnings = 0;
 
@@ -210,7 +219,10 @@ function outputResults(results: FileValidationResult[], options: CliOptions): nu
       totalErrors += result.errors.length;
       totalWarnings += result.warnings.length;
 
-      if (result.errors.length === 0 && (result.warnings.length === 0 || options.quiet)) {
+      if (
+        result.errors.length === 0 &&
+        (result.warnings.length === 0 || options.quiet)
+      ) {
         if (options.verbose) {
           console.log(`✓ ${file}: Valid`);
         }
