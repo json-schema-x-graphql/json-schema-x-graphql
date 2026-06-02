@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback, Suspense } from "react";
 
 const GraphQLEditor = React.lazy(() =>
-  import("graphql-editor").then((mod) => ({ default: mod.GraphQLEditor || mod.default })),
+  import("graphql-editor").then((mod) => ({
+    default: mod.GraphQLEditor || mod.default,
+  })),
 );
 
 /**
@@ -35,7 +37,9 @@ const MODES = [
 
 export default function App() {
   const [mode, setMode] = useState("canonical");
-  const [schema, setSchema] = useState({ code: "type Query { _noop: String }" });
+  const [schema, setSchema] = useState({
+    code: "type Query { _noop: String }",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -47,7 +51,9 @@ export default function App() {
         const candidate = MODES.find((x) => x.key === m) || MODES[0];
         const res = await fetch(candidate.path);
         if (!res.ok) {
-          throw new Error(`Failed to fetch ${candidate.path} (HTTP ${res.status})`);
+          throw new Error(
+            `Failed to fetch ${candidate.path} (HTTP ${res.status})`,
+          );
         }
         const text = await res.text();
         setSchema({ code: text });
@@ -93,17 +99,23 @@ export default function App() {
     <div style={styles.app}>
       <header style={styles.header}>
         <div style={styles.titleBlock}>
-          <h1 style={styles.title}>GraphQL Editor — Schema Unification Forest (Standalone)</h1>
+          <h1 style={styles.title}>
+            GraphQL Editor — Schema Unification Forest (Standalone)
+          </h1>
           <p style={styles.subtitle}>
-            Edit and explore the generated GraphQL SDL. This editor runs as an isolated app to avoid
-            bundling issues with Monaco and the main site.
+            Edit and explore the generated GraphQL SDL. This editor runs as an
+            isolated app to avoid bundling issues with Monaco and the main site.
           </p>
         </div>
 
         <div style={styles.controls}>
           <label style={styles.label}>
             Mode
-            <select value={mode} onChange={handleModeChange} style={styles.select}>
+            <select
+              value={mode}
+              onChange={handleModeChange}
+              style={styles.select}
+            >
               {MODES.map((m) => (
                 <option key={m.key} value={m.key}>
                   {m.label}
@@ -148,7 +160,9 @@ export default function App() {
 
         {!loading && (
           <div style={styles.editorWrapper}>
-            <Suspense fallback={<div style={styles.loading}>Loading editor…</div>}>
+            <Suspense
+              fallback={<div style={styles.loading}>Loading editor…</div>}
+            >
               <GraphQLEditor
                 schema={schema}
                 setSchema={(next) => {
@@ -164,8 +178,9 @@ export default function App() {
 
       <footer style={styles.footer}>
         <small>
-          Built as an isolated Vite app. To serve from the main site, build and copy the output to
-          the Next.js site's <code>/public/graphql-editor</code> directory.
+          Built as an isolated Vite app. To serve from the main site, build and
+          copy the output to the Next.js site's{" "}
+          <code>/public/graphql-editor</code> directory.
         </small>
       </footer>
     </div>
@@ -177,7 +192,8 @@ const styles = {
     height: "100vh",
     display: "flex",
     flexDirection: "column",
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
     background: "#f8fafc",
     color: "#0f172a",
   },

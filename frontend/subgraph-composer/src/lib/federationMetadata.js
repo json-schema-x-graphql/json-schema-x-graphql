@@ -78,7 +78,9 @@ function extractFederatedTypes(sdl) {
 
     types.push({
       name: typeName,
-      isFederated: /@key|@extends|@external|@requires|@provides/g.test(typeSection),
+      isFederated: /@key|@extends|@external|@requires|@provides/g.test(
+        typeSection,
+      ),
       hasKey: /@key/g.test(typeSection),
       isExtended: /@extends/g.test(typeSection),
       hasExternalFields: /@external/g.test(typeSection),
@@ -149,7 +151,8 @@ function extractTypeFields(typeSection) {
  */
 function extractDirectives(sdl) {
   const directives = [];
-  const directiveRegex = /(@key|@external|@requires|@provides|@extends)\s*\(([^)]+)\)/g;
+  const directiveRegex =
+    /(@key|@external|@requires|@provides|@extends)\s*\(([^)]+)\)/g;
   let match;
 
   while ((match = directiveRegex.exec(sdl)) !== null) {
@@ -192,7 +195,8 @@ function extractReferences(sdl) {
  */
 function extractEntityTypes(sdl) {
   const entities = [];
-  const entityRegex = /@key\s*\(\s*fields:\s*"([^"]+)"\s*\)\s*\n\s*type\s+(\w+)/g;
+  const entityRegex =
+    /@key\s*\(\s*fields:\s*"([^"]+)"\s*\)\s*\n\s*type\s+(\w+)/g;
   let match;
 
   while ((match = entityRegex.exec(sdl)) !== null) {
@@ -247,7 +251,9 @@ export function analyzeFederationRequirements(subgraphs) {
   for (const metadata of allMetadata) {
     for (const entity of metadata.entityTypes) {
       if (entityNames.has(entity.name)) {
-        analysis.issues.push(`Entity "${entity.name}" defined in multiple subgraphs`);
+        analysis.issues.push(
+          `Entity "${entity.name}" defined in multiple subgraphs`,
+        );
         analysis.canCompose = false;
       } else {
         entityNames.add(entity.name);
@@ -263,11 +269,18 @@ export function analyzeFederationRequirements(subgraphs) {
   for (const metadata of allMetadata) {
     for (const extField of metadata.externalFields) {
       const entityName = Object.keys(analysis.entityMap).find((key) =>
-        metadata.types.find((t) => t.name === key)?.fields?.some((f) => f.name === extField.field),
+        metadata.types
+          .find((t) => t.name === key)
+          ?.fields?.some((f) => f.name === extField.field),
       );
 
-      if (!entityName && !metadata.types.some((t) => t.isExtended && t.name === entityName)) {
-        analysis.warnings.push(`External field "${extField.field}" may require @extends`);
+      if (
+        !entityName &&
+        !metadata.types.some((t) => t.isExtended && t.name === entityName)
+      ) {
+        analysis.warnings.push(
+          `External field "${extField.field}" may require @extends`,
+        );
       }
     }
   }

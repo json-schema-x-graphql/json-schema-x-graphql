@@ -1,6 +1,15 @@
-import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
-const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange }, ref) {
+const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
+  { value, onChange },
+  ref,
+) {
   const [EditorComp, setEditorComp] = useState(null);
   const [loadError, setLoadError] = useState(false);
   const textareaRef = useRef(null);
@@ -123,7 +132,12 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange 
   return (
     <textarea
       ref={textareaRef}
-      style={{ height: "100%", width: "100%", fontFamily: "monospace", fontSize: 13 }}
+      style={{
+        height: "100%",
+        width: "100%",
+        fontFamily: "monospace",
+        fontSize: 13,
+      }}
       value={currentValue}
       onChange={(e) => handleChange(e.target.value)}
     />

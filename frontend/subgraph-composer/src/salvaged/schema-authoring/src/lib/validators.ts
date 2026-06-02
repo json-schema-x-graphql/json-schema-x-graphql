@@ -37,7 +37,9 @@ const DRAFT_2020_12_SCHEMA = "https://json-schema.org/draft/2020-12/schema";
 /**
  * Validate JSON Schema
  */
-export async function validateJsonSchema(schemaString: string): Promise<ValidationResult> {
+export async function validateJsonSchema(
+  schemaString: string,
+): Promise<ValidationResult> {
   const errors: ValidationError[] = [];
   const warnings: ValidationWarning[] = [];
 
@@ -79,7 +81,8 @@ export async function validateJsonSchema(schemaString: string): Promise<Validati
           path: "",
           line: 1,
           column: 1,
-          suggestion: 'Wrap your schema in curly braces: { "type": "object", ... }',
+          suggestion:
+            'Wrap your schema in curly braces: { "type": "object", ... }',
         },
       ],
       warnings: [],
@@ -125,7 +128,9 @@ export async function validateJsonSchema(schemaString: string): Promise<Validati
     const valid = validate(schema);
 
     if (!valid && validate.errors) {
-      errors.push(...validate.errors.map((error) => convertAjvError(error, schemaString)));
+      errors.push(
+        ...validate.errors.map((error) => convertAjvError(error, schemaString)),
+      );
     }
   } catch (error) {
     errors.push({
@@ -157,7 +162,10 @@ export async function validateJsonSchema(schemaString: string): Promise<Validati
 /**
  * Convert Ajv error to ValidationError
  */
-function convertAjvError(error: ErrorObject, schemaString: string): ValidationError {
+function convertAjvError(
+  error: ErrorObject,
+  schemaString: string,
+): ValidationError {
   const path = error.instancePath || error.schemaPath || "";
   const position = findPositionInString(schemaString, path);
   const { line, column } = position
@@ -313,7 +321,10 @@ function getSyntaxErrorFix(
 
   // Attempt to detect trailing comma
   if (error.message.includes("Unexpected token")) {
-    const context = schemaString.slice(Math.max(0, position - 10), position + 10);
+    const context = schemaString.slice(
+      Math.max(0, position - 10),
+      position + 10,
+    );
     if (context.includes(",}") || context.includes(",]")) {
       return {
         description: "Remove trailing comma",
@@ -347,7 +358,10 @@ function validateXGraphQLExtensions(
   const warnings: ValidationWarning[] = [];
 
   // Check x-graphql-type-name
-  if (schema["x-graphql-type-name"] && typeof schema["x-graphql-type-name"] !== "string") {
+  if (
+    schema["x-graphql-type-name"] &&
+    typeof schema["x-graphql-type-name"] !== "string"
+  ) {
     errors.push({
       severity: "error",
       message: "x-graphql-type-name must be a string",
@@ -380,7 +394,10 @@ function validateXGraphQLExtensions(
         const prop = propValue as Record<string, unknown>;
 
         // Check x-graphql-field-name
-        if (prop["x-graphql-field-name"] && typeof prop["x-graphql-field-name"] !== "string") {
+        if (
+          prop["x-graphql-field-name"] &&
+          typeof prop["x-graphql-field-name"] !== "string"
+        ) {
           errors.push({
             severity: "error",
             message: `x-graphql-field-name must be a string in property "${propName}"`,
@@ -428,7 +445,8 @@ function checkCommonIssues(
       path: "",
       line: 1,
       column: 1,
-      suggestion: 'Add "type", "properties", or "items" to define the schema structure',
+      suggestion:
+        'Add "type", "properties", or "items" to define the schema structure',
     });
   }
 
@@ -442,7 +460,8 @@ function checkCommonIssues(
         path: "properties",
         line: 1,
         column: 1,
-        suggestion: "Add at least one property definition or remove the empty properties object",
+        suggestion:
+          "Add at least one property definition or remove the empty properties object",
       });
     }
   }
@@ -465,7 +484,10 @@ function checkCommonIssues(
 /**
  * Get line and column from position
  */
-function getLineColumn(text: string, position: number): { line: number; column: number } {
+function getLineColumn(
+  text: string,
+  position: number,
+): { line: number; column: number } {
   const lines = text.slice(0, position).split("\n");
   return {
     line: lines.length,
@@ -493,7 +515,9 @@ function findPositionInString(jsonString: string, path: string): number | null {
 /**
  * Validate GraphQL SDL (basic)
  */
-export async function validateGraphQLSdl(sdl: string): Promise<ValidationResult> {
+export async function validateGraphQLSdl(
+  sdl: string,
+): Promise<ValidationResult> {
   const errors: ValidationError[] = [];
   const warnings: ValidationWarning[] = [];
 
@@ -520,7 +544,11 @@ export async function validateGraphQLSdl(sdl: string): Promise<ValidationResult>
     const trimmed = line.trim();
 
     // Check for common syntax errors
-    if (trimmed.includes("{") && !trimmed.includes("}") && !lines[index + 1]?.includes("}")) {
+    if (
+      trimmed.includes("{") &&
+      !trimmed.includes("}") &&
+      !lines[index + 1]?.includes("}")
+    ) {
       warnings.push({
         severity: "warning",
         message: "Possible unclosed brace",
@@ -557,7 +585,9 @@ export async function validateAndFormat(
   schemaString: string,
 ): Promise<{ formatted: string; validation: ValidationResult }> {
   const validation = await validateJsonSchema(schemaString);
-  const formatted = validation.valid ? formatJsonSchema(schemaString) : schemaString;
+  const formatted = validation.valid
+    ? formatJsonSchema(schemaString)
+    : schemaString;
 
   return { formatted, validation };
 }

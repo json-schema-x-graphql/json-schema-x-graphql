@@ -21,7 +21,12 @@ const Row = ({ val, x, y, index }: RowProps) => {
   const rowPosition = index * NODE_DIMENSIONS.ROW_HEIGHT;
 
   return (
-    <Styled.StyledRow $value={rowValue} data-key={key} data-x={x} data-y={y + rowPosition}>
+    <Styled.StyledRow
+      $value={rowValue}
+      data-key={key}
+      data-x={x}
+      data-y={y + rowPosition}
+    >
       <Styled.StyledKey $type="object">{rowKey}: </Styled.StyledKey>
       <TextRenderer>{rowValue}</TextRenderer>
     </Styled.StyledRow>
@@ -44,7 +49,10 @@ const Node = ({ node, x, y }: CustomNodeProps) => (
 );
 
 function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
-  return String(prev.node.text) === String(next.node.text) && prev.node.width === next.node.width;
+  return (
+    String(prev.node.text) === String(next.node.text) &&
+    prev.node.width === next.node.width
+  );
 }
 
 export const ObjectNode = React.memo(Node, propsAreEqual);

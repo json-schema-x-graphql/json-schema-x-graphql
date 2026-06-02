@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Paper,
+  Title,
+  Text,
+} from "@mantine/core";
 import type { OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
 import { NextSeo } from "next-seo";
@@ -80,7 +88,8 @@ const JSONSchemaTool = () => {
         monacoAny.languages &&
         monacoAny.languages.json &&
         monacoAny.languages.json.jsonDefaults &&
-        typeof monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions === "function"
+        typeof monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions ===
+          "function"
       ) {
         monacoAny.languages.json.jsonDefaults.setDiagnosticsOptions({
           validate: true,
@@ -105,13 +114,20 @@ const JSONSchemaTool = () => {
   }, [jsonSchema, parsedJsonSchema]);
 
   const generateJsonSchema = async () => {
-    const jsonSchema = await generateType(json, FileFormat.JSON, TypeLanguage.JSON_SCHEMA);
+    const jsonSchema = await generateType(
+      json,
+      FileFormat.JSON,
+      TypeLanguage.JSON_SCHEMA,
+    );
     setJsonSchema(jsonSchema);
   };
 
   const generateJson = async () => {
     const randomJson = await JSONSchemaFaker.resolve(JSON.parse(jsonSchema));
-    const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), FileFormat.JSON);
+    const contents = await jsonToContent(
+      JSON.stringify(randomJson, null, 2),
+      FileFormat.JSON,
+    );
     setJson(contents);
   };
 
@@ -148,7 +164,11 @@ const JSONSchemaTool = () => {
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
                 <Text c="gray.3">JSON</Text>
-                {jsonError ? <LuCircleX color="red" /> : <LuCheck color="lightgreen" />}
+                {jsonError ? (
+                  <LuCircleX color="red" />
+                ) : (
+                  <LuCheck color="lightgreen" />
+                )}
               </Flex>
             </Box>
             <Editor
@@ -165,7 +185,11 @@ const JSONSchemaTool = () => {
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
                 <Text c="gray.3">JSON Schema</Text>
-                {jsonSchemaError ? <LuCircleX color="red" /> : <LuCheck color="lightgreen" />}
+                {jsonSchemaError ? (
+                  <LuCircleX color="red" />
+                ) : (
+                  <LuCheck color="lightgreen" />
+                )}
               </Flex>
             </Box>
             <Editor

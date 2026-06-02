@@ -166,7 +166,11 @@
     "mixedArray": {
       "type": "array",
       "items": {
-        "oneOf": [{ "type": "string" }, { "type": "number" }, { "type": "boolean" }]
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" }
+        ]
       },
       "description": "Array with mixed types"
     },

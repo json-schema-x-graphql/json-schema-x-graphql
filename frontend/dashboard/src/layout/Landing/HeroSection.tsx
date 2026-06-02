@@ -23,8 +23,22 @@ const StyledHeroSection = styled.main`
       linear-gradient(to right, #f7f7f7 1px, transparent 1px),
       linear-gradient(to bottom, #f7f7f7 1px, transparent 1px);
     image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 0%, white, 98%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 0%, white, 98%, transparent);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      0%,
+      white,
+      98%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      0%,
+      white,
+      98%,
+      transparent
+    );
   }
 
   @media only screen and (max-width: 1240px) {
@@ -196,16 +210,18 @@ export const HeroSection = ({ stars = 0 }) => {
           </Link>
 
           <StyledHeroTitle>
-            Federal Procurement Data Fabric (FPDF) v2.0 by Schema Unification Forest Project with
-            GraphQL Extensions
+            Federal Procurement Data Fabric (FPDF) v2.0 by Schema Unification
+            Forest Project with GraphQL Extensions
           </StyledHeroTitle>
           <StyledHeroText>
-            The <strong>Federal Procurement Data Fabric (FPDF) v2.0</strong> by Schema Unification
-            Forest Project provides interactive visualization tools for government contract data,
-            powered by advanced GraphQL extensions. Explore normalized contract records from
-            Contract Data, Legacy Procurement, and EASi systems, and examine the unified{" "}
-            <strong>schema_unification.schema.json</strong> data structure that enables cross-system
-            analysis, reporting, and modern API/dashboard applications.
+            The <strong>Federal Procurement Data Fabric (FPDF) v2.0</strong> by
+            Schema Unification Forest Project provides interactive visualization
+            tools for government contract data, powered by advanced GraphQL
+            extensions. Explore normalized contract records from Contract Data,
+            Legacy Procurement, and EASi systems, and examine the unified{" "}
+            <strong>schema_unification.schema.json</strong> data structure that
+            enables cross-system analysis, reporting, and modern API/dashboard
+            applications.
           </StyledHeroText>
 
           <StyledVersionSection>
@@ -214,11 +230,14 @@ export const HeroSection = ({ stars = 0 }) => {
               <StyledBadge variant="stable">Stable</StyledBadge>
             </StyledVersionTitle>
             <StyledVersionDescription>
-              Enhanced definitions-based schema optimized for GraphQL APIs, dashboards, and advanced
-              querying with typed system extensions.
+              Enhanced definitions-based schema optimized for GraphQL APIs,
+              dashboards, and advanced querying with typed system extensions.
             </StyledVersionDescription>
             <StyledBenefitsList>
-              <li>Typed, structured system extensions (Contract Data, Legacy Procurement, EASi)</li>
+              <li>
+                Typed, structured system extensions (Contract Data, Legacy
+                Procurement, EASi)
+              </li>
               <li>GraphQL-optimized with rich type definitions</li>
               <li>Advanced querying and filtering capabilities</li>
               <li>Better IDE auto-completion and type safety</li>

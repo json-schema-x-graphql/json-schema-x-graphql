@@ -362,7 +362,10 @@ export function snakeToCamel(str: string): string {
 /**
  * Recursively convert object keys using a converter function
  */
-export function convertObjectKeys(obj: any, converter: (key: string) => string): any {
+export function convertObjectKeys(
+  obj: any,
+  converter: (key: string) => string,
+): any {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertObjectKeys(item, converter));
   } else if (obj !== null && typeof obj === "object") {
@@ -379,7 +382,10 @@ export function convertObjectKeys(obj: any, converter: (key: string) => string):
 /**
  * Convert GraphQL field names in SDL string using a converter
  */
-export function convertGraphQLFields(sdl: string, converter: (field: string) => string): string {
+export function convertGraphQLFields(
+  sdl: string,
+  converter: (field: string) => string,
+): string {
   return sdl.replace(
     /(\s*)([a-zA-Z][a-zA-Z0-9_]*)\s*:/g,
     (match, ws, field) => `${ws}${converter(field)}:`,
@@ -424,7 +430,11 @@ export class JsonSchemaToGraphQL {
 
     // Check for circular $ref
     if (visited.has(refPath)) {
-      throw new ConversionError(`Circular $ref detected: ${refPath}`, undefined, "CIRCULAR_REF");
+      throw new ConversionError(
+        `Circular $ref detected: ${refPath}`,
+        undefined,
+        "CIRCULAR_REF",
+      );
     }
     visited.add(refPath);
 
@@ -771,7 +781,9 @@ describe("$ref Resolution", () => {
       },
     };
 
-    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(/Circular.*ref/i);
+    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(
+      /Circular.*ref/i,
+    );
   });
 });
 ```
@@ -789,7 +801,9 @@ describe("Circular Reference Protection", () => {
       },
     };
 
-    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(/Circular reference/i);
+    expect(() => jsonSchemaToGraphQL(JSON.stringify(schema))).toThrow(
+      /Circular reference/i,
+    );
   });
 
   it("should detect mutual references", () => {
@@ -951,7 +965,15 @@ module.exports = {
   // Type filtering
   excludeTypes: ["Query", "Mutation", "Subscription", "PageInfo"],
 
-  excludeTypeSuffixes: ["Filter", "Sort", "Connection", "Edge", "Input", "Args", "Payload"],
+  excludeTypeSuffixes: [
+    "Filter",
+    "Sort",
+    "Connection",
+    "Edge",
+    "Input",
+    "Args",
+    "Payload",
+  ],
 
   includeOperationalTypes: false,
 

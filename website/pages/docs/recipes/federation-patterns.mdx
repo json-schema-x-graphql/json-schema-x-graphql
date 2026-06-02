@@ -91,7 +91,11 @@ type Product @key(fields: "upc") {
       "type": "object",
       "x-graphql-federation-keys": ["id"],
       "properties": {
-        "id": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+        "id": {
+          "type": "string",
+          "x-graphql-field-type": "ID",
+          "x-graphql-field-non-null": true
+        },
         "product_upc": {
           "type": "string",
           "x-graphql-field-name": "productUpc",
@@ -141,7 +145,11 @@ Use `resolvable: false` when you only need an entity stub — no additional fiel
     "type": "object",
     "x-graphql-federation-keys": [{ "fields": "upc", "resolvable": false }],
     "properties": {
-      "upc": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true }
+      "upc": {
+        "type": "string",
+        "x-graphql-field-type": "ID",
+        "x-graphql-field-non-null": true
+      }
     }
   }
 }
@@ -196,7 +204,10 @@ type User @key(fields: "id organizationId") {
     "x-graphql-federation-keys": ["id organization { id }"],
     "properties": {
       "id": { "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
-      "organization": { "x-graphql-field-type": "Organization", "x-graphql-field-non-null": true }
+      "organization": {
+        "x-graphql-field-type": "Organization",
+        "x-graphql-field-non-null": true
+      }
     }
   }
 }

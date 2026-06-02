@@ -30,7 +30,9 @@ const TextEditor = () => {
   const setError = useFile((state) => state.setError);
   const jsonSchema = useFile((state) => state.jsonSchema);
   const getHasChanges = useFile((state) => state.getHasChanges);
-  const theme = useConfig((state) => (state.darkmodeEnabled ? "vs-dark" : "light"));
+  const theme = useConfig((state) =>
+    state.darkmodeEnabled ? "vs-dark" : "light",
+  );
   const fileType = useFile((state) => state.format);
 
   React.useEffect(() => {
@@ -40,8 +42,14 @@ const TextEditor = () => {
     let mounted = true;
     const applyDefaults = () => {
       try {
-        const mon = typeof window !== "undefined" ? (window as any).monaco : null;
-        if (mon && mon.languages && mon.languages.json && mon.languages.json.jsonDefaults) {
+        const mon =
+          typeof window !== "undefined" ? (window as any).monaco : null;
+        if (
+          mon &&
+          mon.languages &&
+          mon.languages.json &&
+          mon.languages.json.jsonDefaults
+        ) {
           mon.languages.json.jsonDefaults.setDiagnosticsOptions({
             validate: true,
             allowComments: true,

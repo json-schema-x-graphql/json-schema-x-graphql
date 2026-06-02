@@ -23,7 +23,10 @@ function mapLanguagesToProgramming(
   return mappedCombinations;
 }
 
-const filterProgrammingLanguages = [TypeLanguage.TypeScript_Combined, TypeLanguage.JSON_SCHEMA];
+const filterProgrammingLanguages = [
+  TypeLanguage.TypeScript_Combined,
+  TypeLanguage.JSON_SCHEMA,
+];
 
 const languages = formats.map((format) => format.label);
 
@@ -31,7 +34,10 @@ const programmingLanguages = typeOptions
   .filter((option) => !filterProgrammingLanguages.includes(option.value))
   .map((option) => option.label);
 
-const groupedLanguages = mapLanguagesToProgramming(languages, programmingLanguages);
+const groupedLanguages = mapLanguagesToProgramming(
+  languages,
+  programmingLanguages,
+);
 
 export const PageLinks = () => {
   return (

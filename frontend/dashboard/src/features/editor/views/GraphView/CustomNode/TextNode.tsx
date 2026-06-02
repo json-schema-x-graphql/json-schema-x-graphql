@@ -25,7 +25,10 @@ const StyledExpand = styled.button`
   }
 `;
 
-const StyledTextNodeWrapper = styled.span<{ $hasCollapse: boolean; $isParent: boolean }>`
+const StyledTextNodeWrapper = styled.span<{
+  $hasCollapse: boolean;
+  $isParent: boolean;
+}>`
   display: flex;
   justify-content: ${({ $hasCollapse, $isParent }) =>
     $hasCollapse ? "space-between" : $isParent ? "center" : "flex-start"};
@@ -55,7 +58,9 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     data: { isParent, childrenCount, type },
   } = node;
   const { validateHiddenNodes } = useToggleHide();
-  const collapseButtonVisible = useConfig((state) => state.collapseButtonVisible);
+  const collapseButtonVisible = useConfig(
+    (state) => state.collapseButtonVisible,
+  );
   const childrenCountVisible = useConfig((state) => state.childrenCountVisible);
   const imagePreviewEnabled = useConfig((state) => state.imagePreviewEnabled);
   const expandNodes = useGraph((state) => state.expandNodes);
@@ -88,7 +93,12 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     >
       {isImage ? (
         <StyledImageWrapper>
-          <StyledImage src={text as string} width="70" height="70" loading="lazy" />
+          <StyledImage
+            src={text as string}
+            width="70"
+            height="70"
+            loading="lazy"
+          />
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper
@@ -102,7 +112,9 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
             <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && childrenCountVisible && (
-            <Styled.StyledChildrenCount>{childrenCountText}</Styled.StyledChildrenCount>
+            <Styled.StyledChildrenCount>
+              {childrenCountText}
+            </Styled.StyledChildrenCount>
           )}
           {isParent && hasCollapse && collapseButtonVisible && (
             <StyledExpand aria-label="Expand" onClick={handleExpand}>

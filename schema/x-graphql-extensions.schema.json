@@ -54,7 +54,14 @@
 
     "graphqlKind": {
       "type": "string",
-      "enum": ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"],
+      "enum": [
+        "OBJECT",
+        "INTERFACE",
+        "UNION",
+        "ENUM",
+        "INPUT_OBJECT",
+        "SCALAR"
+      ],
       "description": "GraphQL type kind"
     },
 

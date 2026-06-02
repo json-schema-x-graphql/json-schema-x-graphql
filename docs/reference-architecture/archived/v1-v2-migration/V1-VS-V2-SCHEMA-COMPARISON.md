@@ -553,7 +553,11 @@ query {
 # ❌ CANNOT DO THIS
 query {
   contracts(
-    filter: { contract_data: { legacy_procurementanceType: { isFinancialAssistance: true } } }
+    filter: {
+      contract_data: {
+        legacy_procurementanceType: { isFinancialAssistance: true }
+      }
+    }
   ) {
     piid
   }
@@ -571,7 +575,9 @@ query {
     filter: {
       systemExtensions: {
         contract_data: {
-          contract_data: { legacy_procurementanceType: { isFinancialAssistance: true } }
+          contract_data: {
+            legacy_procurementanceType: { isFinancialAssistance: true }
+          }
         }
       }
     }

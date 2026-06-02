@@ -1,7 +1,8 @@
 import type { NextSeoProps } from "next-seo";
 
 export const SEO: NextSeoProps = {
-  title: "GSA Enterprise Schema Unification Forest | Government Contract Data Visualizer",
+  title:
+    "GSA Enterprise Schema Unification Forest | Government Contract Data Visualizer",
   description:
     "GSA Technology Transformation Services (TTS) Schema Unification Forest project provides interactive visualization tools for government contract data from Contract Data, Legacy Procurement, and EASi systems. Explore normalized contract records and unified data schemas.",
   themeColor: "#202842",

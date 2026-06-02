@@ -186,7 +186,8 @@ export class ConverterManager {
 
       // If failed and fallback is enabled, try fallback engine
       if (this.config.enableFallback) {
-        const fallbackEngine = selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
+        const fallbackEngine =
+          selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
         console.warn(
           `Primary engine (${selectedEngine}) failed, falling back to ${fallbackEngine}`,
         );
@@ -211,7 +212,8 @@ export class ConverterManager {
     } catch (error) {
       // If fallback is enabled, try fallback engine
       if (this.config.enableFallback) {
-        const fallbackEngine = selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
+        const fallbackEngine =
+          selectedEngine === "rust-wasm" ? "node" : "rust-wasm";
         console.warn(
           `Primary engine (${selectedEngine}) threw error, falling back to ${fallbackEngine}:`,
           error,
@@ -240,7 +242,9 @@ export class ConverterManager {
               message: `Both converters failed. Primary: ${
                 error instanceof Error ? error.message : "Unknown error"
               }. Fallback: ${
-                fallbackError instanceof Error ? fallbackError.message : "Unknown error"
+                fallbackError instanceof Error
+                  ? fallbackError.message
+                  : "Unknown error"
               }`,
             },
             engine: fallbackEngine,
@@ -289,11 +293,15 @@ export class ConverterManager {
     const wasmAvailable = this.wasmConverter.isAvailable();
     const wasmLoading = this.wasmConverter.isLoading();
     const wasmError = this.wasmConverter.getError();
-    const wasmVersion = wasmAvailable ? await this.wasmConverter.getVersion() : null;
+    const wasmVersion = wasmAvailable
+      ? await this.wasmConverter.getVersion()
+      : null;
 
     // Check Node status
     const nodeAvailable = await this.nodeConverter.isAvailable();
-    const nodeVersion = nodeAvailable ? await this.nodeConverter.getVersion() : null;
+    const nodeVersion = nodeAvailable
+      ? await this.nodeConverter.getVersion()
+      : null;
 
     const status: EngineStatus = {
       wasm: {
@@ -353,7 +361,9 @@ export class ConverterManager {
   /**
    * Get average conversion time by engine
    */
-  getAverageConversionTime(engine?: ConverterEngine): Record<ConverterEngine, number> {
+  getAverageConversionTime(
+    engine?: ConverterEngine,
+  ): Record<ConverterEngine, number> {
     const metrics = engine
       ? this.performanceMetrics.filter((m) => m.engine === engine)
       : this.performanceMetrics;
@@ -401,7 +411,8 @@ export class ConverterManager {
 
     return Object.entries(byEngine).reduce(
       (acc, [eng, stats]) => {
-        acc[eng as ConverterEngine] = stats.total > 0 ? stats.success / stats.total : 0;
+        acc[eng as ConverterEngine] =
+          stats.total > 0 ? stats.success / stats.total : 0;
         return acc;
       },
       {} as Record<ConverterEngine, number>,

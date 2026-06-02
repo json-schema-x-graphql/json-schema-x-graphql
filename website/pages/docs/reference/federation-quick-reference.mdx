@@ -33,7 +33,11 @@ Quick directive mapping and common patterns for `x-graphql` federation extension
     "x-graphql-type-name": "User",
     "x-graphql-federation": { "keys": [{ "fields": "id" }] },
     "properties": {
-      "id": { "type": "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+      "id": {
+        "type": "string",
+        "x-graphql-field-type": "ID",
+        "x-graphql-field-non-null": true
+      },
       "name": { "type": "string" }
     }
   }
@@ -106,7 +110,9 @@ Generated: `type Product @key(fields: "sku storeId") { ... }`
 ```json
 {
   "User": {
-    "x-graphql-federation": { "keys": [{ "fields": "id" }, { "fields": "email" }] }
+    "x-graphql-federation": {
+      "keys": [{ "fields": "id" }, { "fields": "email" }]
+    }
   }
 }
 ```
@@ -127,7 +133,9 @@ Generated: `name: String @shareable`
 
 ```json
 {
-  "price": { "x-graphql-federation": { "override": { "from": "legacy-service" } } }
+  "price": {
+    "x-graphql-federation": { "override": { "from": "legacy-service" } }
+  }
 }
 ```
 

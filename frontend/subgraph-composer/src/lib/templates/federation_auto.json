@@ -8,5 +8,7 @@
     "name": { "type": "string", "description": "federated entity name" }
   },
   "required": ["id", "sku"],
-  "x-graphql-directives": [{ "name": "key", "arguments": { "fields": "id sku" } }]
+  "x-graphql-directives": [
+    { "name": "key", "arguments": { "fields": "id sku" } }
+  ]
 }

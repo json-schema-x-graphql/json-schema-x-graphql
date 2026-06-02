@@ -17,7 +17,10 @@ import { SecureInfo } from "./SecureInfo";
 import { ZoomControl } from "./ZoomControl";
 import useGraph from "./stores/useGraph";
 
-const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
+const StyledEditorWrapper = styled.div<{
+  $widget: boolean;
+  $showRulers: boolean;
+}>`
   position: absolute;
   width: 100%;
   height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 67px)")};
@@ -92,7 +95,9 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
+        const changeRatio = Math.abs(
+          (areaSize * 100) / (paneWidth * paneHeight) - 100,
+        );
 
         setPaneWidth(layout.width + 50);
         setPaneHeight((layout.height as number) + 50);
@@ -106,7 +111,14 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
         });
       }
     },
-    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes],
+    [
+      isWidget,
+      paneHeight,
+      paneWidth,
+      centerView,
+      setLoading,
+      validateHiddenNodes,
+    ],
   );
 
   return (
@@ -146,20 +158,25 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const [debouncedLoading] = useDebouncedValue(loading, 300);
 
   const callback = React.useCallback(() => {
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+    const canvas = document.querySelector(
+      ".jsoncrack-canvas",
+    ) as HTMLDivElement | null;
     canvas?.classList.add("dragging");
   }, []);
 
   const bindLongPress = useLongPress(callback, {
     threshold: 150,
     onFinish: () => {
-      const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+      const canvas = document.querySelector(
+        ".jsoncrack-canvas",
+      ) as HTMLDivElement | null;
       canvas?.classList.remove("dragging");
     },
   });
 
   const blurOnClick = React.useCallback(() => {
-    if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
+    if ("activeElement" in document)
+      (document.activeElement as HTMLElement)?.blur();
   }, []);
 
   const debouncedOnZoomChangeHandler = debounce(() => {

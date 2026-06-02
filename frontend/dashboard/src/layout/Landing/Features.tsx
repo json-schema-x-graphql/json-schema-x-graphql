@@ -12,7 +12,10 @@ import {
 } from "@mantine/core";
 import { FaBolt, FaToolbox } from "react-icons/fa";
 import { IoImages, IoShieldCheckmark } from "react-icons/io5";
-import { MdOutlineFormatIndentIncrease, MdOutlineGeneratingTokens } from "react-icons/md";
+import {
+  MdOutlineFormatIndentIncrease,
+  MdOutlineGeneratingTokens,
+} from "react-icons/md";
 import { TbTransformFilled } from "react-icons/tb";
 import { VscJson } from "react-icons/vsc";
 
@@ -47,7 +50,8 @@ const features: FeatureItem[] = [
   },
   {
     title: "Generate Code/Types",
-    description: "Generate TypeScript interface, Golang structs, Rust serde, JSON Schema and more.",
+    description:
+      "Generate TypeScript interface, Golang structs, Rust serde, JSON Schema and more.",
     icon: <MdOutlineGeneratingTokens size={20} />,
     color: "grape",
   },
@@ -60,7 +64,8 @@ const features: FeatureItem[] = [
   },
   {
     title: "Advanced JSON Tools",
-    description: "Decode JWT, randomize data, execute jq (JSON Query), json path commands.",
+    description:
+      "Decode JWT, randomize data, execute jq (JSON Query), json path commands.",
     icon: <FaToolbox size={20} />,
     color: "teal.5",
   },
@@ -73,7 +78,8 @@ const features: FeatureItem[] = [
   },
   {
     title: "Secure",
-    description: "Your data is never stored on our servers. Everything happens on your device.",
+    description:
+      "Your data is never stored on our servers. Everything happens on your device.",
     icon: <IoShieldCheckmark size={20} />,
     color: "gray",
   },
@@ -136,7 +142,12 @@ export const Features = () => {
           {features.map((feature, index) => (
             <Paper key={index} bg="gray.0" p="lg" radius="md">
               <Flex gap="sm" align="center" justify="center" direction="column">
-                <ThemeIcon radius="xl" size="xl" variant="light" color={feature.color}>
+                <ThemeIcon
+                  radius="xl"
+                  size="xl"
+                  variant="light"
+                  color={feature.color}
+                >
                   {feature.icon}
                 </ThemeIcon>
                 <Title fw={500} ta="center" c="gray.9" order={3}>

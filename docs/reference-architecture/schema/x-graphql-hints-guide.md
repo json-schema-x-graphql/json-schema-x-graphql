@@ -348,7 +348,11 @@ type Contract {
 
 ```graphql
 type Query {
-  contracts(limit: Int = 10, offset: Int = 0, filter: ContractFilterInput): [Contract!]!
+  contracts(
+    limit: Int = 10
+    offset: Int = 0
+    filter: ContractFilterInput
+  ): [Contract!]!
 }
 ```
 
@@ -893,7 +897,9 @@ describe("hint-based generation", () => {
     const graphql = generateGraphQL(schema);
 
     expect(graphql).toContain("type Contract DataExtension");
-    expect(graphql).toContain("legacy_procurementanceType: Contract DataAssistanceType");
+    expect(graphql).toContain(
+      "legacy_procurementanceType: Contract DataAssistanceType",
+    );
   });
 });
 ```
@@ -942,7 +948,9 @@ Define reusable hint patterns:
 {
   "x-graphql-macros": {
     "adminOnly": {
-      "x-graphql-directives": [{ "name": "auth", "args": { "requires": "ADMIN" } }]
+      "x-graphql-directives": [
+        { "name": "auth", "args": { "requires": "ADMIN" } }
+      ]
     }
   },
   "sensitiveData": {

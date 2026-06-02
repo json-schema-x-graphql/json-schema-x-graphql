@@ -1,0 +1,207 @@
+
+
+    schema
+    @link(url: "https://specs.apollo.dev/link/v1.0")
+    @link(url: "https://specs.apollo.dev/join/v0.3", for: EXECUTION)
+    
+    
+    
+    
+    
+    
+    
+  {
+    query: Query
+    
+    
+  }
+
+  
+    directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+    directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+    
+      directive @join__field(
+        graph: join__Graph
+        requires: join__FieldSet
+        provides: join__FieldSet
+        type: String
+        external: Boolean
+        override: String
+        usedOverridden: Boolean
+        
+        
+      ) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+    
+    
+
+    directive @join__implements(
+      graph: join__Graph!
+      interface: String!
+    ) repeatable on OBJECT | INTERFACE
+
+    directive @join__type(
+      graph: join__Graph!
+      key: join__FieldSet
+      extension: Boolean! = false
+      resolvable: Boolean! = true
+      isInterfaceObject: Boolean! = false
+    ) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+    directive @join__unionMember(
+      graph: join__Graph!
+      member: String!
+    ) repeatable on UNION
+
+    scalar join__FieldSet
+    
+  
+  
+  directive @link(
+    url: String
+    as: String
+    for: link__Purpose
+    import: [link__Import]
+  ) repeatable on SCHEMA
+
+  scalar link__Import
+
+  enum link__Purpose {
+    """
+    `SECURITY` features provide metadata necessary to securely resolve fields.
+    """
+    SECURITY
+
+    """
+    `EXECUTION` features provide metadata necessary for operation execution.
+    """
+    EXECUTION
+  }
+
+  
+  
+  
+  
+  
+  
+  
+enum join__Graph {
+  PRODUCTS @join__graph(name: "products", url: "") 
+  REVIEWS @join__graph(name: "reviews", url: "") 
+  USERS @join__graph(name: "users", url: "") 
+}
+
+"""
+Product in the catalog
+"""
+type Product @join__type(graph: PRODUCTS, key: "upc")  @join__type(graph: REVIEWS, key: "upc")  {
+  """
+  Universal Product Code (primary key)
+  """
+  upc: ID!
+  """
+  Product name
+  """
+  name: String! @join__field(graph: PRODUCTS) 
+  """
+  Product price
+  """
+  price: Float @join__field(graph: PRODUCTS) 
+  """
+  Product weight in grams
+  """
+  weight: Int @join__field(graph: PRODUCTS) 
+  """
+  Reviews for this product
+  """
+  reviews: [Review!]! @join__field(graph: REVIEWS) 
+}
+
+type Query @join__type(graph: PRODUCTS)  @join__type(graph: REVIEWS)  @join__type(graph: USERS)  {
+  """
+  Get a product by UPC
+  """
+  product(upc: ID!) : Product @join__field(graph: PRODUCTS) 
+  """
+  Get all products
+  """
+  products: [Product!]! @join__field(graph: PRODUCTS) 
+  """
+  Get a review by ID
+  """
+  review(id: ID!) : Review @join__field(graph: REVIEWS) 
+  """
+  Get all reviews
+  """
+  reviews: [Review!]! @join__field(graph: REVIEWS) 
+  """
+  Get a user by email
+  """
+  user(email: ID!) : User @join__field(graph: USERS) 
+  """
+  Get all users
+  """
+  users: [User!]! @join__field(graph: USERS) 
+}
+
+"""
+Extended User type with reviews
+"""
+type User @join__type(graph: REVIEWS, key: "email")  @join__type(graph: USERS, key: "email")  {
+  """
+  User's email address
+  """
+  email: ID!
+  """
+  Reviews written by this user
+  """
+  reviews: [Review!]! @join__field(graph: REVIEWS) 
+  """
+  User's display name
+  """
+  name: String @join__field(graph: USERS) 
+  """
+  Unique username for the account
+  """
+  username: String @join__field(graph: USERS) 
+  """
+  User's date of birth
+  """
+  birthDate: String @join__field(graph: USERS) 
+}
+
+"""
+Product review by a user
+"""
+type Review @join__type(graph: REVIEWS, key: "id")  {
+  """
+  Review ID (primary key)
+  """
+  id: ID!
+  """
+  Foreign key to Product (UPC)
+  """
+  productUpc: ID!
+  """
+  Foreign key to User (email)
+  """
+  authorEmail: ID!
+  """
+  Review text content
+  """
+  body: String
+  """
+  Rating from 1-5
+  """
+  rating: Int
+  """
+  User who wrote the review
+  """
+  author: User!
+  """
+  Product being reviewed
+  """
+  product: Product!
+}
+    

@@ -61,7 +61,10 @@ Each transformation record follows this comprehensive structure:
       "fieldsTransformed": 45,
       "fieldsSkipped": 7,
       "defaultsApplied": 3,
-      "businessRulesApplied": ["sba_client_defaults", "logistics_mgmt_field_mapping"],
+      "businessRulesApplied": [
+        "sba_client_defaults",
+        "logistics_mgmt_field_mapping"
+      ],
       "validationErrors": 1,
       "warnings": 2
     },
@@ -107,7 +110,11 @@ Each transformation record follows this comprehensive structure:
     "businessRulesApplied": {
       "sba_client_defaults": {
         "applied": true,
-        "fieldsAffected": ["agencyCode", "clientOrganizationName", "officeAddress"],
+        "fieldsAffected": [
+          "agencyCode",
+          "clientOrganizationName",
+          "officeAddress"
+        ],
         "defaultValues": {
           "agencyCode": "073-00",
           "clientOrganizationName": "SMALL BUSINESS ADMINISTRATION"
@@ -235,7 +242,10 @@ Each transformation record follows this comprehensive structure:
     ],
     "contract_dataPreparation": {
       "fieldsPrepped": 15,
-      "complianceRulesApplied": ["principal_naics_mapping", "gfp_indicator_mapping"],
+      "complianceRulesApplied": [
+        "principal_naics_mapping",
+        "gfp_indicator_mapping"
+      ],
       "reportingReadiness": true
     }
   }
@@ -254,7 +264,11 @@ Each transformation record follows this comprehensive structure:
     "complianceContext": {
       "contract_dataReportingRequirements": "Federal Procurement Data System compliance",
       "reportingPeriod": "FY2024_Q2",
-      "mandatoryFields": ["principalNaicsCode", "gfpProvidedUnderThisAction", "localAreaSetAside"]
+      "mandatoryFields": [
+        "principalNaicsCode",
+        "gfpProvidedUnderThisAction",
+        "localAreaSetAside"
+      ]
     },
     "fieldMappings": [
       {
@@ -325,7 +339,10 @@ Each transformation record follows this comprehensive structure:
     "totalTransformationTime": "5 days 7 hours 20 minutes",
     "recordsProcessed": 1247,
     "averageRecordProcessingTime": "6.2 seconds",
-    "systemBottlenecks": ["CLIN-level processing", "Contract Data compliance validation"]
+    "systemBottlenecks": [
+      "CLIN-level processing",
+      "Contract Data compliance validation"
+    ]
   }
 }
 ```

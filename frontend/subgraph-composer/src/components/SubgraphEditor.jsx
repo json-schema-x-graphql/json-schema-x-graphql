@@ -58,7 +58,9 @@ export default function SubgraphEditor({
           flexDirection: "column",
         }}
       >
-        <Suspense fallback={<div className="editor-loading">Loading editor...</div>}>
+        <Suspense
+          fallback={<div className="editor-loading">Loading editor...</div>}
+        >
           <CodeMirrorEditor value={subgraph.content} onChange={handleChange} />
         </Suspense>
       </div>
@@ -108,7 +110,9 @@ export default function SubgraphEditor({
             {sdl ? (
               <pre style={{ margin: 0 }}>{sdl}</pre>
             ) : (
-              <span style={{ color: "var(--color-text-light)" }}>No SDL available</span>
+              <span style={{ color: "var(--color-text-light)" }}>
+                No SDL available
+              </span>
             )}
           </div>
         </div>
@@ -206,7 +210,9 @@ export default function SubgraphEditor({
                           Found in: {conflict.sources.join(", ")}
                         </div>
                         {conflict.fieldCount > 0 && (
-                          <div style={{ color: "#92400e", fontStyle: "italic" }}>
+                          <div
+                            style={{ color: "#92400e", fontStyle: "italic" }}
+                          >
                             {conflict.fieldCount} field(s)
                           </div>
                         )}
@@ -216,7 +222,9 @@ export default function SubgraphEditor({
                 )}
               </div>
             ) : (
-              <span style={{ color: "var(--color-text-light)" }}>No statistics available</span>
+              <span style={{ color: "var(--color-text-light)" }}>
+                No statistics available
+              </span>
             )}
           </div>
         </div>

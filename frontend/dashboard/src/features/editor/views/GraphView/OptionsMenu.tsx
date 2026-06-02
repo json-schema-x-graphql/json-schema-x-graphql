@@ -40,7 +40,9 @@ export const OptionsMenu = () => {
   const gesturesEnabled = useConfig((state) => state.gesturesEnabled);
   const childrenCountVisible = useConfig((state) => state.childrenCountVisible);
   const rulersEnabled = useConfig((state) => state.rulersEnabled);
-  const collapseButtonVisible = useConfig((state) => state.collapseButtonVisible);
+  const collapseButtonVisible = useConfig(
+    (state) => state.collapseButtonVisible,
+  );
   const imagePreviewEnabled = useConfig((state) => state.imagePreviewEnabled);
   const { validateHiddenNodes } = useToggleHide();
   const setDirection = useGraph((state) => state.setDirection);
@@ -70,7 +72,9 @@ export const OptionsMenu = () => {
       [
         "mod+f",
         () => {
-          const input = document.querySelector("#search-node") as HTMLInputElement;
+          const input = document.querySelector(
+            "#search-node",
+          ) as HTMLInputElement;
           input.focus();
         },
       ],
@@ -97,7 +101,12 @@ export const OptionsMenu = () => {
     >
       <Menu withArrow>
         <Menu.Target>
-          <ActionIcon aria-label="actions" size="lg" color="gray" variant="light">
+          <ActionIcon
+            aria-label="actions"
+            size="lg"
+            color="gray"
+            variant="light"
+          >
             <LuMenu size="18" />
           </ActionIcon>
         </Menu.Target>
@@ -119,7 +128,9 @@ export const OptionsMenu = () => {
               toggleDirection();
               gaEvent("rotate_layout", { label: direction });
             }}
-            leftSection={<StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
+            leftSection={
+              <StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />
+            }
             rightSection={
               <Text ml="md" fz={10} c="dimmed">
                 {coreKey} Shift D
@@ -133,7 +144,9 @@ export const OptionsMenu = () => {
             fz={12}
             onClick={() => {
               toggleExpandCollapseGraph();
-              gaEvent("expand_collapse_graph", { label: graphCollapsed ? "expand" : "collapse" });
+              gaEvent("expand_collapse_graph", {
+                label: graphCollapsed ? "expand" : "collapse",
+              });
             }}
             leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
             rightSection={
@@ -154,7 +167,10 @@ export const OptionsMenu = () => {
                 fullWidth
                 fw="400"
                 rightSection={<LuChevronRight />}
-                styles={{ root: { paddingInline: 11 }, inner: { justifyContent: "space-between" } }}
+                styles={{
+                  root: { paddingInline: 11 },
+                  inner: { justifyContent: "space-between" },
+                }}
               >
                 View Options
               </Button>
@@ -164,7 +180,9 @@ export const OptionsMenu = () => {
                 leftSection={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
                 onClick={() => {
                   toggleRulers(!rulersEnabled);
-                  gaEvent("toggle_rulers", { label: rulersEnabled ? "on" : "off" });
+                  gaEvent("toggle_rulers", {
+                    label: rulersEnabled ? "on" : "off",
+                  });
                 }}
               >
                 <Text size="xs">Rulers</Text>
@@ -173,31 +191,43 @@ export const OptionsMenu = () => {
                 leftSection={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
                 onClick={() => {
                   toggleGestures(!gesturesEnabled);
-                  gaEvent("toggle_gestures", { label: gesturesEnabled ? "on" : "off" });
+                  gaEvent("toggle_gestures", {
+                    label: gesturesEnabled ? "on" : "off",
+                  });
                 }}
               >
                 <Text size="xs">Trackpad Gestures</Text>
               </Menu.Item>
               <Menu.Item
-                leftSection={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
+                leftSection={
+                  <BsCheck2 opacity={childrenCountVisible ? 100 : 0} />
+                }
                 onClick={() => {
                   toggleChildrenCount(!childrenCountVisible);
-                  gaEvent("toggle_children_count", { label: childrenCountVisible ? "on" : "off" });
+                  gaEvent("toggle_children_count", {
+                    label: childrenCountVisible ? "on" : "off",
+                  });
                 }}
               >
                 <Text size="xs">Item Count</Text>
               </Menu.Item>
               <Menu.Item
-                leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
+                leftSection={
+                  <BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />
+                }
                 onClick={() => {
                   toggleImagePreview(!imagePreviewEnabled);
-                  gaEvent("toggle_image_preview", { label: imagePreviewEnabled ? "on" : "off" });
+                  gaEvent("toggle_image_preview", {
+                    label: imagePreviewEnabled ? "on" : "off",
+                  });
                 }}
               >
                 <Text size="xs">Image Link Preview</Text>
               </Menu.Item>
               <Menu.Item
-                leftSection={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
+                leftSection={
+                  <BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />
+                }
                 onClick={() => {
                   toggleCollapseButton(!collapseButtonVisible);
                   gaEvent("toggle_expand_collapse", {

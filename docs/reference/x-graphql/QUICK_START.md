@@ -90,7 +90,10 @@ const jsonSchema = `{
   }
 }`;
 
-const graphql = converter.convert(jsonSchema, ConversionDirection.JsonSchemaToGraphQL);
+const graphql = converter.convert(
+  jsonSchema,
+  ConversionDirection.JsonSchemaToGraphQL,
+);
 
 console.log(graphql);
 // Output:
