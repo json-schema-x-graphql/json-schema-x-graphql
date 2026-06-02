@@ -316,6 +316,21 @@ describe("X-GraphQL Shared Test Data", () => {
 
       expect(result).toMatch(/@override\(from:\s*"[^"]+"\)/);
     });
+
+    it("should generate @policy directive", () => {
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "SecureType",
+        "x-graphql-federation-policy": [["Admin"], ["Owner", "Editor"]],
+        properties: {
+          id: { type: "string" },
+        },
+      };
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain(
+        '@policy(policies: [["Admin"], ["Owner", "Editor"]])',
+      );
+    });
   });
 
   describe("Round-Trip Fidelity", () => {

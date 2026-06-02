@@ -37,14 +37,15 @@ All GitHub Actions workflows and configuration files have been successfully crea
 
 Ensure your GitHub repository has the following secrets configured in **Settings → Secrets and variables → Actions**:
 
-| Secret | Source | Purpose |
-|--------|--------|---------|
-| `NPM_TOKEN` | https://www.npmjs.com/settings/~/tokens | npm publishing |
-| `CARGO_TOKEN` | https://crates.io/me → API Tokens | Cargo/crates.io publishing |
-| `CODECOV_TOKEN` | https://codecov.io/settings | Codecov coverage reporting |
-| `GITHUB_TOKEN` | Auto-provided by GitHub | GitHub release creation |
+| Secret          | Source                                  | Purpose                    |
+| --------------- | --------------------------------------- | -------------------------- |
+| `NPM_TOKEN`     | https://www.npmjs.com/settings/~/tokens | npm publishing             |
+| `CARGO_TOKEN`   | https://crates.io/me → API Tokens       | Cargo/crates.io publishing |
+| `CODECOV_TOKEN` | https://codecov.io/settings             | Codecov coverage reporting |
+| `GITHUB_TOKEN`  | Auto-provided by GitHub                 | GitHub release creation    |
 
 **Setup Instructions:**
+
 1. Go to GitHub repo → **Settings → Secrets and variables → Actions**
 2. For each secret above, click **New repository secret**
 3. Enter the secret name and value from the source URL
@@ -57,6 +58,7 @@ Ensure your GitHub repository has the following secrets configured in **Settings
 ### Main Release Workflow (release.yml)
 
 **Validation Phase:**
+
 - ✅ Rust formatting + clippy checks
 - ✅ Rust tests (all features)
 - ✅ Node.js formatting + eslint checks
@@ -67,6 +69,7 @@ Ensure your GitHub repository has the following secrets configured in **Settings
 - ✅ WASM build
 
 **Publishing Phase:**
+
 - ✅ Version calculation (major/minor/patch)
 - ✅ Updates package.json version
 - ✅ Updates Cargo.toml version
@@ -79,6 +82,7 @@ Ensure your GitHub repository has the following secrets configured in **Settings
 - ✅ Creates GitHub Release with formatted changelog
 
 **Post-Release Phase:**
+
 - ✅ Posts release summary
 - ✅ Links to published artifacts
 
@@ -97,18 +101,21 @@ Ensure your GitHub repository has the following secrets configured in **Settings
 The release workflow now includes comprehensive coverage reporting:
 
 **Rust Coverage:**
+
 - Tool: `cargo-tarpaulin`
 - Format: Cobertura XML
 - Upload: Yes (to Codecov)
 - Flag: `rust`
 
 **Node.js Coverage:**
+
 - Tool: Jest coverage
 - Format: LCOV
 - Upload: Yes (to Codecov)
 - Flag: `node`
 
 **Codecov Dashboard:**
+
 - URL: https://codecov.io/gh/json-schema-x-graphql/json-schema-x-graphql
 - Reports: Published with each release
 - History: Tracked over time
@@ -195,6 +202,7 @@ Before triggering the release workflow:
 5. **Trigger Release workflow** to publish everything
 
 **Why this approach:**
+
 - Gives you a chance to review before publishing
 - Automatic changelog generation
 - Professional, auditable release process
@@ -212,15 +220,15 @@ Before triggering the release workflow:
 
 ### Expected Timeline for Release
 
-| Phase | Duration | What Happens |
-|-------|----------|--------------|
-| **Setup** | 1-2 min | Checkout code, install dependencies |
-| **Validation** | 3-5 min | Run all tests, check formatting, generate coverage |
-| **Coverage Upload** | 1-2 min | Upload Rust + Node coverage to Codecov |
-| **Release** | 2-3 min | Calculate versions, update files, create commits/tags |
-| **Publishing** | 3-5 min | Publish to npm and Cargo |
-| **GitHub Release** | 1 min | Create release with changelog |
-| **Total** | ~15-20 min | Full release cycle |
+| Phase               | Duration   | What Happens                                          |
+| ------------------- | ---------- | ----------------------------------------------------- |
+| **Setup**           | 1-2 min    | Checkout code, install dependencies                   |
+| **Validation**      | 3-5 min    | Run all tests, check formatting, generate coverage    |
+| **Coverage Upload** | 1-2 min    | Upload Rust + Node coverage to Codecov                |
+| **Release**         | 2-3 min    | Calculate versions, update files, create commits/tags |
+| **Publishing**      | 3-5 min    | Publish to npm and Cargo                              |
+| **GitHub Release**  | 1 min      | Create release with changelog                         |
+| **Total**           | ~15-20 min | Full release cycle                                    |
 
 ---
 
@@ -229,11 +237,13 @@ Before triggering the release workflow:
 ### Issue: "401 Unauthorized" from npm
 
 **Check:**
+
 1. `NPM_TOKEN` is set in repository secrets
 2. Token hasn't expired (create new if needed)
 3. Account has publish permissions
 
 **Fix:**
+
 ```
 GitHub Settings → Secrets and variables → Actions
 → Edit NPM_TOKEN
@@ -243,11 +253,13 @@ GitHub Settings → Secrets and variables → Actions
 ### Issue: "token not provided" from Cargo
 
 **Check:**
+
 1. `CARGO_TOKEN` is set in repository secrets
 2. Token is from https://crates.io (not GitHub)
 3. Token hasn't expired
 
 **Fix:**
+
 ```
 GitHub Settings → Secrets and variables → Actions
 → Edit CARGO_TOKEN
@@ -257,6 +269,7 @@ GitHub Settings → Secrets and variables → Actions
 ### Issue: Codecov upload fails
 
 **Check:**
+
 1. `CODECOV_TOKEN` is set (it is!)
 2. Repository is public or token allows private access
 3. Coverage files are being generated
@@ -266,11 +279,13 @@ GitHub Settings → Secrets and variables → Actions
 ### Issue: Workflow stuck at "Publish to npm"
 
 **Reasons:**
+
 1. npm registry is down/slow
 2. Network issue
 3. Very old node_modules in cache
 
 **Fix:**
+
 1. Wait a few minutes and manually retry
 2. Clear actions cache and retry
 3. Check npm status page
@@ -278,6 +293,7 @@ GitHub Settings → Secrets and variables → Actions
 ### Issue: Version mismatch in published packages
 
 **This shouldn't happen** - the workflow automatically:
+
 - Updates package.json
 - Updates Cargo.toml
 - Updates converters/rust/Cargo.toml
@@ -320,11 +336,12 @@ Three documentation files have been created:
 ✅ **Professional Changelog**: Auto-generated from commits
 ✅ **GitHub Integration**: Creates releases with formatted notes
 ✅ **Two Release Methods**:
-   - Manual control (immediate release)
-   - Automated PRs (with review step)
-✅ **Production Ready**: Used in many open-source projects
-✅ **Well Documented**: Three guides for different audiences
-✅ **Easy to Debug**: Detailed logs at every step
+
+- Manual control (immediate release)
+- Automated PRs (with review step)
+  ✅ **Production Ready**: Used in many open-source projects
+  ✅ **Well Documented**: Three guides for different audiences
+  ✅ **Easy to Debug**: Detailed logs at every step
 
 ---
 
@@ -342,12 +359,14 @@ Three documentation files have been created:
 ## 📞 Support
 
 For detailed information:
+
 - See `PUBLISHING.md` for comprehensive guide
 - See `RELEASE_QUICK_REF.md` for quick reference
 - GitHub Actions logs show real-time execution
 - Check Codecov dashboard after release
 
 For issues:
+
 - Review troubleshooting section
 - Check workflow logs
 - File issue with workflow logs attached

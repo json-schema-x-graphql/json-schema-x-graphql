@@ -1,0 +1,9 @@
+type Noidinference {
+  "Should be String, not ID"
+  id: String!
+  "Should be String, not ID"
+  userId: String
+  "Should be String, not ID"
+  uuid: ID
+}
+

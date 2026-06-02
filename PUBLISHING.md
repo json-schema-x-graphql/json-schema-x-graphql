@@ -68,12 +68,13 @@ Trigger the workflow via GitHub Actions UI:
 1. Go to: **Actions** → **Release and Publish**
 2. Click **Run workflow**
 3. Select version bump type:
-    - `patch` - Bug fixes (2.0.0 → 2.0.1)
-    - `minor` - New features (2.0.0 → 2.1.0)
-    - `major` - Breaking changes (2.0.0 → 3.0.0)
+   - `patch` - Bug fixes (2.0.0 → 2.0.1)
+   - `minor` - New features (2.0.0 → 2.1.0)
+   - `major` - Breaking changes (2.0.0 → 3.0.0)
 4. Click **Run workflow**
 
 **What happens:**
+
 1. ✅ Runs all tests (Rust + Node)
 2. ✅ Calculates new version
 3. ✅ Updates `package.json` and `Cargo.toml`
@@ -92,6 +93,7 @@ Release-Please automatically creates release PRs:
 2. **Manual**: Go to **Actions** → **Release Please** → **Run workflow**
 
 **What happens:**
+
 1. ✅ Analyzes commits since last release
 2. ✅ Determines version bump (based on conventional commits)
 3. ✅ Creates a release PR with:
@@ -102,6 +104,7 @@ Release-Please automatically creates release PRs:
 5. ✅ Manually trigger the **Release and Publish** workflow to publish
 
 **Recommended Flow:**
+
 ```
 1. Merge feature PRs to main with conventional commits
 2. Release-Please creates a release PR
@@ -158,6 +161,7 @@ https://github.com/json-schema-x-graphql/json-schema-x-graphql/releases
 ### Step 5: Announce Release
 
 Update any relevant channels:
+
 - GitHub discussions
 - Discord/Slack channels
 - Twitter/announcement channels
@@ -182,6 +186,7 @@ footer
 ### Examples
 
 **Features** (bump `minor`):
+
 ```
 feat(converter): add support for custom directives
 
@@ -192,6 +197,7 @@ Closes #123
 ```
 
 **Bug Fixes** (bump `patch`):
+
 ```
 fix(wasm): correct field nullability handling
 
@@ -200,6 +206,7 @@ incorrectly treated as nullable in generated SDL.
 ```
 
 **Breaking Changes** (bump `major`):
+
 ```
 feat(spec)!: replace x-graphql-keys with x-graphql-federation-keys
 
@@ -237,43 +244,51 @@ fix!: change behavior of field resolution
 ### NPM Publishing Fails
 
 **Issue**: `401 Unauthorized`
+
 - **Fix**: Check `NPM_TOKEN` is set in repository secrets
 - **Fix**: Verify token hasn't expired (create new token)
 - **Fix**: Verify package.json `name` field is correct
 
 **Issue**: `403 Forbidden`
+
 - **Fix**: Verify account has publish permissions
 - **Fix**: Check if package is private/restricted
 
 ### Cargo Publishing Fails
 
 **Issue**: `error: token not provided`
+
 - **Fix**: Check `CARGO_TOKEN` is set in repository secrets
 - **Fix**: Token must be from crates.io (not GitHub)
 
 **Issue**: `error: unable to verify the checksum`
+
 - **Fix**: Delete `Cargo.lock` and regenerate
 - **Fix**: Push Cargo.lock to git before publishing
 
 ### Release Workflow Hangs
 
 **Issue**: Workflow stuck at "Publish to npm"
+
 - **Fix**: Check npm registry status
 - **Fix**: Manually cancel and retry
 
 **Issue**: "Failed to push tag"
+
 - **Fix**: Verify Git credentials are correct
 - **Fix**: Check branch protection rules don't block tags
 
 ### Version Mismatch
 
 **Issue**: package.json and Cargo.toml have different versions
+
 - **Fix**: Ensure both files are committed before running release
 - **Fix**: Release workflow should keep them in sync
 
 ### CHANGELOG Conflicts
 
 **Issue**: CHANGELOG.md merge conflicts
+
 - **Fix**: Resolve conflicts manually before merging release PR
 - **Fix**: Ensure only release workflow updates CHANGELOG.md
 
@@ -303,6 +318,7 @@ This project follows **Semantic Versioning** (SemVer):
 - **PATCH**: Bug fixes (backward compatible)
 
 Examples:
+
 - 2.0.0 → 2.0.1 (patch: bug fix)
 - 2.0.0 → 2.1.0 (minor: new feature)
 - 2.0.0 → 3.0.0 (major: breaking change)
@@ -314,12 +330,14 @@ Examples:
 ### Changelog Integration
 
 The changelog is automatically generated from commits using:
+
 - **conventional-changelog** for formatting
 - **@semantic-release** plugins for changelog generation
 
 ### GitHub Release Notes
 
 Release notes include:
+
 - Generated changelog from commits
 - Links to related PRs and issues
 - Contributors list
@@ -327,6 +345,7 @@ Release notes include:
 ### npm Package
 
 The npm package includes:
+
 - Built WASM binaries from `converters/rust/pkg/`
 - TypeScript definitions
 - README.md and LICENSE
@@ -334,6 +353,7 @@ The npm package includes:
 ### Cargo Package
 
 The Cargo package includes:
+
 - All Rust source code
 - README.md and LICENSE
 
@@ -355,6 +375,7 @@ A: Pre-releases are not currently configured in the documented Release-Please se
 
 **Q: Can I manually push to npm without using the workflow?**
 A: Not recommended. Use the workflow to ensure:
+
 - Tests pass before publishing
 - Versions are synchronized
 - Changelog is updated

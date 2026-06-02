@@ -565,6 +565,17 @@ fn convert_type_definition(
         );
     }
 
+    // @policy
+    if let Some(policies) = obj
+        .get("x-graphql-federation-policy")
+        .and_then(|v| v.as_array())
+        .or_else(|| fed.and_then(|f| f.get("policy").and_then(|v| v.as_array())))
+    {
+        directives_json.push(
+            serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }),
+        );
+    }
+
     // @composeDirective
     if let Some(cd) = fed.and_then(|f| f.get("composeDirective").and_then(|v| v.as_str())) {
         directives_json
@@ -1035,6 +1046,28 @@ fn convert_field(
         directives_json.push(serde_json::json!({ "name": "shareable" }));
     }
 
+    // @requiresScopes
+    if let Some(scopes) = obj
+        .get("x-graphql-federation-requires-scopes")
+        .and_then(|v| v.as_array())
+        .or_else(|| fed.and_then(|f| f.get("requiresScopes").and_then(|v| v.as_array())))
+    {
+        directives_json.push(
+            serde_json::json!({ "name": "requiresScopes", "arguments": { "scopes": scopes } }),
+        );
+    }
+
+    // @policy
+    if let Some(policies) = obj
+        .get("x-graphql-federation-policy")
+        .and_then(|v| v.as_array())
+        .or_else(|| fed.and_then(|f| f.get("policy").and_then(|v| v.as_array())))
+    {
+        directives_json.push(
+            serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }),
+        );
+    }
+
     output.push_str(&format_directives(&JsonValue::Array(directives_json))?);
 
     Ok(output)
@@ -1383,6 +1416,20 @@ fn format_value(value: &JsonValue) -> String {
         JsonValue::Number(n) => n.to_string(),
         JsonValue::Bool(b) => b.to_string(),
         JsonValue::Null => "null".to_string(),
+        JsonValue::Array(arr) => {
+            let mut formatted = String::new();
+            formatted.push('[');
+            let mut first = true;
+            for val in arr {
+                if !first {
+                    formatted.push_str(", ");
+                }
+                first = false;
+                formatted.push_str(&format_value(val));
+            }
+            formatted.push(']');
+            formatted
+        }
         _ => "null".to_string(),
     }
 }

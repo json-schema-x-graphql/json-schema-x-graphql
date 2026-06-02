@@ -1678,6 +1678,7 @@ function isFederationDirective(name: string): boolean {
     name === "shareable" ||
     name === "inaccessible" ||
     name === "requiresScopes" ||
+    name === "policy" ||
     name === "authenticated" ||
     name === "interfaceObject"
   );
