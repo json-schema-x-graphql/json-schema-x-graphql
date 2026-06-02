@@ -405,9 +405,13 @@ describe("X-GraphQL Shared Test Data", () => {
       const spans = getOtelSpans();
       expect(spans.length).toBeGreaterThanOrEqual(1);
 
-      const conversionSpan = spans.find((s) => s.name === "jsonSchemaToGraphQL");
+      const conversionSpan = spans.find(
+        (s) => s.name === "jsonSchemaToGraphQL",
+      );
       expect(conversionSpan).toBeDefined();
-      expect(conversionSpan?.attributes["options.federationVersion"]).toBeDefined();
+      expect(
+        conversionSpan?.attributes["options.federationVersion"],
+      ).toBeDefined();
     });
 
     it("should generate a span and capture errors when conversion fails", () => {
@@ -417,7 +421,9 @@ describe("X-GraphQL Shared Test Data", () => {
 
       const spans = getOtelSpans();
       expect(spans.length).toBeGreaterThanOrEqual(1);
-      const conversionSpan = spans.find((s) => s.name === "jsonSchemaToGraphQL");
+      const conversionSpan = spans.find(
+        (s) => s.name === "jsonSchemaToGraphQL",
+      );
       expect(conversionSpan).toBeDefined();
       expect(conversionSpan?.status.code).toBe(2); // Error status
     });

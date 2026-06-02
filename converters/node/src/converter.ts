@@ -130,7 +130,10 @@ export function jsonSchemaToGraphQL(
   return otelTracer.startActiveSpan("jsonSchemaToGraphQL", (span) => {
     try {
       const result = jsonSchemaToGraphQLInternal(jsonSchemaInput, options);
-      span.setAttribute("options.federationVersion", options.federationVersion || "AUTO");
+      span.setAttribute(
+        "options.federationVersion",
+        options.federationVersion || "AUTO",
+      );
       span.setStatus({ code: 1 }); // Ok
       return result;
     } catch (error: any) {
