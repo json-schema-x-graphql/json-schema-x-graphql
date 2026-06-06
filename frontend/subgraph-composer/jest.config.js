@@ -5,6 +5,7 @@ export default {
     "\\.(css)$": "<rootDir>/src/__tests__/__mocks__/styleMock.js",
     "^@json-schema-x-graphql/core$":
       "<rootDir>/src/__tests__/__mocks__/coreMock.js",
+    "^graphql-voyager$": "<rootDir>/src/__tests__/__mocks__/graphql-voyager.js",
   },
   transform: {
     "^.+\\.(jsx?|mjs)$": "babel-jest",

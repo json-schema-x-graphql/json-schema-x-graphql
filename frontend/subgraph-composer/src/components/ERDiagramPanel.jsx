@@ -10,14 +10,22 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "./ERDiagramPanel.css";
-import { parseERDiagram, generateMermaidER, exportMermaidER } from "../lib/erDiagramParser.js";
+import {
+  parseERDiagram,
+  generateMermaidER,
+  exportMermaidER,
+} from "../lib/erDiagramParser.js";
 import ERDiagramNode from "./ERDiagramNode.jsx";
 
 const nodeTypes = {
   entityNode: ERDiagramNode,
 };
 
-export default function ERDiagramPanel({ supergraphSDL, schemas, typeSources }) {
+export default function ERDiagramPanel({
+  supergraphSDL,
+  schemas,
+  typeSources,
+}) {
   const [viewMode, setViewMode] = useState("diagram"); // "diagram" | "mermaid"
   const [mermaidText, setMermaidText] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -35,10 +43,20 @@ export default function ERDiagramPanel({ supergraphSDL, schemas, typeSources }) 
         erData.edges.map((e) => ({
           ...e,
           markerEnd: e.markerEnd
-            ? { type: MarkerType.ArrowClosed, width: 12, height: 12, color: e.style?.stroke || "#999" }
+            ? {
+                type: MarkerType.ArrowClosed,
+                width: 12,
+                height: 12,
+                color: e.style?.stroke || "#999",
+              }
             : undefined,
           markerStart: e.markerStart
-            ? { type: MarkerType.ArrowClosed, width: 12, height: 12, color: e.style?.stroke || "#999" }
+            ? {
+                type: MarkerType.ArrowClosed,
+                width: 12,
+                height: 12,
+                color: e.style?.stroke || "#999",
+              }
             : undefined,
         })),
       );
@@ -78,7 +96,11 @@ export default function ERDiagramPanel({ supergraphSDL, schemas, typeSources }) 
         </div>
 
         {hasData && (
-          <button className="er-diagram-export-btn" onClick={handleExport} title="Export Mermaid ER diagram">
+          <button
+            className="er-diagram-export-btn"
+            onClick={handleExport}
+            title="Export Mermaid ER diagram"
+          >
             Export Mermaid
           </button>
         )}
@@ -112,7 +134,10 @@ export default function ERDiagramPanel({ supergraphSDL, schemas, typeSources }) 
             {mermaidText ? (
               <>
                 <pre className="er-diagram-mermaid-code">{mermaidText}</pre>
-                <button className="er-diagram-copy-btn" onClick={() => navigator.clipboard?.writeText(mermaidText)}>
+                <button
+                  className="er-diagram-copy-btn"
+                  onClick={() => navigator.clipboard?.writeText(mermaidText)}
+                >
                   Copy to Clipboard
                 </button>
               </>
@@ -135,7 +160,10 @@ function SubgraphSwimlanes({ subgraphs }) {
     <div className="er-swimlanes-legend">
       {subgraphs.map((sg) => (
         <div key={sg.id} className="er-swimlanes-item">
-          <span className="er-swimlanes-dot" style={{ backgroundColor: sg.color }} />
+          <span
+            className="er-swimlanes-dot"
+            style={{ backgroundColor: sg.color }}
+          />
           <span className="er-swimlanes-name">{sg.name}</span>
         </div>
       ))}

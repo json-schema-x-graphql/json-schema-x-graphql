@@ -83,7 +83,14 @@ const typeSources = {
 
 describe("ERDiagramPanel", () => {
   test("renders empty state when no SDL is provided", () => {
-    render(<ERDiagramPanel supergraphSDL="" subgraphsMap={new Map()} schemas={[]} typeSources={{}} />);
+    render(
+      <ERDiagramPanel
+        supergraphSDL=""
+        subgraphsMap={new Map()}
+        schemas={[]}
+        typeSources={{}}
+      />,
+    );
     expect(screen.getByText(/No supergraph available/i)).toBeInTheDocument();
   });
 
@@ -96,8 +103,12 @@ describe("ERDiagramPanel", () => {
         typeSources={typeSources}
       />,
     );
-    expect(screen.getByRole("button", { name: /^Diagram$/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /^Mermaid$/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /^Diagram$/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /^Mermaid$/i }),
+    ).toBeInTheDocument();
   });
 
   test("switches to Mermaid view on click", async () => {
@@ -139,12 +150,23 @@ describe("ERDiagramPanel", () => {
         typeSources={typeSources}
       />,
     );
-    expect(screen.getByRole("button", { name: /Export Mermaid/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /Export Mermaid/i }),
+    ).toBeInTheDocument();
   });
 
   test("hides export button when no data is available", () => {
-    render(<ERDiagramPanel supergraphSDL="" subgraphsMap={new Map()} schemas={[]} typeSources={{}} />);
-    expect(screen.queryByRole("button", { name: /Export Mermaid/i })).not.toBeInTheDocument();
+    render(
+      <ERDiagramPanel
+        supergraphSDL=""
+        subgraphsMap={new Map()}
+        schemas={[]}
+        typeSources={{}}
+      />,
+    );
+    expect(
+      screen.queryByRole("button", { name: /Export Mermaid/i }),
+    ).not.toBeInTheDocument();
   });
 
   test("renders swimlane legend when subgraphs exist", () => {

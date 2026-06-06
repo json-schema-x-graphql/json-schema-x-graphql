@@ -16,7 +16,11 @@ import { useSettings } from "./hooks/useSettings.js";
 import { getTemplate } from "./lib/templates.js";
 
 // Lazy-load ER diagram panel to avoid bundling @xyflow/react on initial load
-const ERDiagramPanel = React.lazy(() => import("./components/ERDiagramPanel.jsx"));
+const ERDiagramPanel = React.lazy(
+  () => import("./components/ERDiagramPanel.jsx"),
+);
+// Lazy-load Voyager panel to avoid bundling graphql-voyager on initial load
+const VoyagerPanel = React.lazy(() => import("./components/VoyagerPanel.jsx"));
 
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -329,12 +333,16 @@ export default function App() {
                     style={{
                       padding: "var(--spacing-sm) var(--spacing-md)",
                       border: "none",
-                      background: activeTab === "editor" ? "white" : "transparent",
+                      background:
+                        activeTab === "editor" ? "white" : "transparent",
                       cursor: "pointer",
                       fontSize: "0.875rem",
                       fontWeight: activeTab === "editor" ? "600" : "400",
                       color: "var(--color-text)",
-                      borderBottom: activeTab === "editor" ? "2px solid var(--color-primary)" : "2px solid transparent",
+                      borderBottom:
+                        activeTab === "editor"
+                          ? "2px solid var(--color-primary)"
+                          : "2px solid transparent",
                     }}
                   >
                     Preview
@@ -345,12 +353,16 @@ export default function App() {
                     style={{
                       padding: "var(--spacing-sm) var(--spacing-md)",
                       border: "none",
-                      background: activeTab === "visualize" ? "white" : "transparent",
+                      background:
+                        activeTab === "visualize" ? "white" : "transparent",
                       cursor: "pointer",
                       fontSize: "0.875rem",
                       fontWeight: activeTab === "visualize" ? "600" : "400",
                       color: "var(--color-text)",
-                      borderBottom: activeTab === "visualize" ? "2px solid var(--color-primary)" : "2px solid transparent",
+                      borderBottom:
+                        activeTab === "visualize"
+                          ? "2px solid var(--color-primary)"
+                          : "2px solid transparent",
                     }}
                   >
                     Visualize
@@ -366,7 +378,10 @@ export default function App() {
                       fontSize: "0.875rem",
                       fontWeight: activeTab === "er" ? "600" : "400",
                       color: "var(--color-text)",
-                      borderBottom: activeTab === "er" ? "2px solid var(--color-primary)" : "2px solid transparent",
+                      borderBottom:
+                        activeTab === "er"
+                          ? "2px solid var(--color-primary)"
+                          : "2px solid transparent",
                     }}
                   >
                     ER Diagram
@@ -417,13 +432,26 @@ export default function App() {
                     )}
                   </>
                 ) : activeTab === "visualize" ? (
-                  <Suspense fallback={<div className="empty-state">Loading visualization...</div>}>
-                    <div className="empty-state">
-                      <p>Voyager visualization is not available in this build.</p>
-                    </div>
+                  <Suspense
+                    fallback={
+                      <div className="empty-state">
+                        Loading visualization...
+                      </div>
+                    }
+                  >
+                    <VoyagerPanel
+                      supergraphSDL={supergraphSDL}
+                      subgraphsMap={subgraphsMap}
+                      schemas={schemas}
+                      typeSources={typeSources}
+                    />
                   </Suspense>
                 ) : (
-                  <Suspense fallback={<div className="empty-state">Loading ER diagram...</div>}>
+                  <Suspense
+                    fallback={
+                      <div className="empty-state">Loading ER diagram...</div>
+                    }
+                  >
                     <ERDiagramPanel
                       supergraphSDL={supergraphSDL}
                       schemas={schemas}
