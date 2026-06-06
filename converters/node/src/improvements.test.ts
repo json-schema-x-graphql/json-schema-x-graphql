@@ -120,9 +120,93 @@ describe("Converter Improvements", () => {
       expect(result).toContain("type Address");
       expect(result).toContain("type UserProfile");
     });
+
+    test("should resolve $ref through tryGetProperty with case fallback", () => {
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "TestType",
+        properties: {
+          user_profile: { $ref: "#/$defs/userProfile" },
+        },
+        $defs: {
+          userProfile: {
+            type: "object",
+            "x-graphql-type-name": "UserProfile",
+            properties: {
+              email: { type: "string" },
+            },
+          },
+        },
+      };
+
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain("type UserProfile");
+      expect(result).toContain("email: String");
+    });
+
+    test("should resolve final-node $ref recursively", () => {
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "Root",
+        properties: {
+          address: { $ref: "#/$defs/AddressRef" },
+        },
+        $defs: {
+          AddressRef: {
+            $ref: "#/$defs/Address",
+            "x-graphql-type-name": "AddressRef",
+          },
+          Address: {
+            type: "object",
+            "x-graphql-type-name": "Address",
+            properties: {
+              street: { type: "string" },
+            },
+          },
+        },
+      };
+
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain("type Address");
+      expect(result).toContain("address: AddressRef");
+    });
   });
 
   describe("Circular Reference Protection", () => {
+    test("should detect circular reference on root self-reference", () => {
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "Node",
+        properties: { next: { $ref: "#" } },
+      };
+      expect(() => jsonSchemaToGraphQL(schema)).toThrow(
+        /Circular reference detected/,
+      );
+    });
+
+    test("should detect circular $ref chain", () => {
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "Root",
+        properties: {
+          a: { $ref: "#/$defs/A" },
+        },
+        $defs: {
+          A: {
+            $ref: "#/$defs/B",
+            "x-graphql-type-name": "A",
+          },
+          B: {
+            $ref: "#/$defs/A",
+            "x-graphql-type-name": "B",
+          },
+        },
+      };
+      expect(() => jsonSchemaToGraphQL(schema)).toThrow(
+        /Circular \$ref detected/,
+      );
+    });
+
     test("should handle self-referencing types without error", () => {
       const schema = {
         $defs: {
