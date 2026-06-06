@@ -1,0 +1,160 @@
+.er-diagram-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+  border: 1px solid var(--color-border, #d1d5db);
+  overflow: hidden;
+}
+
+.er-diagram-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  background: var(--color-bg-secondary, #f3f4f6);
+  border-bottom: 1px solid var(--color-border, #d1d5db);
+  flex-shrink: 0;
+  gap: var(--spacing-md, 1rem);
+}
+
+.er-diagram-toggle-group {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-sm, 4px);
+  overflow: hidden;
+  border: 1px solid var(--color-border, #d1d5db);
+}
+
+.er-diagram-toggle-btn {
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
+  border: none;
+  background: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-text, #1f2937);
+  transition: background 0.2s ease;
+}
+
+.er-diagram-toggle-btn:hover {
+  background: var(--color-bg, #f9fafb);
+}
+
+.er-diagram-toggle-btn.active {
+  background: var(--color-primary, #6366f1);
+  color: white;
+  font-weight: 600;
+}
+
+.er-diagram-export-btn {
+  padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
+  border: 1px solid var(--color-border, #d1d5db);
+  background: white;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-text, #1f2937);
+  transition: all 0.2s ease;
+}
+
+.er-diagram-export-btn:hover {
+  background: var(--color-bg-secondary, #f3f4f6);
+  border-color: var(--color-text-light, #6b7280);
+}
+
+.er-diagram-viewport {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.er-diagram-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-light, #6b7280);
+  font-size: 0.95rem;
+  gap: var(--spacing-md, 1rem);
+}
+
+.er-diagram-mermaid {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-md, 1rem);
+  gap: var(--spacing-md, 1rem);
+  overflow: auto;
+}
+
+.er-diagram-mermaid-code {
+  flex: 1;
+  background: var(--color-bg-secondary, #f3f4f6);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: var(--radius-md, 8px);
+  padding: var(--spacing-md, 1rem);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow: auto;
+  white-space: pre;
+  margin: 0;
+}
+
+.er-diagram-copy-btn {
+  align-self: flex-start;
+  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+  border: 1px solid var(--color-border, #d1d5db);
+  background: white;
+  border-radius: var(--radius-sm, 4px);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--color-text, #1f2937);
+  transition: all 0.2s ease;
+}
+
+.er-diagram-copy-btn:hover {
+  background: var(--color-bg-secondary, #f3f4f6);
+}
+
+.er-swimlanes-legend {
+  position: absolute;
+  top: var(--spacing-sm, 0.5rem);
+  right: var(--spacing-sm, 0.5rem);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: var(--radius-sm, 4px);
+  padding: var(--spacing-sm, 0.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 0.8rem;
+}
+
+.er-swimlanes-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.er-swimlanes-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.er-swimlanes-name {
+  color: var(--color-text, #1f2937);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
