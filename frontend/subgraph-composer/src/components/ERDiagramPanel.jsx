@@ -17,7 +17,7 @@ const nodeTypes = {
   entityNode: ERDiagramNode,
 };
 
-export default function ERDiagramPanel({ supergraphSDL, subgraphsMap, schemas, typeSources }) {
+export default function ERDiagramPanel({ supergraphSDL, schemas, typeSources }) {
   const [viewMode, setViewMode] = useState("diagram"); // "diagram" | "mermaid"
   const [mermaidText, setMermaidText] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);

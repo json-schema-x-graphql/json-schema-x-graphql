@@ -40,19 +40,22 @@ export default function ERDiagramNode({ data }) {
       <div className="er-node-body">
         {fields && fields.length > 0 ? (
           <ul className="er-node-fields">
-            {fields.map((field, idx) => (
-              <li key={idx} className="er-node-field">
-                <span className="field-name">{field.name}</span>
-                <span className="field-type">{field.type}</span>
-                {field.directives && field.directives.length > 0 && (
-                  <span className="field-badges">
-                    {field.directives.map((d, i) => (
-                      <DirectiveBadge key={i} name={d.name} />
-                    ))}
-                  </span>
-                )}
-              </li>
-            ))}
+            {fields.map((field, idx) => {
+              const isExternal = field.directives?.some((d) => d.name === "@external");
+              return (
+                <li key={idx} className={`er-node-field ${isExternal ? "external-field" : ""}`}>
+                  <span className="field-name">{field.name}</span>
+                  <span className="field-type">{field.type}</span>
+                  {field.directives && field.directives.length > 0 && (
+                    <span className="field-badges">
+                      {field.directives.map((d, i) => (
+                        <DirectiveBadge key={i} name={d.name} />
+                      ))}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <div className="er-node-empty">No fields</div>

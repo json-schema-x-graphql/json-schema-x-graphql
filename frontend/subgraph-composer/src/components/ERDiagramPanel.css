@@ -135,12 +135,14 @@
   gap: 0.4rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   font-size: 0.8rem;
+  pointer-events: none;
 }
 
 .er-swimlanes-item {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  pointer-events: auto;
 }
 
 .er-swimlanes-dot {

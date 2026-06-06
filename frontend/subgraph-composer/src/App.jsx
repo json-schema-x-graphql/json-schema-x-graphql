@@ -411,7 +411,6 @@ export default function App() {
                   <Suspense fallback={<div className="empty-state">Loading ER diagram...</div>}>
                     <ERDiagramPanel
                       supergraphSDL={supergraphSDL}
-                      subgraphsMap={subgraphsMap}
                       schemas={schemas}
                       typeSources={typeSources}
                     />

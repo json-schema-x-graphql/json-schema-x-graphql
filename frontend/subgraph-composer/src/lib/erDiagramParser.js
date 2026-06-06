@@ -52,7 +52,7 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
   // First pass: create all nodes
   const nodeMap = new Map();
   let nodeId = 0;
-  const typeRegex = /type\s+(\w+)\s*(?:@[\w(\s"=:,)]+)?\s*\{([^}]*)\}/g;
+  const typeRegex = /type\s+(\w+)(?:\s+implements\s+[\w&\s,]+)?\s*(?:@[\w(\s"=:,)]+)?\s*\{([^}]*)\}/g;
   let match;
 
   while ((match = typeRegex.exec(sdl)) !== null) {
@@ -258,7 +258,7 @@ export function generateMermaidER(erData) {
     const fields = node.data.fields || [];
     lines.push(`  ${label} {`);
     for (const field of fields) {
-      const type = field.type.replace(/!/g, "");
+      const type = extractBaseType(field.type);
       const badges = field.directives
         .filter((d) => FEDERATION_DIRECTIVES.includes(d.name))
         .map((d) => d.name)

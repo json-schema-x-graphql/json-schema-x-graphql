@@ -61,6 +61,15 @@
   border-bottom: none;
 }
 
+.external-field {
+  opacity: 0.6;
+  border-bottom: 1px dashed #ccc;
+}
+
+.external-field:last-child {
+  border-bottom: 1px dashed #ccc;
+}
+
 .field-name {
   font-weight: 600;
   color: var(--color-text, #1f2937);
