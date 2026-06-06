@@ -132,6 +132,14 @@ export function composeSupergraph(subgraphs, options = {}) {
 
     const finalSDL = sdlLines.filter(Boolean).join("\n\n");
 
+    // Build typeSources map for color-coding in visualizers
+    const typeSources = {};
+    for (const [typeName, sources] of typeSourceMap.entries()) {
+      if (typeName !== "_rootTypes") {
+        typeSources[typeName] = sources;
+      }
+    }
+
     return {
       success: errors.length === 0,
       sdl: finalSDL,
@@ -142,6 +150,7 @@ export function composeSupergraph(subgraphs, options = {}) {
         mergedTypes: Array.from(typeRegistry.values()).filter((d) => d && d.kind).length,
         conflicts: conflicts, // Return full conflict objects, not just strings
       },
+      typeSources,
     };
   } catch (error) {
     errors.push(`Composition failed: ${error.message}`);
@@ -150,6 +159,7 @@ export function composeSupergraph(subgraphs, options = {}) {
       sdl: "",
       errors,
       stats: { totalTypes: 0, totalFields: 0, mergedTypes: 0, conflicts: [] },
+      typeSources: {},
     };
   }
 }
