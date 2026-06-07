@@ -13,6 +13,7 @@ export function useComposition() {
       setSupergraphSDL("");
       setCompositionStats(null);
       setCompositionErrors([]);
+      setTypeSources({});
       return;
     }
 
@@ -42,11 +43,13 @@ export function useComposition() {
           setSupergraphSDL(result.sdl);
           setCompositionStats(result.stats);
           setCompositionErrors(result.errors);
+          setTypeSources(result.typeSources ?? {});
         } else {
           span.setAttribute("composition.errors", result.errors.join("; "));
           span.setStatus({ code: 2, message: result.errors[0] });
           setCompositionErrors(result.errors);
           setSupergraphSDL("");
+          setTypeSources({});
         }
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
@@ -56,6 +59,7 @@ export function useComposition() {
         span.setStatus({ code: 2, message: errorMsg });
         setCompositionErrors([errorMsg]);
         setSupergraphSDL("");
+        setTypeSources({});
       } finally {
         span.end();
       }

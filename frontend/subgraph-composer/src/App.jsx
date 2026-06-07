@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, Suspense } from "react";
 import SplitPane from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
@@ -15,8 +15,12 @@ import { useDirectiveSuggestions } from "./hooks/useDirectiveSuggestions.js";
 import { useSettings } from "./hooks/useSettings.js";
 import { getTemplate } from "./lib/templates.js";
 
+// Lazy-load ER diagram panel to avoid bundling @xyflow/react on initial load
+const ERDiagramPanel = React.lazy(() => import("./components/ERDiagramPanel.jsx"));
+
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState("editor"); // "editor" | "visualize" | "er"
 
   const {
     schemas,
@@ -309,45 +313,123 @@ export default function App() {
                 )}
               </div>
               <div className="editor-section">
-                {/* Subgraph Editor for the active subgraph with SDL/Stats */}
-                {subgraphs && subgraphs.length > 0 ? (
-                  <SubgraphEditor
-                    subgraph={{
-                      name: activeSchema?.name || "Subgraph 1",
-                      content: subgraphs[0].sdl || "",
-                    }}
-                    onUpdate={(content) => {
-                      /* TODO: implement subgraph update logic */
-                    }}
-                    isLoading={isLoading}
-                    sdl={supergraphSDL}
-                    stats={compositionStats}
-                    errors={compositionErrors}
-                    schemas={schemas}
-                    subgraphCount={subgraphs.length}
-                  />
-                ) : (
-                  <div
-                    className="schema-editor"
+                {/* Tab bar to switch between Preview, Visualize, and ER Diagram */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 0,
+                    borderBottom: "1px solid var(--color-border)",
+                    background: "var(--color-bg-secondary)",
+                    flexShrink: 0,
+                  }}
+                >
+                  <button
+                    className={`tab-btn ${activeTab === "editor" ? "active" : ""}`}
+                    onClick={() => setActiveTab("editor")}
                     style={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      background: "white",
-                      borderRadius: "var(--radius-md)",
-                      boxShadow: "var(--shadow-sm)",
-                      border: "1px solid var(--color-border)",
+                      padding: "var(--spacing-sm) var(--spacing-md)",
+                      border: "none",
+                      background: activeTab === "editor" ? "white" : "transparent",
+                      cursor: "pointer",
+                      fontSize: "0.875rem",
+                      fontWeight: activeTab === "editor" ? "600" : "400",
+                      color: "var(--color-text)",
+                      borderBottom: activeTab === "editor" ? "2px solid var(--color-primary)" : "2px solid transparent",
                     }}
                   >
-                    <div className="editor-header">
-                      <div className="editor-title">Subgraph Preview</div>
-                    </div>
+                    Preview
+                  </button>
+                  <button
+                    className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
+                    onClick={() => setActiveTab("visualize")}
+                    style={{
+                      padding: "var(--spacing-sm) var(--spacing-md)",
+                      border: "none",
+                      background: activeTab === "visualize" ? "white" : "transparent",
+                      cursor: "pointer",
+                      fontSize: "0.875rem",
+                      fontWeight: activeTab === "visualize" ? "600" : "400",
+                      color: "var(--color-text)",
+                      borderBottom: activeTab === "visualize" ? "2px solid var(--color-primary)" : "2px solid transparent",
+                    }}
+                  >
+                    Visualize
+                  </button>
+                  <button
+                    className={`tab-btn ${activeTab === "er" ? "active" : ""}`}
+                    onClick={() => setActiveTab("er")}
+                    style={{
+                      padding: "var(--spacing-sm) var(--spacing-md)",
+                      border: "none",
+                      background: activeTab === "er" ? "white" : "transparent",
+                      cursor: "pointer",
+                      fontSize: "0.875rem",
+                      fontWeight: activeTab === "er" ? "600" : "400",
+                      color: "var(--color-text)",
+                      borderBottom: activeTab === "er" ? "2px solid var(--color-primary)" : "2px solid transparent",
+                    }}
+                  >
+                    ER Diagram
+                  </button>
+                </div>
+
+                {activeTab === "editor" ? (
+                  <>
+                    {/* Subgraph Editor for the active subgraph with SDL/Stats */}
+                    {subgraphs && subgraphs.length > 0 ? (
+                      <SubgraphEditor
+                        subgraph={{
+                          name: activeSchema?.name || "Subgraph 1",
+                          content: subgraphs[0].sdl || "",
+                        }}
+                        onUpdate={(content) => {
+                          /* TODO: implement subgraph update logic */
+                        }}
+                        isLoading={isLoading}
+                        sdl={supergraphSDL}
+                        stats={compositionStats}
+                        errors={compositionErrors}
+                        schemas={schemas}
+                        subgraphCount={subgraphs.length}
+                      />
+                    ) : (
+                      <div
+                        className="schema-editor"
+                        style={{
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          background: "white",
+                          borderRadius: "var(--radius-md)",
+                          boxShadow: "var(--shadow-sm)",
+                          border: "1px solid var(--color-border)",
+                        }}
+                      >
+                        <div className="editor-header">
+                          <div className="editor-title">Subgraph Preview</div>
+                        </div>
+                        <div className="empty-state">
+                          <p>Click "Generate" to create a subgraph</p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                ) : activeTab === "visualize" ? (
+                  <Suspense fallback={<div className="empty-state">Loading visualization...</div>}>
                     <div className="empty-state">
-                      <p>Click "Generate" to create a subgraph</p>
+                      <p>Voyager visualization is not available in this build.</p>
                     </div>
-                  </div>
+                  </Suspense>
+                ) : (
+                  <Suspense fallback={<div className="empty-state">Loading ER diagram...</div>}>
+                    <ERDiagramPanel
+                      supergraphSDL={supergraphSDL}
+                      schemas={schemas}
+                      typeSources={typeSources}
+                    />
+                  </Suspense>
                 )}
               </div>
             </SplitPane>

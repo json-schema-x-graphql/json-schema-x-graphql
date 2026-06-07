@@ -631,6 +631,13 @@ function convertTypeDefinition(
   // Skip types marked with x-graphql-skip
   if (schema["x-graphql-skip"] === true) return;
 
+  if (context.building.has(typeName)) {
+    throw new ConversionError(
+      `Circular reference detected: ${typeName}`,
+      "CIRCULAR_REF",
+    );
+  }
+
   if (context.generating.has(typeName)) {
     throw new ConversionError(
       `Circular type resolution detected for ${typeName}`,
@@ -1113,20 +1120,8 @@ function resolveRef(
       current = resolved.schema;
     }
 
-    // Try to get property with fallbacks
-    let next = accessChild(current, part);
-
-    if (next === undefined && current && typeof current === "object") {
-      // Try snake_case
-      const snake = camelToSnake(part);
-      next = accessChild(current, snake);
-
-      // Try camelCase
-      if (next === undefined) {
-        const camel = snakeToCamel(part);
-        next = accessChild(current, camel);
-      }
-    }
+    // Try to get property with case-insensitive fallback
+    let next = tryGetProperty(current, part);
 
     current = next;
 
@@ -1136,6 +1131,12 @@ function resolveRef(
         "INVALID_REF",
       );
     }
+  }
+
+  // Follow $ref on the final node if present (recursive resolution)
+  if (current && typeof current === "object" && current.$ref) {
+    const resolved = resolveRef(current.$ref, context, visited);
+    return { schema: resolved.schema, pointer };
   }
 
   return { schema: current as JsonSchema, pointer };
@@ -1555,6 +1556,20 @@ function accessChild(node: any, key: string): any {
     return node[index];
   }
   return node?.[key];
+}
+
+function tryGetProperty(obj: any, key: string): any {
+  if (obj === null || obj === undefined || typeof obj !== "object") {
+    return undefined;
+  }
+  let result = accessChild(obj, key);
+  if (result !== undefined) return result;
+  const snake = camelToSnake(key);
+  result = accessChild(obj, snake);
+  if (result !== undefined) return result;
+  const camel = snakeToCamel(key);
+  result = accessChild(obj, camel);
+  return result;
 }
 
 function derivePrimitiveGraphQLType(
