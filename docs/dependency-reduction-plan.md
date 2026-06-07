@@ -1,6 +1,6 @@
 # Dependency Reduction Implementation Plan
 
-*Revised after independent audit (see `dependency-reduction-plan-review-1.md` and `dependency-reduction-plan-review-2.md`)*
+_Revised after independent audit (see `dependency-reduction-plan-review-1.md` and `dependency-reduction-plan-review-2.md`)_
 
 ## Key Corrections from Audit
 
@@ -196,6 +196,7 @@ Gate `opentelemetry` behind the existing `telemetry` feature (already implemente
 Consumers who need OpenTelemetry spans opt in with `--features telemetry`.
 
 The alternative of replacing with `tracing` was considered but rejected because:
+
 - `tracing-opentelemetry` transitively pulls `opentelemetry` anyway
 - Existing consumers relying on OTel spans would break
 - Gating is a simpler change with zero integration risk
@@ -205,6 +206,7 @@ The alternative of replacing with `tracing` was considered but rejected because:
 ### Phase 3: Replace `regex` case conversion + name validation only (Rust)
 
 The crate uses `regex` for:
+
 - Case conversion: `([a-z0-9])([A-Z])` and `([A-Z])([A-Z][a-z])` — **safely replaceable** with char-by-char iteration
 - GraphQL name validation: `^[_A-Za-z][_0-9A-Za-z]*$` — **safely replaceable** with `char::is_alphanumeric()` + prefix check
 - URL validation: `^https?://[^\s/$.?#]\.[^\s]*$` — **NOT replaceable** (correctness risk)
@@ -327,18 +329,18 @@ time node -e "require('./dist/converter.js').Converter"
 
 ## Expected Impact Summary
 
-| Change                                                  | Crates Removed    | Build Size Saved   | Risk                                  |
-| ------------------------------------------------------- | ------------------ | ------------------ | ------------------------------------- |
-| Phase 1A: Remove stubbed validation crates               | ~20 (DONE)        | ~33 MB (DONE)      | None (they were stubbed)              |
-| Phase 1B: Remove test_utils/                            | 0 (DONE)          | ~0 MB (DONE)       | None (dead code)                     |
-| Phase 1C: Move opentelemetry_sdk to dev-deps           | ~5 (DONE)         | ~5 MB (DONE)       | Low                                  |
-| Phase 1D: Remove node script-only deps                  | 0 (DONE)          | ~2 MB npm (DONE)   | Low                                  |
-| Phase 1E: Gate async_graphql server                    | ~15-30 (DONE)      | ~41 MB (DONE)      | Medium (refactored parser imports)    |
-| Phase 2: Gate `opentelemetry` behind feature flag       | ~3 (DONE)         | ~7 MB (DONE)       | Medium (gating, not rewriting)       |
-| Phase 3 | Replace regex case conversion + name valid.   | ~3              | ~0 MB (already done)   | None (already hand-written)       |
-| Phase 4 | Gate JSON Schema validation                   | ~2              | ~0 MB (already done)  | None (crates already removed)      |
-| Phase 5 | Extract Node CLI                               | 0               | ~0 MB npm (already done) | None (CLI already separate)        |
-| Phase 6: Make Node OTel optional (dynamic import)     | 0 (DONE)          | ~1 MB npm (DONE)   | Low                                  |
+| Change                                            | Crates Removed                              | Build Size Saved | Risk                               |
+| ------------------------------------------------- | ------------------------------------------- | ---------------- | ---------------------------------- | ----------------------------- |
+| Phase 1A: Remove stubbed validation crates        | ~20 (DONE)                                  | ~33 MB (DONE)    | None (they were stubbed)           |
+| Phase 1B: Remove test_utils/                      | 0 (DONE)                                    | ~0 MB (DONE)     | None (dead code)                   |
+| Phase 1C: Move opentelemetry_sdk to dev-deps      | ~5 (DONE)                                   | ~5 MB (DONE)     | Low                                |
+| Phase 1D: Remove node script-only deps            | 0 (DONE)                                    | ~2 MB npm (DONE) | Low                                |
+| Phase 1E: Gate async_graphql server               | ~15-30 (DONE)                               | ~41 MB (DONE)    | Medium (refactored parser imports) |
+| Phase 2: Gate `opentelemetry` behind feature flag | ~3 (DONE)                                   | ~7 MB (DONE)     | Medium (gating, not rewriting)     |
+| Phase 3                                           | Replace regex case conversion + name valid. | ~3               | ~0 MB (already done)               | None (already hand-written)   |
+| Phase 4                                           | Gate JSON Schema validation                 | ~2               | ~0 MB (already done)               | None (crates already removed) |
+| Phase 5                                           | Extract Node CLI                            | 0                | ~0 MB npm (already done)           | None (CLI already separate)   |
+| Phase 6: Make Node OTel optional (dynamic import) | 0 (DONE)                                    | ~1 MB npm (DONE) | Low                                |
 
 **All phases are now complete.**
 
@@ -359,16 +361,16 @@ The telemetry adds: `opentelemetry`
 
 ### Current State After Implemented Changes
 
-| Metric                                | Before            | After (default)  | Change    |
-| ------------------------------------- | ----------------- | ----------------- | --------- |
-| Target dir (all features)             | 2.1 GB            | 747 MB            | **-64%**   |
-| Target dir (default features)         | 687 MB            | 212 MB            | **-69%**  |
-| Unique crates (default)               | 231               | 43                | **-81%**  |
-| Unique crates (all features)           | 247               | 181               | **-27%**  |
-| libjson_schema_x_graphql.so           | 7.1 MB            | 6.5 MB            | -8%       |
-| libjson_schema_x_graphql.rlib         | 9.7 MB            | 9.0 MB            | -7%       |
-| json_schema_to_graphql (bench)         | 13.7 µs           | 13.5 µs           | ~same     |
-| graphql_to_json_schema (bench)         | 39.1 µs           | 37.7 µs           | -4%       |
+| Metric                         | Before  | After (default) | Change   |
+| ------------------------------ | ------- | --------------- | -------- |
+| Target dir (all features)      | 2.1 GB  | 747 MB          | **-64%** |
+| Target dir (default features)  | 687 MB  | 212 MB          | **-69%** |
+| Unique crates (default)        | 231     | 43              | **-81%** |
+| Unique crates (all features)   | 247     | 181             | **-27%** |
+| libjson_schema_x_graphql.so    | 7.1 MB  | 6.5 MB          | -8%      |
+| libjson_schema_x_graphql.rlib  | 9.7 MB  | 9.0 MB          | -7%      |
+| json_schema_to_graphql (bench) | 13.7 µs | 13.5 µs         | ~same    |
+| graphql_to_json_schema (bench) | 39.1 µs | 37.7 µs         | -4%      |
 
 ---
 

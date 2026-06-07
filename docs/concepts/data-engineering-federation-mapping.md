@@ -29,9 +29,9 @@ type User @key(fields: "id") {
 
 **GraphQL Federation:** This is achieved through explicit **Subgraph Ownership** and field-level directives:
 
-| Directive | Meaning |
-|-----------|---------|
-| `@external` | "This field originates from another subgraph" |
+| Directive   | Meaning                                                                 |
+| ----------- | ----------------------------------------------------------------------- |
+| `@external` | "This field originates from another subgraph"                           |
 | `@requires` | "I need these specific fields from other subgraphs to compute my value" |
 
 ```graphql
@@ -51,9 +51,9 @@ type Billing @extends @key(fields: "id") {
 
 **GraphQL Federation:** Survivorship is codified into the schema using directives:
 
-| Directive | Meaning |
-|-----------|---------|
-| `@override` | "This subgraph is now the authoritative source for this field" |
+| Directive   | Meaning                                                                  |
+| ----------- | ------------------------------------------------------------------------ |
+| `@override` | "This subgraph is now the authoritative source for this field"           |
 | `@provides` | "I can resolve this field even though another subgraph normally owns it" |
 
 ```graphql
@@ -115,19 +115,19 @@ Instead of heavy ETL pipelines, the engine intercepts raw REST or database JSON 
 
 ## Quick Reference Table
 
-| Data Engineering | GraphQL Federation | Directive / Concept |
-|------------------|--------------------|---------------------|
-| Canonical model | Supergraph | Composition |
-| Primary key | Entity `@key` | `@key(fields: "id")` |
-| Foreign key | Cross-subgraph reference | `@external` + `@key` |
-| Borrowed column | Borrowed field | `@external` |
-| Denormalized / eager-loaded | Eager resolution | `@provides` |
-| Computed column | Computed field | `@requires` |
-| Shared table | Shared type | `@shareable` |
-| Database / schema namespace | Subgraph | `x-graphql-subgraph-name` |
-| Data provenance | Subgraph ownership | `@external`, `@requires` |
-| Survivorship | Authoritative source | `@override`, `@provides` |
-| ETL transformation | Response translation | `x-graphql-field-name` |
+| Data Engineering            | GraphQL Federation       | Directive / Concept       |
+| --------------------------- | ------------------------ | ------------------------- |
+| Canonical model             | Supergraph               | Composition               |
+| Primary key                 | Entity `@key`            | `@key(fields: "id")`      |
+| Foreign key                 | Cross-subgraph reference | `@external` + `@key`      |
+| Borrowed column             | Borrowed field           | `@external`               |
+| Denormalized / eager-loaded | Eager resolution         | `@provides`               |
+| Computed column             | Computed field           | `@requires`               |
+| Shared table                | Shared type              | `@shareable`              |
+| Database / schema namespace | Subgraph                 | `x-graphql-subgraph-name` |
+| Data provenance             | Subgraph ownership       | `@external`, `@requires`  |
+| Survivorship                | Authoritative source     | `@override`, `@provides`  |
+| ETL transformation          | Response translation     | `x-graphql-field-name`    |
 
 ---
 
