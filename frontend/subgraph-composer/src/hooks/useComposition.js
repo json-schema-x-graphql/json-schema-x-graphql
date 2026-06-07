@@ -6,6 +6,7 @@ export function useComposition() {
   const [supergraphSDL, setSupergraphSDL] = useState("");
   const [compositionStats, setCompositionStats] = useState(null);
   const [compositionErrors, setCompositionErrors] = useState([]);
+  const [typeSources, setTypeSources] = useState([]);
 
   const compose = useCallback(async (subgraphs) => {
     if (subgraphs.size === 0) {
@@ -65,6 +66,7 @@ export function useComposition() {
     supergraphSDL,
     compositionStats,
     compositionErrors,
+    typeSources,
     compose,
   };
 }

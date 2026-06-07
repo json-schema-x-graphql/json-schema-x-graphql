@@ -34,8 +34,13 @@ export default function App() {
   const { generateSubgraph, subgraphs, subgraphsMap, isLoading } =
     useSubgraphGenerator();
 
-  const { supergraphSDL, compositionStats, compositionErrors, compose } =
-    useComposition();
+  const {
+    supergraphSDL,
+    compositionStats,
+    compositionErrors,
+    typeSources,
+    compose,
+  } = useComposition();
 
   const {
     suggestions,
