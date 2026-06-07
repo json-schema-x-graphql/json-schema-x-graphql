@@ -1,8 +1,8 @@
 //! Validation module for JSON Schema and GraphQL SDL
 //!
-//! This module provides comprehensive validation infrastructure:
-//! - JSON Schema validation with dual validators (jsonschema + boon)
-//! - GraphQL SDL validation (Apollo parser, compiler, spec, federation)
+//! This module provides validation infrastructure:
+//! - JSON Schema structural validation and x-graphql constraint checks
+//! - GraphQL SDL structural validation (full semantic validation available via `graphql-validation` feature)
 //! - Integration with CI/CD pipelines
 //! - CLI tools for validation
 

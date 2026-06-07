@@ -1,6 +1,7 @@
 export function extractDirectives(schema, options) {
     const directives = [];
-    const includeFederation = (options?.includeFederationDirectives ?? true) && options?.federationVersion !== "NONE";
+    const includeFederation = (options?.includeFederationDirectives ?? true) &&
+        options?.federationVersion !== "NONE";
     // 1. Process explicit x-graphql-directives
     if (Array.isArray(schema["x-graphql-directives"])) {
         for (const dir of schema["x-graphql-directives"]) {
@@ -116,7 +117,9 @@ export function printDirectives(directives) {
             return dir.raw;
         if (!dir.name)
             return "";
-        const args = dir.args && Object.keys(dir.args).length > 0 ? `(${formatDirectiveArgs(dir.args)})` : "";
+        const args = dir.args && Object.keys(dir.args).length > 0
+            ? `(${formatDirectiveArgs(dir.args)})`
+            : "";
         return `@${dir.name}${args}`;
     });
     return parts

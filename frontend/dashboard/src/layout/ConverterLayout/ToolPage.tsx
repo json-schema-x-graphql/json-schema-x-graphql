@@ -46,7 +46,8 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
 
   useEffect(() => {
     const scrollPositionRatio =
-      (scrollPosition / editorHeight) * (editorRef.current?.getContentHeight() || 0);
+      (scrollPosition / editorHeight) *
+      (editorRef.current?.getContentHeight() || 0);
 
     editorRef.current?.setScrollTop(scrollPositionRatio);
   }, [editorHeight, scrollPosition]);

@@ -6,7 +6,7 @@ export function useComposition() {
   const [supergraphSDL, setSupergraphSDL] = useState("");
   const [compositionStats, setCompositionStats] = useState(null);
   const [compositionErrors, setCompositionErrors] = useState([]);
-  const [typeSources, setTypeSources] = useState({});
+  const [typeSources, setTypeSources] = useState([]);
 
   const compose = useCallback(async (subgraphs) => {
     if (subgraphs.size === 0) {
@@ -27,9 +27,18 @@ export function useComposition() {
         });
 
         if (result.success) {
-          span.setAttribute("composition.totalTypes", result.stats?.totalTypes ?? 0);
-          span.setAttribute("composition.totalFields", result.stats?.totalFields ?? 0);
-          span.setAttribute("composition.conflicts", result.stats?.conflicts?.length ?? 0);
+          span.setAttribute(
+            "composition.totalTypes",
+            result.stats?.totalTypes ?? 0,
+          );
+          span.setAttribute(
+            "composition.totalFields",
+            result.stats?.totalFields ?? 0,
+          );
+          span.setAttribute(
+            "composition.conflicts",
+            result.stats?.conflicts?.length ?? 0,
+          );
           span.setStatus({ code: 1 }); // Ok
           setSupergraphSDL(result.sdl);
           setCompositionStats(result.stats);
@@ -44,7 +53,9 @@ export function useComposition() {
         }
       } catch (error) {
         const errorMsg = error instanceof Error ? error.message : String(error);
-        span.recordException(error instanceof Error ? error : new Error(errorMsg));
+        span.recordException(
+          error instanceof Error ? error : new Error(errorMsg),
+        );
         span.setStatus({ code: 2, message: errorMsg });
         setCompositionErrors([errorMsg]);
         setSupergraphSDL("");

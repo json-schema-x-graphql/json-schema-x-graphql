@@ -179,7 +179,9 @@ export function formatJsonSchema(jsonString) {
     const parsed = JSON.parse(jsonString);
     return JSON.stringify(parsed, null, 2);
   } catch (error) {
-    throw new Error(`Invalid JSON: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Invalid JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 

@@ -1,56 +1,57 @@
-use async_graphql::{Enum, InputObject, SimpleObject};
+
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Deserialize, Serialize, InputObject)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::InputObject))]
 #[serde(rename_all = "camelCase")]
-#[graphql(rename_fields = "camelCase")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_fields = "camelCase"))]
 pub struct ConverterOptions {
     #[serde(default = "default_true")]
-    #[graphql(default = true)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = true))]
     pub validate: bool,
 
     #[serde(default = "default_true")]
-    #[graphql(default = true)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = true))]
     pub include_descriptions: bool,
 
     #[serde(default = "default_true")]
-    #[graphql(default = true)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = true))]
     pub preserve_field_order: bool,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub federation_version: FederationVersion,
 
     #[serde(default = "default_true")]
-    #[graphql(default = true)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = true))]
     pub include_federation_directives: bool,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub naming_convention: NamingConvention,
 
     #[serde(default)]
-    #[graphql(default = false)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = false))]
     pub infer_ids: bool,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub id_strategy: IdInferenceStrategy,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub output_format: OutputFormat,
 
     #[serde(default = "default_false")]
-    #[graphql(default = false)]
+    #[cfg_attr(feature = "graphql-server", graphql(default = false))]
     pub fail_on_warning: bool,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub exclude_types: Vec<String>,
 
     #[serde(default)]
-    #[graphql(default)]
+    #[cfg_attr(feature = "graphql-server", graphql(default))]
     pub exclude_patterns: Vec<String>,
 }
 
@@ -81,9 +82,10 @@ impl Default for ConverterOptions {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Default)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum FederationVersion {
     None,
     V1,
@@ -92,18 +94,20 @@ pub enum FederationVersion {
     Auto,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Default)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum NamingConvention {
     Preserve,
     #[default]
     GraphqlIdiomatic,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Default)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum IdInferenceStrategy {
     #[default]
     None,
@@ -111,9 +115,10 @@ pub enum IdInferenceStrategy {
     AllStrings,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Default)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum OutputFormat {
     #[default]
     Sdl,
@@ -121,9 +126,10 @@ pub enum OutputFormat {
     AstJson,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, SimpleObject)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::SimpleObject))]
 #[serde(rename_all = "camelCase")]
-#[graphql(rename_fields = "camelCase")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_fields = "camelCase"))]
 pub struct ConversionResult {
     /// The generated output string.
     /// This contains the SDL string if outputFormat is SDL or SDL_WITH_FEDERATION_METADATA.
@@ -139,9 +145,10 @@ pub struct ConversionResult {
     pub warning_count: i32,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, SimpleObject)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::SimpleObject))]
 #[serde(rename_all = "camelCase")]
-#[graphql(rename_fields = "camelCase")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_fields = "camelCase"))]
 pub struct Diagnostic {
     pub severity: DiagnosticSeverity,
 
@@ -156,18 +163,20 @@ pub struct Diagnostic {
     pub code: Option<String>,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum DiagnosticSeverity {
     Info,
     Warning,
     Error,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Enum)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::Enum))]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
-#[graphql(rename_items = "SCREAMING_SNAKE_CASE")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_items = "SCREAMING_SNAKE_CASE"))]
 pub enum DiagnosticKind {
     JsonSchemaValidation,
     GraphqlValidation,
@@ -178,9 +187,10 @@ pub enum DiagnosticKind {
     Other,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, InputObject)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[cfg_attr(feature = "graphql-server", derive(async_graphql::InputObject))]
 #[serde(rename_all = "camelCase")]
-#[graphql(rename_fields = "camelCase")]
+#[cfg_attr(feature = "graphql-server", graphql(rename_fields = "camelCase"))]
 pub struct ConvertInput {
     pub json_schema: String,
 

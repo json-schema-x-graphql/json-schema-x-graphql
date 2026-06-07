@@ -78,7 +78,11 @@ export function getScalarType(schema) {
  * Map JSON Schema type to GraphQL type
  */
 export function mapType(schema, propName, options = {}) {
-  const { parentRequired = [], rootSchema = null, supergraphSchema = null } = options;
+  const {
+    parentRequired = [],
+    rootSchema = null,
+    supergraphSchema = null,
+  } = options;
 
   // Handle $ref
   if (schema.$ref) {
@@ -91,7 +95,11 @@ export function mapType(schema, propName, options = {}) {
       let typeName = snakeToPascal(refName);
 
       // Try to resolve from supergraph schema
-      if (supergraphSchema && supergraphSchema.$defs && supergraphSchema.$defs[refName]) {
+      if (
+        supergraphSchema &&
+        supergraphSchema.$defs &&
+        supergraphSchema.$defs[refName]
+      ) {
         typeName = getTypeName(supergraphSchema.$defs[refName], refName);
       }
 
@@ -183,13 +191,15 @@ export function formatDirectives(directives, filter = null) {
   if (Array.isArray(directives)) {
     return directives
       .filter((dir) => {
-        const name = typeof dir === "string" ? dir.match(/@(\w+)/)?.[1] : dir.name;
+        const name =
+          typeof dir === "string" ? dir.match(/@(\w+)/)?.[1] : dir.name;
         if (filter && name && !filter.shouldInclude(name)) return false;
         return true;
       })
       .map((dir) => {
         if (typeof dir === "string") return dir;
-        if (!dir.args || Object.keys(dir.args).length === 0) return `@${dir.name}`;
+        if (!dir.args || Object.keys(dir.args).length === 0)
+          return `@${dir.name}`;
 
         const args = Object.entries(dir.args)
           .map(([key, value]) => {
@@ -214,7 +224,10 @@ export function generateFieldArgs(args, filter = null) {
 
   const argStrings = Object.entries(args).map(([name, argDef]) => {
     const type = argDef.type || "String";
-    const defaultVal = argDef.default !== undefined ? ` = ${JSON.stringify(argDef.default)}` : "";
+    const defaultVal =
+      argDef.default !== undefined
+        ? ` = ${JSON.stringify(argDef.default)}`
+        : "";
     const desc = argDef.description ? `"${argDef.description}" ` : "";
 
     // Support arguments with directives
@@ -257,7 +270,9 @@ export function generateEnum(name, schema) {
       const enumValue = config.name || snakeValue.toUpperCase();
       if (config.description) output.push(`  """${config.description}"""`);
       if (config.deprecated) {
-        output.push(`  ${enumValue} @deprecated(reason: "${config.deprecated}")`);
+        output.push(
+          `  ${enumValue} @deprecated(reason: "${config.deprecated}")`,
+        );
       } else {
         output.push(`  ${enumValue}`);
       }
@@ -330,10 +345,12 @@ export function generateObjectType(name, schema, options = {}) {
 
   let typeKeyword = "type";
   if (graphqlType === "interface") typeKeyword = "interface";
-  else if (graphqlType === "input" || schema["x-graphql-input"]) typeKeyword = "input";
+  else if (graphqlType === "input" || schema["x-graphql-input"])
+    typeKeyword = "input";
 
   let typeDecl = `${typeKeyword} ${typeName}`;
-  if (implements_.length > 0) typeDecl += ` implements ${implements_.join(" & ")}`;
+  if (implements_.length > 0)
+    typeDecl += ` implements ${implements_.join(" & ")}`;
 
   // Federation keys
   const keys = Array.isArray(federatedKeys) ? federatedKeys : [federatedKeys];

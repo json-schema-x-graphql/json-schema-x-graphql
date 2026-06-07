@@ -17,7 +17,10 @@ export interface ToolbarProps {
   onExportClick?: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick }) => {
+export const Toolbar: React.FC<ToolbarProps> = ({
+  onSettingsClick,
+  onExportClick,
+}) => {
   const mode = useAppStore((state) => state.mode);
   const selectedEngine = useAppStore((state) => state.settings.converterEngine);
   const isConverting = useAppStore((state) => state.isConverting);
@@ -26,8 +29,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick
   const validationResult = useAppStore((state) => state.validationResult);
 
   const setConverterEngine = useAppStore((state) => state.setConverterEngine);
-  const convertJsonToGraphQL = useAppStore((state) => state.convertJsonToGraphQL);
-  const convertGraphQLToJson = useAppStore((state) => state.convertGraphQLToJson);
+  const convertJsonToGraphQL = useAppStore(
+    (state) => state.convertJsonToGraphQL,
+  );
+  const convertGraphQLToJson = useAppStore(
+    (state) => state.convertGraphQLToJson,
+  );
   const validateJsonSchema = useAppStore((state) => state.validateJsonSchema);
   const validateGraphQL = useAppStore((state) => state.validateGraphQL);
   const exportSchemas = useAppStore((state) => state.exportSchemas);
@@ -89,7 +96,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick
   };
 
   const handleDirectionToggle = () => {
-    const newMode: AppMode = mode === "json-to-graphql" ? "graphql-to-json" : "json-to-graphql";
+    const newMode: AppMode =
+      mode === "json-to-graphql" ? "graphql-to-json" : "json-to-graphql";
     updateSettings({ converterEngine: selectedEngine });
     // Note: The store doesn't expose setMode directly, so we'd need to add that
     // For now, this is a placeholder
@@ -159,7 +167,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick
                 {validationResult.valid ? (
                   <span>✓ Schema valid</span>
                 ) : (
-                  <span>✗ {validationResult.errors.length} validation errors</span>
+                  <span>
+                    ✗ {validationResult.errors.length} validation errors
+                  </span>
                 )}
               </div>
             )}
@@ -194,21 +204,25 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick
               {showEngineMenu && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50">
                   <div className="py-1">
-                    {(["auto", "rust-wasm", "node"] as ConverterEngine[]).map((engine) => (
-                      <button
-                        key={engine}
-                        onClick={() => handleEngineSelect(engine)}
-                        className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-3 ${
-                          selectedEngine === engine
-                            ? "bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300"
-                            : "text-gray-700 dark:text-gray-300"
-                        }`}
-                      >
-                        <span>{getEngineIcon(engine)}</span>
-                        <span className="flex-1">{getEngineLabel(engine)}</span>
-                        {selectedEngine === engine && <span>✓</span>}
-                      </button>
-                    ))}
+                    {(["auto", "rust-wasm", "node"] as ConverterEngine[]).map(
+                      (engine) => (
+                        <button
+                          key={engine}
+                          onClick={() => handleEngineSelect(engine)}
+                          className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-3 ${
+                            selectedEngine === engine
+                              ? "bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300"
+                              : "text-gray-700 dark:text-gray-300"
+                          }`}
+                        >
+                          <span>{getEngineIcon(engine)}</span>
+                          <span className="flex-1">
+                            {getEngineLabel(engine)}
+                          </span>
+                          {selectedEngine === engine && <span>✓</span>}
+                        </button>
+                      ),
+                    )}
                   </div>
                   <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-2">
                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -262,7 +276,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({ onSettingsClick, onExportClick
 
       {/* Close dropdown when clicking outside */}
       {showEngineMenu && (
-        <div className="fixed inset-0 z-40" onClick={() => setShowEngineMenu(false)} />
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => setShowEngineMenu(false)}
+        />
       )}
     </header>
   );

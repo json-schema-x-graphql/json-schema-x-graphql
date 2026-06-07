@@ -1,6 +1,15 @@
-import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 
-const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange }, ref) {
+const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
+  { value, onChange },
+  ref,
+) {
   const [EditorComp, setEditorComp] = useState(null);
   const [loadError, setLoadError] = useState(false);
   const textareaRef = useRef(null);
@@ -10,7 +19,11 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor({ value, onChange 
 
   useEffect(() => {
     let mounted = true;
-    if (typeof process !== "undefined" && process.env && process.env.NODE_ENV === "test") {
+    if (
+      typeof process !== "undefined" &&
+      process.env &&
+      process.env.NODE_ENV === "test"
+    ) {
       setLoadError(true);
       return;
     }

@@ -131,7 +131,12 @@ Documentation (Generated)
       "properties": {
         "role": {
           "type": "string",
-          "enum": ["primary", "technical", "administrative", "contracting_officer"]
+          "enum": [
+            "primary",
+            "technical",
+            "administrative",
+            "contracting_officer"
+          ]
         }
       }
     }
@@ -338,8 +343,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
 
-const schemaPath = path.join(repoRoot, "src", "data", "schema_unification.schema.json");
-const outputPath = path.join(repoRoot, "src", "data", "schema_unification.graphql");
+const schemaPath = path.join(
+  repoRoot,
+  "src",
+  "data",
+  "schema_unification.schema.json",
+);
+const outputPath = path.join(
+  repoRoot,
+  "src",
+  "data",
+  "schema_unification.graphql",
+);
 const tempPath = path.join(repoRoot, "generated-schemas", "temp.graphql");
 
 async function generateGraphQL() {
@@ -476,7 +491,10 @@ function addOperations(graphql, schema) {
   }
 
   if (operations.mutations) {
-    const mutationType = generateOperationType("Mutation", operations.mutations);
+    const mutationType = generateOperationType(
+      "Mutation",
+      operations.mutations,
+    );
     sdl += "\n\n" + mutationType;
   }
 
@@ -638,7 +656,9 @@ describe("GraphQL Extensions Processor", () => {
     };
 
     const result = processGraphQLExtensions("", schema);
-    expect(result).toContain("union SystemExtension = Contract DataExtension | AssistExtension");
+    expect(result).toContain(
+      "union SystemExtension = Contract DataExtension | AssistExtension",
+    );
   });
 
   // Add more tests...
@@ -656,7 +676,10 @@ describe("Schema Roundtrip", () => {
     await generateGraphQL();
 
     // Parse generated GraphQL
-    const graphql = await fs.readFile("src/data/schema_unification.graphql", "utf8");
+    const graphql = await fs.readFile(
+      "src/data/schema_unification.graphql",
+      "utf8",
+    );
     const schema = buildSchema(graphql);
 
     // Validate all expected types exist

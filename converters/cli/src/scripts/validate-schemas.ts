@@ -33,12 +33,15 @@ interface ValidationReport {
   invalidSchemas: number;
   results: ValidationResult[];
   summary: {
-    byDirectory: Record<string, { total: number; valid: number; invalid: number }>;
+    byDirectory: Record<
+      string,
+      { total: number; valid: number; invalid: number }
+    >;
     xGraphQLSchemas: number;
   };
 }
 
-const PROJECT_ROOT = join(__dirname, "../..");
+const PROJECT_ROOT = join(import.meta.dirname, "../../../..");
 const TEST_DATA_DIRS = [
   join(PROJECT_ROOT, "converters/test-data"),
   join(PROJECT_ROOT, "converters/test-data/x-graphql"),
@@ -226,7 +229,10 @@ class SchemaValidator {
   /**
    * Validate x-graphql extension usage
    */
-  private validateXGraphQLExtensions(schema: any, result: ValidationResult): void {
+  private validateXGraphQLExtensions(
+    schema: any,
+    result: ValidationResult,
+  ): void {
     const checkExtensions = (obj: any, path: string = "") => {
       if (!obj || typeof obj !== "object") return;
 
@@ -334,21 +340,29 @@ class SchemaValidator {
           ]);
 
           if (!knownExtensions.has(extName)) {
-            result.warnings?.push(`Unknown x-graphql extension at ${currentPath}: ${key}`);
+            result.warnings?.push(
+              `Unknown x-graphql extension at ${currentPath}: ${key}`,
+            );
           }
 
           // Validate extension value types
           if (key === "x-graphql-skip" && typeof obj[key] !== "boolean") {
-            result.warnings?.push(`${currentPath} should be boolean, got ${typeof obj[key]}`);
+            result.warnings?.push(
+              `${currentPath} should be boolean, got ${typeof obj[key]}`,
+            );
           }
           if (key === "x-graphql-nullable" && typeof obj[key] !== "boolean") {
-            result.warnings?.push(`${currentPath} should be boolean, got ${typeof obj[key]}`);
+            result.warnings?.push(
+              `${currentPath} should be boolean, got ${typeof obj[key]}`,
+            );
           }
           if (
             (key === "x-graphql-name" || key === "x-graphql-field-name") &&
             typeof obj[key] !== "string"
           ) {
-            result.warnings?.push(`${currentPath} should be string, got ${typeof obj[key]}`);
+            result.warnings?.push(
+              `${currentPath} should be string, got ${typeof obj[key]}`,
+            );
           }
         }
 
@@ -367,7 +381,10 @@ class SchemaValidator {
   validateAll(): ValidationReport {
     const schemas = this.discoverSchemas();
     const results: ValidationResult[] = [];
-    const byDirectory: Record<string, { total: number; valid: number; invalid: number }> = {};
+    const byDirectory: Record<
+      string,
+      { total: number; valid: number; invalid: number }
+    > = {};
 
     console.log(`\n🔍 Discovered ${schemas.length} schema files\n`);
 
@@ -447,7 +464,9 @@ function main() {
   console.log("\nBy directory:");
   for (const [dir, stats] of Object.entries(report.summary.byDirectory)) {
     console.log(`  ${dir}:`);
-    console.log(`    Total: ${stats.total}, Valid: ${stats.valid}, Invalid: ${stats.invalid}`);
+    console.log(
+      `    Total: ${stats.total}, Valid: ${stats.valid}, Invalid: ${stats.invalid}`,
+    );
   }
   console.log("=".repeat(60) + "\n");
 
@@ -467,7 +486,10 @@ function main() {
     process.exit(1);
   }
 
-  const totalWarnings = report.results.reduce((sum, r) => sum + (r.warnings?.length || 0), 0);
+  const totalWarnings = report.results.reduce(
+    (sum, r) => sum + (r.warnings?.length || 0),
+    0,
+  );
   if (flags.failOnWarning && totalWarnings > 0) {
     console.error("⚠️  Validation failed: warnings found");
     process.exit(1);
@@ -476,7 +498,7 @@ function main() {
   console.log("✅ Schema validation complete\n");
 }
 
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
 

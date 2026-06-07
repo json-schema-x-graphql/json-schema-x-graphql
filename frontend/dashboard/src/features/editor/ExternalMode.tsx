@@ -44,7 +44,8 @@ const ExternalMode = () => {
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      if (window.location.pathname.includes("widget")) return setExternal(false);
+      if (window.location.pathname.includes("widget"))
+        return setExternal(false);
       if (window.location.host !== "jsoncrack.com") return setExternal(true);
       return setExternal(false);
     }
@@ -64,17 +65,25 @@ const ExternalMode = () => {
       >
         External Host
       </Button>
-      <Modal title="External Host of JSON Crack" opened={isOpen} onClose={closeModal} centered>
+      <Modal
+        title="External Host of JSON Crack"
+        opened={isOpen}
+        onClose={closeModal}
+        centered
+      >
         <Group>
           <StyledTitle>Dear valued user,</StyledTitle>
           <Text>
-            We would like to inform you that you are presently utilizing the external release of the{" "}
-            <Anchor href="https://jsoncrack.com">JSON Crack</Anchor>. Your continued support is
-            crucial in sustaining and improving our services.
+            We would like to inform you that you are presently utilizing the
+            external release of the{" "}
+            <Anchor href="https://jsoncrack.com">JSON Crack</Anchor>. Your
+            continued support is crucial in sustaining and improving our
+            services.
             <br />
             <br />
-            We kindly encourage you to consider upgrading to the premium version, which not only
-            enhances your experience but also contributes to the ongoing development of JSON Crack.
+            We kindly encourage you to consider upgrading to the premium
+            version, which not only enhances your experience but also
+            contributes to the ongoing development of JSON Crack.
           </Text>
         </Group>
         <Group pt="lg" justify="right">

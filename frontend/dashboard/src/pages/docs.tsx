@@ -70,10 +70,13 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
           </Title>
           <StyledContentBody>
             <Text>
-              By adding <StyledHighlight>?json=https://catfact.ninja/fact</StyledHighlight> query at
-              the end of iframe src you will be able to fetch from URL at widgets without additional
-              scripts. This applies to editor page as well, the following link will fetch the url at
-              the editor:{" "}
+              By adding{" "}
+              <StyledHighlight>
+                ?json=https://catfact.ninja/fact
+              </StyledHighlight>{" "}
+              query at the end of iframe src you will be able to fetch from URL
+              at widgets without additional scripts. This applies to editor page
+              as well, the following link will fetch the url at the editor:{" "}
               <StyledHighlight
                 as="a"
                 href="https://jsoncrack.com/editor?json=https://catfact.ninja/fact"
@@ -88,8 +91,10 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
               src="https://codepen.io/AykutSarac/embed/KKBpWVR?default-tab=html%2Cresult"
               loading="eager"
             >
-              See the Pen <a href="https://codepen.io/AykutSarac/pen/KKBpWVR">Untitled</a> by Aykut
-              Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
+              See the Pen{" "}
+              <a href="https://codepen.io/AykutSarac/pen/KKBpWVR">Untitled</a>{" "}
+              by Aykut Saraç (
+              <a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
@@ -135,8 +140,9 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
               >
                 MessagePort
               </StyledHighlight>
-              , you should pass an object consist of &quot;json&quot; and &quot;options&quot; key
-              where json is a string and options is an object that may contain the following:
+              , you should pass an object consist of &quot;json&quot; and
+              &quot;options&quot; key where json is a string and options is an
+              object that may contain the following:
               <CodeHighlight
                 w={500}
                 language="json"
@@ -153,8 +159,10 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
               src="https://codepen.io/AykutSarac/embed/rNrVyWP?default-tab=html%2Cresult"
               loading="lazy"
             >
-              See the Pen <a href="https://codepen.io/AykutSarac/pen/rNrVyWP">Untitled</a> by Aykut
-              Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
+              See the Pen{" "}
+              <a href="https://codepen.io/AykutSarac/pen/rNrVyWP">Untitled</a>{" "}
+              by Aykut Saraç (
+              <a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
@@ -164,12 +172,14 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
           <StyledContentBody>
             <Text>
               <Text>
-                ⚠️ <b>Important!</b> - iframe should be defined before the script tag
+                ⚠️ <b>Important!</b> - iframe should be defined before the
+                script tag
               </Text>
               <Text>
-                ⚠️ <b>Note</b> - Widget is not loaded immediately with the parent page. The widget
-                sends its <b>id</b> attribute so you can listen for it as in the example below to
-                ensure its loaded and ready to listen for messages.
+                ⚠️ <b>Note</b> - Widget is not loaded immediately with the
+                parent page. The widget sends its <b>id</b> attribute so you can
+                listen for it as in the example below to ensure its loaded and
+                ready to listen for messages.
               </Text>
             </Text>
             <StyledFrame
@@ -177,8 +187,10 @@ const Docs: React.FC<DocsProps> = ({ active, archived }) => {
               src="https://codepen.io/AykutSarac/embed/QWBbpqx?default-tab=html%2Cresult"
               loading="lazy"
             >
-              See the Pen <a href="https://codepen.io/AykutSarac/pen/QWBbpqx">Untitled</a> by Aykut
-              Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
+              See the Pen{" "}
+              <a href="https://codepen.io/AykutSarac/pen/QWBbpqx">Untitled</a>{" "}
+              by Aykut Saraç (
+              <a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
@@ -227,7 +239,9 @@ export const getStaticProps: GetStaticProps<DocsProps> = async () => {
       href = `/docs/${parts.slice(0, -1).join("/")}`;
     }
 
-    const title = data.title || parts.slice(-1)[0].replace(/\.md$/, "").replace(/[-_]/g, " ");
+    const title =
+      data.title ||
+      parts.slice(-1)[0].replace(/\.md$/, "").replace(/[-_]/g, " ");
 
     if (parts[0] === "archived") {
       archived.push({ href, title });

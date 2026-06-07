@@ -171,7 +171,11 @@ export const useEditorStore = create<EditorState>()(
       errors: [],
 
       // Initialize Loro collaboration
-      initializeLoro: (_docId: string, _serverUrl: string, username: string) => {
+      initializeLoro: (
+        _docId: string,
+        _serverUrl: string,
+        username: string,
+      ) => {
         const { loroDoc } = get();
 
         // Clean up existing document
@@ -282,7 +286,8 @@ export const useEditorStore = create<EditorState>()(
 
       setConverting: (isConverting) => set({ isConverting }),
 
-      toggleAutoSync: () => set((state) => ({ isAutoSyncEnabled: !state.isAutoSyncEnabled })),
+      toggleAutoSync: () =>
+        set((state) => ({ isAutoSyncEnabled: !state.isAutoSyncEnabled })),
 
       setConnectionStatus: (status) => set({ connectionStatus: status }),
 

@@ -3,6 +3,10 @@
 **/*.rs.bk
 *.pdb
 
+# Rust build examples/ Large binaries
+target/debug/examples/
+target/release/examples/
+
 # WASM
 /pkg/
 *.wasm
@@ -57,9 +61,8 @@ temp/
 Thumbs.db
 .DS_Store
 
-#Rust
+# Rust (secondary crate target directory — should be unused after .cargo/config.toml consolidation)
 converters/rust/target/
-converters/rust/target/*
 
 # Next.js build artifacts and cache
 .next/
@@ -100,9 +103,7 @@ frontend/dashboard/.next/cache/webpack/
 frontend/**/node_modules/
 converters/**/node_modules/
 
-# Large binaries (Rust examples)
-converters/rust/target/debug/examples/
-converters/rust/target/release/examples/
+
 
 # Archives
 *.zip

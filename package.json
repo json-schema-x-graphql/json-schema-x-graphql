@@ -39,10 +39,10 @@
     "build:wasm": "cd converters/rust && wasm-pack build --target web --out-dir ../../frontend/subgraph-composer/src/salvaged/wasm --release",
     "test": "jest --runInBand --testPathIgnorePatterns converters/node/src/parity.test.ts",
     "test:watch": "jest --watch",
-    "lint": "oxlint check . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
-    "lint:fix": "oxlint fix . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
-    "lint:eslint": "eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
-    "lint:eslint:fix": "eslint \"converters/node/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
+    "lint": "oxlint check . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"converters/cli/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
+    "lint:fix": "oxlint fix . --ignore-path=.prettierignore && eslint \"converters/node/src/**/*.ts\" \"converters/cli/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
+    "lint:eslint": "eslint \"converters/node/src/**/*.ts\" \"converters/cli/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\"",
+    "lint:eslint:fix": "eslint \"converters/node/src/**/*.ts\" \"converters/cli/src/**/*.ts\" \"scripts/**/*.js\" \"scripts/**/*.ts\" --fix",
     "lint:oxlint": "oxlint check . --ignore-path=.prettierignore",
     "lint:oxlint:fix": "oxlint fix . --ignore-path=.prettierignore",
     "format": "oxfmt check . --write && prettier --write .",
@@ -65,15 +65,16 @@
     "skip-report:run": "node scripts/skip-report.js --input . --output reports/skip-report.json",
     "skip-report:summary": "node scripts/summarize-skip-report.js --input reports/skip-report.json --output reports/skip-report-summary.txt",
     "skip-report:all": "npm run skip-report:run && npm run skip-report:summary",
-    "validate-schemas": "pnpm --filter converters/node run validate:schemas",
+    "validate-schemas": "pnpm --filter @json-schema-x-graphql/cli run validate:schemas",
+    "validate-graphql": "pnpm --filter @json-schema-x-graphql/cli run validate:graphql",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "ajv": "8.17.1",
-    "graphql": "^16.14.0",
-    "graphql-tag": "^2.12.6"
+    "graphql": "^16.14.0"
   },
   "devDependencies": {
+    "@apollo/subgraph": "^2.14.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
     "@theguild/federation-composition": "^0.22.3",
@@ -106,7 +107,7 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "packageManager": "pnpm@11.0.9",
+  "packageManager": "pnpm@11.5.2",
   "pnpm": {
     "overrides": {
       "minimatch": "3.1.2",

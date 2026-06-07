@@ -1,13 +1,11 @@
-//! GraphQL SDL validation using Apollo parser, compiler, and federation validators
+//! GraphQL SDL validation module
 //!
-//! This module provides comprehensive GraphQL SDL validation using multiple validators:
-//! - Apollo Parser: Syntax and structure validation
-//! - Apollo Compiler: Semantic validation and type checking
-//! - GraphQL Spec: Core specification compliance
-//! - Federation Composition: Apollo Federation v2 validation
+//! Provides structural validation for GraphQL SDL documents.
 //!
-//! NOTE: Currently stubbed due to apollo-parser API compatibility issues.
-//! TODO: Fix apollo-parser version compatibility and restore full validation functionality.
+//! The validators here check for basic syntactic correctness.
+//! Full semantic validation (Apollo parser, compiler, spec compliance,
+//! federation composition) is available behind the `graphql-validation`
+//! feature flag, which re-enables the external Apollo crates.
 
 use serde::{Deserialize, Serialize};
 use std::path::Path;

@@ -5,7 +5,10 @@ interface ErrorBannerProps {
   onClear: () => void;
 }
 
-export const ErrorBanner: React.FC<ErrorBannerProps> = ({ errors, onClear }) => {
+export const ErrorBanner: React.FC<ErrorBannerProps> = ({
+  errors,
+  onClear,
+}) => {
   if (errors.length === 0) return null;
 
   return (
@@ -46,7 +49,10 @@ interface StatusBadgeProps {
   variant?: "success" | "error" | "warning" | "info";
 }
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ label, variant = "info" }) => {
+export const StatusBadge: React.FC<StatusBadgeProps> = ({
+  label,
+  variant = "info",
+}) => {
   const colors = {
     success: "bg-green-700 text-green-100",
     error: "bg-red-700 text-red-100",
@@ -55,7 +61,11 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ label, variant = "info
   };
 
   return (
-    <span className={`px-2 py-1 rounded text-xs font-medium ${colors[variant]}`}>{label}</span>
+    <span
+      className={`px-2 py-1 rounded text-xs font-medium ${colors[variant]}`}
+    >
+      {label}
+    </span>
   );
 };
 
@@ -64,11 +74,16 @@ interface KeyboardHintProps {
   shortcut: string;
 }
 
-export const KeyboardHint: React.FC<KeyboardHintProps> = ({ text, shortcut }) => {
+export const KeyboardHint: React.FC<KeyboardHintProps> = ({
+  text,
+  shortcut,
+}) => {
   return (
     <div className="text-xs text-gray-500">
       {text}{" "}
-      <kbd className="px-1.5 py-0.5 bg-gray-700 rounded text-gray-300 font-mono">{shortcut}</kbd>
+      <kbd className="px-1.5 py-0.5 bg-gray-700 rounded text-gray-300 font-mono">
+        {shortcut}
+      </kbd>
     </div>
   );
 };

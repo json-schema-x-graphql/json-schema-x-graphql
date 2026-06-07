@@ -2,14 +2,14 @@
 import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
-import { jsonSchemaToGraphQL } from "./converter.js";
+import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
 import {
   FederationVersion,
   NamingConvention,
   IdInferenceStrategy,
   OutputFormat,
   ConverterOptions,
-} from "./generated/types.js";
+} from "@json-schema-x-graphql/core";
 
 const { values, positionals } = parseArgs({
   options: {
@@ -102,7 +102,7 @@ Options:
 
 if (values.version) {
   const packageJson = JSON.parse(
-    fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8"),
+    fs.readFileSync(path.join(import.meta.dirname, "../package.json"), "utf-8"),
   );
   console.log(packageJson.version);
   process.exit(0);

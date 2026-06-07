@@ -80,8 +80,9 @@ export const Section3 = () => {
             Visualize and convert to multiple formats
           </Title>
           <Text my="md" c="gray.7" fz={16} maw={510}>
-            Enterprise Schema Unification Forest supports formats like TOML, CSV, YAML, and XML,
-            making it easier to visualize your contract data, no matter the type.
+            Enterprise Schema Unification Forest supports formats like TOML,
+            CSV, YAML, and XML, making it easier to visualize your contract
+            data, no matter the type.
           </Text>
           <List
             fz={{

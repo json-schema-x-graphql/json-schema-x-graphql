@@ -5,7 +5,7 @@
 
 use crate::error::ConversionError;
 use crate::types::{ConversionOptions, GqlScalar, GqlType};
-use async_graphql::parser::{
+use async_graphql_parser::{
     parse_schema,
     types::{
         BaseType, ConstDirective, FieldDefinition, InputValueDefinition, Type, TypeDefinition,

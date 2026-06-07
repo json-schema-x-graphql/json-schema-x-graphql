@@ -76,7 +76,9 @@ function createWorkerFromPath(path: string, workerBaseUrl?: string): Worker {
   // 3) Use globally configured base (conventional)
   try {
     const globalBase =
-      (typeof window !== "undefined" && (window as any).__MONACO_WORKER_BASE__) || undefined;
+      (typeof window !== "undefined" &&
+        (window as any).__MONACO_WORKER_BASE__) ||
+      undefined;
     if (globalBase) {
       const url = globalBase.endsWith("/")
         ? globalBase + path + ".js"
@@ -121,11 +123,16 @@ export function setupMonacoWorkers(options: SetupOptions = {}) {
 
   if (!silenceWarnings && typeof console !== "undefined") {
     // lightweight notice for debugging setups
-    console.debug?.("[monaco-worker-setup] initializing Monaco worker environment");
+    console.debug?.(
+      "[monaco-worker-setup] initializing Monaco worker environment",
+    );
   }
 
   // If getWorker already exists, don't override it (allows other runtime to configure)
-  if (globalObj.MonacoEnvironment && typeof globalObj.MonacoEnvironment.getWorker === "function") {
+  if (
+    globalObj.MonacoEnvironment &&
+    typeof globalObj.MonacoEnvironment.getWorker === "function"
+  ) {
     if (!silenceWarnings && typeof console !== "undefined") {
       console.debug?.(
         "[monaco-worker-setup] MonacoEnvironment.getWorker already defined - skipping override",
@@ -141,7 +148,11 @@ export function setupMonacoWorkers(options: SetupOptions = {}) {
     if (normalized === "json") return DEFAULT_WORKER_PATHS.json;
     if (normalized === "css" || normalized === "scss" || normalized === "less")
       return DEFAULT_WORKER_PATHS.css;
-    if (normalized === "html" || normalized === "handlebars" || normalized === "razor")
+    if (
+      normalized === "html" ||
+      normalized === "handlebars" ||
+      normalized === "razor"
+    )
       return DEFAULT_WORKER_PATHS.html;
     if (
       normalized === "typescript" ||
@@ -158,7 +169,10 @@ export function setupMonacoWorkers(options: SetupOptions = {}) {
   // Install global MonacoEnvironment.getWorker
   globalObj.MonacoEnvironment = globalObj.MonacoEnvironment || {};
 
-  globalObj.MonacoEnvironment.getWorker = function (_moduleId: string, label?: string) {
+  globalObj.MonacoEnvironment.getWorker = function (
+    _moduleId: string,
+    label?: string,
+  ) {
     const workerPath = getWorkerPathByLabel(label);
     try {
       return createWorkerFromPath(workerPath, workerBaseUrl);
@@ -185,12 +199,16 @@ export function setupMonacoWorkers(options: SetupOptions = {}) {
   };
 
   // Optionally, if a monaco instance is available, add a small helper to it so other modules can verify configuration.
-  if (monacoInstance && typeof monacoInstance.getConfiguredWorker !== "function") {
+  if (
+    monacoInstance &&
+    typeof monacoInstance.getConfiguredWorker !== "function"
+  ) {
     monacoInstance.getConfiguredWorker = function () {
       return {
         hasMonaco: true,
         getWorker: typeof globalObj.MonacoEnvironment.getWorker === "function",
-        workerBaseUrl: workerBaseUrl || globalObj.__MONACO_WORKER_BASE__ || null,
+        workerBaseUrl:
+          workerBaseUrl || globalObj.__MONACO_WORKER_BASE__ || null,
       };
     };
   }

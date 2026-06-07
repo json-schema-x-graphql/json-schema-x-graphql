@@ -1,38 +1,68 @@
+/**
+ * OpenTelemetry tracing integration for json-schema-x-graphql.
+ *
+ * The SDK packages (`@opentelemetry/sdk-trace-node`, `@opentelemetry/sdk-trace-base`)
+ * are loaded lazily via dynamic `import()` so they are NOT included in browser/WASM
+ * bundles — they are only loaded at runtime in Node environments where they are installed.
+ *
+ * This makes `@opentelemetry/api` the only required runtime dependency; the SDK
+ * packages become truly optional and can be omitted from installations that don't
+ * need tracing instrumentation.
+ */
 import { trace, type Tracer } from "@opentelemetry/api";
-import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import {
-  SimpleSpanProcessor,
-  InMemorySpanExporter,
-} from "@opentelemetry/sdk-trace-base";
 
-let memoryExporter: InMemorySpanExporter | null = null;
-let provider: NodeTracerProvider | null = null;
+let memoryExporter: any = null;
 
-// Initialize tracer provider only if in a Node/testing environment
-if (
-  typeof (globalThis as any).window === "undefined" &&
-  typeof process !== "undefined" &&
-  process.versions?.node
-) {
-  provider = new NodeTracerProvider();
-  memoryExporter = new InMemorySpanExporter();
-  provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));
-  provider.register();
+// Lazily initialize the tracer provider only in Node environments where the SDK
+// packages are installed.  The dynamic import() ensures bundlers do not pull
+// the heavy SDK packages into a WASM/browser build.
+async function initTracerProvider(): Promise<void> {
+  if (
+    typeof (globalThis as any).window !== "undefined" ||
+    typeof process === "undefined" ||
+    !process.versions?.node
+  ) {
+    return; // Not a Node environment — skip initialisation
+  }
+
+  try {
+    const [
+      { NodeTracerProvider },
+      { SimpleSpanProcessor, InMemorySpanExporter },
+    ] = await Promise.all([
+      import("@opentelemetry/sdk-trace-node"),
+      import("@opentelemetry/sdk-trace-base"),
+    ]);
+
+    const provider = new NodeTracerProvider();
+    memoryExporter = new InMemorySpanExporter();
+    provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));
+    provider.register();
+  } catch {
+    // SDK packages are not installed — tracing degrades gracefully to no-ops.
+  }
 }
 
+// Fire-and-forget initialisation; any spans created before the provider
+// finishes setting up will be recorded by the default global provider (no-ops).
+initTracerProvider();
+
+/** The OTel tracer — always available, backed by the global provider. */
 export const otelTracer: Tracer = trace.getTracer("json-schema-x-graphql");
 
 /**
- * Helper to get accumulated traces during test execution
+ * Helper to get accumulated traces during test execution.
+ * Returns an empty array if the SDK is not installed or not yet initialised.
  */
-export function getOtelSpans() {
+export function getOtelSpans(): any[] {
   return memoryExporter ? memoryExporter.getFinishedSpans() : [];
 }
 
 /**
- * Helper to clear accumulated traces between test cases
+ * Helper to clear accumulated traces between test cases.
+ * No-op if the SDK is not installed.
  */
-export function clearOtelSpans() {
+export function clearOtelSpans(): void {
   if (memoryExporter) {
     memoryExporter.reset();
   }

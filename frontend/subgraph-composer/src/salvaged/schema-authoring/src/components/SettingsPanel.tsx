@@ -21,7 +21,10 @@ export interface SettingsPanelProps {
   onClose: () => void;
 }
 
-export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
+export const SettingsPanel: React.FC<SettingsPanelProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const settings = useAppStore((state) => state.settings);
   const updateSettings = useAppStore((state) => state.updateSettings);
 
@@ -80,7 +83,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm" onClick={handleCancel} />
+      <div
+        className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+        onClick={handleCancel}
+      />
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -91,7 +97,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
           {/* Header */}
           <div className="bg-gray-50 dark:bg-gray-900 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">⚙️ Settings</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                ⚙️ Settings
+              </h2>
               <button
                 onClick={handleCancel}
                 className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
@@ -109,50 +117,52 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                 Converter Engine
               </h3>
               <div className="space-y-2">
-                {(["auto", "rust-wasm", "node"] as ConverterEngine[]).map((engine) => (
-                  <label
-                    key={engine}
-                    className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
-                      localSettings.converterEngine === engine
-                        ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20"
-                        : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="engine"
-                      value={engine}
-                      checked={localSettings.converterEngine === engine}
-                      onChange={() => handleEngineChange(engine)}
-                      className="w-4 h-4 text-primary-600 focus:ring-primary-500"
-                    />
-                    <div className="ml-3 flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900 dark:text-white capitalize">
-                          {engine === "rust-wasm" ? "WASM" : engine}
-                        </span>
-                        {engine === "auto" && (
-                          <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded">
-                            Recommended
+                {(["auto", "rust-wasm", "node"] as ConverterEngine[]).map(
+                  (engine) => (
+                    <label
+                      key={engine}
+                      className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                        localSettings.converterEngine === engine
+                          ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="engine"
+                        value={engine}
+                        checked={localSettings.converterEngine === engine}
+                        onChange={() => handleEngineChange(engine)}
+                        className="w-4 h-4 text-primary-600 focus:ring-primary-500"
+                      />
+                      <div className="ml-3 flex-1">
+                        <div className="flex items-center space-x-2">
+                          <span className="font-medium text-gray-900 dark:text-white capitalize">
+                            {engine === "rust-wasm" ? "WASM" : engine}
                           </span>
-                        )}
-                        {engine === "rust-wasm" && (
-                          <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-0.5 rounded">
-                            Fastest
-                          </span>
-                        )}
+                          {engine === "auto" && (
+                            <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded">
+                              Recommended
+                            </span>
+                          )}
+                          {engine === "rust-wasm" && (
+                            <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-0.5 rounded">
+                              Fastest
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          {engine === "auto" &&
+                            "Automatically selects the best available engine (WASM → Node)"}
+                          {engine === "rust-wasm" &&
+                            "WebAssembly converter - fastest performance, runs in browser"}
+                          {engine === "node" &&
+                            "Node.js converter - reliable fallback, may require server"}
+                        </p>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        {engine === "auto" &&
-                          "Automatically selects the best available engine (WASM → Node)"}
-                        {engine === "rust-wasm" &&
-                          "WebAssembly converter - fastest performance, runs in browser"}
-                        {engine === "node" &&
-                          "Node.js converter - reliable fallback, may require server"}
-                      </p>
-                    </div>
-                  </label>
-                ))}
+                    </label>
+                  ),
+                )}
               </div>
             </section>
 
@@ -162,38 +172,42 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                 Editor Theme
               </h3>
               <div className="space-y-2">
-                {(["vs-dark", "vs-light", "hc-black"] as EditorTheme[]).map((theme) => (
-                  <label
-                    key={theme}
-                    className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
-                      localSettings.theme === theme
-                        ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20"
-                        : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="theme"
-                      value={theme}
-                      checked={localSettings.theme === theme}
-                      onChange={() => handleThemeChange(theme)}
-                      className="w-4 h-4 text-primary-600 focus:ring-primary-500"
-                    />
-                    <div className="ml-3">
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        {theme === "vs-dark" && "🌙 Dark"}
-                        {theme === "vs-light" && "☀️ Light"}
-                        {theme === "hc-black" && "🔲 High Contrast"}
-                      </span>
-                    </div>
-                  </label>
-                ))}
+                {(["vs-dark", "vs-light", "hc-black"] as EditorTheme[]).map(
+                  (theme) => (
+                    <label
+                      key={theme}
+                      className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-colors ${
+                        localSettings.theme === theme
+                          ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20"
+                          : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="theme"
+                        value={theme}
+                        checked={localSettings.theme === theme}
+                        onChange={() => handleThemeChange(theme)}
+                        className="w-4 h-4 text-primary-600 focus:ring-primary-500"
+                      />
+                      <div className="ml-3">
+                        <span className="font-medium text-gray-900 dark:text-white">
+                          {theme === "vs-dark" && "🌙 Dark"}
+                          {theme === "vs-light" && "☀️ Light"}
+                          {theme === "hc-black" && "🔲 High Contrast"}
+                        </span>
+                      </div>
+                    </label>
+                  ),
+                )}
               </div>
             </section>
 
             {/* Behavior Section */}
             <section>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Behavior</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                Behavior
+              </h3>
               <div className="space-y-3">
                 {/* Auto-validate toggle */}
                 <label className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700">
@@ -239,7 +253,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                         Debounce delay
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Wait time before triggering auto-actions: {localSettings.debounceMs}ms
+                        Wait time before triggering auto-actions:{" "}
+                        {localSettings.debounceMs}ms
                       </p>
                     </div>
                   </label>
@@ -249,7 +264,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     max="2000"
                     step="100"
                     value={localSettings.debounceMs}
-                    onChange={(e) => handleDebounceChange(Number(e.target.value))}
+                    onChange={(e) =>
+                      handleDebounceChange(Number(e.target.value))
+                    }
                     className="w-full mt-3"
                   />
                   <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -262,7 +279,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
 
             {/* Advanced Section */}
             <section>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Advanced</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                Advanced
+              </h3>
               <div className="space-y-3">
                 <div className="p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
                   <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
@@ -272,8 +291,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     window.__schemaAuthoringAPI__.getAPI()
                   </code>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                    Use this API to programmatically control the editor from the browser console or
-                    external scripts.
+                    Use this API to programmatically control the editor from the
+                    browser console or external scripts.
                   </p>
                 </div>
 

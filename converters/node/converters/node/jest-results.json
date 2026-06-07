@@ -1122,7 +1122,10 @@
           "title": "should convert basic-types.json successfully"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Comprehensive Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Comprehensive Features"
+          ],
           "duration": 2,
           "failureDetails": [],
           "failureMessages": [],
@@ -1135,7 +1138,10 @@
           "title": "should convert comprehensive-features.json with all extensions"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Comprehensive Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Comprehensive Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1148,7 +1154,10 @@
           "title": "should respect x-graphql-skip on types"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Comprehensive Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Comprehensive Features"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1252,7 +1261,10 @@
           "title": "should prefer x-graphql-description over JSON Schema description"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Comprehensive Schema"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Comprehensive Schema"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1265,7 +1277,10 @@
           "title": "should convert comprehensive.json successfully"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "All Schemas Validation"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "All Schemas Validation"
+          ],
           "duration": 17,
           "failureDetails": [],
           "failureMessages": [],
@@ -1291,7 +1306,10 @@
           "title": "should respect x-graphql-type-name"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Field Name Mapping"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Field Name Mapping"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1304,7 +1322,10 @@
           "title": "should map snake_case to camelCase using x-graphql-field-name"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Field Type Mapping"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Field Type Mapping"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1317,7 +1338,10 @@
           "title": "should use x-graphql-field-type for custom scalar types"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "List Item Non-Null"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "List Item Non-Null"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1330,7 +1354,10 @@
           "title": "should respect x-graphql-field-list-item-non-null"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1343,7 +1370,10 @@
           "title": "should generate @key directives"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1356,7 +1386,10 @@
           "title": "should generate @shareable directive"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1369,7 +1402,10 @@
           "title": "should generate @external directive"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1382,7 +1418,10 @@
           "title": "should generate @requires directive"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1395,7 +1434,10 @@
           "title": "should generate @provides directive"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Federation Features"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Federation Features"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1408,7 +1450,10 @@
           "title": "should generate @override directive"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Round-Trip Fidelity"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Round-Trip Fidelity"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1421,7 +1466,10 @@
           "title": "should preserve key features in conversion"
         },
         {
-          "ancestorTitles": ["X-GraphQL Shared Test Data", "Expected Output Comparison"],
+          "ancestorTitles": [
+            "X-GraphQL Shared Test Data",
+            "Expected Output Comparison"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1444,7 +1492,10 @@
     {
       "assertionResults": [
         {
-          "ancestorTitles": ["Converter Improvements", "Case Conversion Utilities"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Case Conversion Utilities"
+          ],
           "duration": 3,
           "failureDetails": [],
           "failureMessages": [],
@@ -1457,7 +1508,10 @@
           "title": "camelToSnake converts camelCase to snake_case"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Case Conversion Utilities"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Case Conversion Utilities"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1470,7 +1524,10 @@
           "title": "snakeToCamel converts snake_case to camelCase"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Case Conversion Utilities"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Case Conversion Utilities"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1483,7 +1540,10 @@
           "title": "convertObjectKeys recursively converts keys"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "$ref Resolution with Case Mismatch"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "$ref Resolution with Case Mismatch"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1496,7 +1556,10 @@
           "title": "should resolve $ref with case mismatch"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "$ref Resolution with Case Mismatch"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "$ref Resolution with Case Mismatch"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1509,7 +1572,10 @@
           "title": "should handle snake_case ref to camelCase definition"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "$ref Resolution with Case Mismatch"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "$ref Resolution with Case Mismatch"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1522,7 +1588,10 @@
           "title": "should resolve nested $refs with case mismatch"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Circular Reference Protection"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Circular Reference Protection"
+          ],
           "duration": 1,
           "failureDetails": [],
           "failureMessages": [],
@@ -1535,7 +1604,10 @@
           "title": "should handle self-referencing types without error"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Circular Reference Protection"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Circular Reference Protection"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1548,7 +1620,10 @@
           "title": "should handle mutual references between types"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Circular Reference Protection"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Circular Reference Protection"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],
@@ -1561,7 +1636,10 @@
           "title": "should handle recursive tree structures"
         },
         {
-          "ancestorTitles": ["Converter Improvements", "Circular Reference Protection"],
+          "ancestorTitles": [
+            "Converter Improvements",
+            "Circular Reference Protection"
+          ],
           "duration": 0,
           "failureDetails": [],
           "failureMessages": [],

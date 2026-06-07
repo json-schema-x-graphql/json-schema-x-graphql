@@ -1,0 +1,8 @@
+Benchmarking json_schema_to_graphql_small
+                        time:   [13.674 µs 13.691 µs 13.708 µs]
+Benchmarking graphql_to_json_schema_small
+                        time:   [38.918 µs 39.082 µs 39.287 µs]
+Benchmarking cached_json_to_graphql
+cached_json_to_graphql  time:   [335.11 ns 335.71 ns 336.36 ns]
+Benchmarking json_to_graphql_no_validation
+                        time:   [12.877 µs 12.904 µs 12.936 µs]

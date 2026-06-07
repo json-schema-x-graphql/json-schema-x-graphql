@@ -178,7 +178,8 @@ function outputResults(results, options) {
         for (const { file, result } of results) {
             totalErrors += result.errors.length;
             totalWarnings += result.warnings.length;
-            if (result.errors.length === 0 && (result.warnings.length === 0 || options.quiet)) {
+            if (result.errors.length === 0 &&
+                (result.warnings.length === 0 || options.quiet)) {
                 if (options.verbose) {
                     console.log(`✓ ${file}: Valid`);
                 }

@@ -35,9 +35,16 @@ export default function App() {
     toggleSchema,
   } = useSchemaManager();
 
-  const { generateSubgraph, subgraphs, subgraphsMap, isLoading } = useSubgraphGenerator();
+  const { generateSubgraph, subgraphs, subgraphsMap, isLoading } =
+    useSubgraphGenerator();
 
-  const { supergraphSDL, compositionStats, compositionErrors, typeSources, compose } = useComposition();
+  const {
+    supergraphSDL,
+    compositionStats,
+    compositionErrors,
+    typeSources,
+    compose,
+  } = useComposition();
 
   const {
     suggestions,
@@ -180,7 +187,9 @@ export default function App() {
         <header className="app-header">
           <div className="header-content">
             <h1>Subgraph Composer</h1>
-            <p>Convert JSON Schemas to GraphQL Subgraphs & Compose Supergraphs</p>
+            <p>
+              Convert JSON Schemas to GraphQL Subgraphs & Compose Supergraphs
+            </p>
           </div>
           <div className="header-stats">
             {schemas.length > 0 && (
@@ -188,7 +197,8 @@ export default function App() {
                 <span>{schemas.length} schema(s)</span>
                 {compositionStats && (
                   <span>
-                    {compositionStats.totalTypes} types, {compositionStats.totalFields} fields
+                    {compositionStats.totalTypes} types,{" "}
+                    {compositionStats.totalFields} fields
                   </span>
                 )}
               </>
@@ -271,14 +281,19 @@ export default function App() {
                   {activeSchema ? (
                     <SchemaEditor
                       schema={activeSchema}
-                      onUpdate={(content) => updateSchema(activeSchema.id, content)}
+                      onUpdate={(content) =>
+                        updateSchema(activeSchema.id, content)
+                      }
                       onGenerate={handleGenerate}
                       isLoading={isLoading}
                     />
                   ) : (
                     <div className="empty-state">
                       <p>No schema selected</p>
-                      <button onClick={handleAddSchema} className="btn btn-primary">
+                      <button
+                        onClick={handleAddSchema}
+                        className="btn btn-primary"
+                      >
                         Add First Schema
                       </button>
                     </div>

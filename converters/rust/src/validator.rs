@@ -5,16 +5,29 @@ use regex::Regex;
 use serde_json::Value as JsonValue;
 use std::sync::OnceLock;
 
-/// Regex for valid GraphQL names: /^[_A-Za-z][_0-9A-Za-z]*$/
-fn graphql_name_regex() -> &'static Regex {
-    static REGEX: OnceLock<Regex> = OnceLock::new();
-    REGEX.get_or_init(|| Regex::new(r"^[_A-Za-z][_0-9A-Za-z]*$").unwrap())
+fn is_valid_graphql_name(name: &str) -> bool {
+    let mut chars = name.chars();
+    if let Some(first) = chars.next() {
+        if first == '_' || first.is_ascii_alphabetic() {
+            return chars.all(|c| c == '_' || c.is_ascii_alphanumeric());
+        }
+    }
+    false
 }
 
-/// Regex for valid GraphQL type references (including lists and non-null)
-fn graphql_type_regex() -> &'static Regex {
-    static REGEX: OnceLock<Regex> = OnceLock::new();
-    REGEX.get_or_init(|| Regex::new(r"^(\[)?[_A-Za-z][_0-9A-Za-z]*!?(\])?!?$").unwrap())
+fn is_valid_graphql_type(type_str: &str) -> bool {
+    if type_str.is_empty() { return false; }
+    let mut s = type_str;
+    if s.ends_with('!') {
+        s = &s[..s.len()-1];
+    }
+    if s.starts_with('[') && s.ends_with(']') {
+        s = &s[1..s.len()-1];
+        if s.ends_with('!') {
+            s = &s[..s.len()-1];
+        }
+    }
+    is_valid_graphql_name(s)
 }
 
 /// Regex for valid URLs
@@ -29,7 +42,7 @@ pub fn validate_graphql_name(name: &str) -> Result<()> {
         return Err(ConversionError::invalid_name(name, "name cannot be empty"));
     }
 
-    if !graphql_name_regex().is_match(name) {
+    if !is_valid_graphql_name(name) {
         return Err(ConversionError::invalid_name(
             name,
             "name must match /^[_A-Za-z][_0-9A-Za-z]*$/",
@@ -61,7 +74,7 @@ pub fn validate_graphql_type(type_str: &str) -> Result<()> {
         ));
     }
 
-    if !graphql_type_regex().is_match(type_str) {
+    if !is_valid_graphql_type(type_str) {
         return Err(ConversionError::InvalidType(format!(
             "invalid GraphQL type format: {}",
             type_str

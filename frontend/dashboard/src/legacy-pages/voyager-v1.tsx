@@ -42,11 +42,12 @@ const VoyagerV1Page: NextPage = () => {
         }
 
         const sdl = await response.text();
-        const { buildSchema, getIntrospectionQuery, graphql } = graphqlModule as {
-          buildSchema: (sdl: string) => any;
-          getIntrospectionQuery: () => string;
-          graphql: (args: any) => Promise<any>;
-        };
+        const { buildSchema, getIntrospectionQuery, graphql } =
+          graphqlModule as {
+            buildSchema: (sdl: string) => any;
+            getIntrospectionQuery: () => string;
+            graphql: (args: any) => Promise<any>;
+          };
         const schema = buildSchema(sdl);
         const introspectionResult = await graphql({
           schema,
@@ -55,7 +56,9 @@ const VoyagerV1Page: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors.map((graphqlError) => graphqlError.message).join("\n"),
+            introspectionResult.errors
+              .map((graphqlError) => graphqlError.message)
+              .join("\n"),
           );
         }
 
@@ -85,7 +88,10 @@ const VoyagerV1Page: NextPage = () => {
           return;
         }
 
-        const message = err instanceof Error ? err.message : "Unknown error initialising Voyager";
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Unknown error initialising Voyager";
         setError(message);
 
         console.error("[VoyagerV1Page]", err);
@@ -102,7 +108,9 @@ const VoyagerV1Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>GraphQL Voyager - V1 Auto-Generated | Schema Unification Forest</title>
+        <title>
+          GraphQL Voyager - V1 Auto-Generated | Schema Unification Forest
+        </title>
         <meta
           name="description"
           content="Visualise the auto-generated V2 schema from V1 (core contract types) as an interactive graph using GraphQL Voyager."

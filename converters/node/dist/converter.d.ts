@@ -6,6 +6,7 @@
  * Rust implementation as closely as possible.
  */
 import type { ConverterOptions, ConvertInput, ConversionResult } from "./generated/types.js";
+export * from "./generated/types.js";
 import { IJsonSchemaConverter, ExtendedConverterOptions, JsonSchemaInput } from "./interfaces.js";
 export declare function jsonSchemaToGraphQL(jsonSchemaInput: JsonSchemaInput, options?: ExtendedConverterOptions): string;
 export declare function graphqlToJsonSchema(graphqlSdl: string, options?: ConverterOptions): string;

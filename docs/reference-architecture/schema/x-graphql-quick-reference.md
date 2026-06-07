@@ -99,7 +99,10 @@ type IDVContract implements Contract {
   "ContractSearchResult": {
     "x-graphql-type": "union",
     "x-graphql-union-types": ["IDVContract", "Order"],
-    "oneOf": [{ "$ref": "#/definitions/IDVContract" }, { "$ref": "#/definitions/Order" }]
+    "oneOf": [
+      { "$ref": "#/definitions/IDVContract" },
+      { "$ref": "#/definitions/Order" }
+    ]
   }
 }
 ```
