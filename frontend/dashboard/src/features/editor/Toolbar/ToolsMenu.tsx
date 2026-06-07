@@ -34,7 +34,10 @@ export const ToolsMenu = () => {
 
       // generate random data
       const randomJson = JSONSchemaFaker.generate(JSON.parse(jsonSchema));
-      const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), getFormat());
+      const contents = await jsonToContent(
+        JSON.stringify(randomJson, null, 2),
+        getFormat(),
+      );
       setContents({ contents });
 
       gaEvent("randomize_data");

@@ -449,7 +449,15 @@ JSON Schema represents the _structure_ of data, while GraphQL schema represents 
       "type": "object",
       "title": "Post",
       "description": "A blog post",
-      "required": ["id", "title", "content", "author", "createdAt", "updatedAt", "comments"],
+      "required": [
+        "id",
+        "title",
+        "content",
+        "author",
+        "createdAt",
+        "updatedAt",
+        "comments"
+      ],
       "properties": {
         "id": {
           "type": "string",

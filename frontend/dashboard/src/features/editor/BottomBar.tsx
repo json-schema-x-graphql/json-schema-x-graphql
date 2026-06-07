@@ -136,7 +136,10 @@ export const BottomBar = () => {
           <Text fz="xs">Live Transform</Text>
         </StyledBottomBarItem>
         {!liveTransformEnabled && (
-          <StyledBottomBarItem onClick={() => setContents({})} disabled={!!error}>
+          <StyledBottomBarItem
+            onClick={() => setContents({})}
+            disabled={!!error}
+          >
             <VscRunAll />
             Click to Transform
           </StyledBottomBarItem>

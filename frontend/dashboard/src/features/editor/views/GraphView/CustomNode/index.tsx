@@ -45,7 +45,8 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
         ev.currentTarget.style.stroke = "#3B82F6";
       }}
       onLeave={(ev) => {
-        ev.currentTarget.style.stroke = colorScheme === "dark" ? "#424242" : "#BCBEC0";
+        ev.currentTarget.style.stroke =
+          colorScheme === "dark" ? "#424242" : "#BCBEC0";
       }}
       style={{
         fill: colorScheme === "dark" ? "#292929" : "#ffffff",
@@ -59,7 +60,14 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
           return <ObjectNode node={node as NodeData} x={x} y={y} />;
         }
 
-        return <TextNode node={node as NodeData} hasCollapse={!!data?.childrenCount} x={x} y={y} />;
+        return (
+          <TextNode
+            node={node as NodeData}
+            hasCollapse={!!data?.childrenCount}
+            x={x}
+            y={y}
+          />
+        );
       }}
     </Node>
   );

@@ -40,9 +40,15 @@ let passed = 0;
 let failed = 0;
 
 console.log(`${colors.bold}${colors.cyan}`);
-console.log("╔════════════════════════════════════════════════════════════════╗");
-console.log("║           Node.js Converter Manual Test Suite                 ║");
-console.log("╚════════════════════════════════════════════════════════════════╝");
+console.log(
+  "╔════════════════════════════════════════════════════════════════╗",
+);
+console.log(
+  "║           Node.js Converter Manual Test Suite                 ║",
+);
+console.log(
+  "╚════════════════════════════════════════════════════════════════╝",
+);
 console.log(colors.reset);
 
 // Get all test schemas
@@ -51,7 +57,9 @@ const schemaFiles = fs
   .filter((file) => file.endsWith(".json"))
   .sort();
 
-console.log(`${colors.bold}Found ${schemaFiles.length} test schemas${colors.reset}\n`);
+console.log(
+  `${colors.bold}Found ${schemaFiles.length} test schemas${colors.reset}\n`,
+);
 
 // Converter options
 const converterOptions = {
@@ -68,9 +76,13 @@ for (const schemaFile of schemaFiles) {
   const expectedPath = path.join(EXPECTED_DIR, `${schemaName}.graphql`);
   const outputPath = path.join(OUTPUT_DIR, `${schemaName}.graphql`);
 
-  console.log(`${colors.cyan}──────────────────────────────────────────────────${colors.reset}`);
+  console.log(
+    `${colors.cyan}──────────────────────────────────────────────────${colors.reset}`,
+  );
   console.log(`${colors.bold}Testing: ${schemaName}${colors.reset}`);
-  console.log(`${colors.cyan}──────────────────────────────────────────────────${colors.reset}`);
+  console.log(
+    `${colors.cyan}──────────────────────────────────────────────────${colors.reset}`,
+  );
 
   total++;
 
@@ -103,10 +115,14 @@ for (const schemaFile of schemaFiles) {
       const normalizedActual = normalizeSDL(sdl);
 
       if (normalizedExpected === normalizedActual) {
-        console.log(`  ${colors.green}✓ Output matches expected${colors.reset}`);
+        console.log(
+          `  ${colors.green}✓ Output matches expected${colors.reset}`,
+        );
         passed++;
       } else {
-        console.log(`  ${colors.red}✗ Output differs from expected${colors.reset}`);
+        console.log(
+          `  ${colors.red}✗ Output differs from expected${colors.reset}`,
+        );
 
         // Show a preview of differences
         const expectedLines = normalizedExpected.split("\n");
@@ -130,7 +146,9 @@ for (const schemaFile of schemaFiles) {
         failed++;
       }
     } else {
-      console.log(`  ${colors.yellow}⚠ No expected output to compare${colors.reset}`);
+      console.log(
+        `  ${colors.yellow}⚠ No expected output to compare${colors.reset}`,
+      );
     }
 
     // Manual validation checks
@@ -160,15 +178,23 @@ for (const schemaFile of schemaFiles) {
 
     if (schemaName === "skip-fields") {
       if (!sdl.includes("password_hash") && !sdl.includes("passwordHash")) {
-        console.log(`    ${colors.green}✓ Field skip: password_hash NOT in output${colors.reset}`);
+        console.log(
+          `    ${colors.green}✓ Field skip: password_hash NOT in output${colors.reset}`,
+        );
       } else {
-        console.log(`    ${colors.red}✗ Field skip: password_hash found in output${colors.reset}`);
+        console.log(
+          `    ${colors.red}✗ Field skip: password_hash found in output${colors.reset}`,
+        );
       }
 
       if (!sdl.includes("InternalType")) {
-        console.log(`    ${colors.green}✓ Type skip: InternalType NOT in output${colors.reset}`);
+        console.log(
+          `    ${colors.green}✓ Type skip: InternalType NOT in output${colors.reset}`,
+        );
       } else {
-        console.log(`    ${colors.red}✗ Type skip: InternalType found in output${colors.reset}`);
+        console.log(
+          `    ${colors.red}✗ Type skip: InternalType found in output${colors.reset}`,
+        );
       }
     }
 
@@ -185,20 +211,29 @@ for (const schemaFile of schemaFiles) {
       }
     }
 
-    if (schemaName === "comprehensive" || schemaName === "comprehensive-features") {
+    if (
+      schemaName === "comprehensive" ||
+      schemaName === "comprehensive-features"
+    ) {
       const customScalars = ["Email", "URL", "DateTime", "JSON"];
-      const foundScalars = customScalars.filter((scalar) => sdl.includes(scalar));
+      const foundScalars = customScalars.filter((scalar) =>
+        sdl.includes(scalar),
+      );
 
       if (foundScalars.length > 0) {
         console.log(
           `    ${colors.green}✓ Custom scalars: ${foundScalars.join(", ")}${colors.reset}`,
         );
       } else {
-        console.log(`    ${colors.yellow}⚠ Custom scalars: none found${colors.reset}`);
+        console.log(
+          `    ${colors.yellow}⚠ Custom scalars: none found${colors.reset}`,
+        );
       }
 
       if (sdl.includes("[String!]") || sdl.includes("[ID!]")) {
-        console.log(`    ${colors.green}✓ List item non-null: [Type!] syntax found${colors.reset}`);
+        console.log(
+          `    ${colors.green}✓ List item non-null: [Type!] syntax found${colors.reset}`,
+        );
       } else {
         console.log(
           `    ${colors.yellow}⚠ List item non-null: [Type!] syntax not found${colors.reset}`,
@@ -213,7 +248,9 @@ for (const schemaFile of schemaFiles) {
           `    ${colors.green}✓ Federation: ${foundDirectives.join(", ")}${colors.reset}`,
         );
       } else {
-        console.log(`    ${colors.yellow}⚠ Federation: no directives found${colors.reset}`);
+        console.log(
+          `    ${colors.yellow}⚠ Federation: no directives found${colors.reset}`,
+        );
       }
     }
 
@@ -223,7 +260,9 @@ for (const schemaFile of schemaFiles) {
           `    ${colors.green}✓ Union syntax: 'union Name = Type1 | Type2' found${colors.reset}`,
         );
       } else {
-        console.log(`    ${colors.red}✗ Union syntax: proper union not found${colors.reset}`);
+        console.log(
+          `    ${colors.red}✗ Union syntax: proper union not found${colors.reset}`,
+        );
       }
     }
 
@@ -233,11 +272,15 @@ for (const schemaFile of schemaFiles) {
           `    ${colors.green}✓ Descriptions: both block (""") and inline (") styles found${colors.reset}`,
         );
       } else {
-        console.log(`    ${colors.yellow}⚠ Descriptions: check format${colors.reset}`);
+        console.log(
+          `    ${colors.yellow}⚠ Descriptions: check format${colors.reset}`,
+        );
       }
     }
   } catch (error) {
-    console.log(`  ${colors.red}✗ Conversion failed: ${error.message}${colors.reset}`);
+    console.log(
+      `  ${colors.red}✗ Conversion failed: ${error.message}${colors.reset}`,
+    );
     failed++;
 
     // Show stack trace for debugging
@@ -251,9 +294,15 @@ for (const schemaFile of schemaFiles) {
 
 // Summary
 console.log(`${colors.bold}${colors.cyan}`);
-console.log("╔════════════════════════════════════════════════════════════════╗");
-console.log("║                      SUMMARY REPORT                            ║");
-console.log("╚════════════════════════════════════════════════════════════════╝");
+console.log(
+  "╔════════════════════════════════════════════════════════════════╗",
+);
+console.log(
+  "║                      SUMMARY REPORT                            ║",
+);
+console.log(
+  "╚════════════════════════════════════════════════════════════════╝",
+);
 console.log(colors.reset);
 
 console.log(`\n${colors.bold}Results:${colors.reset}`);
@@ -277,10 +326,14 @@ for (const schemaFile of schemaFiles) {
 console.log("");
 
 if (failed === 0 && passed === total) {
-  console.log(`${colors.green}${colors.bold}✓ ALL TESTS PASSED!${colors.reset}\n`);
+  console.log(
+    `${colors.green}${colors.bold}✓ ALL TESTS PASSED!${colors.reset}\n`,
+  );
   process.exit(0);
 } else {
-  console.log(`${colors.red}${colors.bold}✗ SOME TESTS FAILED${colors.reset}\n`);
+  console.log(
+    `${colors.red}${colors.bold}✗ SOME TESTS FAILED${colors.reset}\n`,
+  );
   console.log(`Review outputs in: ${OUTPUT_DIR}\n`);
   process.exit(1);
 }

@@ -76,7 +76,9 @@ async function handleConvert(req, res) {
         if (request.direction === "json-to-graphql") {
             console.log("🔄 Converting JSON Schema to GraphQL...");
             // Convert JSON Schema to GraphQL
-            const schema = typeof request.input === "string" ? JSON.parse(request.input) : request.input;
+            const schema = typeof request.input === "string"
+                ? JSON.parse(request.input)
+                : request.input;
             console.log("📋 Schema to convert:", JSON.stringify(schema).substring(0, 200));
             try {
                 output = jsonSchemaToGraphQL(schema, request.options);
@@ -89,7 +91,9 @@ async function handleConvert(req, res) {
         }
         else if (request.direction === "graphql-to-json") {
             // Convert GraphQL to JSON Schema
-            const sdl = typeof request.input === "string" ? request.input : JSON.stringify(request.input);
+            const sdl = typeof request.input === "string"
+                ? request.input
+                : JSON.stringify(request.input);
             const result = graphqlToJsonSchema(sdl, request.options);
             output = JSON.stringify(result, null, 2);
         }

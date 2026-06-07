@@ -62,7 +62,8 @@ export const SCHEMA_TEMPLATES = {
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "User Entity - Owner Subgraph",
-      description: "Base User entity definition with federation @key. This is the owner subgraph.",
+      description:
+        "Base User entity definition with federation @key. This is the owner subgraph.",
       "x-graphql-supergraph-name": "users-service",
       "x-graphql-supergraph-type": "base-entity",
       "x-graphql-supergraph-entity": "User",
@@ -131,7 +132,8 @@ export const SCHEMA_TEMPLATES = {
   custom_scalars: {
     name: "Custom Scalars",
     category: "Basic Types",
-    description: "DateTime, Date, Email, URL, JSON, Decimal custom scalar types",
+    description:
+      "DateTime, Date, Email, URL, JSON, Decimal custom scalar types",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Custom Scalars",
@@ -192,7 +194,8 @@ export const SCHEMA_TEMPLATES = {
   enums: {
     name: "User Status (Extending - Enums)",
     category: "Federation",
-    description: "Federation extending subgraph - adds enum fields to the User entity via @extends",
+    description:
+      "Federation extending subgraph - adds enum fields to the User entity via @extends",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "User Status - Extending Subgraph",
@@ -224,7 +227,12 @@ export const SCHEMA_TEMPLATES = {
         },
         VerificationLevel: {
           description: "Account verification level",
-          values: ["UNVERIFIED", "EMAIL_VERIFIED", "TWO_FACTOR_ENABLED", "FULLY_VERIFIED"],
+          values: [
+            "UNVERIFIED",
+            "EMAIL_VERIFIED",
+            "TWO_FACTOR_ENABLED",
+            "FULLY_VERIFIED",
+          ],
         },
       },
       properties: {
@@ -253,7 +261,12 @@ export const SCHEMA_TEMPLATES = {
         },
         verification_level: {
           type: "string",
-          enum: ["UNVERIFIED", "EMAIL_VERIFIED", "TWO_FACTOR_ENABLED", "FULLY_VERIFIED"],
+          enum: [
+            "UNVERIFIED",
+            "EMAIL_VERIFIED",
+            "TWO_FACTOR_ENABLED",
+            "FULLY_VERIFIED",
+          ],
           "x-graphql-type": "VerificationLevel!",
           description: "Current verification level",
         },
@@ -270,7 +283,12 @@ export const SCHEMA_TEMPLATES = {
           default: false,
         },
       },
-      required: ["user_id", "account_role", "current_status", "verification_level"],
+      required: [
+        "user_id",
+        "account_role",
+        "current_status",
+        "verification_level",
+      ],
     },
   },
 
@@ -281,7 +299,8 @@ export const SCHEMA_TEMPLATES = {
   arrays: {
     name: "Arrays & Collections",
     category: "Collections",
-    description: "Array types with items, uniqueItems, and x-graphql type annotations",
+    description:
+      "Array types with items, uniqueItems, and x-graphql type annotations",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Arrays Example",
@@ -453,7 +472,8 @@ export const SCHEMA_TEMPLATES = {
   references: {
     name: "Type References & Composition",
     category: "Advanced",
-    description: "JSON Schema $ref for reusable type definitions and composition",
+    description:
+      "JSON Schema $ref for reusable type definitions and composition",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "References Example",
@@ -502,7 +522,8 @@ export const SCHEMA_TEMPLATES = {
   federation_basic: {
     name: "Federation - Basic Subgraph",
     category: "Apollo Federation",
-    description: "Basic Apollo Federation @key directive with x-graphql extensions",
+    description:
+      "Basic Apollo Federation @key directive with x-graphql extensions",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Federation - Basic User Subgraph",
@@ -539,7 +560,8 @@ export const SCHEMA_TEMPLATES = {
   federation_extended: {
     name: "Federation - Extended Type",
     category: "Apollo Federation",
-    description: "Federation @extends and @external directives for subgraph composition",
+    description:
+      "Federation @extends and @external directives for subgraph composition",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Federation - Extended Order Subgraph",
@@ -598,7 +620,8 @@ export const SCHEMA_TEMPLATES = {
   federation_shareable: {
     name: "Federation - Shareable Fields",
     category: "Apollo Federation",
-    description: "Federation @shareable directive for fields available in multiple subgraphs",
+    description:
+      "Federation @shareable directive for fields available in multiple subgraphs",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Federation - Shared Product Subgraph",
@@ -643,7 +666,8 @@ export const SCHEMA_TEMPLATES = {
   ecommerce: {
     name: "E-Commerce Product Catalog",
     category: "Real-World",
-    description: "Complete e-commerce product with inventory, reviews, categories",
+    description:
+      "Complete e-commerce product with inventory, reviews, categories",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "E-Commerce Product",
@@ -800,7 +824,15 @@ export const SCHEMA_TEMPLATES = {
           },
         },
       },
-      required: ["id", "title", "slug", "content", "author", "published", "updated_at"],
+      required: [
+        "id",
+        "title",
+        "slug",
+        "content",
+        "author",
+        "published",
+        "updated_at",
+      ],
     },
   },
 
@@ -857,7 +889,8 @@ export const SCHEMA_TEMPLATES = {
   pagination: {
     name: "Pagination & Filtering",
     category: "Advanced",
-    description: "Pagination, sorting, and filtering patterns with x-graphql-arguments",
+    description:
+      "Pagination, sorting, and filtering patterns with x-graphql-arguments",
     schema: {
       $schema: "https://json-schema.org/draft/2020-12/schema",
       title: "Paginated List",

@@ -1,7 +1,9 @@
-//! JSON Schema validation using dual validator approach (jsonschema + boon)
+//! JSON Schema validation with structural and x-graphql constraint checks.
 //!
-//! This module provides comprehensive JSON Schema validation with two independent
-//! validators to catch edge cases and ensure schema correctness before conversion.
+//! This module validates JSON Schema documents for structural correctness,
+//! x-graphql extension constraints, and naming conventions.
+//! External validators (jsonschema, boon) were removed as part of dependency
+//! reduction — this module now performs validation in-crate.
 
 use serde_json::Value;
 use std::path::Path;
@@ -41,7 +43,9 @@ pub struct ValidationResult {
     pub valid: bool,
     pub errors: Vec<ValidationIssue>,
     pub warnings: Vec<ValidationIssue>,
+    /// Whether structural validation of the JSON Schema passed.
     pub jsonschema_valid: bool,
+    /// Whether x-graphql constraint validation passed.
     pub boon_valid: bool,
 }
 

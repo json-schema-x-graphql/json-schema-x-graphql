@@ -28,10 +28,13 @@ const useConfig = create(
       ...initialStates,
       toggleRulers: (rulersEnabled) => set({ rulersEnabled }),
       toggleGestures: (gesturesEnabled) => set({ gesturesEnabled }),
-      toggleLiveTransform: (liveTransformEnabled) => set({ liveTransformEnabled }),
+      toggleLiveTransform: (liveTransformEnabled) =>
+        set({ liveTransformEnabled }),
       toggleDarkMode: (darkmodeEnabled) => set({ darkmodeEnabled }),
-      toggleCollapseButton: (collapseButtonVisible) => set({ collapseButtonVisible }),
-      toggleChildrenCount: (childrenCountVisible) => set({ childrenCountVisible }),
+      toggleCollapseButton: (collapseButtonVisible) =>
+        set({ collapseButtonVisible }),
+      toggleChildrenCount: (childrenCountVisible) =>
+        set({ childrenCountVisible }),
       toggleImagePreview: (imagePreviewEnabled) => {
         set({ imagePreviewEnabled });
         useGraph.getState().setGraph();

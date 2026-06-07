@@ -820,7 +820,10 @@ type Query {
 
 # Query
 query {
-  users(filter: { role: ADMIN, status: ACTIVE, createdAfter: "2025-01-01" }, limit: 10) {
+  users(
+    filter: { role: ADMIN, status: ACTIVE, createdAfter: "2025-01-01" }
+    limit: 10
+  ) {
     id
     name
     role

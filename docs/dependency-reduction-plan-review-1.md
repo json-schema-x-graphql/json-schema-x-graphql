@@ -11,7 +11,7 @@ Key findings from my audit:
 3. **`async_graphql`** is used for:
    - Core parsing in `graphql_to_json.rs` and `graphql_ast_json.rs` — imports `async_graphql::parser::*`
    - Server framework in `schema.rs` and `api_types.rs` — uses `Schema`, `SimpleObject`, `InputObject`, etc.
-   The plan suggests splitting: use `async-graphql-parser` directly and gate the full framework. This is reasonable but there's a risk — `async-graphql-parser` and `async-graphql-value` may not be independently versioned/stabilized the same way. I should note this.
+     The plan suggests splitting: use `async-graphql-parser` directly and gate the full framework. This is reasonable but there's a risk — `async-graphql-parser` and `async-graphql-value` may not be independently versioned/stabilized the same way. I should note this.
 
 4. **`opentelemetry`** — used in `lib.rs` for two trivial span wrappers. The plan suggests replacing with `tracing`. This is reasonable but may be over-engineering if the spans are genuinely useful for OTel integration.
 
@@ -36,17 +36,20 @@ Key findings from my audit:
 ## Plan Quality Assessment
 
 ### Good recommendations:
+
 - Phase 1A: Remove stubbed Apollo crates — excellent, zero risk, confirmed unused
 - Phase 1B: Remove dead `test_utils/` — excellent
 - Phase 1C: Move `opentelemetry_sdk` to dev-deps — good, it's only used in a test in `lib.rs` (I verified this)
 - Phase 1D: Remove unused Node dev deps — good, `graphql-tag` is redundant, `@apollo/subgraph` should be moved
 
 ### Questionable recommendations:
+
 - Phase 1E: `indexmap` → `BTreeMap` — **WRONG**. `IndexMap` preserves insertion order which is critical for `graphql_to_json.rs` field order preservation. `BTreeMap` would sort alphabetically, destroying semantic field ordering.
 - Phase 3: Replace `regex` — questionable cost/benefit. The `regex` crate is well-maintained, thoroughly tested, and the replacements introduce hand-rolled code that may have edge cases. For URL validation especially, a hand-rolled regex is likely less correct than the existing one. However, the GraphQL name validation and case conversion replacements are reasonable.
 - Phase 2: OTel → tracing — valid but may break existing OTel integrations. The plan correctly notes `tracing-opentelemetry` bridge exists.
 
 ### Missed recommendations:
+
 - `indexmap` is also used for the LRU cache in `lib.rs` (which is under `#[cfg(feature = "caching")]`). The `BTreeMap` replacement wouldn't work for the LRU cache either (need insertion order for eviction).
 - The plan doesn't discuss WASM binary size impact. Many of these crates may already be stripped during WASM optimization (wasm-opt).
 - The plan suggests `--all-features` for benchmarks, but `--all-features` would enable `cli` which pulls in `tokio`, `reqwest`, etc. This would skew benchmarks.
@@ -69,11 +72,11 @@ Now I have all the data I need. Let me compile the comprehensive audit.
 
 The branch makes only two non-documentation changes:
 
-| File | Change |
-|---|---|
-| `.cargo/config.toml` | New — consolidates build artifacts into a single `target/` directory |
-| `Cargo.toml` (root) | Adds `[profile.dev]` / `[profile.test]` with `debug = 1` (line-tables only) + `debug = 0` for dep packages |
-| `package.json` (root) | Bumps `pnpm` from `11.0.9` → `11.5.2` |
+| File                  | Change                                                                                                     |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `.cargo/config.toml`  | New — consolidates build artifacts into a single `target/` directory                                       |
+| `Cargo.toml` (root)   | Adds `[profile.dev]` / `[profile.test]` with `debug = 1` (line-tables only) + `debug = 0` for dep packages |
+| `package.json` (root) | Bumps `pnpm` from `11.0.9` → `11.5.2`                                                                      |
 
 The substantive analytical work is in **`docs/dependency-reduction-plan.md`** — a 372-line implementation plan proposing to remove ~50 crates and ~120 MB of build artifacts across 6 phases.
 
@@ -103,12 +106,12 @@ Zero imports of `apollo_parser`, `apollo_compiler`, `graphql_composition`, or `g
 
 Usage breakdown confirmed:
 
-| File | What it imports | Purpose |
-|---|---|---|
-| `graphql_to_json.rs` | `async_graphql::parser::*` | Core parsing |
-| `graphql_ast_json.rs` | `async_graphql::parser::*` | AST → JSON |
-| `schema.rs` | `async_graphql::{Schema, ...}` | API server |
-| `api_types.rs` | `async_graphql::{Enum, InputObject, SimpleObject}` | API types |
+| File                  | What it imports                                    | Purpose      |
+| --------------------- | -------------------------------------------------- | ------------ |
+| `graphql_to_json.rs`  | `async_graphql::parser::*`                         | Core parsing |
+| `graphql_ast_json.rs` | `async_graphql::parser::*`                         | AST → JSON   |
+| `schema.rs`           | `async_graphql::{Schema, ...}`                     | API server   |
+| `api_types.rs`        | `async_graphql::{Enum, InputObject, SimpleObject}` | API types    |
 
 **Risk assessment for Phase 1E (split parser from server)**:
 
@@ -145,11 +148,11 @@ Additionally, the LRU cache in `lib.rs` uses `IndexMap` because it needs both O(
 
 Usage breakdown:
 
-| Location | Pattern | Replacement feasibility |
-|---|---|---|
-| `case_conversion.rs:20` | `([a-z0-9])([A-Z])` and `([A-Z])([A-Z][a-z])` | ✅ Trivial — char-by-char iteration |
-| `validator.rs:9-21` | GraphQL name/type/URL validation | ⚠️ Mixed — name validation is simple char-class check; URL is complex |
-| `json_to_graphql.rs:1651` | Dynamic `regex::Regex::new(pattern)` | ❌ Cannot replace — user-provided patterns at runtime |
+| Location                  | Pattern                                       | Replacement feasibility                                               |
+| ------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| `case_conversion.rs:20`   | `([a-z0-9])([A-Z])` and `([A-Z])([A-Z][a-z])` | ✅ Trivial — char-by-char iteration                                   |
+| `validator.rs:9-21`       | GraphQL name/type/URL validation              | ⚠️ Mixed — name validation is simple char-class check; URL is complex |
+| `json_to_graphql.rs:1651` | Dynamic `regex::Regex::new(pattern)`          | ❌ Cannot replace — user-provided patterns at runtime                 |
 
 The plan acknowledges keeping `regex` behind a feature flag for the dynamic case. The ~12 MB claimed savings is for `regex` + `regex_automata` + `regex_syntax` combined, but `regex_automata` may already be shared with other dependencies.
 
@@ -209,7 +212,10 @@ The plan lists `@opentelemetry/sdk-trace-base` and `@opentelemetry/sdk-trace-nod
 
 ```typescript
 import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import { SimpleSpanProcessor, InMemorySpanExporter } from "@opentelemetry/sdk-trace-base";
+import {
+  SimpleSpanProcessor,
+  InMemorySpanExporter,
+} from "@opentelemetry/sdk-trace-base";
 ```
 
 This module is imported by `src/converter.ts` (line 43), making these **hard runtime dependencies** despite being listed under `devDependencies` in `package.json`. The guard at lines 12-16 checks for Node environment at import time, but the imports themselves execute regardless.
@@ -231,22 +237,27 @@ The `@opentelemetry/api` package is ~40 KB and is the ONLY non-`graphql` runtime
 The three file changes on the branch are sound and independent:
 
 ### `.cargo/config.toml`
+
 ```toml
 [build]
 target-dir = "target"
 ```
+
 Consolidates Cargo build output. The plan cites "~589 MB in a separate target dir" for `converters/rust/target/`. Current measurement shows 1.1 GB in the single `target/` and the `converters/rust/target/` was already cleaned up. This is a **no-brainer** — reduces disk usage and avoids recompiling shared dependencies between workspace members.
 
 ### `Cargo.toml` profile changes
+
 ```toml
 [profile.dev]
 debug = 1        # line-tables-only
 [profile.dev.package."*"]
 debug = 0        # skip deps
 ```
+
 This is the standard Rust optimization for faster dev iteration. `debug = 1` provides enough info for backtraces while dramatically reducing binary size and compile time. `debug = 0` for dependencies is safe — you rarely need to step into `serde` internals during debugging.
 
 ### `package.json` pnpm version bump
+
 `11.0.9` → `11.5.2` is a patch-range bump with no breaking changes.
 
 **Verdict**: All three changes are correct, low-risk, and independently valuable.
@@ -257,20 +268,21 @@ This is the standard Rust optimization for faster dev iteration. `debug = 1` pro
 
 Based on the audit findings, here is the corrected order:
 
-| # | Phase | Risk | Impact | Audit Note |
-|---|---|---|---|---|
-| **1** | Remove stubbed Apollo crates + `apollo_encoder` | ✅ None | ~33 MB | Zero risk, confirmed unused |
-| **2** | Remove dead `test_utils/` module | ✅ None | ~0 MB | Confirmed never imported |
-| **3** | Move `opentelemetry_sdk` to dev-deps | ✅ Low | ~5 MB | Only used in test at lib.rs:258 |
-| **4** | Remove `graphql-tag`, move `@apollo/subgraph` to scripts package | ✅ Low | ~2 MB npm | `gql` → `parse()` confirmed drop-in |
-| **5** | Gate JSON Schema validation behind feature flag | ✅ Low | ~20 MB | Default should remain ON |
-| **6** | Node: dynamic import for OTel SDK | ✅ Low | ~1 MB npm | Fixes SDK misclassification |
-| **7** | Gate `async_graphql` server behind feature flag | ⚠️ Medium | ~41 MB | Verify `async-graphql-parser` version pinning |
-| **8** | Extract Node CLI to separate package | ⚠️ Medium | ~5 MB npm | Must also cover `scripts/validation/` |
-| **9** | Replace `regex` case conversion + name validation | ⚠️ Medium | ~3-5 MB | Keep `regex` for URL + dynamic patterns |
-| **10** | Gate `opentelemetry` behind feature flag | ⚠️ Medium | ~7 MB | Gate, don't rewrite to `tracing` |
+| #      | Phase                                                            | Risk      | Impact    | Audit Note                                    |
+| ------ | ---------------------------------------------------------------- | --------- | --------- | --------------------------------------------- |
+| **1**  | Remove stubbed Apollo crates + `apollo_encoder`                  | ✅ None   | ~33 MB    | Zero risk, confirmed unused                   |
+| **2**  | Remove dead `test_utils/` module                                 | ✅ None   | ~0 MB     | Confirmed never imported                      |
+| **3**  | Move `opentelemetry_sdk` to dev-deps                             | ✅ Low    | ~5 MB     | Only used in test at lib.rs:258               |
+| **4**  | Remove `graphql-tag`, move `@apollo/subgraph` to scripts package | ✅ Low    | ~2 MB npm | `gql` → `parse()` confirmed drop-in           |
+| **5**  | Gate JSON Schema validation behind feature flag                  | ✅ Low    | ~20 MB    | Default should remain ON                      |
+| **6**  | Node: dynamic import for OTel SDK                                | ✅ Low    | ~1 MB npm | Fixes SDK misclassification                   |
+| **7**  | Gate `async_graphql` server behind feature flag                  | ⚠️ Medium | ~41 MB    | Verify `async-graphql-parser` version pinning |
+| **8**  | Extract Node CLI to separate package                             | ⚠️ Medium | ~5 MB npm | Must also cover `scripts/validation/`         |
+| **9**  | Replace `regex` case conversion + name validation                | ⚠️ Medium | ~3-5 MB   | Keep `regex` for URL + dynamic patterns       |
+| **10** | Gate `opentelemetry` behind feature flag                         | ⚠️ Medium | ~7 MB     | Gate, don't rewrite to `tracing`              |
 
 ### Stricken recommendations:
+
 - ❌ **`indexmap` → `BTreeMap`** — would break field ordering, a core feature
 - ❌ **Full `regex` removal** — URL validation and dynamic patterns justify keeping the crate
 

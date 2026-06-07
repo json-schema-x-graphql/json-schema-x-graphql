@@ -8,7 +8,12 @@ const Modal = ({ modalKey }: { modalKey: ModalName }) => {
   const setVisible = useModal((state) => state.setVisible);
   const ModalComponent = ModalComponents[modalKey];
 
-  return <ModalComponent opened={opened} onClose={() => setVisible(modalKey, false)} />;
+  return (
+    <ModalComponent
+      opened={opened}
+      onClose={() => setVisible(modalKey, false)}
+    />
+  );
 };
 
 const ModalController = () => {

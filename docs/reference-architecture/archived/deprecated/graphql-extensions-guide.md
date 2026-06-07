@@ -1098,7 +1098,12 @@ input ContractMetadataInput {
 
     "SystemType": {
       "type": "string",
-      "enum": ["Contract Data", "Legacy Procurement", "Intake Process", "Logistics Mgmt"],
+      "enum": [
+        "Contract Data",
+        "Legacy Procurement",
+        "Intake Process",
+        "Logistics Mgmt"
+      ],
       "x-graphql-enum": {
         "name": "SystemType",
         "values": {

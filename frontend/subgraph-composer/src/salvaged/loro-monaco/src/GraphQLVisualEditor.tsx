@@ -13,7 +13,10 @@ if (typeof window !== "undefined") {
   try {
     // import.meta.url resolution allows bundlers (Vite) to rewrite the path to the
     // correct served asset in dev and build modes.
-    workerUrl = new URL("graphql-editor-worker/lib/worker/validation.worker.js", import.meta.url);
+    workerUrl = new URL(
+      "graphql-editor-worker/lib/worker/validation.worker.js",
+      import.meta.url,
+    );
     // Helpful runtime diagnostic for dev
     // eslint-disable-next-line no-console
     console.log(
@@ -30,10 +33,16 @@ if (typeof window !== "undefined") {
     try {
       workerUrl = new URL("/validation.worker.js", window.location.origin);
       // eslint-disable-next-line no-console
-      console.log("[GraphQLVisualEditor] Falling back to public worker path:", workerUrl.href);
+      console.log(
+        "[GraphQLVisualEditor] Falling back to public worker path:",
+        workerUrl.href,
+      );
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error("[GraphQLVisualEditor] Failed to construct fallback worker URL:", e);
+      console.error(
+        "[GraphQLVisualEditor] Failed to construct fallback worker URL:",
+        e,
+      );
       workerUrl = null;
     }
   }
@@ -90,8 +99,14 @@ class EditorErrorBoundary extends React.Component<
   }
 }
 
-export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProps>(
-  ({ value, onChange, loroDoc, textKey, readOnly = false, className = "" }, ref) => {
+export const GraphQLVisualEditor = React.forwardRef<
+  any,
+  GraphQLVisualEditorProps
+>(
+  (
+    { value, onChange, loroDoc, textKey, readOnly = false, className = "" },
+    ref,
+  ) => {
     const [error, setError] = useState<string | null>(null);
     const [schema, setSchema] = useState<PassedSchema>({
       code: value,
@@ -121,7 +136,9 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
 
       // Diagnostic: show that we are attempting the dynamic import
       // eslint-disable-next-line no-console
-      console.log("[GraphQLVisualEditor] Attempting dynamic import of graphql-editor...");
+      console.log(
+        "[GraphQLVisualEditor] Attempting dynamic import of graphql-editor...",
+      );
 
       (runtimeImporter() as Promise<any>)
         .then((mod: any) => {
@@ -154,7 +171,10 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
           const msg = String((e && e.message) ?? String(err));
           // Better diagnostics in the console for devs running the demo
           // eslint-disable-next-line no-console
-          console.error("[GraphQLVisualEditor] Failed to load graphql-editor dynamically:", err);
+          console.error(
+            "[GraphQLVisualEditor] Failed to load graphql-editor dynamically:",
+            err,
+          );
           // Surface the message so the UI can show the fallback and the reason
           setEditorLoadError(msg);
         });
@@ -181,7 +201,10 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
           setError(null);
         } catch (e) {
           const err = e as Error;
-          console.warn("⚠️ GraphQLVisualEditor: Schema validation warning:", err.message);
+          console.warn(
+            "⚠️ GraphQLVisualEditor: Schema validation warning:",
+            err.message,
+          );
           setError(err.message);
         }
 
@@ -204,7 +227,9 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
 
     const handleSchemaChange = (newSchema: PassedSchema) => {
       if (readOnly) {
-        console.log("⏭️ GraphQLVisualEditor: Skipping schema change (readOnly)");
+        console.log(
+          "⏭️ GraphQLVisualEditor: Skipping schema change (readOnly)",
+        );
         return;
       }
 
@@ -242,7 +267,9 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
     // Retry handler to re-attempt the dynamic import of the visual editor.
     // Resets the attempt flag and clears errors so the import effect can run again.
     const handleRetryLoadEditor = () => {
-      console.log("[GraphQLVisualEditor] Retry requested for graphql-editor dynamic import");
+      console.log(
+        "[GraphQLVisualEditor] Retry requested for graphql-editor dynamic import",
+      );
       setEditorLoadError(null);
       setEditor(null);
       didAttemptLoadRef.current = false;
@@ -269,7 +296,10 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
             <EditorErrorBoundary
               onError={(err: Error) => {
                 const msg = String((err && err.message) ?? String(err));
-                console.error("GraphQLEditor render-time error (caught by boundary):", err);
+                console.error(
+                  "GraphQLEditor render-time error (caught by boundary):",
+                  err,
+                );
                 // Unregister the visual editor component so we fall back to Monaco and show the error.
                 setEditor(null);
                 setEditorLoadError(msg);
@@ -327,7 +357,9 @@ export const GraphQLVisualEditor = React.forwardRef<any, GraphQLVisualEditorProp
               <MonacoEditor
                 value={schema.code}
                 language="graphql"
-                onChange={(val) => handleSchemaChange({ ...schema, code: val ?? "" })}
+                onChange={(val) =>
+                  handleSchemaChange({ ...schema, code: val ?? "" })
+                }
                 loroDoc={loroDoc}
                 textKey={textKey}
                 readOnly={readOnly}

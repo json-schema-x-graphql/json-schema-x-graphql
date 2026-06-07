@@ -36,7 +36,9 @@ export default function ClientMonacoEditor({
   monacoVsPath = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs",
   ...editorProps
 }: Props) {
-  const [EditorComp, setEditorComp] = useState<React.ComponentType<any> | null>(null);
+  const [EditorComp, setEditorComp] = useState<React.ComponentType<any> | null>(
+    null,
+  );
   const loadErrorRef = useRef<Error | null>(null);
 
   // Memoize the bundler-proof importer so it's stable across renders.
@@ -100,7 +102,8 @@ export default function ClientMonacoEditor({
       })
       .catch((err) => {
         // Store error for debugging and leave EditorComp null
-        loadErrorRef.current = err instanceof Error ? err : new Error(String(err));
+        loadErrorRef.current =
+          err instanceof Error ? err : new Error(String(err));
 
         console.error("Failed to load @monaco-editor/react at runtime:", err);
       });

@@ -21,7 +21,12 @@ import styled from "styled-components";
 import Cookie from "js-cookie";
 import { FaPlay } from "react-icons/fa6";
 import { GoDependabot } from "react-icons/go";
-import { LuCheck, LuGitCompareArrows, LuInfinity, LuPencilRuler } from "react-icons/lu";
+import {
+  LuCheck,
+  LuGitCompareArrows,
+  LuInfinity,
+  LuPencilRuler,
+} from "react-icons/lu";
 import useConfig from "../../../store/useConfig";
 
 export const UpgradeContent = (props: FlexProps) => {
@@ -155,7 +160,10 @@ const FeatureCard = (props: {
   selected: boolean;
 }) => {
   return (
-    <StyledFeatureItem className={props.selected ? "selected" : ""} onClick={props.onClick}>
+    <StyledFeatureItem
+      className={props.selected ? "selected" : ""}
+      onClick={props.onClick}
+    >
       <Flex gap="md" align="flex-start">
         <ThemeIcon variant="light" color="teal" radius="xl" size="36">
           {props.icon}
@@ -181,7 +189,8 @@ const FeatureCard = (props: {
 const FEATURES = [
   {
     title: "No File Size Limits",
-    description: "Load and edit even the largest data files without restrictions.",
+    description:
+      "Load and edit even the largest data files without restrictions.",
     icon: <LuInfinity size={20} />,
   },
   {
@@ -191,7 +200,8 @@ const FEATURES = [
   },
   {
     title: "Live JSON Schema Validation",
-    description: "Instantly see invalid fields highlighted in red on the diagram.",
+    description:
+      "Instantly see invalid fields highlighted in red on the diagram.",
     icon: <LuGitCompareArrows size={20} />,
   },
   {

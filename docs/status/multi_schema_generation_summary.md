@@ -62,7 +62,11 @@ Changed `handleGenerate()` to:
 **Before:**
 
 ```javascript
-const result = await generateSubgraph(parsed, activeSchema.id, converterOptions);
+const result = await generateSubgraph(
+  parsed,
+  activeSchema.id,
+  converterOptions,
+);
 ```
 
 **After:**

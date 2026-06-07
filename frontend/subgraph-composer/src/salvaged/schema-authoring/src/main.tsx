@@ -18,7 +18,9 @@ setupMonacoWorkers();
 const root = document.getElementById("root");
 
 if (!root) {
-  throw new Error('Root element not found. Make sure index.html has a div with id="root"');
+  throw new Error(
+    'Root element not found. Make sure index.html has a div with id="root"',
+  );
 }
 
 // Render application

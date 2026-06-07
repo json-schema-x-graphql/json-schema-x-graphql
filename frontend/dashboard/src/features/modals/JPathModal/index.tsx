@@ -1,6 +1,14 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Stack, Modal, Button, Text, Anchor, Group, TextInput } from "@mantine/core";
+import {
+  Stack,
+  Modal,
+  Button,
+  Text,
+  Anchor,
+  Group,
+  TextInput,
+} from "@mantine/core";
 import { JSONPath } from "jsonpath-plus";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -27,12 +35,19 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
   };
 
   return (
-    <Modal title="JSON Path" size="lg" opened={opened} onClose={onClose} centered>
+    <Modal
+      title="JSON Path"
+      size="lg"
+      opened={opened}
+      onClose={onClose}
+      centered
+    >
       <Stack>
         <Text fz="sm">
-          JsonPath expressions always refer to a JSON structure in the same way as XPath expression
-          are used in combination with an XML document. The &quot;root member object&quot; in
-          JsonPath is always referred to as $ regardless if it is an object or array.
+          JsonPath expressions always refer to a JSON structure in the same way
+          as XPath expression are used in combination with an XML document. The
+          &quot;root member object&quot; in JsonPath is always referred to as $
+          regardless if it is an object or array.
           <br />
           <Anchor
             fz="sm"

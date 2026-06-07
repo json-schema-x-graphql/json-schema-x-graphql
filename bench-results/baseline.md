@@ -1,10 +1,13 @@
 # Dependency Reduction Baseline Measurements
+
 # Date: 2026-06-06
+
 # State: All features enabled, debug profile with reduced debug info (debug=1 for crate, debug=0 for deps)
 
 ## Rust Baseline
 
 ### Build Metrics
+
 - Target dir (all features, debug): 885 MB
 - Target dir (default features, debug): 687 MB
 - Unique crates (all features): 247
@@ -13,12 +16,14 @@
 - Clean build time (default features): ~11.4s elapsed (with cached deps)
 
 ### Binary Sizes (debug, all features)
+
 - libjson_schema_x_graphql.so: 7.1 MB
 - libjson_schema_x_graphql.rlib: 9.7 MB
 - jxql (debug): 27 MB
 - jxql (release): 3.5 MB
 
 ### Top Contributing Dependencies by Compiled Size
+
 1. async_graphql: 41 MB
 2. apollo_compiler: 25 MB
 3. tokio: 15 MB
@@ -41,18 +46,21 @@
 20. regex_syntax: 7.8 MB
 
 ### Criterion Benchmark Results (all features, debug)
-| Benchmark | Mean Time |
-|---|---|
-| json_schema_to_graphql_small | 13.691 µs |
-| graphql_to_json_schema_small | 39.082 µs |
-| cached_json_to_graphql | 335.71 ns |
+
+| Benchmark                     | Mean Time |
+| ----------------------------- | --------- |
+| json_schema_to_graphql_small  | 13.691 µs |
+| graphql_to_json_schema_small  | 39.082 µs |
+| cached_json_to_graphql        | 335.71 ns |
 | json_to_graphql_no_validation | 12.904 µs |
 
 ## Node Baseline
 
 ### Dependencies
+
 - Runtime: 2 (graphql, @opentelemetry/api)
 - Dev: 18
 
 ### Package Size
+
 - dist/: 436 KB

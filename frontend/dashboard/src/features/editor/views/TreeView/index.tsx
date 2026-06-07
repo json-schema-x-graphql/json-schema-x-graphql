@@ -68,8 +68,12 @@ export const TreeView = () => {
     <JSONTree
       hideRoot
       data={parsedData}
-      valueRenderer={(valueAsString, value) => <Value {...{ valueAsString, value }} />}
-      labelRenderer={(keyPath, nodeType) => <Label {...{ keyPath, nodeType }} />}
+      valueRenderer={(valueAsString, value) => (
+        <Value {...{ valueAsString, value }} />
+      )}
+      labelRenderer={(keyPath, nodeType) => (
+        <Label {...{ keyPath, nodeType }} />
+      )}
       theme={{
         extend: {
           overflow: "scroll",

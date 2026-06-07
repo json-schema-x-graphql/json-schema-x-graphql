@@ -40,7 +40,12 @@ const Terms = () => {
                   {term}
                 </Title>
                 {terms[term].map((term) => (
-                  <Text mt="md" c="gray.8" key={term} ml={term.startsWith("•") ? 15 : 0}>
+                  <Text
+                    mt="md"
+                    c="gray.8"
+                    key={term}
+                    ml={term.startsWith("•") ? 15 : 0}
+                  >
                     {term}
                   </Text>
                 ))}

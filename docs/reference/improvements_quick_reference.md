@@ -202,7 +202,15 @@ options.exclude_type_suffixes = vec!["Filter".to_string(), "Input".to_string()];
 ```typescript
 const result = jsonSchemaToGraphQL(schema, {
   includeOperationalTypes: false, // Exclude Query/Mutation/Subscription
-  excludeTypeSuffixes: ["Filter", "Sort", "Connection", "Edge", "Payload", "Args", "Input"],
+  excludeTypeSuffixes: [
+    "Filter",
+    "Sort",
+    "Connection",
+    "Edge",
+    "Payload",
+    "Args",
+    "Input",
+  ],
 });
 ```
 
@@ -226,7 +234,11 @@ Utility functions for working with different naming conventions.
 ### Node.js
 
 ```typescript
-import { camelToSnake, snakeToCamel, convertObjectKeys } from "./case-conversion";
+import {
+  camelToSnake,
+  snakeToCamel,
+  convertObjectKeys,
+} from "./case-conversion";
 
 // Convert strings
 camelToSnake("camelCase"); // → 'camel_case'

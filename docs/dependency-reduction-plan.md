@@ -23,32 +23,32 @@ significant build cost:
 
 ### Current State
 
-| Dependency | Compiled Size | Transitive Crates | Used In | Status |
-|---|---|---|---|---|
-| `async_graphql` | 41 MB | 2 (direct) | `schema.rs`, `api_types.rs`, parser in `graphql_to_json.rs` | **Split required**: parser vs. server |
-| `apollo_compiler` | 25 MB (×2 hashes) | 2 | `validation/graphql_sdl.rs` | **STUBBED** — returns empty |
-| `apollo_parser` | 4.6 MB (×2) | 2 | `validation/graphql_sdl.rs` | **STUBBED** — returns empty |
-| `apollo_encoder` | 1.6 MB (×2) | 2 | Not found in source | **UNUSED** |
-| `graphql_composition` | 2.8 MB (×2) | 2 | `validation/graphql_sdl.rs` | **STUBBED** — returns empty |
-| `graphql_schema_validation` | 1.4 MB (×2) | 2 | `validation/graphql_sdl.rs` | **STUBBED** — returns empty |
-| `jsonschema` | 13 MB (×2 hashes) | 2 | `validation/json_schema.rs` | ✅ Active — dual validator |
-| `boon` | 7.7 MB | 2 | `validation/json_schema.rs` | ✅ Active — dual validator |
-| `opentelemetry` | 1.8 MB | 4 | `lib.rs` (`start`/`startActiveSpan`) | **Replaceable** with `tracing` |
-| `opentelemetry_sdk` | 5.2 MB | — | `lib.rs` test only | Should be **dev-dep** |
-| `tokio` | 15 MB | 31 | `bin/jxql.rs` only | CLI-only, gated ✅ |
-| `reqwest` | 9.4 MB | 4 | `bin/jxql.rs` only | CLI-only, gated ✅ |
-| `clap` | 7 MB | 4 | `bin/jxql.rs` only | CLI-only, gated ✅ |
-| `anyhow` | 790 KB | 4 | `bin/jxql.rs` only | CLI-only, gated ✅ |
-| `regex` | 982 KB | 13 | `case_conversion.rs`, `validator.rs`, `json_to_graphql.rs` | ✅ Active |
-| `serde` | 906 KB | ~109 (transitive) | Core | ✅ Irreplaceable |
-| `serde_json` | 4.8 MB | 36 | Core | ✅ Irreplaceable |
-| `thiserror` | 57 KB | ~24 | `error.rs`, `validation/` | ✅ Lightweight, idiomatic |
-| `indexmap` | 1.3 MB | 52 | `graphql_to_json.rs`, `lib.rs` (caching) | Could use `BTreeMap` |
-| `wasm_bindgen` | 2.8 MB | 8 | `wasm.rs` | ✅ Required for WASM |
-| `console_error_panic_hook` | 31 KB | 2 | `wasm.rs` | ✅ WASM quality-of-life |
-| `serde_wasm_bindgen` | 490 KB | 2 | `wasm.rs` | ✅ Required for WASM |
-| `getrandom` | 406 KB | — | Not found (transitive) | Transitive — keep |
-| `bytes` | 1.2 MB | ~80 | Not found in source | **Transitive of reqwest** — already gated ✅ |
+| Dependency                  | Compiled Size     | Transitive Crates | Used In                                                     | Status                                       |
+| --------------------------- | ----------------- | ----------------- | ----------------------------------------------------------- | -------------------------------------------- |
+| `async_graphql`             | 41 MB             | 2 (direct)        | `schema.rs`, `api_types.rs`, parser in `graphql_to_json.rs` | **Split required**: parser vs. server        |
+| `apollo_compiler`           | 25 MB (×2 hashes) | 2                 | `validation/graphql_sdl.rs`                                 | **STUBBED** — returns empty                  |
+| `apollo_parser`             | 4.6 MB (×2)       | 2                 | `validation/graphql_sdl.rs`                                 | **STUBBED** — returns empty                  |
+| `apollo_encoder`            | 1.6 MB (×2)       | 2                 | Not found in source                                         | **UNUSED**                                   |
+| `graphql_composition`       | 2.8 MB (×2)       | 2                 | `validation/graphql_sdl.rs`                                 | **STUBBED** — returns empty                  |
+| `graphql_schema_validation` | 1.4 MB (×2)       | 2                 | `validation/graphql_sdl.rs`                                 | **STUBBED** — returns empty                  |
+| `jsonschema`                | 13 MB (×2 hashes) | 2                 | `validation/json_schema.rs`                                 | ✅ Active — dual validator                   |
+| `boon`                      | 7.7 MB            | 2                 | `validation/json_schema.rs`                                 | ✅ Active — dual validator                   |
+| `opentelemetry`             | 1.8 MB            | 4                 | `lib.rs` (`start`/`startActiveSpan`)                        | **Replaceable** with `tracing`               |
+| `opentelemetry_sdk`         | 5.2 MB            | —                 | `lib.rs` test only                                          | Should be **dev-dep**                        |
+| `tokio`                     | 15 MB             | 31                | `bin/jxql.rs` only                                          | CLI-only, gated ✅                           |
+| `reqwest`                   | 9.4 MB            | 4                 | `bin/jxql.rs` only                                          | CLI-only, gated ✅                           |
+| `clap`                      | 7 MB              | 4                 | `bin/jxql.rs` only                                          | CLI-only, gated ✅                           |
+| `anyhow`                    | 790 KB            | 4                 | `bin/jxql.rs` only                                          | CLI-only, gated ✅                           |
+| `regex`                     | 982 KB            | 13                | `case_conversion.rs`, `validator.rs`, `json_to_graphql.rs`  | ✅ Active                                    |
+| `serde`                     | 906 KB            | ~109 (transitive) | Core                                                        | ✅ Irreplaceable                             |
+| `serde_json`                | 4.8 MB            | 36                | Core                                                        | ✅ Irreplaceable                             |
+| `thiserror`                 | 57 KB             | ~24               | `error.rs`, `validation/`                                   | ✅ Lightweight, idiomatic                    |
+| `indexmap`                  | 1.3 MB            | 52                | `graphql_to_json.rs`, `lib.rs` (caching)                    | Could use `BTreeMap`                         |
+| `wasm_bindgen`              | 2.8 MB            | 8                 | `wasm.rs`                                                   | ✅ Required for WASM                         |
+| `console_error_panic_hook`  | 31 KB             | 2                 | `wasm.rs`                                                   | ✅ WASM quality-of-life                      |
+| `serde_wasm_bindgen`        | 490 KB            | 2                 | `wasm.rs`                                                   | ✅ Required for WASM                         |
+| `getrandom`                 | 406 KB            | —                 | Not found (transitive)                                      | Transitive — keep                            |
+| `bytes`                     | 1.2 MB            | ~80               | Not found in source                                         | **Transitive of reqwest** — already gated ✅ |
 
 ### Key Findings
 
@@ -81,26 +81,26 @@ significant build cost:
 
 ### Runtime Dependencies
 
-| Package | Used In | Status |
-|---|---|---|
-| `graphql` | `converter.ts` (core) | ✅ **Critical** — cannot remove |
+| Package              | Used In                   | Status                               |
+| -------------------- | ------------------------- | ------------------------------------ |
+| `graphql`            | `converter.ts` (core)     | ✅ **Critical** — cannot remove      |
 | `@opentelemetry/api` | `otel.ts`, `converter.ts` | **Replaceable** — span wrappers only |
 
 ### Dev Dependencies
 
-| Package | Used In | Status |
-|---|---|---|
-| `@apollo/subgraph` | `scripts/validation/` only | **Remove from package** — move to scripts workspace |
-| `graphql-tag` | `scripts/validation/` only | **Remove** — `graphql.parse()` is a drop-in |
-| `ajv` + `ajv-formats` | `src/cli/validate.ts` only | **Extract CLI to separate package** or inline validator |
-| `@opentelemetry/sdk-trace-base` | `src/otel.ts` (both prod+test) | Make **test-only** with conditional import |
-| `@opentelemetry/sdk-trace-node` | `src/otel.ts` (both prod+test) | Make **test-only** with conditional import |
-| `jest` + `ts-jest` | Test runner | ✅ Keep (or migrate to Vitest) |
-| `tsx` | Script runner | ✅ Keep |
-| `typescript` | Build | ✅ Keep |
-| `eslint` + `typescript-eslint` + `@eslint/js` | Linting | ✅ Keep |
-| `@graphql-codegen/cli` + `@graphql-codegen/typescript` | Codegen | ✅ Keep — generates `src/generated/types.ts` |
-| `@types/jest` + `@types/node` | Type defs | ✅ Keep |
+| Package                                                | Used In                        | Status                                                  |
+| ------------------------------------------------------ | ------------------------------ | ------------------------------------------------------- |
+| `@apollo/subgraph`                                     | `scripts/validation/` only     | **Remove from package** — move to scripts workspace     |
+| `graphql-tag`                                          | `scripts/validation/` only     | **Remove** — `graphql.parse()` is a drop-in             |
+| `ajv` + `ajv-formats`                                  | `src/cli/validate.ts` only     | **Extract CLI to separate package** or inline validator |
+| `@opentelemetry/sdk-trace-base`                        | `src/otel.ts` (both prod+test) | Make **test-only** with conditional import              |
+| `@opentelemetry/sdk-trace-node`                        | `src/otel.ts` (both prod+test) | Make **test-only** with conditional import              |
+| `jest` + `ts-jest`                                     | Test runner                    | ✅ Keep (or migrate to Vitest)                          |
+| `tsx`                                                  | Script runner                  | ✅ Keep                                                 |
+| `typescript`                                           | Build                          | ✅ Keep                                                 |
+| `eslint` + `typescript-eslint` + `@eslint/js`          | Linting                        | ✅ Keep                                                 |
+| `@graphql-codegen/cli` + `@graphql-codegen/typescript` | Codegen                        | ✅ Keep — generates `src/generated/types.ts`            |
+| `@types/jest` + `@types/node`                          | Type defs                      | ✅ Keep                                                 |
 
 ---
 
@@ -209,12 +209,14 @@ via `tracing-opentelemetry` if users need OTel export.
 ### Phase 3: Replace `regex` with hand-written patterns (Rust)
 
 The crate uses `regex` for:
+
 - Case conversion: `([a-z0-9])([A-Z])` and `([A-Z])([A-Z][a-z])` — these are trivial
 - GraphQL name validation: `^[_A-Za-z][_0-9A-Za-z]*$` — this is a simple char-class check
 - URL validation: `^https?://[^\s/$.?#].[^\s]*$` — this is the only complex pattern
 - Dynamic pattern exclusion in `json_to_graphql.rs`
 
 Replace `regex` crate with:
+
 - For case conversion: simple char-by-char iteration (already half-implemented as utility)
 - For GraphQL name validation: `char::is_alphanumeric()` + prefix check
 - For URL validation: `url::Url::parse()` or a simple starts-with check
@@ -307,13 +309,13 @@ du -sh target/debug/deps/libjson_schema_x_graphql.*
 
 #### Metrics Table
 
-| Metric | Baseline | Phase 1A | Phase 1E | Phase 2 | Phase 3 | Phase 4 |
-|---|---|---|---|---|---|---|
-| Compile time (s) | _measure_ | | | | | |
-| Binary size (MB) | _measure_ | | | | | |
-| Target dir (MB) | _measure_ | | | | | |
-| Unique crates | ~247 | | | | | |
-| Criterion mean (μs) | _measure_ | | | | | |
+| Metric              | Baseline  | Phase 1A | Phase 1E | Phase 2 | Phase 3 | Phase 4 |
+| ------------------- | --------- | -------- | -------- | ------- | ------- | ------- |
+| Compile time (s)    | _measure_ |          |          |         |         |         |
+| Binary size (MB)    | _measure_ |          |          |         |         |         |
+| Target dir (MB)     | _measure_ |          |          |         |         |         |
+| Unique crates       | ~247      |          |          |         |         |         |
+| Criterion mean (μs) | _measure_ |          |          |         |         |         |
 
 ### Node Benchmarks
 
@@ -334,19 +336,19 @@ time node -e "require('./dist/converter.js').Converter"
 
 ## Expected Impact Summary
 
-| Change | Crates Removed | Build Size Saved | Risk |
-|---|---|---|---|
-| Phase 1A: Remove stubbed validation crates | ~20 | ~33 MB | Low (they're stubbed) |
-| Phase 1B: Remove test_utils/ | 0 | ~0 MB | None (dead code) |
-| Phase 1C: Move opentelemetry_sdk to dev-deps | ~5 | ~5 MB | Low |
-| Phase 1D: Remove node script-only deps | 0 | ~2 MB npm | Low |
-| Phase 1E: Gate async_graphql server | ~15-30 | ~41 MB | Medium (refactor parser imports) |
-| Phase 2: Replace OTel with tracing | ~3 | ~7 MB | Medium |
-| Phase 3: Replace regex | ~3 | ~12 MB | Medium |
-| Phase 4: Gate JSON Schema validation | ~2 | ~20 MB | Low |
-| Phase 5: Extract Node CLI | 0 | ~5 MB npm | Low |
-| Phase 6: Make Node OTel optional | 0 | ~1 MB npm | Low |
-| **Total** | **~50 crates** | **~120 MB Rust** / **~8 MB npm** | |
+| Change                                       | Crates Removed | Build Size Saved                 | Risk                             |
+| -------------------------------------------- | -------------- | -------------------------------- | -------------------------------- |
+| Phase 1A: Remove stubbed validation crates   | ~20            | ~33 MB                           | Low (they're stubbed)            |
+| Phase 1B: Remove test_utils/                 | 0              | ~0 MB                            | None (dead code)                 |
+| Phase 1C: Move opentelemetry_sdk to dev-deps | ~5             | ~5 MB                            | Low                              |
+| Phase 1D: Remove node script-only deps       | 0              | ~2 MB npm                        | Low                              |
+| Phase 1E: Gate async_graphql server          | ~15-30         | ~41 MB                           | Medium (refactor parser imports) |
+| Phase 2: Replace OTel with tracing           | ~3             | ~7 MB                            | Medium                           |
+| Phase 3: Replace regex                       | ~3             | ~12 MB                           | Medium                           |
+| Phase 4: Gate JSON Schema validation         | ~2             | ~20 MB                           | Low                              |
+| Phase 5: Extract Node CLI                    | 0              | ~5 MB npm                        | Low                              |
+| Phase 6: Make Node OTel optional             | 0              | ~1 MB npm                        | Low                              |
+| **Total**                                    | **~50 crates** | **~120 MB Rust** / **~8 MB npm** |                                  |
 
 After all phases, the default WASM build would depend on only:
 `serde`, `serde_json`, `indexmap`, `async_graphql_parser`, `async_graphql_value`,

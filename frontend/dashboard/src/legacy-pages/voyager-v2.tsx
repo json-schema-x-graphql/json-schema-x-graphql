@@ -42,11 +42,12 @@ const VoyagerV2Page: NextPage = () => {
         }
 
         const sdl = await response.text();
-        const { buildSchema, getIntrospectionQuery, graphql } = graphqlModule as {
-          buildSchema: (sdl: string) => any;
-          getIntrospectionQuery: () => string;
-          graphql: (args: any) => Promise<any>;
-        };
+        const { buildSchema, getIntrospectionQuery, graphql } =
+          graphqlModule as {
+            buildSchema: (sdl: string) => any;
+            getIntrospectionQuery: () => string;
+            graphql: (args: any) => Promise<any>;
+          };
         const schema = buildSchema(sdl);
         const introspectionResult = await graphql({
           schema,
@@ -55,7 +56,9 @@ const VoyagerV2Page: NextPage = () => {
 
         if (introspectionResult.errors?.length) {
           throw new Error(
-            introspectionResult.errors.map((graphqlError) => graphqlError.message).join("\n"),
+            introspectionResult.errors
+              .map((graphqlError) => graphqlError.message)
+              .join("\n"),
           );
         }
 
@@ -85,7 +88,10 @@ const VoyagerV2Page: NextPage = () => {
           return;
         }
 
-        const message = err instanceof Error ? err.message : "Unknown error initialising Voyager";
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Unknown error initialising Voyager";
         setError(message);
 
         console.error("[VoyagerV2Page]", err);
@@ -102,7 +108,9 @@ const VoyagerV2Page: NextPage = () => {
   return (
     <>
       <Head>
-        <title>GraphQL Voyager - V2 Hand-Crafted | Schema Unification Forest</title>
+        <title>
+          GraphQL Voyager - V2 Hand-Crafted | Schema Unification Forest
+        </title>
         <meta
           name="description"
           content="Visualise the hand-crafted V2 schema (30 types with detailed extensions) as an interactive graph using GraphQL Voyager."
@@ -143,8 +151,8 @@ const VoyagerV2Page: NextPage = () => {
           </div>
           <div className="info-badge">
             <span className="docs-link">
-              📖 GraphQL Voyager documentation has been archived and is available in the docs
-              archive.
+              📖 GraphQL Voyager documentation has been archived and is
+              available in the docs archive.
             </span>
           </div>
         </div>

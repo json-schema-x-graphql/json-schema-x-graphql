@@ -4,7 +4,14 @@
  * Validation utilities for x-graphql-* extensions in JSON Schema.
  * Ensures correct usage of x-graphql attributes and provides helpful error messages.
  */
-const VALID_TYPE_KINDS = ["OBJECT", "INTERFACE", "UNION", "ENUM", "INPUT_OBJECT", "SCALAR"];
+const VALID_TYPE_KINDS = [
+    "OBJECT",
+    "INTERFACE",
+    "UNION",
+    "ENUM",
+    "INPUT_OBJECT",
+    "SCALAR",
+];
 const GRAPHQL_SCALAR_TYPES = [
     "ID",
     "String",
@@ -145,7 +152,8 @@ export function validateExtensions(schema, path) {
         }
     }
     // Validate field-type
-    if (extensions.fieldType !== undefined && typeof extensions.fieldType === "string") {
+    if (extensions.fieldType !== undefined &&
+        typeof extensions.fieldType === "string") {
         // Extract base type (remove [], !, etc.)
         const baseType = extensions.fieldType.replace(/[\[\]!]/g, "");
         if (!GRAPHQL_NAME_PATTERN.test(baseType)) {
@@ -167,7 +175,8 @@ export function validateExtensions(schema, path) {
         });
     }
     // Validate nullable
-    if (extensions.nullable !== undefined && typeof extensions.nullable !== "boolean") {
+    if (extensions.nullable !== undefined &&
+        typeof extensions.nullable !== "boolean") {
         errors.push({
             path,
             message: "x-graphql-nullable must be a boolean",
@@ -176,7 +185,8 @@ export function validateExtensions(schema, path) {
         });
     }
     // Validate description
-    if (extensions.description !== undefined && typeof extensions.description !== "string") {
+    if (extensions.description !== undefined &&
+        typeof extensions.description !== "string") {
         errors.push({
             path,
             message: "x-graphql-description must be a string",
@@ -185,7 +195,8 @@ export function validateExtensions(schema, path) {
         });
     }
     // Validate field-non-null
-    if (extensions.fieldNonNull !== undefined && typeof extensions.fieldNonNull !== "boolean") {
+    if (extensions.fieldNonNull !== undefined &&
+        typeof extensions.fieldNonNull !== "boolean") {
         errors.push({
             path,
             message: "x-graphql-field-non-null must be a boolean",
@@ -291,7 +302,11 @@ export function validateExtensions(schema, path) {
         }
     }
     // Validate federation booleans
-    for (const attr of ["federationShareable", "federationExternal", "federationInaccessible"]) {
+    for (const attr of [
+        "federationShareable",
+        "federationExternal",
+        "federationInaccessible",
+    ]) {
         const value = extensions[attr];
         if (value !== undefined && typeof value !== "boolean") {
             const attrName = "x-graphql-" + attr.replace(/([A-Z])/g, "-$1").toLowerCase();
@@ -313,7 +328,9 @@ export function validateExtensions(schema, path) {
         });
     }
     // Warn about skip on required fields
-    if (extensions.skip === true && schema.required && Array.isArray(schema.required)) {
+    if (extensions.skip === true &&
+        schema.required &&
+        Array.isArray(schema.required)) {
         const fieldName = extensions.fieldName || path.split(".").pop();
         if (fieldName && schema.required.includes(fieldName)) {
             errors.push({
@@ -325,7 +342,8 @@ export function validateExtensions(schema, path) {
         }
     }
     // Warn about unused field-list-item-non-null on non-arrays
-    if (extensions.fieldListItemNonNull !== undefined && schema.type !== "array") {
+    if (extensions.fieldListItemNonNull !== undefined &&
+        schema.type !== "array") {
         errors.push({
             path,
             message: 'x-graphql-field-list-item-non-null is set but schema type is not "array"',

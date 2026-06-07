@@ -121,7 +121,12 @@ npm install loro-crdt
 ```typescript
 import { MonacoBinding } from "y-monaco";
 
-const binding = new MonacoBinding(ytext, editor.getModel(), new Set([editor]), awareness);
+const binding = new MonacoBinding(
+  ytext,
+  editor.getModel(),
+  new Set([editor]),
+  awareness,
+);
 // Done! Fully integrated
 ```
 
