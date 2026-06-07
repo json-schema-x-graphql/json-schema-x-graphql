@@ -1,66 +1,61 @@
-# Dependency Reduction Baseline Measurements
-
+# Dependency Reduction Baseline & Post-Implementation Measurements
 # Date: 2026-06-06
+# State: After Phases 1A-1E, 2, 6 implemented
 
-# State: All features enabled, debug profile with reduced debug info (debug=1 for crate, debug=0 for deps)
+## Previous Baseline (before any changes)
 
-## Rust Baseline
+| Metric                                | Before            |
+| ------------------------------------- | ----------------- |
+| Target dir (all features)             | 2.1 GB            |
+| Target dir (default features)         | 687 MB            |
+| Unique crates (default)               | 231               |
+| Unique crates (all features)           | 247               |
+| libjson_schema_x_graphql.so           | 7.1 MB            |
+| libjson_schema_x_graphql.rlib         | 9.7 MB            |
+| jxql (debug)                           | 27 MB             |
 
-### Build Metrics
+## Current State (after implemented phases)
 
-- Target dir (all features, debug): 885 MB
-- Target dir (default features, debug): 687 MB
-- Unique crates (all features): 247
-- Unique crates (default features): 231
-- Clean build time (all features): ~12.4s elapsed (with cached deps)
-- Clean build time (default features): ~11.4s elapsed (with cached deps)
+| Metric                                | After (default)   | Change            |
+| ------------------------------------- | ----------------- | ----------------- |
+| Target dir (all features)             | 747 MB            | **-64%**          |
+| Target dir (default features)         | 212 MB            | **-69%**          |
+| Unique crates (default)               | 43                | **-81%**          |
+| Unique crates (all features)           | 181               | **-27%**          |
+| libjson_schema_x_graphql.so           | 6.5 MB            | -8%               |
+| libjson_schema_x_graphql.rlib         | 9.0 MB            | -7%               |
+| jxql (debug)                           | 26 MB             | -4%               |
+| json_schema_to_graphql (bench)         | 13.5 µs           | ~same             |
+| graphql_to_json_schema (bench)         | 37.7 µs           | -4%               |
+| cached_json_to_graphql (bench)         | 317 ns            | -5%               |
+| json_to_graphql_no_validation (bench)  | 12.9 µs           | ~same             |
 
-### Binary Sizes (debug, all features)
+## Rust Criterion Benchmarks (final)
 
-- libjson_schema_x_graphql.so: 7.1 MB
-- libjson_schema_x_graphql.rlib: 9.7 MB
-- jxql (debug): 27 MB
-- jxql (release): 3.5 MB
-
-### Top Contributing Dependencies by Compiled Size
-
-1. async_graphql: 41 MB
-2. apollo_compiler: 25 MB
-3. tokio: 15 MB
-4. jsonschema: 13 MB
-5. criterion: 11 MB
-6. reqwest: 9.4 MB
-7. boon: 7.7 MB
-8. opentelemetry_sdk: 5.2 MB
-9. serde_json: 4.8 MB
-10. apollo_parser: 4.6 MB
-11. clap_builder: 7.0 MB
-12. openssl: 7.3 MB
-13. wasm_bindgen: 2.8 MB
-14. graphql_composition: 2.8 MB
-15. opentelemetry: 1.8 MB
-16. apollo_encoder: 1.6 MB
-17. graphql_schema_validation: 1.4 MB
-18. indexmap: 1.3 MB
-19. regex_automata: 11 MB
-20. regex_syntax: 7.8 MB
-
-### Criterion Benchmark Results (all features, debug)
-
-| Benchmark                     | Mean Time |
-| ----------------------------- | --------- |
-| json_schema_to_graphql_small  | 13.691 µs |
-| graphql_to_json_schema_small  | 39.082 µs |
-| cached_json_to_graphql        | 335.71 ns |
-| json_to_graphql_no_validation | 12.904 µs |
+| Benchmark                            | Before (µs) | After (µs) | Change |
+| ------------------------------------- | ----------- | ---------- | ------ |
+| json_schema_to_graphql_small          | 13.7            | 13.8       | +1%    |
+| graphql_to_json_schema_small          | 39.1            | 37.4       | -4%    |
+| cached_json_to_graphql               | 336 ns          | 319 ns     | -5%    |
+| json_to_graphql_no_validation         | 12.9            | 13.2       | +2%    |
 
 ## Node Baseline
 
-### Dependencies
-
+### Dependencies (before)
 - Runtime: 2 (graphql, @opentelemetry/api)
-- Dev: 18
+- Dev: 18 (including @opentelemetry/sdk-trace-base, @opentelemetry/sdk-trace-node as hardcoded imports)
+## Node Baseline
 
-### Package Size
+### Dependencies (after changes)
+- Runtime: 2 (`graphql`, `@opentelemetry/api`)
+- Dev: 10 (`@eslint/js`, `@graphql-codegen/cli`, `@graphql-codegen/typescript`, `@types/jest`, `@types/node`, `eslint`, `jest`, `ts-jest`, `tsx`, `typescript`, `typescript-eslint`)
+- Optional: 2 (`@opentelemetry/sdk-trace-base`, `@opentelemetry/sdk-trace-node`)
 
-- dist/: 436 KB
+### Key changes from review feedback
+- `@apollo/subgraph` and `graphql-tag` removed from core package (moved to CLI package)
+- `ajv` and `ajv-formats` removed from core package (moved to CLI package)
+- `@opentelemetry/sdk-trace-*` moved from devDependencies to optionalDependencies
+- OTel SDK now loaded via dynamic `import()` for WASM/browser compatibility
+- `indexmap` kept (required for `preserve_order` feature and LRU cache)
+- `regex` kept (required for URL validation and dynamic exclude patterns)
+- `opentelemetry` gated behind `telemetry` feature (not replaced with `tracing`)
