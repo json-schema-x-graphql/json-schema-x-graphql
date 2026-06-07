@@ -1,8 +1,57 @@
 version: 2
 updates:
-  # Manage the entire pnpm workspace dependencies from the root
+  # Root pnpm workspace — use npm ecosystem for pnpm-lock.yaml
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+
+  # Frontend dashboard workspace
+  - package-ecosystem: "npm"
+    directory: "/frontend/dashboard"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Converter node workspace
+  - package-ecosystem: "npm"
+    directory: "/converters/node"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Converter CLI workspace
+  - package-ecosystem: "npm"
+    directory: "/converters/cli"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Frontend subgraph-composer workspace
+  - package-ecosystem: "npm"
+    directory: "/frontend/subgraph-composer"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Website workspace
+  - package-ecosystem: "npm"
+    directory: "/website"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Rust Cargo ecosystem
+  - package-ecosystem: "cargo"
+    directory: "/converters/rust"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
