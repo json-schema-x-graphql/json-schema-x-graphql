@@ -23,12 +23,14 @@
 //! let result = converter.convert(json_schema, ConversionDirection::JsonSchemaToGraphQL);
 //! ```
 
+#[cfg(any(feature = "graphql-server", feature = "wasm"))]
 pub mod api_types;
 pub mod case_conversion;
 pub mod error;
 pub mod graphql_ast_json;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
+#[cfg(feature = "graphql-server")]
 pub mod schema;
 pub mod types;
 pub mod validation;
@@ -139,9 +141,12 @@ impl Converter {
 
     /// Convert JSON Schema to GraphQL SDL
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String> {
-        use opentelemetry::trace::Tracer;
-        let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
-        let _span = tracer.start("json_schema_to_graphql");
+        #[cfg(feature = "telemetry")]
+        let _span = {
+            use opentelemetry::trace::Tracer;
+            let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
+            tracer.start("json_schema_to_graphql")
+        };
 
         let schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
@@ -159,9 +164,12 @@ impl Converter {
 
     /// Convert GraphQL SDL to JSON Schema
     pub fn graphql_to_json_schema(&self, graphql_sdl: &str) -> Result<String> {
-        use opentelemetry::trace::Tracer;
-        let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
-        let _span = tracer.start("graphql_to_json_schema");
+        #[cfg(feature = "telemetry")]
+        let _span = {
+            use opentelemetry::trace::Tracer;
+            let tracer = opentelemetry::global::tracer("json-schema-x-graphql");
+            tracer.start("graphql_to_json_schema")
+        };
 
         if self.options.validate {
             validator::validate_graphql_sdl(graphql_sdl)?;
@@ -252,7 +260,7 @@ mod tests {
         assert!(result.is_err());
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
+    #[cfg(all(not(target_arch = "wasm32"), feature = "telemetry"))]
     #[test]
     fn test_opentelemetry_instrumentation() {
         use opentelemetry_sdk::trace::TracerProvider;

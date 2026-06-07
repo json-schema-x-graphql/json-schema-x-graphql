@@ -18,6 +18,7 @@ import type {
   DiagnosticSeverity,
   DiagnosticKind,
 } from "./generated/types.js";
+export * from "./generated/types.js";
 import { parse, print } from "graphql";
 import {
   IJsonSchemaConverter,

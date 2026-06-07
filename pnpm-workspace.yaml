@@ -1,5 +1,6 @@
 packages:
   - converters/node
+  - converters/cli
   - frontend/subgraph-composer
   - website
   - external/visual-json

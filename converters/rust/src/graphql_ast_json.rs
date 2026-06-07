@@ -1,5 +1,5 @@
 use crate::error::{ConversionError, Result};
-use async_graphql::parser::{
+use async_graphql_parser::{
     parse_schema,
     types::{
         BaseType, ConstDirective, FieldDefinition, InputValueDefinition, Type, TypeDefinition,

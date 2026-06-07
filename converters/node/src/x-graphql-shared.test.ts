@@ -406,7 +406,7 @@ describe("X-GraphQL Shared Test Data", () => {
       expect(spans.length).toBeGreaterThanOrEqual(1);
 
       const conversionSpan = spans.find(
-        (s) => s.name === "jsonSchemaToGraphQL",
+        (s: any) => s.name === "jsonSchemaToGraphQL",
       );
       expect(conversionSpan).toBeDefined();
       expect(
@@ -422,7 +422,7 @@ describe("X-GraphQL Shared Test Data", () => {
       const spans = getOtelSpans();
       expect(spans.length).toBeGreaterThanOrEqual(1);
       const conversionSpan = spans.find(
-        (s) => s.name === "jsonSchemaToGraphQL",
+        (s: any) => s.name === "jsonSchemaToGraphQL",
       );
       expect(conversionSpan).toBeDefined();
       expect(conversionSpan?.status.code).toBe(2); // Error status

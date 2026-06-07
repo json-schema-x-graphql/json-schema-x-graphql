@@ -1,24 +1,45 @@
 //! Case conversion utilities for flexible field name handling
 
-use regex::Regex;
-
 /// Convert camelCase or PascalCase to snake_case
 pub fn camel_to_snake(s: &str) -> String {
-    let re1 = Regex::new(r"([a-z0-9])([A-Z])").unwrap();
-    let re2 = Regex::new(r"([A-Z])([A-Z][a-z])").unwrap();
-
-    let temp = re1.replace_all(s, "${1}_${2}");
-    let result = re2.replace_all(&temp, "${1}_${2}");
-
-    result.to_lowercase()
+    let mut snake = String::with_capacity(s.len() + 4);
+    let mut chars = s.chars().peekable();
+    let mut prev_was_lower_or_digit = false;
+    
+    while let Some(ch) = chars.next() {
+        if ch.is_uppercase() {
+            if prev_was_lower_or_digit {
+                snake.push('_');
+            } else if let Some(next) = chars.peek() {
+                if next.is_lowercase() && !snake.is_empty() {
+                    snake.push('_');
+                }
+            }
+            snake.extend(ch.to_lowercase());
+            prev_was_lower_or_digit = false;
+        } else {
+            snake.push(ch);
+            prev_was_lower_or_digit = ch.is_lowercase() || ch.is_ascii_digit();
+        }
+    }
+    snake
 }
 
 /// Convert snake_case to camelCase
 pub fn snake_to_camel(s: &str) -> String {
-    let re = Regex::new(r"_([a-zA-Z0-9])").unwrap();
-
-    re.replace_all(s, |caps: &regex::Captures| caps[1].to_uppercase())
-        .to_string()
+    let mut camel = String::with_capacity(s.len());
+    let mut next_upper = false;
+    for ch in s.chars() {
+        if ch == '_' {
+            next_upper = true;
+        } else if next_upper {
+            camel.extend(ch.to_uppercase());
+            next_upper = false;
+        } else {
+            camel.push(ch);
+        }
+    }
+    camel
 }
 
 #[cfg(test)]

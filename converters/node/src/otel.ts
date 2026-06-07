@@ -1,12 +1,7 @@
 import { trace, type Tracer } from "@opentelemetry/api";
-import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import {
-  SimpleSpanProcessor,
-  InMemorySpanExporter,
-} from "@opentelemetry/sdk-trace-base";
 
-let memoryExporter: InMemorySpanExporter | null = null;
-let provider: NodeTracerProvider | null = null;
+let memoryExporter: any = null;
+let provider: any = null;
 
 // Initialize tracer provider only if in a Node/testing environment
 if (
@@ -14,10 +9,24 @@ if (
   typeof process !== "undefined" &&
   process.versions?.node
 ) {
-  provider = new NodeTracerProvider();
-  memoryExporter = new InMemorySpanExporter();
-  provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));
-  provider.register();
+  Promise.all([
+    import("@opentelemetry/sdk-trace-node"),
+    import("@opentelemetry/sdk-trace-base"),
+  ])
+    .then(
+      ([
+        { NodeTracerProvider },
+        { SimpleSpanProcessor, InMemorySpanExporter },
+      ]) => {
+        provider = new NodeTracerProvider();
+        memoryExporter = new InMemorySpanExporter();
+        provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));
+        provider.register();
+      },
+    )
+    .catch(() => {
+      // optional dependencies might not be installed
+    });
 }
 
 export const otelTracer: Tracer = trace.getTracer("json-schema-x-graphql");
