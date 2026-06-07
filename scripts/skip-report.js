@@ -113,8 +113,10 @@ function parseJsonc(content) {
     s = s.replace(/,\s*(?=[}\]])/g, "");
     return JSON.parse(s);
   } catch (err) {
-    // propagate original error
-    throw err;
+    // rethrow with context, preserving original error as cause
+    const wrapped = new Error(`skip-report JSON parse error: ${err.message}`);
+    wrapped.cause = err;
+    throw wrapped;
   }
 }
 

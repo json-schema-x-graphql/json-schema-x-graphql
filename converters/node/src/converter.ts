@@ -470,11 +470,7 @@ function convertGraphQLFieldToSchema(
   typeRegistry: Map<string, GraphQLTypeDefinition>,
   options: NormalizedConverterOptions,
 ): JsonSchema {
-  const typeSchema = convertGraphQLTypeToJsonSchema(
-    field.type,
-    typeRegistry,
-    options,
-  );
+  const typeSchema = convertGraphQLTypeToJsonSchema(field.type, typeRegistry);
 
   // Merge description if present
   if (field.description?.value && options.includeDescriptions) {
@@ -493,7 +489,6 @@ function convertGraphQLFieldToSchema(
 function convertGraphQLTypeToJsonSchema(
   gqlType: any,
   typeRegistry: Map<string, GraphQLTypeDefinition>,
-  options: NormalizedConverterOptions,
 ): JsonSchema {
   // Unwrap NonNull
   let currentType = gqlType;
@@ -505,11 +500,7 @@ function convertGraphQLTypeToJsonSchema(
   if (currentType?.kind === "ListType") {
     return {
       type: "array",
-      items: convertGraphQLTypeToJsonSchema(
-        currentType.type,
-        typeRegistry,
-        options,
-      ),
+      items: convertGraphQLTypeToJsonSchema(currentType.type, typeRegistry),
     };
   }
 
@@ -1710,9 +1701,13 @@ function formatDescription(
   const shouldBlock =
     description.includes("\n") || description.length >= BLOCK_THRESHOLD;
   if (shouldBlock) {
-    return `"""${description.replace(/"""/g, '\\"\"\"')}"""`;
+    // Escape backslashes first, then triple-quote sequences
+    const escaped = description.replace(/\\/g, "\\\\").replace(/"""/g, '\\"""');
+    return `"""${escaped}"""`;
   }
-  return `"${description.replace(/"/g, '\\"')}"`;
+  // Escape backslashes first, then quotes
+  const escaped = description.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  return `"${escaped}"`;
 }
 
 function formatDirectives(
