@@ -1,5 +1,4 @@
 import { jsonSchemaToGraphQL } from "./converter";
-import { ConverterOptions } from "./generated/types";
 import {
   camelToSnake,
   snakeToCamel,

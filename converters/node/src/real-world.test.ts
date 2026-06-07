@@ -89,7 +89,3 @@ describe("Real-world Schema Conversions", () => {
     });
   });
 });
-
-function normalizeSDL(sdl: string): string {
-  return sdl.replace(/\s+/g, " ").trim();
-}

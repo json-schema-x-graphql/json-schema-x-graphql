@@ -7,13 +7,7 @@
  * Outputs benchmark results in JSON format for CI/CD integration.
  */
 
-import {
-  readFileSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-  existsSync,
-} from "fs";
+import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, relative, basename } from "path";
 import { jsonSchemaToGraphQL } from "../../converters/node/src/converter";
 import { parse as parseGraphQL, buildSchema, validate } from "graphql";
@@ -123,7 +117,7 @@ class BenchmarkRunner {
       try {
         const content = readFileSync(optionsPath, "utf-8");
         return JSON.parse(content);
-      } catch (err) {
+      } catch (_err) {
         return {};
       }
     }
@@ -175,7 +169,7 @@ class BenchmarkRunner {
       }
 
       return { types, fields };
-    } catch (err) {
+    } catch (_err) {
       return { types: 0, fields: 0 };
     }
   }
@@ -272,7 +266,7 @@ class BenchmarkRunner {
         const ast = parseGraphQL(generatedSDL);
         const graphqlSchema = buildSchema(generatedSDL);
         validate(graphqlSchema, ast);
-      } catch (err) {
+      } catch (_err) {
         // Validation errors don't affect timing
       }
       const end = process.hrtime.bigint();

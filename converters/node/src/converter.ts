@@ -10,8 +10,6 @@ import type {
   ConverterOptions,
   FederationVersion,
   NamingConvention,
-  IdInferenceStrategy,
-  OutputFormat,
   ConvertInput,
   ConversionResult,
   Diagnostic,
@@ -25,12 +23,8 @@ import {
   JsonSchema,
   ExtendedConverterOptions,
   NormalizedConverterOptions,
-  GraphQLArgumentConfig,
   GraphQLDirective,
-  GraphQLEnumConfig,
-  GraphQLOperations,
   GraphQLOperationArg,
-  GraphQLScalarConfig,
   ConversionContext,
   JsonSchemaInput,
 } from "./interfaces.js";
@@ -383,7 +377,7 @@ function graphqlToJsonSchemaInternal(
     }
 
     return JSON.stringify(schema, null, 2);
-  } catch (e) {
+  } catch (_e) {
     // Fallback to simple parsing if AST parsing fails
     return fallbackGraphqlToJsonSchema(graphqlSdl, normalized);
   }
@@ -501,8 +495,6 @@ function convertGraphQLTypeToJsonSchema(
   typeRegistry: Map<string, GraphQLTypeDefinition>,
   options: NormalizedConverterOptions,
 ): JsonSchema {
-  const schema: JsonSchema = {};
-
   // Unwrap NonNull
   let currentType = gqlType;
   if (currentType?.kind === "NonNullType") {
@@ -1729,18 +1721,6 @@ function formatDirectives(
 ): string {
   const directives: GeneralizedDirective[] = extractDirectives(schema, options);
   return printDirectives(directives);
-}
-
-function isFederationDirective(name: string): boolean {
-  return (
-    name === "key" ||
-    name === "shareable" ||
-    name === "inaccessible" ||
-    name === "requiresScopes" ||
-    name === "policy" ||
-    name === "authenticated" ||
-    name === "interfaceObject"
-  );
 }
 
 function formatArgs(schema: JsonSchema): string {

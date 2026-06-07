@@ -43,7 +43,6 @@ describe("X-GraphQL Shared Test Data", () => {
       const expected = loadExpectedSDL("basic-types.graphql");
       if (expected) {
         const resultNorm = normalizeWhitespace(result);
-        const expectedNorm = normalizeWhitespace(expected);
 
         // Check for key structural elements rather than exact match
         // (formatting may differ between implementations)

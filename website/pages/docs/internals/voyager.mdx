@@ -1,0 +1,99 @@
+---
+title: GraphQL Voyager Visualization
+---
+
+# GraphQL Voyager — Interactive Schema Visualization
+
+The Subgraph Composer integrates [graphql-voyager](https://github.com/graphql-kit/graphql-voyager) for interactive, force-directed graph visualization of federated GraphQL schemas. See [ADR 0010](../adr/0010-visual-editor-design) for the design rationale behind the dual-visualization strategy (voyager + ER diagram).
+
+---
+
+## Overview
+
+The `VoyagerPanel` component (in `frontend/subgraph-composer/src/components/VoyagerPanel.jsx`) renders an interactive graph view using `graphql-voyager`'s `Voyager` component. It operates in two modes:
+
+| Mode             | Input                   | Description                                                                   |
+| ---------------- | ----------------------- | ----------------------------------------------------------------------------- |
+| **Supergraph**   | Composed supergraph SDL | Shows the merged federated graph with all entity relationships cross-subgraph |
+| **Per-Subgraph** | Individual subgraph SDL | Isolates a single subgraph for focused inspection                             |
+
+---
+
+## Component Architecture
+
+```
+VoyagerPanel
+├── Toolbar
+│   ├── Toggle buttons (Supergraph / Per-Subgraph)
+│   ├── Subgraph selector dropdown (Per-Subgraph mode)
+│   └── Color legend (Supergraph mode)
+├── Voyager Viewport
+│   ├── <Voyager> component (graphql-voyager)
+│   └── Empty state message
+└── Dynamic Color Styles (injected <style> tag)
+```
+
+### Key Design Decisions
+
+**Lazy loading.** The `graphql-voyager` dependency is imported as a standard ES module — no dynamic `import()` required because the component renders only after SDL is available, avoiding SSR/tree-shaking conflicts.
+
+**SDL-to-introspection conversion.** The `sdlToSchema()` utility from `graphql-voyager` converts raw SDL strings to the introspection JSON format the voyager renderer expects. This happens in a `useMemo` block keyed on the selected view mode and SDL.
+
+**Subgraph color-coding.** Ten visually distinct color palettes are assigned to subgraphs by index. In supergraph mode, the component injects a `<style>` tag into the document head that colors each type node based on which subgraph contributed it (using the `typeSources` mapping). The style tag is removed on unmount or mode switch.
+
+**Subgraph selector.** In per-subgraph mode, a dropdown lets users pick which subgraph to visualize. The dropdown is populated from the `subgraphsMap` and `schemas` props.
+
+### Props
+
+| Prop            | Type                                | Description                                             |
+| --------------- | ----------------------------------- | ------------------------------------------------------- |
+| `supergraphSDL` | `string \| null`                    | The composed supergraph SDL string                      |
+| `subgraphsMap`  | `Map<string, string>`               | Subgraph ID → SDL mapping                               |
+| `schemas`       | `Array<{id: string, name: string}>` | Schema metadata for legend and selector                 |
+| `typeSources`   | `Record<string, string[]>`          | Type name → originating subgraph IDs (for color-coding) |
+
+---
+
+## Display Options
+
+The voyager is configured with:
+
+```js
+displayOptions={{
+  skipRelay: true,       // Hide Relay connection types (Node, PageInfo, etc.)
+  skipDeprecated: true,  // Hide @deprecated fields
+  showLeafFields: true,  // Show scalar/leaf fields on nodes
+  sortByAlphabet: false, // Preserve schema ordering
+  hideRoot: false,       // Show root Query/Mutation types
+}}
+```
+
+---
+
+## Integration with Subgraph Composer
+
+The `VoyagerPanel` is rendered in the composer's tabbed interface alongside:
+
+- **CodeMirror Editor** — SDL text editing
+- **Subgraph List** — Subgraph management
+- **ER Diagram** — Entity-relationship view (see [#20](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/20))
+
+The voyager tab activates only after subgraphs have been generated and composed into a supergraph. Before that, an empty state message ("No supergraph available. Generate subgraphs first.") is shown.
+
+---
+
+## Tests
+
+Tests live in:
+
+- `frontend/subgraph-composer/src/__tests__/voyager-panel.test.jsx` — Unit tests for rendering, mode switching, and empty states
+- `frontend/subgraph-composer/src/__tests__/voyager-integration.test.jsx` — Integration tests verifying SDL → introspection flow
+
+---
+
+## Related Documents
+
+- [ADR 0010: Visual Editor Design](../adr/0010-visual-editor-design) — Dual-visualization strategy
+- [Subgraph Composer Spec](./subgraph-composer-spec) — Full composer technical specification
+- [#19: graphql-voyager visualization](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/19) — Original implementation issue
+- [#20: Federation ER Diagram](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/20) — Companion ER diagram feature

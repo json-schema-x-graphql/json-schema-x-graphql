@@ -15,7 +15,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { parse, print } = require("graphql");
+const { parse } = require("graphql");
 const { composeServices } = require("@theguild/federation-composition");
 
 // ANSI color codes
@@ -78,7 +78,6 @@ async function composeSubgraphs(subgraphs) {
     const services = subgraphs.map((sg) => {
       try {
         const document = parse(sg.schema);
-        const normalizedSchema = print(document);
         return {
           name: sg.name,
           typeDefs: document, // Pass the parsed DocumentNode
