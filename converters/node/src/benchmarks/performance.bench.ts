@@ -6,7 +6,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
- 
+
 const Benchmark = require("benchmark");
 
 // Note: Import actual converter implementation based on project structure
