@@ -15,7 +15,11 @@ const BADGE_COLORS = {
 function DirectiveBadge({ name }) {
   const color = BADGE_COLORS[name] || "#607d8b";
   return (
-    <span className="directive-badge" style={{ backgroundColor: color }} title={name}>
+    <span
+      className="directive-badge"
+      style={{ backgroundColor: color }}
+      title={name}
+    >
       {name.replace("@", "")}
     </span>
   );
@@ -26,7 +30,11 @@ export default function ERDiagramNode({ data }) {
 
   return (
     <div className="er-node" style={{ borderColor: color }}>
-      <Handle type="target" position={Position.Top} style={{ background: color }} />
+      <Handle
+        type="target"
+        position={Position.Top}
+        style={{ background: color }}
+      />
       <div className="er-node-header" style={{ backgroundColor: color }}>
         <div className="er-node-title">{label}</div>
         {directives && directives.length > 0 && (
@@ -41,9 +49,14 @@ export default function ERDiagramNode({ data }) {
         {fields && fields.length > 0 ? (
           <ul className="er-node-fields">
             {fields.map((field, idx) => {
-              const isExternal = field.directives?.some((d) => d.name === "@external");
+              const isExternal = field.directives?.some(
+                (d) => d.name === "@external",
+              );
               return (
-                <li key={idx} className={`er-node-field ${isExternal ? "external-field" : ""}`}>
+                <li
+                  key={idx}
+                  className={`er-node-field ${isExternal ? "external-field" : ""}`}
+                >
                   <span className="field-name">{field.name}</span>
                   <span className="field-type">{field.type}</span>
                   {field.directives && field.directives.length > 0 && (
@@ -70,7 +83,11 @@ export default function ERDiagramNode({ data }) {
           ))}
         </div>
       )}
-      <Handle type="source" position={Position.Bottom} style={{ background: color }} />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        style={{ background: color }}
+      />
     </div>
   );
 }

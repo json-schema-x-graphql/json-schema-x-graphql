@@ -56,7 +56,9 @@ describe("ER Diagram Parser", () => {
   test("nodes include federation directives on type", () => {
     const result = parseERDiagram(sampleSDL, typeSources, schemas);
     const productNode = result.nodes.find((n) => n.data.label === "Product");
-    expect(productNode.data.directives.some((d) => d.name === "@key")).toBe(true);
+    expect(productNode.data.directives.some((d) => d.name === "@key")).toBe(
+      true,
+    );
   });
 
   test("fields include federation directives", () => {
@@ -70,7 +72,9 @@ describe("ER Diagram Parser", () => {
     const result = parseERDiagram(sampleSDL, typeSources, schemas);
     const productToReview = result.edges.find((e) => e.label === "reviews");
     expect(productToReview).toBeDefined();
-    expect(productToReview.data.directives.some((d) => d.name === "@requires")).toBe(true);
+    expect(
+      productToReview.data.directives.some((d) => d.name === "@requires"),
+    ).toBe(true);
   });
 
   test("subgraphs are grouped by source schema", () => {
@@ -95,7 +99,9 @@ describe("ER Diagram Parser", () => {
         name: String
       }
     `;
-    const result = parseERDiagram(plainSDL, { User: ["s1"] }, [{ id: "s1", name: "Users" }]);
+    const result = parseERDiagram(plainSDL, { User: ["s1"] }, [
+      { id: "s1", name: "Users" },
+    ]);
     const userNode = result.nodes.find((n) => n.data.label === "User");
     expect(userNode.data.directives).toEqual([]);
   });

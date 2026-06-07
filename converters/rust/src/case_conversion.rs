@@ -5,7 +5,7 @@ pub fn camel_to_snake(s: &str) -> String {
     let mut snake = String::with_capacity(s.len() + 4);
     let mut chars = s.chars().peekable();
     let mut prev_was_lower_or_digit = false;
-    
+
     while let Some(ch) = chars.next() {
         if ch.is_uppercase() {
             if prev_was_lower_or_digit {

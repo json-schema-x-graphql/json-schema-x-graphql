@@ -167,7 +167,7 @@ impl WasmConverter {
                 return Err(JsValue::from_str(&format!(
                     "Invalid direction: {}. Use 'json-to-graphql' or 'graphql-to-json'",
                     direction
-                )))
+                )));
             }
         };
 

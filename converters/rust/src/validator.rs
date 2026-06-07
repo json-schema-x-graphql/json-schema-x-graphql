@@ -16,15 +16,17 @@ fn is_valid_graphql_name(name: &str) -> bool {
 }
 
 fn is_valid_graphql_type(type_str: &str) -> bool {
-    if type_str.is_empty() { return false; }
+    if type_str.is_empty() {
+        return false;
+    }
     let mut s = type_str;
     if s.ends_with('!') {
-        s = &s[..s.len()-1];
+        s = &s[..s.len() - 1];
     }
     if s.starts_with('[') && s.ends_with(']') {
-        s = &s[1..s.len()-1];
+        s = &s[1..s.len() - 1];
         if s.ends_with('!') {
-            s = &s[..s.len()-1];
+            s = &s[..s.len() - 1];
         }
     }
     is_valid_graphql_name(s)

@@ -5,13 +5,25 @@
  * with federation directive metadata.
  */
 
-export const FEDERATION_DIRECTIVES = ["@key", "@external", "@provides", "@requires", "@shareable", "@extends", "@override"];
+export const FEDERATION_DIRECTIVES = [
+  "@key",
+  "@external",
+  "@provides",
+  "@requires",
+  "@shareable",
+  "@extends",
+  "@override",
+];
 
 export const DIRECTIVE_EDGE_STYLES = {
   "@key": { strokeDasharray: "0", markerEnd: "arrow" },
   "@external": { strokeDasharray: "5 5", markerEnd: "arrow" },
   "@requires": { strokeDasharray: "2 2", markerEnd: "arrow" },
-  "@shareable": { strokeDasharray: "0", markerEnd: "arrow", markerStart: "arrow" },
+  "@shareable": {
+    strokeDasharray: "0",
+    markerEnd: "arrow",
+    markerStart: "arrow",
+  },
   "@provides": { strokeDasharray: "0", markerEnd: "arrow", strokeWidth: 2 },
   "@extends": { strokeDasharray: "8 4", markerEnd: "arrow" },
   "@override": { strokeDasharray: "0", markerEnd: "arrow", strokeWidth: 2 },
@@ -52,7 +64,8 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
   // First pass: create all nodes
   const nodeMap = new Map();
   let nodeId = 0;
-  const typeRegex = /type\s+(\w+)(?:\s+implements\s+[\w&\s,]+)?\s*(?:@[\w(\s"=:,)]+)?\s*\{([^}]*)\}/g;
+  const typeRegex =
+    /type\s+(\w+)(?:\s+implements\s+[\w&\s,]+)?\s*(?:@[\w(\s"=:,)]+)?\s*\{([^}]*)\}/g;
   let match;
 
   while ((match = typeRegex.exec(sdl)) !== null) {
@@ -60,7 +73,9 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
     const body = match[2];
     const fullMatch = match[0];
 
-    const typeDirectives = extractDirectives(fullMatch.substring(0, fullMatch.indexOf("{")));
+    const typeDirectives = extractDirectives(
+      fullMatch.substring(0, fullMatch.indexOf("{")),
+    );
     const fields = parseFields(body);
 
     const sourceIds = typeSources[typeName] || [];
@@ -77,7 +92,9 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
         directives: typeDirectives,
         color: primaryColor,
         sourceIds,
-        sourceNames: sourceIds.map((id) => schemas.find((s) => s.id === id)?.name || id),
+        sourceNames: sourceIds.map(
+          (id) => schemas.find((s) => s.id === id)?.name || id,
+        ),
       },
     };
 
@@ -104,9 +121,13 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
       if (baseType && baseType !== node.data.label && isComplexType(baseType)) {
         const targetNode = nodeMap.get(baseType);
         if (targetNode) {
-          const edgeDirectives = field.directives.filter((d) => FEDERATION_DIRECTIVES.includes(d.name));
+          const edgeDirectives = field.directives.filter((d) =>
+            FEDERATION_DIRECTIVES.includes(d.name),
+          );
           const primaryDirective = edgeDirectives[0]?.name || "@key";
-          const style = DIRECTIVE_EDGE_STYLES[primaryDirective] || DIRECTIVE_EDGE_STYLES["@key"];
+          const style =
+            DIRECTIVE_EDGE_STYLES[primaryDirective] ||
+            DIRECTIVE_EDGE_STYLES["@key"];
 
           edges.push({
             id: `edge-${node.id}-${targetNode.id}-${field.name}`,
@@ -149,7 +170,9 @@ function parseFields(body) {
     if (!trimmed || trimmed.startsWith("#")) continue;
 
     // Match field definitions: name(args): Type @directives
-    const fieldMatch = trimmed.match(/^(\w+)(?:\s*\([^)]*\))?\s*:\s*([^@\n]+)(.*)?$/);
+    const fieldMatch = trimmed.match(
+      /^(\w+)(?:\s*\([^)]*\))?\s*:\s*([^@\n]+)(.*)?$/,
+    );
     if (fieldMatch) {
       const fieldName = fieldMatch[1];
       const typeStr = fieldMatch[2].trim();
@@ -198,7 +221,18 @@ function extractBaseType(typeStr) {
  */
 function isComplexType(typeStr) {
   const base = extractBaseType(typeStr);
-  const scalars = ["String", "Int", "Float", "Boolean", "ID", "Date", "DateTime", "JSON", "Url", "Email"];
+  const scalars = [
+    "String",
+    "Int",
+    "Float",
+    "Boolean",
+    "ID",
+    "Date",
+    "DateTime",
+    "JSON",
+    "Url",
+    "Email",
+  ];
   return base && !scalars.includes(base);
 }
 
@@ -277,7 +311,8 @@ export function generateMermaidER(erData) {
     if (!sourceLabel || !targetLabel) continue;
 
     const key = `${sourceLabel} ||--|| ${targetLabel}`;
-    const directives = edge.data?.directives?.map((d) => d.name).join(", ") || "";
+    const directives =
+      edge.data?.directives?.map((d) => d.name).join(", ") || "";
     const label = edge.label || "";
     const fullLabel = directives ? `${label} : ${directives}` : label;
 
