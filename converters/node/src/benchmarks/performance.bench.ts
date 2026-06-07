@@ -252,7 +252,7 @@ function runBenchmarks() {
     files.forEach((file) => {
       const filePath = path.join(TEST_DATA_PATH, file);
       const content = fs.readFileSync(filePath, "utf-8");
-      const schema = JSON.parse(content);
+      JSON.parse(content); // schema parsed for validation benchmark
 
       realWorldSuite.add(`Validate ${file}`, () => {
         // validator.validate(schema);
@@ -291,14 +291,9 @@ function runBenchmarks() {
       };
     }
 
-    const largeSchema = {
-      type: "object",
-      "x-graphql-type-name": "LargeType",
-      properties,
-    };
-
+    // Schema object constructed in benchmark fn below
     scalingSuite.add(`Validate ${fieldCount} fields`, () => {
-      // validator.validate(largeSchema);
+      // validator.validate({ type: "object", "x-graphql-type-name": "LargeType", properties });
     });
   });
 

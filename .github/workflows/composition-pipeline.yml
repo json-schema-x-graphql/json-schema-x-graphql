@@ -62,8 +62,8 @@ jobs:
 
       - name: Generate Supergraph from Examples
         run: |
-          cd converters/node
-          pnpm tsx ../../scripts/validation/validate-graphql.ts --federation
+          cd converters/cli
+          pnpm tsx src/scripts/validate-graphql.ts --federation
 
       - name: Composition & Schema Drift Validation
         run: |
