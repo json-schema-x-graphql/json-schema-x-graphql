@@ -1,0 +1,5 @@
+# Consolidate all Cargo build output into a single target directory.
+# This avoids duplicating dependency artifacts between the root workspace
+# and converters/rust, which was consuming ~589 MB in a separate target dir.
+[build]
+target-dir = "target"
