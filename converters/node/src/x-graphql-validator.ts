@@ -29,18 +29,6 @@ const VALID_TYPE_KINDS = [
   "SCALAR",
 ];
 
-const GRAPHQL_SCALAR_TYPES = [
-  "ID",
-  "String",
-  "Int",
-  "Float",
-  "Boolean",
-  "DateTime",
-  "Date",
-  "Time",
-  "JSON",
-];
-
 const GRAPHQL_NAME_PATTERN = /^[_A-Za-z][_0-9A-Za-z]*$/;
 
 /**

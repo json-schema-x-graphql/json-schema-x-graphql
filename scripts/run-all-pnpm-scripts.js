@@ -55,7 +55,7 @@ function findPackageJsonFiles(startDir) {
     let entries;
     try {
       entries = fs.readdirSync(dir, { withFileTypes: true });
-    } catch (err) {
+    } catch (_err) {
       // Skip directories we can't read
       return;
     }
@@ -103,10 +103,10 @@ function runCommand(cmd, args, cwd, timeoutMs) {
         timedOut = true;
         try {
           child.kill("SIGKILL");
-        } catch (e) {
+        } catch (_e) {
           try {
             child.kill();
-          } catch (e2) {}
+          } catch (_e2) {}
         }
       }
     }, timeoutMs);
@@ -252,7 +252,7 @@ async function main() {
   // Ensure scripts directory exists
   try {
     fs.mkdirSync(RESULTS_DIR, { recursive: true });
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
 

@@ -8,7 +8,7 @@
  */
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from "fs";
-import { join, relative, extname, basename } from "path";
+import { join, relative, extname } from "path";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 
@@ -99,7 +99,7 @@ class SchemaValidator {
             }
           }
         }
-      } catch (err) {
+      } catch (_err) {
         // Directory might not exist, skip
       }
     };

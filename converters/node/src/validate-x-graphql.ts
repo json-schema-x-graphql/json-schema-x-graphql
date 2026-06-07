@@ -151,7 +151,10 @@ function loadSchema(filePath: string): Record<string, unknown> | null {
   }
 }
 
-function validateFile(filePath: string, options: CliOptions): ValidationResult {
+function validateFile(
+  filePath: string,
+  _options: CliOptions,
+): ValidationResult {
   const schema = loadSchema(filePath);
 
   if (!schema) {

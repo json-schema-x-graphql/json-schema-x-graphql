@@ -80,7 +80,7 @@ class GraphQLValidator {
             }
           }
         }
-      } catch (err) {
+      } catch (_err) {
         // Directory might not exist, skip
       }
     };
@@ -173,7 +173,7 @@ class GraphQLValidator {
         isFederation,
         federationVersion,
       };
-    } catch (err) {
+    } catch (_err) {
       return {
         types: 0,
         fields: 0,

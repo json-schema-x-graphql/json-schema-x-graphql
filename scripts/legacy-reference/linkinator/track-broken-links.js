@@ -51,7 +51,7 @@ const concurrency = process.env.LINKINATOR_CONCURRENCY || "10";
 function safeRead(filePath) {
   try {
     return fs.readFileSync(filePath, "utf8");
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 }
@@ -231,7 +231,7 @@ function mapToSources(brokenList) {
     try {
       const r = spawnSync("rg", ["--version"], { stdio: "ignore" });
       return r.status === 0;
-    } catch (e) {
+    } catch (_e) {
       return false;
     }
   })();
@@ -256,7 +256,7 @@ function mapToSources(brokenList) {
           mapping[url].sources = res.stdout.trim().split(/\r?\n/).slice(0, 500);
           continue;
         }
-      } catch (e) {
+      } catch (_e) {
         // fall through to fallback
       }
     }
@@ -284,13 +284,13 @@ function mapToSources(brokenList) {
                 if (matches.length >= 500) break;
               }
             }
-          } catch (e) {
+          } catch (_e) {
             // ignore unreadable files
           }
         }
         mapping[url].sources = matches;
       }
-    } catch (e) {
+    } catch (_e) {
       mapping[url].sources = [];
     }
   }
