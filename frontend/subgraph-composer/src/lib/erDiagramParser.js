@@ -213,7 +213,7 @@ function extractDirectives(str) {
  * Extract base type from GraphQL type string
  */
 function extractBaseType(typeStr) {
-  return (typeStr || "").replace(/[!\[\]]/g, "").trim();
+  return (typeStr || "").replace(/[![\]]/g, "").trim();
 }
 
 /**
@@ -281,7 +281,7 @@ function layoutNodes(nodes, subgraphs) {
  * @returns {string}
  */
 export function generateMermaidER(erData) {
-  const { nodes, edges, subgraphs } = erData;
+  const { nodes, edges } = erData;
   if (!nodes || nodes.length === 0) return "";
 
   const lines = ["erDiagram"];

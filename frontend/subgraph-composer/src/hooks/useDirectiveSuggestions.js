@@ -5,7 +5,7 @@
  * Handles generation, filtering, application, and persistence
  */
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import {
   generateDirectiveSuggestions,
   applySuggestionsToSdl,

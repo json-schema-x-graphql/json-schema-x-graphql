@@ -4,7 +4,7 @@ import "./SettingsPanel.css";
 export default function SettingsPanel({
   settings,
   onUpdateSetting,
-  onUpdateSettings,
+  onUpdateSettings: _onUpdateSettings,
   onSaveSettings,
   onResetDefaults,
   isDirty,

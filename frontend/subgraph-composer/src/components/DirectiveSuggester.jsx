@@ -184,7 +184,7 @@ export function DirectiveSuggester({
 
       {/* Suggestions list */}
       <div className="suggestions-list">
-        {filteredSuggestions.map((suggestion, displayIdx) => {
+        {filteredSuggestions.map((suggestion, _displayIdx) => {
           const actualIndex = suggestions.indexOf(suggestion);
           const isSelected = selectedSuggestions.has(actualIndex);
           const isExpanded = expandedIndex === actualIndex;

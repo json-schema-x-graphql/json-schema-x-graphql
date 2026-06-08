@@ -25,14 +25,12 @@ export function validateFederationRules(sdl) {
 
   try {
     // Parse SDL to check for syntax errors
-    const document = parse(sdl);
+    parse(sdl);
 
     // Check for federation directives
     const hasExtends = sdl.includes("@extends");
     const hasExternal = sdl.includes("@external");
     const hasKey = sdl.includes("@key");
-    const hasShareable = sdl.includes("@shareable");
-    const hasRequires = sdl.includes("@requires");
 
     // Validate @extends usage
     if (hasExtends) {
@@ -396,7 +394,7 @@ export function validateSubgraphNaming(schemas) {
   }
 
   // Analyze each schema's metadata
-  schemas.forEach(({ name, schema, type }) => {
+  schemas.forEach(({ name, schema, type: _type }) => {
     const hasSupergraphMetadata = !!(
       schema["x-graphql-supergraph-name"] ||
       schema["x-graphql-supergraph-type"] ||
@@ -511,7 +509,7 @@ export function lintSDL(sdl) {
   });
 
   // Check field naming conventions
-  const fieldMatches = sdl.match(/(\w+)\s*:\s*[A-Z\[!]/g) || [];
+  const fieldMatches = sdl.match(/(\w+)\s*:\s*[A-Z[!]/g) || [];
   fieldMatches.forEach((match) => {
     const fieldName = match.match(/^(\w+)/)[1];
     if (fieldName !== "_empty" && !/^[a-z_]/.test(fieldName)) {

@@ -22,21 +22,11 @@
 
 "use strict";
 
-let React = null;
-try {
-  // Try to require React if it is available in node_modules. If it's not, fall back
-  // to null and return plain `null` from the component.
-  React = require("react");
-} catch (e) {
-  React = null;
-}
-
 /**
  * A minimal no-op React component to act as the editor on the server.
  * It renders `null` (no DOM) and accepts any props so consumer code can call it.
  */
-function NoopEditor(props) {
-  // If React is available, return a lightweight React element (null is fine).
+function NoopEditor(_props) {
   // Returning `null` is safe either way.
   return null;
 }

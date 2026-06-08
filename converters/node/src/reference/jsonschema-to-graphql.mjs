@@ -40,7 +40,7 @@ export function getDescription(schema) {
   const raw = schema["x-graphql-description"] || schema.description || "";
   if (typeof raw !== "string" || !raw) return "";
   // Escape triple quotes for SDL
-  return raw.replace(/\"\"\"/g, '\\"\\"\\"');
+  return raw.replace(/"""/g, '\\"\\"\\"');
 }
 
 /**
@@ -363,7 +363,7 @@ export function generateObjectType(name, schema, options = {}) {
   }
 
   const required = [...(schema.required || [])];
-  const properties = { ...(schema.properties || {}) };
+  const properties = schema.properties ? { ...schema.properties } : {};
 
   // Handle allOf
   if (schema.allOf) {

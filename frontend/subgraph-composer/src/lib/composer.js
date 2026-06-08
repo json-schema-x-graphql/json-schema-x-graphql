@@ -1,4 +1,4 @@
-import { parse, printSchema, buildASTSchema, visit } from "graphql";
+import { parse } from "graphql";
 
 /**
  * Compose multiple GraphQL subgraphs into a unified supergraph
