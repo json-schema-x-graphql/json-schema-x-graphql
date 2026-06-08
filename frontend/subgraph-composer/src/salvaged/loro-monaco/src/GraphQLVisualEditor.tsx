@@ -84,7 +84,7 @@ class EditorErrorBoundary extends React.Component<
     if (this.props.onError) {
       try {
         this.props.onError(error);
-      } catch (e) {
+      } catch (_e) {
         // ignore errors from onError handler
       }
     }

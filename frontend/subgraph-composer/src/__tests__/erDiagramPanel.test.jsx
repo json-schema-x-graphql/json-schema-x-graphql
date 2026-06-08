@@ -51,7 +51,6 @@ jest.mock("@xyflow/react", () => {
 });
 
 jest.mock("../components/ERDiagramNode.jsx", () => {
-  const React = require("react");
   return {
     __esModule: true,
     default: ({ data }) => <div data-testid="entity-node">{data.label}</div>,

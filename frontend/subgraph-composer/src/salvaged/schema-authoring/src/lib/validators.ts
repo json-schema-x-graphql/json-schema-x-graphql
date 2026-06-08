@@ -32,7 +32,6 @@ addFormats(ajv);
  * JSON Schema meta-schema for validation
  */
 const DRAFT_07_SCHEMA = "http://json-schema.org/draft-07/schema#";
-const DRAFT_2020_12_SCHEMA = "https://json-schema.org/draft/2020-12/schema";
 
 /**
  * Validate JSON Schema
@@ -352,7 +351,7 @@ function getSyntaxErrorFix(
  */
 function validateXGraphQLExtensions(
   schema: Record<string, unknown>,
-  schemaString: string,
+  _schemaString: string,
 ): { errors: ValidationError[]; warnings: ValidationWarning[] } {
   const errors: ValidationError[] = [];
   const warnings: ValidationWarning[] = [];
@@ -433,7 +432,7 @@ function validateXGraphQLExtensions(
  */
 function checkCommonIssues(
   schema: Record<string, unknown>,
-  schemaString: string,
+  _schemaString: string,
 ): ValidationWarning[] {
   const warnings: ValidationWarning[] = [];
 

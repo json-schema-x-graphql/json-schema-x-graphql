@@ -42,7 +42,7 @@ export const getStaticProps = (async () => {
     );
     const data = await res.json();
     stars = data?.stargazers_count || 0;
-  } catch (e) {
+  } catch (_e) {
     // ignore
   }
 

@@ -33,9 +33,9 @@ if (typeof document !== "undefined") {
       // Intentionally empty
       styleEl.appendChild(document.createTextNode(EMPTY_CSS));
       // Use append rather than prepend to avoid interfering with critical app styles
-      document.head && document.head.appendChild(styleEl);
+      document.head?.appendChild(styleEl);
     }
-  } catch (e) {
+  } catch (_e) {
     // Silence any DOM-related errors — shim must be safe.
   }
 }

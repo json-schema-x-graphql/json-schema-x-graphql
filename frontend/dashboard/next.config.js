@@ -48,7 +48,7 @@ const config = {
     // package provides a different entry. This alias maps those imports to
     // the installed CJS entry point under the project root.
     config.resolve.alias = {
-      ...(config.resolve.alias || {}),
+      ...config.resolve.alias,
       "js-yaml/dist/js-yaml.mjs": path.resolve(
         projectRoot,
         "node_modules",
@@ -75,7 +75,7 @@ const config = {
         "empty-css.cjs",
       );
       config.resolve.alias = {
-        ...(config.resolve.alias || {}),
+        ...config.resolve.alias,
         "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": serverShim,
         "monaco-editor/esm/vs/base/browser/ui/actionbar/actionbar.css":
           serverShim,
@@ -94,7 +94,7 @@ const config = {
     // Redirect specific monaco and editor CSS imports to a small compat shim so Next.js
     // doesn't try to process global CSS from node_modules during the server build.
     config.resolve.alias = {
-      ...(config.resolve.alias || {}),
+      ...config.resolve.alias,
       "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": path.resolve(
         projectRoot,
         "src",
@@ -217,7 +217,7 @@ const config = {
       // that some packages use. This helps when a package requires a CSS file by exact path
       // (e.g. monaco-editor/esm/vs/base/browser/ui/aria/aria.css) and bypasses the loader rules.
       config.resolve.alias = {
-        ...(config.resolve.alias || {}),
+        ...config.resolve.alias,
         "monaco-editor/esm/vs/base/browser/ui/aria/aria.css": emptyCss,
         "monaco-editor/esm/vs/editor/editor.main.css": emptyCss,
       };
@@ -236,7 +236,7 @@ const config = {
                 /(?:graphql-editor|@monaco-editor|monaco-editor|@monaco-editor\/react)/,
             }),
           );
-        } catch (err) {
+        } catch (_err) {
           // If IgnorePlugin isn't available for some reason, continue gracefully.
         }
       }

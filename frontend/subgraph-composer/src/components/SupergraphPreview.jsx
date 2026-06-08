@@ -6,7 +6,7 @@ export default function SupergraphPreview({
   sdl,
   stats,
   errors,
-  schemas,
+  _schemas,
   subgraphs,
 }) {
   const [expandedSections, setExpandedSections] = React.useState({

@@ -11,7 +11,7 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   ref,
 ) {
   const [EditorComp, setEditorComp] = useState(null);
-  const [loadError, setLoadError] = useState(false);
+  const [_loadError, setLoadError] = useState(false);
   const textareaRef = useRef(null);
   const editorRef = useRef(null);
   const containerRef = useRef(null);
@@ -37,17 +37,6 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
           Comp = m.JsonEditor;
         } else if (m.FormView) {
           Comp = m.FormView;
-        } else if (m.VisualJson && m.JsonEditor) {
-          // Compose provider + editor
-          const Visual = m.VisualJson;
-          const JsonEd = m.JsonEditor;
-          Comp = function WrappedVisualJson(props) {
-            return React.createElement(
-              Visual,
-              { value: props.value, onChange: props.onChange },
-              React.createElement(JsonEd, null),
-            );
-          };
         } else if (m.VisualJson) {
           Comp = m.VisualJson;
         } else if (m.default) {
@@ -70,7 +59,7 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   let invalidJson = false;
   try {
     parsed = currentValue ? JSON.parse(currentValue) : {};
-  } catch (e) {
+  } catch (_e) {
     invalidJson = true;
     parsed = currentValue;
   }
@@ -83,13 +72,13 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
       } else {
         strVal = JSON.stringify(newVal, null, 2);
       }
-    } catch (e) {
+    } catch (_e) {
       strVal = String(newVal);
     }
     setCurrentValue(strVal);
     try {
       onChange(strVal);
-    } catch (e) {
+    } catch (_e) {
       // ignore upstream handler errors here
     }
   };
@@ -102,14 +91,14 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
       setCurrentValue(next);
       try {
         onChange(next);
-      } catch (e) {}
+      } catch (_e) {}
     },
     focus: () => {
       if (editorRef.current && typeof editorRef.current.focus === "function") {
         try {
           editorRef.current.focus();
           return;
-        } catch (e) {}
+        } catch (_e) {}
       }
       // Try to focus a focusable element inside the VisualJson container
       try {
@@ -122,7 +111,7 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
             return;
           }
         }
-      } catch (e) {}
+      } catch (_e) {}
       if (textareaRef.current) textareaRef.current.focus();
     },
   }));

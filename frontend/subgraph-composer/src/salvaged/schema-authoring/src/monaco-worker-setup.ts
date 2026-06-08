@@ -56,7 +56,7 @@ function createWorkerFromPath(path: string, workerBaseUrl?: string): Worker {
     return new Worker(new URL(path, import.meta.url) as unknown as string, {
       type: "module",
     });
-  } catch (e) {
+  } catch (_e) {
     // swallow and continue to next strategy
   }
 
@@ -68,7 +68,7 @@ function createWorkerFromPath(path: string, workerBaseUrl?: string): Worker {
         : workerBaseUrl + "/" + path + ".js";
       // eslint-disable-next-line no-new
       return new Worker(adjusted);
-    } catch (e) {
+    } catch (_e) {
       // continue
     }
   }
@@ -86,7 +86,7 @@ function createWorkerFromPath(path: string, workerBaseUrl?: string): Worker {
       // eslint-disable-next-line no-new
       return new Worker(url);
     }
-  } catch (e) {
+  } catch (_e) {
     // continue
   }
 
@@ -94,7 +94,7 @@ function createWorkerFromPath(path: string, workerBaseUrl?: string): Worker {
   try {
     // eslint-disable-next-line no-new
     return new Worker(path + ".js");
-  } catch (err) {
+  } catch (_err) {
     // Final fallback: throw a helpful error so developer can diagnose missing worker files
     throw new Error(
       `Monaco worker instantiation failed for "${path}". ` +
@@ -189,12 +189,7 @@ export function setupMonacoWorkers(options: SetupOptions = {}) {
         );
       }
       // Final attempt to return editor worker or throw
-      try {
-        return createWorkerFromPath(DEFAULT_WORKER_PATHS.editor, workerBaseUrl);
-      } catch (fatal) {
-        // If even the fallback fails, escalate
-        throw fatal;
-      }
+      return createWorkerFromPath(DEFAULT_WORKER_PATHS.editor, workerBaseUrl);
     }
   };
 

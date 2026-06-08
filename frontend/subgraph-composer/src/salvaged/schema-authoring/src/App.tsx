@@ -89,7 +89,7 @@ export function App() {
         // Persist the last position to the store (rounded)
         try {
           storeSetDividerPosition(Math.round(dividerPosition));
-        } catch (err) {
+        } catch (_err) {
           // best-effort persistence; swallow errors so UI is not blocked
           // console.debug('Persist divider failed', err);
         }
@@ -408,26 +408,26 @@ export function App() {
                 setDividerPosition(next);
                 try {
                   storeSetDividerPosition(Math.round(next));
-                } catch (err) {}
+                } catch (_err) {}
               } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
                 e.preventDefault();
                 const next = Math.max(10, Math.min(90, dividerPosition + step));
                 setDividerPosition(next);
                 try {
                   storeSetDividerPosition(Math.round(next));
-                } catch (err) {}
+                } catch (_err) {}
               } else if (e.key === "Home") {
                 e.preventDefault();
                 setDividerPosition(10);
                 try {
                   storeSetDividerPosition(10);
-                } catch (err) {}
+                } catch (_err) {}
               } else if (e.key === "End") {
                 e.preventDefault();
                 setDividerPosition(90);
                 try {
                   storeSetDividerPosition(90);
-                } catch (err) {}
+                } catch (_err) {}
               }
             }}
             style={{ height: "100%" }}

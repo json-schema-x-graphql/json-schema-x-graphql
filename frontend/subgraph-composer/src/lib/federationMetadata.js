@@ -176,7 +176,7 @@ function extractReferences(sdl) {
   let match;
 
   while ((match = refRegex.exec(sdl)) !== null) {
-    const typeRef = match[1].replace(/[\[\]]/g, "");
+    const typeRef = match[1].replace(/[[]]/g, "");
     if (!references.some((r) => r.type === typeRef)) {
       references.push({
         type: typeRef,

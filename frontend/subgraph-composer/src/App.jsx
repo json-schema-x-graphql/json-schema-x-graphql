@@ -395,7 +395,7 @@ export default function App() {
                           name: activeSchema?.name || "Subgraph 1",
                           content: subgraphs[0].sdl || "",
                         }}
-                        onUpdate={(content) => {
+                        onUpdate={(_content) => {
                           /* TODO: implement subgraph update logic */
                         }}
                         isLoading={isLoading}

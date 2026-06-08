@@ -66,7 +66,7 @@ const TextEditor = () => {
           });
           return true;
         }
-      } catch (e) {
+      } catch (_e) {
         // ignore and allow retry
       }
       return false;

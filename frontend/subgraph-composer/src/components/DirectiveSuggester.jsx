@@ -24,7 +24,7 @@ export function DirectiveSuggester({
 
   // Filter suggestions
   const filteredSuggestions = useMemo(() => {
-    return suggestions.filter((s, i) => {
+    return suggestions.filter((s, _i) => {
       if (filterType !== "all" && s.type !== filterType) return false;
       if (filterSeverity !== "all" && s.severity !== filterSeverity)
         return false;

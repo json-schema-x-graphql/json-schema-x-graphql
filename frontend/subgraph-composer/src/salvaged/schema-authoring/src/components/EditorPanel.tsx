@@ -44,7 +44,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const theme = useAppStore((state) => state.settings.theme);
-  const autoValidate = useAppStore((state) => state.settings.autoValidate);
+  const _autoValidate = useAppStore((state) => state.settings.autoValidate);
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Determine Monaco language
@@ -256,7 +256,7 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({
           theme={theme}
           onChange={handleEditorChange}
           onMount={handleEditorDidMount}
-          beforeMount={(monaco) => {
+          beforeMount={(_monaco) => {
             console.log("Monaco beforeMount called, language:", language);
           }}
           options={{
