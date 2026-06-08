@@ -14,7 +14,7 @@ allowBuilds:
   esbuild: true
   protobufjs: true
   sharp: true
-  wasm-pack: true
+  wasm-pack: false
 
 onlyBuiltDependencies:
   - "visual-json"
@@ -22,7 +22,6 @@ onlyBuiltDependencies:
   - "@apollo/protobufjs"
   - "protobufjs"
   - "esbuild"
-  - "wasm-pack"
 
 overrides:
   minimatch: ^10.2.5
