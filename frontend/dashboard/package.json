@@ -118,7 +118,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash.debounce": "^4.0.8",
     "mermaid": "^11.12.1",
-    "next": "16.1.6",
+    "next": "^16.2.7",
     "next-seo": "^6.8.0",
     "next-sitemap": "^4.2.3",
     "nextjs-google-analytics": "^2.3.7",
