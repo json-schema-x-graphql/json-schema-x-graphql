@@ -16,7 +16,7 @@ export default function GraphQLEditorPage(): JSX.Element {
   const [EditorComponent, setEditorComponent] =
     useState<React.ComponentType<any> | null>(null);
   const [editorLoading, setEditorLoading] = useState<boolean>(false);
-  const [editorLoadError, setEditorLoadError] = useState<string | null>(null);
+  const [_editorLoadError, setEditorLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let canceled = false;

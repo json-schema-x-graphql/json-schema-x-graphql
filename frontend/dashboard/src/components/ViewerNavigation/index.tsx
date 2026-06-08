@@ -30,8 +30,6 @@ interface ViewerNavigationProps {
   currentViewer: "data" | "schema" | "editor";
 }
 
-const examples: any[] = [];
-
 export const ViewerNavigation = ({ currentViewer }: ViewerNavigationProps) => {
   const getNavigationItems = () => {
     switch (currentViewer) {
@@ -43,16 +41,6 @@ export const ViewerNavigation = ({ currentViewer }: ViewerNavigationProps) => {
         ];
       default:
         return [];
-    }
-  };
-
-  const handleExampleSelect = async (fileName: string, label: string) => {
-    // Example loading/navigation to the standalone data viewer has been removed.
-    // This function is intentionally disabled to avoid referencing the removed data viewer.
-    if (typeof window !== "undefined") {
-      console.warn(
-        "Example selection is disabled. Data viewer navigation has been removed.",
-      );
     }
   };
 

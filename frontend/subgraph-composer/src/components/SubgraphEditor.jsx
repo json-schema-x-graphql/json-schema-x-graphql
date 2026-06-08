@@ -11,11 +11,11 @@ const CodeMirrorEditor = React.lazy(() =>
 export default function SubgraphEditor({
   subgraph,
   onUpdate,
-  isLoading,
+  isLoading: _isLoading,
   sdl,
   stats,
-  errors,
-  schemas,
+  errors: _errors,
+  schemas: _schemas,
   subgraphCount,
 }) {
   const [error, setError] = React.useState(null);

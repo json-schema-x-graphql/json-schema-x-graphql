@@ -116,12 +116,12 @@ describe("E2E: Complete Workflows", () => {
           id: ID!
           name: String!
         }
-        
+
         type Order {
           id: ID!
           userId: ID!
         }
-        
+
         type Query {
           users: [User!]!
           orders: [Order!]!
@@ -181,7 +181,7 @@ describe("E2E: Complete Workflows", () => {
           name: String!
           email: String!
         }
-        
+
         extend type Order {
           userId: ID! @external
           user: User @requires(fields: "userId")
@@ -355,7 +355,6 @@ describe("E2E: Complete Workflows", () => {
       // 6. Composition updates
       // 7. Suggestions dismissed
 
-      const baseSdl = "type User { id: ID! }";
       const suggestion = {
         type: "requires",
         typeName: "Order",
@@ -501,7 +500,6 @@ describe("E2E: Complete Workflows", () => {
       // 4. Shows conflicting definitions
       // 5. Recommends @key consistency
 
-      const sharedType = "User"; // Defined in users and orders schemas
       const suggestions = [
         {
           type: "composite_key",
@@ -620,8 +618,6 @@ describe("E2E: Complete Workflows", () => {
       // 4. New suggestions appear
       // 5. No race conditions or duplicates
 
-      const suggestions1 = [{ id: 1, typeName: "User" }];
-      const suggestions2 = [{ id: 2, typeName: "Order" }];
       const suggestions3 = [{ id: 3, typeName: "Product" }];
 
       // Only latest should be shown

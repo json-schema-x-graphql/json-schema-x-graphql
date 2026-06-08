@@ -95,7 +95,7 @@ function analyzeDependencies(sdl) {
 
     // Extract field definitions
     const fieldMatches = fieldsBlock.matchAll(
-      /(\w+)\s*(?:\([^)]*\))?:\s*([!\[\w$]+)*/g,
+      /(\w+)\s*(?:\([^)]*\))?:\s*([![\]\w$]+)*/g,
     );
 
     for (const fieldMatch of fieldMatches) {
@@ -270,7 +270,7 @@ function isComplexType(typeStr) {
  * @returns {string} Base type name
  */
 function extractBaseType(typeStr) {
-  return typeStr.replace(/[!\[\]]/g, "");
+  return typeStr.replace(/[![\]]/g, "");
 }
 
 /**

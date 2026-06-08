@@ -196,7 +196,7 @@ export function validateExtensions(
     typeof extensions.fieldType === "string"
   ) {
     // Extract base type (remove [], !, etc.)
-    const baseType = extensions.fieldType.replace(/[\[\]!]/g, "");
+    const baseType = extensions.fieldType.replace(/[[\]!]/g, "");
     if (!GRAPHQL_NAME_PATTERN.test(baseType)) {
       errors.push({
         path,

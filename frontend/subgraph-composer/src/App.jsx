@@ -3,7 +3,6 @@ import SplitPane from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
 import SchemaEditor from "./components/SchemaEditor.jsx";
-import SupergraphPreview from "./components/SupergraphPreview.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import DirectiveSuggester from "./components/DirectiveSuggester.jsx";
 import SubgraphEditor from "./components/SubgraphEditor.jsx";
@@ -52,7 +51,6 @@ export default function App() {
 
   const {
     suggestions,
-    appliedDirectives,
     isLoading: suggestionsLoading,
     showSuggestions,
     generateSuggestions,
