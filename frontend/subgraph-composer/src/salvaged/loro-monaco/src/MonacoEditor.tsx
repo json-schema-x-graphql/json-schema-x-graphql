@@ -202,7 +202,7 @@ export const MonacoEditor: React.FC<MonacoEditorProps> = ({
           ],
           typeKeywords: ["String", "Int", "Float", "Boolean", "ID"],
           operators: ["=", "!", "?", ":", "&", "|", "@"],
-          symbols: /[=><!~?:&|+*/^%-]+/
+          symbols: /[=><!~?:&|+*/^%-]+/,
 
           tokenizer: {
             root: [

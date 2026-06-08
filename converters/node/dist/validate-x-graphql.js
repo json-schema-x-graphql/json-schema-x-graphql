@@ -130,7 +130,7 @@ function loadSchema(filePath) {
         return null;
     }
 }
-function validateFile(filePath, options) {
+function validateFile(filePath, _options) {
     const schema = loadSchema(filePath);
     if (!schema) {
         return {

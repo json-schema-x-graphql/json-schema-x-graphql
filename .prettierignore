@@ -16,3 +16,4 @@ frontend/dashboard/scripts/
 **/generated/
 frontend/dashboard/src/data/
 **/salvaged/**/wasm/
+website/next-env.d.ts

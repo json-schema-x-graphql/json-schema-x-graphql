@@ -90,7 +90,7 @@ function normalizeEnumValue(value) {
 
 function tripleQuote(desc, indent = "") {
   if (!desc) return "";
-  const text = String(desc).replace(/"""/g, '\\"""');
+  const text = String(desc).replace(/\\/g, "\\\\").replace(/"""/g, '\\"""');
   const lines = text.split(/\r?\n/).map(l => indent + l);
   return `${indent}"""\n${lines.join("\n")}\n${indent}"""`;
 }
