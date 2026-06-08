@@ -3,20 +3,25 @@ packages:
   - converters/cli
   - frontend/subgraph-composer
   - website
+  - examples/mesh-gateway
   - external/visual-json
   - external/visual-json/packages/*
   - external/visual-json/packages/@visual-json/*
   - external/visual-json/packages/@internal/*
 
 allowBuilds:
-  esbuild: false
+  "@apollo/protobufjs": true
+  esbuild: true
+  protobufjs: true
   sharp: true
-  unrs-resolver: false
   wasm-pack: false
 
 onlyBuiltDependencies:
   - "visual-json"
   - "sharp"
+  - "@apollo/protobufjs"
+  - "protobufjs"
+  - "esbuild"
 
 overrides:
   minimatch: ^10.2.5

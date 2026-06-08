@@ -12,17 +12,6 @@ const VALID_TYPE_KINDS = [
     "INPUT_OBJECT",
     "SCALAR",
 ];
-const GRAPHQL_SCALAR_TYPES = [
-    "ID",
-    "String",
-    "Int",
-    "Float",
-    "Boolean",
-    "DateTime",
-    "Date",
-    "Time",
-    "JSON",
-];
 const GRAPHQL_NAME_PATTERN = /^[_A-Za-z][_0-9A-Za-z]*$/;
 /**
  * Validate all x-graphql extensions in a JSON Schema
@@ -155,7 +144,7 @@ export function validateExtensions(schema, path) {
     if (extensions.fieldType !== undefined &&
         typeof extensions.fieldType === "string") {
         // Extract base type (remove [], !, etc.)
-        const baseType = extensions.fieldType.replace(/[\[\]!]/g, "");
+        const baseType = extensions.fieldType.replace(/[[\]!]/g, "");
         if (!GRAPHQL_NAME_PATTERN.test(baseType)) {
             errors.push({
                 path,

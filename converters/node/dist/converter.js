@@ -283,7 +283,7 @@ function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
         }
         return JSON.stringify(schema, null, 2);
     }
-    catch (e) {
+    catch (_e) {
         // Fallback to simple parsing if AST parsing fails
         return fallbackGraphqlToJsonSchema(graphqlSdl, normalized);
     }
@@ -338,7 +338,7 @@ function convertGraphQLTypeToSchema(typeDef, typeRegistry, options) {
     return schema;
 }
 function convertGraphQLFieldToSchema(field, typeRegistry, options) {
-    const typeSchema = convertGraphQLTypeToJsonSchema(field.type, typeRegistry, options);
+    const typeSchema = convertGraphQLTypeToJsonSchema(field.type, typeRegistry);
     // Merge description if present
     if (field.description?.value && options.includeDescriptions) {
         typeSchema.description = field.description.value;
@@ -348,8 +348,7 @@ function convertGraphQLFieldToSchema(field, typeRegistry, options) {
     }
     return typeSchema;
 }
-function convertGraphQLTypeToJsonSchema(gqlType, typeRegistry, options) {
-    const schema = {};
+function convertGraphQLTypeToJsonSchema(gqlType, typeRegistry) {
     // Unwrap NonNull
     let currentType = gqlType;
     if (currentType?.kind === "NonNullType") {
@@ -359,7 +358,7 @@ function convertGraphQLTypeToJsonSchema(gqlType, typeRegistry, options) {
     if (currentType?.kind === "ListType") {
         return {
             type: "array",
-            items: convertGraphQLTypeToJsonSchema(currentType.type, typeRegistry, options),
+            items: convertGraphQLTypeToJsonSchema(currentType.type, typeRegistry),
         };
     }
     // Named type
@@ -455,6 +454,9 @@ function convertTypeDefinition(schema, typeName, context) {
     // Skip types marked with x-graphql-skip
     if (schema["x-graphql-skip"] === true)
         return;
+    if (context.building.has(typeName)) {
+        throw new ConversionError(`Circular reference detected: ${typeName}`, "CIRCULAR_REF");
+    }
     if (context.generating.has(typeName)) {
         throw new ConversionError(`Circular type resolution detected for ${typeName}`, "CIRCULAR_TYPE");
     }
@@ -812,22 +814,17 @@ function resolveRef(refPath, context, visited = new Set()) {
             const resolved = resolveRef(current.$ref, context, visited);
             current = resolved.schema;
         }
-        // Try to get property with fallbacks
-        let next = accessChild(current, part);
-        if (next === undefined && current && typeof current === "object") {
-            // Try snake_case
-            const snake = camelToSnake(part);
-            next = accessChild(current, snake);
-            // Try camelCase
-            if (next === undefined) {
-                const camel = snakeToCamel(part);
-                next = accessChild(current, camel);
-            }
-        }
+        // Try to get property with case-insensitive fallback
+        let next = tryGetProperty(current, part);
         current = next;
         if (current === undefined) {
             throw new ConversionError(`Failed to resolve $ref segment '${part}' in ${refPath}`, "INVALID_REF");
         }
+    }
+    // Follow $ref on the final node if present (recursive resolution)
+    if (current && typeof current === "object" && current.$ref) {
+        const resolved = resolveRef(current.$ref, context, visited);
+        return { schema: resolved.schema, pointer };
     }
     return { schema: current, pointer };
 }
@@ -1181,6 +1178,21 @@ function accessChild(node, key) {
     }
     return node?.[key];
 }
+function tryGetProperty(obj, key) {
+    if (obj === null || obj === undefined || typeof obj !== "object") {
+        return undefined;
+    }
+    let result = accessChild(obj, key);
+    if (result !== undefined)
+        return result;
+    const snake = camelToSnake(key);
+    result = accessChild(obj, snake);
+    if (result !== undefined)
+        return result;
+    const camel = snakeToCamel(key);
+    result = accessChild(obj, camel);
+    return result;
+}
 function derivePrimitiveGraphQLType(schema, context) {
     if (!schema || typeof schema !== "object") {
         return null;
@@ -1300,22 +1312,17 @@ function formatDescription(description, options) {
     const BLOCK_THRESHOLD = options?.descriptionBlockThreshold ?? 80;
     const shouldBlock = description.includes("\n") || description.length >= BLOCK_THRESHOLD;
     if (shouldBlock) {
-        return `"""${description.replace(/"""/g, '\\"\"\"')}"""`;
+        // Escape backslashes first, then triple-quote sequences
+        const escaped = description.replace(/\\/g, "\\\\").replace(/"""/g, '\\"""');
+        return `"""${escaped}"""`;
     }
-    return `"${description.replace(/"/g, '\\"')}"`;
+    // Escape backslashes first, then quotes
+    const escaped = description.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    return `"${escaped}"`;
 }
 function formatDirectives(schema, options) {
     const directives = extractDirectives(schema, options);
     return printDirectives(directives);
-}
-function isFederationDirective(name) {
-    return (name === "key" ||
-        name === "shareable" ||
-        name === "inaccessible" ||
-        name === "requiresScopes" ||
-        name === "policy" ||
-        name === "authenticated" ||
-        name === "interfaceObject");
 }
 function formatArgs(schema) {
     const args = schema["x-graphql-arguments"];

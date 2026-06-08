@@ -167,7 +167,7 @@ function indent(text, spaces = 2) {
  * @returns {string}
  */
 function esc(value) {
-  return value.replace(/"/g, '\\"');
+  return value.replace(/\\/g, "\\\\").replace(/"/g, "\\\"");
 }
 
 /* -------------------------------------------------------------------------- */

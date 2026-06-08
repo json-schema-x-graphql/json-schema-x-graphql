@@ -24,7 +24,7 @@ interface CliOptions {
     files: string[];
 }
 declare function parseArgs(args: string[]): CliOptions;
-declare function validateFile(filePath: string, options: CliOptions): ValidationResult;
+declare function validateFile(filePath: string, _options: CliOptions): ValidationResult;
 interface FileValidationResult {
     file: string;
     result: ValidationResult;
