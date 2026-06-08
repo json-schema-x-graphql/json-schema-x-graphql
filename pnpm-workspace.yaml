@@ -9,17 +9,11 @@ packages:
   - external/visual-json/packages/@visual-json/*
   - external/visual-json/packages/@internal/*
 
-allowBuilds:
-  '@apollo/protobufjs': set this to true or false
-  esbuild: false
-  protobufjs: set this to true or false
-  sharp: true
-  unrs-resolver: false
-  wasm-pack: false
-
 onlyBuiltDependencies:
   - "visual-json"
   - "sharp"
+  - "@apollo/protobufjs"
+  - "protobufjs"
 
 overrides:
   minimatch: ^10.2.5
