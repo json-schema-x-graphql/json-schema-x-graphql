@@ -13,9 +13,6 @@ export default defineConfig({
     target: "esnext",
     minify: "esbuild",
     sourcemap: false,
-    rollupOptions: {
-      external: ["@visual-json/react"],
-    },
   },
   define: {
     "process.env.NODE_ENV": JSON.stringify(

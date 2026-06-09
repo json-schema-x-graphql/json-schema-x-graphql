@@ -68,15 +68,48 @@ export default function VoyagerPanel({
     }
   }, [subgraphEntries, selectedSubgraphId]);
 
+const FEDERATION_STUB = `
+  scalar _FieldSet
+  scalar join__Graph
+
+  directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+  directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+  directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+  directive @external on FIELD_DEFINITION
+  directive @extends on OBJECT | INTERFACE
+  directive @shareable on OBJECT | FIELD_DEFINITION
+  directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+  directive @override(from: String!) on FIELD_DEFINITION
+  directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+  directive @join__type(graph: join__Graph!, key: _FieldSet, fieldable: Boolean = true) repeatable on OBJECT | INTERFACE
+  directive @join__field(graph: join__Graph, requires: _FieldSet, provides: _FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean) repeatable on FIELD_DEFINITION
+  directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+  directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+  directive @link(url: String!, as: String, import: [String!]) repeatable on SCHEMA
+`;
+
+function prepareSDLForVoyager(sdl) {
+  if (!sdl) return "";
+  let prepared = sdl;
+
+  // Appends query type if not present to prevent voyager from crashing on missing root Query type
+  if (!/type\s+Query\b/.test(prepared)) {
+    prepared += "\n\ntype Query {\n  _dummy: String\n}";
+  }
+
+  return FEDERATION_STUB + "\n" + prepared;
+}
+
   const schema = useMemo(() => {
     try {
       if (viewMode === "supergraph") {
         if (!supergraphSDL) return null;
-        return sdlToSchema(supergraphSDL);
+        return sdlToSchema(prepareSDLForVoyager(supergraphSDL));
       } else {
         const sdl = subgraphsMap?.get(selectedSubgraphId);
         if (!sdl) return null;
-        return sdlToSchema(sdl);
+        return sdlToSchema(prepareSDLForVoyager(sdl));
       }
     } catch (error) {
       console.error("Failed to parse SDL for Voyager:", error);

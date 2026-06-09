@@ -21,14 +21,15 @@ if (
         { WebTracerProvider },
         { SimpleSpanProcessor, InMemorySpanExporter, ConsoleSpanExporter },
         { ZoneContextManager },
-        { Resource },
+        { resourceFromAttributes, defaultResource },
         { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION },
       ]) => {
-        const resource = new Resource({
+        const customResource = resourceFromAttributes({
           [ATTR_SERVICE_NAME]: "subgraph-composer",
           [ATTR_SERVICE_VERSION]: "0.1.0",
           "app.environment": "development",
         });
+        const resource = defaultResource().merge(customResource);
 
         const provider = new WebTracerProvider({ resource });
         memoryExporter = new InMemorySpanExporter();

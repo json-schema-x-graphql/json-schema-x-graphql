@@ -174,9 +174,6 @@ async function handleConvert(
     sendJson(res, 500, {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error",
-      details: {
-        context: error instanceof Error ? error.stack : undefined,
-      },
     });
   }
 }
