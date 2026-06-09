@@ -3,6 +3,69 @@ import { Voyager, sdlToSchema } from "graphql-voyager";
 import "graphql-voyager/dist/voyager.css";
 import "./VoyagerPanel.css";
 
+// Federation directive/scalar stubs needed by graphql-voyager to parse subgraph SDL without crashing.
+// These are only prepended when the SDL does not already declare them (e.g. supergraph SDL already
+// includes its own canonical definitions via @link imports).
+const FEDERATION_STUB = `
+  scalar _FieldSet
+  scalar link__Import
+  scalar join__Graph
+
+  directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+  directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+  directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+  directive @external on OBJECT | FIELD_DEFINITION
+  directive @extends on OBJECT | INTERFACE
+  directive @shareable repeatable on OBJECT | FIELD_DEFINITION
+  directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+  directive @override(from: String!, label: String) on FIELD_DEFINITION
+  directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+  directive @composeDirective(name: String!) repeatable on SCHEMA
+
+  directive @join__type(graph: join__Graph!, key: _FieldSet, extension: Boolean! = false, resolvable: Boolean! = true, isInterfaceObject: Boolean! = false) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+  directive @join__field(graph: join__Graph, requires: _FieldSet, provides: _FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+  directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+  directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+  directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+  directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
+  directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+  directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+  enum link__Purpose {
+    SECURITY
+    EXECUTION
+  }
+`;
+
+/**
+ * Prepares a GraphQL SDL string for graphql-voyager by:
+ * 1. Ensuring a root Query type exists (Voyager requires one).
+ * 2. Prepending federation type/directive stubs when the SDL does not already
+ *    declare them (avoids "duplicate definition" parse errors on supergraph SDL).
+ */
+function prepareSDLForVoyager(sdl) {
+  if (!sdl) return "";
+  let prepared = sdl;
+
+  // Append a stub Query type if none is present — Voyager crashes without a root Query.
+  if (!/type\s+Query\b/.test(prepared)) {
+    prepared += "\n\ntype Query {\n  _dummy: String\n}";
+  }
+
+  // Supergraph SDLs already carry their own federation directive definitions via @link.
+  // Prepending the stub in that case causes duplicate-definition parse errors.
+  const hasFederationDefs =
+    /directive\s+@join__type\b/.test(prepared) ||
+    /directive\s+@link\b/.test(prepared) ||
+    /scalar\s+join__FieldSet\b/.test(prepared);
+
+  if (hasFederationDefs) {
+    return prepared;
+  }
+
+  return FEDERATION_STUB + "\n" + prepared;
+}
+
 const SUBGRAPH_COLORS = [
   { stroke: "#2196f3", fill: "#e3f2fd", header: "#2196f3" },
   { stroke: "#4caf50", fill: "#e8f5e9", header: "#4caf50" },
@@ -67,39 +130,6 @@ export default function VoyagerPanel({
       setSelectedSubgraphId(subgraphEntries[0].id);
     }
   }, [subgraphEntries, selectedSubgraphId]);
-
-const FEDERATION_STUB = `
-  scalar _FieldSet
-  scalar join__Graph
-
-  directive @key(fields: _FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
-  directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
-  directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
-  directive @external on FIELD_DEFINITION
-  directive @extends on OBJECT | INTERFACE
-  directive @shareable on OBJECT | FIELD_DEFINITION
-  directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-  directive @override(from: String!) on FIELD_DEFINITION
-  directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-
-  directive @join__type(graph: join__Graph!, key: _FieldSet, fieldable: Boolean = true) repeatable on OBJECT | INTERFACE
-  directive @join__field(graph: join__Graph, requires: _FieldSet, provides: _FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean) repeatable on FIELD_DEFINITION
-  directive @join__owner(graph: join__Graph!) on OBJECT | INTERFACE
-  directive @join__graph(name: String!, url: String!) on ENUM_VALUE
-  directive @link(url: String!, as: String, import: [String!]) repeatable on SCHEMA
-`;
-
-function prepareSDLForVoyager(sdl) {
-  if (!sdl) return "";
-  let prepared = sdl;
-
-  // Appends query type if not present to prevent voyager from crashing on missing root Query type
-  if (!/type\s+Query\b/.test(prepared)) {
-    prepared += "\n\ntype Query {\n  _dummy: String\n}";
-  }
-
-  return FEDERATION_STUB + "\n" + prepared;
-}
 
   const schema = useMemo(() => {
     try {

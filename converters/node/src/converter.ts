@@ -63,17 +63,6 @@ function shouldExcludeType(
 ): boolean {
   if (!typeName) return true;
 
-  // Debug filtering
-  if (
-    typeName === "Mutation" ||
-    typeName === "Query" ||
-    typeName === "PageInfo"
-  ) {
-    console.log(
-      `Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`,
-    );
-  }
-
   // Always exclude introspection types
   if (typeName.startsWith("__")) {
     return true;
@@ -200,13 +189,6 @@ function jsonSchemaToGraphQLInternal(
       const typeName =
         context.typeNames.get(`/$defs/${defKey}`) ||
         context.typeNames.get(`/definitions/${defKey}`);
-      // Debug logging
-      if (typeName === "Mutation") {
-        console.log(
-          `Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`,
-        );
-      }
-
       if (typeName && !shouldExcludeType(typeName, context.options)) {
         convertTypeDefinition(defSchema, typeName, context);
       }
