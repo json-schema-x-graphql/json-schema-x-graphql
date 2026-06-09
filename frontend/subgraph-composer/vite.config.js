@@ -14,6 +14,10 @@ export default defineConfig({
     minify: "esbuild",
     sourcemap: false,
     rollupOptions: {
+      // @visual-json/react comes from the external/visual-json git submodule which is not
+      // initialized in CI. The dynamic import in CodeMirrorEditor.jsx handles the missing
+      // package gracefully at runtime via .catch(). Marking it external prevents Vite from
+      // failing to resolve the package during the production build.
       external: ["@visual-json/react"],
     },
   },

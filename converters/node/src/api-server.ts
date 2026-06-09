@@ -32,6 +32,7 @@ interface ConvertResponse {
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3004;
 const HOST = process.env.HOST || "localhost";
+const MAX_BODY_BYTES = 1 * 1024 * 1024; // 1 MB — safeguard against oversized payloads
 
 /**
  * Parse JSON from request body
@@ -39,7 +40,14 @@ const HOST = process.env.HOST || "localhost";
 function parseRequestBody(req: http.IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let body = "";
+    let size = 0;
     req.on("data", (chunk) => {
+      size += chunk.length;
+      if (size > MAX_BODY_BYTES) {
+        req.destroy();
+        reject(new Error("Request body exceeds maximum allowed size (1 MB)"));
+        return;
+      }
       body += chunk.toString();
     });
     req.on("end", () => {
@@ -76,18 +84,21 @@ async function handleConvert(
 
   try {
     // Parse request body
-    const bodyStr = await parseRequestBody(req);
-    console.log("📥 Received request body:", bodyStr.substring(0, 200));
+    let bodyStr: string;
+    try {
+      bodyStr = await parseRequestBody(req);
+    } catch (sizeError) {
+      const msg =
+        sizeError instanceof Error ? sizeError.message : "Body read error";
+      const isTooBig = msg.includes("maximum allowed size");
+      sendJson(res, isTooBig ? 413 : 400, { success: false, error: msg });
+      return;
+    }
 
     let request: ConvertRequest;
 
     try {
       request = JSON.parse(bodyStr);
-      console.log("✓ Parsed request:", {
-        direction: request.direction,
-        inputType: typeof request.input,
-        hasOptions: !!request.options,
-      });
     } catch (error) {
       console.error("❌ JSON parse error:", error);
       sendJson(res, 400, {
@@ -174,9 +185,6 @@ async function handleConvert(
     sendJson(res, 500, {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error",
-      details: {
-        context: error instanceof Error ? error.stack : undefined,
-      },
     });
   }
 }

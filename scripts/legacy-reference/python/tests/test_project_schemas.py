@@ -2,6 +2,7 @@
 
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import pytest
 
@@ -10,18 +11,38 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from validate_schemas import load_json_file, validate_with_jsonschema
 
 # Get the project root directory
-PROJECT_ROOT = Path(__file__).parent.parent.parent
-SCHEMA_DIR = PROJECT_ROOT / "src" / "data"
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
+SCHEMA_DIR = PROJECT_ROOT / "frontend" / "dashboard" / "src" / "data"
+
+_JSON_SCHEMA_HOSTS = {"json-schema.org"}
+_MODERN_SCHEMA_PATHS = {
+    "/draft/2019-09/schema",
+    "/draft/2020-12/schema",
+}
+
+
+def _is_json_schema_url(url: str) -> bool:
+    """Return True only when the URL's hostname is exactly json-schema.org."""
+    parsed = urlparse(url)
+    return parsed.scheme in {"https", "http"} and parsed.netloc in _JSON_SCHEMA_HOSTS
+
+
+def _is_modern_schema_url(url: str) -> bool:
+    """Return True when the URL is a recognized modern JSON Schema draft URI."""
+    parsed = urlparse(url)
+    if parsed.netloc not in _JSON_SCHEMA_HOSTS:
+        return False
+    return parsed.path in _MODERN_SCHEMA_PATHS or not parsed.path
 
 
 @pytest.mark.parametrize(
     "schema_file",
     [
-        "schema_unification.schema.json",
-        "schema_unification.schema.v2.json",
-        "schema_unification.schema.v2-generated.json",
-        "schema_unification.schema.v2-graphql.json",
-        "schema_unification-contract_data-hinted.schema.json",
+        "schema-unification.schema.json",
+        "archived/schema-unification.schema.v2.json",
+        "archived/schema-unification.schema.v2-generated.json",
+        "archived/schema-unification.schema.v2-graphql.json",
+        "archived/schema-unification-contract-data-hinted.schema.json",
     ],
 )
 def test_project_schemas_are_valid(schema_file):
@@ -47,8 +68,7 @@ def test_all_schemas_have_schema_key():
     for schema_path in schema_files:
         schema = load_json_file(schema_path)
         assert "$schema" in schema, f"{schema_path.name} should have $schema key"
-        # nosemgrep: python.lang.security.audit.detect-url-substring-detection
-        assert "json-schema.org" in schema["$schema"], (
+        assert _is_json_schema_url(schema["$schema"]), (
             f"{schema_path.name} $schema should reference json-schema.org"
         )
 
@@ -57,17 +77,9 @@ def test_schemas_use_modern_draft():
     """Test that schemas use a modern JSON Schema draft (2019-09 or 2020-12)."""
     schema_files = list(SCHEMA_DIR.glob("*.schema.json"))
 
-    modern_drafts = [
-        "https://json-schema.org/draft/2019-09/schema",
-        "https://json-schema.org/draft/2020-12/schema",
-    ]
-
     for schema_path in schema_files:
         schema = load_json_file(schema_path)
         if "$schema" in schema:
-            # Allow any modern draft or just the base URL
-            is_modern = any(draft in schema["$schema"] for draft in modern_drafts)
-            # nosemgrep: python.lang.security.audit.detect-url-substring-detection
-            assert is_modern or "json-schema.org" in schema["$schema"], (
-                f"{schema_path.name} should use a modern JSON Schema draft"
-            )
+            assert _is_modern_schema_url(schema["$schema"]) or _is_json_schema_url(
+                schema["$schema"]
+            ), f"{schema_path.name} should use a modern JSON Schema draft"

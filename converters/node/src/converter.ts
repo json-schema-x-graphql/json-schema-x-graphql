@@ -63,17 +63,6 @@ function shouldExcludeType(
 ): boolean {
   if (!typeName) return true;
 
-  // Debug filtering
-  if (
-    typeName === "Mutation" ||
-    typeName === "Query" ||
-    typeName === "PageInfo"
-  ) {
-    console.log(
-      `Checking exclusion for ${typeName}: includeOps=${options.includeOperationalTypes}, inList=${options.excludeTypes?.includes(typeName)}, list=${JSON.stringify(options.excludeTypes)}`,
-    );
-  }
-
   // Always exclude introspection types
   if (typeName.startsWith("__")) {
     return true;
@@ -200,13 +189,6 @@ function jsonSchemaToGraphQLInternal(
       const typeName =
         context.typeNames.get(`/$defs/${defKey}`) ||
         context.typeNames.get(`/definitions/${defKey}`);
-      // Debug logging
-      if (typeName === "Mutation") {
-        console.log(
-          `Processing def Mutation. Should exclude? ${shouldExcludeType(typeName, context.options)}`,
-        );
-      }
-
       if (typeName && !shouldExcludeType(typeName, context.options)) {
         convertTypeDefinition(defSchema, typeName, context);
       }
@@ -1217,6 +1199,24 @@ function emitOperations(schema: JsonSchema, context: ConversionContext) {
   }
 }
 
+function escapeRegExp(pattern: string): string {
+  if (typeof pattern !== "string") {
+    return "";
+  }
+  // Allow safe regex characters but prevent ReDoS / catastrophic backtracking.
+  // If the pattern has nested quantifiers or multiple wildcards, escape it.
+  const isSafe =
+    /^[a-zA-Z0-9_*?|\-^$().+\[\]]+$/.test(pattern) &&
+    !/(\*|\+){2,}/.test(pattern) &&
+    !/(\+|\*).*(?:\+|\*)/.test(pattern);
+
+  if (isSafe) {
+    return pattern;
+  }
+  // Escape all metacharacters if it contains potentially unsafe constructs
+  return pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 // --- Helpers -------------------------------------------------------------------
 
 function normalizeOptions(
@@ -1247,7 +1247,9 @@ function normalizeOptions(
     ),
   );
   const excludePatterns = Array.from(new Set(options.excludePatterns ?? []));
-  const excludeRegexes = excludePatterns.map((pattern) => new RegExp(pattern));
+  const excludeRegexes = excludePatterns.map(
+    (pattern) => new RegExp(escapeRegExp(pattern)),
+  );
 
   const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
   const emitEmptyTypes = options.emitEmptyTypes ?? false;
