@@ -365,25 +365,6 @@ export default function App() {
                   >
                     Visualize
                   </button>
-                  <button
-                    className={`tab-btn ${activeTab === "er" ? "active" : ""}`}
-                    onClick={() => setActiveTab("er")}
-                    style={{
-                      padding: "var(--spacing-sm) var(--spacing-md)",
-                      border: "none",
-                      background: activeTab === "er" ? "white" : "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
-                      fontWeight: activeTab === "er" ? "600" : "400",
-                      color: "var(--color-text)",
-                      borderBottom:
-                        activeTab === "er"
-                          ? "2px solid var(--color-primary)"
-                          : "2px solid transparent",
-                    }}
-                  >
-                    ER Diagram
-                  </button>
                 </div>
 
                 {activeTab === "editor" ? (
@@ -430,32 +411,43 @@ export default function App() {
                     )}
                   </>
                 ) : activeTab === "visualize" ? (
-                  <Suspense
-                    fallback={
-                      <div className="empty-state">
-                        Loading visualization...
-                      </div>
-                    }
+                  <SplitPane
+                    split="horizontal"
+                    minSize={200}
+                    defaultSize="50%"
+                    allowResize
+                    paneStyle={{ minHeight: 0, display: "flex", flexDirection: "column" }}
+                    style={{ height: "100%", position: "relative", display: "flex", flexDirection: "column" }}
+                    resizerStyle={{ background: "#eee", height: "6px", cursor: "row-resize", zIndex: 2 }}
                   >
-                    <VoyagerPanel
-                      supergraphSDL={supergraphSDL}
-                      subgraphsMap={subgraphsMap}
-                      schemas={schemas}
-                      typeSources={typeSources}
-                    />
-                  </Suspense>
+                    <Suspense
+                      fallback={
+                        <div className="empty-state">
+                          Loading visualization...
+                        </div>
+                      }
+                    >
+                      <VoyagerPanel
+                        supergraphSDL={supergraphSDL}
+                        subgraphsMap={subgraphsMap}
+                        schemas={schemas}
+                        typeSources={typeSources}
+                      />
+                    </Suspense>
+                    <Suspense
+                      fallback={
+                        <div className="empty-state">Loading ER diagram...</div>
+                      }
+                    >
+                      <ERDiagramPanel
+                        supergraphSDL={supergraphSDL}
+                        schemas={schemas}
+                        typeSources={typeSources}
+                      />
+                    </Suspense>
+                  </SplitPane>
                 ) : (
-                  <Suspense
-                    fallback={
-                      <div className="empty-state">Loading ER diagram...</div>
-                    }
-                  >
-                    <ERDiagramPanel
-                      supergraphSDL={supergraphSDL}
-                      schemas={schemas}
-                      typeSources={typeSources}
-                    />
-                  </Suspense>
+                  <div />
                 )}
               </div>
             </SplitPane>

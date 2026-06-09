@@ -77,9 +77,23 @@
 }
 
 .field-type {
-  color: var(--color-text-light, #6b7280);
   font-size: 0.8rem;
   font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.is-complex {
+  color: var(--color-text-light, #6b7280);
+}
+
+.is-scalar {
+  color: var(--color-text-light, #9ca3af);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.er-node-body:hover .is-scalar,
+.er-node-field:hover .is-scalar {
+  opacity: 1;
 }
 
 .field-badges {
