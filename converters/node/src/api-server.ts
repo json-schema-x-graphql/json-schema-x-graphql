@@ -88,7 +88,8 @@ async function handleConvert(
     try {
       bodyStr = await parseRequestBody(req);
     } catch (sizeError) {
-      const msg = sizeError instanceof Error ? sizeError.message : "Body read error";
+      const msg =
+        sizeError instanceof Error ? sizeError.message : "Body read error";
       const isTooBig = msg.includes("maximum allowed size");
       sendJson(res, isTooBig ? 413 : 400, { success: false, error: msg });
       return;

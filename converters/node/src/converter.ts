@@ -1247,7 +1247,9 @@ function normalizeOptions(
     ),
   );
   const excludePatterns = Array.from(new Set(options.excludePatterns ?? []));
-  const excludeRegexes = excludePatterns.map((pattern) => new RegExp(escapeRegExp(pattern)));
+  const excludeRegexes = excludePatterns.map(
+    (pattern) => new RegExp(escapeRegExp(pattern)),
+  );
 
   const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
   const emitEmptyTypes = options.emitEmptyTypes ?? false;

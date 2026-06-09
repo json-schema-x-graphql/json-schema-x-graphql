@@ -2,6 +2,7 @@
 
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 import pytest
 
@@ -12,6 +13,26 @@ from validate_schemas import load_json_file, validate_with_jsonschema
 # Get the project root directory
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
 SCHEMA_DIR = PROJECT_ROOT / "frontend" / "dashboard" / "src" / "data"
+
+_JSON_SCHEMA_HOSTS = {"json-schema.org"}
+_MODERN_SCHEMA_PATHS = {
+    "/draft/2019-09/schema",
+    "/draft/2020-12/schema",
+}
+
+
+def _is_json_schema_url(url: str) -> bool:
+    """Return True only when the URL's hostname is exactly json-schema.org."""
+    parsed = urlparse(url)
+    return parsed.scheme in {"https", "http"} and parsed.netloc in _JSON_SCHEMA_HOSTS
+
+
+def _is_modern_schema_url(url: str) -> bool:
+    """Return True when the URL is a recognized modern JSON Schema draft URI."""
+    parsed = urlparse(url)
+    if parsed.netloc not in _JSON_SCHEMA_HOSTS:
+        return False
+    return parsed.path in _MODERN_SCHEMA_PATHS or not parsed.path
 
 
 @pytest.mark.parametrize(
@@ -47,8 +68,7 @@ def test_all_schemas_have_schema_key():
     for schema_path in schema_files:
         schema = load_json_file(schema_path)
         assert "$schema" in schema, f"{schema_path.name} should have $schema key"
-        schema_url = schema["$schema"]
-        assert schema_url.startswith("https://json-schema.org") or schema_url.startswith("http://json-schema.org"), (
+        assert _is_json_schema_url(schema["$schema"]), (
             f"{schema_path.name} $schema should reference json-schema.org"
         )
 
@@ -57,16 +77,9 @@ def test_schemas_use_modern_draft():
     """Test that schemas use a modern JSON Schema draft (2019-09 or 2020-12)."""
     schema_files = list(SCHEMA_DIR.glob("*.schema.json"))
 
-    modern_drafts = [
-        "https://json-schema.org/draft/2019-09/schema",
-        "https://json-schema.org/draft/2020-12/schema",
-    ]
-
     for schema_path in schema_files:
         schema = load_json_file(schema_path)
         if "$schema" in schema:
-            schema_url = schema["$schema"]
-            is_modern = any(schema_url.startswith(draft) for draft in modern_drafts)
-            assert is_modern or schema_url.startswith("https://json-schema.org") or schema_url.startswith("http://json-schema.org"), (
-                f"{schema_path.name} should use a modern JSON Schema draft"
-            )
+            assert _is_modern_schema_url(schema["$schema"]) or _is_json_schema_url(
+                schema["$schema"]
+            ), f"{schema_path.name} should use a modern JSON Schema draft"
