@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, Suspense } from "react";
+import React, { useState, useCallback, useEffect, useRef, Suspense } from "react";
 import SplitPane from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
@@ -86,12 +86,16 @@ export default function App() {
     }
   }, []); // Only run once on mount
 
-  // Generate suggestions when composition completes
+  // Only call generateSuggestions when the supergraphSDL string actually changes.
+  // Using a ref to track the previous value avoids the infinite loop caused by
+  // `subgraphs` being a new array reference on every render.
+  const prevSDLRef = useRef(null);
   useEffect(() => {
-    if (supergraphSDL && subgraphs.length > 1) {
+    if (supergraphSDL && supergraphSDL !== prevSDLRef.current && subgraphs.length > 1) {
+      prevSDLRef.current = supergraphSDL;
       generateSuggestions(subgraphs, supergraphSDL);
     }
-  }, [supergraphSDL, subgraphs]);
+  }, [supergraphSDL]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleGenerate = useCallback(async () => {
     if (schemas.length === 0) {

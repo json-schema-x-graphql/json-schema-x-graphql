@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useState,
   useRef,
+  useCallback,
   forwardRef,
   useImperativeHandle,
 } from "react";
@@ -51,8 +52,14 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
     };
   }, []);
 
-  // keep internal currentValue in sync with prop
-  useEffect(() => setCurrentValue(value), [value]);
+  // Keep internal currentValue in sync with prop — only update when actually different
+  // to avoid a props→state→parent→props render cycle.
+  useEffect(() => {
+    if (value !== currentValue) {
+      setCurrentValue(value);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   // Parse value to object for structured editor; if invalid JSON, fallback to text area
   let parsed = null;
@@ -64,7 +71,15 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
     parsed = currentValue;
   }
 
-  const handleChange = (newVal) => {
+  // Stable onChange handler — new reference only when onChange prop itself changes.
+  // This prevents @visual-json/react's FormView from seeing a new prop every render
+  // and firing its internal useEffect([onChange]) → setState infinite loop.
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  });
+
+  const handleChange = useCallback((newVal) => {
     let strVal;
     try {
       if (typeof newVal === "string") {
@@ -77,11 +92,11 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
     }
     setCurrentValue(strVal);
     try {
-      onChange(strVal);
+      onChangeRef.current(strVal);
     } catch (_e) {
       // ignore upstream handler errors here
     }
-  };
+  }, []); // [] — stable for the lifetime of this component instance
 
   useImperativeHandle(ref, () => ({
     getValue: () => currentValue,
