@@ -1,5 +1,6 @@
 import React from "react";
 import { Handle, Position } from "@xyflow/react";
+import { isComplexType } from "../lib/erDiagramParser.js";
 import "./ERDiagramNode.css";
 
 const BADGE_COLORS = {
@@ -25,7 +26,11 @@ function DirectiveBadge({ name }) {
     style = { backgroundColor: "#ffd700", color: "#000" };
   } else if (isExternal) {
     className += " badge-external";
-    style = { backgroundColor: "transparent", border: "1px dashed #ccc", color: "#666" };
+    style = {
+      backgroundColor: "transparent",
+      border: "1px dashed #ccc",
+      color: "#666",
+    };
   }
 
   return (
@@ -66,7 +71,7 @@ export default function ERDiagramNode({ data }) {
               const isExternal = field.directives?.some(
                 (d) => d.name === "@external",
               );
-              const isScalar = ["String", "Int", "Boolean", "Float", "ID", "Date", "DateTime", "JSON", "Url", "Email"].some(t => field.type.includes(t));
+              const isScalar = !isComplexType(field.type);
 
               return (
                 <li
