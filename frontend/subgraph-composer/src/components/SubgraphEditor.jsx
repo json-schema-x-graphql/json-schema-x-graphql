@@ -59,7 +59,7 @@ export default function SubgraphEditor({
   return (
     <div
       className="schema-editor"
-      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+      style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}
     >
       <div className="editor-header">
         <div className="editor-title">{subgraph.name}</div>
@@ -105,9 +105,11 @@ export default function SubgraphEditor({
           <span>{validMsg}</span>
         </div>
       )}
-      {/* SDL and Stats Section — no className="schema-editor" here; that class sets overflow:hidden which breaks scrolling */}
+      {/* SDL and Stats Section */}
       <div
         style={{
+          flex: 1,
+          minHeight: 0,
           marginTop: "16px",
           background: "white",
           borderRadius: "var(--radius-md)",
@@ -117,7 +119,7 @@ export default function SubgraphEditor({
           display: "flex",
           flexDirection: "column",
           gap: "var(--spacing-md)",
-          overflow: "auto",
+          overflowY: "auto",
         }}
       >
         <div>
