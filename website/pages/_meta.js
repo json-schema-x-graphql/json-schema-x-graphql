@@ -14,7 +14,7 @@ export default {
   editor: {
     title: "Editor ↗",
     type: "page",
-    href: "https://json-schema-x-graphql.github.io/editor",
+    href: "https://json-schema-x-graphql.github.io/json-schema-x-graphql/editor/",
     newWindow: true,
   },
 };
