@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, Suspense } from "react";
+import React, { useState, useCallback, useEffect, useRef, Suspense } from "react";
 import SplitPane from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
@@ -86,12 +86,23 @@ export default function App() {
     }
   }, []); // Only run once on mount
 
-  // Generate suggestions when composition completes
+  // Only call generateSuggestions when the supergraphSDL string actually changes.
+  // Using a ref to track the previous value avoids the infinite loop caused by
+  // `subgraphs` being a new array reference on every render.
+  const prevSDLRef = useRef(null);
   useEffect(() => {
-    if (supergraphSDL && subgraphs.length > 1) {
+    if (supergraphSDL && supergraphSDL !== prevSDLRef.current && subgraphs.length > 1) {
+      prevSDLRef.current = supergraphSDL;
       generateSuggestions(subgraphs, supergraphSDL);
     }
-  }, [supergraphSDL, subgraphs]);
+  }, [supergraphSDL]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset active tab to editor if supergraphSDL is cleared
+  useEffect(() => {
+    if (!supergraphSDL && activeTab === "visualize") {
+      setActiveTab("editor");
+    }
+  }, [supergraphSDL, activeTab]);
 
   const handleGenerate = useCallback(async () => {
     if (schemas.length === 0) {
@@ -345,45 +356,28 @@ export default function App() {
                   >
                     Preview
                   </button>
-                  <button
-                    className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
-                    onClick={() => setActiveTab("visualize")}
-                    style={{
-                      padding: "var(--spacing-sm) var(--spacing-md)",
-                      border: "none",
-                      background:
-                        activeTab === "visualize" ? "white" : "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
-                      fontWeight: activeTab === "visualize" ? "600" : "400",
-                      color: "var(--color-text)",
-                      borderBottom:
-                        activeTab === "visualize"
-                          ? "2px solid var(--color-primary)"
-                          : "2px solid transparent",
-                    }}
-                  >
-                    Visualize
-                  </button>
-                  <button
-                    className={`tab-btn ${activeTab === "er" ? "active" : ""}`}
-                    onClick={() => setActiveTab("er")}
-                    style={{
-                      padding: "var(--spacing-sm) var(--spacing-md)",
-                      border: "none",
-                      background: activeTab === "er" ? "white" : "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
-                      fontWeight: activeTab === "er" ? "600" : "400",
-                      color: "var(--color-text)",
-                      borderBottom:
-                        activeTab === "er"
-                          ? "2px solid var(--color-primary)"
-                          : "2px solid transparent",
-                    }}
-                  >
-                    ER Diagram
-                  </button>
+                  {supergraphSDL && (
+                    <button
+                      className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
+                      onClick={() => setActiveTab("visualize")}
+                      style={{
+                        padding: "var(--spacing-sm) var(--spacing-md)",
+                        border: "none",
+                        background:
+                          activeTab === "visualize" ? "white" : "transparent",
+                        cursor: "pointer",
+                        fontSize: "0.875rem",
+                        fontWeight: activeTab === "visualize" ? "600" : "400",
+                        color: "var(--color-text)",
+                        borderBottom:
+                          activeTab === "visualize"
+                            ? "2px solid var(--color-primary)"
+                            : "2px solid transparent",
+                      }}
+                    >
+                      Visualize
+                    </button>
+                  )}
                 </div>
 
                 {activeTab === "editor" ? (
@@ -432,21 +426,6 @@ export default function App() {
                 ) : activeTab === "visualize" ? (
                   <Suspense
                     fallback={
-                      <div className="empty-state">
-                        Loading visualization...
-                      </div>
-                    }
-                  >
-                    <VoyagerPanel
-                      supergraphSDL={supergraphSDL}
-                      subgraphsMap={subgraphsMap}
-                      schemas={schemas}
-                      typeSources={typeSources}
-                    />
-                  </Suspense>
-                ) : (
-                  <Suspense
-                    fallback={
                       <div className="empty-state">Loading ER diagram...</div>
                     }
                   >
@@ -456,6 +435,8 @@ export default function App() {
                       typeSources={typeSources}
                     />
                   </Suspense>
+                ) : (
+                  <div />
                 )}
               </div>
             </SplitPane>

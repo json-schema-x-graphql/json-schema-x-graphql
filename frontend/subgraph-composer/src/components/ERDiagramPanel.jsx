@@ -7,6 +7,7 @@ import {
   useNodesState,
   useEdgesState,
   MarkerType,
+  BezierEdge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import "./ERDiagramPanel.css";
@@ -17,8 +18,29 @@ import {
 } from "../lib/erDiagramParser.js";
 import ERDiagramNode from "./ERDiagramNode.jsx";
 
+// Self-loop edge for @requires intra-node connections.
+// ReactFlow collapses edges where source === target to zero length;
+// this custom type applies a curvature so the arc is visible.
+function SelfConnectingEdge(props) {
+  const { sourceX, sourceY, targetX, targetY, ...rest } = props;
+  // Offset target slightly so BezierEdge computes a visible arc
+  return (
+    <BezierEdge
+      {...rest}
+      sourceX={sourceX}
+      sourceY={sourceY}
+      targetX={sourceX + 1}
+      targetY={sourceY - 60}
+    />
+  );
+}
+
 const nodeTypes = {
   entityNode: ERDiagramNode,
+};
+
+const edgeTypes = {
+  selfConnecting: SelfConnectingEdge,
 };
 
 export default function ERDiagramPanel({
@@ -115,6 +137,7 @@ export default function ERDiagramPanel({
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               nodeTypes={nodeTypes}
+              edgeTypes={edgeTypes}
               fitView
               attributionPosition="bottom-right"
             >

@@ -15,6 +15,14 @@ global.localStorage = localStorageMock;
 global.URL.createObjectURL = jest.fn(() => "mock-url");
 global.URL.revokeObjectURL = jest.fn();
 
+// Mock ResizeObserver for @xyflow/react
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+global.ResizeObserver = ResizeObserverMock;
+
 // Reset mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();

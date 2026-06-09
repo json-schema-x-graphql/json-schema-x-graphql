@@ -104,6 +104,10 @@ pre {
   gap: 0;
   padding: 0;
   min-height: 0;
+  /* SplitPane uses position:absolute internally — position:relative contains it
+     to this element's bounds so it doesn't escape to the viewport height and
+     clip the Statistics section. */
+  position: relative;
 }
 
 .sidebar {
