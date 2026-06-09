@@ -114,9 +114,19 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
     }
   }
 
+  // Group entities by name to find cross-subgraph extensions
+  const entitiesByName = new Map();
+  for (const node of nodes) {
+    if (!entitiesByName.has(node.data.label)) {
+      entitiesByName.set(node.data.label, []);
+    }
+    entitiesByName.get(node.data.label).push(node);
+  }
+
   // Second pass: create edges from all nodes
   for (const node of nodes) {
     for (const field of node.data.fields) {
+      // 1. Generic type relationships (Field -> Entity)
       const baseType = extractBaseType(field.type);
       if (baseType && baseType !== node.data.label && isComplexType(baseType)) {
         const targetNode = nodeMap.get(baseType);
@@ -132,8 +142,10 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
           edges.push({
             id: `edge-${node.id}-${targetNode.id}-${field.name}`,
             source: node.id,
+            sourceHandle: `source-${field.name}`,
             target: targetNode.id,
             label: field.name,
+            animated: edgeDirectives.length > 0,
             style: {
               stroke: node.data.color,
               strokeWidth: style.strokeWidth || 1,
@@ -147,6 +159,48 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
             },
           });
         }
+      }
+
+      // 2. Intra-node @requires -> @external
+      const reqDir = field.directives.find(d => d.name === "@requires");
+      if (reqDir) {
+        const requiredFields = reqDir.args.match(/fields:\s*"([^"]+)"/);
+        if (requiredFields) {
+          const reqNames = requiredFields[1].split(/\s+/);
+          for (const reqName of reqNames) {
+             edges.push({
+               id: `edge-req-${node.id}-${field.name}-${reqName}`,
+               source: node.id,
+               sourceHandle: `source-${field.name}`,
+               target: node.id,
+               targetHandle: `target-${reqName}`,
+               animated: true,
+               style: { stroke: '#f44336', strokeWidth: 2, strokeDasharray: '2 2' },
+               data: { type: 'federation-requires' }
+             });
+          }
+        }
+      }
+
+      // 3. Cross-domain @external -> @key
+      const isExternal = field.directives.some(d => d.name === "@external");
+      if (isExternal) {
+         const siblingNodes = entitiesByName.get(node.data.label);
+         if (siblingNodes && siblingNodes.length > 1) {
+            const ownerNode = siblingNodes.find(n => n !== node && n.data.fields.some(f => f.name === field.name && f.directives.some(d => d.name === "@key")));
+            if (ownerNode) {
+              edges.push({
+                 id: `edge-ext-${node.id}-${field.name}-${ownerNode.id}`,
+                 source: node.id,
+                 sourceHandle: `source-${field.name}`,
+                 target: ownerNode.id,
+                 targetHandle: `target-${field.name}`,
+                 animated: true,
+                 style: { stroke: '#ff9800', strokeWidth: 2, strokeDasharray: '5 5' },
+                 data: { type: 'federation-external' }
+              });
+            }
+         }
       }
     }
   }

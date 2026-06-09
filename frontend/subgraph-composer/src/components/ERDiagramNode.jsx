@@ -3,24 +3,38 @@ import { Handle, Position } from "@xyflow/react";
 import "./ERDiagramNode.css";
 
 const BADGE_COLORS = {
-  "@key": "#2196f3",
-  "@external": "#ff9800",
-  "@provides": "#4caf50",
-  "@requires": "#f44336",
-  "@shareable": "#9c27b0",
+  "@key": "#ffd700", // Gold
+  "@external": "transparent",
+  "@provides": "#9c27b0", // Vivid purple
+  "@requires": "#4caf50", // Green
+  "@shareable": "#607d8b",
   "@extends": "#795548",
   "@override": "#e91e63",
 };
 
 function DirectiveBadge({ name }) {
-  const color = BADGE_COLORS[name] || "#607d8b";
+  const isKey = name === "@key";
+  const isExternal = name === "@external";
+
+  let content = name.replace("@", "");
+  let style = { backgroundColor: BADGE_COLORS[name] || "#607d8b" };
+  let className = "directive-badge";
+
+  if (isKey) {
+    content = "🔑";
+    style = { backgroundColor: "#ffd700", color: "#000" };
+  } else if (isExternal) {
+    className += " badge-external";
+    style = { backgroundColor: "transparent", border: "1px dashed #ccc", color: "#666" };
+  }
+
   return (
     <span
-      className="directive-badge"
-      style={{ backgroundColor: color }}
+      className={className}
+      style={style}
       title={name}
     >
-      {name.replace("@", "")}
+      {content}
     </span>
   );
 }
@@ -52,13 +66,17 @@ export default function ERDiagramNode({ data }) {
               const isExternal = field.directives?.some(
                 (d) => d.name === "@external",
               );
+              const isScalar = ["String", "Int", "Boolean", "Float", "ID", "Date", "DateTime", "JSON", "Url", "Email"].some(t => field.type.includes(t));
+
               return (
                 <li
                   key={idx}
                   className={`er-node-field ${isExternal ? "external-field" : ""}`}
+                  style={{ position: "relative" }}
                 >
+                  <Handle type="target" position={Position.Left} id={`target-${field.name}`} style={{ top: "50%", transform: "translateY(-50%)", opacity: 0 }} />
                   <span className="field-name">{field.name}</span>
-                  <span className="field-type">{field.type}</span>
+                  <span className={`field-type ${isScalar ? "is-scalar" : "is-complex"}`}>{field.type}</span>
                   {field.directives && field.directives.length > 0 && (
                     <span className="field-badges">
                       {field.directives.map((d, i) => (
@@ -66,6 +84,7 @@ export default function ERDiagramNode({ data }) {
                       ))}
                     </span>
                   )}
+                  <Handle type="source" position={Position.Right} id={`source-${field.name}`} style={{ top: "50%", transform: "translateY(-50%)", opacity: 0 }} />
                 </li>
               );
             })}
