@@ -781,8 +781,11 @@ function renderObject(
   const typeKind = (schema["x-graphql-type-kind"] || "").toUpperCase();
   const isInterface =
     typeKind === "INTERFACE" || schema["x-graphql-type"] === "interface";
+  const isExtend = schema["x-graphql-federation-extends"] === true;
+  const typeKeyword = isInterface ? "interface" : "type";
+  const keyword = isExtend ? `extend ${typeKeyword}` : typeKeyword;
   const header = [
-    isInterface ? "interface" : "type",
+    keyword,
     typeName,
     implementsList.length ? `implements ${implementsList.join(" & ")}` : "",
     formatDirectives(schema, context.options),
@@ -1305,7 +1308,8 @@ function detectFederationVersion(schema: JsonSchema): FederationVersion {
       current["x-graphql-federation-inaccessible"] ||
       current["x-graphql-federation-authenticated"] ||
       current["x-graphql-federation-interface-object"] ||
-      current["x-graphql-federation-requires-scopes"]
+      current["x-graphql-federation-requires-scopes"] ||
+      current["x-graphql-federation-extends"]
     ) {
       return "V2";
     }
