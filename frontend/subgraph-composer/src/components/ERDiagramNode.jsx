@@ -68,11 +68,13 @@ export default function ERDiagramNode({ data }) {
                 (d) => d.name === "@external",
               );
               const isScalar = !isComplexType(field.type);
+              const isKey = field.directives?.some((d) => d.name === "@key");
+              const shouldHide = isScalar && !isKey;
 
               return (
                 <li
                   key={idx}
-                  className={`er-node-field ${isExternal ? "external-field" : ""}`}
+                  className={`er-node-field ${isExternal ? "external-field" : ""} ${shouldHide ? "hide-by-default" : ""}`}
                   style={{ position: "relative" }}
                 >
                   <Handle

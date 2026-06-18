@@ -142,6 +142,27 @@ export default function ERDiagramPanel({
 
   const hasData = erData.nodes.length > 0;
 
+  const displayEdges = useMemo(() => {
+    const selectedNodeIds = new Set(
+      nodes.filter((n) => n.selected).map((n) => n.id),
+    );
+    return edges.map((e) => {
+      if (
+        e.data?.isCrossDomain &&
+        !selectedNodeIds.has(e.source) &&
+        !selectedNodeIds.has(e.target)
+      ) {
+        return {
+          ...e,
+          sourceHandle: undefined,
+          targetHandle: undefined,
+          style: { ...e.style, strokeWidth: 4, opacity: 0.5 },
+        };
+      }
+      return e;
+    });
+  }, [edges, nodes]);
+
   return (
     <div className="er-diagram-panel">
       <div className="er-diagram-toolbar">
@@ -205,7 +226,7 @@ export default function ERDiagramPanel({
           hasData ? (
             <ReactFlow
               nodes={nodes}
-              edges={edges}
+              edges={displayEdges}
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               nodeTypes={nodeTypes}
