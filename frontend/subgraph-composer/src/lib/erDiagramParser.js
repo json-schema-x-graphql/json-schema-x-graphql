@@ -177,7 +177,11 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
               // Self-loop: ReactFlow needs type=selfConnecting for correct bezier routing
               type: "selfConnecting",
               animated: true,
-              style: { stroke: "#f44336", strokeWidth: 2, strokeDasharray: "2 2" },
+              style: {
+                stroke: "#f44336",
+                strokeWidth: 2,
+                strokeDasharray: "2 2",
+              },
               data: { type: "federation-requires" },
             });
           }
@@ -206,7 +210,11 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
               target: ownerNode.id,
               targetHandle: `target-${field.name}`,
               animated: true,
-              style: { stroke: "#ff9800", strokeWidth: 2, strokeDasharray: "5 5" },
+              style: {
+                stroke: "#ff9800",
+                strokeWidth: 2,
+                strokeDasharray: "5 5",
+              },
               data: { type: "federation-external" },
             });
           }

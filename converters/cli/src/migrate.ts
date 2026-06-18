@@ -45,7 +45,9 @@ Options:
 const inputPath = values.input || positionals[0];
 
 if (!inputPath) {
-  console.error("Error: Input file is required. Use --input <file> or pass it as an argument.");
+  console.error(
+    "Error: Input file is required. Use --input <file> or pass it as an argument.",
+  );
   process.exit(1);
 }
 

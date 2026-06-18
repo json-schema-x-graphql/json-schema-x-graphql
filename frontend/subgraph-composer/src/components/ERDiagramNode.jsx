@@ -34,11 +34,7 @@ function DirectiveBadge({ name }) {
   }
 
   return (
-    <span
-      className={className}
-      style={style}
-      title={name}
-    >
+    <span className={className} style={style} title={name}>
       {content}
     </span>
   );
@@ -79,9 +75,22 @@ export default function ERDiagramNode({ data }) {
                   className={`er-node-field ${isExternal ? "external-field" : ""}`}
                   style={{ position: "relative" }}
                 >
-                  <Handle type="target" position={Position.Left} id={`target-${field.name}`} style={{ top: "50%", transform: "translateY(-50%)", opacity: 0 }} />
+                  <Handle
+                    type="target"
+                    position={Position.Left}
+                    id={`target-${field.name}`}
+                    style={{
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      opacity: 0,
+                    }}
+                  />
                   <span className="field-name">{field.name}</span>
-                  <span className={`field-type ${isScalar ? "is-scalar" : "is-complex"}`}>{field.type}</span>
+                  <span
+                    className={`field-type ${isScalar ? "is-scalar" : "is-complex"}`}
+                  >
+                    {field.type}
+                  </span>
                   {field.directives && field.directives.length > 0 && (
                     <span className="field-badges">
                       {field.directives.map((d, i) => (
@@ -89,7 +98,16 @@ export default function ERDiagramNode({ data }) {
                       ))}
                     </span>
                   )}
-                  <Handle type="source" position={Position.Right} id={`source-${field.name}`} style={{ top: "50%", transform: "translateY(-50%)", opacity: 0 }} />
+                  <Handle
+                    type="source"
+                    position={Position.Right}
+                    id={`source-${field.name}`}
+                    style={{
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      opacity: 0,
+                    }}
+                  />
                 </li>
               );
             })}

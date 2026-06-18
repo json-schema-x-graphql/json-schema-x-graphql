@@ -85,13 +85,13 @@ export default function SubgraphEditor({
             </button>
           </div>
         </div>
-        
+
         {error && (
           <div className="editor-error" style={{ borderTop: "none" }}>
             <span>❌ {error}</span>
           </div>
         )}
-        
+
         {validMsg && !error && (
           <div
             className="editor-error"
@@ -226,9 +226,7 @@ export default function SubgraphEditor({
                         Found in: {conflict.sources.join(", ")}
                       </div>
                       {conflict.fieldCount > 0 && (
-                        <div
-                          style={{ color: "#92400e", fontStyle: "italic" }}
-                        >
+                        <div style={{ color: "#92400e", fontStyle: "italic" }}>
                           {conflict.fieldCount} field(s)
                         </div>
                       )}

@@ -83,9 +83,26 @@ export default function SupergraphPreview({
       </div>
 
       {sdl ? (
-        <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, gap: "var(--spacing-sm)", overflow: "hidden" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            minHeight: 0,
+            gap: "var(--spacing-sm)",
+            overflow: "hidden",
+          }}
+        >
           {/* SDL Preview Section */}
-          <div className="preview-section" style={{ flex: expandedSections.preview ? 3 : "none", display: "flex", flexDirection: "column", minHeight: 0 }}>
+          <div
+            className="preview-section"
+            style={{
+              flex: expandedSections.preview ? 3 : "none",
+              display: "flex",
+              flexDirection: "column",
+              minHeight: 0,
+            }}
+          >
             <div
               className="section-header"
               onClick={() => toggleSection("preview")}
@@ -106,7 +123,10 @@ export default function SupergraphPreview({
               </span>
             </div>
             {expandedSections.preview && (
-              <div className="sdl-display" style={{ flex: 1, overflow: "auto" }}>
+              <div
+                className="sdl-display"
+                style={{ flex: 1, overflow: "auto" }}
+              >
                 <pre>{sdl}</pre>
               </div>
             )}
@@ -114,7 +134,15 @@ export default function SupergraphPreview({
 
           {/* Stats Section */}
           {stats && (
-            <div className="preview-section" style={{ flex: expandedSections.stats ? 2 : "none", display: "flex", flexDirection: "column", minHeight: 0 }}>
+            <div
+              className="preview-section"
+              style={{
+                flex: expandedSections.stats ? 2 : "none",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 0,
+              }}
+            >
               <div
                 className="section-header"
                 onClick={() => toggleSection("stats")}
@@ -135,7 +163,10 @@ export default function SupergraphPreview({
                 </span>
               </div>
               {expandedSections.stats && (
-                <div className="stats-display" style={{ flex: 1, overflow: "auto" }}>
+                <div
+                  className="stats-display"
+                  style={{ flex: 1, overflow: "auto" }}
+                >
                   <div className="stat-item">
                     <span className="stat-label">Types:</span>
                     <span className="stat-value">{stats.totalTypes}</span>
@@ -187,7 +218,15 @@ export default function SupergraphPreview({
 
           {/* Errors Section */}
           {errors && errors.length > 0 && (
-            <div className="preview-section" style={{ flex: expandedSections.errors ? 2 : "none", display: "flex", flexDirection: "column", minHeight: 0 }}>
+            <div
+              className="preview-section"
+              style={{
+                flex: expandedSections.errors ? 2 : "none",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 0,
+              }}
+            >
               <div
                 className="section-header error"
                 onClick={() => toggleSection("errors")}
@@ -208,7 +247,10 @@ export default function SupergraphPreview({
                 </span>
               </div>
               {expandedSections.errors && (
-                <div className="errors-display" style={{ flex: 1, overflow: "auto" }}>
+                <div
+                  className="errors-display"
+                  style={{ flex: 1, overflow: "auto" }}
+                >
                   {errors.map((error, idx) => (
                     <div key={idx} className="error-item">
                       <span className="error-icon">❌</span>

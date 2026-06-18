@@ -34,10 +34,14 @@ describe("jxql-migrate CLI Integration", () => {
     const tempFile = path.join(tempDir, "schema-stdout.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    const output = execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-stdout.json"], {
-      cwd: __dirname,
-      encoding: "utf-8",
-    });
+    const output = execFileSync(
+      "node",
+      ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-stdout.json"],
+      {
+        cwd: __dirname,
+        encoding: "utf-8",
+      },
+    );
     const migrated = JSON.parse(output);
 
     expect(migrated["x-graphql-federation"]).toBeUndefined();
@@ -50,10 +54,19 @@ describe("jxql-migrate CLI Integration", () => {
     const tempFile = path.join(tempDir, "schema-inplace.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-inplace.json", "--write"], {
-      cwd: __dirname,
-      encoding: "utf-8",
-    });
+    execFileSync(
+      "node",
+      [
+        "../../cli/dist/migrate.js",
+        "-i",
+        "../temp-test/schema-inplace.json",
+        "--write",
+      ],
+      {
+        cwd: __dirname,
+        encoding: "utf-8",
+      },
+    );
     const fileContent = fs.readFileSync(tempFile, "utf-8");
     const migrated = JSON.parse(fileContent);
 
@@ -68,10 +81,20 @@ describe("jxql-migrate CLI Integration", () => {
     const outFile = path.join(tempDir, "schema-output.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-input.json", "-o", "../temp-test/schema-output.json"], {
-      cwd: __dirname,
-      encoding: "utf-8",
-    });
+    execFileSync(
+      "node",
+      [
+        "../../cli/dist/migrate.js",
+        "-i",
+        "../temp-test/schema-input.json",
+        "-o",
+        "../temp-test/schema-output.json",
+      ],
+      {
+        cwd: __dirname,
+        encoding: "utf-8",
+      },
+    );
     const fileContent = fs.readFileSync(outFile, "utf-8");
     const migrated = JSON.parse(fileContent);
 
