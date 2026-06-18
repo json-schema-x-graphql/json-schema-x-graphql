@@ -497,9 +497,11 @@ fn convert_type_definition(
                     if let Some(fields) = key_obj.get("fields") {
                         let mut args = serde_json::json!({ "fields": fields });
                         if let Some(resolvable) = key_obj.get("resolvable") {
-                            args.as_object_mut()
-                                .unwrap()
-                                .insert("resolvable".to_string(), resolvable.clone());
+                            if resolvable.as_bool() == Some(false) {
+                                args.as_object_mut()
+                                    .unwrap()
+                                    .insert("resolvable".to_string(), resolvable.clone());
+                            }
                         }
                         directives_json
                             .push(serde_json::json!({ "name": "key", "arguments": args }));

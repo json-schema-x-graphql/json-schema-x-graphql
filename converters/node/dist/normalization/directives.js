@@ -167,10 +167,11 @@ export function normalizeFederationExtensions(schema, warnedState = { warned: fa
     }
     // Handle arrays recursively
     if (Array.isArray(schema)) {
-        return schema.map(item => normalizeFederationExtensions(item, warnedState));
+        return schema.map((item) => normalizeFederationExtensions(item, warnedState));
     }
     const flat = { ...schema };
-    if (schema["x-graphql-federation"] && typeof schema["x-graphql-federation"] === "object") {
+    if (schema["x-graphql-federation"] &&
+        typeof schema["x-graphql-federation"] === "object") {
         const nested = schema["x-graphql-federation"];
         if (!warnedState.warned) {
             console.warn("The nested `x-graphql-federation` object format is deprecated and will be removed in v2.0. " +
@@ -227,11 +228,19 @@ export function normalizeFederationExtensions(schema, warnedState = { warned: fa
     }
     // Recursively normalize all properties/definitions/etc.
     for (const key of Object.keys(flat)) {
-        if (key === "$defs" || key === "definitions" || key === "properties" || key === "allOf" || key === "anyOf" || key === "oneOf" || key === "items") {
+        if (key === "$defs" ||
+            key === "definitions" ||
+            key === "properties" ||
+            key === "allOf" ||
+            key === "anyOf" ||
+            key === "oneOf" ||
+            key === "items") {
             flat[key] = normalizeFederationExtensions(flat[key], warnedState);
         }
         else if (flat[key] && typeof flat[key] === "object") {
-            if (key !== "enum" && key !== "required" && !key.startsWith("x-graphql-federation")) {
+            if (key !== "enum" &&
+                key !== "required" &&
+                !key.startsWith("x-graphql-federation")) {
                 flat[key] = normalizeFederationExtensions(flat[key], warnedState);
             }
         }

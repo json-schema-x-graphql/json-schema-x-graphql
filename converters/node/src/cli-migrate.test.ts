@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 
 describe("jxql-migrate CLI Integration", () => {
-  const cliPath = path.resolve(__dirname, "../../cli/dist/migrate.js");
   const tempDir = path.resolve(__dirname, "../temp-test");
 
   beforeAll(() => {
@@ -35,7 +34,8 @@ describe("jxql-migrate CLI Integration", () => {
     const tempFile = path.join(tempDir, "schema-stdout.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    const output = execFileSync("node", [cliPath, "-i", tempFile], {
+    const output = execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-stdout.json"], {
+      cwd: __dirname,
       encoding: "utf-8",
     });
     const migrated = JSON.parse(output);
@@ -50,7 +50,8 @@ describe("jxql-migrate CLI Integration", () => {
     const tempFile = path.join(tempDir, "schema-inplace.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execFileSync("node", [cliPath, "-i", tempFile, "--write"], {
+    execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-inplace.json", "--write"], {
+      cwd: __dirname,
       encoding: "utf-8",
     });
     const fileContent = fs.readFileSync(tempFile, "utf-8");
@@ -67,7 +68,8 @@ describe("jxql-migrate CLI Integration", () => {
     const outFile = path.join(tempDir, "schema-output.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execFileSync("node", [cliPath, "-i", tempFile, "-o", outFile], {
+    execFileSync("node", ["../../cli/dist/migrate.js", "-i", "../temp-test/schema-input.json", "-o", "../temp-test/schema-output.json"], {
+      cwd: __dirname,
       encoding: "utf-8",
     });
     const fileContent = fs.readFileSync(outFile, "utf-8");

@@ -383,6 +383,25 @@ fn convert_gql_type(gql_type: &Type, context: &ConversionContext) -> GqlType {
 
 // --- IR to JSON Schema Conversion ---
 
+fn is_federation_directive(name: &str) -> bool {
+    matches!(
+        name,
+        "key"
+            | "shareable"
+            | "inaccessible"
+            | "override"
+            | "external"
+            | "provides"
+            | "requires"
+            | "extends"
+            | "authenticated"
+            | "requiresScopes"
+            | "policy"
+            | "interfaceObject"
+            | "tag"
+    )
+}
+
 fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> JsonValue {
     let mut x_graphql = json!({
         "typeName": type_def.name,
@@ -394,9 +413,10 @@ fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> Js
     }
 
     if !type_def.directives.is_empty() {
-        x_graphql["directives"] = json!(type_def
+        let non_fed_dirs: Vec<_> = type_def
             .directives
             .iter()
+            .filter(|d| !is_federation_directive(&d.name))
             .map(|d| {
                 let mut dir_json = json!({ "name": d.name });
                 if !d.arguments.is_empty() {
@@ -404,7 +424,11 @@ fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> Js
                 }
                 dir_json
             })
-            .collect::<Vec<_>>());
+            .collect();
+
+        if !non_fed_dirs.is_empty() {
+            x_graphql["directives"] = json!(non_fed_dirs);
+        }
 
         // Extract federation directives
         let mut federation = json!({});
@@ -422,7 +446,7 @@ fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> Js
                             .unwrap_or(true);
 
                         let key_obj = if resolvable {
-                            json!({ "fields": fields_str, "resolvable": true })
+                            json!({ "fields": fields_str })
                         } else {
                             json!({ "fields": fields_str, "resolvable": false })
                         };
@@ -515,9 +539,10 @@ fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> Js
 
                 // Add directives
                 if !field.directives.is_empty() {
-                    field_x_graphql["directives"] = json!(field
+                    let non_fed_dirs: Vec<_> = field
                         .directives
                         .iter()
+                        .filter(|d| !is_federation_directive(&d.name))
                         .map(|d| {
                             let mut dir_json = json!({ "name": d.name });
                             if !d.arguments.is_empty() {
@@ -525,7 +550,11 @@ fn convert_type_to_schema(type_def: &TypeDef, context: &ConversionContext) -> Js
                             }
                             dir_json
                         })
-                        .collect::<Vec<_>>());
+                        .collect();
+
+                    if !non_fed_dirs.is_empty() {
+                        field_x_graphql["directives"] = json!(non_fed_dirs);
+                    }
 
                     // Handle federation field directives
                     let mut federation = json!({});
