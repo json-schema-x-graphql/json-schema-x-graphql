@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join } from "path";
 import { parse, type DocumentNode } from "graphql";
@@ -250,7 +250,7 @@ describe("Parity: Node vs Rust converter outputs", () => {
       }
 
       // run comparison script which writes outputs to output/comparison
-      execSync(`node "${scriptPath}" "${inputPath}"`, {
+      execFileSync("node", [scriptPath, inputPath], {
         stdio: "inherit",
         cwd: repoRoot,
         env,

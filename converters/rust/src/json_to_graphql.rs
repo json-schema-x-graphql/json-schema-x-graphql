@@ -1769,28 +1769,58 @@ pub fn normalize_federation_extensions(value: &mut JsonValue, warned: &mut bool)
                 }
 
                 if let Some(external) = nested.get("external") {
-                    map.insert("x-graphql-federation-external".to_string(), external.clone());
+                    map.insert(
+                        "x-graphql-federation-external".to_string(),
+                        external.clone(),
+                    );
                 }
                 if let Some(provides) = nested.get("provides") {
-                    map.insert("x-graphql-federation-provides".to_string(), provides.clone());
+                    map.insert(
+                        "x-graphql-federation-provides".to_string(),
+                        provides.clone(),
+                    );
                 }
                 if let Some(requires) = nested.get("requires") {
-                    map.insert("x-graphql-federation-requires".to_string(), requires.clone());
+                    map.insert(
+                        "x-graphql-federation-requires".to_string(),
+                        requires.clone(),
+                    );
                 }
                 if let Some(shareable) = nested.get("shareable") {
-                    map.insert("x-graphql-federation-shareable".to_string(), shareable.clone());
+                    map.insert(
+                        "x-graphql-federation-shareable".to_string(),
+                        shareable.clone(),
+                    );
                 }
                 if let Some(inaccessible) = nested.get("inaccessible") {
-                    map.insert("x-graphql-federation-inaccessible".to_string(), inaccessible.clone());
+                    map.insert(
+                        "x-graphql-federation-inaccessible".to_string(),
+                        inaccessible.clone(),
+                    );
                 }
                 if let Some(authenticated) = nested.get("authenticated") {
-                    map.insert("x-graphql-federation-authenticated".to_string(), authenticated.clone());
+                    map.insert(
+                        "x-graphql-federation-authenticated".to_string(),
+                        authenticated.clone(),
+                    );
                 }
-                if let Some(interface_object) = nested.get("interfaceObject").or_else(|| nested.get("interface-object")) {
-                    map.insert("x-graphql-federation-interface-object".to_string(), interface_object.clone());
+                if let Some(interface_object) = nested
+                    .get("interfaceObject")
+                    .or_else(|| nested.get("interface-object"))
+                {
+                    map.insert(
+                        "x-graphql-federation-interface-object".to_string(),
+                        interface_object.clone(),
+                    );
                 }
-                if let Some(requires_scopes) = nested.get("requiresScopes").or_else(|| nested.get("requires-scopes")) {
-                    map.insert("x-graphql-federation-requires-scopes".to_string(), requires_scopes.clone());
+                if let Some(requires_scopes) = nested
+                    .get("requiresScopes")
+                    .or_else(|| nested.get("requires-scopes"))
+                {
+                    map.insert(
+                        "x-graphql-federation-requires-scopes".to_string(),
+                        requires_scopes.clone(),
+                    );
                 }
                 if let Some(policy) = nested.get("policy") {
                     map.insert("x-graphql-federation-policy".to_string(), policy.clone());
@@ -1800,7 +1830,10 @@ pub fn normalize_federation_extensions(value: &mut JsonValue, warned: &mut bool)
                 }
                 if let Some(JsonValue::Object(override_obj)) = nested.get("override") {
                     if let Some(from) = override_obj.get("from") {
-                        map.insert("x-graphql-federation-override-from".to_string(), from.clone());
+                        map.insert(
+                            "x-graphql-federation-override-from".to_string(),
+                            from.clone(),
+                        );
                     }
                 }
                 if let Some(extends) = nested.get("extends") {
@@ -1810,12 +1843,19 @@ pub fn normalize_federation_extensions(value: &mut JsonValue, warned: &mut bool)
 
             // Recurse into children
             for (key, val) in map.iter_mut() {
-                if key == "$defs" || key == "definitions" || key == "properties" || key == "allOf" || key == "anyOf" || key == "oneOf" || key == "items" {
+                if key == "$defs"
+                    || key == "definitions"
+                    || key == "properties"
+                    || key == "allOf"
+                    || key == "anyOf"
+                    || key == "oneOf"
+                    || key == "items"
+                    || ((val.is_object() || val.is_array())
+                        && key != "enum"
+                        && key != "required"
+                        && !key.starts_with("x-graphql-federation"))
+                {
                     normalize_federation_extensions(val, warned);
-                } else if val.is_object() || val.is_array() {
-                    if key != "enum" && key != "required" && !key.starts_with("x-graphql-federation") {
-                        normalize_federation_extensions(val, warned);
-                    }
                 }
             }
         }
@@ -2377,4 +2417,3 @@ mod tests {
         assert!(result.contains("extend type User"));
     }
 }
-

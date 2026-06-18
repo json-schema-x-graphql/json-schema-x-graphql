@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
@@ -24,18 +24,20 @@ describe("jxql-migrate CLI Integration", () => {
     "x-graphql-federation": {
       keys: [{ fields: "sku" }],
       shareable: true,
-      extends: true
+      extends: true,
     },
     properties: {
-      sku: { type: "string" }
-    }
+      sku: { type: "string" },
+    },
   };
 
   test("should output migrated schema to stdout by default", () => {
     const tempFile = path.join(tempDir, "schema-stdout.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    const output = execSync(`node ${cliPath} -i ${tempFile}`, { encoding: "utf-8" });
+    const output = execFileSync("node", [cliPath, "-i", tempFile], {
+      encoding: "utf-8",
+    });
     const migrated = JSON.parse(output);
 
     expect(migrated["x-graphql-federation"]).toBeUndefined();
@@ -48,7 +50,9 @@ describe("jxql-migrate CLI Integration", () => {
     const tempFile = path.join(tempDir, "schema-inplace.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execSync(`node ${cliPath} -i ${tempFile} --write`);
+    execFileSync("node", [cliPath, "-i", tempFile, "--write"], {
+      encoding: "utf-8",
+    });
     const fileContent = fs.readFileSync(tempFile, "utf-8");
     const migrated = JSON.parse(fileContent);
 
@@ -63,7 +67,9 @@ describe("jxql-migrate CLI Integration", () => {
     const outFile = path.join(tempDir, "schema-output.json");
     fs.writeFileSync(tempFile, JSON.stringify(testSchema, null, 2));
 
-    execSync(`node ${cliPath} -i ${tempFile} -o ${outFile}`);
+    execFileSync("node", [cliPath, "-i", tempFile, "-o", outFile], {
+      encoding: "utf-8",
+    });
     const fileContent = fs.readFileSync(outFile, "utf-8");
     const migrated = JSON.parse(fileContent);
 

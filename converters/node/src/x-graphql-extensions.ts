@@ -199,8 +199,7 @@ export function extractExtensions(
           if (fed.shareable) extensions.federationShareable = fed.shareable;
           if (fed.inaccessible)
             extensions.federationInaccessible = fed.inaccessible;
-          if (fed.extends)
-            extensions.federationExtends = fed.extends;
+          if (fed.extends) extensions.federationExtends = fed.extends;
           if (fed.authenticated) {
             // Add to directives if not handled by interface properties
             const directives = extensions.typeDirectives || [];
