@@ -149,7 +149,11 @@ describe("x-graphql-federation-extends (unit)", () => {
           "x-graphql-federation-keys": ["id"],
           "x-graphql-federation-extends": true,
           properties: {
-            id: { type: "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+            id: {
+              type: "string",
+              "x-graphql-field-type": "ID",
+              "x-graphql-field-non-null": true,
+            },
             email: { type: "string" },
           },
           required: ["id"],
@@ -176,7 +180,11 @@ describe("x-graphql-federation-extends (unit)", () => {
           "x-graphql-type-kind": "OBJECT",
           "x-graphql-federation-keys": ["id"],
           properties: {
-            id: { type: "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+            id: {
+              type: "string",
+              "x-graphql-field-type": "ID",
+              "x-graphql-field-non-null": true,
+            },
           },
           required: ["id"],
         },
@@ -203,7 +211,11 @@ describe("x-graphql-federation-extends (unit)", () => {
           "x-graphql-federation-keys": ["upc"],
           "x-graphql-federation-extends": false,
           properties: {
-            upc: { type: "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+            upc: {
+              type: "string",
+              "x-graphql-field-type": "ID",
+              "x-graphql-field-non-null": true,
+            },
           },
           required: ["upc"],
         },
@@ -228,7 +240,11 @@ describe("x-graphql-federation-extends (unit)", () => {
           "x-graphql-type-kind": "OBJECT",
           "x-graphql-federation-extends": true,
           properties: {
-            id: { type: "string", "x-graphql-field-type": "ID", "x-graphql-field-non-null": true },
+            id: {
+              type: "string",
+              "x-graphql-field-type": "ID",
+              "x-graphql-field-non-null": true,
+            },
           },
           required: ["id"],
         },

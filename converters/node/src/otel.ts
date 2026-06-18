@@ -34,9 +34,10 @@ async function initTracerProvider(): Promise<void> {
       import("@opentelemetry/sdk-trace-base"),
     ]);
 
-    const provider = new NodeTracerProvider();
     memoryExporter = new InMemorySpanExporter();
-    provider.addSpanProcessor(new SimpleSpanProcessor(memoryExporter));
+    const provider = new NodeTracerProvider({
+      spanProcessors: [new SimpleSpanProcessor(memoryExporter)],
+    });
     provider.register();
   } catch {
     // SDK packages are not installed — tracing degrades gracefully to no-ops.
