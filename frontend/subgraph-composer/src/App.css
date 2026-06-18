@@ -412,3 +412,18 @@ pre {
 .color-text-secondary {
   --color-text-secondary: #9ca3af;
 }
+
+.resizer-col {
+  width: 6px;
+  cursor: col-resize;
+  background: #f3f4f6;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+  height: 100%;
+  z-index: 10;
+}
+
+.resizer-col:hover,
+.resizer-col:active {
+  background: var(--color-primary);
+}

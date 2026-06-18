@@ -115,6 +115,9 @@ export function extractDirectives(
     if (schema["x-graphql-federation-external"]) {
       directives.push({ name: "external" });
     }
+    if (schema["x-graphql-federation-extends"]) {
+      directives.push({ name: "extends" });
+    }
     if (schema["x-graphql-federation-override-from"]) {
       directives.push({
         name: "override",

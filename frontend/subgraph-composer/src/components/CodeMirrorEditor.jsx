@@ -6,6 +6,8 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
 
 const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   { value, onChange },
@@ -17,14 +19,16 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   const editorRef = useRef(null);
   const containerRef = useRef(null);
   const [currentValue, setCurrentValue] = useState(value);
+  const [editMode, setEditMode] = useState("code"); // "code" | "visual"
+
+  const isTest =
+    typeof process !== "undefined" &&
+    process.env &&
+    process.env.NODE_ENV === "test";
 
   useEffect(() => {
     let mounted = true;
-    if (
-      typeof process !== "undefined" &&
-      process.env &&
-      process.env.NODE_ENV === "test"
-    ) {
+    if (isTest) {
       setLoadError(true);
       return;
     }
@@ -50,7 +54,7 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [isTest]);
 
   // Keep internal currentValue in sync with prop — only update when actually different
   // to avoid a props→state→parent→props render cycle.
@@ -131,28 +135,87 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
     },
   }));
 
-  if (EditorComp && !invalidJson) {
-    const Editor = EditorComp;
+  // If in test mode, display raw textarea for safety
+  if (isTest) {
     return (
-      <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
-        <Editor value={parsed} onChange={handleChange} />
-      </div>
+      <textarea
+        ref={textareaRef}
+        style={{
+          height: "100%",
+          width: "100%",
+          fontFamily: "monospace",
+          fontSize: 13,
+        }}
+        value={currentValue}
+        onChange={(e) => handleChange(e.target.value)}
+      />
     );
   }
 
-  // Fallback: if JSON invalid or editor failed to load, show a textarea
   return (
-    <textarea
-      ref={textareaRef}
-      style={{
-        height: "100%",
-        width: "100%",
-        fontFamily: "monospace",
-        fontSize: 13,
-      }}
-      value={currentValue}
-      onChange={(e) => handleChange(e.target.value)}
-    />
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
+      {/* Editor Tab Bar */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderBottom: "1px solid var(--color-border)",
+          background: "var(--color-bg-secondary)",
+          padding: "var(--spacing-xs) var(--spacing-md)",
+          flexShrink: 0,
+        }}
+      >
+        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
+          <button
+            className={`btn btn-small ${editMode === "code" ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => setEditMode("code")}
+            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+          >
+            Code
+          </button>
+          {EditorComp && (
+            <button
+              className={`btn btn-small ${editMode === "visual" ? "btn-primary" : "btn-secondary"}`}
+              onClick={() => {
+                if (invalidJson) {
+                  alert("Cannot switch to Visual Form: JSON is invalid");
+                  return;
+                }
+                setEditMode("visual");
+              }}
+              disabled={invalidJson}
+              style={{ padding: "4px 8px", fontSize: "0.75rem" }}
+              title={invalidJson ? "Visual editor is disabled for invalid JSON" : ""}
+            >
+              Visual Form
+            </button>
+          )}
+        </div>
+        {invalidJson && (
+          <span style={{ color: "var(--color-danger)", fontSize: "0.75rem" }}>
+            ⚠️ Invalid JSON
+          </span>
+        )}
+      </div>
+
+      {/* Editor Content Area */}
+      <div style={{ flex: 1, overflow: "auto", position: "relative", minHeight: 0 }}>
+        {editMode === "visual" && EditorComp && !invalidJson ? (
+          <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
+            <EditorComp value={parsed} onChange={handleChange} />
+          </div>
+        ) : (
+          <CodeMirror
+            value={currentValue}
+            height="100%"
+            extensions={[json()]}
+            onChange={handleChange}
+            style={{ height: "100%", width: "100%" }}
+          />
+        )}
+      </div>
+    </div>
   );
 });
 

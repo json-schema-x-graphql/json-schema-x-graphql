@@ -529,8 +529,13 @@ fn convert_type_definition(
         directives_json.push(serde_json::json!({ "name": "inaccessible" }));
     }
 
-    // @extends
-    if fed.and_then(|f| f.get("extends").and_then(|v| v.as_bool())) == Some(true) {
+    // @extends — check both flat key (canonical) and legacy nested path
+    if obj
+        .get("x-graphql-federation-extends")
+        .and_then(|v| v.as_bool())
+        == Some(true)
+        || fed.and_then(|f| f.get("extends").and_then(|v| v.as_bool())) == Some(true)
+    {
         directives_json.push(serde_json::json!({ "name": "extends" }));
     }
 
@@ -801,7 +806,20 @@ fn convert_type_definition(
                         output.push_str(&format_description(description, context.options));
                     }
                 }
-                output.push_str(&format!("{} {}", kind, type_name));
+                // Emit 'extend type/interface' when x-graphql-federation-extends is true
+                let is_extend = obj
+                    .get("x-graphql-federation-extends")
+                    .and_then(|v| v.as_bool())
+                    .unwrap_or(false)
+                    || fed
+                        .and_then(|f| f.get("extends").and_then(|v| v.as_bool()))
+                        .unwrap_or(false);
+                let keyword = if is_extend {
+                    format!("extend {}", kind)
+                } else {
+                    kind.to_string()
+                };
+                output.push_str(&format!("{} {}", keyword, type_name));
                 if !implements.is_empty() {
                     output.push_str(&format!(" implements {}", implements.join(" & ")));
                 }

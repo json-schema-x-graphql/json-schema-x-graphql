@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect, useRef, Suspense } from "react";
-import SplitPane from "react-split-pane";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
 import SchemaEditor from "./components/SchemaEditor.jsx";
@@ -24,6 +23,67 @@ const VoyagerPanel = React.lazy(() => import("./components/VoyagerPanel.jsx"));
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState("editor"); // "editor" | "visualize" | "er"
+
+  const [sidebarWidth, setSidebarWidth] = useState(300);
+  const [editorWidth, setEditorWidth] = useState(700);
+  
+  const sidebarWidthRef = useRef(300);
+  const editorWidthRef = useRef(700);
+  const containerRef = useRef(null);
+  const isResizingSidebar = useRef(false);
+  const isResizingEditor = useRef(false);
+  
+  useEffect(() => {
+    sidebarWidthRef.current = sidebarWidth;
+  }, [sidebarWidth]);
+  
+  useEffect(() => {
+    editorWidthRef.current = editorWidth;
+  }, [editorWidth]);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    if (isResizingSidebar.current) {
+      const newWidth = e.clientX - rect.left;
+      if (newWidth >= 220 && newWidth <= 500) {
+        setSidebarWidth(newWidth);
+      }
+    } else if (isResizingEditor.current) {
+      const newWidth = e.clientX - rect.left - sidebarWidthRef.current - 6;
+      if (newWidth >= 350) {
+        setEditorWidth(newWidth);
+      }
+    }
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    isResizingSidebar.current = false;
+    isResizingEditor.current = false;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  }, [handleMouseMove]);
+
+  const startResizeSidebar = useCallback((e) => {
+    e.preventDefault();
+    isResizingSidebar.current = true;
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  }, [handleMouseMove, handleMouseUp]);
+
+  const startResizeEditor = useCallback((e) => {
+    e.preventDefault();
+    isResizingEditor.current = true;
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  }, [handleMouseMove, handleMouseUp]);
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [handleMouseMove, handleMouseUp]);
 
   const {
     schemas,
@@ -228,219 +288,187 @@ export default function App() {
           </div>
         </header>
 
-        <main className="app-main">
-          <SplitPane
-            split="vertical"
-            minSize={220}
-            defaultSize={300}
-            maxSize={500}
-            allowResize
-            paneStyle={{
+        <main className="app-main" ref={containerRef} style={{ display: "flex", width: "100%", height: "100%", position: "relative" }}>
+          <div className="sidebar" style={{ width: sidebarWidth, flex: "none", height: "100%" }}>
+            <SchemaManager
+              schemas={schemas}
+              activeSchemaId={activeSchemaId}
+              onSelect={setActiveSchemaId}
+              onAdd={handleAddSchema}
+              onAddWithTemplate={handleAddWithTemplate}
+              onRemove={removeSchema}
+              onRename={renameSchema}
+              onReorder={reorderSchemas}
+              onClear={clearAll}
+              onToggleSchema={toggleSchema}
+              isLoading={isLoading}
+            />
+          </div>
+          
+          <div className="resizer-col" onMouseDown={startResizeSidebar} />
+
+          <div
+            className="editor-and-directives"
+            style={{
               display: "flex",
               flexDirection: "column",
               height: "100%",
-            }}
-            style={{ display: "flex", flex: 1, height: "100%" }}
-            resizerStyle={{
-              background: "#eee",
-              width: "6px",
-              cursor: "col-resize",
-              zIndex: 2,
+              width: editorWidth,
+              flex: "none",
             }}
           >
-            <div className="sidebar">
-              <SchemaManager
-                schemas={schemas}
-                activeSchemaId={activeSchemaId}
-                onSelect={setActiveSchemaId}
-                onAdd={handleAddSchema}
-                onAddWithTemplate={handleAddWithTemplate}
-                onRemove={removeSchema}
-                onRename={renameSchema}
-                onReorder={reorderSchemas}
-                onClear={clearAll}
-                onToggleSchema={toggleSchema}
-                isLoading={isLoading}
-              />
+            <div className="editor-section" style={{ flex: 1 }}>
+              {activeSchema ? (
+                <SchemaEditor
+                  schema={activeSchema}
+                  onUpdate={(content) =>
+                    updateSchema(activeSchema.id, content)
+                  }
+                  onGenerate={handleGenerate}
+                  isLoading={isLoading}
+                />
+              ) : (
+                <div className="empty-state">
+                  <p>No schema selected</p>
+                  <button
+                    onClick={handleAddSchema}
+                    className="btn btn-primary"
+                  >
+                    Add First Schema
+                  </button>
+                </div>
+              )}
             </div>
-            <SplitPane
-              split="vertical"
-              minSize={350}
-              defaultSize={700}
-              maxSize={-300}
-              allowResize
-              paneStyle={{
+            {/* Federation Directive Suggestions */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="directives-panel">
+                <DirectiveSuggester
+                  suggestions={suggestions}
+                  supergraphSdl={supergraphSDL}
+                  onApplyDirectives={handleApplyDirectives}
+                  onDismissSuggestion={handleDismissSuggestion}
+                  isLoading={suggestionsLoading}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="resizer-col" onMouseDown={startResizeEditor} />
+
+          <div className="editor-section" style={{ flex: 1, minWidth: 300 }}>
+            {/* Tab bar to switch between Preview, Visualize, and ER Diagram */}
+            <div
+              style={{
                 display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
-              style={{ display: "flex", flex: 1, height: "100%" }}
-              resizerStyle={{
-                background: "#eee",
-                width: "6px",
-                cursor: "col-resize",
-                zIndex: 2,
+                gap: 0,
+                borderBottom: "1px solid var(--color-border)",
+                background: "var(--color-bg-secondary)",
+                flexShrink: 0,
               }}
             >
-              <div
-                className="editor-and-directives"
+              <button
+                className={`tab-btn ${activeTab === "editor" ? "active" : ""}`}
+                onClick={() => setActiveTab("editor")}
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%",
+                  padding: "var(--spacing-sm) var(--spacing-md)",
+                  border: "none",
+                  background:
+                    activeTab === "editor" ? "white" : "transparent",
+                  cursor: "pointer",
+                  fontSize: "0.875rem",
+                  fontWeight: activeTab === "editor" ? "600" : "400",
+                  color: "var(--color-text)",
+                  borderBottom:
+                    activeTab === "editor"
+                      ? "2px solid var(--color-primary)"
+                      : "2px solid transparent",
                 }}
               >
-                <div className="editor-section">
-                  {activeSchema ? (
-                    <SchemaEditor
-                      schema={activeSchema}
-                      onUpdate={(content) =>
-                        updateSchema(activeSchema.id, content)
-                      }
-                      onGenerate={handleGenerate}
-                      isLoading={isLoading}
-                    />
-                  ) : (
-                    <div className="empty-state">
-                      <p>No schema selected</p>
-                      <button
-                        onClick={handleAddSchema}
-                        className="btn btn-primary"
-                      >
-                        Add First Schema
-                      </button>
-                    </div>
-                  )}
-                </div>
-                {/* Federation Directive Suggestions */}
-                {showSuggestions && suggestions.length > 0 && (
-                  <div className="directives-panel">
-                    <DirectiveSuggester
-                      suggestions={suggestions}
-                      supergraphSdl={supergraphSDL}
-                      onApplyDirectives={handleApplyDirectives}
-                      onDismissSuggestion={handleDismissSuggestion}
-                      isLoading={suggestionsLoading}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="editor-section">
-                {/* Tab bar to switch between Preview, Visualize, and ER Diagram */}
-                <div
+                Preview
+              </button>
+              {supergraphSDL && (
+                <button
+                  className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
+                  onClick={() => setActiveTab("visualize")}
                   style={{
-                    display: "flex",
-                    gap: 0,
-                    borderBottom: "1px solid var(--color-border)",
-                    background: "var(--color-bg-secondary)",
-                    flexShrink: 0,
+                    padding: "var(--spacing-sm) var(--spacing-md)",
+                    border: "none",
+                    background:
+                      activeTab === "visualize" ? "white" : "transparent",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                    fontWeight: activeTab === "visualize" ? "600" : "400",
+                    color: "var(--color-text)",
+                    borderBottom:
+                      activeTab === "visualize"
+                        ? "2px solid var(--color-primary)"
+                        : "2px solid transparent",
                   }}
                 >
-                  <button
-                    className={`tab-btn ${activeTab === "editor" ? "active" : ""}`}
-                    onClick={() => setActiveTab("editor")}
+                  Visualize
+                </button>
+              )}
+            </div>
+
+            {activeTab === "editor" ? (
+              <>
+                {/* Subgraph Editor for the active subgraph with SDL/Stats */}
+                {subgraphs && subgraphs.length > 0 ? (
+                  <SubgraphEditor
+                    subgraph={{
+                      name: activeSchema?.name || "Subgraph 1",
+                      content: subgraphs[0].sdl || "",
+                    }}
+                    onUpdate={(_content) => {
+                      /* TODO: implement subgraph update logic */
+                    }}
+                    isLoading={isLoading}
+                    sdl={supergraphSDL}
+                    stats={compositionStats}
+                    errors={compositionErrors}
+                    schemas={schemas}
+                    subgraphCount={subgraphs.length}
+                  />
+                ) : (
+                  <div
+                    className="schema-editor"
                     style={{
-                      padding: "var(--spacing-sm) var(--spacing-md)",
-                      border: "none",
-                      background:
-                        activeTab === "editor" ? "white" : "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
-                      fontWeight: activeTab === "editor" ? "600" : "400",
-                      color: "var(--color-text)",
-                      borderBottom:
-                        activeTab === "editor"
-                          ? "2px solid var(--color-primary)"
-                          : "2px solid transparent",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      background: "white",
+                      borderRadius: "var(--radius-md)",
+                      boxShadow: "var(--shadow-sm)",
+                      border: "1px solid var(--color-border)",
                     }}
                   >
-                    Preview
-                  </button>
-                  {supergraphSDL && (
-                    <button
-                      className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
-                      onClick={() => setActiveTab("visualize")}
-                      style={{
-                        padding: "var(--spacing-sm) var(--spacing-md)",
-                        border: "none",
-                        background:
-                          activeTab === "visualize" ? "white" : "transparent",
-                        cursor: "pointer",
-                        fontSize: "0.875rem",
-                        fontWeight: activeTab === "visualize" ? "600" : "400",
-                        color: "var(--color-text)",
-                        borderBottom:
-                          activeTab === "visualize"
-                            ? "2px solid var(--color-primary)"
-                            : "2px solid transparent",
-                      }}
-                    >
-                      Visualize
-                    </button>
-                  )}
-                </div>
-
-                {activeTab === "editor" ? (
-                  <>
-                    {/* Subgraph Editor for the active subgraph with SDL/Stats */}
-                    {subgraphs && subgraphs.length > 0 ? (
-                      <SubgraphEditor
-                        subgraph={{
-                          name: activeSchema?.name || "Subgraph 1",
-                          content: subgraphs[0].sdl || "",
-                        }}
-                        onUpdate={(_content) => {
-                          /* TODO: implement subgraph update logic */
-                        }}
-                        isLoading={isLoading}
-                        sdl={supergraphSDL}
-                        stats={compositionStats}
-                        errors={compositionErrors}
-                        schemas={schemas}
-                        subgraphCount={subgraphs.length}
-                      />
-                    ) : (
-                      <div
-                        className="schema-editor"
-                        style={{
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          background: "white",
-                          borderRadius: "var(--radius-md)",
-                          boxShadow: "var(--shadow-sm)",
-                          border: "1px solid var(--color-border)",
-                        }}
-                      >
-                        <div className="editor-header">
-                          <div className="editor-title">Subgraph Preview</div>
-                        </div>
-                        <div className="empty-state">
-                          <p>Click "Generate" to create a subgraph</p>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                ) : activeTab === "visualize" ? (
-                  <Suspense
-                    fallback={
-                      <div className="empty-state">Loading ER diagram...</div>
-                    }
-                  >
-                    <ERDiagramPanel
-                      supergraphSDL={supergraphSDL}
-                      schemas={schemas}
-                      typeSources={typeSources}
-                    />
-                  </Suspense>
-                ) : (
-                  <div />
+                    <div className="editor-header">
+                      <div className="editor-title">Subgraph Preview</div>
+                    </div>
+                    <div className="empty-state">
+                      <p>Click "Generate" to create a subgraph</p>
+                    </div>
+                  </div>
                 )}
-              </div>
-            </SplitPane>
-          </SplitPane>
+              </>
+            ) : activeTab === "visualize" ? (
+              <Suspense
+                fallback={
+                  <div className="empty-state">Loading ER diagram...</div>
+                }
+              >
+                <ERDiagramPanel
+                  supergraphSDL={supergraphSDL}
+                  schemas={schemas}
+                  typeSources={typeSources}
+                />
+              </Suspense>
+            ) : (
+              <div />
+            )}
+          </div>
         </main>
 
         <footer className="app-footer">

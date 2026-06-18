@@ -5,12 +5,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
 
-// Mock react-split-pane to avoid layout issues in jsdom
-jest.mock("react-split-pane", () => {
-  return function SplitPane({ children }) {
-    return <div>{children}</div>;
-  };
-});
 
 describe("Visualize Integration", () => {
   beforeEach(() => {
