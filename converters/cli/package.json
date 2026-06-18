@@ -4,7 +4,8 @@
   "description": "CLI tools for json-schema-x-graphql",
   "bin": {
     "json-schema-x-graphql": "dist/index.js",
-    "jxql-validate": "dist/validate.js"
+    "jxql-validate": "dist/validate.js",
+    "jxql-migrate": "dist/migrate.js"
   },
   "type": "module",
   "main": "dist/index.js",

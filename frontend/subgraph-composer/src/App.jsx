@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useEffect, useRef, Suspense } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  Suspense,
+} from "react";
 import "./App.css";
 import SchemaManager from "./components/SchemaManager.jsx";
 import SchemaEditor from "./components/SchemaEditor.jsx";
@@ -26,17 +32,17 @@ export default function App() {
 
   const [sidebarWidth, setSidebarWidth] = useState(300);
   const [editorWidth, setEditorWidth] = useState(700);
-  
+
   const sidebarWidthRef = useRef(300);
   const editorWidthRef = useRef(700);
   const containerRef = useRef(null);
   const isResizingSidebar = useRef(false);
   const isResizingEditor = useRef(false);
-  
+
   useEffect(() => {
     sidebarWidthRef.current = sidebarWidth;
   }, [sidebarWidth]);
-  
+
   useEffect(() => {
     editorWidthRef.current = editorWidth;
   }, [editorWidth]);
@@ -64,19 +70,25 @@ export default function App() {
     document.removeEventListener("mouseup", handleMouseUp);
   }, [handleMouseMove]);
 
-  const startResizeSidebar = useCallback((e) => {
-    e.preventDefault();
-    isResizingSidebar.current = true;
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove, handleMouseUp]);
+  const startResizeSidebar = useCallback(
+    (e) => {
+      e.preventDefault();
+      isResizingSidebar.current = true;
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [handleMouseMove, handleMouseUp],
+  );
 
-  const startResizeEditor = useCallback((e) => {
-    e.preventDefault();
-    isResizingEditor.current = true;
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-  }, [handleMouseMove, handleMouseUp]);
+  const startResizeEditor = useCallback(
+    (e) => {
+      e.preventDefault();
+      isResizingEditor.current = true;
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    },
+    [handleMouseMove, handleMouseUp],
+  );
 
   useEffect(() => {
     return () => {
@@ -151,7 +163,11 @@ export default function App() {
   // `subgraphs` being a new array reference on every render.
   const prevSDLRef = useRef(null);
   useEffect(() => {
-    if (supergraphSDL && supergraphSDL !== prevSDLRef.current && subgraphs.length > 1) {
+    if (
+      supergraphSDL &&
+      supergraphSDL !== prevSDLRef.current &&
+      subgraphs.length > 1
+    ) {
       prevSDLRef.current = supergraphSDL;
       generateSuggestions(subgraphs, supergraphSDL);
     }
@@ -288,8 +304,20 @@ export default function App() {
           </div>
         </header>
 
-        <main className="app-main" ref={containerRef} style={{ display: "flex", width: "100%", height: "100%", position: "relative" }}>
-          <div className="sidebar" style={{ width: sidebarWidth, flex: "none", height: "100%" }}>
+        <main
+          className="app-main"
+          ref={containerRef}
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            position: "relative",
+          }}
+        >
+          <div
+            className="sidebar"
+            style={{ width: sidebarWidth, flex: "none", height: "100%" }}
+          >
             <SchemaManager
               schemas={schemas}
               activeSchemaId={activeSchemaId}
@@ -304,7 +332,7 @@ export default function App() {
               isLoading={isLoading}
             />
           </div>
-          
+
           <div className="resizer-col" onMouseDown={startResizeSidebar} />
 
           <div
@@ -321,19 +349,14 @@ export default function App() {
               {activeSchema ? (
                 <SchemaEditor
                   schema={activeSchema}
-                  onUpdate={(content) =>
-                    updateSchema(activeSchema.id, content)
-                  }
+                  onUpdate={(content) => updateSchema(activeSchema.id, content)}
                   onGenerate={handleGenerate}
                   isLoading={isLoading}
                 />
               ) : (
                 <div className="empty-state">
                   <p>No schema selected</p>
-                  <button
-                    onClick={handleAddSchema}
-                    className="btn btn-primary"
-                  >
+                  <button onClick={handleAddSchema} className="btn btn-primary">
                     Add First Schema
                   </button>
                 </div>
@@ -372,8 +395,7 @@ export default function App() {
                 style={{
                   padding: "var(--spacing-sm) var(--spacing-md)",
                   border: "none",
-                  background:
-                    activeTab === "editor" ? "white" : "transparent",
+                  background: activeTab === "editor" ? "white" : "transparent",
                   cursor: "pointer",
                   fontSize: "0.875rem",
                   fontWeight: activeTab === "editor" ? "600" : "400",

@@ -54,7 +54,9 @@ export default function ERDiagramPanel({
     process.env.NODE_ENV === "test";
 
   const [viewMode, setViewMode] = useState("diagram"); // "diagram" | "mermaid"
-  const [mermaidViewMode, setMermaidViewMode] = useState(isTest ? "code" : "preview"); // "preview" | "code"
+  const [mermaidViewMode, setMermaidViewMode] = useState(
+    isTest ? "code" : "preview",
+  ); // "preview" | "code"
   const [mermaidText, setMermaidText] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -101,7 +103,12 @@ export default function ERDiagramPanel({
 
   // Dynamic visual mermaid rendering
   useEffect(() => {
-    if (isTest || viewMode !== "mermaid" || mermaidViewMode !== "preview" || !mermaidText) {
+    if (
+      isTest ||
+      viewMode !== "mermaid" ||
+      mermaidViewMode !== "preview" ||
+      !mermaidText
+    ) {
       return;
     }
 
@@ -138,7 +145,13 @@ export default function ERDiagramPanel({
   return (
     <div className="er-diagram-panel">
       <div className="er-diagram-toolbar">
-        <div style={{ display: "flex", gap: "var(--spacing-md)", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "var(--spacing-md)",
+            alignItems: "center",
+          }}
+        >
           <div className="er-diagram-toggle-group">
             <button
               className={`er-diagram-toggle-btn ${viewMode === "diagram" ? "active" : ""}`}
@@ -212,12 +225,25 @@ export default function ERDiagramPanel({
             </div>
           )
         ) : (
-          <div className="er-diagram-mermaid" style={{ height: "100%", width: "100%", boxSizing: "border-box", padding: "var(--spacing-md)", display: "flex", flexDirection: "column" }}>
+          <div
+            className="er-diagram-mermaid"
+            style={{
+              height: "100%",
+              width: "100%",
+              boxSizing: "border-box",
+              padding: "var(--spacing-md)",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             {mermaidText ? (
               mermaidViewMode === "preview" ? (
                 mermaidRenderError ? (
                   <div className="er-diagram-empty">
-                    <p>Failed to visually render Mermaid diagram. See the Mermaid Code view.</p>
+                    <p>
+                      Failed to visually render Mermaid diagram. See the Mermaid
+                      Code view.
+                    </p>
                   </div>
                 ) : (
                   <div
@@ -233,12 +259,25 @@ export default function ERDiagramPanel({
                       borderRadius: "var(--radius-md)",
                       padding: "var(--spacing-md)",
                     }}
-                    dangerouslySetInnerHTML={{ __html: svgContent || "<div style='color: var(--color-text-light)'>Rendering diagram...</div>" }}
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        svgContent ||
+                        "<div style='color: var(--color-text-light)'>Rendering diagram...</div>",
+                    }}
                   />
                 )
               ) : (
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-                  <pre className="er-diagram-mermaid-code" style={{ flex: 1 }}>{mermaidText}</pre>
+                <div
+                  style={{
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    minHeight: 0,
+                  }}
+                >
+                  <pre className="er-diagram-mermaid-code" style={{ flex: 1 }}>
+                    {mermaidText}
+                  </pre>
                   <button
                     className="er-diagram-copy-btn"
                     onClick={() => navigator.clipboard?.writeText(mermaidText)}

@@ -737,4 +737,62 @@ describe("Converter Improvements", () => {
       expect(result).toContain("A user in the system");
     });
   });
+
+  describe("Backward Compatibility Normalization Shim", () => {
+    test("should normalize deprecated nested x-graphql-federation and issue a console warning", () => {
+      const consoleWarnSpy = jest
+        .spyOn(console, "warn")
+        .mockImplementation(() => {});
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "User",
+        "x-graphql-federation": {
+          keys: [{ fields: "id" }],
+          shareable: true,
+          external: true,
+          provides: "username",
+          override: { from: "legacy-service" },
+          extends: true,
+          requires: "someField",
+        },
+        properties: {
+          id: { type: "string" },
+          username: { type: "string" },
+          someField: { type: "string" },
+        },
+      };
+
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain('@key(fields: "id")');
+      expect(result).toContain("@shareable");
+      expect(result).toContain("@extends");
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "The nested `x-graphql-federation` object format is deprecated",
+        ),
+      );
+      consoleWarnSpy.mockRestore();
+    });
+
+    test("should not warn if schema does not use deprecated nested format", () => {
+      const consoleWarnSpy = jest
+        .spyOn(console, "warn")
+        .mockImplementation(() => {});
+      const schema = {
+        type: "object",
+        "x-graphql-type-name": "User",
+        "x-graphql-federation-keys": ["id"],
+        "x-graphql-federation-shareable": true,
+        properties: {
+          id: { type: "string" },
+        },
+      };
+
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain('@key(fields: "id")');
+      expect(result).toContain("@shareable");
+      expect(consoleWarnSpy).not.toHaveBeenCalled();
+      consoleWarnSpy.mockRestore();
+    });
+  });
 });

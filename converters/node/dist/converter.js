@@ -8,7 +8,8 @@
 export * from "./generated/types.js";
 import { parse, print } from "graphql";
 import { camelToSnake, snakeToCamel } from "./case-conversion.js";
-import { extractDirectives, printDirectives, } from "./normalization/directives.js";
+import { extractDirectives, normalizeFederationExtensions, printDirectives, } from "./normalization/directives.js";
+export { normalizeFederationExtensions };
 import { ensureConnectionType } from "./features/relay.js";
 import { otelTracer } from "./otel.js";
 // ExtendedConverterOptions and others moved to interfaces.ts
@@ -83,9 +84,10 @@ export function jsonSchemaToGraphQL(jsonSchemaInput, options = {}) {
     });
 }
 function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
-    const schema = typeof jsonSchemaInput === "string"
+    const schemaRaw = typeof jsonSchemaInput === "string"
         ? JSON.parse(jsonSchemaInput)
         : jsonSchemaInput;
+    const schema = normalizeFederationExtensions(schemaRaw);
     const normalized = normalizeOptions(options);
     const resolvedFederation = normalized.federationVersion === "AUTO"
         ? detectFederationVersion(schema)
@@ -831,7 +833,8 @@ function emitImpliedScalars(context) {
     const standardScalars = new Set(["String", "Int", "Float", "Boolean", "ID"]);
     const lines = [];
     let addedHeader = false;
-    for (const scalar of context.usedScalars) {
+    const sortedScalars = Array.from(context.usedScalars).sort();
+    for (const scalar of sortedScalars) {
         if (existing.has(scalar))
             continue;
         if (context.generatedTypes.has(scalar))

@@ -523,6 +523,9 @@
     "^x-graphql-federation-external$": {
       "type": "boolean"
     },
+    "^x-graphql-federation-extends$": {
+      "type": "boolean"
+    },
     "^x-graphql-federation-requires$": {
       "$ref": "#/$defs/graphqlFieldSelection"
     },

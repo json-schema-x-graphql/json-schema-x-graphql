@@ -497,9 +497,11 @@ fn convert_type_definition(
                     if let Some(fields) = key_obj.get("fields") {
                         let mut args = serde_json::json!({ "fields": fields });
                         if let Some(resolvable) = key_obj.get("resolvable") {
-                            args.as_object_mut()
-                                .unwrap()
-                                .insert("resolvable".to_string(), resolvable.clone());
+                            if resolvable.as_bool() == Some(false) {
+                                args.as_object_mut()
+                                    .unwrap()
+                                    .insert("resolvable".to_string(), resolvable.clone());
+                            }
                         }
                         directives_json
                             .push(serde_json::json!({ "name": "key", "arguments": args }));
@@ -1723,6 +1725,151 @@ fn extract_type_name_from_ref(
     Some(sanitize_type_name(&raw, convention))
 }
 
+pub fn normalize_federation_extensions(value: &mut JsonValue, warned: &mut bool) {
+    match value {
+        JsonValue::Object(map) => {
+            if let Some(JsonValue::Object(nested)) = map.remove("x-graphql-federation") {
+                if !*warned {
+                    eprintln!(
+                        "The nested `x-graphql-federation` object format is deprecated and will be removed in v2.0. \
+                         Please migrate to the flat `x-graphql-federation-*` format. \
+                         See: https://github.com/json-schema-x-graphql/json-schema-x-graphql/blob/main/docs/adr/0013-federation-extension-format-recommendation.md"
+                    );
+                    *warned = true;
+                }
+
+                if let Some(keys) = nested.get("keys") {
+                    if let Some(arr) = keys.as_array() {
+                        let normalized_keys: Vec<JsonValue> = arr
+                            .iter()
+                            .map(|k| match k {
+                                JsonValue::String(_) => k.clone(),
+                                JsonValue::Object(key_obj) => {
+                                    if let Some(fields) = key_obj.get("fields") {
+                                        if let Some(resolvable) = key_obj.get("resolvable") {
+                                            serde_json::json!({
+                                                "fields": fields.clone(),
+                                                "resolvable": resolvable.clone()
+                                            })
+                                        } else {
+                                            fields.clone()
+                                        }
+                                    } else {
+                                        k.clone()
+                                    }
+                                }
+                                _ => k.clone(),
+                            })
+                            .collect();
+                        map.insert(
+                            "x-graphql-federation-keys".to_string(),
+                            JsonValue::Array(normalized_keys),
+                        );
+                    } else if keys.is_string() {
+                        map.insert("x-graphql-federation-keys".to_string(), keys.clone());
+                    }
+                }
+
+                if let Some(external) = nested.get("external") {
+                    map.insert(
+                        "x-graphql-federation-external".to_string(),
+                        external.clone(),
+                    );
+                }
+                if let Some(provides) = nested.get("provides") {
+                    map.insert(
+                        "x-graphql-federation-provides".to_string(),
+                        provides.clone(),
+                    );
+                }
+                if let Some(requires) = nested.get("requires") {
+                    map.insert(
+                        "x-graphql-federation-requires".to_string(),
+                        requires.clone(),
+                    );
+                }
+                if let Some(shareable) = nested.get("shareable") {
+                    map.insert(
+                        "x-graphql-federation-shareable".to_string(),
+                        shareable.clone(),
+                    );
+                }
+                if let Some(inaccessible) = nested.get("inaccessible") {
+                    map.insert(
+                        "x-graphql-federation-inaccessible".to_string(),
+                        inaccessible.clone(),
+                    );
+                }
+                if let Some(authenticated) = nested.get("authenticated") {
+                    map.insert(
+                        "x-graphql-federation-authenticated".to_string(),
+                        authenticated.clone(),
+                    );
+                }
+                if let Some(interface_object) = nested
+                    .get("interfaceObject")
+                    .or_else(|| nested.get("interface-object"))
+                {
+                    map.insert(
+                        "x-graphql-federation-interface-object".to_string(),
+                        interface_object.clone(),
+                    );
+                }
+                if let Some(requires_scopes) = nested
+                    .get("requiresScopes")
+                    .or_else(|| nested.get("requires-scopes"))
+                {
+                    map.insert(
+                        "x-graphql-federation-requires-scopes".to_string(),
+                        requires_scopes.clone(),
+                    );
+                }
+                if let Some(policy) = nested.get("policy") {
+                    map.insert("x-graphql-federation-policy".to_string(), policy.clone());
+                }
+                if let Some(tags) = nested.get("tags") {
+                    map.insert("x-graphql-federation-tags".to_string(), tags.clone());
+                }
+                if let Some(JsonValue::Object(override_obj)) = nested.get("override") {
+                    if let Some(from) = override_obj.get("from") {
+                        map.insert(
+                            "x-graphql-federation-override-from".to_string(),
+                            from.clone(),
+                        );
+                    }
+                }
+                if let Some(extends) = nested.get("extends") {
+                    map.insert("x-graphql-federation-extends".to_string(), extends.clone());
+                }
+            }
+
+            // Recurse into children
+            for (key, val) in map.iter_mut() {
+                if key == "$defs"
+                    || key == "definitions"
+                    || key == "properties"
+                    || key == "allOf"
+                    || key == "anyOf"
+                    || key == "oneOf"
+                    || key == "items"
+                    || ((val.is_object() || val.is_array())
+                        && key != "enum"
+                        && key != "required"
+                        && !key.starts_with("x-graphql-federation"))
+                {
+                    normalize_federation_extensions(val, warned);
+                }
+            }
+        }
+        JsonValue::Array(arr) => {
+            for val in arr {
+                normalize_federation_extensions(val, warned);
+            }
+        }
+        _ => {}
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2229,5 +2376,46 @@ mod tests {
         assert!(result.contains("type User"));
         assert!(!result.contains("type UserFilter"));
         assert!(!result.contains("type Query"));
+    }
+
+    #[test]
+    fn test_normalize_federation_extensions() {
+        let mut schema = json!({
+            "type": "object",
+            "x-graphql-type-name": "User",
+            "x-graphql-federation": {
+                "keys": [{ "fields": "id" }],
+                "shareable": true,
+                "extends": true
+            },
+            "properties": {
+                "id": { "type": "string" }
+            }
+        });
+
+        let mut warned = false;
+        normalize_federation_extensions(&mut schema, &mut warned);
+        assert!(warned);
+
+        assert_eq!(
+            schema.get("x-graphql-federation-keys").unwrap(),
+            &json!(["id"])
+        );
+        assert_eq!(
+            schema.get("x-graphql-federation-shareable").unwrap(),
+            &json!(true)
+        );
+        assert_eq!(
+            schema.get("x-graphql-federation-extends").unwrap(),
+            &json!(true)
+        );
+        assert!(schema.get("x-graphql-federation").is_none());
+
+        // Test with conversion
+        let options = ConversionOptions::default();
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("@key(fields: \"id\")"));
+        assert!(result.contains("@shareable"));
+        assert!(result.contains("extend type User"));
     }
 }

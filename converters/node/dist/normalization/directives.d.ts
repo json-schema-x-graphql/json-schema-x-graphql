@@ -6,3 +6,6 @@ export interface GeneralizedDirective {
 }
 export declare function extractDirectives(schema: JsonSchema, options?: NormalizedConverterOptions): GeneralizedDirective[];
 export declare function printDirectives(directives: GeneralizedDirective[]): string;
+export declare function normalizeFederationExtensions(schema: any, warnedState?: {
+    warned: boolean;
+}): any;

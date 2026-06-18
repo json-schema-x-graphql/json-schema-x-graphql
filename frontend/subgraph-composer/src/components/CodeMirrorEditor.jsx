@@ -153,7 +153,14 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+      }}
+    >
       {/* Editor Tab Bar */}
       <div
         style={{
@@ -186,7 +193,9 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
               }}
               disabled={invalidJson}
               style={{ padding: "4px 8px", fontSize: "0.75rem" }}
-              title={invalidJson ? "Visual editor is disabled for invalid JSON" : ""}
+              title={
+                invalidJson ? "Visual editor is disabled for invalid JSON" : ""
+              }
             >
               Visual Form
             </button>
@@ -200,7 +209,14 @@ const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
       </div>
 
       {/* Editor Content Area */}
-      <div style={{ flex: 1, overflow: "auto", position: "relative", minHeight: 0 }}>
+      <div
+        style={{
+          flex: 1,
+          overflow: "auto",
+          position: "relative",
+          minHeight: 0,
+        }}
+      >
         {editMode === "visual" && EditorComp && !invalidJson ? (
           <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
             <EditorComp value={parsed} onChange={handleChange} />

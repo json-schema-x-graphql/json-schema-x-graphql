@@ -32,8 +32,10 @@ import { camelToSnake, snakeToCamel } from "./case-conversion.js";
 import {
   extractDirectives,
   GeneralizedDirective,
+  normalizeFederationExtensions,
   printDirectives,
 } from "./normalization/directives.js";
+export { normalizeFederationExtensions };
 import { ensureConnectionType } from "./features/relay.js";
 import { otelTracer } from "./otel.js";
 
@@ -134,10 +136,11 @@ function jsonSchemaToGraphQLInternal(
   jsonSchemaInput: JsonSchemaInput,
   options: ExtendedConverterOptions = {},
 ): string {
-  const schema =
+  const schemaRaw =
     typeof jsonSchemaInput === "string"
       ? (JSON.parse(jsonSchemaInput) as JsonSchema)
       : jsonSchemaInput;
+  const schema = normalizeFederationExtensions(schemaRaw) as JsonSchema;
 
   const normalized = normalizeOptions(options);
   const resolvedFederation =
@@ -1124,7 +1127,8 @@ function emitImpliedScalars(context: ConversionContext) {
   const lines: string[] = [];
   let addedHeader = false;
 
-  for (const scalar of context.usedScalars) {
+  const sortedScalars = Array.from(context.usedScalars).sort();
+  for (const scalar of sortedScalars) {
     if (existing.has(scalar)) continue;
     if (context.generatedTypes.has(scalar)) continue;
     if (standardScalars.has(scalar)) continue;

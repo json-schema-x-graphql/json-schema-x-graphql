@@ -61,7 +61,7 @@ class SchemaValidator {
                     }
                 }
             }
-            catch (err) {
+            catch (_err) {
                 // Directory might not exist, skip
             }
         };
@@ -388,7 +388,7 @@ function main() {
     }
     console.log("✅ Schema validation complete\n");
 }
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
     main();
 }
 export { SchemaValidator };

@@ -96,7 +96,7 @@ info "Using RUSTFLAGS: ${RUSTFLAGS_TO_USE}"
   export RUSTFLAGS="${RUSTFLAGS_TO_USE}"
 
   info "Invoking wasm-pack build (target=web) from: ${RUST_CRATE_DIR}"
-  wasm-pack build --target web --out-dir "${WASM_OUT_DIR}"
+  wasm-pack build --target web --out-dir "${WASM_OUT_DIR}" --dev
 )
 
 # List results

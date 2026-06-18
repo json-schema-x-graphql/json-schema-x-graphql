@@ -57,7 +57,7 @@ type Address {
   custAddress5: String
 }
 
-type Solicitation {
+type Solicitation @key(fields: "solicitation_number amendment_number") {
   destination: String
   origin: String
   createBy: String
@@ -243,7 +243,7 @@ type SolicitationClause {
   clauseFullText: String
 }
 
-type Requisition {
+type Requisition @key(fields: "requisition_number amendment_number") {
   criticalityDesignator: String
   origin: String
   externalFinanceDoc: String

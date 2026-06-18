@@ -148,8 +148,11 @@ impl Converter {
             tracer.start("json_schema_to_graphql")
         };
 
-        let schema: JsonValue = serde_json::from_str(json_schema)
+        let mut schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
+
+        let mut warned = false;
+        json_to_graphql::normalize_federation_extensions(&mut schema, &mut warned);
 
         if self.options.validate {
             validator::validate_json_schema(&schema)?;
