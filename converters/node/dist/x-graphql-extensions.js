@@ -99,6 +99,8 @@ export function extractExtensions(schema) {
                         extensions.federationShareable = fed.shareable;
                     if (fed.inaccessible)
                         extensions.federationInaccessible = fed.inaccessible;
+                    if (fed.extends)
+                        extensions.federationExtends = fed.extends;
                     if (fed.authenticated) {
                         // Add to directives if not handled by interface properties
                         const directives = extensions.typeDirectives || [];
@@ -135,6 +137,9 @@ export function extractExtensions(schema) {
                 break;
             case "federation-inaccessible":
                 extensions.federationInaccessible = value;
+                break;
+            case "federation-extends":
+                extensions.federationExtends = value;
                 break;
             case "federation-tag":
                 extensions.federationTag = value;

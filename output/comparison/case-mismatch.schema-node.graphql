@@ -34,6 +34,6 @@ type Casemismatchtest {
 }
 
 # Implied Scalars
-scalar Email
 scalar DateTime
+scalar Email
 scalar URI

@@ -18,7 +18,7 @@ scalar Email
 scalar Uri
 
 """Root Intake Process entity combining system metadata and Intake Process-specific extension data."""
-type EasiRecord {
+type EasiRecord @key(fields: "business_owner system_owner source_record_id") {
   "System-level lineage and ingestion metadata."
   systemMetadata: SystemMetadata!
   "Domain-specific fields unique to Intake Process."
@@ -90,5 +90,5 @@ type IntakeProcessCanonicalSchema {
 }
 
 # Implied Scalars
-scalar DateTime
 scalar Date
+scalar DateTime

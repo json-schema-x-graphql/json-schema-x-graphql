@@ -358,11 +358,12 @@ export function validateExtensions(
     }
   }
 
-  // Validate federation booleans
   for (const attr of [
     "federationShareable",
     "federationExternal",
     "federationInaccessible",
+    "federationExtends",
+    "federationAuthenticated",
   ]) {
     const value = extensions[attr as keyof XGraphQLExtensions];
     if (value !== undefined && typeof value !== "boolean") {
@@ -470,6 +471,9 @@ export function validateExtensionValue(
     case "x-graphql-field-list-item-non-null":
     case "x-graphql-federation-shareable":
     case "x-graphql-federation-external":
+    case "x-graphql-federation-inaccessible":
+    case "x-graphql-federation-extends":
+    case "x-graphql-federation-authenticated":
       if (typeof value !== "boolean") {
         errors.push({
           path,

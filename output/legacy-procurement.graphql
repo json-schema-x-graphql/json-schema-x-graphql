@@ -18,7 +18,7 @@ scalar Email
 scalar Uri
 
 """Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
-type AssistRecord {
+type AssistRecord @key(fields: "ia_piid_or_unique_id source_record_id") {
   "System-level metadata for lineage, versioning, and ingestion."
   systemMetadata: SystemMetadata!
   "Legacy Procurement-specific domain fields."
@@ -114,6 +114,6 @@ type LegacyProcurementCanonicalSchema {
 }
 
 # Implied Scalars
+scalar Date
 scalar DateTime
 scalar Email
-scalar Date

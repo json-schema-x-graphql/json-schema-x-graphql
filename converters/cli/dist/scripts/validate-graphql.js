@@ -41,7 +41,7 @@ class GraphQLValidator {
                     }
                 }
             }
-            catch (err) {
+            catch (_err) {
                 // Directory might not exist, skip
             }
         };
@@ -122,7 +122,7 @@ class GraphQLValidator {
                 federationVersion,
             };
         }
-        catch (err) {
+        catch (_err) {
             return {
                 types: 0,
                 fields: 0,
@@ -167,10 +167,18 @@ class GraphQLValidator {
             try {
                 let schemaSDL = sdl;
                 // Add common scalar definitions if they are missing but used
-                const commonScalars = ["DateTime", "Date", "Email", "URL", "JSON", "Void"];
+                const commonScalars = [
+                    "DateTime",
+                    "Date",
+                    "Email",
+                    "URL",
+                    "JSON",
+                    "Void",
+                ];
                 const missingScalars = commonScalars.filter((scalar) => sdl.includes(scalar) && !sdl.includes(`scalar ${scalar}`));
                 if (missingScalars.length > 0) {
-                    schemaSDL += "\n" + missingScalars.map((s) => `scalar ${s}`).join("\n");
+                    schemaSDL +=
+                        "\n" + missingScalars.map((s) => `scalar ${s}`).join("\n");
                 }
                 // If it's a federation schema, add directive definitions for standard validation
                 if (result.metadata?.isFederation) {
@@ -229,7 +237,9 @@ class GraphQLValidator {
             if (result.metadata?.isFederation && result.valid) {
                 try {
                     const subgraphAst = parse(sdl);
-                    const subgraphSchema = buildSubgraphSchema([{ typeDefs: subgraphAst }]);
+                    const subgraphSchema = buildSubgraphSchema([
+                        { typeDefs: subgraphAst },
+                    ]);
                     // Basic federation checks
                     if (!subgraphSchema) {
                         result.warnings?.push("Federation subgraph schema could not be built");
@@ -432,7 +442,7 @@ function main() {
     }
     console.log("✅ GraphQL SDL validation complete\n");
 }
-if (require.main === module) {
+if (import.meta.url === `file://${process.argv[1]}`) {
     main();
 }
 export { GraphQLValidator };

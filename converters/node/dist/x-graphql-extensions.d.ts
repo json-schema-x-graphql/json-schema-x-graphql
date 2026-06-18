@@ -36,6 +36,7 @@ export interface XGraphQLExtensions {
     federationTag?: string;
     federationRequiresScopes?: string[][];
     federationPolicy?: string[][];
+    federationExtends?: boolean;
     scalar?: string;
     enumValues?: Record<string, EnumValueConfig>;
     defaultValue?: unknown;
