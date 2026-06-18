@@ -48,10 +48,18 @@ export default function ERDiagramPanel({
   schemas,
   typeSources,
 }) {
+  const isTest =
+    typeof process !== "undefined" &&
+    process.env &&
+    process.env.NODE_ENV === "test";
+
   const [viewMode, setViewMode] = useState("diagram"); // "diagram" | "mermaid"
+  const [mermaidViewMode, setMermaidViewMode] = useState(isTest ? "code" : "preview"); // "preview" | "code"
   const [mermaidText, setMermaidText] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [svgContent, setSvgContent] = useState("");
+  const [mermaidRenderError, setMermaidRenderError] = useState(false);
 
   const erData = useMemo(() => {
     if (!supergraphSDL) return { nodes: [], edges: [], subgraphs: [] };
@@ -91,6 +99,36 @@ export default function ERDiagramPanel({
     }
   }, [erData, setNodes, setEdges]);
 
+  // Dynamic visual mermaid rendering
+  useEffect(() => {
+    if (isTest || viewMode !== "mermaid" || mermaidViewMode !== "preview" || !mermaidText) {
+      return;
+    }
+
+    const renderDiagram = async () => {
+      try {
+        const mermaid = (await import("mermaid")).default;
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: "default",
+          securityLevel: "loose",
+          fontFamily: "Arial, sans-serif",
+          fontSize: 14,
+        });
+
+        const randomId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
+        const { svg } = await mermaid.render(randomId, mermaidText);
+        setSvgContent(svg);
+        setMermaidRenderError(false);
+      } catch (error) {
+        console.error("Error rendering Mermaid diagram:", error);
+        setMermaidRenderError(true);
+      }
+    };
+
+    renderDiagram();
+  }, [viewMode, mermaidViewMode, mermaidText, isTest]);
+
   const handleExport = useCallback(() => {
     exportMermaidER(erData, "federation-er-diagram.mmd");
   }, [erData]);
@@ -100,21 +138,42 @@ export default function ERDiagramPanel({
   return (
     <div className="er-diagram-panel">
       <div className="er-diagram-toolbar">
-        <div className="er-diagram-toggle-group">
-          <button
-            className={`er-diagram-toggle-btn ${viewMode === "diagram" ? "active" : ""}`}
-            onClick={() => setViewMode("diagram")}
-            title="Show interactive ER diagram"
-          >
-            Diagram
-          </button>
-          <button
-            className={`er-diagram-toggle-btn ${viewMode === "mermaid" ? "active" : ""}`}
-            onClick={() => setViewMode("mermaid")}
-            title="Show Mermaid source"
-          >
-            Mermaid
-          </button>
+        <div style={{ display: "flex", gap: "var(--spacing-md)", alignItems: "center" }}>
+          <div className="er-diagram-toggle-group">
+            <button
+              className={`er-diagram-toggle-btn ${viewMode === "diagram" ? "active" : ""}`}
+              onClick={() => setViewMode("diagram")}
+              title="Show interactive ER diagram"
+            >
+              Diagram
+            </button>
+            <button
+              className={`er-diagram-toggle-btn ${viewMode === "mermaid" ? "active" : ""}`}
+              onClick={() => setViewMode("mermaid")}
+              title="Show Mermaid visualization"
+            >
+              Mermaid
+            </button>
+          </div>
+
+          {viewMode === "mermaid" && mermaidText && (
+            <div className="er-diagram-toggle-group">
+              <button
+                className={`er-diagram-toggle-btn ${mermaidViewMode === "preview" ? "active" : ""}`}
+                onClick={() => setMermaidViewMode("preview")}
+                title="Show visual preview"
+              >
+                Preview
+              </button>
+              <button
+                className={`er-diagram-toggle-btn ${mermaidViewMode === "code" ? "active" : ""}`}
+                onClick={() => setMermaidViewMode("code")}
+                title="Show raw Mermaid code"
+              >
+                Code
+              </button>
+            </div>
+          )}
         </div>
 
         {hasData && (
@@ -153,17 +212,42 @@ export default function ERDiagramPanel({
             </div>
           )
         ) : (
-          <div className="er-diagram-mermaid">
+          <div className="er-diagram-mermaid" style={{ height: "100%", width: "100%", boxSizing: "border-box", padding: "var(--spacing-md)", display: "flex", flexDirection: "column" }}>
             {mermaidText ? (
-              <>
-                <pre className="er-diagram-mermaid-code">{mermaidText}</pre>
-                <button
-                  className="er-diagram-copy-btn"
-                  onClick={() => navigator.clipboard?.writeText(mermaidText)}
-                >
-                  Copy to Clipboard
-                </button>
-              </>
+              mermaidViewMode === "preview" ? (
+                mermaidRenderError ? (
+                  <div className="er-diagram-empty">
+                    <p>Failed to visually render Mermaid diagram. See the Mermaid Code view.</p>
+                  </div>
+                ) : (
+                  <div
+                    className="mermaid-rendered-container"
+                    style={{
+                      flex: 1,
+                      overflow: "auto",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: "#f9fafb",
+                      border: "1px solid var(--color-border)",
+                      borderRadius: "var(--radius-md)",
+                      padding: "var(--spacing-md)",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: svgContent || "<div style='color: var(--color-text-light)'>Rendering diagram...</div>" }}
+                  />
+                )
+              ) : (
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
+                  <pre className="er-diagram-mermaid-code" style={{ flex: 1 }}>{mermaidText}</pre>
+                  <button
+                    className="er-diagram-copy-btn"
+                    onClick={() => navigator.clipboard?.writeText(mermaidText)}
+                    style={{ marginTop: "var(--spacing-sm)" }}
+                  >
+                    Copy to Clipboard
+                  </button>
+                </div>
+              )
             ) : (
               <div className="er-diagram-empty">
                 <p>No supergraph available. Generate subgraphs first.</p>
