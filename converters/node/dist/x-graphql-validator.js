@@ -347,7 +347,7 @@ export function validateExtensions(schema, path) {
             extensions.viaductBackingData === null) {
             errors.push({
                 path,
-                message: "x-graphql-viaduct-backing-data must be an object (e.g. { type: \"com.example.Foo\" })",
+                message: 'x-graphql-viaduct-backing-data must be an object (e.g. { type: "com.example.Foo" })',
                 severity: "error",
                 attribute: "x-graphql-viaduct-backing-data",
             });
@@ -358,7 +358,7 @@ export function validateExtensions(schema, path) {
             extensions.viaductIdOf === null) {
             errors.push({
                 path,
-                message: "x-graphql-viaduct-id-of must be an object (e.g. { type: \"EmailAddress\" })",
+                message: 'x-graphql-viaduct-id-of must be an object (e.g. { type: "EmailAddress" })',
                 severity: "error",
                 attribute: "x-graphql-viaduct-id-of",
             });

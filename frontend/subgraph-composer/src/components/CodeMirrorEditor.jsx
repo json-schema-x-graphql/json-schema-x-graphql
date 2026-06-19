@@ -1,237 +1,98 @@
 import React, {
   useEffect,
-  useState,
   useRef,
-  useCallback,
-  forwardRef,
   useImperativeHandle,
+  forwardRef,
 } from "react";
-import CodeMirror from "@uiw/react-codemirror";
-import { json } from "@codemirror/lang-json";
+import { JSONEditor } from "vanilla-jsoneditor";
+import "vanilla-jsoneditor/themes/jse-theme-dark.css";
 
 const CodeMirrorEditor = forwardRef(function CodeMirrorEditor(
   { value, onChange },
   ref,
 ) {
-  const [EditorComp, setEditorComp] = useState(null);
-  const [_loadError, setLoadError] = useState(false);
-  const textareaRef = useRef(null);
-  const editorRef = useRef(null);
   const containerRef = useRef(null);
-  const [currentValue, setCurrentValue] = useState(value);
-  const [editMode, setEditMode] = useState("code"); // "code" | "visual"
-
-  const isTest =
-    typeof process !== "undefined" &&
-    process.env &&
-    process.env.NODE_ENV === "test";
+  const editorRef = useRef(null);
 
   useEffect(() => {
-    let mounted = true;
-    if (isTest) {
-      setLoadError(true);
-      return;
-    }
-    // Dynamic import to support multiple package layout possibilities
-    import("@visual-json/react")
-      .then((m) => {
-        if (!mounted) return;
-        let Comp = null;
-        // Prefer a ready-to-render editor component
-        if (m.JsonEditor) {
-          Comp = m.JsonEditor;
-        } else if (m.FormView) {
-          Comp = m.FormView;
-        } else if (m.VisualJson) {
-          Comp = m.VisualJson;
-        } else if (m.default) {
-          Comp = m.default;
-        }
-        if (Comp) setEditorComp(() => Comp);
-        else setLoadError(true);
-      })
-      .catch(() => setLoadError(true));
+    if (!containerRef.current) return;
+
+    editorRef.current = new JSONEditor({
+      target: containerRef.current,
+      props: {
+        content: { text: value || "" },
+        onChange: (updatedContent) => {
+          if (onChange) {
+            const text =
+              "text" in updatedContent
+                ? updatedContent.text
+                : JSON.stringify(updatedContent.json, null, 2);
+            onChange(text);
+          }
+        },
+      },
+    });
+
     return () => {
-      mounted = false;
+      if (editorRef.current) {
+        editorRef.current.destroy();
+        editorRef.current = null;
+      }
     };
-  }, [isTest]);
+  }, []); // Run once on mount
 
-  // Keep internal currentValue in sync with prop — only update when actually different
-  // to avoid a props→state→parent→props render cycle.
+  // Sync value from props to editor
   useEffect(() => {
-    if (value !== currentValue) {
-      setCurrentValue(value);
+    if (editorRef.current) {
+      const currentContent = editorRef.current.get();
+      const currentText =
+        "text" in currentContent
+          ? currentContent.text
+          : JSON.stringify(currentContent.json, null, 2);
+
+      if (currentText !== value) {
+        editorRef.current.updateProps({
+          content: { text: value || "" },
+        });
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  // Parse value to object for structured editor; if invalid JSON, fallback to text area
-  let parsed = null;
-  let invalidJson = false;
-  try {
-    parsed = currentValue ? JSON.parse(currentValue) : {};
-  } catch (_e) {
-    invalidJson = true;
-    parsed = currentValue;
-  }
-
-  // Stable onChange handler — new reference only when onChange prop itself changes.
-  // This prevents @visual-json/react's FormView from seeing a new prop every render
-  // and firing its internal useEffect([onChange]) → setState infinite loop.
-  const onChangeRef = useRef(onChange);
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  });
-
-  const handleChange = useCallback((newVal) => {
-    let strVal;
-    try {
-      if (typeof newVal === "string") {
-        strVal = newVal;
-      } else {
-        strVal = JSON.stringify(newVal, null, 2);
-      }
-    } catch (_e) {
-      strVal = String(newVal);
-    }
-    setCurrentValue(strVal);
-    try {
-      onChangeRef.current(strVal);
-    } catch (_e) {
-      // ignore upstream handler errors here
-    }
-  }, []); // [] — stable for the lifetime of this component instance
-
   useImperativeHandle(ref, () => ({
-    getValue: () => currentValue,
+    getValue: () => {
+      if (!editorRef.current) return value;
+      const content = editorRef.current.get();
+      return "text" in content
+        ? content.text
+        : JSON.stringify(content.json, null, 2);
+    },
     setValue: (v) => {
-      // accept object or string
-      const next = typeof v === "string" ? v : JSON.stringify(v, null, 2);
-      setCurrentValue(next);
-      try {
-        onChange(next);
-      } catch (_e) {}
+      const text = typeof v === "string" ? v : JSON.stringify(v, null, 2);
+      if (editorRef.current) {
+        editorRef.current.updateProps({ content: { text } });
+      }
+      if (onChange) onChange(text);
     },
     focus: () => {
-      if (editorRef.current && typeof editorRef.current.focus === "function") {
-        try {
-          editorRef.current.focus();
-          return;
-        } catch (_e) {}
+      if (editorRef.current) {
+        editorRef.current.focus();
       }
-      // Try to focus a focusable element inside the VisualJson container
-      try {
-        if (containerRef.current) {
-          const focusable = containerRef.current.querySelector(
-            "[tabindex], button, input, textarea, [role=tree], [role=button]",
-          );
-          if (focusable && typeof focusable.focus === "function") {
-            focusable.focus();
-            return;
-          }
-        }
-      } catch (_e) {}
-      if (textareaRef.current) textareaRef.current.focus();
     },
   }));
 
-  // If in test mode, display raw textarea for safety
-  if (isTest) {
-    return (
-      <textarea
-        ref={textareaRef}
-        style={{
-          height: "100%",
-          width: "100%",
-          fontFamily: "monospace",
-          fontSize: 13,
-        }}
-        value={currentValue}
-        onChange={(e) => handleChange(e.target.value)}
-      />
-    );
-  }
-
+  // Render with jse-theme-dark to automatically use dark mode styling
+  // And custom overrides to transparent background
   return (
     <div
+      className="jse-theme-dark custom-json-editor"
+      ref={containerRef}
       style={{
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
-        height: "100%",
-        width: "100%",
       }}
-    >
-      {/* Editor Tab Bar */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid var(--color-border)",
-          background: "var(--color-bg-secondary)",
-          padding: "var(--spacing-xs) var(--spacing-md)",
-          flexShrink: 0,
-        }}
-      >
-        <div style={{ display: "flex", gap: "var(--spacing-sm)" }}>
-          <button
-            className={`btn btn-small ${editMode === "code" ? "btn-primary" : "btn-secondary"}`}
-            onClick={() => setEditMode("code")}
-            style={{ padding: "4px 8px", fontSize: "0.75rem" }}
-          >
-            Code
-          </button>
-          {EditorComp && (
-            <button
-              className={`btn btn-small ${editMode === "visual" ? "btn-primary" : "btn-secondary"}`}
-              onClick={() => {
-                if (invalidJson) {
-                  alert("Cannot switch to Visual Form: JSON is invalid");
-                  return;
-                }
-                setEditMode("visual");
-              }}
-              disabled={invalidJson}
-              style={{ padding: "4px 8px", fontSize: "0.75rem" }}
-              title={
-                invalidJson ? "Visual editor is disabled for invalid JSON" : ""
-              }
-            >
-              Visual Form
-            </button>
-          )}
-        </div>
-        {invalidJson && (
-          <span style={{ color: "var(--color-danger)", fontSize: "0.75rem" }}>
-            ⚠️ Invalid JSON
-          </span>
-        )}
-      </div>
-
-      {/* Editor Content Area */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "auto",
-          position: "relative",
-          minHeight: 0,
-        }}
-      >
-        {editMode === "visual" && EditorComp && !invalidJson ? (
-          <div ref={containerRef} style={{ height: "100%", width: "100%" }}>
-            <EditorComp value={parsed} onChange={handleChange} />
-          </div>
-        ) : (
-          <CodeMirror
-            value={currentValue}
-            height="100%"
-            extensions={[json()]}
-            onChange={handleChange}
-            style={{ height: "100%", width: "100%" }}
-          />
-        )}
-      </div>
-    </div>
+    />
   );
 });
 

@@ -113,19 +113,25 @@ export function extractDirectives(schema, options) {
     if (schema["x-graphql-viaduct-resolver"] !== undefined) {
         directives.push({
             name: "resolver",
-            args: typeof schema["x-graphql-viaduct-resolver"] === "object" ? schema["x-graphql-viaduct-resolver"] : undefined,
+            args: typeof schema["x-graphql-viaduct-resolver"] === "object"
+                ? schema["x-graphql-viaduct-resolver"]
+                : undefined,
         });
     }
     if (schema["x-graphql-viaduct-backing-data"] !== undefined) {
         directives.push({
             name: "backingData",
-            args: typeof schema["x-graphql-viaduct-backing-data"] === "object" ? schema["x-graphql-viaduct-backing-data"] : undefined,
+            args: typeof schema["x-graphql-viaduct-backing-data"] === "object"
+                ? schema["x-graphql-viaduct-backing-data"]
+                : undefined,
         });
     }
     if (schema["x-graphql-viaduct-id-of"] !== undefined) {
         directives.push({
             name: "idOf",
-            args: typeof schema["x-graphql-viaduct-id-of"] === "object" ? schema["x-graphql-viaduct-id-of"] : undefined,
+            args: typeof schema["x-graphql-viaduct-id-of"] === "object"
+                ? schema["x-graphql-viaduct-id-of"]
+                : undefined,
         });
     }
     return directives;
