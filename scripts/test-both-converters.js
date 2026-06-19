@@ -16,7 +16,7 @@ import {
 } from "fs";
 import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { execFileSync } from "child_process";
+import { spawnSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -241,15 +241,20 @@ async function testRustConverter(inputFile, outputFile) {
     const args = buildRustArgs(EFFECTIVE_OPTIONS, inputFile, outputFile);
 
     if (existsSync(rustBinaryPath)) {
-      execFileSync(rustBinaryPath, args, {
+      const output = spawnSync(rustBinaryPath, args, {
         encoding: "utf-8",
-        stdio: "inherit",
       });
 
-      const duration = Date.now() - startTime;
+      let duration = Date.now() - startTime;
+      const stderr = output.stderr || "";
+      const match = stderr.match(/Internal conversion time: (\d+)ms/);
+      if (match) {
+        duration = parseInt(match[1], 10);
+      }
+
       const result = readFileSync(outputFile, "utf-8");
 
-      log(`✅ Success (${duration}ms)`, "green");
+      log(`✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`, "green");
       log(`   Output: ${outputFile}`, "reset");
       log(`   Size: ${result.length} bytes`, "reset");
 
@@ -258,20 +263,25 @@ async function testRustConverter(inputFile, outputFile) {
 
     // Fallback: invoke the CLI via cargo with the same flags used by the
     // prebuilt binary so parity tests don't drift from missing defaults.
-    execFileSync(
+    const output = spawnSync(
       "cargo",
       ["run", "-q", "--features", "cli", "--bin", "jxql", "--", ...args],
       {
         cwd: rustDir,
         encoding: "utf-8",
-        stdio: "inherit",
       },
     );
 
-    const duration = Date.now() - startTime;
+    let duration = Date.now() - startTime;
+    const stderr = output.stderr || "";
+    const match = stderr.match(/Internal conversion time: (\d+)ms/);
+    if (match) {
+      duration = parseInt(match[1], 10);
+    }
+
     const result = readFileSync(outputFile, "utf-8");
 
-    log(`✅ Success (${duration}ms)`, "green");
+    log(`✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`, "green");
     log(`   Output: ${outputFile}`, "reset");
     log(`   Size: ${result.length} bytes`, "reset");
 

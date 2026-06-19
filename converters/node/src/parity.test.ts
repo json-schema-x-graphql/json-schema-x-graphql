@@ -5,7 +5,7 @@ import { parse, type DocumentNode } from "graphql";
 
 jest.setTimeout(180000); // allow time for Rust builds
 
-const FIXTURE_FILTER = process.env.PARITY_FIXTURE_FILTER?.trim();
+const FIXTURE_FILTER = (process.env.PARITY_FIXTURE_FILTER || "").trim();
 const MAX_FIXTURES = Number.parseInt(process.env.PARITY_MAX_FIXTURES ?? "", 10);
 
 function shouldRunFixture(file: string): boolean {
