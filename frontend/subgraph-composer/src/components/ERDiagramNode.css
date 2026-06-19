@@ -96,6 +96,14 @@
   opacity: 1;
 }
 
+.hide-by-default {
+  display: none;
+}
+
+.er-node:hover .hide-by-default {
+  display: flex;
+}
+
 .field-badges {
   display: flex;
   gap: 0.2rem;

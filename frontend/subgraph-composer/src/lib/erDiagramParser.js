@@ -79,6 +79,16 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
     const fields = parseFields(body);
 
     const sourceIds = typeSources[typeName] || [];
+
+    // Exclude underlying data source mappings like endpoints-config.yaml
+    const isEndpointConfig =
+      sourceIds.length > 0 &&
+      sourceIds.every((id) => {
+        const s = schemas.find((s) => s.id === id);
+        return s && s.name.includes("endpoints-config");
+      });
+    if (isEndpointConfig) continue;
+
     const sourceIndices = sourceIds.map((id) => schemaIndexMap.get(id) ?? 0);
     const primaryColor = SUBGRAPH_COLORS[sourceIndices[0] ?? 0];
 
@@ -156,6 +166,8 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
             data: {
               directives: edgeDirectives,
               fieldName: field.name,
+              isCrossDomain:
+                node.data.sourceIds[0] !== targetNode.data.sourceIds[0],
             },
           });
         }
@@ -215,7 +227,7 @@ export function parseERDiagram(sdl, typeSources = {}, schemas = []) {
                 strokeWidth: 2,
                 strokeDasharray: "5 5",
               },
-              data: { type: "federation-external" },
+              data: { type: "federation-external", isCrossDomain: true },
             });
           }
         }
@@ -275,6 +287,14 @@ function extractDirectives(str) {
   while ((dmatch = directiveRegex.exec(str)) !== null) {
     const name = `@${dmatch[1]}`;
     const args = dmatch[2] || "";
+    // Filter out boilerplate directives
+    if (
+      ["@shareable", "@x-graphql-field-name", "@x-graphql-type-name"].includes(
+        name,
+      )
+    ) {
+      continue;
+    }
     directives.push({ name, args });
   }
 
