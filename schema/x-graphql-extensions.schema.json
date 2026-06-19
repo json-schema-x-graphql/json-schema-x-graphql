@@ -591,14 +591,19 @@
       "type": "string"
     },
     "^x-graphql-viaduct-resolver$": {
-      "type": "object",
-      "additionalProperties": true
+      "description": "Marks a field or type as resolved by a remote service. Use `true` for a no-argument resolver or an object with resolver-specific arguments (e.g. `{ isBatching: true }`).",
+      "oneOf": [
+        { "type": "boolean", "const": true },
+        { "type": "object", "additionalProperties": true }
+      ]
     },
     "^x-graphql-viaduct-backing-data$": {
+      "description": "Declares the backing data source type for a GraphQL type (e.g. `{ type: \"com.example.User\" }`).",
       "type": "object",
       "additionalProperties": true
     },
     "^x-graphql-viaduct-id-of$": {
+      "description": "Declares a field as a typed identifier for a backing entity (e.g. `{ type: \"EmailAddress\" }`).",
       "type": "object",
       "additionalProperties": true
     },

@@ -54,6 +54,15 @@ export interface XGraphQLExtensions {
   federationPolicy?: string[][];
   federationExtends?: boolean;
 
+  // Viaduct extensions (x-graphql-viaduct-*)
+  // Analogous to Apollo Federation directives, used for schema-driven service mesh routing.
+  /** @see `x-graphql-viaduct-resolver` — marks a field/type as resolved by a remote service */
+  viaductResolver?: boolean | Record<string, unknown>;
+  /** @see `x-graphql-viaduct-backing-data` — declares the backing data source type */
+  viaductBackingData?: Record<string, unknown>;
+  /** @see `x-graphql-viaduct-id-of` — declares a field as a typed identifier */
+  viaductIdOf?: Record<string, unknown>;
+
   // Metadata extensions
   scalar?: string;
   enumValues?: Record<string, EnumValueConfig>;
@@ -277,6 +286,17 @@ export function extractExtensions(
       // Custom scalars
       case "scalars":
         extensions.scalars = value as Record<string, GraphQLScalarConfig>;
+        break;
+
+      // Viaduct (x-graphql-viaduct-*)
+      case "viaduct-resolver":
+        extensions.viaductResolver = value as boolean | Record<string, unknown>;
+        break;
+      case "viaduct-backing-data":
+        extensions.viaductBackingData = value as Record<string, unknown>;
+        break;
+      case "viaduct-id-of":
+        extensions.viaductIdOf = value as Record<string, unknown>;
         break;
 
       // Also check for legacy x-graphql-type (could be string or object)
