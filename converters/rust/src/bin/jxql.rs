@@ -144,9 +144,12 @@ async fn main() -> Result<()> {
     };
 
     // Convert using the appropriate direction
+    let start_time = std::time::Instant::now();
     let result = converter
         .convert(&json_content, direction)
         .context("Conversion failed")?;
+    let duration = start_time.elapsed();
+    eprintln!("Internal conversion time: {}ms", duration.as_millis());
 
     // Output
     if let Some(output_path) = args.output {
