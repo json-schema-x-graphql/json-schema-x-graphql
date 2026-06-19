@@ -1,8 +1,8 @@
 type Allstringsid {
   "string-based code"
-  code: ID!
+  code: String!
   "uuid-ish identifier"
   uuid: ID!
-  name: ID
+  name: String
 }
 

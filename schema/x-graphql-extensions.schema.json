@@ -590,6 +590,18 @@
     "^x-graphql-subscription-filter$": {
       "type": "string"
     },
+    "^x-graphql-viaduct-resolver$": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "^x-graphql-viaduct-backing-data$": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "^x-graphql-viaduct-id-of$": {
+      "type": "object",
+      "additionalProperties": true
+    },
     "^x-graphql-directives$": {
       "type": "array",
       "items": {

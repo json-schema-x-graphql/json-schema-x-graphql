@@ -6,10 +6,10 @@ Bidirectional, lossless converter between JSON Schema and GraphQL SDL using stan
 
 - ✅ **Bidirectional Conversion**: JSON Schema ↔ GraphQL SDL
 - ✅ **Lossless Round-Tripping**: Preserves all metadata via `x-graphql-*` extensions
-- ✅ **Apollo Federation Support**: Full support for Federation v1 and v2 directives
+- ✅ **Apollo Federation & Viaduct Support**: Full support for Federation directives and Viaduct extensions (`@resolver`, `@backingData`, `@idOf`)
 - ✅ **WASM Compatible**: Run in browsers and Node.js
 - ✅ **Type Safe**: Written in Rust with strong type guarantees
-- ✅ **Fast**: Optimized for performance with optional LRU caching
+- ✅ **Ultra-Fast**: Optimized for performance with native `simd-json` parsing (on supported targets) and optional LRU caching
 - ✅ **Standards Compliant**: Follows JSON Schema 2020-12 and GraphQL spec
 
 ## Simplified Extension System & Type Inference

@@ -615,6 +615,29 @@ fn convert_type_definition(
         }
     }
 
+    // Viaduct extensions
+    if let Some(val) = obj.get("x-graphql-viaduct-resolver") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "resolver", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "resolver" }));
+        }
+    }
+    if let Some(val) = obj.get("x-graphql-viaduct-backing-data") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "backingData", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "backingData" }));
+        }
+    }
+    if let Some(val) = obj.get("x-graphql-viaduct-id-of") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "idOf", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "idOf" }));
+        }
+    }
+
     let directives_str = format_directives(&JsonValue::Array(directives_json))?;
 
     // Generate SDL based on kind
@@ -1076,7 +1099,6 @@ fn convert_field(
         );
     }
 
-    // @policy
     if let Some(policies) = obj
         .get("x-graphql-federation-policy")
         .and_then(|v| v.as_array())
@@ -1084,6 +1106,29 @@ fn convert_field(
     {
         directives_json
             .push(serde_json::json!({ "name": "policy", "arguments": { "policies": policies } }));
+    }
+
+    // Viaduct extensions
+    if let Some(val) = obj.get("x-graphql-viaduct-resolver") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "resolver", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "resolver" }));
+        }
+    }
+    if let Some(val) = obj.get("x-graphql-viaduct-backing-data") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "backingData", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "backingData" }));
+        }
+    }
+    if let Some(val) = obj.get("x-graphql-viaduct-id-of") {
+        if let Some(args) = val.as_object() {
+            directives_json.push(serde_json::json!({ "name": "idOf", "arguments": args }));
+        } else {
+            directives_json.push(serde_json::json!({ "name": "idOf" }));
+        }
     }
 
     output.push_str(&format_directives(&JsonValue::Array(directives_json))?);
@@ -2411,11 +2456,38 @@ mod tests {
         );
         assert!(schema.get("x-graphql-federation").is_none());
 
-        // Test with conversion
+    // Test with conversion
         let options = ConversionOptions::default();
         let result = convert(&schema, &options).unwrap();
         assert!(result.contains("@key(fields: \"id\")"));
         assert!(result.contains("@shareable"));
         assert!(result.contains("extend type User"));
+    }
+
+    #[test]
+    fn test_viaduct_directives() {
+        let options = ConversionOptions::default();
+        let schema = json!({
+            "type": "object",
+            "x-graphql-type-name": "User",
+            "x-graphql-viaduct-backing-data": { "type": "com.example.User" },
+            "properties": {
+                "id": { 
+                    "type": "string",
+                    "x-graphql-viaduct-resolver": { "isBatching": true }
+                },
+                "email": {
+                    "type": "string",
+                    "x-graphql-viaduct-resolver": true,
+                    "x-graphql-viaduct-id-of": { "type": "Email" }
+                }
+            }
+        });
+
+        let result = convert(&schema, &options).unwrap();
+        assert!(result.contains("@backingData(type: \"com.example.User\")"));
+        assert!(result.contains("id: String @resolver(isBatching: true)"));
+        assert!(result.contains("@resolver"));
+        assert!(result.contains("@idOf(type: \"Email\")"));
     }
 }

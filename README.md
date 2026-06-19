@@ -32,7 +32,10 @@ We define a **lossless** mapping strategy using standard JSON Schema extensions.
 
 - **Single Source of Truth**: JSON Schema defines both validation logic and API structure.
 - **Bidirectional**: Convert JSON Schema ↔ GraphQL SDL without losing metadata.
+- **Upstream Interop**: Bridge directly from Zod or Standard Schema using `@standard-schema/spec`.
+- **Downstream Codegen**: Automatically pipe SDL outputs into `@graphql-codegen` for end-to-end TS interfaces.
 - **Federation-Ready**: Full support for Apollo Federation v2.9 directives.
+- **Strict Governance**: Meta-schema rejects unknown `x-graphql` keywords to prevent configuration drift.
 
 ## Quick Start
 
@@ -84,9 +87,10 @@ type User @key(fields: "id") {
 Node CLI (built output):
 
 ```bash
-node converters/node/dist/cli.js \
+node converters/cli/dist/index.js \
   --input examples/user-service.schema.json \
   --output output/user-service.graphql \
+  --types output/user-service.d.ts \
   --descriptions \
   --preserve-order \
   --include-federation-directives \
@@ -116,6 +120,7 @@ Notes:
 - `--output-format AST_JSON` emits the AST as JSON instead of SDL.
 - `--fail-on-warning` exits non-zero if any warnings are produced.
 - `--id-strategy` accepts `NONE`, `COMMON_PATTERNS`, or `ALL_STRINGS` (legacy `--infer-ids` maps to `COMMON_PATTERNS`).
+- `--types <path>` enables automatic TypeScript typings generation via `@graphql-codegen/core`.
 
 Example AST_JSON output (truncated):
 
@@ -152,6 +157,8 @@ Example AST_JSON output (truncated):
 - **Type System Complete**: Supports Objects, Interfaces, Unions, Enums, Inputs, and Scalars.
 - **Field Arguments**: Define arguments with default values in JSON Schema.
 - **Documentation**: Preserves descriptions and deprecation reasons.
+- **Performance**: Rust backend relies on `simd-json` for ultra-fast native SIMD processing.
+- **Ecosystem Bridges**: Built-in support for Zod and Standard Schema.
 
 ### Apollo Federation Support (v2.9)
 
@@ -160,6 +167,7 @@ Fully supports the Apollo Federation specification:
 - **Entities**: `@key`, `@shareable`, `@interfaceObject`
 - **Field Directives**: `@external`, `@requires`, `@provides`, `@override`
 - **Authorization**: `@authenticated`, `@requiresScopes`, `@policy`
+- **Viaduct Support**: Deep integration with `@resolver`, `@backingData`, and `@idOf`.
 
 ### Federated REST Emulation & API Stitching Gateway
 
@@ -208,20 +216,23 @@ To handle naming conflicts and conventions cleanly, we use three distinct namesp
   - Comprehensive example schemas
   - Architecture documentation
 - **Phase 2: Core Converters**
-  - ✅ Rust converter (WASM-ready, high performance)
-  - ✅ Node.js converter (TypeScript, easy integration)
+  - ✅ Rust converter (WASM-ready, SIMD optimized)
+  - ✅ Node.js converter (TypeScript, Codegen/Zod interop)
   - ✅ Bidirectional fidelity verification
 - **Phase 3: Web Editor**
   - ✅ React split-pane editor
   - ✅ Visual Graph integration
   - ✅ Real-time bidirectional conversion
+- **Phase 4: Architecture Governance**
+  - ✅ Strict Meta-Schema closures
+  - ✅ Native Zod and Standard Schema integrations
+  - ✅ Seamless GraphQL-Codegen output pipeline
 
 ### In Progress 🚧
 
-- **Phase 4: Validation & Testing**
-  - Consolidating test suites
-  - Performance benchmarking
-  - Cross-browser validation
+- **Performance Benchmarking**
+  - Rust SIMD benchmark suite calibration
+- **Cross-browser validation**
 
 ### Future Roadmap 📋
 
