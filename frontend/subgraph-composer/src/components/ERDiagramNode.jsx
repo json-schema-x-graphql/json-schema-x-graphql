@@ -15,6 +15,8 @@ const BADGE_COLORS = {
 
 function DirectiveBadge({ name }) {
   const isKey = name === "@key";
+  const isProvides = name === "@provides";
+  const isRequires = name === "@requires";
   const isExternal = name === "@external";
 
   let content = name.replace("@", "");
@@ -22,8 +24,14 @@ function DirectiveBadge({ name }) {
   let className = "directive-badge";
 
   if (isKey) {
-    content = "🔑";
-    style = { background: BADGE_COLORS[name], color: "#000" };
+    content = "PK 🔑";
+    style = { background: BADGE_COLORS[name], color: "#000", fontWeight: "bold" };
+  } else if (isProvides) {
+    content = "FK 🔗 (provides)";
+    style = { background: BADGE_COLORS[name], color: "#fff", fontWeight: "bold" };
+  } else if (isRequires) {
+    content = "FK 🔗 (requires)";
+    style = { background: BADGE_COLORS[name], color: "#fff", fontWeight: "bold" };
   } else if (isExternal) {
     className += " badge-external";
     style = {
