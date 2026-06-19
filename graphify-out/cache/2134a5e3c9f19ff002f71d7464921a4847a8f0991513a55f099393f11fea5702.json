@@ -1,0 +1,13 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_next_env_d_ts",
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/next-env.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [],
+  "raw_calls": []
+}

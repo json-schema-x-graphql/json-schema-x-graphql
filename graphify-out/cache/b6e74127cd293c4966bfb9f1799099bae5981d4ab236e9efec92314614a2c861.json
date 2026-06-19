@@ -1,0 +1,1044 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "label": "coverage-visual-summary.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "coverage_visual_summary_exists",
+      "label": "exists()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L35"
+    },
+    {
+      "id": "coverage_visual_summary_readjson",
+      "label": "readJSON()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "coverage_visual_summary_clamp",
+      "label": "clamp()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L48"
+    },
+    {
+      "id": "coverage_visual_summary_pctcolor",
+      "label": "pctColor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L52"
+    },
+    {
+      "id": "coverage_visual_summary_textcolorfor",
+      "label": "textColorFor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L59"
+    },
+    {
+      "id": "coverage_visual_summary_formatpct",
+      "label": "formatPct()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L65"
+    },
+    {
+      "id": "coverage_visual_summary_parselcov",
+      "label": "parseLCOV()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L70"
+    },
+    {
+      "id": "coverage_visual_summary_collectfilesfromsummary",
+      "label": "collectFilesFromSummary()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L109"
+    },
+    {
+      "id": "coverage_visual_summary_todataurisvg",
+      "label": "toDataUriSvg()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L130"
+    },
+    {
+      "id": "coverage_visual_summary_buildtotals",
+      "label": "buildTotals()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L135"
+    },
+    {
+      "id": "coverage_visual_summary_svgrect",
+      "label": "svgRect()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L144"
+    },
+    {
+      "id": "coverage_visual_summary_svgtext",
+      "label": "svgText()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L148"
+    },
+    {
+      "id": "coverage_visual_summary_buildbar",
+      "label": "buildBar()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L152"
+    },
+    {
+      "id": "coverage_visual_summary_buildcoveragesvg",
+      "label": "buildCoverageSVG()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L177"
+    },
+    {
+      "id": "coverage_visual_summary_buildhtml",
+      "label": "buildHTML()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L243"
+    },
+    {
+      "id": "coverage_visual_summary_ensuredir",
+      "label": "ensureDir()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L365"
+    },
+    {
+      "id": "coverage_visual_summary_pickworstfiles",
+      "label": "pickWorstFiles()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L371"
+    },
+    {
+      "id": "coverage_visual_summary_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L377"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_exists",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_readjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_clamp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_pctcolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_textcolorfor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_formatpct",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_parselcov",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_collectfilesfromsummary",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_todataurisvg",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_buildtotals",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_svgrect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_svgtext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_buildbar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_buildcoveragesvg",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_buildhtml",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L243",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_ensuredir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L365",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_pickworstfiles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L371",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_coverage_visual_summary_mjs",
+      "target": "coverage_visual_summary_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_parselcov",
+      "target": "coverage_visual_summary_exists",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildbar",
+      "target": "coverage_visual_summary_clamp",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildbar",
+      "target": "coverage_visual_summary_pctcolor",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildbar",
+      "target": "coverage_visual_summary_textcolorfor",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildbar",
+      "target": "coverage_visual_summary_svgrect",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildbar",
+      "target": "coverage_visual_summary_svgtext",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L163",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildcoveragesvg",
+      "target": "coverage_visual_summary_svgrect",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildcoveragesvg",
+      "target": "coverage_visual_summary_svgtext",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildcoveragesvg",
+      "target": "coverage_visual_summary_formatpct",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildcoveragesvg",
+      "target": "coverage_visual_summary_buildbar",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_buildhtml",
+      "target": "coverage_visual_summary_formatpct",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L321",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_exists",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_readjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L383",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_buildtotals",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_collectfilesfromsummary",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L385",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_parselcov",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_pickworstfiles",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_buildcoveragesvg",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L390",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_buildhtml",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L391",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_ensuredir",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L393",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_todataurisvg",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "coverage_visual_summary_main",
+      "target": "coverage_visual_summary_formatpct",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L406",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "coverage_visual_summary_exists",
+      "callee": "accessSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_readjson",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_readjson",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_clamp",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_clamp",
+      "callee": "min",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_formatpct",
+      "callee": "isNaN",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_formatpct",
+      "callee": "toFixed",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "isFinite",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_parselcov",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_collectfilesfromsummary",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_collectfilesfromsummary",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_collectfilesfromsummary",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_todataurisvg",
+      "callee": "encodeURIComponent",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_svgtext",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_svgtext",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildbar",
+      "callee": "round",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildbar",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildbar",
+      "callee": "min",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L166"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L224"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L226"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildcoveragesvg",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L239"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildhtml",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L244"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildhtml",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L313"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_buildhtml",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L313"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_ensuredir",
+      "callee": "mkdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_pickworstfiles",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_pickworstfiles",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_pickworstfiles",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L374"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L379"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L380"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L394"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L395"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L401"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "appendFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L415"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L417"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L421"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L422"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L422"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L422"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L423"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L423"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L423"
+    },
+    {
+      "caller_nid": "coverage_visual_summary_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/coverage-visual-summary.mjs",
+      "source_location": "L424"
+    }
+  ]
+}

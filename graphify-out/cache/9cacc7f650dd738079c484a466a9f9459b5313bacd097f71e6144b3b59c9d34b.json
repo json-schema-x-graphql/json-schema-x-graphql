@@ -1,0 +1,73 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "label": "styles.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "styles_gettextcolor",
+      "label": "getTextColor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L13"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "target": "react_linkify_it",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles_tsx",
+      "target": "styles_gettextcolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "styles_gettextcolor",
+      "callee": "isNaN",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/styles.tsx",
+      "source_location": "L21"
+    }
+  ]
+}

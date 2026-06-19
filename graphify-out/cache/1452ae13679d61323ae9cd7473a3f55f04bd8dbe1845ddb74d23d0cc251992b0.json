@@ -1,0 +1,231 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "label": "converter.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "converter_loadconverter",
+      "label": "loadConverter()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L9"
+    },
+    {
+      "id": "converter_enhanceschemawithidmetadata",
+      "label": "enhanceSchemaWithIdMetadata()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L22"
+    },
+    {
+      "id": "converter_convertschema",
+      "label": "convertSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L79"
+    },
+    {
+      "id": "converter_validatejsonschema",
+      "label": "validateJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L135"
+    },
+    {
+      "id": "converter_formatjsonschema",
+      "label": "formatJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L178"
+    },
+    {
+      "id": "converter_getconverterinfo",
+      "label": "getConverterInfo()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L193"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_loadconverter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_enhanceschemawithidmetadata",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_convertschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_validatejsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_formatjsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter_js",
+      "target": "converter_getconverterinfo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L193",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertschema",
+      "target": "converter_enhanceschemawithidmetadata",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertschema",
+      "target": "converter_loadconverter",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L95",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "converter_loadconverter",
+      "callee": "import",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "converter_enhanceschemawithidmetadata",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "converter_enhanceschemawithidmetadata",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "converter_enhanceschemawithidmetadata",
+      "callee": "processProperties",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "converter_convertschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "converter_convertschema",
+      "callee": "jsonSchemaToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "converter_convertschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "converter_convertschema",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L153"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "converter_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "converter_formatjsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "converter_formatjsonschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "converter_formatjsonschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/converter.js",
+      "source_location": "L184"
+    }
+  ]
+}

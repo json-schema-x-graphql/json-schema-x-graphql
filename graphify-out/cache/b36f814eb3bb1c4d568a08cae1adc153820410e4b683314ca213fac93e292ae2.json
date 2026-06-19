@@ -1,0 +1,55 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_src_lib_rs",
+      "label": "lib.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_test_version",
+      "label": "test_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L27"
+    },
+    {
+      "id": "lib_test_name",
+      "label": "test_name()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L32"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_src_lib_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_src_lib_rs",
+      "target": "lib_test_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_src_lib_rs",
+      "target": "lib_test_name",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/src/lib.rs",
+      "source_location": "L32",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_jsonadapter_ts",
+      "label": "jsonAdapter.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "jsonadapter_contenttojson",
+      "label": "contentToJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "jsonadapter_jsontocontent",
+      "label": "jsonToContent()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L58"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_jsonadapter_ts",
+      "target": "jsonc_parser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_jsonadapter_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_enums_file_enum",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_jsonadapter_ts",
+      "target": "jsonadapter_contenttojson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_jsonadapter_ts",
+      "target": "jsonadapter_jsontocontent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/jsonAdapter.ts",
+      "source_location": "L58",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

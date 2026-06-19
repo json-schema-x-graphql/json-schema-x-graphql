@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_test_ts",
+      "label": "x-graphql-extensions.test.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.test.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_test_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.test.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

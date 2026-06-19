@@ -1,0 +1,93 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_templates_js",
+      "label": "templates.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_gettemplatenames",
+      "label": "getTemplateNames()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L13"
+    },
+    {
+      "id": "templates_gettemplate",
+      "label": "getTemplate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L27"
+    },
+    {
+      "id": "templates_gettemplatesbycategory",
+      "label": "getTemplatesByCategory()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L42"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_templates_js",
+      "target": "templates_gettemplatenames",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_templates_js",
+      "target": "templates_gettemplate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_templates_js",
+      "target": "templates_gettemplatesbycategory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L42",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "templates_gettemplatenames",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "templates_gettemplatenames",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "templates_gettemplate",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "templates_gettemplatesbycategory",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "templates_gettemplatesbycategory",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/templates.js",
+      "source_location": "L44"
+    }
+  ]
+}

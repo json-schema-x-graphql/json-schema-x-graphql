@@ -1,0 +1,601 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager_ts",
+      "label": "converter-manager.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "converter_manager_convertermanager",
+      "label": "ConverterManager",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L83"
+    },
+    {
+      "id": "converter_manager_convertermanager_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L93"
+    },
+    {
+      "id": "converter_manager_convertermanager_convertjsontographql",
+      "label": ".convertJsonToGraphQL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L112"
+    },
+    {
+      "id": "converter_manager_convertermanager_convertgraphqltojson",
+      "label": ".convertGraphQLToJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L132"
+    },
+    {
+      "id": "converter_manager_convertermanager_executeconversion",
+      "label": ".executeConversion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L152"
+    },
+    {
+      "id": "converter_manager_convertermanager_selectbestengine",
+      "label": ".selectBestEngine()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L264"
+    },
+    {
+      "id": "converter_manager_convertermanager_getenginestatus",
+      "label": ".getEngineStatus()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L284"
+    },
+    {
+      "id": "converter_manager_convertermanager_initializewasm",
+      "label": ".initializeWasm()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L330"
+    },
+    {
+      "id": "converter_manager_convertermanager_isanyconverteravailable",
+      "label": ".isAnyConverterAvailable()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L337"
+    },
+    {
+      "id": "converter_manager_convertermanager_trackperformance",
+      "label": ".trackPerformance()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L345"
+    },
+    {
+      "id": "converter_manager_convertermanager_getperformancemetrics",
+      "label": ".getPerformanceMetrics()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L357"
+    },
+    {
+      "id": "converter_manager_convertermanager_getaverageconversiontime",
+      "label": ".getAverageConversionTime()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L364"
+    },
+    {
+      "id": "converter_manager_convertermanager_getsuccessrate",
+      "label": ".getSuccessRate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L395"
+    },
+    {
+      "id": "converter_manager_convertermanager_clearperformancemetrics",
+      "label": ".clearPerformanceMetrics()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L425"
+    },
+    {
+      "id": "converter_manager_convertermanager_updateconfig",
+      "label": ".updateConfig()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L432"
+    },
+    {
+      "id": "converter_manager_convertermanager_getconfig",
+      "label": ".getConfig()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L451"
+    },
+    {
+      "id": "converter_manager_convertermanager_cancelall",
+      "label": ".cancelAll()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L458"
+    },
+    {
+      "id": "converter_manager_convertermanager_reset",
+      "label": ".reset()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L465"
+    },
+    {
+      "id": "converter_manager_convertermanager_getconverters",
+      "label": ".getConverters()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L475"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_wasm_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_node_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager_ts",
+      "target": "converter_manager_convertermanager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_convertjsontographql",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_convertgraphqltojson",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_executeconversion",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_selectbestengine",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L264",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getenginestatus",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_initializewasm",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L330",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_isanyconverteravailable",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_trackperformance",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L345",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getperformancemetrics",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L357",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getaverageconversiontime",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L364",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getsuccessrate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L395",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_clearperformancemetrics",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_updateconfig",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L432",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getconfig",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L451",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_cancelall",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L458",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_reset",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager",
+      "target": "converter_manager_convertermanager_getconverters",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L475",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_convertjsontographql",
+      "target": "converter_manager_convertermanager_executeconversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_convertgraphqltojson",
+      "target": "converter_manager_convertermanager_executeconversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_executeconversion",
+      "target": "converter_manager_convertermanager_selectbestengine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_executeconversion",
+      "target": "converter_manager_convertermanager_trackperformance",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L173",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_selectbestengine",
+      "target": "converter_manager_convertermanager_getenginestatus",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L265",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_isanyconverteravailable",
+      "target": "converter_manager_convertermanager_getenginestatus",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L338",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_manager_convertermanager_reset",
+      "target": "converter_manager_convertermanager_clearperformancemetrics",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L467",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "conversionFn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "conversionFn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L217"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "conversionFn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L223"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_executeconversion",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L251"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L285"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "isAvailable",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L293"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "isLoading",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L294"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "getError",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L295"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "getVersion",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L297"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "isAvailable",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getenginestatus",
+      "callee": "getVersion",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_initializewasm",
+      "callee": "init",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L331"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_trackperformance",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L346"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_trackperformance",
+      "callee": "shift",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getaverageconversiontime",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L368"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getaverageconversiontime",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getaverageconversiontime",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L383"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getaverageconversiontime",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L383"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getsuccessrate",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L397"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getsuccessrate",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L400"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getsuccessrate",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L412"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_getsuccessrate",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L412"
+    },
+    {
+      "caller_nid": "converter_manager_convertermanager_cancelall",
+      "callee": "cancel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/converters/converter-manager.ts",
+      "source_location": "L459"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usedirectivesuggestions_js",
+      "label": "useDirectiveSuggestions.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "usedirectivesuggestions_usedirectivesuggestions",
+      "label": "useDirectiveSuggestions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L17"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usedirectivesuggestions_js",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usedirectivesuggestions_js",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usedirectivesuggestions_js",
+      "target": "usedirectivesuggestions_usedirectivesuggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L17",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L165"
+    },
+    {
+      "caller_nid": "usedirectivesuggestions_usedirectivesuggestions",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useDirectiveSuggestions.js",
+      "source_location": "L193"
+    }
+  ]
+}

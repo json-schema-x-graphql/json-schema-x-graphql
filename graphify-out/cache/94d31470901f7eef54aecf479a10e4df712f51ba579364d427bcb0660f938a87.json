@@ -1,0 +1,2966 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "label": "converter.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "converter_conversionerror",
+      "label": "ConversionError",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L54"
+    },
+    {
+      "id": "converter_conversionerror_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "converter_shouldexcludetype",
+      "label": "shouldExcludeType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L64"
+    },
+    {
+      "id": "converter_jsonschematographql",
+      "label": "jsonSchemaToGraphQL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L125"
+    },
+    {
+      "id": "converter_graphqltojsonschema",
+      "label": "graphqlToJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L219"
+    },
+    {
+      "id": "converter_convertgraphqltypetoschema",
+      "label": "convertGraphQLTypeToSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L354"
+    },
+    {
+      "id": "converter_convertgraphqlfieldtoschema",
+      "label": "convertGraphQLFieldToSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L425"
+    },
+    {
+      "id": "converter_convertgraphqltypetojsonschema",
+      "label": "convertGraphQLTypeToJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L450"
+    },
+    {
+      "id": "converter_fallbackgraphqltojsonschema",
+      "label": "fallbackGraphqlToJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L504"
+    },
+    {
+      "id": "converter_converttypedefinition",
+      "label": "convertTypeDefinition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L573"
+    },
+    {
+      "id": "converter_renderenum",
+      "label": "renderEnum()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L623"
+    },
+    {
+      "id": "converter_renderunion",
+      "label": "renderUnion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L672"
+    },
+    {
+      "id": "converter_renderobject",
+      "label": "renderObject()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L716"
+    },
+    {
+      "id": "converter_tocamelcase",
+      "label": "toCamelCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L772"
+    },
+    {
+      "id": "converter_convertfield",
+      "label": "convertField()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L778"
+    },
+    {
+      "id": "converter_infergraphqltype",
+      "label": "inferGraphQLType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L834"
+    },
+    {
+      "id": "converter_ensurereferencedtype",
+      "label": "ensureReferencedType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L961"
+    },
+    {
+      "id": "converter_resolveref",
+      "label": "resolveRef()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L996"
+    },
+    {
+      "id": "converter_emitimpliedscalars",
+      "label": "emitImpliedScalars()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1097"
+    },
+    {
+      "id": "converter_emitcustomscalars",
+      "label": "emitCustomScalars()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1131"
+    },
+    {
+      "id": "converter_emitoperations",
+      "label": "emitOperations()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1146"
+    },
+    {
+      "id": "converter_normalizeoptions",
+      "label": "normalizeOptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1189"
+    },
+    {
+      "id": "converter_detectfederationversion",
+      "label": "detectFederationVersion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1260"
+    },
+    {
+      "id": "converter_converter",
+      "label": "Converter",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1309"
+    },
+    {
+      "id": "converter_converter_convert",
+      "label": ".convert()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1310"
+    },
+    {
+      "id": "converter_gettypename",
+      "label": "getTypeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1377"
+    },
+    {
+      "id": "converter_uniqueinlinetypename",
+      "label": "uniqueInlineTypeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1431"
+    },
+    {
+      "id": "converter_sanitizetypename",
+      "label": "sanitizeTypeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1450"
+    },
+    {
+      "id": "converter_sanitizefieldname",
+      "label": "sanitizeFieldName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1470"
+    },
+    {
+      "id": "converter_propfallbackname",
+      "label": "propFallbackName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1483"
+    },
+    {
+      "id": "converter_pointerlastsegment",
+      "label": "pointerLastSegment()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1488"
+    },
+    {
+      "id": "converter_decodepointersegment",
+      "label": "decodePointerSegment()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1493"
+    },
+    {
+      "id": "converter_accesschild",
+      "label": "accessChild()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1497"
+    },
+    {
+      "id": "converter_deriveprimitivegraphqltype",
+      "label": "derivePrimitiveGraphQLType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1506"
+    },
+    {
+      "id": "converter_mapstringformat",
+      "label": "mapStringFormat()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1558"
+    },
+    {
+      "id": "converter_finalizetype",
+      "label": "finalizeType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1583"
+    },
+    {
+      "id": "converter_stripnonnull",
+      "label": "stripNonNull()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1591"
+    },
+    {
+      "id": "converter_shouldpromotetoid",
+      "label": "shouldPromoteToId()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1595"
+    },
+    {
+      "id": "converter_collectinterfaces",
+      "label": "collectInterfaces()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1620"
+    },
+    {
+      "id": "converter_formatdescription",
+      "label": "formatDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1644"
+    },
+    {
+      "id": "converter_formatdirectives",
+      "label": "formatDirectives()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1657"
+    },
+    {
+      "id": "converter_isfederationdirective",
+      "label": "isFederationDirective()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1665"
+    },
+    {
+      "id": "converter_formatargs",
+      "label": "formatArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1676"
+    },
+    {
+      "id": "converter_formatoperationargs",
+      "label": "formatOperationArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1695"
+    },
+    {
+      "id": "converter_convertgqltypetojson",
+      "label": "convertGqlTypeToJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1715"
+    },
+    {
+      "id": "converter_topascalcase",
+      "label": "toPascalCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1768"
+    },
+    {
+      "id": "converter_tosnakecase",
+      "label": "toSnakeCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1779"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_generated_types_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_interfaces_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_case_conversion_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_normalization_directives_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_features_relay_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_conversionerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_conversionerror",
+      "target": "converter_conversionerror_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_shouldexcludetype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_jsonschematographql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_graphqltojsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_convertgraphqltypetoschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_convertgraphqlfieldtoschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_convertgraphqltypetojsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L450",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_fallbackgraphqltojsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L504",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_converttypedefinition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L573",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_renderenum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L623",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_renderunion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L672",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_renderobject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L716",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_tocamelcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L772",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_convertfield",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L778",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_infergraphqltype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L834",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_ensurereferencedtype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L961",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_resolveref",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L996",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_emitimpliedscalars",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1097",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_emitcustomscalars",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1131",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_emitoperations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1146",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_normalizeoptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1189",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_detectfederationversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1260",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_converter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1309",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converter",
+      "target": "converter_converter_convert",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1310",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_gettypename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1377",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_uniqueinlinetypename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1431",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_sanitizetypename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1450",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_sanitizefieldname",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1470",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_propfallbackname",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1483",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_pointerlastsegment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1488",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_decodepointersegment",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1493",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_accesschild",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1497",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_deriveprimitivegraphqltype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1506",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_mapstringformat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1558",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_finalizetype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1583",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_stripnonnull",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1591",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_shouldpromotetoid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1595",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_collectinterfaces",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1620",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_formatdescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1644",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_formatdirectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1657",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_isfederationdirective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1665",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_formatargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1676",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_formatoperationargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1695",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_convertgqltypetojson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1715",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_topascalcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1768",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "target": "converter_tosnakecase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1779",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_normalizeoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_detectfederationversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_emitcustomscalars",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_gettypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_shouldexcludetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_converttypedefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_emitimpliedscalars",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_jsonschematographql",
+      "target": "converter_emitoperations",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_graphqltojsonschema",
+      "target": "converter_normalizeoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L223",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_graphqltojsonschema",
+      "target": "converter_convertgraphqltypetoschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L310",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_graphqltojsonschema",
+      "target": "converter_fallbackgraphqltojsonschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L339",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertgraphqltypetoschema",
+      "target": "converter_convertgraphqlfieldtoschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertgraphqlfieldtoschema",
+      "target": "converter_convertgraphqltypetojsonschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L430",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_fallbackgraphqltojsonschema",
+      "target": "converter_convertgqltypetojson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L556",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converttypedefinition",
+      "target": "converter_shouldexcludetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L579",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converttypedefinition",
+      "target": "converter_renderenum",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L606",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converttypedefinition",
+      "target": "converter_renderunion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L609",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converttypedefinition",
+      "target": "converter_renderobject",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L612",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderenum",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L630",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderenum",
+      "target": "converter_formatdirectives",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L633",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderunion",
+      "target": "converter_ensurereferencedtype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L687",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderunion",
+      "target": "converter_gettypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L690",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderunion",
+      "target": "converter_converttypedefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L692",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderunion",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L708",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderunion",
+      "target": "converter_formatdirectives",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L711",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderobject",
+      "target": "converter_convertfield",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L732",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderobject",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L750",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderobject",
+      "target": "converter_collectinterfaces",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L753",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_renderobject",
+      "target": "converter_formatdirectives",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L761",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L787",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_tocamelcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L794",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_sanitizefieldname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L795",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_formatargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L796",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_infergraphqltype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L814",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_stripnonnull",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L822",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_shouldpromotetoid",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L823",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertfield",
+      "target": "converter_formatdirectives",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L828",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_finalizetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L854",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_sanitizetypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L859",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_ensurereferencedtype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L874",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_pointerlastsegment",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L875",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_mapstringformat",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L885",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_propfallbackname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L913",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_gettypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L938",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_uniqueinlinetypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L943",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_infergraphqltype",
+      "target": "converter_converttypedefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L951",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_ensurereferencedtype",
+      "target": "converter_resolveref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L965",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_ensurereferencedtype",
+      "target": "converter_deriveprimitivegraphqltype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L971",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_ensurereferencedtype",
+      "target": "converter_pointerlastsegment",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L980",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_ensurereferencedtype",
+      "target": "converter_gettypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L981",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_ensurereferencedtype",
+      "target": "converter_converttypedefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L992",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_resolveref",
+      "target": "converter_sanitizetypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1021",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_resolveref",
+      "target": "converter_accesschild",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1068",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_emitcustomscalars",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1139",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_emitcustomscalars",
+      "target": "converter_topascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1142",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_emitoperations",
+      "target": "converter_shouldexcludetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1150",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_emitoperations",
+      "target": "converter_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1157",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_emitoperations",
+      "target": "converter_formatoperationargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1160",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converter_convert",
+      "target": "converter_normalizeoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1317",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converter_convert",
+      "target": "converter_detectfederationversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1320",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_converter_convert",
+      "target": "converter_jsonschematographql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1327",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_gettypename",
+      "target": "converter_sanitizetypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1408",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_uniqueinlinetypename",
+      "target": "converter_sanitizetypename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1436",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_sanitizefieldname",
+      "target": "converter_tocamelcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1476",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_pointerlastsegment",
+      "target": "converter_decodepointersegment",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1490",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_deriveprimitivegraphqltype",
+      "target": "converter_topascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1529",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_deriveprimitivegraphqltype",
+      "target": "converter_mapstringformat",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1542",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_collectinterfaces",
+      "target": "converter_ensurereferencedtype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1635",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_convertgqltypetojson",
+      "target": "converter_tosnakecase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1761",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "converter_conversionerror_constructor",
+      "callee": "super",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L106"
+    },
+    {
+      "caller_nid": "converter_shouldexcludetype",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L115"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L175"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "converter_jsonschematographql",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L227"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L243"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L257"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L268"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L280"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L282"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L295"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L308"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L315"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L332"
+    },
+    {
+      "caller_nid": "converter_graphqltojsonschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L336"
+    },
+    {
+      "caller_nid": "converter_convertgraphqltypetoschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "converter_convertgraphqltypetoschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L377"
+    },
+    {
+      "caller_nid": "converter_convertgraphqltypetoschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L385"
+    },
+    {
+      "caller_nid": "converter_convertgraphqltypetoschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L414"
+    },
+    {
+      "caller_nid": "converter_convertgraphqlfieldtoschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L442"
+    },
+    {
+      "caller_nid": "converter_convertgraphqltypetojsonschema",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L493"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L515"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L520"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L521"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L523"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L528"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L528"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L534"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L535"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L536"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L538"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L552"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L553"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L553"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L562"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L563"
+    },
+    {
+      "caller_nid": "converter_fallbackgraphqltojsonschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L568"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L580"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L585"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L592"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L593"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "ensureConnectionType",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L602"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L607"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L610"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L613"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L615"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "delete",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L618"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "delete",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L619"
+    },
+    {
+      "caller_nid": "converter_converttypedefinition",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L620"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L630"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L633"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L638"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L657"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L657"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L659"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L661"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L662"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L662"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L662"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L668"
+    },
+    {
+      "caller_nid": "converter_renderenum",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L669"
+    },
+    {
+      "caller_nid": "converter_renderunion",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L680"
+    },
+    {
+      "caller_nid": "converter_renderunion",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L681"
+    },
+    {
+      "caller_nid": "converter_renderunion",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L688"
+    },
+    {
+      "caller_nid": "converter_renderunion",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L693"
+    },
+    {
+      "caller_nid": "converter_renderunion",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L711"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L726"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L727"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L727"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L735"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L739"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L750"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L754"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L757"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L757"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L760"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L766"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L766"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L766"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L767"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L768"
+    },
+    {
+      "caller_nid": "converter_renderobject",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L769"
+    },
+    {
+      "caller_nid": "converter_tocamelcase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L773"
+    },
+    {
+      "caller_nid": "converter_tocamelcase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L773"
+    },
+    {
+      "caller_nid": "converter_infergraphqltype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L864"
+    },
+    {
+      "caller_nid": "converter_infergraphqltype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L881"
+    },
+    {
+      "caller_nid": "converter_infergraphqltype",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L918"
+    },
+    {
+      "caller_nid": "converter_ensurereferencedtype",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L976"
+    },
+    {
+      "caller_nid": "converter_ensurereferencedtype",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L977"
+    },
+    {
+      "caller_nid": "converter_ensurereferencedtype",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L988"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1001"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1005"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1005"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1008"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1008"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1009"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "charCodeAt",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1015"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "imul",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1016"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1018"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1020"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1041"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1048"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1050"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1055"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1055"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1055"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1072"
+    },
+    {
+      "caller_nid": "converter_resolveref",
+      "callee": "snakeToCamel",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1077"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1101"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1110"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1111"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1112"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1115"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1118"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1127"
+    },
+    {
+      "caller_nid": "converter_emitimpliedscalars",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1127"
+    },
+    {
+      "caller_nid": "converter_emitcustomscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1135"
+    },
+    {
+      "caller_nid": "converter_emitcustomscalars",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1136"
+    },
+    {
+      "caller_nid": "converter_emitcustomscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1138"
+    },
+    {
+      "caller_nid": "converter_emitcustomscalars",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1142"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1154"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1156"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1157"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1162"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1164"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1165"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1165"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1172"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1174"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1175"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1180"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1182"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1183"
+    },
+    {
+      "caller_nid": "converter_emitoperations",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1183"
+    },
+    {
+      "caller_nid": "converter_normalizeoptions",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1211"
+    },
+    {
+      "caller_nid": "converter_normalizeoptions",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1216"
+    },
+    {
+      "caller_nid": "converter_normalizeoptions",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1217"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1264"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1279"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1294"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1294"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1297"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1299"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1299"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1300"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1300"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1301"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1301"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1302"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1302"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1303"
+    },
+    {
+      "caller_nid": "converter_detectfederationversion",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1303"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1314"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1334"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1335"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1340"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1343"
+    },
+    {
+      "caller_nid": "converter_converter_convert",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1361"
+    },
+    {
+      "caller_nid": "converter_gettypename",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1399"
+    },
+    {
+      "caller_nid": "converter_gettypename",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1400"
+    },
+    {
+      "caller_nid": "converter_gettypename",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1404"
+    },
+    {
+      "caller_nid": "converter_gettypename",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1407"
+    },
+    {
+      "caller_nid": "converter_gettypename",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1415"
+    },
+    {
+      "caller_nid": "converter_uniqueinlinetypename",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1441"
+    },
+    {
+      "caller_nid": "converter_uniqueinlinetypename",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1442"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1455"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1456"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizetypename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1459"
+    },
+    {
+      "caller_nid": "converter_sanitizefieldname",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1473"
+    },
+    {
+      "caller_nid": "converter_sanitizefieldname",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1476"
+    },
+    {
+      "caller_nid": "converter_sanitizefieldname",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1479"
+    },
+    {
+      "caller_nid": "converter_sanitizefieldname",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1480"
+    },
+    {
+      "caller_nid": "converter_pointerlastsegment",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1489"
+    },
+    {
+      "caller_nid": "converter_pointerlastsegment",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1489"
+    },
+    {
+      "caller_nid": "converter_decodepointersegment",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1494"
+    },
+    {
+      "caller_nid": "converter_decodepointersegment",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1494"
+    },
+    {
+      "caller_nid": "converter_accesschild",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1498"
+    },
+    {
+      "caller_nid": "converter_accesschild",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1499"
+    },
+    {
+      "caller_nid": "converter_accesschild",
+      "callee": "isNaN",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1500"
+    },
+    {
+      "caller_nid": "converter_deriveprimitivegraphqltype",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1520"
+    },
+    {
+      "caller_nid": "converter_deriveprimitivegraphqltype",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1530"
+    },
+    {
+      "caller_nid": "converter_deriveprimitivegraphqltype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1534"
+    },
+    {
+      "caller_nid": "converter_mapstringformat",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1561"
+    },
+    {
+      "caller_nid": "converter_mapstringformat",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1564"
+    },
+    {
+      "caller_nid": "converter_mapstringformat",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1567"
+    },
+    {
+      "caller_nid": "converter_mapstringformat",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1570"
+    },
+    {
+      "caller_nid": "converter_mapstringformat",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1576"
+    },
+    {
+      "caller_nid": "converter_finalizetype",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1585"
+    },
+    {
+      "caller_nid": "converter_stripnonnull",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1592"
+    },
+    {
+      "caller_nid": "converter_stripnonnull",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1592"
+    },
+    {
+      "caller_nid": "converter_shouldpromotetoid",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1605"
+    },
+    {
+      "caller_nid": "converter_shouldpromotetoid",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1608"
+    },
+    {
+      "caller_nid": "converter_shouldpromotetoid",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1616"
+    },
+    {
+      "caller_nid": "converter_shouldpromotetoid",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1616"
+    },
+    {
+      "caller_nid": "converter_collectinterfaces",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1628"
+    },
+    {
+      "caller_nid": "converter_collectinterfaces",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1629"
+    },
+    {
+      "caller_nid": "converter_collectinterfaces",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1632"
+    },
+    {
+      "caller_nid": "converter_collectinterfaces",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1636"
+    },
+    {
+      "caller_nid": "converter_formatdescription",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1650"
+    },
+    {
+      "caller_nid": "converter_formatdescription",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1652"
+    },
+    {
+      "caller_nid": "converter_formatdescription",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1654"
+    },
+    {
+      "caller_nid": "converter_formatdirectives",
+      "callee": "extractDirectives",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1661"
+    },
+    {
+      "caller_nid": "converter_formatdirectives",
+      "callee": "printDirectives",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1662"
+    },
+    {
+      "caller_nid": "converter_formatargs",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1680"
+    },
+    {
+      "caller_nid": "converter_formatargs",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1680"
+    },
+    {
+      "caller_nid": "converter_formatargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1692"
+    },
+    {
+      "caller_nid": "converter_formatoperationargs",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1699"
+    },
+    {
+      "caller_nid": "converter_formatoperationargs",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1699"
+    },
+    {
+      "caller_nid": "converter_formatoperationargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1710"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1724"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1727"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1728"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1731"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1731"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1732"
+    },
+    {
+      "caller_nid": "converter_convertgqltypetojson",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1757"
+    },
+    {
+      "caller_nid": "converter_topascalcase",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1769"
+    },
+    {
+      "caller_nid": "converter_topascalcase",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1769"
+    },
+    {
+      "caller_nid": "converter_topascalcase",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1769"
+    },
+    {
+      "caller_nid": "converter_topascalcase",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1769"
+    },
+    {
+      "caller_nid": "converter_tosnakecase",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1780"
+    },
+    {
+      "caller_nid": "converter_tosnakecase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1780"
+    },
+    {
+      "caller_nid": "converter_tosnakecase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/converter.ts",
+      "source_location": "L1780"
+    }
+  ]
+}

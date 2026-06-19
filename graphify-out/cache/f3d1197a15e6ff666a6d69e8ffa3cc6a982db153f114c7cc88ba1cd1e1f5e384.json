@@ -1,0 +1,13 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_tests_validator_tests_rs",
+      "label": "validator_tests.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/validator_tests.rs",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [],
+  "raw_calls": []
+}

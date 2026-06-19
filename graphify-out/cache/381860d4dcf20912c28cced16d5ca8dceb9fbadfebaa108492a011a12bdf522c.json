@@ -1,0 +1,620 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "label": "track-broken-links.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "track_broken_links_saferead",
+      "label": "safeRead()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L51"
+    },
+    {
+      "id": "track_broken_links_safewrite",
+      "label": "safeWrite()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L59"
+    },
+    {
+      "id": "track_broken_links_patchseoopengraph",
+      "label": "patchSeoOpenGraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L66"
+    },
+    {
+      "id": "track_broken_links_ensurenextconfigrewrites",
+      "label": "ensureNextConfigRewrites()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L113"
+    },
+    {
+      "id": "track_broken_links_runlinkinator",
+      "label": "runLinkinator()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L170"
+    },
+    {
+      "id": "track_broken_links_extractbroken",
+      "label": "extractBroken()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L208"
+    },
+    {
+      "id": "track_broken_links_maptosources",
+      "label": "mapToSources()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L228"
+    },
+    {
+      "id": "track_broken_links_writeoutputs",
+      "label": "writeOutputs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L301"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_saferead",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_safewrite",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_patchseoopengraph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_ensurenextconfigrewrites",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_runlinkinator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_extractbroken",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_maptosources",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_linkinator_track_broken_links_js",
+      "target": "track_broken_links_writeoutputs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L301",
+      "weight": 1.0
+    },
+    {
+      "source": "track_broken_links_patchseoopengraph",
+      "target": "track_broken_links_saferead",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "track_broken_links_patchseoopengraph",
+      "target": "track_broken_links_safewrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "track_broken_links_ensurenextconfigrewrites",
+      "target": "track_broken_links_saferead",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "track_broken_links_ensurenextconfigrewrites",
+      "target": "track_broken_links_safewrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "track_broken_links_writeoutputs",
+      "target": "track_broken_links_safewrite",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L304",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "track_broken_links_saferead",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "track_broken_links_safewrite",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "track_broken_links_patchseoopengraph",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "indexOf",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L145"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "track_broken_links_ensurenextconfigrewrites",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L161"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L171"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L172"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "execSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L184"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L184"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "track_broken_links_runlinkinator",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "track_broken_links_extractbroken",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "(function () {\n    try {\n      const r = spawnSync(\"rg\", [\"--version\"], { stdio: \"ignore\" });\n      return r.status === 0;\n    } catch (e) {\n      return false;\n    }\n  })",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L232"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L266"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L275"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L275"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L276"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L277"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L281"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L282"
+    },
+    {
+      "caller_nid": "track_broken_links_maptosources",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L283"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L304"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L305"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L307"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L309"
+    },
+    {
+      "caller_nid": "track_broken_links_writeoutputs",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/linkinator/track-broken-links.js",
+      "source_location": "L309"
+    }
+  ]
+}

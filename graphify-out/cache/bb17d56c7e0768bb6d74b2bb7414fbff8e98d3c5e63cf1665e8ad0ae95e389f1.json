@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_jsx",
+      "label": "SchemaEditor.jsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "schemaeditor_schemaeditor",
+      "label": "SchemaEditor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L10"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_jsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_jsx",
+      "target": "schemaeditor_schemaeditor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "schemaeditor_schemaeditor",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SchemaEditor.jsx",
+      "source_location": "L16"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "label": "voyager.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "voyager_voyagerpage",
+      "label": "VoyagerPage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "target": "head",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "target": "script",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_tsx",
+      "target": "voyager_voyagerpage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "voyager_voyagerpage",
+      "callee": "useRef",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "voyager_voyagerpage",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "voyager_voyagerpage",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "voyager_voyagerpage",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "voyager_voyagerpage",
+      "callee": "(\n    <>\n      <Head>\n        <title>GraphQL Voyager | Schema Unification Forest</title>\n        <meta\n          name=\"description\"\n          content=\"Visualise the Schema Unification Forest GraphQL schema as an interactive graph using GraphQL Voyager.\"\n        />\n        <link\n          rel=\"stylesheet\"\n          href=\"https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.css\"\n        />\n      </Head>\n\n      <Script\n        src=\"https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.standalone.js\"\n        strategy=\"afterInteractive\"\n        onLoad={()",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager.tsx",
+      "source_location": "L101"
+    }
+  ]
+}

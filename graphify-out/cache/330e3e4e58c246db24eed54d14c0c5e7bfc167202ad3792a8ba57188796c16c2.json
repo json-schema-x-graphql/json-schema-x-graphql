@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "label": "useGraph.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "viewport",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "elklayout",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "zustand",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_store_usejson",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_types_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_jsonparser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getchildrenedges",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getoutgoers",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/stores/useGraph.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_format_json_mjs",
+      "label": "format-json.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "format_json_formatjson",
+      "label": "formatJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L7"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_format_json_mjs",
+      "target": "prettier",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_format_json_mjs",
+      "target": "format_json_formatjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "format_json_formatjson",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "format_json_formatjson",
+      "callee": "format",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/format-json.mjs",
+      "source_location": "L10"
+    }
+  ]
+}

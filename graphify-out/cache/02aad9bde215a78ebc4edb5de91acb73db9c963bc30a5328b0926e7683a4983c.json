@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_monaco_worker_setup_ts",
+      "label": "monaco-worker-setup.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "monaco_worker_setup_createworkerfrompath",
+      "label": "createWorkerFromPath()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L48"
+    },
+    {
+      "id": "monaco_worker_setup_setupmonacoworkers",
+      "label": "setupMonacoWorkers()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L110"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_monaco_worker_setup_ts",
+      "target": "monaco_worker_setup_createworkerfrompath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_monaco_worker_setup_ts",
+      "target": "monaco_worker_setup_setupmonacoworkers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "monaco_worker_setup_setupmonacoworkers",
+      "target": "monaco_worker_setup_createworkerfrompath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L178",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "monaco_worker_setup_createworkerfrompath",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "monaco_worker_setup_createworkerfrompath",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "monaco_worker_setup_setupmonacoworkers",
+      "callee": "debug",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "monaco_worker_setup_setupmonacoworkers",
+      "callee": "debug",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L137"
+    },
+    {
+      "caller_nid": "monaco_worker_setup_setupmonacoworkers",
+      "callee": "getWorkerPathByLabel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "monaco_worker_setup_setupmonacoworkers",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/monaco-worker-setup.ts",
+      "source_location": "L182"
+    }
+  ]
+}

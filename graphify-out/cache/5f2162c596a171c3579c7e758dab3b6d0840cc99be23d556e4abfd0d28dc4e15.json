@@ -1,0 +1,41 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_adr_options_test_ts",
+      "label": "adr.options.test.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/adr.options.test.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_adr_options_test_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/adr.options.test.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_adr_options_test_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/adr.options.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_adr_options_test_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/adr.options.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

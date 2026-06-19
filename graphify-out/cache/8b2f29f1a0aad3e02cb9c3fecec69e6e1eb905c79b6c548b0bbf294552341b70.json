@@ -1,0 +1,709 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "label": "federationDirectiveGenerator.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "federationdirectivegenerator_generatedirectivesuggestions",
+      "label": "generateDirectiveSuggestions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L15"
+    },
+    {
+      "id": "federationdirectivegenerator_analyzedependencies",
+      "label": "analyzeDependencies()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L86"
+    },
+    {
+      "id": "federationdirectivegenerator_buildtypetoschemamap",
+      "label": "buildTypeToSchemaMap()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L125"
+    },
+    {
+      "id": "federationdirectivegenerator_detectsharedtypes",
+      "label": "detectSharedTypes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L157"
+    },
+    {
+      "id": "federationdirectivegenerator_detectentityextensions",
+      "label": "detectEntityExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L175"
+    },
+    {
+      "id": "federationdirectivegenerator_generaterequiresdirective",
+      "label": "generateRequiresDirective()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L232"
+    },
+    {
+      "id": "federationdirectivegenerator_generateprovidesdirective",
+      "label": "generateProvidesDirective()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L250"
+    },
+    {
+      "id": "federationdirectivegenerator_iscomplextype",
+      "label": "isComplexType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L260"
+    },
+    {
+      "id": "federationdirectivegenerator_extractbasetype",
+      "label": "extractBaseType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L272"
+    },
+    {
+      "id": "federationdirectivegenerator_applysuggestionstosdl",
+      "label": "applySuggestionsToSdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L282"
+    },
+    {
+      "id": "federationdirectivegenerator_filtersuggestions",
+      "label": "filterSuggestions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L332"
+    },
+    {
+      "id": "federationdirectivegenerator_ranksuggestions",
+      "label": "rankSuggestions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L347"
+    },
+    {
+      "id": "federationdirectivegenerator_generatesuggestionreport",
+      "label": "generateSuggestionReport()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L366"
+    },
+    {
+      "id": "federationdirectivegenerator_validatesuggestion",
+      "label": "validateSuggestion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L400"
+    },
+    {
+      "id": "federationdirectivegenerator_mergesuggestionsintosdl",
+      "label": "mergeSuggestionsIntoSdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L437"
+    },
+    {
+      "id": "federationdirectivegenerator_analyzedirectiverequirements",
+      "label": "analyzeDirectiveRequirements()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L449"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_generatedirectivesuggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_analyzedependencies",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_buildtypetoschemamap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_detectsharedtypes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_detectentityextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_generaterequiresdirective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L232",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_generateprovidesdirective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L250",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_iscomplextype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L260",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_extractbasetype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_applysuggestionstosdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_filtersuggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_ranksuggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_generatesuggestionreport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L366",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_validatesuggestion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_mergesuggestionsintosdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L437",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_federationdirectivegenerator_js",
+      "target": "federationdirectivegenerator_analyzedirectiverequirements",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L449",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_buildtypetoschemamap",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_analyzedependencies",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_generaterequiresdirective",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_detectsharedtypes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_detectentityextensions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_generatedirectivesuggestions",
+      "target": "federationdirectivegenerator_generateprovidesdirective",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_analyzedependencies",
+      "target": "federationdirectivegenerator_iscomplextype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_analyzedependencies",
+      "target": "federationdirectivegenerator_extractbasetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_iscomplextype",
+      "target": "federationdirectivegenerator_extractbasetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L261",
+      "weight": 1.0
+    },
+    {
+      "source": "federationdirectivegenerator_mergesuggestionsintosdl",
+      "target": "federationdirectivegenerator_applysuggestionstosdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L441",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatedirectivesuggestions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedependencies",
+      "callee": "matchAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedependencies",
+      "callee": "matchAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedependencies",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_buildtypetoschemamap",
+      "callee": "matchAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_buildtypetoschemamap",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_buildtypetoschemamap",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectsharedtypes",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectsharedtypes",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L161"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "matchAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L197"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "matchAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_detectentityextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generaterequiresdirective",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L235"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generaterequiresdirective",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L235"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generateprovidesdirective",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L251"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_iscomplextype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_extractbasetype",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L273"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L293"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L299"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L299"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L305"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L314"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L314"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L315"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_applysuggestionstosdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L320"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_filtersuggestions",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L333"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_ranksuggestions",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatesuggestionreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L374"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatesuggestionreport",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L377"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatesuggestionreport",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L378"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_generatesuggestionreport",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L378"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L404"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L405"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L413"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L414"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L421"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_validatesuggestion",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L422"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_mergesuggestionsintosdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L451"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L452"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L453"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L454"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L462"
+    },
+    {
+      "caller_nid": "federationdirectivegenerator_analyzedirectiverequirements",
+      "callee": "min",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/federationDirectiveGenerator.js",
+      "source_location": "L467"
+    }
+  ]
+}

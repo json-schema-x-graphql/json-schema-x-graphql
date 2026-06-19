@@ -1,0 +1,147 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "label": "DirectiveSuggester.jsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "directivesuggester_directivesuggester",
+      "label": "DirectiveSuggester()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L11"
+    },
+    {
+      "id": "directivesuggester_applysuggestiontosdl",
+      "label": "applySuggestionToSdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L316"
+    },
+    {
+      "id": "directivesuggester_copytoclipboard",
+      "label": "copyToClipboard()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L338"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "target": "directivesuggester_directivesuggester",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "target": "directivesuggester_applysuggestiontosdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L316",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_jsx",
+      "target": "directivesuggester_copytoclipboard",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L338",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useMemo",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "useMemo",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "directivesuggester_directivesuggester",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "directivesuggester_applysuggestiontosdl",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L327"
+    },
+    {
+      "caller_nid": "directivesuggester_copytoclipboard",
+      "callee": "then",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L339"
+    },
+    {
+      "caller_nid": "directivesuggester_copytoclipboard",
+      "callee": "writeText",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/DirectiveSuggester.jsx",
+      "source_location": "L339"
+    }
+  ]
+}

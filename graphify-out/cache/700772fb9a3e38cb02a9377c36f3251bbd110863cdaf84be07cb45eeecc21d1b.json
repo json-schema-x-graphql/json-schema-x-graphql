@@ -1,0 +1,82 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_tools_graphql_editor_src_app_jsx",
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_app",
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L66"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_tools_graphql_editor_src_app_jsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_tools_graphql_editor_src_app_jsx",
+      "target": "app_app",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L66",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "app_app",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/tools/graphql-editor/src/App.jsx",
+      "source_location": "L137"
+    }
+  ]
+}

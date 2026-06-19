@@ -1,0 +1,786 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "label": "validate-graphql.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator",
+      "label": "GraphQLValidator",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L58"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_discoversdlfiles",
+      "label": ".discoverSDLFiles()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L62"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_isfederationschema",
+      "label": ".isFederationSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L99"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_detectfederationversion",
+      "label": ".detectFederationVersion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L119"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_extractmetadata",
+      "label": ".extractMetadata()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L132"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_validatesdl",
+      "label": ".validateSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L190"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "label": ".performQualityChecks()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L348"
+    },
+    {
+      "id": "validate_graphql_graphqlvalidator_validateall",
+      "label": ".validateAll()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L402"
+    },
+    {
+      "id": "validate_graphql_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L491"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "subgraph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "graphql_tag",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "validate_graphql_graphqlvalidator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_discoversdlfiles",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_isfederationschema",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_detectfederationversion",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_extractmetadata",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L132",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_validatesdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L190",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L348",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator",
+      "target": "validate_graphql_graphqlvalidator_validateall",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L402",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validation_validate_graphql_ts",
+      "target": "validate_graphql_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L491",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_detectfederationversion",
+      "target": "validate_graphql_graphqlvalidator_isfederationschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_extractmetadata",
+      "target": "validate_graphql_graphqlvalidator_isfederationschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_extractmetadata",
+      "target": "validate_graphql_graphqlvalidator_detectfederationversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_validatesdl",
+      "target": "validate_graphql_graphqlvalidator_extractmetadata",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_validatesdl",
+      "target": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L331",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_validateall",
+      "target": "validate_graphql_graphqlvalidator_discoversdlfiles",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L403",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_graphqlvalidator_validateall",
+      "target": "validate_graphql_graphqlvalidator_validatesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L417",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_main",
+      "target": "validate_graphql_graphqlvalidator_validateall",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L501",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_discoversdlfiles",
+      "callee": "walkDir",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_isfederationschema",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_detectfederationversion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_extractmetadata",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_extractmetadata",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_extractmetadata",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L240"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L240"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "buildSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L262"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "validate",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L268"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L279"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L293"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "gql",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "buildSubgraphSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L304"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L319"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L325"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L351"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L355"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L360"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L364"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L366"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L375"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L377"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L381"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L383"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L390"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_performqualitychecks",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L394"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L418"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L421"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L421"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L444"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L447"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L456"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L464"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "validate_graphql_graphqlvalidator_validateall",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L473"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L492"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L494"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L496"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L497"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L504"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L504"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L506"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L506"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L507"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L508"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L509"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L510"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L511"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L512"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L513"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L514"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L515"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L516"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L520"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L520"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L525"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L534"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L535"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L538"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L543"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L544"
+    },
+    {
+      "caller_nid": "validate_graphql_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validation/validate-graphql.ts",
+      "source_location": "L547"
+    }
+  ]
+}

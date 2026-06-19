@@ -1,0 +1,130 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getnodepath_ts",
+      "label": "getNodePath.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "getnodepath_getnodepath",
+      "label": "getNodePath()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L3"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getnodepath_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_types_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getnodepath_ts",
+      "target": "getnodepath_getnodepath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "require",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "getParentsForNodeId",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "concat",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "reverse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "findIndex",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "indexOf",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "getnodepath_getnodepath",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getNodePath.ts",
+      "source_location": "L48"
+    }
+  ]
+}

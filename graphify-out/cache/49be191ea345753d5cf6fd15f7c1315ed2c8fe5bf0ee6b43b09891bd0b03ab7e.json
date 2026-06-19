@@ -1,0 +1,304 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_test_core_types_mjs",
+      "label": "test-core-types.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_core_types_testcoretypes",
+      "label": "testCoreTypes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L15"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_test_core_types_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_test_core_types_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_test_core_types_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_test_core_types_mjs",
+      "target": "test_core_types_testcoretypes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L15",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "import",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "import",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "jsonSchemaToCoreTypes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "coreTypesToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "graphqlToCoreTypes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "coreTypesToJsonSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "test_core_types_testcoretypes",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/test-core-types.mjs",
+      "source_location": "L81"
+    }
+  ]
+}

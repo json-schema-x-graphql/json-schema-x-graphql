@@ -1,0 +1,615 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "label": "x-graphql-validator.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "x_graphql_validator_validateschema",
+      "label": "validateSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L49"
+    },
+    {
+      "id": "x_graphql_validator_validateextensions",
+      "label": "validateExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L140"
+    },
+    {
+      "id": "x_graphql_validator_validateextensionvalue",
+      "label": "validateExtensionValue()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L440"
+    },
+    {
+      "id": "x_graphql_validator_formatvalidationerrors",
+      "label": "formatValidationErrors()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L543"
+    },
+    {
+      "id": "x_graphql_validator_hasxgraphqlextensions",
+      "label": "hasXGraphQLExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L566"
+    },
+    {
+      "id": "x_graphql_validator_getusedxgraphqlattributes",
+      "label": "getUsedXGraphQLAttributes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L575"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_validateschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_validateextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_validateextensionvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L440",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_formatvalidationerrors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L543",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_hasxgraphqlextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L566",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_validator_ts",
+      "target": "x_graphql_validator_getusedxgraphqlattributes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L575",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_validator_validateschema",
+      "target": "x_graphql_validator_validateextensions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L57",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateschema",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L164"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L165"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L196"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L224"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L237"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L276"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L287"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L296"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L316"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L317"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L326"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L332"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L333"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L346"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L357"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L362"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L382"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L382"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L383"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L394"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L407"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L411"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L425"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L452"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L458"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L459"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L469"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L472"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L486"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L497"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L508"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L509"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L518"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "x_graphql_validator_validateextensionvalue",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L525"
+    },
+    {
+      "caller_nid": "x_graphql_validator_formatvalidationerrors",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L547"
+    },
+    {
+      "caller_nid": "x_graphql_validator_formatvalidationerrors",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L549"
+    },
+    {
+      "caller_nid": "x_graphql_validator_formatvalidationerrors",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L554"
+    },
+    {
+      "caller_nid": "x_graphql_validator_formatvalidationerrors",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L556"
+    },
+    {
+      "caller_nid": "x_graphql_validator_formatvalidationerrors",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L560"
+    },
+    {
+      "caller_nid": "x_graphql_validator_hasxgraphqlextensions",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L569"
+    },
+    {
+      "caller_nid": "x_graphql_validator_hasxgraphqlextensions",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L569"
+    },
+    {
+      "caller_nid": "x_graphql_validator_getusedxgraphqlattributes",
+      "callee": "traverse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-validator.ts",
+      "source_location": "L592"
+    }
+  ]
+}

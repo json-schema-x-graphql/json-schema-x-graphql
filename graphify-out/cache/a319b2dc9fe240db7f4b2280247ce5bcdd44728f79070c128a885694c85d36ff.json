@@ -1,0 +1,85 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_examples_test_convert_rs",
+      "label": "test_convert.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_convert_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L4"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_examples_test_convert_rs",
+      "target": "json_schema_x_graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_examples_test_convert_rs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_examples_test_convert_rs",
+      "target": "test_convert_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "read_to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "with_options",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "default",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L9"
+    },
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "write",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "test_convert_main",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/examples/test_convert.rs",
+      "source_location": "L14"
+    }
+  ]
+}

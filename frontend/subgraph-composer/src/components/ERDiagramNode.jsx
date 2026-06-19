@@ -4,13 +4,13 @@ import { isComplexType } from "../lib/erDiagramParser.js";
 import "./ERDiagramNode.css";
 
 const BADGE_COLORS = {
-  "@key": "#ffd700", // Gold
+  "@key": "linear-gradient(135deg, #ffd700, #ff9800)", // Glowing gold
   "@external": "transparent",
-  "@provides": "#9c27b0", // Vivid purple
-  "@requires": "#4caf50", // Green
-  "@shareable": "#607d8b",
-  "@extends": "#795548",
-  "@override": "#e91e63",
+  "@provides": "linear-gradient(135deg, #ab47bc, #7b1fa2)", // Vivid purple
+  "@requires": "linear-gradient(135deg, #66bb6a, #388e3c)", // Green
+  "@shareable": "linear-gradient(135deg, #78909c, #455a64)",
+  "@extends": "linear-gradient(135deg, #8d6e63, #5d4037)",
+  "@override": "linear-gradient(135deg, #ec407a, #c2185b)",
 };
 
 function DirectiveBadge({ name }) {
@@ -18,18 +18,18 @@ function DirectiveBadge({ name }) {
   const isExternal = name === "@external";
 
   let content = name.replace("@", "");
-  let style = { backgroundColor: BADGE_COLORS[name] || "#607d8b" };
+  let style = { background: BADGE_COLORS[name] || "#607d8b" };
   let className = "directive-badge";
 
   if (isKey) {
     content = "🔑";
-    style = { backgroundColor: "#ffd700", color: "#000" };
+    style = { background: BADGE_COLORS[name], color: "#000" };
   } else if (isExternal) {
     className += " badge-external";
     style = {
-      backgroundColor: "transparent",
-      border: "1px dashed #ccc",
-      color: "#666",
+      background: "transparent",
+      border: "1px dashed rgba(255,255,255,0.4)",
+      color: "rgba(255,255,255,0.7)",
     };
   }
 
@@ -40,18 +40,39 @@ function DirectiveBadge({ name }) {
   );
 }
 
+// Convert hex to rgba for glassmorphism
+const hexToRgba = (hex, alpha) => {
+  if (!hex || !hex.startsWith("#")) return `rgba(255,255,255,${alpha})`;
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 export default function ERDiagramNode({ data }) {
   const { label, fields, directives, color, sourceNames } = data;
+  const glowColor = hexToRgba(color, 0.4);
+  const headerBg = hexToRgba(color, 0.2);
 
   return (
-    <div className="er-node" style={{ borderColor: color }}>
+    <div 
+      className="er-node" 
+      style={{ 
+        "--node-color": color, 
+        "--node-glow": glowColor,
+        borderTopColor: color 
+      }}
+    >
       <Handle
         type="target"
         position={Position.Top}
-        style={{ background: color }}
+        className="er-handle top-handle"
+        style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}
       />
-      <div className="er-node-header" style={{ backgroundColor: color }}>
-        <div className="er-node-title">{label}</div>
+      <div className="er-node-header" style={{ background: headerBg }}>
+        <div className="er-node-title-wrapper">
+          <div className="er-node-title">{label}</div>
+        </div>
         {directives && directives.length > 0 && (
           <div className="er-node-directives">
             {directives.map((d, i) => (
@@ -75,17 +96,13 @@ export default function ERDiagramNode({ data }) {
                 <li
                   key={idx}
                   className={`er-node-field ${isExternal ? "external-field" : ""} ${shouldHide ? "hide-by-default" : ""}`}
-                  style={{ position: "relative" }}
                 >
                   <Handle
                     type="target"
                     position={Position.Left}
                     id={`target-${field.name}`}
-                    style={{
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      opacity: 0,
-                    }}
+                    className="er-handle side-handle"
+                    style={{ opacity: 0 }}
                   />
                   <span className="field-name">{field.name}</span>
                   <span
@@ -104,11 +121,8 @@ export default function ERDiagramNode({ data }) {
                     type="source"
                     position={Position.Right}
                     id={`source-${field.name}`}
-                    style={{
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      opacity: 0,
-                    }}
+                    className="er-handle side-handle"
+                    style={{ opacity: 0 }}
                   />
                 </li>
               );
@@ -121,7 +135,7 @@ export default function ERDiagramNode({ data }) {
       {sourceNames && sourceNames.length > 0 && (
         <div className="er-node-footer">
           {sourceNames.map((name, i) => (
-            <span key={i} className="er-node-source">
+            <span key={i} className="er-node-source" style={{ color: color, borderColor: hexToRgba(color, 0.3) }}>
               {name}
             </span>
           ))}
@@ -130,7 +144,8 @@ export default function ERDiagramNode({ data }) {
       <Handle
         type="source"
         position={Position.Bottom}
-        style={{ background: color }}
+        className="er-handle bottom-handle"
+        style={{ backgroundColor: color, boxShadow: `0 0 8px ${color}` }}
       />
     </div>
   );

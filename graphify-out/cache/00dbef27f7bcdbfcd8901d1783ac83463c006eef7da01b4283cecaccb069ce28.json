@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_json2go_js",
+      "label": "json2go.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "json2go_jsontogo",
+      "label": "jsonToGo()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L10"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_lib_utils_json2go_js",
+      "target": "json2go_jsontogo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L10",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "json2go_jsontogo",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "json2go_jsontogo",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "json2go_jsontogo",
+      "callee": "format",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "json2go_jsontogo",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "json2go_jsontogo",
+      "callee": "parseScope",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/lib/utils/json2go.js",
+      "source_location": "L41"
+    }
+  ]
+}

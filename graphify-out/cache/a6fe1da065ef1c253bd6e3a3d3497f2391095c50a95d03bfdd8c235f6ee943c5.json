@@ -1,0 +1,142 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "label": "converter-api.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "converter_api_mapoptions",
+      "label": "mapOptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L44"
+    },
+    {
+      "id": "converter_api_convertjsonschematographql",
+      "label": "convertJsonSchemaToGraphQL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L62"
+    },
+    {
+      "id": "converter_api_convertgraphqltojsonschema",
+      "label": "convertGraphQLToJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L98"
+    },
+    {
+      "id": "converter_api_formatoutput",
+      "label": "formatOutput()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L134"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "target": "converter_api_mapoptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "target": "converter_api_convertjsonschematographql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "target": "converter_api_convertgraphqltojsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_converter_api_ts",
+      "target": "converter_api_formatoutput",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_api_convertjsonschematographql",
+      "target": "converter_api_mapoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_api_convertgraphqltojsonschema",
+      "target": "converter_api_mapoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L103",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "converter_api_convertjsonschematographql",
+      "callee": "jsonSchemaToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "converter_api_convertjsonschematographql",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "converter_api_convertgraphqltojsonschema",
+      "callee": "graphqlToJsonSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "converter_api_convertgraphqltojsonschema",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "converter_api_formatoutput",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "converter_api_formatoutput",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/converter-api.ts",
+      "source_location": "L144"
+    }
+  ]
+}

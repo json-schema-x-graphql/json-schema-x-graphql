@@ -1,0 +1,925 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "label": "test-conversions.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_conversions_integrationtestharness",
+      "label": "IntegrationTestHarness",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L63"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_discovertestschemas",
+      "label": ".discoverTestSchemas()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_loadoptions",
+      "label": ".loadOptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L108"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_hasxgraphqlextensions",
+      "label": ".hasXGraphQLExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L125"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_counttypes",
+      "label": ".countTypes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L142"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_normalizesdl",
+      "label": ".normalizeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L167"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_generatediff",
+      "label": ".generateDiff()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L178"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_runtest",
+      "label": ".runTest()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L205"
+    },
+    {
+      "id": "test_conversions_integrationtestharness_runall",
+      "label": ".runAll()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L324"
+    },
+    {
+      "id": "test_conversions_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L434"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "test_conversions_integrationtestharness",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_discovertestschemas",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_loadoptions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_hasxgraphqlextensions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_counttypes",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_normalizesdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_generatediff",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_runtest",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness",
+      "target": "test_conversions_integrationtestharness_runall",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L324",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_integration_test_conversions_ts",
+      "target": "test_conversions_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runtest",
+      "target": "test_conversions_integrationtestharness_hasxgraphqlextensions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L226",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runtest",
+      "target": "test_conversions_integrationtestharness_loadoptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runtest",
+      "target": "test_conversions_integrationtestharness_counttypes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runtest",
+      "target": "test_conversions_integrationtestharness_normalizesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runtest",
+      "target": "test_conversions_integrationtestharness_generatediff",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runall",
+      "target": "test_conversions_integrationtestharness_discovertestschemas",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_integrationtestharness_runall",
+      "target": "test_conversions_integrationtestharness_runtest",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L339",
+      "weight": 1.0
+    },
+    {
+      "source": "test_conversions_main",
+      "target": "test_conversions_integrationtestharness_runall",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L445",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "readdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L75"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_discovertestschemas",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_loadoptions",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_loadoptions",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_loadoptions",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_loadoptions",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_hasxgraphqlextensions",
+      "callee": "checkObject",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_counttypes",
+      "callee": "parseGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_normalizesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_normalizesdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_normalizesdl",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_normalizesdl",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L194"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_generatediff",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L223"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L240"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "jsonSchemaToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L244"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L251"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L262"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "parseGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L305"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L309"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runtest",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L332"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L340"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L343"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L343"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L375"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L385"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L392"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L393"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L396"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L397"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L398"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L404"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L411"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L412"
+    },
+    {
+      "caller_nid": "test_conversions_integrationtestharness_runall",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L415"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L435"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L437"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L439"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L440"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L441"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L449"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L455"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L456"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L457"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L464"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L474"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L474"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L475"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L476"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L476"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L477"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L478"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L479"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L480"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L481"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "toFixed",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L482"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L484"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L485"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L486"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L487"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L488"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L499"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L499"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L500"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L504"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L504"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L509"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L510"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L514"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L516"
+    },
+    {
+      "caller_nid": "test_conversions_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/integration/test-conversions.ts",
+      "source_location": "L518"
+    }
+  ]
+}

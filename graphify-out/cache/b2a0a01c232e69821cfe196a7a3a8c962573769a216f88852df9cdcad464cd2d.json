@@ -1,0 +1,116 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_tests_error_tests_rs",
+      "label": "error_tests.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "error_tests_test_conversion_error_display",
+      "label": "test_conversion_error_display()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L4"
+    },
+    {
+      "id": "error_tests_test_from_serde_json_error",
+      "label": "test_from_serde_json_error()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L19"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_error_tests_rs",
+      "target": "conversionerror",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_error_tests_rs",
+      "target": "error_tests_test_conversion_error_display",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_error_tests_rs",
+      "target": "error_tests_test_from_serde_json_error",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L19",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "InvalidJsonSchema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "InvalidGraphQLSdl",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "InvalidField",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "UnsupportedFeature",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "error_tests_test_conversion_error_display",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "error_tests_test_from_serde_json_error",
+      "callee": "unwrap_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "error_tests_test_from_serde_json_error",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/error_tests.rs",
+      "source_location": "L21"
+    }
+  ]
+}

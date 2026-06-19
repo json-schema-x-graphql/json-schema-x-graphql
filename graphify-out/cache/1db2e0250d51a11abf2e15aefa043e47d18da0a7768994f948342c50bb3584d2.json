@@ -1,0 +1,259 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "label": "clean-public-spending-schema.py",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "clean_public_spending_schema_snake_to_camel",
+      "label": "snake_to_camel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "clean_public_spending_schema_clean_property",
+      "label": "clean_property()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "clean_public_spending_schema_clean_schema",
+      "label": "clean_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L60"
+    },
+    {
+      "id": "clean_public_spending_schema_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "clean_public_spending_schema_rationale_40",
+      "label": "Convert snake_case to camelCase.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "clean_public_spending_schema_rationale_45",
+      "label": "Remove redundant x-graphql annotations from a property.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L45"
+    },
+    {
+      "id": "clean_public_spending_schema_rationale_61",
+      "label": "Recursively clean all properties in schema.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L61"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "json",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "re",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "clean_public_spending_schema_snake_to_camel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "clean_public_spending_schema_clean_property",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "clean_public_spending_schema_clean_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_clean_public_spending_schema_py",
+      "target": "clean_public_spending_schema_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_clean_property",
+      "target": "clean_public_spending_schema_snake_to_camel",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_clean_schema",
+      "target": "clean_public_spending_schema_clean_property",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_main",
+      "target": "clean_public_spending_schema_clean_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_rationale_40",
+      "target": "clean_public_spending_schema_snake_to_camel",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_rationale_45",
+      "target": "clean_public_spending_schema_clean_property",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "clean_public_spending_schema_rationale_61",
+      "target": "clean_public_spending_schema_clean_schema",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L61",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "clean_public_spending_schema_snake_to_camel",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L41"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_snake_to_camel",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_snake_to_camel",
+      "callee": "title",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_clean_schema",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_clean_schema",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_clean_schema",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "open",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "load",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "open",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "dump",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "print",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "clean_public_spending_schema_main",
+      "callee": "print",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/clean-public-spending-schema.py",
+      "source_location": "L84"
+    }
+  ]
+}

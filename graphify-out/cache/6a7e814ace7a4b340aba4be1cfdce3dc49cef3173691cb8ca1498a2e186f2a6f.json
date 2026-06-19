@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_test_utils_mod_rs",
+      "label": "mod.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/test_utils/mod.rs",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_test_utils_mod_rs",
+      "target": "schema_validation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/test_utils/mod.rs",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_test_utils_mod_rs",
+      "target": "graphql_validation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/test_utils/mod.rs",
+      "source_location": "L52",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

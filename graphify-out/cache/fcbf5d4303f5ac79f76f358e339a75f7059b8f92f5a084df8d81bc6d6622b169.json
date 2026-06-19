@@ -1,0 +1,341 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_test_mocks_ts",
+      "label": "mocks.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "mocks_mocklorotext",
+      "label": "MockLoroText",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "mocks_mocklorotext_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "mocks_mocklorotext_tostring",
+      "label": ".toString()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "mocks_mocklorotext_length",
+      "label": ".length()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L31"
+    },
+    {
+      "id": "mocks_mocklorotext_insert",
+      "label": ".insert()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "mocks_mocklorotext_delete",
+      "label": ".delete()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "mocks_mockloro",
+      "label": "MockLoro",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L47"
+    },
+    {
+      "id": "mocks_mockloro_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "mocks_mockloro_setpeerid",
+      "label": ".setPeerId()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "mocks_mockloro_gettext",
+      "label": ".getText()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L61"
+    },
+    {
+      "id": "mocks_mockloro_subscribe",
+      "label": ".subscribe()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L68"
+    },
+    {
+      "id": "mocks_mockloro_commit",
+      "label": ".commit()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L75"
+    },
+    {
+      "id": "mocks_mockloro_checkout",
+      "label": ".checkout()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "mocks_mockloro_oplogversion",
+      "label": ".oplogVersion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L83"
+    },
+    {
+      "id": "mocks_mockloro_exportsnapshot",
+      "label": ".exportSnapshot()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L87"
+    },
+    {
+      "id": "mocks_mockloro_import",
+      "label": ".import()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L91"
+    },
+    {
+      "id": "mocks_mockloro_exportfrom",
+      "label": ".exportFrom()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L95"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_test_mocks_ts",
+      "target": "mocks_mocklorotext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mocklorotext",
+      "target": "mocks_mocklorotext_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mocklorotext",
+      "target": "mocks_mocklorotext_tostring",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mocklorotext",
+      "target": "mocks_mocklorotext_length",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mocklorotext",
+      "target": "mocks_mocklorotext_insert",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mocklorotext",
+      "target": "mocks_mocklorotext_delete",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_test_mocks_ts",
+      "target": "mocks_mockloro",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_setpeerid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_gettext",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_subscribe",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_commit",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_checkout",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_oplogversion",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_exportsnapshot",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_import",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "mocks_mockloro",
+      "target": "mocks_mockloro_exportfrom",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L95",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "mocks_mocklorotext_insert",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "mocks_mocklorotext_insert",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "mocks_mocklorotext_delete",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "mocks_mocklorotext_delete",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "mocks_mockloro_gettext",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "mocks_mockloro_gettext",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "mocks_mockloro_gettext",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "mocks_mockloro_subscribe",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "mocks_mockloro_commit",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/test/mocks.ts",
+      "source_location": "L76"
+    }
+  ]
+}

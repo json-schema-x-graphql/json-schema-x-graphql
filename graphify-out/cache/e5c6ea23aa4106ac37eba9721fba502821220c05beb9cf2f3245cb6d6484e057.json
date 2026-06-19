@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates_ts",
+      "label": "templates.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "templates_gettemplatenames",
+      "label": "getTemplateNames()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "templates_gettemplate",
+      "label": "getTemplate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "templates_gettemplatesbycategory",
+      "label": "getTemplatesByCategory()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L56"
+    },
+    {
+      "id": "templates_getdefaulttemplate",
+      "label": "getDefaultTemplate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L654"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates_ts",
+      "target": "templates_gettemplatenames",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates_ts",
+      "target": "templates_gettemplate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates_ts",
+      "target": "templates_gettemplatesbycategory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates_ts",
+      "target": "templates_getdefaulttemplate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L654",
+      "weight": 1.0
+    },
+    {
+      "source": "templates_getdefaulttemplate",
+      "target": "templates_gettemplate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L655",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "templates_gettemplatenames",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "templates_gettemplatenames",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "templates_gettemplate",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "templates_gettemplatesbycategory",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "templates_gettemplatesbycategory",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/templates.ts",
+      "source_location": "L61"
+    }
+  ]
+}

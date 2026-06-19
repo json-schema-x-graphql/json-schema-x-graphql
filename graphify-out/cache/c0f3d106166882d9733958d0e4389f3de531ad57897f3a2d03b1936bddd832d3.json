@@ -1,0 +1,122 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "label": "store.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "store_generateusercolor",
+      "label": "generateUserColor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L115"
+    },
+    {
+      "id": "store_generateuserid",
+      "label": "generateUserId()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L130"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "zustand",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "middleware",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "loro_crdt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "home_john_json_schema_x_graphql_examples_user_service_schema_json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "home_john_json_schema_x_graphql_examples_federal_procurement_graphql_raw",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "store_generateusercolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store_ts",
+      "target": "store_generateuserid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L130",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "store_generateusercolor",
+      "callee": "floor",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "store_generateusercolor",
+      "callee": "random",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "store_generateuserid",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "store_generateuserid",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "store_generateuserid",
+      "callee": "random",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/store.ts",
+      "source_location": "L131"
+    }
+  ]
+}

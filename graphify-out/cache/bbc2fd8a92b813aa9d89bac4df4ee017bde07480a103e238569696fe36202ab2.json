@@ -1,0 +1,230 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "label": "SettingsPanel.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "settingspanel_handlesave",
+      "label": "handleSave()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L35"
+    },
+    {
+      "id": "settingspanel_handlecancel",
+      "label": "handleCancel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L46"
+    },
+    {
+      "id": "settingspanel_handlereset",
+      "label": "handleReset()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L51"
+    },
+    {
+      "id": "settingspanel_handleenginechange",
+      "label": "handleEngineChange()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L63"
+    },
+    {
+      "id": "settingspanel_handlethemechange",
+      "label": "handleThemeChange()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L67"
+    },
+    {
+      "id": "settingspanel_handleautovalidatechange",
+      "label": "handleAutoValidateChange()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L71"
+    },
+    {
+      "id": "settingspanel_handleautoconvertchange",
+      "label": "handleAutoConvertChange()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L75"
+    },
+    {
+      "id": "settingspanel_handledebouncechange",
+      "label": "handleDebounceChange()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L79"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_store_app_store",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handlesave",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handlecancel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handlereset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handleenginechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handlethemechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handleautovalidatechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handleautoconvertchange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_settingspanel_tsx",
+      "target": "settingspanel_handledebouncechange",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L79",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "settingspanel_handlesave",
+      "callee": "updateSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "settingspanel_handlesave",
+      "callee": "onClose",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "settingspanel_handlecancel",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "settingspanel_handlecancel",
+      "callee": "onClose",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "settingspanel_handlereset",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "settingspanel_handleenginechange",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "settingspanel_handlethemechange",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "settingspanel_handleautovalidatechange",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "settingspanel_handleautoconvertchange",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "settingspanel_handledebouncechange",
+      "callee": "setLocalSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/SettingsPanel.tsx",
+      "source_location": "L80"
+    }
+  ]
+}

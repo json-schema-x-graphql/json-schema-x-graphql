@@ -1,0 +1,100 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "label": "ObjectNode.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "objectnode_row",
+      "label": "Row()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L16"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_textrenderer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_styles",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_objectnode_tsx",
+      "target": "objectnode_row",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L16",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "objectnode_row",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "objectnode_row",
+      "callee": "replaceAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "objectnode_row",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "objectnode_row",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx",
+      "source_location": "L19"
+    }
+  ]
+}

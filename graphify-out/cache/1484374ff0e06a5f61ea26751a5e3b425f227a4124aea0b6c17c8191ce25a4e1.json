@@ -1,0 +1,98 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "label": "diff-sdl-schema.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "diff_sdl_schema_collectgraphqltypefieldsmap",
+      "label": "collectGraphQLTypeFieldsMap()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L19"
+    },
+    {
+      "id": "diff_sdl_schema_collectjsonschemapropertyset",
+      "label": "collectJsonSchemaPropertySet()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L32"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "target": "diff_sdl_schema_collectgraphqltypefieldsmap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_diff_sdl_schema_mjs",
+      "target": "diff_sdl_schema_collectjsonschemapropertyset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L32",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "diff_sdl_schema_collectgraphqltypefieldsmap",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "diff_sdl_schema_collectgraphqltypefieldsmap",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "diff_sdl_schema_collectgraphqltypefieldsmap",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "diff_sdl_schema_collectjsonschemapropertyset",
+      "callee": "walk",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/diff-sdl-schema.mjs",
+      "source_location": "L47"
+    }
+  ]
+}

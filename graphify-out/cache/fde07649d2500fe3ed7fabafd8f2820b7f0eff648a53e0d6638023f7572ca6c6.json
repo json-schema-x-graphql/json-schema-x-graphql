@@ -1,0 +1,201 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "label": "App.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_onmousemove",
+      "label": "onMouseMove()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L70"
+    },
+    {
+      "id": "app_onmouseup",
+      "label": "onMouseUp()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L78"
+    },
+    {
+      "id": "app_initializeapp",
+      "label": "initializeApp()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L113"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_store_app_store",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_converters_converter_manager",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_templates",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "app_onmousemove",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "app_onmouseup",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_app_tsx",
+      "target": "app_initializeapp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L113",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "app_onmousemove",
+      "callee": "getBoundingClientRect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "app_onmousemove",
+      "callee": "min",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "app_onmousemove",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "app_onmousemove",
+      "callee": "setDividerPosition",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L75"
+    },
+    {
+      "caller_nid": "app_onmouseup",
+      "callee": "storeSetDividerPosition",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "app_onmouseup",
+      "callee": "round",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "getEngineStatus",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "app_initializeapp",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/App.tsx",
+      "source_location": "L134"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "label": "Value.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "value_getvaluecolor",
+      "label": "getValueColor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L11"
+    },
+    {
+      "id": "value_value",
+      "label": "Value()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L26"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_customnode_textrenderer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "value_getvaluecolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_treeview_value_tsx",
+      "target": "value_value",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "value_value",
+      "target": "value_getvaluecolor",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L33",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "value_getvaluecolor",
+      "callee": "isNaN",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "value_value",
+      "callee": "useTheme",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "value_value",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/TreeView/Value.tsx",
+      "source_location": "L39"
+    }
+  ]
+}

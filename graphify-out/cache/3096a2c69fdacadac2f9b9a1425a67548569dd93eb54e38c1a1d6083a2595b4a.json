@@ -1,0 +1,235 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "label": "test_project_schemas.py",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_project_schemas_test_project_schemas_are_valid",
+      "label": "test_project_schemas_are_valid()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "test_project_schemas_test_all_schemas_have_schema_key",
+      "label": "test_all_schemas_have_schema_key()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "test_project_schemas_test_schemas_use_modern_draft",
+      "label": "test_schemas_use_modern_draft()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L54"
+    },
+    {
+      "id": "test_project_schemas_rationale_1",
+      "label": "Integration tests for validating all project JSON Schemas.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_project_schemas_rationale_29",
+      "label": "Test that all project schemas are valid JSON Schema files.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "test_project_schemas_rationale_41",
+      "label": "Test that all schemas declare their JSON Schema version.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L41"
+    },
+    {
+      "id": "test_project_schemas_rationale_55",
+      "label": "Test that schemas use a modern JSON Schema draft (2019-09 or 2020-12).",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L55"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "sys",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "pytest",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "validate_schemas",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "test_project_schemas_test_project_schemas_are_valid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "test_project_schemas_test_all_schemas_have_schema_key",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "target": "test_project_schemas_test_schemas_use_modern_draft",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "test_project_schemas_rationale_1",
+      "target": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_project_schemas_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "test_project_schemas_rationale_29",
+      "target": "test_project_schemas_test_project_schemas_are_valid",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "test_project_schemas_rationale_41",
+      "target": "test_project_schemas_test_all_schemas_have_schema_key",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "test_project_schemas_rationale_55",
+      "target": "test_project_schemas_test_schemas_use_modern_draft",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L55",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_project_schemas_test_project_schemas_are_valid",
+      "callee": "exists",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_project_schemas_are_valid",
+      "callee": "skip",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_project_schemas_are_valid",
+      "callee": "load_json_file",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_project_schemas_are_valid",
+      "callee": "validate_with_jsonschema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_all_schemas_have_schema_key",
+      "callee": "list",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_all_schemas_have_schema_key",
+      "callee": "glob",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_all_schemas_have_schema_key",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_all_schemas_have_schema_key",
+      "callee": "load_json_file",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_schemas_use_modern_draft",
+      "callee": "list",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_schemas_use_modern_draft",
+      "callee": "glob",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_schemas_use_modern_draft",
+      "callee": "load_json_file",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_project_schemas_test_schemas_use_modern_draft",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_project_schemas.py",
+      "source_location": "L67"
+    }
+  ]
+}

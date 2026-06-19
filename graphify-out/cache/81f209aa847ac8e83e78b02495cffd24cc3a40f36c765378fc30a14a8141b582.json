@@ -1,0 +1,191 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "label": "test-roundtrip.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_roundtrip_compareobjects",
+      "label": "compareObjects()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L158"
+    },
+    {
+      "id": "test_roundtrip_shouldignoredifference",
+      "label": "shouldIgnoreDifference()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L231"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "target": "test_roundtrip_compareobjects",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_roundtrip_js",
+      "target": "test_roundtrip_shouldignoredifference",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "test_roundtrip_compareobjects",
+      "target": "test_roundtrip_shouldignoredifference",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L219",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L161"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L162"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "test_roundtrip_compareobjects",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L220"
+    },
+    {
+      "caller_nid": "test_roundtrip_shouldignoredifference",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "test_roundtrip_shouldignoredifference",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "test_roundtrip_shouldignoredifference",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "test_roundtrip_shouldignoredifference",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-roundtrip.js",
+      "source_location": "L242"
+    }
+  ]
+}

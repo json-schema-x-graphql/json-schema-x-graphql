@@ -1,0 +1,75 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "label": "validation.worker.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "validation_worker_receive",
+      "label": "receive()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L12"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_elk_api",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_tsalgo",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_validation",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "graphql_js_tree",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "graphql_language_service",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_public_validation_worker_js",
+      "target": "validation_worker_receive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/public/validation.worker.js",
+      "source_location": "L12",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

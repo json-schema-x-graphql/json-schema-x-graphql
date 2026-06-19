@@ -1,0 +1,570 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_schemadiff_js",
+      "label": "schemaDiff.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "schemadiff_schemadiff",
+      "label": "SchemaDiff",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L6"
+    },
+    {
+      "id": "schemadiff_schemadiff_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L7"
+    },
+    {
+      "id": "schemadiff_schemadiff_analyze",
+      "label": ".analyze()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L18"
+    },
+    {
+      "id": "schemadiff_schemadiff_haschanged",
+      "label": ".hasChanged()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L61"
+    },
+    {
+      "id": "schemadiff_schemadiff_getfieldchanges",
+      "label": ".getFieldChanges()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L80"
+    },
+    {
+      "id": "schemadiff_schemadiff_getsummary",
+      "label": ".getSummary()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L121"
+    },
+    {
+      "id": "schemadiff_schemadiff_getformatted",
+      "label": ".getFormatted()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L144"
+    },
+    {
+      "id": "schemadiff_schemadiff_getchangedescription",
+      "label": ".getChangeDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L158"
+    },
+    {
+      "id": "schemadiff_schemadiff_isidentical",
+      "label": ".isIdentical()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L178"
+    },
+    {
+      "id": "schemadiff_schemadiff_getcommonfields",
+      "label": ".getCommonFields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L185"
+    },
+    {
+      "id": "schemadiff_schemadiff_getadditions",
+      "label": ".getAdditions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L197"
+    },
+    {
+      "id": "schemadiff_schemadiff_getremovals",
+      "label": ".getRemovals()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L204"
+    },
+    {
+      "id": "schemadiff_schemadiff_getmodifications",
+      "label": ".getModifications()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L211"
+    },
+    {
+      "id": "schemadiff_schemadiff_totextreport",
+      "label": ".toTextReport()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L218"
+    },
+    {
+      "id": "schemadiff_comparemultipleschemas",
+      "label": "compareMultipleSchemas()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L263"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_schemadiff_js",
+      "target": "schemadiff_schemadiff",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_analyze",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_haschanged",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getfieldchanges",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getsummary",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getformatted",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getchangedescription",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_isidentical",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getcommonfields",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getadditions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getremovals",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_getmodifications",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff",
+      "target": "schemadiff_schemadiff_totextreport",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_schemadiff_js",
+      "target": "schemadiff_comparemultipleschemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L263",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_constructor",
+      "target": "schemadiff_schemadiff_analyze",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_analyze",
+      "target": "schemadiff_schemadiff_haschanged",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_analyze",
+      "target": "schemadiff_schemadiff_getfieldchanges",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_getformatted",
+      "target": "schemadiff_schemadiff_getsummary",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_totextreport",
+      "target": "schemadiff_schemadiff_getsummary",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_schemadiff_totextreport",
+      "target": "schemadiff_schemadiff_getchangedescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L242",
+      "weight": 1.0
+    },
+    {
+      "source": "schemadiff_comparemultipleschemas",
+      "target": "schemadiff_schemadiff_getformatted",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L278",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "schemadiff_schemadiff_analyze",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_analyze",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_analyze",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_analyze",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_analyze",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_haschanged",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_haschanged",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_haschanged",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_haschanged",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getfieldchanges",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getsummary",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getsummary",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getsummary",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getsummary",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getsummary",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getformatted",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getchangedescription",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L165"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getchangedescription",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getcommonfields",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getcommonfields",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getadditions",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getremovals",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_getmodifications",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L235"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L237"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L241"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L252"
+    },
+    {
+      "caller_nid": "schemadiff_schemadiff_totextreport",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "schemadiff_comparemultipleschemas",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L275"
+    },
+    {
+      "caller_nid": "schemadiff_comparemultipleschemas",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "schemadiff_comparemultipleschemas",
+      "callee": "then",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "schemadiff_comparemultipleschemas",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "schemadiff_comparemultipleschemas",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/schemaDiff.js",
+      "source_location": "L294"
+    }
+  ]
+}

@@ -1,0 +1,1257 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "label": "generate-graphql-from-json-schema.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_getnodebypath",
+      "label": "getNodeByPath()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L60"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_formatdescription",
+      "label": "formatDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L92"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_resolvepointer",
+      "label": "resolvePointer()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L102"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_findnodebycandidates",
+      "label": "findNodeByCandidates()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L337"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_ensurearray",
+      "label": "ensureArray()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L379"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_transformenumvalues",
+      "label": "transformEnumValues()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L385"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_buildenumsdl",
+      "label": "buildEnumSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L404"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_buildfielddescription",
+      "label": "buildFieldDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L457"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_buildfieldsdl",
+      "label": "buildFieldSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L465"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_buildtypesdl",
+      "label": "buildTypeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L493"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_buildunionsdl",
+      "label": "buildUnionSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L521"
+    },
+    {
+      "id": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "label": "generateFromJSONSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L557"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_json_to_graphql_config_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_graphql_utils_proto_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_getnodebypath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_formatdescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_resolvepointer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_findnodebycandidates",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_ensurearray",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L379",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_transformenumvalues",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L385",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_buildenumsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L404",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_buildfielddescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L457",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_buildfieldsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_buildtypesdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L493",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_buildunionsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L521",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_graphql_from_json_schema_mjs",
+      "target": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L557",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_resolvepointer",
+      "target": "generate_graphql_from_json_schema_getnodebypath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_resolvepointer",
+      "target": "generate_graphql_from_json_schema_findnodebycandidates",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L280",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildenumsdl",
+      "target": "generate_graphql_from_json_schema_resolvepointer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildenumsdl",
+      "target": "generate_graphql_from_json_schema_ensurearray",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L421",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildenumsdl",
+      "target": "generate_graphql_from_json_schema_getnodebypath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L427",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildenumsdl",
+      "target": "generate_graphql_from_json_schema_transformenumvalues",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L442",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildenumsdl",
+      "target": "generate_graphql_from_json_schema_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L447",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildfieldsdl",
+      "target": "generate_graphql_from_json_schema_resolvepointer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L466",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildfieldsdl",
+      "target": "generate_graphql_from_json_schema_buildfielddescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L467",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildfieldsdl",
+      "target": "generate_graphql_from_json_schema_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L468",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildtypesdl",
+      "target": "generate_graphql_from_json_schema_resolvepointer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L494",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildtypesdl",
+      "target": "generate_graphql_from_json_schema_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L499",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildtypesdl",
+      "target": "generate_graphql_from_json_schema_buildfieldsdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L505",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_buildunionsdl",
+      "target": "generate_graphql_from_json_schema_formatdescription",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L522",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "target": "generate_graphql_from_json_schema_buildenumsdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L653",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "target": "generate_graphql_from_json_schema_buildtypesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L660",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "target": "generate_graphql_from_json_schema_buildunionsdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L665",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_graphql_from_json_schema_getnodebypath",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_getnodebypath",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_getnodebypath",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_getnodebypath",
+      "callee": "snakeToCamel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_formatdescription",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "snakeToCamel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L201"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L236"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L237"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L272"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L294"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L319"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L320"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "Boolean",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L326"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_resolvepointer",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L329"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L346"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L354"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L355"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L357"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L357"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L360"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L361"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L363"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L363"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L366"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L369"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L369"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L374"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_findnodebycandidates",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L374"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_ensurearray",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L381"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "transform",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L390"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L396"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L397"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_transformenumvalues",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L398"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L411"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L411"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L426"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L447"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L449"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L450"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L453"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildenumsdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L454"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildfieldsdl",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildfieldsdl",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildfieldsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L472"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildfieldsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L481"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L499"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L501"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L507"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L509"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L511"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L517"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildtypesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L518"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_buildunionsdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L523"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L565"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L565"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L565"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L572"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L575"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L585"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L592"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L593"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L596"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L597"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L598"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "convertObjectKeys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L605"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L607"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "buildSchemaFromIR",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L613"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L623"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "emitCanonicalSDL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L630"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L632"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L634"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L634"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L637"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L644"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L645"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L647"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L650"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L655"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L656"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L661"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L662"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L665"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L666"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "trimEnd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L670"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L670"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L670"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L675"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "write",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L679"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L680"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L686"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L687"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L688"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "write",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L690"
+    },
+    {
+      "caller_nid": "generate_graphql_from_json_schema_generatefromjsonschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-graphql-from-json-schema.mjs",
+      "source_location": "L691"
+    }
+  ]
+}

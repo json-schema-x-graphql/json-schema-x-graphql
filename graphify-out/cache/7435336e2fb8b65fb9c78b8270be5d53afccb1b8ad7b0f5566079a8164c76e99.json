@@ -1,0 +1,1138 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "label": "validate-schema-sync.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "validate_schema_sync_readfile",
+      "label": "readFile()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L18"
+    },
+    {
+      "id": "validate_schema_sync_collectjsonschemakeys",
+      "label": "collectJsonSchemaKeys()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L22"
+    },
+    {
+      "id": "validate_schema_sync_collectgraphqlfieldnames",
+      "label": "collectGraphQLFieldNames()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L67"
+    },
+    {
+      "id": "validate_schema_sync_getargflag",
+      "label": "getArgFlag()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L99"
+    },
+    {
+      "id": "validate_schema_sync_getargvalue",
+      "label": "getArgValue()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L103"
+    },
+    {
+      "id": "validate_schema_sync_getjsonschemaatpath",
+      "label": "getJsonSchemaAtPath()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L109"
+    },
+    {
+      "id": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "label": "collectGraphQLTypeFieldsMap()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L189"
+    },
+    {
+      "id": "validate_schema_sync_iscamelcase",
+      "label": "isCamelCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L205"
+    },
+    {
+      "id": "validate_schema_sync_issnakecase",
+      "label": "isSnakeCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L213"
+    },
+    {
+      "id": "validate_schema_sync_islowercase",
+      "label": "isLowercase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L221"
+    },
+    {
+      "id": "validate_schema_sync_validatejsonschemanaming",
+      "label": "validateJsonSchemaNaming()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L228"
+    },
+    {
+      "id": "validate_schema_sync_validategraphqlnaming",
+      "label": "validateGraphQLNaming()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L274"
+    },
+    {
+      "id": "validate_schema_sync_cameltosnake",
+      "label": "camelToSnake()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L315"
+    },
+    {
+      "id": "validate_schema_sync_snaketocamel",
+      "label": "snakeToCamel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L322"
+    },
+    {
+      "id": "validate_schema_sync_compareschemas",
+      "label": "compareSchemas()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L340"
+    },
+    {
+      "id": "validate_schema_sync_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L493"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_readfile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_collectjsonschemakeys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_collectgraphqlfieldnames",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_getargflag",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_getargvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_getjsonschemaatpath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_iscamelcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_issnakecase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L213",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_islowercase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_validatejsonschemanaming",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_validategraphqlnaming",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L274",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_cameltosnake",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L315",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_snaketocamel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L322",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_compareschemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_validate_schema_sync_mjs",
+      "target": "validate_schema_sync_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L493",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_validatejsonschemanaming",
+      "target": "validate_schema_sync_iscamelcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L236",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_validatejsonschemanaming",
+      "target": "validate_schema_sync_cameltosnake",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L242",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_validategraphqlnaming",
+      "target": "validate_schema_sync_issnakecase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L285",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_validategraphqlnaming",
+      "target": "validate_schema_sync_snaketocamel",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_validategraphqlnaming",
+      "target": "validate_schema_sync_islowercase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L295",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_validatejsonschemanaming",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L350",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_validategraphqlnaming",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L351",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_collectgraphqlfieldnames",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_collectjsonschemakeys",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L355",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L458",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_compareschemas",
+      "target": "validate_schema_sync_getjsonschemaatpath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L470",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_main",
+      "target": "validate_schema_sync_readfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L510",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_main",
+      "target": "validate_schema_sync_getargflag",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L513",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_main",
+      "target": "validate_schema_sync_getargvalue",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L514",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_schema_sync_main",
+      "target": "validate_schema_sync_compareschemas",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L521",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "validate_schema_sync_readfile",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectjsonschemakeys",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqlfieldnames",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqlfieldnames",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqlfieldnames",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqlfieldnames",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getargflag",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getargvalue",
+      "callee": "indexOf",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "derefNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "resolveRef",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L164"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "derefNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L166"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "derefNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "validate_schema_sync_getjsonschemaatpath",
+      "callee": "call",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L175"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "validate_schema_sync_collectgraphqltypefieldsmap",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L196"
+    },
+    {
+      "caller_nid": "validate_schema_sync_iscamelcase",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L207"
+    },
+    {
+      "caller_nid": "validate_schema_sync_iscamelcase",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L207"
+    },
+    {
+      "caller_nid": "validate_schema_sync_issnakecase",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "validate_schema_sync_issnakecase",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "validate_schema_sync_islowercase",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L232"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L237"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L253"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L264"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L265"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validatejsonschemanaming",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L266"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validategraphqlnaming",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L275"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validategraphqlnaming",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validategraphqlnaming",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L297"
+    },
+    {
+      "caller_nid": "validate_schema_sync_validategraphqlnaming",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "validate_schema_sync_cameltosnake",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L316"
+    },
+    {
+      "caller_nid": "validate_schema_sync_cameltosnake",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L316"
+    },
+    {
+      "caller_nid": "validate_schema_sync_snaketocamel",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L323"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L341"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L363"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L363"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L364"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L364"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L379"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L411"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L413"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L413"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L427"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L428"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L430"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L430"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L460"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L461"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L463"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L464"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L465"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "mapJsonPointer",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L469"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L472"
+    },
+    {
+      "caller_nid": "validate_schema_sync_compareschemas",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L479"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "fileURLToPath",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L494"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L496"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L497"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L498"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L500"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L501"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L502"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L506"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L507"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L511"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L516"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L523"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L528"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L531"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L535"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L536"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L536"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L536"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L541"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L544"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L548"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L548"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L553"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L554"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L558"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L559"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L563"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L564"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L568"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L569"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L574"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L575"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L577"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L581"
+    },
+    {
+      "caller_nid": "validate_schema_sync_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/validate-schema-sync.mjs",
+      "source_location": "L582"
+    }
+  ]
+}

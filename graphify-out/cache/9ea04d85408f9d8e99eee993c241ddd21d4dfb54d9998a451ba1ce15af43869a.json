@@ -1,0 +1,310 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_schema_interop_mjs",
+      "label": "generate-schema-interop.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_schema_interop_runinteropgeneration",
+      "label": "runInteropGeneration()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L42"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_schema_interop_mjs",
+      "target": "child_process",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_schema_interop_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_schema_interop_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_schema_interop_mjs",
+      "target": "generate_schema_interop_runinteropgeneration",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L42",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "mkdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L128"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "mkdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L145"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "readdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "copyFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "generate_schema_interop_runinteropgeneration",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-schema-interop.mjs",
+      "source_location": "L157"
+    }
+  ]
+}

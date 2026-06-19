@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_monacoeditor_tsx",
+      "label": "MonacoEditor.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/MonacoEditor.tsx",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_monacoeditor_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/MonacoEditor.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_monacoeditor_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/MonacoEditor.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_monacoeditor_tsx",
+      "target": "monaco_editor",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/MonacoEditor.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_monacoeditor_tsx",
+      "target": "loro_crdt",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/MonacoEditor.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

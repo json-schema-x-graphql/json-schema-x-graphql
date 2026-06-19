@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_globalstyle_ts",
+      "label": "globalStyle.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/constants/globalStyle.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_globalstyle_ts",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/constants/globalStyle.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

@@ -1,0 +1,384 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "label": "run-validate-schema-sync.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_validate_schema_sync_readtext",
+      "label": "readText()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L38"
+    },
+    {
+      "id": "run_validate_schema_sync_readjson",
+      "label": "readJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L45"
+    },
+    {
+      "id": "run_validate_schema_sync_parseargs",
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L56"
+    },
+    {
+      "id": "run_validate_schema_sync_clamp",
+      "label": "clamp()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L70"
+    },
+    {
+      "id": "run_validate_schema_sync_printresult",
+      "label": "printResult()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L76"
+    },
+    {
+      "id": "run_validate_schema_sync_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L104"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "home_john_json_schema_x_graphql_docs_scripts_validate_schema_sync_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_readtext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_readjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_parseargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_clamp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_printresult",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_sync_mjs",
+      "target": "run_validate_schema_sync_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_sync_printresult",
+      "target": "run_validate_schema_sync_clamp",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_sync_main",
+      "target": "run_validate_schema_sync_parseargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_sync_main",
+      "target": "run_validate_schema_sync_readtext",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_sync_main",
+      "target": "run_validate_schema_sync_readjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_sync_main",
+      "target": "run_validate_schema_sync_printresult",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L118",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "run_validate_schema_sync_readtext",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_readtext",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_readjson",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_readjson",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_readjson",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_clamp",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_clamp",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_printresult",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "compareSchemas",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "compareSchemas",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L140"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "run_validate_schema_sync_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema-sync.mjs",
+      "source_location": "L149"
+    }
+  ]
+}

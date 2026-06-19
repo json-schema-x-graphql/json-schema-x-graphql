@@ -1,0 +1,100 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_errorpanel_tsx",
+      "label": "ErrorPanel.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "errorpanel_errorpanel",
+      "label": "ErrorPanel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L25"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_errorpanel_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_errorpanel_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_store_app_store",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_errorpanel_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_errorpanel_tsx",
+      "target": "errorpanel_errorpanel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L25",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L32"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "errorpanel_errorpanel",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/ErrorPanel.tsx",
+      "source_location": "L94"
+    }
+  ]
+}

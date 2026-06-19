@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_schema_unification_data_viewer_tsx",
+      "label": "schema-unification-data-viewer.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "schema_unification_data_viewer_schemaunificationdataviewer",
+      "label": "SchemaUnificationDataViewer()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L4"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_schema_unification_data_viewer_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_schema_unification_data_viewer_tsx",
+      "target": "router",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_schema_unification_data_viewer_tsx",
+      "target": "schema_unification_data_viewer_schemaunificationdataviewer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "schema_unification_data_viewer_schemaunificationdataviewer",
+      "callee": "useRouter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "schema_unification_data_viewer_schemaunificationdataviewer",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/schema-unification-data-viewer.tsx",
+      "source_location": "L7"
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "label": "ViewMenu.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "viewmenu_viewmenu",
+      "label": "ViewMenu()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L11"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "hooks",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "nextjs_google_analytics",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "bs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "cg",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_enums_viewmode_enum",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_store_useconfig",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_styles",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_toolbar_viewmenu_tsx",
+      "target": "viewmenu_viewmenu",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "viewmenu_viewmenu",
+      "callee": "useConfig",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "viewmenu_viewmenu",
+      "callee": "useConfig",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "viewmenu_viewmenu",
+      "callee": "useSessionStorage",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/Toolbar/ViewMenu.tsx",
+      "source_location": "L14"
+    }
+  ]
+}

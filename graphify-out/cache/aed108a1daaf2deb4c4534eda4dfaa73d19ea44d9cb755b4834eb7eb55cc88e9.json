@@ -1,0 +1,71 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_uicomponents_tsx",
+      "label": "UIComponents.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "uicomponents_errorbanner",
+      "label": "ErrorBanner()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L8"
+    },
+    {
+      "id": "uicomponents_emptystate",
+      "label": "EmptyState()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L34"
+    },
+    {
+      "id": "uicomponents_keyboardhint",
+      "label": "KeyboardHint()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L72"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_uicomponents_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_uicomponents_tsx",
+      "target": "uicomponents_errorbanner",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_uicomponents_tsx",
+      "target": "uicomponents_emptystate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_uicomponents_tsx",
+      "target": "uicomponents_keyboardhint",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/UIComponents.tsx",
+      "source_location": "L72",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

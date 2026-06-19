@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_tests_schema_composition_test_js",
+      "label": "schema-composition.test.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/__tests__/schema-composition.test.js",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_tests_schema_composition_test_js",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/__tests__/schema-composition.test.js",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_tests_schema_composition_test_js",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/__tests__/schema-composition.test.js",
+      "source_location": "L13",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

@@ -1,0 +1,73 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usecomposition_js",
+      "label": "useComposition.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "usecomposition_usecomposition",
+      "label": "useComposition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L4"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usecomposition_js",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usecomposition_js",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_composer",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usecomposition_js",
+      "target": "usecomposition_usecomposition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "usecomposition_usecomposition",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "usecomposition_usecomposition",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L6"
+    },
+    {
+      "caller_nid": "usecomposition_usecomposition",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L7"
+    },
+    {
+      "caller_nid": "usecomposition_usecomposition",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/hooks/useComposition.js",
+      "source_location": "L9"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "label": "benchmark.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "benchmark_runcommand",
+      "label": "runCommand()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L49"
+    },
+    {
+      "id": "benchmark_benchmark",
+      "label": "benchmark()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L61"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "child_process",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "perf_hooks",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "benchmark_runcommand",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_benchmark_mjs",
+      "target": "benchmark_benchmark",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "benchmark_runcommand",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "benchmark_runcommand",
+      "callee": "spawnSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "benchmark_runcommand",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "benchmark_runcommand",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "runner",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "runner",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "reduce",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "min",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L75"
+    },
+    {
+      "caller_nid": "benchmark_benchmark",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/benchmark.mjs",
+      "source_location": "L76"
+    }
+  ]
+}

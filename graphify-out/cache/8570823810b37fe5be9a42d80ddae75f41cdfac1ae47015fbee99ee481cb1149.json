@@ -1,0 +1,32 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_fuzz_fuzz_targets_round_trip_rs",
+      "label": "round_trip.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/fuzz/fuzz_targets/round_trip.rs",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_fuzz_fuzz_targets_round_trip_rs",
+      "target": "json_schema_graphql_converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/fuzz/fuzz_targets/round_trip.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_fuzz_fuzz_targets_round_trip_rs",
+      "target": "fuzz_target",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/fuzz/fuzz_targets/round_trip.rs",
+      "source_location": "L4",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

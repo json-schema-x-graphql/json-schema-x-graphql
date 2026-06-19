@@ -1,0 +1,106 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "label": "voyager-v2-hinted.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "voyager_v2_hinted_voyagerv2hintedpage",
+      "label": "VoyagerV2HintedPage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L21"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "next",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "head",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "script",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_legacy_pages_voyager_v2_hinted_tsx",
+      "target": "voyager_v2_hinted_voyagerv2hintedpage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L21",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "voyager_v2_hinted_voyagerv2hintedpage",
+      "callee": "useRef",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "voyager_v2_hinted_voyagerv2hintedpage",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "voyager_v2_hinted_voyagerv2hintedpage",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "voyager_v2_hinted_voyagerv2hintedpage",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "voyager_v2_hinted_voyagerv2hintedpage",
+      "callee": "(\n    <>\n      <Head>\n        <title>GraphQL Voyager - V2 x-graphql Hinted Contract Data Example | Schema Unification Forest</title>\n        <meta\n          name=\"description\"\n          content=\"Visualise the V2 x-graphql hinted Contract Data example schema with interfaces, unions, and custom scalars as an interactive graph using GraphQL Voyager.\"\n        />\n        <link\n          rel=\"stylesheet\"\n          href=\"https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.css\"\n        />\n      </Head>\n\n      <Script\n        src=\"https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.standalone.js\"\n        strategy=\"afterInteractive\"\n        onLoad={()",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/legacy-pages/voyager-v2-hinted.tsx",
+      "source_location": "L102"
+    }
+  ]
+}
