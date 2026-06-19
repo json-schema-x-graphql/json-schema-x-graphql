@@ -47,6 +47,7 @@ overrides:
   protobufjs: ^7.6.3
   form-data: ^4.0.6
   js-yaml: ^4.1.2
+  ts-deepmerge: ^8.0.0
 
 patchedDependencies:
   gray-matter@4.0.3: 5e73cf5a4218f9a21d163ff21105495be3eea8c20af0f515db916ab0157fe5bc
@@ -8780,8 +8781,8 @@ packages:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
     engines: {node: '>=6.10'}
 
-  ts-deepmerge@6.2.1:
-    resolution: {integrity: sha512-8CYSLazCyj0DJDpPIxOFzJG46r93uh6EynYjuey+bxcLltBeqZL7DMfaE5ZPzZNFlav7wx+2TDa/mBl8gkTYzw==}
+  ts-deepmerge@8.0.0:
+    resolution: {integrity: sha512-133O+10nJmVI8w5xeVZPEv5PIrv7iaUae07wv1aH8XJH95Ur6YIhWAPhPyP1YPlbPS9fCVcNIZTu7m8urRVF0A==}
     engines: {node: '>=14.13.1'}
 
   ts-graphviz@1.8.2:
@@ -9508,7 +9509,7 @@ snapshots:
       react: 18.3.1
       react-day-picker: 8.10.2(date-fns@3.6.0)(react@18.3.1)
       react-laag: 2.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      ts-deepmerge: 6.2.1
+      ts-deepmerge: 8.0.0
       unstated-next: 1.1.0
       uuid: 11.1.1
     transitivePeerDependencies:
@@ -19817,7 +19818,7 @@ snapshots:
 
   ts-dedent@2.2.0: {}
 
-  ts-deepmerge@6.2.1: {}
+  ts-deepmerge@8.0.0: {}
 
   ts-graphviz@1.8.2: {}
 
