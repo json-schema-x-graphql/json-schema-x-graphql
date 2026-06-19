@@ -10,6 +10,8 @@ export * from "./generated/types.js";
 import { IJsonSchemaConverter, ExtendedConverterOptions, JsonSchemaInput } from "./interfaces.js";
 import { normalizeFederationExtensions } from "./normalization/directives.js";
 export { normalizeFederationExtensions };
+export * from "./standard-schema.js";
+export * from "./codegen.js";
 export declare function jsonSchemaToGraphQL(jsonSchemaInput: JsonSchemaInput, options?: ExtendedConverterOptions): string;
 export declare function graphqlToJsonSchema(graphqlSdl: string, options?: ConverterOptions): string;
 export declare class Converter implements IJsonSchemaConverter {

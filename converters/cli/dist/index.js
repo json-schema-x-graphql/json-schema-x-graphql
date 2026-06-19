@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
-import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
+import { jsonSchemaToGraphQL, generateTypeScript } from "@json-schema-x-graphql/core";
 const { values, positionals } = parseArgs({
     options: {
         input: {
@@ -62,6 +62,10 @@ const { values, positionals } = parseArgs({
         version: {
             type: "boolean",
             short: "v",
+        },
+        types: {
+            type: "string",
+            short: "t",
         },
     },
     allowPositionals: true,
@@ -141,6 +145,11 @@ try {
     }
     else {
         console.log(sdl);
+    }
+    if (values.types) {
+        const tsCode = await generateTypeScript(sdl);
+        fs.writeFileSync(values.types, tsCode);
+        console.log(`Successfully generated TypeScript types to ${values.types}`);
     }
 }
 catch (error) {

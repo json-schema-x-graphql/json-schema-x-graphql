@@ -589,6 +589,26 @@
     },
     "^x-graphql-subscription-filter$": {
       "type": "string"
+    },
+    "^x-graphql-directives$": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/directive"
+          },
+          {
+            "type": "string",
+            "description": "Raw directive string",
+            "examples": [
+              "@resolver(isBatching: true)",
+              "@backingData(type: \"com.example.User\")",
+              "@idOf(type: \"User\")"
+            ]
+          }
+        ]
+      }
     }
-  }
+  },
+  "unevaluatedProperties": false
 }
