@@ -11102,6 +11102,14 @@ snapshots:
       graphql: 16.14.0
       tslib: 2.8.1
 
+  '@graphql-codegen/core@6.1.0(graphql@16.14.1)':
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 7.0.1(graphql@16.14.1)
+      '@graphql-tools/schema': 10.0.33(graphql@16.14.1)
+      '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
+      graphql: 16.14.1
+      tslib: 2.8.1
+
   '@graphql-codegen/gql-tag-operations@5.2.0(graphql@16.14.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 6.3.0(graphql@16.14.0)
@@ -11126,6 +11134,15 @@ snapshots:
       change-case-all: 2.1.0
       common-tags: 1.8.2
       graphql: 16.14.0
+      import-from: 4.0.0
+      tslib: 2.8.1
+
+  '@graphql-codegen/plugin-helpers@7.0.1(graphql@16.14.1)':
+    dependencies:
+      '@graphql-tools/utils': 11.1.0(graphql@16.14.1)
+      change-case-all: 2.1.0
+      common-tags: 1.8.2
+      graphql: 16.14.1
       import-from: 4.0.0
       tslib: 2.8.1
 
@@ -12119,6 +12136,8 @@ snapshots:
 
   '@json-schema-x-graphql/core@file:converters/node':
     dependencies:
+      '@graphql-codegen/core': 6.1.0(graphql@16.14.1)
+      '@graphql-codegen/plugin-helpers': 7.0.1(graphql@16.14.1)
       '@opentelemetry/api': 1.9.1
       '@standard-schema/spec': 1.1.0
       graphql: 16.14.1

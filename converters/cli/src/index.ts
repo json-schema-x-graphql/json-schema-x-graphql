@@ -2,7 +2,10 @@
 import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
-import { jsonSchemaToGraphQL, generateTypeScript } from "@json-schema-x-graphql/core";
+import {
+  jsonSchemaToGraphQL,
+  generateTypeScript,
+} from "@json-schema-x-graphql/core";
 import {
   FederationVersion,
   NamingConvention,

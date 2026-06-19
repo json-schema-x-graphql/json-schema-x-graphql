@@ -24,6 +24,6 @@ describe("Viaduct Directives", () => {
 
     expect(result).toContain('@backingData(type: "com.example.User")');
     expect(result).toContain("id: String @resolver(isBatching: true)");
-    expect(result).toContain("email: String @resolver @idOf(type: \"Email\")");
+    expect(result).toContain('email: String @resolver @idOf(type: "Email")');
   });
 });

@@ -385,10 +385,13 @@ export function generateMermaidER(erData) {
     lines.push(`  ${label} {`);
     for (const field of fields) {
       const type = extractBaseType(field.type);
-      
+
       const isPK = field.directives.some((d) => d.name === "@key");
-      const isFK = field.directives.some((d) => ["@provides", "@requires"].includes(d.name)) || isComplexType(field.type);
-      
+      const isFK =
+        field.directives.some((d) =>
+          ["@provides", "@requires"].includes(d.name),
+        ) || isComplexType(field.type);
+
       let keyModifier = "";
       if (isPK && isFK) keyModifier = " PK,FK";
       else if (isPK) keyModifier = " PK";
@@ -399,7 +402,7 @@ export function generateMermaidER(erData) {
         .map((d) => d.name)
         .join(" ");
       const badgeStr = badges ? ` "${badges}"` : "";
-      
+
       lines.push(`    ${type} ${field.name}${keyModifier}${badgeStr}`);
     }
     lines.push("  }");

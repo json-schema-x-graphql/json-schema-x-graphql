@@ -4,7 +4,9 @@ import { convertGraphQLType } from "../../scripts/helpers/generate-graphql-json-
 
 describe("convertGraphQLType", () => {
   test("converts scalar, list and non-null types", () => {
-    const schema = buildSchema(`type Query { a: String b: [String] c: String! }`);
+    const schema = buildSchema(
+      `type Query { a: String b: [String] c: String! }`,
+    );
     const typeMap = schema.getTypeMap();
     const ctx = { definitions: new Map(), building: new Set(), schema };
 

@@ -58,22 +58,25 @@ export default function App() {
     editorWidthRef.current = editorWidth;
   }, [editorWidth]);
 
-  const handleMouseMove = useCallback((e) => {
-    if (isMobile) return;
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    if (isResizingSidebar.current) {
-      const newWidth = e.clientX - rect.left;
-      if (newWidth >= 220 && newWidth <= 500) {
-        setSidebarWidth(newWidth);
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (isMobile) return;
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      if (isResizingSidebar.current) {
+        const newWidth = e.clientX - rect.left;
+        if (newWidth >= 220 && newWidth <= 500) {
+          setSidebarWidth(newWidth);
+        }
+      } else if (isResizingEditor.current) {
+        const newWidth = e.clientX - rect.left - sidebarWidthRef.current - 6;
+        if (newWidth >= 350) {
+          setEditorWidth(newWidth);
+        }
       }
-    } else if (isResizingEditor.current) {
-      const newWidth = e.clientX - rect.left - sidebarWidthRef.current - 6;
-      if (newWidth >= 350) {
-        setEditorWidth(newWidth);
-      }
-    }
-  }, [isMobile]);
+    },
+    [isMobile],
+  );
 
   const handleMouseUp = useCallback(() => {
     isResizingSidebar.current = false;
@@ -334,19 +337,19 @@ export default function App() {
         >
           {isMobile && (
             <div className="mobile-tabs">
-              <button 
+              <button
                 className={`tab-btn ${mobileView === "schemas" ? "active" : ""}`}
                 onClick={() => setMobileView("schemas")}
               >
                 1. Schemas
               </button>
-              <button 
+              <button
                 className={`tab-btn ${mobileView === "editor" ? "active" : ""}`}
                 onClick={() => setMobileView("editor")}
               >
                 2. Editor
               </button>
-              <button 
+              <button
                 className={`tab-btn ${mobileView === "preview" ? "active" : ""}`}
                 onClick={() => setMobileView("preview")}
               >
@@ -357,7 +360,11 @@ export default function App() {
 
           <div
             className={`sidebar ${isMobile && mobileView !== "schemas" ? "mobile-hidden" : ""}`}
-            style={{ width: isMobile ? "100%" : sidebarWidth, flex: isMobile ? "1" : "none", height: "100%" }}
+            style={{
+              width: isMobile ? "100%" : sidebarWidth,
+              flex: isMobile ? "1" : "none",
+              height: "100%",
+            }}
           >
             <SchemaManager
               schemas={schemas}
@@ -377,7 +384,9 @@ export default function App() {
             />
           </div>
 
-          {!isMobile && <div className="resizer-col" onMouseDown={startResizeSidebar} />}
+          {!isMobile && (
+            <div className="resizer-col" onMouseDown={startResizeSidebar} />
+          )}
 
           <div
             className={`editor-and-directives ${isMobile && mobileView !== "editor" ? "mobile-hidden" : ""}`}
@@ -420,14 +429,16 @@ export default function App() {
             )}
           </div>
 
-          {!isMobile && <div className="resizer-col" onMouseDown={startResizeEditor} />}
+          {!isMobile && (
+            <div className="resizer-col" onMouseDown={startResizeEditor} />
+          )}
 
-          <div 
-            className={`editor-section ${isMobile && mobileView !== "preview" ? "mobile-hidden" : ""}`} 
-            style={{ 
+          <div
+            className={`editor-section ${isMobile && mobileView !== "preview" ? "mobile-hidden" : ""}`}
+            style={{
               display: isMobile && mobileView !== "preview" ? "none" : "flex",
-              flex: 1, 
-              minWidth: isMobile ? "100%" : 300 
+              flex: 1,
+              minWidth: isMobile ? "100%" : 300,
             }}
           >
             {/* Tab bar to switch between Preview, Visualize, and ER Diagram */}

@@ -76,24 +76,28 @@ describe("validate-graphql-vs-jsonschema programmatic API", () => {
       expect.objectContaining({
         sdlBuilds: true,
         sampleValid: null,
-      })
+      }),
     );
   });
 
   test("validateParity validates a good sample against the JSON Schema", () => {
-    const result = validateParity(MINIMAL_SDL, PERSON_JSON_SCHEMA, VALID_PERSON_SAMPLE);
+    const result = validateParity(
+      MINIMAL_SDL,
+      PERSON_JSON_SCHEMA,
+      VALID_PERSON_SAMPLE,
+    );
     expect(result).toEqual(
       expect.objectContaining({
         sdlBuilds: true,
         sampleValid: true,
-      })
+      }),
     );
   });
 
   test("validateParity throws with Ajv validationErrors for a bad sample", () => {
-    expect(() => validateParity(MINIMAL_SDL, PERSON_JSON_SCHEMA, INVALID_PERSON_SAMPLE)).toThrow(
-      /Schema validation failed:/
-    );
+    expect(() =>
+      validateParity(MINIMAL_SDL, PERSON_JSON_SCHEMA, INVALID_PERSON_SAMPLE),
+    ).toThrow(/Schema validation failed:/);
 
     try {
       validateParity(MINIMAL_SDL, PERSON_JSON_SCHEMA, INVALID_PERSON_SAMPLE);

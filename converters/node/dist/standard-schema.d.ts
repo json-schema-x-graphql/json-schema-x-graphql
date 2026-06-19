@@ -4,7 +4,8 @@ export declare function isZodSchema(schema: any): boolean;
 export declare function isStandardSchema(schema: any): schema is StandardSchemaV1;
 /**
  * Converts a Zod or Standard Schema to GraphQL SDL.
- * Currently, natively leverages `zod-to-json-schema` to bridge the gap.
+ * Uses `zod-to-json-schema` to bridge to JSON Schema, then runs the converter.
+ *
  * @param schema A Zod schema or Standard Schema-compliant object.
  * @param options Converter options.
  */

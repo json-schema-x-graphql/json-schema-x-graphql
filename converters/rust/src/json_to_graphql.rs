@@ -2456,7 +2456,7 @@ mod tests {
         );
         assert!(schema.get("x-graphql-federation").is_none());
 
-    // Test with conversion
+        // Test with conversion
         let options = ConversionOptions::default();
         let result = convert(&schema, &options).unwrap();
         assert!(result.contains("@key(fields: \"id\")"));
@@ -2472,7 +2472,7 @@ mod tests {
             "x-graphql-type-name": "User",
             "x-graphql-viaduct-backing-data": { "type": "com.example.User" },
             "properties": {
-                "id": { 
+                "id": {
                     "type": "string",
                     "x-graphql-viaduct-resolver": { "isBatching": true }
                 },

@@ -44,7 +44,7 @@ During the build, `tsc` consumes `tsconfig.json`, which is scoped to `src/` and 
 import {
   jsonSchemaToGraphQL,
   graphqlToJsonSchema,
-  convertStandardSchemaToGraphQL
+  convertStandardSchemaToGraphQL,
 } from "@json-schema-x-graphql/core";
 
 // 1. JSON Schema to SDL
