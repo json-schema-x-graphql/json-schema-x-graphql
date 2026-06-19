@@ -1,5 +1,5 @@
 import { jsonSchemaToGraphQL } from "./converter.js";
-import { ConverterOptions, ConversionResult } from "./generated/types.js";
+import { ConverterOptions } from "./generated/types.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 

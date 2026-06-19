@@ -1,6 +1,6 @@
 import { codegen } from "@graphql-codegen/core";
 import * as typescriptPlugin from "@graphql-codegen/typescript";
-import { parse, GraphQLSchema, buildSchema } from "graphql";
+import { parse } from "graphql";
 
 /**
  * Generates TypeScript interfaces from a GraphQL SDL string using @graphql-codegen/core.
