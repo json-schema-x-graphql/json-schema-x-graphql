@@ -39,6 +39,17 @@ export default function App() {
   const isResizingSidebar = useRef(false);
   const isResizingEditor = useRef(false);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [mobileView, setMobileView] = useState("schemas"); // "schemas" | "editor" | "preview"
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     sidebarWidthRef.current = sidebarWidth;
   }, [sidebarWidth]);
@@ -48,6 +59,7 @@ export default function App() {
   }, [editorWidth]);
 
   const handleMouseMove = useCallback((e) => {
+    if (isMobile) return;
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     if (isResizingSidebar.current) {
@@ -61,7 +73,7 @@ export default function App() {
         setEditorWidth(newWidth);
       }
     }
-  }, []);
+  }, [isMobile]);
 
   const handleMouseUp = useCallback(() => {
     isResizingSidebar.current = false;
@@ -305,23 +317,50 @@ export default function App() {
         </header>
 
         <main
-          className="app-main"
+          className={`app-main ${isMobile ? "mobile-layout" : ""}`}
           ref={containerRef}
           style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             width: "100%",
             height: "100%",
             position: "relative",
           }}
         >
+          {isMobile && (
+            <div className="mobile-tabs">
+              <button 
+                className={`tab-btn ${mobileView === "schemas" ? "active" : ""}`}
+                onClick={() => setMobileView("schemas")}
+              >
+                1. Schemas
+              </button>
+              <button 
+                className={`tab-btn ${mobileView === "editor" ? "active" : ""}`}
+                onClick={() => setMobileView("editor")}
+              >
+                2. Editor
+              </button>
+              <button 
+                className={`tab-btn ${mobileView === "preview" ? "active" : ""}`}
+                onClick={() => setMobileView("preview")}
+              >
+                3. Preview
+              </button>
+            </div>
+          )}
+
           <div
-            className="sidebar"
-            style={{ width: sidebarWidth, flex: "none", height: "100%" }}
+            className={`sidebar ${isMobile && mobileView !== "schemas" ? "mobile-hidden" : ""}`}
+            style={{ width: isMobile ? "100%" : sidebarWidth, flex: isMobile ? "1" : "none", height: "100%" }}
           >
             <SchemaManager
               schemas={schemas}
               activeSchemaId={activeSchemaId}
-              onSelect={setActiveSchemaId}
+              onSelect={(id) => {
+                setActiveSchemaId(id);
+                if (isMobile) setMobileView("editor");
+              }}
               onAdd={handleAddSchema}
               onAddWithTemplate={handleAddWithTemplate}
               onRemove={removeSchema}
@@ -333,16 +372,16 @@ export default function App() {
             />
           </div>
 
-          <div className="resizer-col" onMouseDown={startResizeSidebar} />
+          {!isMobile && <div className="resizer-col" onMouseDown={startResizeSidebar} />}
 
           <div
-            className="editor-and-directives"
+            className={`editor-and-directives ${isMobile && mobileView !== "editor" ? "mobile-hidden" : ""}`}
             style={{
-              display: "flex",
+              display: isMobile && mobileView !== "editor" ? "none" : "flex",
               flexDirection: "column",
               height: "100%",
-              width: editorWidth,
-              flex: "none",
+              width: isMobile ? "100%" : editorWidth,
+              flex: isMobile ? "1" : "none",
             }}
           >
             <div className="editor-section" style={{ flex: 1 }}>
@@ -376,11 +415,19 @@ export default function App() {
             )}
           </div>
 
-          <div className="resizer-col" onMouseDown={startResizeEditor} />
+          {!isMobile && <div className="resizer-col" onMouseDown={startResizeEditor} />}
 
-          <div className="editor-section" style={{ flex: 1, minWidth: 300 }}>
+          <div 
+            className={`editor-section ${isMobile && mobileView !== "preview" ? "mobile-hidden" : ""}`} 
+            style={{ 
+              display: isMobile && mobileView !== "preview" ? "none" : "flex",
+              flex: 1, 
+              minWidth: isMobile ? "100%" : 300 
+            }}
+          >
             {/* Tab bar to switch between Preview, Visualize, and ER Diagram */}
             <div
+              className="desktop-tabs"
               style={{
                 display: "flex",
                 gap: 0,
@@ -390,42 +437,15 @@ export default function App() {
               }}
             >
               <button
-                className={`tab-btn ${activeTab === "editor" ? "active" : ""}`}
+                className={`tab-btn desktop-tab ${activeTab === "editor" ? "active" : ""}`}
                 onClick={() => setActiveTab("editor")}
-                style={{
-                  padding: "var(--spacing-sm) var(--spacing-md)",
-                  border: "none",
-                  background: activeTab === "editor" ? "white" : "transparent",
-                  cursor: "pointer",
-                  fontSize: "0.875rem",
-                  fontWeight: activeTab === "editor" ? "600" : "400",
-                  color: "var(--color-text)",
-                  borderBottom:
-                    activeTab === "editor"
-                      ? "2px solid var(--color-primary)"
-                      : "2px solid transparent",
-                }}
               >
                 Preview
               </button>
               {supergraphSDL && (
                 <button
-                  className={`tab-btn ${activeTab === "visualize" ? "active" : ""}`}
+                  className={`tab-btn desktop-tab ${activeTab === "visualize" ? "active" : ""}`}
                   onClick={() => setActiveTab("visualize")}
-                  style={{
-                    padding: "var(--spacing-sm) var(--spacing-md)",
-                    border: "none",
-                    background:
-                      activeTab === "visualize" ? "white" : "transparent",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                    fontWeight: activeTab === "visualize" ? "600" : "400",
-                    color: "var(--color-text)",
-                    borderBottom:
-                      activeTab === "visualize"
-                        ? "2px solid var(--color-primary)"
-                        : "2px solid transparent",
-                  }}
                 >
                   Visualize
                 </button>
