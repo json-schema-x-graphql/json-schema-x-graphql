@@ -117,7 +117,7 @@ export default function ERDiagramPanel({
         const mermaid = (await import("mermaid")).default;
         mermaid.initialize({
           startOnLoad: false,
-          theme: "default",
+          theme: "dark",
           securityLevel: "loose",
           fontFamily: "Arial, sans-serif",
           fontSize: 14,
@@ -232,6 +232,7 @@ export default function ERDiagramPanel({
               nodeTypes={nodeTypes}
               edgeTypes={edgeTypes}
               fitView
+              colorMode="dark"
               attributionPosition="bottom-right"
             >
               <Background variant="dots" gap={12} size={1} />

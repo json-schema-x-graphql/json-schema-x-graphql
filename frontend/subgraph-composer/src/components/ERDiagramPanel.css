@@ -2,66 +2,76 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: white;
-  border-radius: var(--radius-md, 8px);
-  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
-  border: 1px solid var(--color-border, #d1d5db);
+  background: #0b0f19;
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  font-family: "Inter", -apple-system, sans-serif;
 }
 
 .er-diagram-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
-  background: var(--color-bg-secondary, #f3f4f6);
-  border-bottom: 1px solid var(--color-border, #d1d5db);
+  padding: 0.75rem 1.25rem;
+  background: rgba(18, 20, 31, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
-  gap: var(--spacing-md, 1rem);
+  gap: 1rem;
+  z-index: 10;
 }
 
 .er-diagram-toggle-group {
   display: flex;
   gap: 0;
-  border-radius: var(--radius-sm, 4px);
+  border-radius: 6px;
   overflow: hidden;
-  border: 1px solid var(--color-border, #d1d5db);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0,0,0,0.2);
 }
 
 .er-diagram-toggle-btn {
-  padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
+  padding: 0.4rem 1.2rem;
   border: none;
-  background: white;
+  background: transparent;
   cursor: pointer;
-  font-size: 0.875rem;
-  color: var(--color-text, #1f2937);
-  transition: background 0.2s ease;
-}
-
-.er-diagram-toggle-btn:hover {
-  background: var(--color-bg, #f9fafb);
-}
-
-.er-diagram-toggle-btn.active {
-  background: var(--color-primary, #6366f1);
-  color: white;
-  font-weight: 600;
-}
-
-.er-diagram-export-btn {
-  padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
-  border: 1px solid var(--color-border, #d1d5db);
-  background: white;
-  border-radius: var(--radius-sm, 4px);
-  cursor: pointer;
-  font-size: 0.875rem;
-  color: var(--color-text, #1f2937);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
   transition: all 0.2s ease;
 }
 
+.er-diagram-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.er-diagram-toggle-btn.active {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.er-diagram-export-btn {
+  padding: 0.4rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .er-diagram-export-btn:hover {
-  background: var(--color-bg-secondary, #f3f4f6);
-  border-color: var(--color-text-light, #6b7280);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .er-diagram-viewport {
@@ -69,6 +79,12 @@
   min-height: 0;
   position: relative;
   overflow: hidden;
+  /* Dark mode React Flow overrides */
+  --xy-edge-stroke: rgba(255,255,255,0.2);
+  --xy-edge-stroke-selected: #6366f1;
+  --xy-connectionline-stroke: #818cf8;
+  --xy-background-color: #0b0f19;
+  --xy-background-pattern-color: rgba(255,255,255,0.08);
 }
 
 .er-diagram-empty {
@@ -77,63 +93,69 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: var(--color-text-light, #6b7280);
+  color: rgba(255, 255, 255, 0.4);
   font-size: 0.95rem;
-  gap: var(--spacing-md, 1rem);
+  gap: 1rem;
 }
 
 .er-diagram-mermaid {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--spacing-md, 1rem);
-  gap: var(--spacing-md, 1rem);
+  padding: 1rem;
+  gap: 1rem;
   overflow: auto;
 }
 
 .er-diagram-mermaid-code {
   flex: 1;
-  background: var(--color-bg-secondary, #f3f4f6);
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: var(--radius-md, 8px);
-  padding: var(--spacing-md, 1rem);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  background: #0f1322;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1.2rem;
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 0.85rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  color: #a5b4fc;
   overflow: auto;
   white-space: pre;
   margin: 0;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .er-diagram-copy-btn {
   align-self: flex-start;
-  padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
-  border: 1px solid var(--color-border, #d1d5db);
-  background: white;
-  border-radius: var(--radius-sm, 4px);
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.875rem;
-  color: var(--color-text, #1f2937);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   transition: all 0.2s ease;
 }
 
 .er-diagram-copy-btn:hover {
-  background: var(--color-bg-secondary, #f3f4f6);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
 }
 
 .er-swimlanes-legend {
   position: absolute;
-  top: var(--spacing-sm, 0.5rem);
-  right: var(--spacing-sm, 0.5rem);
+  top: 1rem;
+  right: 1rem;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: var(--radius-sm, 4px);
-  padding: var(--spacing-sm, 0.5rem);
+  background: rgba(18, 20, 31, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.8rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  gap: 0.6rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   font-size: 0.8rem;
   pointer-events: none;
 }
@@ -141,7 +163,7 @@
 .er-swimlanes-item {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   pointer-events: auto;
 }
 
@@ -151,12 +173,18 @@
   border-radius: 50%;
   display: inline-block;
   flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
 }
 
 .er-swimlanes-name {
-  color: var(--color-text, #1f2937);
+  color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 140px;
+  font-weight: 500;
+}
+
+.mermaid-rendered-container {
+  background: transparent !important;
 }
