@@ -1,4 +1,4 @@
-# MockForge POC — Lightweight Mock Server for Petrified Forest
+# MockForge POC — Lightweight Mock Server for Example Forest
 
 ## Status: ✅ Operational (Lightweight Yoga + GraphQL Mesh)
 
@@ -40,7 +40,7 @@ Choose the endpoint based on who is consuming the schema and what they need to v
 
 - **End-user apps and unified procurement experiences**: use the federated gateway at `http://localhost:4000/graphql`. This is the right default for contract search, cross-system details, and client integration because users care about one joined contract experience, not subgraph boundaries.
 - **Domain-owned tools and service-team debugging**: query individual subgraphs on `4001-4006` when you need to isolate schema ownership, mock behavior, or field-level regressions within a single system.
-- **Generated artifact validation**: use the generated supergraph mock at `http://localhost:3000/graphql` when you want to verify that `generated-schemas/petrified.supergraph.graphql` can still be consumed as a single published contract.
+- **Generated artifact validation**: use the generated supergraph mock at `http://localhost:3000/graphql` when you want to verify that `generated-schemas/example.supergraph.graphql` can still be consumed as a single published contract.
 
 For code and website imports, prefer generated artifacts over ad hoc copies:
 
@@ -106,7 +106,7 @@ JSON Schema Sources (src/data/*.schema.json)
     ↓ (generate-subgraph-sdl.mjs)
 Subgraph Schemas (generated-schemas/*.subgraph.graphql)
     ↓ (generate-supergraph.mjs)
-Supergraph Schema (generated-schemas/petrified.supergraph.graphql)
+Supergraph Schema (generated-schemas/example.supergraph.graphql)
     ↓
 MockForge Services (auto-mocking with faker.js)
     ↓
@@ -128,7 +128,7 @@ Mock GraphQL API (http://localhost:5050/graphql)
 **Generated Schemas:**
 
 - `generated-schemas/*.subgraph.graphql` - Individual subgraph SDL files
-- `generated-schemas/petrified.supergraph.graphql` - Composed supergraph
+- `generated-schemas/example.supergraph.graphql` - Composed supergraph
 
 **MockForge Configuration:**
 

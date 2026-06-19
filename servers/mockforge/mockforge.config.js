@@ -2,7 +2,7 @@
  * MockForge Configuration
  *
  * Custom resolvers and faker.js integration for realistic mock data
- * generation from the Petrified Forest supergraph.
+ * generation from the Example Forest supergraph.
  */
 import { faker } from "@faker-js/faker";
 import { parse } from "csv-parse/sync";

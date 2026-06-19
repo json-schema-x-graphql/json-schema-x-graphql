@@ -1,12 +1,12 @@
 /**
  * GraphQL Hive Gateway Configuration
- * The Guild's Node.js federation gateway for Petrified Forest mock services
+ * The Guild's Node.js federation gateway for Example Forest mock services
  */
 import { defineConfig } from "@graphql-hive/gateway";
 
 export const gatewayConfig = defineConfig({
   // Load supergraph schema from file
-  supergraph: "./generated-schemas/petrified.supergraph.graphql",
+  supergraph: "./generated-schemas/example.supergraph.graphql",
 
   // Server configuration
   port: 5100,
@@ -15,7 +15,7 @@ export const gatewayConfig = defineConfig({
   // Enable GraphiQL playground
   graphiql: {
     enabled: true,
-    title: "Petrified Forest Federation Gateway",
+    title: "Example Forest Federation Gateway",
     defaultQuery: `# Hive Gateway - Federation GraphQL API
 #
 # Query multiple systems through a single endpoint

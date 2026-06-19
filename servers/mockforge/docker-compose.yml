@@ -13,7 +13,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-fpds-mock
+    container_name: example-fpds-mock
     environment:
       - PORT=4001
       - SYSTEM=fpds
@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-usaspending-mock
+    container_name: example-usaspending-mock
     environment:
       - PORT=4002
       - SYSTEM=usaspending
@@ -84,7 +84,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-assist-mock
+    container_name: example-assist-mock
     environment:
       - PORT=4003
       - SYSTEM=assist
@@ -119,7 +119,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-easi-mock
+    container_name: example-easi-mock
     environment:
       - PORT=4004
       - SYSTEM=easi
@@ -154,7 +154,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-calm-mock
+    container_name: example-calm-mock
     environment:
       - PORT=4005
       - SYSTEM=calm
@@ -182,17 +182,17 @@ services:
       timeout: 5s
       retries: 3
 
-  # Petrified Mock Service
-  petrified-mock:
+  # Example Mock Service
+  example-mock:
     build:
       context: .
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-petrified-mock
+    container_name: example-example-mock
     environment:
       - PORT=4006
-      - SYSTEM=petrified
+      - SYSTEM=example
       - NODE_ENV=development
     volumes:
       - ../../../generated-schemas:/workspace/generated-schemas:ro
@@ -224,7 +224,7 @@ services:
       dockerfile: Dockerfile.mesh
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-mesh-gateway
+    container_name: example-mesh-gateway
     environment:
       - NODE_ENV=development
     volumes:
@@ -238,7 +238,7 @@ services:
       - assist-mock
       - easi-mock
       - calm-mock
-      - petrified-mock
+      - example-mock
     restart: unless-stopped
     healthcheck:
       test:
@@ -259,7 +259,7 @@ services:
       dockerfile: Dockerfile.gateway
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-hive-gateway
+    container_name: example-hive-gateway
     environment:
       - NODE_ENV=development
       - PORT=5100
@@ -279,7 +279,7 @@ services:
         condition: service_healthy
       calm-mock:
         condition: service_healthy
-      petrified-mock:
+      example-mock:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
@@ -302,7 +302,7 @@ services:
       dockerfile: Dockerfile.mock
       args:
         BUILD_ENV: ${BUILD_ENV:-PRODUCTION}
-    container_name: petrified-mockforge
+    container_name: example-mockforge
     working_dir: /workspace
     environment:
       - PORT=3000
@@ -319,7 +319,7 @@ services:
       - assist-mock
       - easi-mock
       - calm-mock
-      - petrified-mock
+      - example-mock
     command: ["node", "gateway-server.js"]
     restart: unless-stopped
     healthcheck:
@@ -340,4 +340,4 @@ volumes:
 
 networks:
   default:
-    name: petrified-mock-network
+    name: example-mock-network

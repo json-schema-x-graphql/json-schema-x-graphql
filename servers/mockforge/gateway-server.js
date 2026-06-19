@@ -42,7 +42,7 @@ const subgraphs = [
   { name: "assist", localPort: 4003, dockerHost: "assist-mock" },
   { name: "easi", localPort: 4004, dockerHost: "easi-mock" },
   { name: "calm", localPort: 4005, dockerHost: "calm-mock" },
-  { name: "petrified", localPort: 4006, dockerHost: "petrified-mock" },
+  { name: "example", localPort: 4006, dockerHost: "example-mock" },
 ].map(sg => ({
   ...sg,
   url: IS_DOCKER
@@ -692,7 +692,7 @@ const yoga = createYoga({
   })(),
   plugins: [systemHealthPlugin],
   graphiql: {
-    title: "Petrified Forest Federation Gateway",
+    title: "Example Forest Federation Gateway",
     defaultQuery: `# Federation Gateway — ${validResults.length} subgraphs available
 # Subgraphs: ${validResults.map(r => r.name).join(", ")}
 # Operations: ${opCount}

@@ -523,8 +523,8 @@ export function compareSchemas(sdl, jsonSchema, options = {}) {
 
 function main() {
   const repoRoot = getRepoRoot(import.meta.url);
-  const graphqlSDLPath = path.join(repoRoot, "generated-schemas", "petrified.supergraph.graphql");
-  const jsonSchemaPath = path.join(repoRoot, "src", "data", "petrified.schema.json");
+  const graphqlSDLPath = path.join(repoRoot, "generated-schemas", "example.supergraph.graphql");
+  const jsonSchemaPath = path.join(repoRoot, "src", "data", "example.schema.json");
   const schemaDir = path.join(repoRoot, "src", "data");
 
   if (!fs.existsSync(graphqlSDLPath)) {
@@ -584,7 +584,8 @@ function main() {
     console.log("\n✅ All GraphQL fields are represented in the JSON Schema (by name).");
   }
 
-  if (false) {
+  const showMissingInGraphQLInfo = process.env.SCHEMA_SYNC_SHOW_MISSING_IN_GRAPHQL === "1";
+  if (showMissingInGraphQLInfo) {
     // Suppressed informational missingInGraphQL output
     console.log("\nℹ️ JSON Schema properties with no GraphQL field (by name):");
     result.missingInGraphQL
@@ -610,7 +611,7 @@ function main() {
       console.log(`    → Should be: '${violation.suggestion}'`);
     });
     console.log(
-      "\n  Fix: Update the JSON Schema canonical source (src/data/petrified.schema.json)"
+      "\n  Fix: Update the JSON Schema canonical source (src/data/example.schema.json)"
     );
     console.log("       to use snake_case naming convention for all field names.");
   }

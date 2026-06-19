@@ -1,4 +1,4 @@
-# Apollo Router Configuration for Petrified Forest Mock Services
+# Apollo Router Configuration for Example Forest Mock Services
 
 # Subgraph URL overrides
 override_subgraph_url:

@@ -6,8 +6,8 @@
  Usage:
    node scripts/validate-graphql-vs-jsonschema.mjs [path/to/sample.json]
 
- - Reads GraphQL SDL from generated-schemas/petrified.supergraph.graphql
- - Reads JSON Schema from src/data/petrified.schema.json
+ - Reads GraphQL SDL from generated-schemas/example.supergraph.graphql
+ - Reads JSON Schema from src/data/example.schema.json
  - If a sample JSON file path is passed, validates it against the JSON Schema
 */
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -133,8 +133,8 @@ function readFile(p) {
 
 function main(argv = process.argv.slice(2)) {
   const repoRoot = getRepoRoot(import.meta.url);
-  const graphqlSDLPath = path.join(repoRoot, "generated-schemas", "petrified.supergraph.graphql");
-  const jsonSchemaPath = path.join(repoRoot, "src", "data", "petrified.schema.json");
+  const graphqlSDLPath = path.join(repoRoot, "generated-schemas", "example.supergraph.graphql");
+  const jsonSchemaPath = path.join(repoRoot, "src", "data", "example.schema.json");
 
   // Load SDL and JSON Schema
   if (!fs.existsSync(graphqlSDLPath)) {
@@ -152,7 +152,7 @@ function main(argv = process.argv.slice(2)) {
 
   // Load external system schemas to resolve $ref
   const systemSchemas = [];
-  const systems = getSystemsWithSchemaFiles().filter(system => system.id !== "petrified");
+  const systems = getSystemsWithSchemaFiles().filter(system => system.id !== "example");
 
   for (const system of systems) {
     const schemaPath = path.join(repoRoot, system.schema);

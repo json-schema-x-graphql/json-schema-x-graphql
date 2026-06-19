@@ -33,4 +33,4 @@ COPY gateway.config.ts ./
 EXPOSE 5100
 
 # Start Hive Gateway with supergraph command
-CMD ["npx", "hive-gateway", "supergraph", "./generated-schemas/petrified.supergraph.graphql"]
+CMD ["npx", "hive-gateway", "supergraph", "./generated-schemas/example.supergraph.graphql"]
