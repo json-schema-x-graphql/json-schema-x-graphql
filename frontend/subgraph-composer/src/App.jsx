@@ -159,14 +159,19 @@ export default function App() {
   useEffect(() => {
     if (schemas.length === 0) {
       const templates = ["basic_scalars", "enums", "nested_objects"];
+      let firstSchemaId = null;
       templates.forEach((templateKey) => {
         if (schemas.length < 10) {
           const template = getTemplate(templateKey);
           if (template) {
-            addSchema(template.name, template.content);
+            const newSchema = addSchema(template.name, template.content);
+            if (!firstSchemaId) firstSchemaId = newSchema.id;
           }
         }
       });
+      if (firstSchemaId) {
+        setActiveSchemaId(firstSchemaId);
+      }
     }
   }, []); // Only run once on mount
 
