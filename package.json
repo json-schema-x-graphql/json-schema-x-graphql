@@ -109,8 +109,5 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "packageManager": "pnpm@11.5.2",
-  "pnpm.overrides": {
-    "js-yaml": "^3.14.1"
-  }
+  "packageManager": "pnpm@11.5.2"
 }
