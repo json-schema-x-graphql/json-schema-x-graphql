@@ -38,6 +38,15 @@ const config = {
     styledComponents: true,
   },
   webpack: (config, { isServer }) => {
+    // Serialize module compilation — only one module compiled at a time.
+    config.parallelism = 1;
+
+    // Force Webpack cache to file-system in production rather than memory
+    config.cache = {
+      type: "filesystem",
+      allowCollectingMemory: true,
+    };
+
     // Ensure resolve object exists
     config.resolve = config.resolve || {};
     // Keep existing fallback for fs
