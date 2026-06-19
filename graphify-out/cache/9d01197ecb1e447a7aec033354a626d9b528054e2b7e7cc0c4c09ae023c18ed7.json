@@ -1,0 +1,1044 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_schema_linter_py",
+      "label": "schema_linter.py",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "schema_linter_schemalinter",
+      "label": "SchemaLinter",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "schema_linter_schemalinter_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L16"
+    },
+    {
+      "id": "schema_linter_schemalinter_lint",
+      "label": ".lint()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_schema_version",
+      "label": "._check_schema_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L47"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_top_level_type",
+      "label": "._check_top_level_type()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L63"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_missing_descriptions",
+      "label": "._check_missing_descriptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_missing_examples",
+      "label": "._check_missing_examples()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L91"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_enum_values",
+      "label": "._check_enum_values()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L98"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_required_fields",
+      "label": "._check_required_fields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L115"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_additional_properties",
+      "label": "._check_additional_properties()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L134"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_string_patterns",
+      "label": "._check_string_patterns()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L146"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_numeric_constraints",
+      "label": "._check_numeric_constraints()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L171"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_array_items",
+      "label": "._check_array_items()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L190"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_deprecated_keywords",
+      "label": "._check_deprecated_keywords()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L208"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_ref_usage",
+      "label": "._check_ref_usage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L219"
+    },
+    {
+      "id": "schema_linter_schemalinter_check_title_presence",
+      "label": "._check_title_presence()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L238"
+    },
+    {
+      "id": "schema_linter_lint_schema",
+      "label": "lint_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L246"
+    },
+    {
+      "id": "schema_linter_rationale_14",
+      "label": "Analyzes JSON Schemas for best practices and potential issues.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "schema_linter_rationale_22",
+      "label": "Run all linting checks on a schema.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L22"
+    },
+    {
+      "id": "schema_linter_rationale_48",
+      "label": "Check if schema uses a modern JSON Schema draft.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L48"
+    },
+    {
+      "id": "schema_linter_rationale_64",
+      "label": "Check if root schema has a type definition.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L64"
+    },
+    {
+      "id": "schema_linter_rationale_71",
+      "label": "Check for missing descriptions in schema and properties.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "schema_linter_rationale_92",
+      "label": "Check if schema includes examples.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L92"
+    },
+    {
+      "id": "schema_linter_rationale_99",
+      "label": "Check enum definitions for best practices.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L99"
+    },
+    {
+      "id": "schema_linter_rationale_116",
+      "label": "Check required field definitions.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "schema_linter_rationale_135",
+      "label": "Check additionalProperties usage.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L135"
+    },
+    {
+      "id": "schema_linter_rationale_149",
+      "label": "Check string type definitions for patterns and formats.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L149"
+    },
+    {
+      "id": "schema_linter_rationale_174",
+      "label": "Check numeric types for appropriate constraints.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L174"
+    },
+    {
+      "id": "schema_linter_rationale_191",
+      "label": "Check array definitions.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L191"
+    },
+    {
+      "id": "schema_linter_rationale_209",
+      "label": "Check for deprecated or discouraged keywords.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L209"
+    },
+    {
+      "id": "schema_linter_rationale_220",
+      "label": "Check $ref usage patterns.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L220"
+    },
+    {
+      "id": "schema_linter_rationale_239",
+      "label": "Check if schema has a title.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L239"
+    },
+    {
+      "id": "schema_linter_rationale_247",
+      "label": "Convenience function to lint a schema.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L247"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_schema_linter_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_schema_linter_py",
+      "target": "typing",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_schema_linter_py",
+      "target": "schema_linter_schemalinter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_lint",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_schema_version",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_top_level_type",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_missing_descriptions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_missing_examples",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_enum_values",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_required_fields",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_additional_properties",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_string_patterns",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_numeric_constraints",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_array_items",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L190",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_deprecated_keywords",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_ref_usage",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter",
+      "target": "schema_linter_schemalinter_check_title_presence",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_schema_linter_py",
+      "target": "schema_linter_lint_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_schema_version",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_top_level_type",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_missing_descriptions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_missing_examples",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_enum_values",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_required_fields",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_additional_properties",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_string_patterns",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_numeric_constraints",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_array_items",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_deprecated_keywords",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_ref_usage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_schemalinter_lint",
+      "target": "schema_linter_schemalinter_check_title_presence",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_lint_schema",
+      "target": "schema_linter_schemalinter",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L248",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_lint_schema",
+      "target": "schema_linter_schemalinter_lint",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_14",
+      "target": "schema_linter_schemalinter",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_22",
+      "target": "schema_linter_schemalinter_lint",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_48",
+      "target": "schema_linter_schemalinter_check_schema_version",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_64",
+      "target": "schema_linter_schemalinter_check_top_level_type",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_71",
+      "target": "schema_linter_schemalinter_check_missing_descriptions",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_92",
+      "target": "schema_linter_schemalinter_check_missing_examples",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_99",
+      "target": "schema_linter_schemalinter_check_enum_values",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_116",
+      "target": "schema_linter_schemalinter_check_required_fields",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_135",
+      "target": "schema_linter_schemalinter_check_additional_properties",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L135",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_149",
+      "target": "schema_linter_schemalinter_check_string_patterns",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_174",
+      "target": "schema_linter_schemalinter_check_numeric_constraints",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_191",
+      "target": "schema_linter_schemalinter_check_array_items",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_209",
+      "target": "schema_linter_schemalinter_check_deprecated_keywords",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_220",
+      "target": "schema_linter_schemalinter_check_ref_usage",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_239",
+      "target": "schema_linter_schemalinter_check_title_presence",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L239",
+      "weight": 1.0
+    },
+    {
+      "source": "schema_linter_rationale_247",
+      "target": "schema_linter_lint_schema",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L247",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "schema_linter_schemalinter_check_schema_version",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_schema_version",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_schema_version",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_top_level_type",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_descriptions",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_missing_examples",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_enum_values",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_required_fields",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_additional_properties",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L137"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_additional_properties",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_additional_properties",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L152"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L152"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L153"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L161"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_string_patterns",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_numeric_constraints",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L175"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_numeric_constraints",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_numeric_constraints",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_numeric_constraints",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_numeric_constraints",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_array_items",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_array_items",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L194"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_array_items",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_array_items",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_array_items",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_deprecated_keywords",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_deprecated_keywords",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L217"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_ref_usage",
+      "callee": "startswith",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L224"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_ref_usage",
+      "callee": "startswith",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L227"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_ref_usage",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_ref_usage",
+      "callee": "items",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_ref_usage",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L235"
+    },
+    {
+      "caller_nid": "schema_linter_schemalinter_check_title_presence",
+      "callee": "append",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/schema_linter.py",
+      "source_location": "L241"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "label": "PageLinks.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "pagelinks_maplanguagestoprogramming",
+      "label": "mapLanguagesToProgramming()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L11"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "fa6",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_enums_file_enum",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_typelayout_pagelinks_tsx",
+      "target": "pagelinks_maplanguagestoprogramming",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L11",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "pagelinks_maplanguagestoprogramming",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/TypeLayout/PageLinks.tsx",
+      "source_location": "L18"
+    }
+  ]
+}

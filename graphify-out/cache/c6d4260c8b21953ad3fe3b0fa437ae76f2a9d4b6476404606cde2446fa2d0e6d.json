@@ -1,0 +1,383 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "label": "validate-federation-composition.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "validate_federation_composition_log",
+      "label": "log()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L31"
+    },
+    {
+      "id": "validate_federation_composition_printheader",
+      "label": "printHeader()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L35"
+    },
+    {
+      "id": "validate_federation_composition_readsubgraphschema",
+      "label": "readSubgraphSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L41"
+    },
+    {
+      "id": "validate_federation_composition_validatesubgraph",
+      "label": "validateSubgraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L50"
+    },
+    {
+      "id": "validate_federation_composition_composesubgraphs",
+      "label": "composeSubgraphs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L75"
+    },
+    {
+      "id": "validate_federation_composition_writesupergraphschema",
+      "label": "writeSupergraphSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L123"
+    },
+    {
+      "id": "validate_federation_composition_printsubgraphvalidation",
+      "label": "printSubgraphValidation()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L138"
+    },
+    {
+      "id": "validate_federation_composition_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L147"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_log",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_printheader",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_readsubgraphschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_validatesubgraph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_composesubgraphs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_writesupergraphschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_printsubgraphvalidation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_validate_federation_composition_js",
+      "target": "validate_federation_composition_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_printheader",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_readsubgraphschema",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_composesubgraphs",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_writesupergraphschema",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_printsubgraphvalidation",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_printheader",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_log",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_readsubgraphschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L179",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_validatesubgraph",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_printsubgraphvalidation",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_composesubgraphs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_federation_composition_main",
+      "target": "validate_federation_composition_writesupergraphschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L222",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "validate_federation_composition_printheader",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "validate_federation_composition_printheader",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "validate_federation_composition_readsubgraphschema",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "validate_federation_composition_validatesubgraph",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "validate_federation_composition_composesubgraphs",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "validate_federation_composition_composesubgraphs",
+      "callee": "composeServices",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "validate_federation_composition_composesubgraphs",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "validate_federation_composition_composesubgraphs",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "validate_federation_composition_writesupergraphschema",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "validate_federation_composition_writesupergraphschema",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "validate_federation_composition_writesupergraphschema",
+      "callee": "mkdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "validate_federation_composition_writesupergraphschema",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "validate_federation_composition_printsubgraphvalidation",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L140"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "every",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L225"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L226"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "validate_federation_composition_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/validate-federation-composition.js",
+      "source_location": "L250"
+    }
+  ]
+}

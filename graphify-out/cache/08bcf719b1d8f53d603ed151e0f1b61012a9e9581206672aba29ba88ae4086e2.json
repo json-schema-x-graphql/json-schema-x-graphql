@@ -1,0 +1,358 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "label": "mod.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "mod_fullstackvalidator",
+      "label": "FullStackValidator",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L25"
+    },
+    {
+      "id": "mod_fullstackvalidator_new",
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L31"
+    },
+    {
+      "id": "mod_fullstackvalidator_validate_conversion",
+      "label": ".validate_conversion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L39"
+    },
+    {
+      "id": "mod_fullstackvalidator_default",
+      "label": ".default()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L60"
+    },
+    {
+      "id": "mod_fullstackvalidationreport",
+      "label": "FullStackValidationReport",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L66"
+    },
+    {
+      "id": "mod_fullstackvalidationreport_is_valid",
+      "label": ".is_valid()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L72"
+    },
+    {
+      "id": "mod_fullstackvalidationreport_total_errors",
+      "label": ".total_errors()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L77"
+    },
+    {
+      "id": "mod_fullstackvalidationreport_total_warnings",
+      "label": ".total_warnings()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L83"
+    },
+    {
+      "id": "mod_validationerror",
+      "label": "ValidationError",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L94"
+    },
+    {
+      "id": "mod_test_full_stack_validation",
+      "label": "test_full_stack_validation()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L108"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "json_schema",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "graphql_sdl",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "mod_fullstackvalidator",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidator",
+      "target": "mod_fullstackvalidator_new",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidator",
+      "target": "mod_fullstackvalidator_validate_conversion",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidator",
+      "target": "mod_fullstackvalidator_default",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "mod_fullstackvalidationreport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidationreport",
+      "target": "mod_fullstackvalidationreport_is_valid",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidationreport",
+      "target": "mod_fullstackvalidationreport_total_errors",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidationreport",
+      "target": "mod_fullstackvalidationreport_total_warnings",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "mod_validationerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "json",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_validation_mod_rs",
+      "target": "mod_test_full_stack_validation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_fullstackvalidator_default",
+      "target": "mod_fullstackvalidator_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_test_full_stack_validation",
+      "target": "mod_fullstackvalidator_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "mod_test_full_stack_validation",
+      "target": "mod_fullstackvalidator_validate_conversion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L133",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "mod_fullstackvalidator_new",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidator_new",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidator_validate_conversion",
+      "callee": "validate",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidator_validate_conversion",
+      "callee": "Some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidator_validate_conversion",
+      "callee": "validate",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidator_validate_conversion",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_is_valid",
+      "callee": "is_fully_valid",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_is_valid",
+      "callee": "map_or",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_is_valid",
+      "callee": "as_ref",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_is_valid",
+      "callee": "is_valid",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_errors",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_errors",
+      "callee": "map_or",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_errors",
+      "callee": "as_ref",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_errors",
+      "callee": "error_count",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_warnings",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_warnings",
+      "callee": "map_or",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_warnings",
+      "callee": "as_ref",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "mod_fullstackvalidationreport_total_warnings",
+      "callee": "warning_count",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "mod_test_full_stack_validation",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "mod_test_full_stack_validation",
+      "callee": "Some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/validation/mod.rs",
+      "source_location": "L133"
+    }
+  ]
+}

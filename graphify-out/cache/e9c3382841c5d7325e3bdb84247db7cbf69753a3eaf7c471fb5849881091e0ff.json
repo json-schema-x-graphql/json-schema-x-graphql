@@ -1,0 +1,139 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "label": "case-conversion.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "case_conversion_cameltosnake",
+      "label": "camelToSnake()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L7"
+    },
+    {
+      "id": "case_conversion_snaketocamel",
+      "label": "snakeToCamel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "case_conversion_convertobjectkeys",
+      "label": "convertObjectKeys()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L21"
+    },
+    {
+      "id": "case_conversion_convertgraphqlfields",
+      "label": "convertGraphQLFields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L36"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "target": "case_conversion_cameltosnake",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "target": "case_conversion_snaketocamel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "target": "case_conversion_convertobjectkeys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "target": "case_conversion_convertgraphqlfields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L36",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "case_conversion_cameltosnake",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "case_conversion_cameltosnake",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "case_conversion_cameltosnake",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "case_conversion_snaketocamel",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L15"
+    },
+    {
+      "caller_nid": "case_conversion_convertobjectkeys",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "case_conversion_convertobjectkeys",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "case_conversion_convertobjectkeys",
+      "callee": "fromEntries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "case_conversion_convertobjectkeys",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "case_conversion_convertobjectkeys",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "case_conversion_convertgraphqlfields",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/case-conversion.mjs",
+      "source_location": "L38"
+    }
+  ]
+}

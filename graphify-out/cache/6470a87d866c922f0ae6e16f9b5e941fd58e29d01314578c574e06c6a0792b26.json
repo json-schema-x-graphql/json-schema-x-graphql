@@ -1,0 +1,355 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "label": "fileIO.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "fileio_exportschema",
+      "label": "exportSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L11"
+    },
+    {
+      "id": "fileio_exportallschemas",
+      "label": "exportAllSchemas()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L39"
+    },
+    {
+      "id": "fileio_importschemafile",
+      "label": "importSchemaFile()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L70"
+    },
+    {
+      "id": "fileio_exportsupergraph",
+      "label": "exportSupergraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L133"
+    },
+    {
+      "id": "fileio_exportreport",
+      "label": "exportReport()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L151"
+    },
+    {
+      "id": "fileio_downloadblob",
+      "label": "downloadBlob()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L176"
+    },
+    {
+      "id": "fileio_inspectschemafile",
+      "label": "inspectSchemaFile()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L191"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_exportschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_exportallschemas",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_importschemafile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_exportsupergraph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_exportreport",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_downloadblob",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_fileio_js",
+      "target": "fileio_inspectschemafile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "fileio_exportschema",
+      "target": "fileio_downloadblob",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "fileio_exportallschemas",
+      "target": "fileio_downloadblob",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "fileio_exportsupergraph",
+      "target": "fileio_downloadblob",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L136",
+      "weight": 1.0
+    },
+    {
+      "source": "fileio_exportreport",
+      "target": "fileio_downloadblob",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L161",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "fileio_exportschema",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "fileio_exportschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "fileio_exportschema",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "fileio_exportschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "fileio_exportschema",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "fileio_exportallschemas",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "fileio_exportallschemas",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "fileio_exportallschemas",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "fileio_exportallschemas",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "text",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "fileio_importschemafile",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "fileio_exportsupergraph",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "fileio_exportreport",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "fileio_exportreport",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "fileio_exportreport",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "createObjectURL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "createElement",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "appendChild",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "click",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "removeChild",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "fileio_downloadblob",
+      "callee": "revokeObjectURL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L184"
+    },
+    {
+      "caller_nid": "fileio_inspectschemafile",
+      "callee": "text",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "fileio_inspectschemafile",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L194"
+    },
+    {
+      "caller_nid": "fileio_inspectschemafile",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "fileio_inspectschemafile",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L201"
+    },
+    {
+      "caller_nid": "fileio_inspectschemafile",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/lib/fileIO.js",
+      "source_location": "L221"
+    }
+  ]
+}

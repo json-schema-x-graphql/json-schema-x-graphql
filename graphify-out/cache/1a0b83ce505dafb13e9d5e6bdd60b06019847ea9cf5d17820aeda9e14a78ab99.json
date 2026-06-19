@@ -1,0 +1,88 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "label": "privacy.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "privacy_privacy",
+      "label": "Privacy()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L18"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "next_seo",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_seo",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_pagelayout",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_legal_privacy_tsx",
+      "target": "privacy_privacy",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L18",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "privacy_privacy",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "privacy_privacy",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages/legal/privacy.tsx",
+      "source_location": "L37"
+    }
+  ]
+}

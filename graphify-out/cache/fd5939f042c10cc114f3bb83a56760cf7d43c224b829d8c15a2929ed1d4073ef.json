@@ -1,0 +1,85 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_convertersettingspanel_tsx",
+      "label": "ConverterSettingsPanel.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "convertersettingspanel_convertersettingspanel",
+      "label": "ConverterSettingsPanel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L9"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_convertersettingspanel_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_convertersettingspanel_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_store",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_loro_monaco_src_convertersettingspanel_tsx",
+      "target": "convertersettingspanel_convertersettingspanel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L9",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "useEditorStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "None",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "None",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "patterns",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L175"
+    },
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "GraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "convertersettingspanel_convertersettingspanel",
+      "callee": "JSON",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/loro-monaco/src/ConverterSettingsPanel.tsx",
+      "source_location": "L209"
+    }
+  ]
+}

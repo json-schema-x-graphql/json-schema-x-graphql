@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "index_getnavigationitems",
+      "label": "getNavigationItems()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L32"
+    },
+    {
+      "id": "index_handleexampleselect",
+      "label": "handleExampleSelect()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L43"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "fa6",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "index_getnavigationitems",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_components_viewernavigation_index_tsx",
+      "target": "index_handleexampleselect",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L43",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "index_handleexampleselect",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/components/ViewerNavigation/index.tsx",
+      "source_location": "L47"
+    }
+  ]
+}

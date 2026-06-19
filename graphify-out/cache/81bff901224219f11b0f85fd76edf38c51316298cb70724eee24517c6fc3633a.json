@@ -1,0 +1,936 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "label": "wasm.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "wasm_init",
+      "label": "init()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L17"
+    },
+    {
+      "id": "wasm_wasmconversionoptions",
+      "label": "WasmConversionOptions",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L24"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_new",
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L35"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_validate",
+      "label": ".validate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L46"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_set_validate",
+      "label": ".set_validate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L51"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_include_descriptions",
+      "label": ".include_descriptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L56"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_set_include_descriptions",
+      "label": ".set_include_descriptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L61"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_preserve_field_order",
+      "label": ".preserve_field_order()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L66"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_set_preserve_field_order",
+      "label": ".set_preserve_field_order()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L71"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_federation_version",
+      "label": ".federation_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L76"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_set_federation_version",
+      "label": ".set_federation_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L81"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_infer_ids",
+      "label": ".infer_ids()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L86"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_set_infer_ids",
+      "label": ".set_infer_ids()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L91"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_to_internal",
+      "label": ".to_internal()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L97"
+    },
+    {
+      "id": "wasm_wasmconversionoptions_default",
+      "label": ".default()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L116"
+    },
+    {
+      "id": "wasm_wasmconverter",
+      "label": "WasmConverter",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L123"
+    },
+    {
+      "id": "wasm_wasmconverter_new",
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L131"
+    },
+    {
+      "id": "wasm_wasmconverter_with_options",
+      "label": ".with_options()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L139"
+    },
+    {
+      "id": "wasm_wasmconverter_json_schema_to_graphql",
+      "label": ".json_schema_to_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L147"
+    },
+    {
+      "id": "wasm_wasmconverter_graphql_to_json_schema",
+      "label": ".graphql_to_json_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L155"
+    },
+    {
+      "id": "wasm_wasmconverter_convert",
+      "label": ".convert()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L162"
+    },
+    {
+      "id": "wasm_wasmconverter_clear_cache",
+      "label": ".clear_cache()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L180"
+    },
+    {
+      "id": "wasm_wasmconverter_default",
+      "label": ".default()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L186"
+    },
+    {
+      "id": "wasm_json_schema_to_graphql",
+      "label": "json_schema_to_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L193"
+    },
+    {
+      "id": "wasm_graphql_to_json_schema",
+      "label": "graphql_to_json_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L202"
+    },
+    {
+      "id": "wasm_validate_json_schema",
+      "label": "validate_json_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L211"
+    },
+    {
+      "id": "wasm_validate_graphql_sdl",
+      "label": "validate_graphql_sdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L225"
+    },
+    {
+      "id": "wasm_validate_graphql_name",
+      "label": "validate_graphql_name()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L235"
+    },
+    {
+      "id": "wasm_get_version",
+      "label": "get_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L245"
+    },
+    {
+      "id": "wasm_convert_api",
+      "label": "convert_api()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L252"
+    },
+    {
+      "id": "wasm_test_wasm_options",
+      "label": "test_wasm_options()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L328"
+    },
+    {
+      "id": "wasm_test_wasm_converter",
+      "label": "test_wasm_converter()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L340"
+    },
+    {
+      "id": "wasm_test_direction_parsing",
+      "label": "test_direction_parsing()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L359"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "api_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "crate",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "serde",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "prelude",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_init",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_wasmconversionoptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_new",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_validate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_set_validate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_include_descriptions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_set_include_descriptions",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_preserve_field_order",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_set_preserve_field_order",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_federation_version",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_set_federation_version",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_infer_ids",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_set_infer_ids",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_to_internal",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L97",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions",
+      "target": "wasm_wasmconversionoptions_default",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_wasmconverter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_new",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_with_options",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_json_schema_to_graphql",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_graphql_to_json_schema",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_convert",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_clear_cache",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter",
+      "target": "wasm_wasmconverter_default",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_json_schema_to_graphql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L193",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_graphql_to_json_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_validate_json_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L211",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_validate_graphql_sdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_validate_graphql_name",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_get_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_convert_api",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L325",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_test_wasm_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L328",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_test_wasm_converter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_wasm_rs",
+      "target": "wasm_test_direction_parsing",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L359",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions_to_internal",
+      "target": "wasm_wasmconverter_default",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconversionoptions_default",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter_with_options",
+      "target": "wasm_wasmconversionoptions_to_internal",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter_json_schema_to_graphql",
+      "target": "wasm_json_schema_to_graphql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter_graphql_to_json_schema",
+      "target": "wasm_graphql_to_json_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_wasmconverter_default",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_json_schema_to_graphql",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_graphql_to_json_schema",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_convert_api",
+      "target": "wasm_wasmconverter_default",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_convert_api",
+      "target": "wasm_wasmconverter_with_options",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_convert_api",
+      "target": "wasm_wasmconverter_convert",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L297",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_wasm_options",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L329",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_wasm_options",
+      "target": "wasm_wasmconversionoptions_set_validate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_wasm_options",
+      "target": "wasm_wasmconversionoptions_set_federation_version",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L335",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_wasm_converter",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L341",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_wasm_converter",
+      "target": "wasm_json_schema_to_graphql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "wasm_test_direction_parsing",
+      "target": "wasm_wasmconverter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L360",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "wasm_init",
+      "callee": "set_once",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_new",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_with_options",
+      "callee": "with_options",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_json_schema_to_graphql",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_graphql_to_json_schema",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_convert",
+      "callee": "Err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_convert",
+      "callee": "from_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_convert",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_convert",
+      "callee": "convert",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "wasm_wasmconverter_clear_cache",
+      "callee": "clear_cache",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "wasm_json_schema_to_graphql",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "wasm_json_schema_to_graphql",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "wasm_graphql_to_json_schema",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "wasm_graphql_to_json_schema",
+      "callee": "graphql_to_json_schema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "wasm_validate_json_schema",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "wasm_validate_json_schema",
+      "callee": "from_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "wasm_validate_json_schema",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "wasm_validate_json_schema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "wasm_validate_json_schema",
+      "callee": "validate_json_schema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_sdl",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_sdl",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_sdl",
+      "callee": "validate_graphql_sdl",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_name",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_name",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "wasm_validate_graphql_name",
+      "callee": "validate_graphql_name",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "wasm_get_version",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L246"
+    },
+    {
+      "caller_nid": "wasm_convert_api",
+      "callee": "from_value",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L253"
+    },
+    {
+      "caller_nid": "wasm_convert_api",
+      "callee": "unwrap_or_default",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L255"
+    },
+    {
+      "caller_nid": "wasm_convert_api",
+      "callee": "Some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L299"
+    },
+    {
+      "caller_nid": "wasm_convert_api",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L320"
+    },
+    {
+      "caller_nid": "wasm_convert_api",
+      "callee": "to_value",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/wasm.rs",
+      "source_location": "L320"
+    }
+  ]
+}

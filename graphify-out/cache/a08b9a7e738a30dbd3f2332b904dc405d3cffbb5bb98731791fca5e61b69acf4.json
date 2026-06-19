@@ -1,0 +1,460 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "label": "generate-graphql-json-schema-helpers.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_scalarfallbackfactory",
+      "label": "scalarFallbackFactory()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L39"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_isbuiltinscalar",
+      "label": "isBuiltInScalar()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L40"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "label": "shouldIncludeType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L57"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_makenullable",
+      "label": "makeNullable()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L69"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_convertscalar",
+      "label": "convertScalar()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L100"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "label": "ensureDefinition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L106"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_buildenumdefinition",
+      "label": "buildEnumDefinition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L130"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "label": "buildUnionDefinition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L140"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "label": "buildObjectDefinition()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L153"
+    },
+    {
+      "id": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "label": "convertGraphQLType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L200"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_scalarfallbackfactory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_isbuiltinscalar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_makenullable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_convertscalar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_buildenumdefinition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_generate_graphql_json_schema_helpers_mjs",
+      "target": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "target": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "target": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "target": "generate_graphql_json_schema_helpers_buildenumdefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "target": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "target": "generate_graphql_json_schema_helpers_makenullable",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L210",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "target": "generate_graphql_json_schema_helpers_convertscalar",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "target": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "target": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L237",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_isbuiltinscalar",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L40"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_shouldincludetype",
+      "callee": "isInputObjectType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_makenullable",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_makenullable",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertscalar",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertscalar",
+      "callee": "factory",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isScalarType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isObjectType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isInputObjectType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isInterfaceType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isEnumType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "isUnionType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_ensuredefinition",
+      "callee": "delete",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_buildenumdefinition",
+      "callee": "getValues",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_buildenumdefinition",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "callee": "getTypes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "callee": "getPossibleTypes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_builduniondefinition",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "callee": "getFields",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_buildobjectdefinition",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "callee": "isScalarType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "callee": "isEnumType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L226"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "callee": "isObjectType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L227"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "callee": "isInterfaceType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "generate_graphql_json_schema_helpers_convertgraphqltype",
+      "callee": "isUnionType",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/helpers/generate-graphql-json-schema-helpers.mjs",
+      "source_location": "L229"
+    }
+  ]
+}

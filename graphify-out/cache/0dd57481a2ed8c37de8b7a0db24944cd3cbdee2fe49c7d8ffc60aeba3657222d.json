@@ -1,0 +1,474 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "label": "error.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "error_conversionerror",
+      "label": "ConversionError",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L12"
+    },
+    {
+      "id": "error_conversionerror_validation",
+      "label": ".validation()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L88"
+    },
+    {
+      "id": "error_conversionerror_invalid_name",
+      "label": ".invalid_name()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L93"
+    },
+    {
+      "id": "error_conversionerror_missing_field",
+      "label": ".missing_field()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L98"
+    },
+    {
+      "id": "error_conversionerror_invalid_extension",
+      "label": ".invalid_extension()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L103"
+    },
+    {
+      "id": "error_conversionerror_type_mismatch",
+      "label": ".type_mismatch()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L108"
+    },
+    {
+      "id": "error_conversionerror_unsupported",
+      "label": ".unsupported()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L113"
+    },
+    {
+      "id": "error_conversionerror_combine",
+      "label": ".combine()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L118"
+    },
+    {
+      "id": "error_conversionerror_from",
+      "label": ".from()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L128"
+    },
+    {
+      "id": "error_wasm_bindgen_jsvalue",
+      "label": "wasm_bindgen::JsValue",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L140"
+    },
+    {
+      "id": "error_wasm_bindgen_jsvalue_from",
+      "label": ".from()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L141"
+    },
+    {
+      "id": "error_test_error_creation",
+      "label": "test_error_creation()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L152"
+    },
+    {
+      "id": "error_test_invalid_name_error",
+      "label": "test_invalid_name_error()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L159"
+    },
+    {
+      "id": "error_test_combine_errors",
+      "label": "test_combine_errors()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L167"
+    },
+    {
+      "id": "error_test_combine_single_error",
+      "label": "test_combine_single_error()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L177"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "serialize",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error_conversionerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_validation",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_invalid_name",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_missing_field",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_invalid_extension",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_type_mismatch",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_unsupported",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_combine",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_from",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "error_conversionerror",
+      "target": "error_conversionerror_from",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "error_wasm_bindgen_jsvalue",
+      "target": "error_wasm_bindgen_jsvalue_from",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error_test_error_creation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error_test_invalid_name_error",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L159",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error_test_combine_errors",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_error_rs",
+      "target": "error_test_combine_single_error",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "error_test_error_creation",
+      "target": "error_conversionerror_validation",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "error_test_invalid_name_error",
+      "target": "error_conversionerror_invalid_name",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "error_test_combine_errors",
+      "target": "error_conversionerror_combine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "error_test_combine_single_error",
+      "target": "error_conversionerror_combine",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L179",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "error_conversionerror_validation",
+      "callee": "ValidationError",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "error_conversionerror_validation",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "error_conversionerror_invalid_name",
+      "callee": "InvalidGraphQLName",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "error_conversionerror_invalid_name",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "error_conversionerror_invalid_name",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "error_conversionerror_missing_field",
+      "callee": "MissingRequiredField",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "error_conversionerror_missing_field",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "error_conversionerror_invalid_extension",
+      "callee": "InvalidExtension",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "error_conversionerror_invalid_extension",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "error_conversionerror_type_mismatch",
+      "callee": "TypeMismatch",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "error_conversionerror_type_mismatch",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "error_conversionerror_unsupported",
+      "callee": "UnsupportedFeature",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "error_conversionerror_unsupported",
+      "callee": "into",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "error_conversionerror_combine",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "error_conversionerror_combine",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "error_conversionerror_combine",
+      "callee": "next",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "error_conversionerror_combine",
+      "callee": "into_iter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "error_conversionerror_combine",
+      "callee": "MultipleErrors",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "error_conversionerror_from",
+      "callee": "JsonError",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "error_conversionerror_from",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "error_conversionerror_from",
+      "callee": "RegexError",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "error_conversionerror_from",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "error_wasm_bindgen_jsvalue_from",
+      "callee": "unwrap_or_else",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "error_wasm_bindgen_jsvalue_from",
+      "callee": "to_value",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "error_wasm_bindgen_jsvalue_from",
+      "callee": "from_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "error_wasm_bindgen_jsvalue_from",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/error.rs",
+      "source_location": "L143"
+    }
+  ]
+}

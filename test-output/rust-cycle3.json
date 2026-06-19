@@ -1,0 +1,366 @@
+{
+  "x-graphql": {
+    "typeName": "Complextestschema",
+    "kind": "object",
+    "directives": [
+      {
+        "name": "auth"
+      }
+    ],
+    "federation": {
+      "keys": [
+        {
+          "fields": "id"
+        }
+      ]
+    }
+  },
+  "description": "A comprehensive test schema covering all JSON Schema features for round-trip validation",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name field with length constraints"
+    },
+    "email": {
+      "$ref": "#/definitions/Email",
+      "description": "Email address"
+    },
+    "age": {
+      "type": "integer",
+      "description": "Age in years"
+    },
+    "score": {
+      "type": "number",
+      "description": "Score value"
+    },
+    "is_active": {
+      "type": "boolean",
+      "x-graphql": {
+        "fieldName": "isActive"
+      },
+      "description": "Active status flag"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of tags"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User roles"
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata",
+      "description": "Additional metadata"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status"
+    },
+    "address": {
+      "$ref": "#/definitions/Address"
+    },
+    "phone_numbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Phonenumbers"
+      },
+      "x-graphql": {
+        "fieldName": "phoneNumbers"
+      }
+    },
+    "preferences": {
+      "$ref": "#/definitions/Preferences"
+    },
+    "nullable_field": {
+      "$ref": "#/definitions/JSON",
+      "x-graphql": {
+        "fieldName": "nullableField"
+      },
+      "description": "Field that can be null"
+    },
+    "mixed_array": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/JSON"
+      },
+      "x-graphql": {
+        "fieldName": "mixedArray"
+      },
+      "description": "Array with mixed types"
+    },
+    "date_fields": {
+      "$ref": "#/definitions/Datefields",
+      "x-graphql": {
+        "fieldName": "dateFields"
+      }
+    },
+    "complex_nested": {
+      "$ref": "#/definitions/Complexnested",
+      "x-graphql": {
+        "fieldName": "complexNested"
+      }
+    },
+    "conditional_field": {
+      "$ref": "#/definitions/Conditionalfield",
+      "x-graphql": {
+        "fieldName": "conditionalField"
+      }
+    },
+    "any_of_example": {
+      "$ref": "#/definitions/JSON",
+      "x-graphql": {
+        "fieldName": "anyOfExample"
+      },
+      "description": "Field that accepts either email or URI"
+    },
+    "all_of_example": {
+      "$ref": "#/definitions/JSON",
+      "x-graphql": {
+        "fieldName": "allOfExample"
+      },
+      "description": "Combined schema using allOf"
+    }
+  },
+  "required": ["id", "name", "email"],
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Metadata": {
+      "x-graphql": {
+        "typeName": "Metadata",
+        "kind": "object"
+      },
+      "description": "Additional metadata",
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "$ref": "#/definitions/DateTime",
+          "x-graphql": {
+            "fieldName": "createdAt"
+          }
+        },
+        "updated_at": {
+          "$ref": "#/definitions/DateTime",
+          "x-graphql": {
+            "fieldName": "updatedAt"
+          }
+        },
+        "version": {
+          "type": "integer"
+        }
+      }
+    },
+    "Address": {
+      "x-graphql": {
+        "typeName": "Address",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string",
+          "x-graphql": {
+            "fieldName": "zipCode"
+          }
+        },
+        "country": {
+          "type": "string"
+        }
+      },
+      "required": ["street", "city", "country"]
+    },
+    "Phonenumbers": {
+      "x-graphql": {
+        "typeName": "Phonenumbers",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "primary": {
+          "type": "boolean"
+        }
+      },
+      "required": ["type", "number"]
+    },
+    "Notifications": {
+      "x-graphql": {
+        "typeName": "Notifications",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "boolean"
+        },
+        "sms": {
+          "type": "boolean"
+        },
+        "push": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Preferences": {
+      "x-graphql": {
+        "typeName": "Preferences",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string"
+        },
+        "notifications": {
+          "$ref": "#/definitions/Notifications"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "Datefields": {
+      "x-graphql": {
+        "typeName": "Datefields",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "birth_date": {
+          "$ref": "#/definitions/Date",
+          "x-graphql": {
+            "fieldName": "birthDate"
+          }
+        },
+        "registration_time": {
+          "$ref": "#/definitions/DateTime",
+          "x-graphql": {
+            "fieldName": "registrationTime"
+          }
+        },
+        "last_login": {
+          "$ref": "#/definitions/DateTime",
+          "x-graphql": {
+            "fieldName": "lastLogin"
+          }
+        }
+      }
+    },
+    "Level3": {
+      "x-graphql": {
+        "typeName": "Level3",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "deep_value": {
+          "type": "string",
+          "x-graphql": {
+            "fieldName": "deepValue"
+          }
+        }
+      }
+    },
+    "Level2": {
+      "x-graphql": {
+        "typeName": "Level2",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "level3": {
+          "$ref": "#/definitions/Level3"
+        }
+      }
+    },
+    "Level1": {
+      "x-graphql": {
+        "typeName": "Level1",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "level2": {
+          "$ref": "#/definitions/Level2"
+        }
+      }
+    },
+    "Complexnested": {
+      "x-graphql": {
+        "typeName": "Complexnested",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "level1": {
+          "$ref": "#/definitions/Level1"
+        }
+      }
+    },
+    "Conditionalfield": {
+      "x-graphql": {
+        "typeName": "Conditionalfield",
+        "kind": "object"
+      },
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "tax_id": {
+          "type": "string",
+          "x-graphql": {
+            "fieldName": "taxId"
+          }
+        }
+      },
+      "required": ["type"]
+    },
+    "Date": {
+      "x-graphql": {
+        "typeName": "Date",
+        "kind": "scalar"
+      },
+      "type": "string"
+    },
+    "DateTime": {
+      "x-graphql": {
+        "typeName": "DateTime",
+        "kind": "scalar"
+      },
+      "type": "string"
+    },
+    "Email": {
+      "x-graphql": {
+        "typeName": "Email",
+        "kind": "scalar"
+      },
+      "type": "string"
+    }
+  }
+}

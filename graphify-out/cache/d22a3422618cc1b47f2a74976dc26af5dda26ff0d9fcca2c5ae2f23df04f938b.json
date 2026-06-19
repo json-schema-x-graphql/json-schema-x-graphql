@@ -1,0 +1,76 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph_ts",
+      "label": "addNodeToGraph.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "addnodetograph_addnodetograph",
+      "label": "addNodeToGraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L12"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph_ts",
+      "target": "jsonc_parser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_jsonparser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph_ts",
+      "target": "addnodetograph_addnodetograph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "addnodetograph_addnodetograph",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "addnodetograph_addnodetograph",
+      "callee": "calculateNodeSize",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "addnodetograph_addnodetograph",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/addNodeToGraph.ts",
+      "source_location": "L35"
+    }
+  ]
+}

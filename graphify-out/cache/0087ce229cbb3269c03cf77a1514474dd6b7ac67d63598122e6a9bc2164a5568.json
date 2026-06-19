@@ -1,0 +1,365 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "label": "traverse.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "traverse_isprimitiveornulltype",
+      "label": "isPrimitiveOrNullType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L17"
+    },
+    {
+      "id": "traverse_alignchildren",
+      "label": "alignChildren()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "traverse_handlenochildren",
+      "label": "handleNoChildren()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L32"
+    },
+    {
+      "id": "traverse_handlehaschildren",
+      "label": "handleHasChildren()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L70"
+    },
+    {
+      "id": "traverse_traverse",
+      "label": "traverse()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L279"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "jsonc_parser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_jsonparser",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addedgetograph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_addnodetograph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "traverse_isprimitiveornulltype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "traverse_alignchildren",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "traverse_handlenochildren",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "traverse_handlehaschildren",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_traverse_ts",
+      "target": "traverse_traverse",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L279",
+      "weight": 1.0
+    },
+    {
+      "source": "traverse_alignchildren",
+      "target": "traverse_isprimitiveornulltype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "traverse_traverse",
+      "target": "traverse_handlenochildren",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L290",
+      "weight": 1.0
+    },
+    {
+      "source": "traverse_traverse",
+      "target": "traverse_handlehaschildren",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L292",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "traverse_isprimitiveornulltype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "traverse_handlenochildren",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "traverse_handlenochildren",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "traverse_handlenochildren",
+      "callee": "addNodeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "traverse_handlenochildren",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "traverse_handlenochildren",
+      "callee": "addEdgeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "findIndex",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "concat",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "calculateNodeSize",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addNodeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addEdgeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addNodeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addEdgeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addEdgeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L185"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "traverseArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "traverseArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L194"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "findIndex",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "calculateNodeSize",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addNodeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L225"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "addEdgeToGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L233"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L255"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L264"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "findIndex",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L265"
+    },
+    {
+      "caller_nid": "traverse_handlehaschildren",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/traverse.ts",
+      "source_location": "L267"
+    }
+  ]
+}

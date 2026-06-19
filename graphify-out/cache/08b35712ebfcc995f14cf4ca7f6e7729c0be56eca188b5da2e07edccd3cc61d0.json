@@ -1,0 +1,547 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "label": "validate-graphql-vs-jsonschema.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_schemasyncmanager",
+      "label": "SchemaSyncManager",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L23"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "label": ".ensureGraphQLSchemaBuilds()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L53"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "label": ".validateGraphQLResponse()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L68"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_validateparity",
+      "label": "validateParity()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L90"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_readfile",
+      "label": "readFile()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L107"
+    },
+    {
+      "id": "validate_graphql_vs_jsonschema_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L111"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "schema",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "ajv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "ajv_formats",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "module",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "home_john_json_schema_x_graphql_scripts_legacy_reference_helpers_federation_directives_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_schemasyncmanager",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_schemasyncmanager",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_schemasyncmanager",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "validate_graphql_vs_jsonschema_validateparity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "validate_graphql_vs_jsonschema_readfile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_validate_graphql_vs_jsonschema_mjs",
+      "target": "validate_graphql_vs_jsonschema_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_validateparity",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_validateparity",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_main",
+      "target": "validate_graphql_vs_jsonschema_readfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_main",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L159",
+      "weight": 1.0
+    },
+    {
+      "source": "validate_graphql_vs_jsonschema_main",
+      "target": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L184",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "createRequire",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "require",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "addFormats",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "addSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_constructor",
+      "callee": "compile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "callee": "makeExecutableSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_ensuregraphqlschemabuilds",
+      "callee": "buildSchema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "callee": "validator",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_schemasyncmanager_validategraphqlresponse",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_readfile",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "fileURLToPath",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L115"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L162"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L164"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L171"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L185"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "validate_graphql_vs_jsonschema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/validate-graphql-vs-jsonschema.mjs",
+      "source_location": "L199"
+    }
+  ]
+}

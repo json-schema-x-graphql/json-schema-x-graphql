@@ -1,0 +1,551 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "label": "lib.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_converter",
+      "label": "Converter",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L47"
+    },
+    {
+      "id": "lib_converter_new",
+      "label": ".new()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L55"
+    },
+    {
+      "id": "lib_converter_with_options",
+      "label": ".with_options()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L60"
+    },
+    {
+      "id": "lib_converter_convert",
+      "label": ".convert()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L71"
+    },
+    {
+      "id": "lib_converter_json_schema_to_graphql",
+      "label": ".json_schema_to_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L99"
+    },
+    {
+      "id": "lib_converter_graphql_to_json_schema",
+      "label": ".graphql_to_json_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L114"
+    },
+    {
+      "id": "lib_converter_options",
+      "label": ".options()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L124"
+    },
+    {
+      "id": "lib_converter_clear_cache",
+      "label": ".clear_cache()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L130"
+    },
+    {
+      "id": "lib_converter_default",
+      "label": ".default()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L138"
+    },
+    {
+      "id": "lib_test_converter_creation",
+      "label": "test_converter_creation()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L148"
+    },
+    {
+      "id": "lib_test_converter_with_options",
+      "label": "test_converter_with_options()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L154"
+    },
+    {
+      "id": "lib_test_simple_json_to_graphql",
+      "label": "test_simple_json_to_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L171"
+    },
+    {
+      "id": "lib_test_invalid_json_schema",
+      "label": "test_invalid_json_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L196"
+    },
+    {
+      "id": "lib_test_caching",
+      "label": "test_caching()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L206"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "error",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "value_as_jsonvalue",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_converter",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_new",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_with_options",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_convert",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_json_schema_to_graphql",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_graphql_to_json_schema",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_options",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_clear_cache",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter",
+      "target": "lib_converter_default",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_test_converter_creation",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L148",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_test_converter_with_options",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_test_simple_json_to_graphql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_test_invalid_json_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_lib_rs",
+      "target": "lib_test_caching",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_new",
+      "target": "lib_converter_with_options",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_new",
+      "target": "lib_converter_default",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_with_options",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_convert",
+      "target": "lib_converter_json_schema_to_graphql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_convert",
+      "target": "lib_converter_graphql_to_json_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_json_schema_to_graphql",
+      "target": "lib_converter_convert",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_graphql_to_json_schema",
+      "target": "lib_converter_convert",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_converter_default",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_converter_creation",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L149",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_converter_with_options",
+      "target": "lib_converter_default",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_converter_with_options",
+      "target": "lib_converter_with_options",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_simple_json_to_graphql",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_simple_json_to_graphql",
+      "target": "lib_converter_json_schema_to_graphql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_invalid_json_schema",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_invalid_json_schema",
+      "target": "lib_converter_json_schema_to_graphql",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_caching",
+      "target": "lib_converter_new",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_caching",
+      "target": "lib_converter_convert",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_test_caching",
+      "target": "lib_converter_clear_cache",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L223",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "lib_converter_with_options",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "lock",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L75"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "clone",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "lock",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "put",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "clone",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "lib_converter_convert",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "map_err",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "from_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "InvalidJsonSchema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "validate_json_schema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "lib_converter_json_schema_to_graphql",
+      "callee": "Ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "lib_converter_graphql_to_json_schema",
+      "callee": "validate_graphql_sdl",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "lib_converter_clear_cache",
+      "callee": "lock",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "lib_converter_clear_cache",
+      "callee": "clear",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "lib_test_simple_json_to_graphql",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/lib.rs",
+      "source_location": "L190"
+    }
+  ]
+}

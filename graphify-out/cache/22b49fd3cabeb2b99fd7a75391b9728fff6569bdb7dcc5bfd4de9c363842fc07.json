@@ -1,0 +1,1108 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "label": "generate-unified-model-views.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_unified_model_views_parseargs",
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L49"
+    },
+    {
+      "id": "generate_unified_model_views_readjson",
+      "label": "readJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L77"
+    },
+    {
+      "id": "generate_unified_model_views_writejson",
+      "label": "writeJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L85"
+    },
+    {
+      "id": "generate_unified_model_views_writetext",
+      "label": "writeText()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L94"
+    },
+    {
+      "id": "generate_unified_model_views_resolvecanonicalnode",
+      "label": "resolveCanonicalNode()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L112"
+    },
+    {
+      "id": "generate_unified_model_views_infergraphqlscalarfromjsonschema",
+      "label": "inferGraphQLScalarFromJSONSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L252"
+    },
+    {
+      "id": "generate_unified_model_views_ensuregsdmcontainer",
+      "label": "ensureGsdmContainer()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L295"
+    },
+    {
+      "id": "generate_unified_model_views_normalizetransformspec",
+      "label": "normalizeTransformSpec()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L335"
+    },
+    {
+      "id": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "label": "mergeLeafTypeFromCanonical()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L347"
+    },
+    {
+      "id": "generate_unified_model_views_buildgsdmschema",
+      "label": "buildGsdmSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L405"
+    },
+    {
+      "id": "generate_unified_model_views_topascalcase",
+      "label": "toPascalCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L490"
+    },
+    {
+      "id": "generate_unified_model_views_tosafetypename",
+      "label": "toSafeTypeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L499"
+    },
+    {
+      "id": "generate_unified_model_views_scalarpreludesdl",
+      "label": "scalarPreludeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L504"
+    },
+    {
+      "id": "generate_unified_model_views_collecttypesfromgsdmschema",
+      "label": "collectTypesFromGsdmSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L525"
+    },
+    {
+      "id": "generate_unified_model_views_printsdlfromtypes",
+      "label": "printSDLFromTypes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L588"
+    },
+    {
+      "id": "generate_unified_model_views_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L624"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_parseargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_readjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_writejson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_writetext",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_resolvecanonicalnode",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_infergraphqlscalarfromjsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_ensuregsdmcontainer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L295",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_normalizetransformspec",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L335",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L347",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_buildgsdmschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L405",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_topascalcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L490",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_tosafetypename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L499",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_scalarpreludesdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L504",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_collecttypesfromgsdmschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L525",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_printsdlfromtypes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L588",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_generate_unified_model_views_mjs",
+      "target": "generate_unified_model_views_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L624",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_buildgsdmschema",
+      "target": "generate_unified_model_views_normalizetransformspec",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L428",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_buildgsdmschema",
+      "target": "generate_unified_model_views_resolvecanonicalnode",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L442",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_buildgsdmschema",
+      "target": "generate_unified_model_views_ensuregsdmcontainer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L452",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_buildgsdmschema",
+      "target": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L455",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_printsdlfromtypes",
+      "target": "generate_unified_model_views_scalarpreludesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L589",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_parseargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L625",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_readjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L652",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_buildgsdmschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L660",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_writejson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L672",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_collecttypesfromgsdmschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L680",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_printsdlfromtypes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L681",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_unified_model_views_main",
+      "target": "generate_unified_model_views_writetext",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L682",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_unified_model_views_readjson",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_readjson",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_readjson",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_readjson",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writejson",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_writetext",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L99"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L171"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L171"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "call",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "call",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L233"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_resolvecanonicalnode",
+      "callee": "unwrapNode",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_infergraphqlscalarfromjsonschema",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L257"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_infergraphqlscalarfromjsonschema",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_ensuregsdmcontainer",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L296"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_ensuregsdmcontainer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L296"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_ensuregsdmcontainer",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_ensuregsdmcontainer",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_normalizetransformspec",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L337"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L353"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L360"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_mergeleaftypefromcanonical",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L361"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_buildgsdmschema",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L407"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_buildgsdmschema",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L420"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_buildgsdmschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L432"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_buildgsdmschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L444"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_buildgsdmschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L480"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_topascalcase",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_tosafetypename",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L500"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_tosafetypename",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L500"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_tosafetypename",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L501"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_scalarpreludesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_collecttypesfromgsdmschema",
+      "callee": "visit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L584"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L592"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L592"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L592"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L595"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L598"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L599"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L599"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L599"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L603"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L605"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L606"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L610"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L612"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L613"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L614"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L617"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_printsdlfromtypes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L617"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L627"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L629"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L630"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L632"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L633"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L633"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L634"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L637"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L638"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L638"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L639"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L639"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L640"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L640"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L641"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L642"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L648"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L665"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L666"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L667"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L672"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L673"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L682"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L688"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L689"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L690"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L690"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L694"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L695"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L696"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L702"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L703"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L704"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L705"
+    },
+    {
+      "caller_nid": "generate_unified_model_views_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/generate-unified-model-views.mjs",
+      "source_location": "L706"
+    }
+  ]
+}

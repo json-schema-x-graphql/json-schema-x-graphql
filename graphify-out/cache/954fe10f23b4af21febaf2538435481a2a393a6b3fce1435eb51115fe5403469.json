@@ -1,0 +1,714 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "label": "generate-examples.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_examples_get",
+      "label": "get()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L45"
+    },
+    {
+      "id": "generate_examples_deepclone",
+      "label": "deepClone()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L58"
+    },
+    {
+      "id": "generate_examples_deepmerge",
+      "label": "deepMerge()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L62"
+    },
+    {
+      "id": "generate_examples_randsuffix",
+      "label": "randSuffix()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L76"
+    },
+    {
+      "id": "generate_examples_generateuuid",
+      "label": "generateUuid()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L83"
+    },
+    {
+      "id": "generate_examples_isdirectiveobject",
+      "label": "isDirectiveObject()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L92"
+    },
+    {
+      "id": "generate_examples_applytemplate",
+      "label": "applyTemplate()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L109"
+    },
+    {
+      "id": "generate_examples_ensuredir",
+      "label": "ensureDir()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L187"
+    },
+    {
+      "id": "generate_examples_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L196"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_deepclone",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_deepmerge",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_randsuffix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_generateuuid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_isdirectiveobject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L92",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_applytemplate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_ensuredir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_examples_mjs",
+      "target": "generate_examples_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_applytemplate",
+      "target": "generate_examples_isdirectiveobject",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_applytemplate",
+      "target": "generate_examples_deepclone",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_applytemplate",
+      "target": "generate_examples_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_applytemplate",
+      "target": "generate_examples_generateuuid",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_applytemplate",
+      "target": "generate_examples_randsuffix",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_main",
+      "target": "generate_examples_ensuredir",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_main",
+      "target": "generate_examples_randsuffix",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_main",
+      "target": "generate_examples_deepclone",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L275",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_main",
+      "target": "generate_examples_applytemplate",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L278",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_examples_main",
+      "target": "generate_examples_deepmerge",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L295",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_examples_get",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "generate_examples_get",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "generate_examples_get",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "generate_examples_deepclone",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "generate_examples_deepclone",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "generate_examples_deepmerge",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "generate_examples_randsuffix",
+      "callee": "floor",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "generate_examples_randsuffix",
+      "callee": "random",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "generate_examples_generateuuid",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "generate_examples_isdirectiveobject",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_examples_isdirectiveobject",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "generate_examples_isdirectiveobject",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L140"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L145"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L166"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "generate_examples_applytemplate",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "generate_examples_ensuredir",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L197"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "load",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L221"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L224"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L227"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "load",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L236"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L244"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L245"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L262"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L281"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L289"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L289"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L289"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L307"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L308"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L308"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L308"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "generate_examples_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-examples.mjs",
+      "source_location": "L317"
+    }
+  ]
+}

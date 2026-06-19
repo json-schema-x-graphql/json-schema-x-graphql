@@ -1,0 +1,109 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_disabled_graphql_editor_tsx",
+      "label": "graphql-editor.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "graphql_editor_loadinitialsdl",
+      "label": "loadInitialSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L67"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_disabled_graphql_editor_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_disabled_graphql_editor_tsx",
+      "target": "head",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_pages_disabled_graphql_editor_tsx",
+      "target": "graphql_editor_loadinitialsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L67",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setLoading",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L68"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setError",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "fetch",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "text",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setError",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "graphql_editor_loadinitialsdl",
+      "callee": "setLoading",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/pages-disabled/graphql-editor.tsx",
+      "source_location": "L101"
+    }
+  ]
+}

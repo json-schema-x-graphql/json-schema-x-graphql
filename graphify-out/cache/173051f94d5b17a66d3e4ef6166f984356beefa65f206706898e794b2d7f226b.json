@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getchildrenedges_ts",
+      "label": "getChildrenEdges.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "getchildrenedges_getchildrenedges",
+      "label": "getChildrenEdges()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L3"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getchildrenedges_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_types_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_getchildrenedges_ts",
+      "target": "getchildrenedges_getchildrenedges",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "getchildrenedges_getchildrenedges",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L7"
+    },
+    {
+      "caller_nid": "getchildrenedges_getchildrenedges",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/getChildrenEdges.ts",
+      "source_location": "L9"
+    }
+  ]
+}

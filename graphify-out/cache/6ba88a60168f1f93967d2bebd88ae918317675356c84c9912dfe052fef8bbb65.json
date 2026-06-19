@@ -1,0 +1,533 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "label": "converter-integration.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "converter_integration_jsonschematographql",
+      "label": "jsonSchemaToGraphQL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L14"
+    },
+    {
+      "id": "converter_integration_graphqltojsonschema",
+      "label": "graphqlToJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L131"
+    },
+    {
+      "id": "converter_integration_convertproperty",
+      "label": "convertProperty()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L257"
+    },
+    {
+      "id": "converter_integration_convertenum",
+      "label": "convertEnum()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L291"
+    },
+    {
+      "id": "converter_integration_jsontypetographqltype",
+      "label": "jsonTypeToGraphQLType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L319"
+    },
+    {
+      "id": "converter_integration_convertgraphqltypetojson",
+      "label": "convertGraphQLTypeToJSON()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L369"
+    },
+    {
+      "id": "converter_integration_topascalcase",
+      "label": "toPascalCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L424"
+    },
+    {
+      "id": "converter_integration_tosnakecase",
+      "label": "toSnakeCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L431"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_jsonschematographql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_graphqltojsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_convertproperty",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_convertenum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L291",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_jsontypetographqltype",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_convertgraphqltypetojson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L369",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_topascalcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_demos_converter_integration_js",
+      "target": "converter_integration_tosnakecase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L431",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_jsonschematographql",
+      "target": "converter_integration_topascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_jsonschematographql",
+      "target": "converter_integration_convertenum",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_jsonschematographql",
+      "target": "converter_integration_convertproperty",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_graphqltojsonschema",
+      "target": "converter_integration_tosnakecase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L203",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_graphqltojsonschema",
+      "target": "converter_integration_convertgraphqltypetojson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_convertproperty",
+      "target": "converter_integration_jsontypetographqltype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_jsontypetographqltype",
+      "target": "converter_integration_topascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "converter_integration_convertgraphqltypetojson",
+      "target": "converter_integration_tosnakecase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L417",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "converter_integration_jsonschematographql",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L162"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L164"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L166"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L196"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L197"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L232"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L233"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "converter_integration_graphqltojsonschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "converter_integration_convertproperty",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L280"
+    },
+    {
+      "caller_nid": "converter_integration_convertproperty",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L282"
+    },
+    {
+      "caller_nid": "converter_integration_convertenum",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "converter_integration_convertenum",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "converter_integration_convertenum",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "converter_integration_jsontypetographqltype",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L332"
+    },
+    {
+      "caller_nid": "converter_integration_jsontypetographqltype",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L332"
+    },
+    {
+      "caller_nid": "converter_integration_convertgraphqltypetojson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "converter_integration_convertgraphqltypetojson",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "converter_integration_convertgraphqltypetojson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L375"
+    },
+    {
+      "caller_nid": "converter_integration_convertgraphqltypetojson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L375"
+    },
+    {
+      "caller_nid": "converter_integration_convertgraphqltypetojson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L376"
+    },
+    {
+      "caller_nid": "converter_integration_topascalcase",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L425"
+    },
+    {
+      "caller_nid": "converter_integration_topascalcase",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L425"
+    },
+    {
+      "caller_nid": "converter_integration_topascalcase",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L425"
+    },
+    {
+      "caller_nid": "converter_integration_tosnakecase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L432"
+    },
+    {
+      "caller_nid": "converter_integration_tosnakecase",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L432"
+    },
+    {
+      "caller_nid": "converter_integration_tosnakecase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/demos/converter-integration.js",
+      "source_location": "L432"
+    }
+  ]
+}

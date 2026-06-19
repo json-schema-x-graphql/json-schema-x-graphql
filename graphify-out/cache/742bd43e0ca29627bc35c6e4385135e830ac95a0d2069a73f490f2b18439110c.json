@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_subgrapheditor_jsx",
+      "label": "SubgraphEditor.jsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "subgrapheditor_subgrapheditor",
+      "label": "SubgraphEditor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L9"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_subgrapheditor_jsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_subgrapheditor_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_subgrapheditor_jsx",
+      "target": "subgrapheditor_subgrapheditor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "subgrapheditor_subgrapheditor",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "subgrapheditor_subgrapheditor",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/components/SubgraphEditor.jsx",
+      "source_location": "L189"
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "label": "api-server.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "api_server_parserequestbody",
+      "label": "parseRequestBody()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L39"
+    },
+    {
+      "id": "api_server_sendjson",
+      "label": "sendJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "api_server_handleconvert",
+      "label": "handleConvert()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L71"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "http",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_converter_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "home_john_json_schema_x_graphql_converters_node_src_generated_types_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "api_server_parserequestbody",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "api_server_sendjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_api_server_ts",
+      "target": "api_server_handleconvert",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleconvert",
+      "target": "api_server_parserequestbody",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "api_server_handleconvert",
+      "target": "api_server_sendjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L93",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "setHeader",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "setHeader",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "setHeader",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "setHeader",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "end",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "api_server_sendjson",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L75"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "jsonSchemaToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "graphqlToJsonSchema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L145"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "now",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "api_server_handleconvert",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/api-server.ts",
+      "source_location": "L172"
+    }
+  ]
+}

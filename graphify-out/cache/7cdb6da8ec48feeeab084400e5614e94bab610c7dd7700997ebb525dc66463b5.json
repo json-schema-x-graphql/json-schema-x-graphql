@@ -1,0 +1,134 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_graphql_utils_proto_mjs",
+      "label": "graphql-utils-proto.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "graphql_utils_proto_validatesdl",
+      "label": "validateSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L13"
+    },
+    {
+      "id": "graphql_utils_proto_emitcanonicalsdl",
+      "label": "emitCanonicalSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L39"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_graphql_utils_proto_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_graphql_utils_proto_mjs",
+      "target": "graphql_utils_proto_validatesdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_graphql_utils_proto_mjs",
+      "target": "graphql_utils_proto_emitcanonicalsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L39",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "graphql_utils_proto_validatesdl",
+      "callee": "buildSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_validatesdl",
+      "callee": "mapSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_validatesdl",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_validatesdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L32"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "buildSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L41"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "mapSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "write",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "graphql_utils_proto_emitcanonicalsdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/graphql-utils-proto.mjs",
+      "source_location": "L68"
+    }
+  ]
+}

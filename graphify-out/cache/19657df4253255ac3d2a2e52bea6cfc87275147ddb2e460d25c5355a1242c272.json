@@ -1,0 +1,1145 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "label": "generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L49"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "label": "toAbs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L72"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_readjson",
+      "label": "readJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L81"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "label": "readMaybeYamlOrJson()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L88"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_ensuredir",
+      "label": "ensureDir()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L117"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_isobject",
+      "label": "isObject()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L125"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_getdefinitions",
+      "label": "getDefinitions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L129"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_collecttypefields",
+      "label": "collectTypeFields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L137"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "label": "resolveRef()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L216"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "label": "collectSchemaFields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L230"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "label": "normalizeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L249"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "label": "buildGlobalLeafIndex()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L253"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "label": "analyzeCoverage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L267"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "label": "toCsv()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L340"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_csvescape",
+      "label": "csvEscape()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L357"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "label": "toMarkdown()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L366"
+    },
+    {
+      "id": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L399"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_readjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L81",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_ensuredir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_isobject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_getdefinitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_collecttypefields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L216",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L230",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L253",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L267",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L340",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_csvescape",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L357",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L366",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_logistics_mgmt_to_schema_unification_coverage_mjs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_getdefinitions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L231",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_isobject",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_collecttypefields",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L259",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_readjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L417",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L424",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_ensuredir",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L437",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L441",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "target": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L444",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_toabs",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readjson",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L82"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readjson",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "indexOf",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L106"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_readmaybeyamlorjson",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_ensuredir",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_ensuredir",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_isobject",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_collecttypefields",
+      "callee": "visit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L217"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_resolveref",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_collectschemafields",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L239"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_normalizename",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L255"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L257"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L261"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_buildgloballeafindex",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L261"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L283"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L285"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L291"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L291"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L305"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L308"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L313"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L313"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L315"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L317"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L320"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_analyzecoverage",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L351"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tocsv",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L354"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_csvescape",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L359"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_csvescape",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L360"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_csvescape",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L361"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L368"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L369"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L374"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L375"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L376"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L377"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L378"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L379"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L380"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L381"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L382"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L383"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "toFixed",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L385"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L386"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L390"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L391"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_tomarkdown",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L392"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L403"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L404"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L404"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L405"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L405"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L406"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L406"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L407"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L407"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L408"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L408"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L409"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L426"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L426"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L429"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L441"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L444"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L447"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L448"
+    },
+    {
+      "caller_nid": "generate_logistics_mgmt_to_schema_unification_coverage_main",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-logistics-mgmt-to-schema-unification-coverage.mjs",
+      "source_location": "L452"
+    }
+  ]
+}

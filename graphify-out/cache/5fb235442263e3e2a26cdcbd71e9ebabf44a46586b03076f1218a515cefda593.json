@@ -1,0 +1,1121 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "label": "test_schema_linter.py",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_schema_linter_test_missing_schema_version",
+      "label": "test_missing_schema_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L13"
+    },
+    {
+      "id": "test_schema_linter_test_old_draft_version",
+      "label": "test_old_draft_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L26"
+    },
+    {
+      "id": "test_schema_linter_test_modern_schema_version",
+      "label": "test_modern_schema_version()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L39"
+    },
+    {
+      "id": "test_schema_linter_test_missing_descriptions",
+      "label": "test_missing_descriptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L52"
+    },
+    {
+      "id": "test_schema_linter_test_empty_enum",
+      "label": "test_empty_enum()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L70"
+    },
+    {
+      "id": "test_schema_linter_test_single_value_enum",
+      "label": "test_single_value_enum()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L84"
+    },
+    {
+      "id": "test_schema_linter_test_no_required_fields",
+      "label": "test_no_required_fields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L98"
+    },
+    {
+      "id": "test_schema_linter_test_invalid_required_fields",
+      "label": "test_invalid_required_fields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L115"
+    },
+    {
+      "id": "test_schema_linter_test_missing_additional_properties",
+      "label": "test_missing_additional_properties()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L130"
+    },
+    {
+      "id": "test_schema_linter_test_string_format_suggestions",
+      "label": "test_string_format_suggestions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L144"
+    },
+    {
+      "id": "test_schema_linter_test_numeric_constraints",
+      "label": "test_numeric_constraints()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L163"
+    },
+    {
+      "id": "test_schema_linter_test_array_without_items",
+      "label": "test_array_without_items()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L177"
+    },
+    {
+      "id": "test_schema_linter_test_array_size_constraints",
+      "label": "test_array_size_constraints()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L191"
+    },
+    {
+      "id": "test_schema_linter_test_deprecated_keywords",
+      "label": "test_deprecated_keywords()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L207"
+    },
+    {
+      "id": "test_schema_linter_test_missing_title",
+      "label": "test_missing_title()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L221"
+    },
+    {
+      "id": "test_schema_linter_test_lint_schema_function",
+      "label": "test_lint_schema_function()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L234"
+    },
+    {
+      "id": "test_schema_linter_test_well_formed_schema",
+      "label": "test_well_formed_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L252"
+    },
+    {
+      "id": "test_schema_linter_rationale_1",
+      "label": "Tests for the schema linter.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_schema_linter_rationale_14",
+      "label": "Test detection of missing $schema declaration.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "test_schema_linter_rationale_27",
+      "label": "Test suggestion for old JSON Schema draft.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "test_schema_linter_rationale_40",
+      "label": "Test recognition of modern schema version.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "test_schema_linter_rationale_53",
+      "label": "Test detection of missing descriptions.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L53"
+    },
+    {
+      "id": "test_schema_linter_rationale_71",
+      "label": "Test detection of empty enum.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L71"
+    },
+    {
+      "id": "test_schema_linter_rationale_85",
+      "label": "Test suggestion for single-value enum.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L85"
+    },
+    {
+      "id": "test_schema_linter_rationale_99",
+      "label": "Test suggestion when no required fields are specified.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L99"
+    },
+    {
+      "id": "test_schema_linter_rationale_116",
+      "label": "Test warning for required fields not in properties.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "test_schema_linter_rationale_131",
+      "label": "Test suggestion for missing additionalProperties.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L131"
+    },
+    {
+      "id": "test_schema_linter_rationale_145",
+      "label": "Test suggestions for string formats.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L145"
+    },
+    {
+      "id": "test_schema_linter_rationale_164",
+      "label": "Test suggestion for numeric constraints.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L164"
+    },
+    {
+      "id": "test_schema_linter_rationale_178",
+      "label": "Test warning for array without items definition.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L178"
+    },
+    {
+      "id": "test_schema_linter_rationale_192",
+      "label": "Test suggestion for array size constraints.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L192"
+    },
+    {
+      "id": "test_schema_linter_rationale_208",
+      "label": "Test detection of deprecated keywords.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L208"
+    },
+    {
+      "id": "test_schema_linter_rationale_222",
+      "label": "Test suggestion for missing title.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L222"
+    },
+    {
+      "id": "test_schema_linter_rationale_235",
+      "label": "Test the convenience lint_schema function.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L235"
+    },
+    {
+      "id": "test_schema_linter_rationale_253",
+      "label": "Test a well-formed schema produces minimal suggestions.",
+      "file_type": "rationale",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L253"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "sys",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "pytest",
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "schema_linter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_missing_schema_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_old_draft_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_modern_schema_version",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_missing_descriptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_empty_enum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_single_value_enum",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_no_required_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_invalid_required_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_missing_additional_properties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_string_format_suggestions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_numeric_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L163",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_array_without_items",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_array_size_constraints",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_deprecated_keywords",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_missing_title",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_lint_schema_function",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "target": "test_schema_linter_test_well_formed_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L252",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_1",
+      "target": "home_john_json_schema_x_graphql_scripts_legacy_reference_python_tests_test_schema_linter_py",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_14",
+      "target": "test_schema_linter_test_missing_schema_version",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_27",
+      "target": "test_schema_linter_test_old_draft_version",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_40",
+      "target": "test_schema_linter_test_modern_schema_version",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_53",
+      "target": "test_schema_linter_test_missing_descriptions",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_71",
+      "target": "test_schema_linter_test_empty_enum",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_85",
+      "target": "test_schema_linter_test_single_value_enum",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_99",
+      "target": "test_schema_linter_test_no_required_fields",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_116",
+      "target": "test_schema_linter_test_invalid_required_fields",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_131",
+      "target": "test_schema_linter_test_missing_additional_properties",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_145",
+      "target": "test_schema_linter_test_string_format_suggestions",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_164",
+      "target": "test_schema_linter_test_numeric_constraints",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_178",
+      "target": "test_schema_linter_test_array_without_items",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L178",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_192",
+      "target": "test_schema_linter_test_array_size_constraints",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_208",
+      "target": "test_schema_linter_test_deprecated_keywords",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_222",
+      "target": "test_schema_linter_test_missing_title",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_235",
+      "target": "test_schema_linter_test_lint_schema_function",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L235",
+      "weight": 1.0
+    },
+    {
+      "source": "test_schema_linter_rationale_253",
+      "target": "test_schema_linter_test_well_formed_schema",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L253",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_schema_linter_test_missing_schema_version",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_schema_version",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_schema_version",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_schema_version",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_old_draft_version",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_old_draft_version",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_old_draft_version",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_old_draft_version",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_old_draft_version",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_modern_schema_version",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_modern_schema_version",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_modern_schema_version",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_modern_schema_version",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_modern_schema_version",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_descriptions",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_descriptions",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_descriptions",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_descriptions",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_descriptions",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_empty_enum",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_empty_enum",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_empty_enum",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_empty_enum",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_empty_enum",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_single_value_enum",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_single_value_enum",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_single_value_enum",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_single_value_enum",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_single_value_enum",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_no_required_fields",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_no_required_fields",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_no_required_fields",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_no_required_fields",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_no_required_fields",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_invalid_required_fields",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_invalid_required_fields",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_invalid_required_fields",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_invalid_required_fields",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_invalid_required_fields",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_additional_properties",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_additional_properties",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L139"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_additional_properties",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L139"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_additional_properties",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_additional_properties",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_string_format_suggestions",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_string_format_suggestions",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_string_format_suggestions",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_string_format_suggestions",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_string_format_suggestions",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L171"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L172"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L172"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_numeric_constraints",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_without_items",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L185"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_without_items",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_without_items",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_without_items",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_without_items",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L201"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_array_size_constraints",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_deprecated_keywords",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L215"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_deprecated_keywords",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_deprecated_keywords",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_deprecated_keywords",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_title",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L228"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_title",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L229"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_title",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L229"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_title",
+      "callee": "any",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_missing_title",
+      "callee": "lower",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_lint_schema_function",
+      "callee": "lint_schema",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_lint_schema_function",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_lint_schema_function",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_lint_schema_function",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L248"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_lint_schema_function",
+      "callee": "isinstance",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L249"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_well_formed_schema",
+      "callee": "SchemaLinter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L280"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_well_formed_schema",
+      "callee": "lint",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L281"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_well_formed_schema",
+      "callee": "Path",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L281"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_well_formed_schema",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "test_schema_linter_test_well_formed_schema",
+      "callee": "len",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/python/tests/test_schema_linter.py",
+      "source_location": "L285"
+    }
+  ]
+}

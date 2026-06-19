@@ -1,0 +1,143 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usetogglehide_ts",
+      "label": "useToggleHide.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "usetogglehide_usetogglehide",
+      "label": "useToggleHide()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "usetogglehide_validatehiddennodes",
+      "label": "validateHiddenNodes()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L18"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usetogglehide_ts",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usetogglehide_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_stores_usegraph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usetogglehide_ts",
+      "target": "usetogglehide_usetogglehide",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usetogglehide_ts",
+      "target": "usetogglehide_validatehiddennodes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "usetogglehide_usetogglehide",
+      "callee": "useGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L5"
+    },
+    {
+      "caller_nid": "usetogglehide_usetogglehide",
+      "callee": "useGraph",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L6"
+    },
+    {
+      "caller_nid": "usetogglehide_usetogglehide",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "querySelectorAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "querySelectorAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "querySelectorAll",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "usetogglehide_validatehiddennodes",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/hooks/useToggleHide.ts",
+      "source_location": "L37"
+    }
+  ]
+}

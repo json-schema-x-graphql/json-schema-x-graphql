@@ -1,0 +1,418 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "label": "run-validate-schema.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "run_validate_schema_parseargs",
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L31"
+    },
+    {
+      "id": "run_validate_schema_isjsonfile",
+      "label": "isJsonFile()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L47"
+    },
+    {
+      "id": "run_validate_schema_resolvepathmaybe",
+      "label": "resolvePathMaybe()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L51"
+    },
+    {
+      "id": "run_validate_schema_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L67"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "home_john_json_schema_x_graphql_docs_scripts_validate_schema_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "run_validate_schema_parseargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "run_validate_schema_isjsonfile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "run_validate_schema_resolvepathmaybe",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_docs_reference_architecture_examples_run_validate_schema_mjs",
+      "target": "run_validate_schema_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_main",
+      "target": "run_validate_schema_parseargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_main",
+      "target": "run_validate_schema_resolvepathmaybe",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "run_validate_schema_main",
+      "target": "run_validate_schema_isjsonfile",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L103",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "run_validate_schema_parseargs",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "run_validate_schema_parseargs",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L41"
+    },
+    {
+      "caller_nid": "run_validate_schema_isjsonfile",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "run_validate_schema_resolvepathmaybe",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "run_validate_schema_resolvepathmaybe",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "run_validate_schema_resolvepathmaybe",
+      "callee": "cwd",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "fileURLToPath",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L70"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "red",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "yellow",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "validateFiles",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "red",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "cyan",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "dim",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "green",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L128"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "red",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L128"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "yellow",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "dim",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "dim",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L140"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "red",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "green",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "run_validate_schema_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/docs/reference-architecture/examples/run-validate-schema.mjs",
+      "source_location": "L151"
+    }
+  ]
+}

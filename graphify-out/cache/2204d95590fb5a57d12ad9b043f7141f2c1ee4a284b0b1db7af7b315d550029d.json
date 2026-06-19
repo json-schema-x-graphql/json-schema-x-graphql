@@ -1,0 +1,594 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "label": "generate-supergraph.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_supergraph_findsubgraphs",
+      "label": "findSubgraphs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L61"
+    },
+    {
+      "id": "generate_supergraph_readsubgraph",
+      "label": "readSubgraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L70"
+    },
+    {
+      "id": "generate_supergraph_composesubgraphswithtools",
+      "label": "composeSubgraphsWithTools()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L79"
+    },
+    {
+      "id": "generate_supergraph_composesubgraphssimple",
+      "label": "composeSubgraphsSimple()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L143"
+    },
+    {
+      "id": "generate_supergraph_generatesupergraph",
+      "label": "generateSupergraph()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L218"
+    },
+    {
+      "id": "generate_supergraph_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L268"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "glob",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_findsubgraphs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_readsubgraph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_composesubgraphswithtools",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_composesubgraphssimple",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L143",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_generatesupergraph",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_supergraph_mjs",
+      "target": "generate_supergraph_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_supergraph_generatesupergraph",
+      "target": "generate_supergraph_findsubgraphs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_supergraph_generatesupergraph",
+      "target": "generate_supergraph_composesubgraphswithtools",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_supergraph_generatesupergraph",
+      "target": "generate_supergraph_composesubgraphssimple",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L238",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_supergraph_main",
+      "target": "generate_supergraph_generatesupergraph",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L273",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_supergraph_findsubgraphs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "generate_supergraph_findsubgraphs",
+      "callee": "glob",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_supergraph_findsubgraphs",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "generate_supergraph_readsubgraph",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "generate_supergraph_readsubgraph",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L87"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L89"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "mergeTypeDefs",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "print",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "makeExecutableSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphswithtools",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "toISOString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L177"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "generate_supergraph_composesubgraphssimple",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "warn",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L225"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L226"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L229"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "all",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L233"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L233"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L241"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L241"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L243"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L246"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "basename",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L246"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L248"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L249"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L252"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L253"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L254"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L257"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L258"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "generate_supergraph_generatesupergraph",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L269"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "resolve",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L270"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L274"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L276"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L277"
+    },
+    {
+      "caller_nid": "generate_supergraph_main",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-supergraph.mjs",
+      "source_location": "L278"
+    }
+  ]
+}

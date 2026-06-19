@@ -1,0 +1,189 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "label": "map-missing-fields.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "map_missing_fields_loadschema",
+      "label": "loadSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "map_missing_fields_findkeylocations",
+      "label": "findKeyLocations()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L19"
+    },
+    {
+      "id": "map_missing_fields_finddeforprop",
+      "label": "findDefOrProp()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L36"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "home_john_json_schema_x_graphql_scripts_legacy_reference_helpers_case_conversion_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "map_missing_fields_loadschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "map_missing_fields_findkeylocations",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_dev_map_missing_fields_mjs",
+      "target": "map_missing_fields_finddeforprop",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "map_missing_fields_finddeforprop",
+      "target": "map_missing_fields_findkeylocations",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L47",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "map_missing_fields_loadschema",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L15"
+    },
+    {
+      "caller_nid": "map_missing_fields_loadschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "map_missing_fields_findkeylocations",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "map_missing_fields_findkeylocations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "map_missing_fields_findkeylocations",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L40"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L41"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "map_missing_fields_finddeforprop",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/dev/map-missing-fields.mjs",
+      "source_location": "L63"
+    }
+  ]
+}

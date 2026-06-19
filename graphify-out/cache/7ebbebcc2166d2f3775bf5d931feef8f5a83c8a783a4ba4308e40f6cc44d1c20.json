@@ -1,0 +1,1603 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "label": "generate-prism-subgraph-sdl.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_parseargs",
+      "label": "parseArgs()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_pascalcase",
+      "label": "pascalCase()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L62"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_safegraphqlname",
+      "label": "safeGraphQLName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L71"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "label": "normalizeEnumValue()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L78"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_triplequote",
+      "label": "tripleQuote()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L91"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_get",
+      "label": "get()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L98"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_isobject",
+      "label": "isObject()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L107"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "label": "PrismSDLBuilder",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L115"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L116"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "label": ".resolveRef()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L126"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenamefordefkey",
+      "label": ".getTypeNameForDefKey()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L139"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "label": ".getTypeNameForRef()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L145"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "label": ".mapScalar()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L158"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "label": ".ensureEnum()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L217"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "label": ".mapPropertyType()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L225"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "label": ".buildFieldSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L306"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "label": ".buildTypeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L332"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "label": ".buildEnumsSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L365"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "label": ".buildQuerySDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L377"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_buildpreludesdl",
+      "label": ".buildPreludeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L436"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "label": ".generateSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L456"
+    },
+    {
+      "id": "generate_prism_subgraph_sdl_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L491"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "url",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_parseargs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_pascalcase",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_safegraphqlname",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_triplequote",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_isobject",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenamefordefkey",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L217",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L306",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L332",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L365",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L377",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildpreludesdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L436",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L456",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_generate_prism_subgraph_sdl_mjs",
+      "target": "generate_prism_subgraph_sdl_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L491",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenamefordefkey",
+      "target": "generate_prism_subgraph_sdl_pascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "target": "generate_prism_subgraph_sdl_pascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "target": "generate_prism_subgraph_sdl_safegraphqlname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "target": "generate_prism_subgraph_sdl_safegraphqlname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "target": "generate_prism_subgraph_sdl_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "target": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L228",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "target": "generate_prism_subgraph_sdl_pascalcase",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L233",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "target": "generate_prism_subgraph_sdl_safegraphqlname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L307",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "target": "generate_prism_subgraph_sdl_triplequote",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L326",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenamefordefkey",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L336",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "target": "generate_prism_subgraph_sdl_triplequote",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L349",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "target": "generate_prism_subgraph_sdl_safegraphqlname",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L350",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "target": "generate_prism_subgraph_sdl_isobject",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L352",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "target": "generate_prism_subgraph_sdl_isobject",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L378",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L384",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L393",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildpreludesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L460",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L466",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L476",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_main",
+      "target": "generate_prism_subgraph_sdl_parseargs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L492",
+      "weight": 1.0
+    },
+    {
+      "source": "generate_prism_subgraph_sdl_main",
+      "target": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L515",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_parseargs",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_pascalcase",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_safegraphqlname",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_safegraphqlname",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_safegraphqlname",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L81"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_normalizeenumvalue",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_triplequote",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_triplequote",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_triplequote",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_triplequote",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_triplequote",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_isobject",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_resolveref",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "callee": "pop",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_gettypenameforref",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L172"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L172"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "toLowerCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L182"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L191"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L196"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mapscalar",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L219"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_ensureenum",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L221"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L232"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L240"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L242"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L245"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L250"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L269"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L270"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L278"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_mappropertytype",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L295"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L309"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L309"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L312"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L312"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L314"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L319"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L321"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L326"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildfieldsdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L329"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L338"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L350"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L353"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L354"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L358"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L359"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildtypesdl",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L360"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L370"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L371"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildenumssdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L373"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L382"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L395"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L398"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L399"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L400"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "splice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L404"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "splice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L407"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "splice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L410"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L413"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L413"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L417"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L420"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L421"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L422"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildquerysdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L432"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildpreludesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_buildpreludesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L453"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L460"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L463"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L467"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L473"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L477"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L480"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L480"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "trimEnd",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L482"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_prismsdlbuilder_generatesdl",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L482"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L494"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L494"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L495"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L498"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "isAbsolute",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L501"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L501"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L504"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L506"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L506"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L507"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L507"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L508"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L508"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L511"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L512"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L517"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L517"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L518"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L519"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L519"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L522"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L522"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L523"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "mkdir",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L528"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L528"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "writeFile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L529"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L530"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "relative",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L530"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L534"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L535"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L536"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L539"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L540"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L541"
+    },
+    {
+      "caller_nid": "generate_prism_subgraph_sdl_main",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/generate-prism-subgraph-sdl.mjs",
+      "source_location": "L542"
+    }
+  ]
+}

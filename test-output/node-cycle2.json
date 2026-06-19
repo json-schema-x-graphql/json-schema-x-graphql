@@ -1,0 +1,266 @@
+{
+  "type": "object",
+  "description": "A comprehensive test schema covering all JSON Schema features for round-trip validation",
+  "x-graphql-type": "Complextestschema",
+  "x-graphql-directives": ["@auth", "@key(fields: \"id\")"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "x-graphql-type": "ID",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name field with length constraints"
+    },
+    "email": {
+      "$ref": "#/$defs/Email",
+      "description": "Email address"
+    },
+    "age": {
+      "type": "integer",
+      "description": "Age in years"
+    },
+    "score": {
+      "type": "number",
+      "description": "Score value"
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "Active status flag"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of tags"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "User roles"
+    },
+    "metadata": {
+      "$ref": "#/$defs/Metadata",
+      "description": "Additional metadata"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status"
+    },
+    "address": {
+      "$ref": "#/$defs/Address"
+    },
+    "phoneNumbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Phonenumbers"
+      }
+    },
+    "preferences": {
+      "$ref": "#/$defs/Preferences"
+    },
+    "nullableField": {
+      "type": "object",
+      "x-graphql-type": "JSON",
+      "description": "Field that can be null"
+    },
+    "mixedArray": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "x-graphql-type": "JSON"
+      },
+      "description": "Array with mixed types"
+    },
+    "dateFields": {
+      "$ref": "#/$defs/Datefields"
+    },
+    "complexNested": {
+      "$ref": "#/$defs/Complexnested"
+    },
+    "conditionalField": {
+      "$ref": "#/$defs/Conditionalfield"
+    },
+    "anyOfExample": {
+      "type": "object",
+      "x-graphql-type": "JSON",
+      "description": "Field that accepts either email or URI"
+    },
+    "allOfExample": {
+      "type": "object",
+      "x-graphql-type": "JSON",
+      "description": "Combined schema using allOf"
+    }
+  },
+  "required": ["id", "name", "email"],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "x-graphql-type": "Metadata",
+      "properties": {
+        "createdAt": {
+          "$ref": "#/$defs/DateTime"
+        },
+        "updatedAt": {
+          "$ref": "#/$defs/DateTime"
+        },
+        "version": {
+          "type": "integer"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "x-graphql-type": "Address",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      },
+      "required": ["street", "city", "country"]
+    },
+    "Phonenumbers": {
+      "type": "object",
+      "x-graphql-type": "Phonenumbers",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "primary": {
+          "type": "boolean"
+        }
+      },
+      "required": ["type", "number"]
+    },
+    "Notifications": {
+      "type": "object",
+      "x-graphql-type": "Notifications",
+      "properties": {
+        "email": {
+          "type": "boolean"
+        },
+        "sms": {
+          "type": "boolean"
+        },
+        "push": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Preferences": {
+      "type": "object",
+      "x-graphql-type": "Preferences",
+      "properties": {
+        "theme": {
+          "type": "string"
+        },
+        "notifications": {
+          "$ref": "#/$defs/Notifications"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "Datefields": {
+      "type": "object",
+      "x-graphql-type": "Datefields",
+      "properties": {
+        "birthDate": {
+          "$ref": "#/$defs/Date"
+        },
+        "registrationTime": {
+          "$ref": "#/$defs/DateTime"
+        },
+        "lastLogin": {
+          "$ref": "#/$defs/DateTime"
+        }
+      }
+    },
+    "Level3": {
+      "type": "object",
+      "x-graphql-type": "Level3",
+      "properties": {
+        "deepValue": {
+          "type": "string"
+        }
+      }
+    },
+    "Level2": {
+      "type": "object",
+      "x-graphql-type": "Level2",
+      "properties": {
+        "level3": {
+          "$ref": "#/$defs/Level3"
+        }
+      }
+    },
+    "Level1": {
+      "type": "object",
+      "x-graphql-type": "Level1",
+      "properties": {
+        "level2": {
+          "$ref": "#/$defs/Level2"
+        }
+      }
+    },
+    "Complexnested": {
+      "type": "object",
+      "x-graphql-type": "Complexnested",
+      "properties": {
+        "level1": {
+          "$ref": "#/$defs/Level1"
+        }
+      }
+    },
+    "Conditionalfield": {
+      "type": "object",
+      "x-graphql-type": "Conditionalfield",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "taxId": {
+          "type": "string"
+        }
+      },
+      "required": ["type"]
+    },
+    "Date": {
+      "type": "string",
+      "x-graphql-type": "Date",
+      "x-graphql-scalar": "Date"
+    },
+    "DateTime": {
+      "type": "string",
+      "x-graphql-type": "DateTime",
+      "x-graphql-scalar": "DateTime"
+    },
+    "Email": {
+      "type": "string",
+      "x-graphql-type": "Email",
+      "x-graphql-scalar": "Email"
+    }
+  }
+}

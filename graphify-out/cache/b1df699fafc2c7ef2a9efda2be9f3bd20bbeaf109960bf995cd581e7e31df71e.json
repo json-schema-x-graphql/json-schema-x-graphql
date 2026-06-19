@@ -1,0 +1,456 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "label": "x-graphql-extensions.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "x_graphql_extensions_extractextensions",
+      "label": "extractExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L102"
+    },
+    {
+      "id": "x_graphql_extensions_shouldskip",
+      "label": "shouldSkip()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L289"
+    },
+    {
+      "id": "x_graphql_extensions_geteffectivedescription",
+      "label": "getEffectiveDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L297"
+    },
+    {
+      "id": "x_graphql_extensions_isfieldnullable",
+      "label": "isFieldNullable()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L321"
+    },
+    {
+      "id": "x_graphql_extensions_geteffectivefieldname",
+      "label": "getEffectiveFieldName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L343"
+    },
+    {
+      "id": "x_graphql_extensions_geteffectivetypename",
+      "label": "getEffectiveTypeName()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L354"
+    },
+    {
+      "id": "x_graphql_extensions_formatdescription",
+      "label": "formatDescription()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L364"
+    },
+    {
+      "id": "x_graphql_extensions_parsefederationkeys",
+      "label": "parseFederationKeys()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L386"
+    },
+    {
+      "id": "x_graphql_extensions_buildfederationdirective",
+      "label": "buildFederationDirective()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L404"
+    },
+    {
+      "id": "x_graphql_extensions_generatetypefederationdirectives",
+      "label": "generateTypeFederationDirectives()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L429"
+    },
+    {
+      "id": "x_graphql_extensions_generatefieldfederationdirectives",
+      "label": "generateFieldFederationDirectives()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L465"
+    },
+    {
+      "id": "x_graphql_extensions_mergeextensions",
+      "label": "mergeExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L511"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_extractextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_shouldskip",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L289",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_geteffectivedescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L297",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_isfieldnullable",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L321",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_geteffectivefieldname",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L343",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_geteffectivetypename",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L354",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_formatdescription",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L364",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_parsefederationkeys",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L386",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_buildfederationdirective",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L404",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_generatetypefederationdirectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L429",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_generatefieldfederationdirectives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L465",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_x_graphql_extensions_ts",
+      "target": "x_graphql_extensions_mergeextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L511",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_extensions_generatetypefederationdirectives",
+      "target": "x_graphql_extensions_parsefederationkeys",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L436",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_extensions_generatetypefederationdirectives",
+      "target": "x_graphql_extensions_buildfederationdirective",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L438",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_extensions_generatefieldfederationdirectives",
+      "target": "x_graphql_extensions_buildfederationdirective",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L480",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L202"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L204"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_extractextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_geteffectivedescription",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L304"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_geteffectivedescription",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L310"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_formatdescription",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L372"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_formatdescription",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L380"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_formatdescription",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L380"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_parsefederationkeys",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L393"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_parsefederationkeys",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L398"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_parsefederationkeys",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L398"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_buildfederationdirective",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L408"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_buildfederationdirective",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L412"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_buildfederationdirective",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L412"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_buildfederationdirective",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L423"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatetypefederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L438"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatetypefederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L444"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatetypefederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L449"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatetypefederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L454"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L472"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L477"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L478"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L480"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L485"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L486"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L488"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L493"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_generatefieldfederationdirectives",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L502"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_mergeextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L521"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_mergeextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "x_graphql_extensions_mergeextensions",
+      "callee": "assign",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/x-graphql-extensions.ts",
+      "source_location": "L528"
+    }
+  ]
+}

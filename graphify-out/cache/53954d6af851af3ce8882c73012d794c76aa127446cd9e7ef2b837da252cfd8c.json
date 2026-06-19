@@ -1,0 +1,647 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "label": "validators.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "validators_validatejsonschema",
+      "label": "validateJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "validators_convertajverror",
+      "label": "convertAjvError()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L165"
+    },
+    {
+      "id": "validators_formatajvmessage",
+      "label": "formatAjvMessage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L197"
+    },
+    {
+      "id": "validators_getajverrorsuggestion",
+      "label": "getAjvErrorSuggestion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L229"
+    },
+    {
+      "id": "validators_getajverrorfix",
+      "label": "getAjvErrorFix()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L249"
+    },
+    {
+      "id": "validators_getsyntaxerrorsuggestion",
+      "label": "getSyntaxErrorSuggestion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L299"
+    },
+    {
+      "id": "validators_getsyntaxerrorfix",
+      "label": "getSyntaxErrorFix()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L315"
+    },
+    {
+      "id": "validators_validatexgraphqlextensions",
+      "label": "validateXGraphQLExtensions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L353"
+    },
+    {
+      "id": "validators_checkcommonissues",
+      "label": "checkCommonIssues()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L434"
+    },
+    {
+      "id": "validators_getlinecolumn",
+      "label": "getLineColumn()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L487"
+    },
+    {
+      "id": "validators_findpositioninstring",
+      "label": "findPositionInString()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L501"
+    },
+    {
+      "id": "validators_validategraphqlsdl",
+      "label": "validateGraphQLSdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L518"
+    },
+    {
+      "id": "validators_formatjsonschema",
+      "label": "formatJsonSchema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L572"
+    },
+    {
+      "id": "validators_validateandformat",
+      "label": "validateAndFormat()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L584"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "ajv",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "ajv_formats",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_types",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_validatejsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_convertajverror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_formatajvmessage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L197",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_getajverrorsuggestion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L229",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_getajverrorfix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L249",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_getsyntaxerrorsuggestion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_getsyntaxerrorfix",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L315",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_validatexgraphqlextensions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_checkcommonissues",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_getlinecolumn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L487",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_findpositioninstring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L501",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_validategraphqlsdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L518",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_formatjsonschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L572",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_lib_validators_ts",
+      "target": "validators_validateandformat",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L584",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validatejsonschema",
+      "target": "validators_getlinecolumn",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validatejsonschema",
+      "target": "validators_getsyntaxerrorsuggestion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validatejsonschema",
+      "target": "validators_getsyntaxerrorfix",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validatejsonschema",
+      "target": "validators_validatexgraphqlextensions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validatejsonschema",
+      "target": "validators_checkcommonissues",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L151",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_convertajverror",
+      "target": "validators_findpositioninstring",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_convertajverror",
+      "target": "validators_getlinecolumn",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_convertajverror",
+      "target": "validators_formatajvmessage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_convertajverror",
+      "target": "validators_getajverrorsuggestion",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_convertajverror",
+      "target": "validators_getajverrorfix",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_getsyntaxerrorfix",
+      "target": "validators_getlinecolumn",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L320",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validateandformat",
+      "target": "validators_validatejsonschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L587",
+      "weight": 1.0
+    },
+    {
+      "source": "validators_validateandformat",
+      "target": "validators_formatjsonschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L589",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L52"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "parseInt",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "getSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "compile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "compile",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L116"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "validate",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L128"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L148"
+    },
+    {
+      "caller_nid": "validators_validatejsonschema",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L152"
+    },
+    {
+      "caller_nid": "validators_formatajvmessage",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "validators_getajverrorsuggestion",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L238"
+    },
+    {
+      "caller_nid": "validators_getajverrorfix",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L263"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorsuggestion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L300"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorsuggestion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L303"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorsuggestion",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorfix",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L323"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorfix",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L324"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorfix",
+      "callee": "max",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L325"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorfix",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "validators_getsyntaxerrorfix",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "validators_validatexgraphqlextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L365"
+    },
+    {
+      "caller_nid": "validators_validatexgraphqlextensions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L377"
+    },
+    {
+      "caller_nid": "validators_validatexgraphqlextensions",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L378"
+    },
+    {
+      "caller_nid": "validators_validatexgraphqlextensions",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L392"
+    },
+    {
+      "caller_nid": "validators_validatexgraphqlextensions",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L392"
+    },
+    {
+      "caller_nid": "validators_checkcommonissues",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L442"
+    },
+    {
+      "caller_nid": "validators_checkcommonissues",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L456"
+    },
+    {
+      "caller_nid": "validators_checkcommonissues",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L457"
+    },
+    {
+      "caller_nid": "validators_checkcommonissues",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L471"
+    },
+    {
+      "caller_nid": "validators_getlinecolumn",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "validators_getlinecolumn",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L491"
+    },
+    {
+      "caller_nid": "validators_findpositioninstring",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "validators_findpositioninstring",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L505"
+    },
+    {
+      "caller_nid": "validators_findpositioninstring",
+      "callee": "exec",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L510"
+    },
+    {
+      "caller_nid": "validators_validategraphqlsdl",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L524"
+    },
+    {
+      "caller_nid": "validators_validategraphqlsdl",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L542"
+    },
+    {
+      "caller_nid": "validators_validategraphqlsdl",
+      "callee": "forEach",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L543"
+    },
+    {
+      "caller_nid": "validators_formatjsonschema",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L574"
+    },
+    {
+      "caller_nid": "validators_formatjsonschema",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/lib/validators.ts",
+      "source_location": "L575"
+    }
+  ]
+}

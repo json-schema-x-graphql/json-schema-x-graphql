@@ -1,0 +1,259 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_app",
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L18"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "react_split_pane",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_css",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemamanager_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_schemaeditor_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_supergraphpreview_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_errorboundary_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_directivesuggester_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_subgrapheditor_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_components_settingspanel_tsx",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_useschemamanager_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usesubgraphgenerator_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usecomposition_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usedirectivesuggestions_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_hooks_usesettings_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_lib_templates_ts",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_subgraph_composer_src_app_jsx",
+      "target": "app_app",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L18",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "app_app",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useSchemaManager",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L32"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useSubgraphGenerator",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useComposition",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useDirectiveSuggestions",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L49"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useSettings",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L137"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "app_app",
+      "callee": "useCallback",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/subgraph-composer/src/App.jsx",
+      "source_location": "L168"
+    }
+  ]
+}

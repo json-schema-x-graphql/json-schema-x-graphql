@@ -1,0 +1,205 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_test_node_converter_js",
+      "label": "test-node-converter.js",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L1"
+    },
+    {
+      "id": "test_node_converter_runtest",
+      "label": "runTest()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L15"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_test_node_converter_js",
+      "target": "test_node_converter_runtest",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L15",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L16"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "existsSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "exit",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "time",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "jsonSchemaToGraphQL",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "timeEnd",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L40"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "readFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "normalize",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L47"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "normalize",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L51"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L53"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L56"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "substring",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L60"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "mkdirSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "dirname",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "writeFileSync",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "log",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "test_node_converter_runtest",
+      "callee": "error",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/test-node-converter.js",
+      "source_location": "L69"
+    }
+  ]
+}

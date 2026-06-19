@@ -1,0 +1,169 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "label": "case_conversion.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "case_conversion_camel_to_snake",
+      "label": "camel_to_snake()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L6"
+    },
+    {
+      "id": "case_conversion_snake_to_camel",
+      "label": "snake_to_camel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L17"
+    },
+    {
+      "id": "case_conversion_test_camel_to_snake",
+      "label": "test_camel_to_snake()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L29"
+    },
+    {
+      "id": "case_conversion_test_snake_to_camel",
+      "label": "test_snake_to_camel()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L37"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "regex",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "case_conversion_camel_to_snake",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "case_conversion_snake_to_camel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "super",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "case_conversion_test_camel_to_snake",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_src_case_conversion_rs",
+      "target": "case_conversion_test_snake_to_camel",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L37",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L7"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L7"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "replace_all",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "replace_all",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "case_conversion_camel_to_snake",
+      "callee": "to_lowercase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "case_conversion_snake_to_camel",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "case_conversion_snake_to_camel",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "case_conversion_snake_to_camel",
+      "callee": "to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "case_conversion_snake_to_camel",
+      "callee": "replace_all",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "case_conversion_snake_to_camel",
+      "callee": "to_uppercase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/src/case_conversion.rs",
+      "source_location": "L20"
+    }
+  ]
+}

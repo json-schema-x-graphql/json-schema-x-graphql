@@ -1,0 +1,867 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "label": "ir-to-graphql.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "ir_to_graphql_getnodebypath",
+      "label": "getNodeByPath()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "ir_to_graphql_ensurearray",
+      "label": "ensureArray()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L53"
+    },
+    {
+      "id": "ir_to_graphql_resolvepointer",
+      "label": "resolvePointer()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L61"
+    },
+    {
+      "id": "ir_to_graphql_transformenumvalues",
+      "label": "transformEnumValues()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L174"
+    },
+    {
+      "id": "ir_to_graphql_parsetypestring",
+      "label": "parseTypeString()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L188"
+    },
+    {
+      "id": "ir_to_graphql_buildschemafromir",
+      "label": "buildSchemaFromIR()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L215"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_helpers_case_conversion_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_getnodebypath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_ensurearray",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_resolvepointer",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_transformenumvalues",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L174",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_parsetypestring",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_scripts_lib_ir_to_graphql_mjs",
+      "target": "ir_to_graphql_buildschemafromir",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L215",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_resolvepointer",
+      "target": "ir_to_graphql_getnodebypath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_transformenumvalues",
+      "target": "ir_to_graphql_ensurearray",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_buildschemafromir",
+      "target": "ir_to_graphql_resolvepointer",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_buildschemafromir",
+      "target": "ir_to_graphql_getnodebypath",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L251",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_buildschemafromir",
+      "target": "ir_to_graphql_ensurearray",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L263",
+      "weight": 1.0
+    },
+    {
+      "source": "ir_to_graphql_buildschemafromir",
+      "target": "ir_to_graphql_transformenumvalues",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L356",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "ir_to_graphql_getnodebypath",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "ir_to_graphql_getnodebypath",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "ir_to_graphql_getnodebypath",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "ir_to_graphql_getnodebypath",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "ir_to_graphql_getnodebypath",
+      "callee": "snakeToCamel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L43"
+    },
+    {
+      "caller_nid": "ir_to_graphql_ensurearray",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "snakeToCamel",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L97"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L106"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "Number",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L146"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "(function dfs(r, cands, seen = new Set(), depth = 0) {\n      if (!r || typeof r !== 'object' || seen.has(r) || depth > 1000) return null;\n      seen.add(r);\n      if (r.$defs) for (const k of Object.keys(r.$defs)) if (cands.includes(k)) return r.$defs[k];\n      if (r.definitions) for (const k of Object.keys(r.definitions)) if (cands.includes(k)) return r.definitions[k];\n      if (r.properties) for (const k of Object.keys(r.properties)) if (cands.includes(k)) return r.properties[k];\n      if (r.items) {\n        const res = dfs(r.items, cands, seen, depth + 1); if (res) return res;\n      }\n      for (const v of Object.values(r)) {\n        if (v && typeof v === 'object') {\n          const res = dfs(v, cands, seen, depth + 1); if (res) return res;\n        }\n      }\n      return null;\n    })",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L152"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L153"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "dfs",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L161"
+    },
+    {
+      "caller_nid": "ir_to_graphql_resolvepointer",
+      "callee": "dfs",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "transform",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "toUpperCase",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "ir_to_graphql_transformenumvalues",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L192"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L195"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L196"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "endsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "lookup",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L201"
+    },
+    {
+      "caller_nid": "ir_to_graphql_parsetypestring",
+      "callee": "lookup",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "create",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L216"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L251"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L251"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L255"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L269"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L270"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L271"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L280"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L282"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "replace",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L288"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L289"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L290"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L297"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L298"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L298"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L317"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L317"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "(function findEnumInNode(n, seen = new Set()) {\n                    if (!n || typeof n !== 'object' || seen.has(n)) return null;\n                    seen.add(n);\n                    if (n.enum && ensureArray(n.enum).length) return n;\n                    if (n.$defs) for (const v of Object.values(n.$defs)) { const r = findEnumInNode(v, seen); if (r) return r; }\n                    if (n.definitions) for (const v of Object.values(n.definitions)) { const r = findEnumInNode(v, seen); if (r) return r; }\n                    if (n.properties) for (const v of Object.values(n.properties)) { const r = findEnumInNode(v, seen); if (r) return r; }\n                    if (n.items) { const r = findEnumInNode(n.items, seen); if (r) return r; }\n                    return null;\n                  })",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L320"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L321"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L322"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L324"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "findEnumInNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L324"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L325"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "findEnumInNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L325"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L326"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "findEnumInNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L326"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "findEnumInNode",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L327"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L344"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L344"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L344"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "write",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L349"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L353"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L359"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L359"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "stringify",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L367"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L449"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L449"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L460"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L460"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "push",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L463"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L463"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "find",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L470"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "values",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L478"
+    },
+    {
+      "caller_nid": "ir_to_graphql_buildschemafromir",
+      "callee": "printSchema",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/scripts/lib/ir-to-graphql.mjs",
+      "source_location": "L479"
+    }
+  ]
+}

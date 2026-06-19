@@ -1,0 +1,88 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "label": "JsonCrackLogo.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "jsoncracklogo_jsoncracklogo",
+      "label": "JSONCrackLogo()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L38"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "local",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "link",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "styled_components",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_layout_jsoncracklogo_tsx",
+      "target": "jsoncracklogo_jsoncracklogo",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L38",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "jsoncracklogo_jsoncracklogo",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "jsoncracklogo_jsoncracklogo",
+      "callee": "useEffect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/layout/JsonCrackLogo.tsx",
+      "source_location": "L41"
+    }
+  ]
+}

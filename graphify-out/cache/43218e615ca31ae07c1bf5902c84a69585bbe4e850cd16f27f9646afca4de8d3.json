@@ -1,0 +1,107 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "label": "field-mapping-helper.mjs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "field_mapping_helper_loadmapping",
+      "label": "loadMapping()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L9"
+    },
+    {
+      "id": "field_mapping_helper_resolve",
+      "label": "resolve()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "target": "promises",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "target": "home_john_json_schema_x_graphql_scripts_legacy_reference_helpers_case_conversion_mjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "target": "field_mapping_helper_loadmapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_scripts_legacy_reference_field_mapping_helper_mjs",
+      "target": "field_mapping_helper_resolve",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "field_mapping_helper_resolve",
+      "target": "field_mapping_helper_loadmapping",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L21",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "field_mapping_helper_loadmapping",
+      "callee": "readFile",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "field_mapping_helper_loadmapping",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "field_mapping_helper_resolve",
+      "callee": "camelToSnake",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "field_mapping_helper_resolve",
+      "callee": "entries",
+      "source_file": "/home/john/json-schema-x-graphql/scripts/legacy-reference/field-mapping-helper.mjs",
+      "source_location": "L25"
+    }
+  ]
+}

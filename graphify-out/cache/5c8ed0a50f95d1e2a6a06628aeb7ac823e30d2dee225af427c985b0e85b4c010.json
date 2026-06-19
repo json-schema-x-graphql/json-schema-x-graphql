@@ -1,0 +1,127 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_statusbar_tsx",
+      "label": "StatusBar.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "statusbar_statusbar",
+      "label": "StatusBar()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_statusbar_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_statusbar_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_store_app_store",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_components_statusbar_tsx",
+      "target": "statusbar_statusbar",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L20",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L23"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "useAppStore",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L32"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "match",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "getEngineStatus",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "statusbar_statusbar",
+      "callee": "{\" \"}",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/components/StatusBar.tsx",
+      "source_location": "L88"
+    }
+  ]
+}

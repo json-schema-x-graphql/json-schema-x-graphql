@@ -1,0 +1,954 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "label": "x_graphql_shared_tests.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "x_graphql_shared_tests_get_test_data_path",
+      "label": "get_test_data_path()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L10"
+    },
+    {
+      "id": "x_graphql_shared_tests_load_test_schema",
+      "label": "load_test_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L18"
+    },
+    {
+      "id": "x_graphql_shared_tests_load_expected_sdl",
+      "label": "load_expected_sdl()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L24"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_basic_types_conversion",
+      "label": "test_basic_types_conversion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L31"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_comprehensive_features",
+      "label": "test_comprehensive_features()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L60"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_interfaces_schema",
+      "label": "test_interfaces_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L110"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_unions_schema",
+      "label": "test_unions_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L128"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_nullability_schema",
+      "label": "test_nullability_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L139"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_skip_fields_schema",
+      "label": "test_skip_fields_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L155"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_descriptions_schema",
+      "label": "test_descriptions_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L171"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_comprehensive_schema",
+      "label": "test_comprehensive_schema()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L186"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "label": "test_all_schemas_are_valid()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L200"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "label": "test_round_trip_fidelity()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L255"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_federation_directives",
+      "label": "test_federation_directives()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L275"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_type_name_mapping",
+      "label": "test_type_name_mapping()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L303"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_field_name_mapping",
+      "label": "test_field_name_mapping()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L326"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_field_type_mapping",
+      "label": "test_field_type_mapping()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L349"
+    },
+    {
+      "id": "x_graphql_shared_tests_test_descriptions_conversion",
+      "label": "test_descriptions_conversion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L362"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "converter",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "pathbuf",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_get_test_data_path",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_load_expected_sdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_basic_types_conversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_comprehensive_features",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_interfaces_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_unions_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_nullability_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_skip_fields_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_descriptions_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_comprehensive_schema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L255",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_federation_directives",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L275",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_type_name_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L303",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_field_name_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L326",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_field_type_mapping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L349",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_x_graphql_shared_tests_rs",
+      "target": "x_graphql_shared_tests_test_descriptions_conversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L362",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_load_test_schema",
+      "target": "x_graphql_shared_tests_get_test_data_path",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_load_expected_sdl",
+      "target": "x_graphql_shared_tests_get_test_data_path",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_basic_types_conversion",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_basic_types_conversion",
+      "target": "x_graphql_shared_tests_load_expected_sdl",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_comprehensive_features",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_interfaces_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_unions_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_nullability_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_skip_fields_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L156",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_descriptions_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_comprehensive_schema",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L187",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "target": "x_graphql_shared_tests_get_test_data_path",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L257",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_federation_directives",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L276",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_type_name_mapping",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L304",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_field_name_mapping",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L327",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_field_type_mapping",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L350",
+      "weight": 1.0
+    },
+    {
+      "source": "x_graphql_shared_tests_test_descriptions_conversion",
+      "target": "x_graphql_shared_tests_load_test_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L363",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "x_graphql_shared_tests_get_test_data_path",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_get_test_data_path",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_get_test_data_path",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_get_test_data_path",
+      "callee": "parent",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_get_test_data_path",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_test_schema",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_test_schema",
+      "callee": "unwrap_or_else",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_test_schema",
+      "callee": "read_to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_expected_sdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_expected_sdl",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_expected_sdl",
+      "callee": "ok",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_load_expected_sdl",
+      "callee": "read_to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "collect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "split_whitespace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "collect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_basic_types_conversion",
+      "callee": "split_whitespace",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_features",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_features",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_features",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_interfaces_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_interfaces_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_interfaces_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_unions_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L130"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_unions_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_unions_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_nullability_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L141"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_nullability_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_nullability_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_skip_fields_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_skip_fields_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_skip_fields_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_schema",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_schema",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_comprehensive_schema",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L189"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "read_dir",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L203"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "path",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "and_then",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "extension",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "to_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "Some",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "to_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "file_name",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "unwrap_or_else",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "read_to_string",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L218"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L221"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L222"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "contains",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L236"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_all_schemas_are_valid",
+      "callee": "contains",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L236"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L258"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_round_trip_fidelity",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_federation_directives",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L277"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_federation_directives",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L278"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_federation_directives",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L278"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_federation_directives",
+      "callee": "contains",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L286"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_type_name_mapping",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L305"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_type_name_mapping",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_type_name_mapping",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L306"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_name_mapping",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L328"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_name_mapping",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L329"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_name_mapping",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L329"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_type_mapping",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L351"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_type_mapping",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_field_type_mapping",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L352"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_conversion",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L364"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_conversion",
+      "callee": "expect",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L365"
+    },
+    {
+      "caller_nid": "x_graphql_shared_tests_test_descriptions_conversion",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/x_graphql_shared_tests.rs",
+      "source_location": "L365"
+    }
+  ]
+}

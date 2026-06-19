@@ -1,0 +1,88 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "label": "index.tsx",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "index_jqmodal",
+      "label": "JQModal()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L7"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "react",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "core",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "vsc",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_hooks_usejsonquery",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_modals_jqmodal_index_tsx",
+      "target": "index_jqmodal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L7",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "index_jqmodal",
+      "callee": "useJsonQuery",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "index_jqmodal",
+      "callee": "useState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/modals/JQModal/index.tsx",
+      "source_location": "L9"
+    }
+  ]
+}

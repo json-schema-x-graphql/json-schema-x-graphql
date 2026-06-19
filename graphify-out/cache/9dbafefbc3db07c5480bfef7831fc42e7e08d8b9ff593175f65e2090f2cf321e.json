@@ -1,0 +1,13 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_schema_authoring_src_wasm_json_schema_x_graphql_bg_wasm_d_ts",
+      "label": "json_schema_x_graphql_bg.wasm.d.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/schema-authoring/src/wasm/json_schema_x_graphql_bg.wasm.d.ts",
+      "source_location": "L1"
+    }
+  ],
+  "edges": [],
+  "raw_calls": []
+}

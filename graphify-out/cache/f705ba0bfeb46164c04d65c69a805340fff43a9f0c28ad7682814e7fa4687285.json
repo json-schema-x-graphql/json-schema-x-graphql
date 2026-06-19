@@ -1,0 +1,214 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "label": "calculateNodeSize.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "calculatenodesize_iscontentimage",
+      "label": "isContentImage()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "calculatenodesize_calculatelines",
+      "label": "calculateLines()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "calculatenodesize_calculatewidthandheight",
+      "label": "calculateWidthAndHeight()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "calculatenodesize_calculatenodesize",
+      "label": "calculateNodeSize()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L57"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_constants_graph",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "home_john_json_schema_x_graphql_frontend_dashboard_src_store_useconfig",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "calculatenodesize_iscontentimage",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "calculatenodesize_calculatelines",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "calculatenodesize_calculatewidthandheight",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_frontend_dashboard_src_features_editor_views_graphview_lib_utils_calculatenodesize_ts",
+      "target": "calculatenodesize_calculatenodesize",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "calculatenodesize_calculatenodesize",
+      "target": "calculatenodesize_iscontentimage",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "calculatenodesize_calculatenodesize",
+      "target": "calculatenodesize_calculatelines",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "calculatenodesize_calculatenodesize",
+      "target": "calculatenodesize_calculatewidthandheight",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L70",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "calculatenodesize_iscontentimage",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "calculatenodesize_iscontentimage",
+      "callee": "startsWith",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "calculatenodesize_iscontentimage",
+      "callee": "includes",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatelines",
+      "callee": "join",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatelines",
+      "callee": "map",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatewidthandheight",
+      "callee": "createElement",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatewidthandheight",
+      "callee": "appendChild",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatewidthandheight",
+      "callee": "getBoundingClientRect",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatewidthandheight",
+      "callee": "split",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L40"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatewidthandheight",
+      "callee": "removeChild",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatenodesize",
+      "callee": "getState",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatenodesize",
+      "callee": "toString",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatenodesize",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatenodesize",
+      "callee": "get",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "calculatenodesize_calculatenodesize",
+      "callee": "set",
+      "source_file": "/home/john/json-schema-x-graphql/frontend/dashboard/src/features/editor/views/GraphView/lib/utils/calculateNodeSize.ts",
+      "source_location": "L80"
+    }
+  ]
+}

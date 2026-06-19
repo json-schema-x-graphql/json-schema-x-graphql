@@ -1,0 +1,295 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "label": "parity.test.ts",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "parity_test_striploc",
+      "label": "stripLoc()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "parity_test_sortdefinitions",
+      "label": "sortDefinitions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "parity_test_normalizesdl",
+      "label": "normalizeSDL()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L54"
+    },
+    {
+      "id": "parity_test_semanticallyequal",
+      "label": "semanticallyEqual()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L199"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "child_process",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "parity_test_striploc",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "parity_test_sortdefinitions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "parity_test_normalizesdl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_node_src_parity_test_ts",
+      "target": "parity_test_semanticallyequal",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "parity_test_normalizesdl",
+      "target": "parity_test_striploc",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "parity_test_normalizesdl",
+      "target": "parity_test_sortdefinitions",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L134",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "parity_test_striploc",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "parity_test_striploc",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L44"
+    },
+    {
+      "caller_nid": "parity_test_sortdefinitions",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "trim",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L55"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "parse",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "String",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "slice",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "normalizeStrings",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L84"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "test",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "replaceNamedTypes",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L122"
+    },
+    {
+      "caller_nid": "parity_test_normalizesdl",
+      "callee": "filter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "has",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L210"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "add",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L211"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "isArray",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L229"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L229"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "sort",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "parity_test_semanticallyequal",
+      "callee": "keys",
+      "source_file": "/home/john/json-schema-x-graphql/converters/node/src/parity.test.ts",
+      "source_location": "L230"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "label": "conversion_benchmark.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "conversion_benchmark_bench_json_to_graphql",
+      "label": "bench_json_to_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L61"
+    },
+    {
+      "id": "conversion_benchmark_bench_graphql_to_json",
+      "label": "bench_graphql_to_json()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L73"
+    },
+    {
+      "id": "conversion_benchmark_bench_cached_conversion",
+      "label": "bench_cached_conversion()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L85"
+    },
+    {
+      "id": "conversion_benchmark_bench_with_validation_disabled",
+      "label": "bench_with_validation_disabled()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L102"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "criterion",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "json_schema_x_graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "conversion_benchmark_bench_json_to_graphql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "conversion_benchmark_bench_graphql_to_json",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "conversion_benchmark_bench_cached_conversion",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_benches_conversion_benchmark_rs",
+      "target": "conversion_benchmark_bench_with_validation_disabled",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L102",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "bench_function",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "iter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L66"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_json_to_graphql",
+      "callee": "black_box",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L67"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "bench_function",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "iter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L77"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "graphql_to_json_schema",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_graphql_to_json",
+      "callee": "black_box",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "bench_function",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "iter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "convert",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_cached_conversion",
+      "callee": "black_box",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "default",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "with_options",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "bench_function",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "iter",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "conversion_benchmark_bench_with_validation_disabled",
+      "callee": "black_box",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/benches/conversion_benchmark.rs",
+      "source_location": "L112"
+    }
+  ]
+}

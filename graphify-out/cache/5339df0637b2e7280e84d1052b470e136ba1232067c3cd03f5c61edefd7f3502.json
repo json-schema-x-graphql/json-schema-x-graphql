@@ -1,0 +1,486 @@
+{
+  "nodes": [
+    {
+      "id": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "label": "edge_cases.rs",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L1"
+    },
+    {
+      "id": "edge_cases_test_deeply_nested_object",
+      "label": "test_deeply_nested_object()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L5"
+    },
+    {
+      "id": "edge_cases_test_recursive_types",
+      "label": "test_recursive_types()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L41"
+    },
+    {
+      "id": "edge_cases_test_reserved_keywords_as_fields",
+      "label": "test_reserved_keywords_as_fields()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L67"
+    },
+    {
+      "id": "edge_cases_test_complex_descriptions_escaping",
+      "label": "test_complex_descriptions_escaping()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L91"
+    },
+    {
+      "id": "edge_cases_test_empty_object_handling",
+      "label": "test_empty_object_handling()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L119"
+    },
+    {
+      "id": "edge_cases_test_very_long_identifiers",
+      "label": "test_very_long_identifiers()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L137"
+    },
+    {
+      "id": "edge_cases_test_nested_arrays_unsupported_in_graphql",
+      "label": "test_nested_arrays_unsupported_in_graphql()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L160"
+    },
+    {
+      "id": "edge_cases_test_union_collision",
+      "label": "test_union_collision()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L194"
+    },
+    {
+      "id": "edge_cases_test_invalid_type_field",
+      "label": "test_invalid_type_field()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L224"
+    },
+    {
+      "id": "edge_cases_test_mixed_case_properties",
+      "label": "test_mixed_case_properties()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L246"
+    },
+    {
+      "id": "edge_cases_test_markdown_descriptions",
+      "label": "test_markdown_descriptions()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L267"
+    },
+    {
+      "id": "edge_cases_test_empty_required_array",
+      "label": "test_empty_required_array()",
+      "file_type": "code",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L291"
+    }
+  ],
+  "edges": [
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "json_schema_x_graphql",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_deeply_nested_object",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_recursive_types",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_reserved_keywords_as_fields",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_complex_descriptions_escaping",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_empty_object_handling",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L119",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_very_long_identifiers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_nested_arrays_unsupported_in_graphql",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L160",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_union_collision",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_invalid_type_field",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L224",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_mixed_case_properties",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L246",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_markdown_descriptions",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L267",
+      "weight": 1.0
+    },
+    {
+      "source": "home_john_json_schema_x_graphql_converters_rust_tests_edge_cases_rs",
+      "target": "edge_cases_test_empty_required_array",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L291",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "from",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L8"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "push_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "push_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "push_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L20"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "push_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "push_str",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L22"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "edge_cases_test_deeply_nested_object",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "edge_cases_test_recursive_types",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "edge_cases_test_recursive_types",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "edge_cases_test_recursive_types",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "edge_cases_test_reserved_keywords_as_fields",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "edge_cases_test_reserved_keywords_as_fields",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L80"
+    },
+    {
+      "caller_nid": "edge_cases_test_reserved_keywords_as_fields",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "edge_cases_test_complex_descriptions_escaping",
+      "callee": "with_options",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "edge_cases_test_complex_descriptions_escaping",
+      "callee": "default",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L106"
+    },
+    {
+      "caller_nid": "edge_cases_test_complex_descriptions_escaping",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "edge_cases_test_complex_descriptions_escaping",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "edge_cases_test_empty_object_handling",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "edge_cases_test_empty_object_handling",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "edge_cases_test_very_long_identifiers",
+      "callee": "repeat",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "edge_cases_test_very_long_identifiers",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "edge_cases_test_very_long_identifiers",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "edge_cases_test_very_long_identifiers",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L155"
+    },
+    {
+      "caller_nid": "edge_cases_test_nested_arrays_unsupported_in_graphql",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "edge_cases_test_nested_arrays_unsupported_in_graphql",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "edge_cases_test_nested_arrays_unsupported_in_graphql",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "edge_cases_test_union_collision",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "edge_cases_test_union_collision",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L214"
+    },
+    {
+      "caller_nid": "edge_cases_test_union_collision",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L217"
+    },
+    {
+      "caller_nid": "edge_cases_test_invalid_type_field",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L234"
+    },
+    {
+      "caller_nid": "edge_cases_test_invalid_type_field",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L235"
+    },
+    {
+      "caller_nid": "edge_cases_test_invalid_type_field",
+      "callee": "to_lowercase",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L239"
+    },
+    {
+      "caller_nid": "edge_cases_test_mixed_case_properties",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L256"
+    },
+    {
+      "caller_nid": "edge_cases_test_mixed_case_properties",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L257"
+    },
+    {
+      "caller_nid": "edge_cases_test_mixed_case_properties",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L261"
+    },
+    {
+      "caller_nid": "edge_cases_test_markdown_descriptions",
+      "callee": "with_options",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L277"
+    },
+    {
+      "caller_nid": "edge_cases_test_markdown_descriptions",
+      "callee": "default",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L279"
+    },
+    {
+      "caller_nid": "edge_cases_test_markdown_descriptions",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L282"
+    },
+    {
+      "caller_nid": "edge_cases_test_markdown_descriptions",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L284"
+    },
+    {
+      "caller_nid": "edge_cases_test_empty_required_array",
+      "callee": "new",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L301"
+    },
+    {
+      "caller_nid": "edge_cases_test_empty_required_array",
+      "callee": "json_schema_to_graphql",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L302"
+    },
+    {
+      "caller_nid": "edge_cases_test_empty_required_array",
+      "callee": "unwrap",
+      "source_file": "/home/john/json-schema-x-graphql/converters/rust/tests/edge_cases.rs",
+      "source_location": "L305"
+    }
+  ]
+}
