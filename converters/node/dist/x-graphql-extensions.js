@@ -173,6 +173,16 @@ export function extractExtensions(schema) {
             case "scalars":
                 extensions.scalars = value;
                 break;
+            // Viaduct (x-graphql-viaduct-*)
+            case "viaduct-resolver":
+                extensions.viaductResolver = value;
+                break;
+            case "viaduct-backing-data":
+                extensions.viaductBackingData = value;
+                break;
+            case "viaduct-id-of":
+                extensions.viaductIdOf = value;
+                break;
             // Also check for legacy x-graphql-type (could be string or object)
             case "type":
                 if (typeof value === "string") {

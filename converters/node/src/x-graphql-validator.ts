@@ -420,6 +420,50 @@ export function validateExtensions(
     });
   }
 
+  // Validate x-graphql-viaduct-* extensions
+  if (extensions.viaductBackingData !== undefined) {
+    if (
+      typeof extensions.viaductBackingData !== "object" ||
+      extensions.viaductBackingData === null
+    ) {
+      errors.push({
+        path,
+        message:
+          'x-graphql-viaduct-backing-data must be an object (e.g. { type: "com.example.Foo" })',
+        severity: "error",
+        attribute: "x-graphql-viaduct-backing-data",
+      });
+    }
+  }
+  if (extensions.viaductIdOf !== undefined) {
+    if (
+      typeof extensions.viaductIdOf !== "object" ||
+      extensions.viaductIdOf === null
+    ) {
+      errors.push({
+        path,
+        message:
+          'x-graphql-viaduct-id-of must be an object (e.g. { type: "EmailAddress" })',
+        severity: "error",
+        attribute: "x-graphql-viaduct-id-of",
+      });
+    }
+  }
+  if (
+    extensions.viaductResolver !== undefined &&
+    typeof extensions.viaductResolver !== "boolean" &&
+    (typeof extensions.viaductResolver !== "object" ||
+      extensions.viaductResolver === null)
+  ) {
+    errors.push({
+      path,
+      message:
+        "x-graphql-viaduct-resolver must be a boolean (true) or an object with resolver arguments",
+      severity: "error",
+      attribute: "x-graphql-viaduct-resolver",
+    });
+  }
+
   return errors;
 }
 

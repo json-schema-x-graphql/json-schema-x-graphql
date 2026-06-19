@@ -254,7 +254,10 @@ async function testRustConverter(inputFile, outputFile) {
 
       const result = readFileSync(outputFile, "utf-8");
 
-      log(`✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`, "green");
+      log(
+        `✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`,
+        "green",
+      );
       log(`   Output: ${outputFile}`, "reset");
       log(`   Size: ${result.length} bytes`, "reset");
 
@@ -281,7 +284,10 @@ async function testRustConverter(inputFile, outputFile) {
 
     const result = readFileSync(outputFile, "utf-8");
 
-    log(`✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`, "green");
+    log(
+      `✅ Success (${duration}ms internal, ${Date.now() - startTime}ms wall)`,
+      "green",
+    );
     log(`   Output: ${outputFile}`, "reset");
     log(`   Size: ${result.length} bytes`, "reset");
 

@@ -7,14 +7,18 @@ import {
 
 describe("Case Conversion Utilities", () => {
   test("camelToSnake converts CamelCase to snake_case", () => {
-    expect(camelToSnake("contractingAgencyCode")).toBe("contracting_agency_code");
+    expect(camelToSnake("contractingAgencyCode")).toBe(
+      "contracting_agency_code",
+    );
     expect(camelToSnake("VendorInfo")).toBe("vendor_info");
     expect(camelToSnake("placeOfPerformance")).toBe("place_of_performance");
     expect(camelToSnake("simple")).toBe("simple");
   });
 
   test("snakeToCamel converts snake_case to camelCase", () => {
-    expect(snakeToCamel("contracting_agency_code")).toBe("contractingAgencyCode");
+    expect(snakeToCamel("contracting_agency_code")).toBe(
+      "contractingAgencyCode",
+    );
     expect(snakeToCamel("vendor_info")).toBe("vendorInfo");
     expect(snakeToCamel("place_of_performance")).toBe("placeOfPerformance");
     expect(snakeToCamel("simple")).toBe("simple");

@@ -1,0 +1,114 @@
+# prek.toml — pre-commit hook manager for json-schema-x-graphql
+# https://github.com/j178/prek
+#
+# Runs format, lint, and tests before every commit/push to catch regressions
+# before they hit CI.
+#
+# One-time setup per clone:
+#   prek install           # installs pre-commit hook
+#   prek install --hook-type pre-push  # installs pre-push hook (for tests)
+#
+# Run manually against all files (useful after initial setup):
+#   prek run --all-files
+
+# ── Built-in hooks (prek native, zero-install) ────────────────────────────────
+[[repos]]
+repo = "builtin"
+hooks = [
+  # Remove trailing whitespace from staged files
+  { id = "trailing-whitespace", exclude = "pnpm-lock.yaml|Cargo.lock" },
+  # Ensure files end with a newline
+  { id = "end-of-file-fixer", exclude = "pnpm-lock.yaml|Cargo.lock" },
+  # Validate JSON syntax
+  { id = "check-json", exclude = "tsconfig.*" },
+  # Prevent large files from being committed accidentally
+  { id = "check-added-large-files", args = ["--maxkb=500"] },
+  # Detect merge conflict markers left in files
+  { id = "check-merge-conflict" },
+]
+
+# ── Rust ──────────────────────────────────────────────────────────────────────
+[[repos]]
+repo = "local"
+hooks = [
+  # rustfmt: auto-format changed Rust files before committing
+  {
+    id = "rust-fmt",
+    name = "cargo fmt (Rust formatter)",
+    language = "system",
+    entry = "cargo fmt --manifest-path converters/rust/Cargo.toml --",
+    types = ["rust"],
+    pass_filenames = true,
+  },
+
+  # clippy: lint all Rust sources (needs full workspace; no filenames)
+  {
+    id = "rust-clippy",
+    name = "cargo clippy (Rust linter)",
+    language = "system",
+    entry = "cargo clippy --manifest-path converters/rust/Cargo.toml -- -D warnings",
+    types = ["rust"],
+    pass_filenames = false,
+  },
+
+  # cargo test: run Rust tests on pre-push only (slow)
+  {
+    id = "cargo-test",
+    name = "cargo test (Rust tests)",
+    language = "system",
+    entry = "cargo test --manifest-path converters/rust/Cargo.toml",
+    types = ["rust"],
+    pass_filenames = false,
+    stages = ["pre-push"],
+  },
+]
+
+# ── Node / TypeScript ─────────────────────────────────────────────────────────
+[[repos]]
+repo = "local"
+hooks = [
+  # prettier: auto-format JS/TS/JSON/YAML/CSS/Markdown
+  {
+    id = "prettier",
+    name = "prettier (formatter)",
+    language = "system",
+    entry = "pnpm exec prettier --write",
+    types_or = ["ts", "tsx", "javascript", "jsx", "json", "yaml", "markdown", "css"],
+    exclude = "pnpm-lock.yaml|Cargo.lock|dist/",
+    pass_filenames = true,
+  },
+
+  # eslint: lint TypeScript converter sources
+  {
+    id = "eslint",
+    name = "eslint (TypeScript linter)",
+    language = "system",
+    entry = "pnpm exec eslint --fix",
+    types = ["ts"],
+    files = "converters/(node|cli)/src/.*\\.ts$",
+    pass_filenames = true,
+  },
+
+  # tsc: type-check the Node converter (needs full project context)
+  {
+    id = "tsc-node",
+    name = "tsc --noEmit (type-check converters/node)",
+    language = "system",
+    entry = "bash -c 'cd converters/node && pnpm exec tsc --noEmit'",
+    types = ["ts"],
+    files = "converters/node/src/.*\\.ts$",
+    pass_filenames = false,
+  },
+
+  # jest: run Node converter tests on pre-push only (slow)
+  {
+    id = "jest",
+    name = "jest (Node converter tests)",
+    language = "system",
+    entry = "bash -c 'cd converters/node && pnpm run test'",
+    types = ["ts"],
+    files = "converters/node/src/.*\\.ts$",
+    pass_filenames = false,
+    stages = ["pre-push"],
+  },
+]

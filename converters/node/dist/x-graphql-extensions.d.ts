@@ -37,6 +37,12 @@ export interface XGraphQLExtensions {
     federationRequiresScopes?: string[][];
     federationPolicy?: string[][];
     federationExtends?: boolean;
+    /** @see `x-graphql-viaduct-resolver` — marks a field/type as resolved by a remote service */
+    viaductResolver?: boolean | Record<string, unknown>;
+    /** @see `x-graphql-viaduct-backing-data` — declares the backing data source type */
+    viaductBackingData?: Record<string, unknown>;
+    /** @see `x-graphql-viaduct-id-of` — declares a field as a typed identifier */
+    viaductIdOf?: Record<string, unknown>;
     scalar?: string;
     enumValues?: Record<string, EnumValueConfig>;
     defaultValue?: unknown;

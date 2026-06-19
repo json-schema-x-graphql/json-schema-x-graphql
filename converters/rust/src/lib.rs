@@ -148,6 +148,14 @@ impl Converter {
             tracer.start("json_schema_to_graphql")
         };
 
+        #[cfg(not(target_arch = "wasm32"))]
+        let mut schema: JsonValue = {
+            let mut bytes = json_schema.as_bytes().to_vec();
+            simd_json::from_slice(&mut bytes)
+                .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?
+        };
+
+        #[cfg(target_arch = "wasm32")]
         let mut schema: JsonValue = serde_json::from_str(json_schema)
             .map_err(|e| ConversionError::InvalidJsonSchema(e.to_string()))?;
 

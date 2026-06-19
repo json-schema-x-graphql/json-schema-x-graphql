@@ -29,7 +29,10 @@ describe("computeWebhookSignature", () => {
     const payload = "binary payload";
     const secret = "s3cr3t";
     const sigFromString = computeWebhookSignature(payload, secret);
-    const sigFromBuffer = computeWebhookSignature(Buffer.from(payload, "utf8"), secret);
+    const sigFromBuffer = computeWebhookSignature(
+      Buffer.from(payload, "utf8"),
+      secret,
+    );
     expect(sigFromString).toBe(sigFromBuffer);
   });
 
@@ -65,7 +68,9 @@ describe("verifyWebhookSignature", () => {
 
   it("returns false for a wrong secret", () => {
     const signature = buildSignature(payload, secret);
-    expect(verifyWebhookSignature(payload, signature, "wrong-secret")).toBe(false);
+    expect(verifyWebhookSignature(payload, signature, "wrong-secret")).toBe(
+      false,
+    );
   });
 
   it("returns false when signature header is missing (undefined)", () => {
@@ -87,7 +92,9 @@ describe("verifyWebhookSignature", () => {
   });
 
   it("returns false for a sha256= header with an incorrect hex value", () => {
-    expect(verifyWebhookSignature(payload, "sha256=deadbeef", secret)).toBe(false);
+    expect(verifyWebhookSignature(payload, "sha256=deadbeef", secret)).toBe(
+      false,
+    );
   });
 
   it("accepts a Buffer payload and returns true for valid signature", () => {

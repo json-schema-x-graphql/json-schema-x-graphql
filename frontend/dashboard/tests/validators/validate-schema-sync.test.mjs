@@ -150,9 +150,17 @@ describe("compareSchemas basic parity checks", () => {
   });
 
   test("detects JSON Schema properties lacking GraphQL fields (missingInGraphQL)", () => {
-    const result = compareSchemas(BASE_SDL_MISSING_FIELDS, JSON_SCHEMA_COMPLETE);
+    const result = compareSchemas(
+      BASE_SDL_MISSING_FIELDS,
+      JSON_SCHEMA_COMPLETE,
+    );
     expect(result.missingInGraphQL).toEqual(
-      expect.arrayContaining(["piid", "placeOfPerformance", "awardAmount", "naicsCode"])
+      expect.arrayContaining([
+        "piid",
+        "placeOfPerformance",
+        "awardAmount",
+        "naicsCode",
+      ]),
     );
   });
 
@@ -194,7 +202,7 @@ describe("compareSchemas strict mode failure scenarios", () => {
         strict: true,
         config: "non-existent-config.json",
         repoRoot: process.cwd(),
-      })
+      }),
     ).toThrow(/Strict mode enabled but config not found/);
   });
 });
@@ -229,7 +237,7 @@ describe("compareSchemas robustness / edge cases", () => {
     const result = compareSchemas(EMPTY_SDL, JSON_SCHEMA_COMPLETE);
     expect(result.missingInJson).toHaveLength(0);
     expect(result.missingInGraphQL.length).toBeGreaterThanOrEqual(
-      Object.keys(JSON_SCHEMA_COMPLETE.properties).length
+      Object.keys(JSON_SCHEMA_COMPLETE.properties).length,
     );
   });
 
@@ -252,7 +260,10 @@ describe("compareSchemas robustness / edge cases", () => {
           items: {
             type: "object",
             properties: {
-              placeOfPerformance: { type: "object", properties: { country: { type: "string" } } },
+              placeOfPerformance: {
+                type: "object",
+                properties: { country: { type: "string" } },
+              },
             },
           },
         },
@@ -288,10 +299,14 @@ describe("compareSchemas naming convention enforcement", () => {
     `;
     const result = compareSchemas(sdl, jsonSchemaWithCamelCase);
     expect(result.namingViolations.jsonSchema.length).toBeGreaterThan(0);
-    expect(result.namingViolations.jsonSchema.some(v => v.field === "vendorInfo")).toBe(true);
-    expect(result.namingViolations.jsonSchema.some(v => v.field === "placeOfPerformance")).toBe(
-      true
-    );
+    expect(
+      result.namingViolations.jsonSchema.some((v) => v.field === "vendorInfo"),
+    ).toBe(true);
+    expect(
+      result.namingViolations.jsonSchema.some(
+        (v) => v.field === "placeOfPerformance",
+      ),
+    ).toBe(true);
     expect(result.exitCode).toBe(1);
   });
 
@@ -312,10 +327,14 @@ describe("compareSchemas naming convention enforcement", () => {
     `;
     const result = compareSchemas(sdlWithSnakeCase, jsonSchema);
     expect(result.namingViolations.graphql.length).toBeGreaterThan(0);
-    expect(result.namingViolations.graphql.some(v => v.field === "vendor_info")).toBe(true);
-    expect(result.namingViolations.graphql.some(v => v.field === "place_of_performance")).toBe(
-      true
-    );
+    expect(
+      result.namingViolations.graphql.some((v) => v.field === "vendor_info"),
+    ).toBe(true);
+    expect(
+      result.namingViolations.graphql.some(
+        (v) => v.field === "place_of_performance",
+      ),
+    ).toBe(true);
     expect(result.exitCode).toBe(1);
   });
 
@@ -382,6 +401,8 @@ describe("compareSchemas naming convention enforcement", () => {
     };
     const sdl = `type Query { _: Boolean }`;
     const result = compareSchemas(sdl, jsonSchemaWithCamelCase);
-    expect(result.namingViolations.jsonSchema[0].suggestion).toBe("vendor_info");
+    expect(result.namingViolations.jsonSchema[0].suggestion).toBe(
+      "vendor_info",
+    );
   });
 });

@@ -4,10 +4,15 @@
   height: 100%;
   background: #0b0f19;
   border-radius: var(--radius-lg, 12px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
-  font-family: "Inter", -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
 }
 
 .er-diagram-toolbar {
@@ -30,7 +35,7 @@
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .er-diagram-toggle-btn {
@@ -53,7 +58,7 @@
   background: linear-gradient(135deg, #6366f1, #4f46e5);
   color: white;
   font-weight: 600;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .er-diagram-export-btn {
@@ -80,11 +85,11 @@
   position: relative;
   overflow: hidden;
   /* Dark mode React Flow overrides */
-  --xy-edge-stroke: rgba(255,255,255,0.2);
+  --xy-edge-stroke: rgba(255, 255, 255, 0.2);
   --xy-edge-stroke-selected: #6366f1;
   --xy-connectionline-stroke: #818cf8;
   --xy-background-color: #0b0f19;
-  --xy-background-pattern-color: rgba(255,255,255,0.08);
+  --xy-background-pattern-color: rgba(255, 255, 255, 0.08);
 }
 
 .er-diagram-empty {
@@ -120,7 +125,7 @@
   overflow: auto;
   white-space: pre;
   margin: 0;
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .er-diagram-copy-btn {

@@ -12,7 +12,9 @@ import { createHmac, timingSafeEqual } from "node:crypto";
  */
 export function computeWebhookSignature(payload, secret) {
   const hmac = createHmac("sha256", secret);
-  hmac.update(typeof payload === "string" ? Buffer.from(payload, "utf8") : payload);
+  hmac.update(
+    typeof payload === "string" ? Buffer.from(payload, "utf8") : payload,
+  );
   return `sha256=${hmac.digest("hex")}`;
 }
 

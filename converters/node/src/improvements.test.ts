@@ -75,15 +75,17 @@ describe("Converter Improvements", () => {
         __dirname,
         "../../../test-data/case-mismatch.schema.json",
       );
-      if (fs.existsSync(testDataPath)) {
-        const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
-        const result = jsonSchemaToGraphQL(schema);
-
-        // Should contain the types defined in the schema
-        expect(result).toContain("type UserInfo");
-        expect(result).toContain("type AccountDetails");
-        expect(result).toContain("type UserProfile");
+      if (!fs.existsSync(testDataPath)) {
+        // eslint-disable-next-line jest/no-conditional-expect
+        return;
       }
+      const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
+      const result = jsonSchemaToGraphQL(schema);
+
+      // Should contain the types defined in the schema
+      expect(result).toContain("type UserInfo");
+      expect(result).toContain("type AccountDetails");
+      expect(result).toContain("type UserProfile");
     });
 
     test("should resolve nested $refs with case mismatch", () => {
@@ -295,14 +297,15 @@ describe("Converter Improvements", () => {
         __dirname,
         "../../../test-data/circular-refs.schema.json",
       );
-      if (fs.existsSync(testDataPath)) {
-        const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
-
-        expect(() => {
-          const result = jsonSchemaToGraphQL(schema);
-          expect(result).toBeTruthy();
-        }).not.toThrow();
+      if (!fs.existsSync(testDataPath)) {
+        return;
       }
+      const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
+
+      expect(() => {
+        const result = jsonSchemaToGraphQL(schema);
+        expect(result).toBeTruthy();
+      }).not.toThrow();
     });
   });
 
@@ -520,21 +523,22 @@ describe("Converter Improvements", () => {
         __dirname,
         "../../../test-data/filtering.schema.json",
       );
-      if (fs.existsSync(testDataPath)) {
-        const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
-        const result = jsonSchemaToGraphQL(schema);
-
-        // Should include main types
-        expect(result).toContain("type User");
-        expect(result).toContain("type Product");
-
-        // Should exclude filtered types
-        expect(result).not.toContain("type UserFilter");
-        expect(result).not.toContain("type UserConnection");
-        expect(result).not.toContain("type CreateUserPayload");
-        expect(result).not.toContain("type Query");
-        expect(result).not.toContain("type Mutation");
+      if (!fs.existsSync(testDataPath)) {
+        return;
       }
+      const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
+      const result = jsonSchemaToGraphQL(schema);
+
+      // Should include main types
+      expect(result).toContain("type User");
+      expect(result).toContain("type Product");
+
+      // Should exclude filtered types
+      expect(result).not.toContain("type UserFilter");
+      expect(result).not.toContain("type UserConnection");
+      expect(result).not.toContain("type CreateUserPayload");
+      expect(result).not.toContain("type Query");
+      expect(result).not.toContain("type Mutation");
     });
 
     test("should include operational types when flag is set", () => {
@@ -542,20 +546,21 @@ describe("Converter Improvements", () => {
         __dirname,
         "../../../test-data/filtering.schema.json",
       );
-      if (fs.existsSync(testDataPath)) {
-        const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
-        const result = jsonSchemaToGraphQL(schema, {
-          includeOperationalTypes: true,
-        });
-
-        // Should include operational types
-        expect(result).toContain("type Query");
-        expect(result).toContain("type Mutation");
-
-        // Should still exclude suffixed types
-        expect(result).not.toContain("type UserFilter");
-        expect(result).not.toContain("type UserConnection");
+      if (!fs.existsSync(testDataPath)) {
+        return;
       }
+      const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
+      const result = jsonSchemaToGraphQL(schema, {
+        includeOperationalTypes: true,
+      });
+
+      // Should include operational types
+      expect(result).toContain("type Query");
+      expect(result).toContain("type Mutation");
+
+      // Should still exclude suffixed types
+      expect(result).not.toContain("type UserFilter");
+      expect(result).not.toContain("type UserConnection");
     });
   });
 

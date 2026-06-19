@@ -5,4 +5,3 @@ type Allstringsid {
   uuid: ID!
   name: ID
 }
-

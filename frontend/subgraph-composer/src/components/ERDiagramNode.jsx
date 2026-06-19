@@ -25,13 +25,25 @@ function DirectiveBadge({ name }) {
 
   if (isKey) {
     content = "PK 🔑";
-    style = { background: BADGE_COLORS[name], color: "#000", fontWeight: "bold" };
+    style = {
+      background: BADGE_COLORS[name],
+      color: "#000",
+      fontWeight: "bold",
+    };
   } else if (isProvides) {
     content = "FK 🔗 (provides)";
-    style = { background: BADGE_COLORS[name], color: "#fff", fontWeight: "bold" };
+    style = {
+      background: BADGE_COLORS[name],
+      color: "#fff",
+      fontWeight: "bold",
+    };
   } else if (isRequires) {
     content = "FK 🔗 (requires)";
-    style = { background: BADGE_COLORS[name], color: "#fff", fontWeight: "bold" };
+    style = {
+      background: BADGE_COLORS[name],
+      color: "#fff",
+      fontWeight: "bold",
+    };
   } else if (isExternal) {
     className += " badge-external";
     style = {
@@ -63,12 +75,12 @@ export default function ERDiagramNode({ data }) {
   const headerBg = hexToRgba(color, 0.2);
 
   return (
-    <div 
-      className="er-node" 
-      style={{ 
-        "--node-color": color, 
+    <div
+      className="er-node"
+      style={{
+        "--node-color": color,
         "--node-glow": glowColor,
-        borderTopColor: color 
+        borderTopColor: color,
       }}
     >
       <Handle
@@ -143,7 +155,11 @@ export default function ERDiagramNode({ data }) {
       {sourceNames && sourceNames.length > 0 && (
         <div className="er-node-footer">
           {sourceNames.map((name, i) => (
-            <span key={i} className="er-node-source" style={{ color: color, borderColor: hexToRgba(color, 0.3) }}>
+            <span
+              key={i}
+              className="er-node-source"
+              style={{ color: color, borderColor: hexToRgba(color, 0.3) }}
+            >
               {name}
             </span>
           ))}

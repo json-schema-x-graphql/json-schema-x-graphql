@@ -38,6 +38,7 @@ import {
 export { normalizeFederationExtensions };
 import { ensureConnectionType } from "./features/relay.js";
 import { otelTracer } from "./otel.js";
+export * from "./standard-schema.js";
 
 // ExtendedConverterOptions and others moved to interfaces.ts
 

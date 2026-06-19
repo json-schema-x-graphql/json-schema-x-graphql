@@ -2,7 +2,10 @@
 import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
-import { jsonSchemaToGraphQL } from "@json-schema-x-graphql/core";
+import {
+  jsonSchemaToGraphQL,
+  generateTypeScript,
+} from "@json-schema-x-graphql/core";
 import {
   FederationVersion,
   NamingConvention,
@@ -70,6 +73,10 @@ const { values, positionals } = parseArgs({
     version: {
       type: "boolean",
       short: "v",
+    },
+    types: {
+      type: "string",
+      short: "t",
     },
   },
   allowPositionals: true,
@@ -172,6 +179,12 @@ try {
     console.log(`Successfully wrote GraphQL SDL to ${values.output}`);
   } else {
     console.log(sdl);
+  }
+
+  if (values.types) {
+    const tsCode = await generateTypeScript(sdl);
+    fs.writeFileSync(values.types, tsCode);
+    console.log(`Successfully generated TypeScript types to ${values.types}`);
   }
 } catch (error: any) {
   console.error("Error converting schema:", error.message);

@@ -6,4 +6,3 @@ type Noidinference {
   "Should be ID because of format: uuid"
   uuid: ID
 }
-
