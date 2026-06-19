@@ -6,6 +6,29 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "../App";
 
+jest.mock("../components/CodeMirrorEditor", () => {
+  const React = require("react");
+  return {
+    __esModule: true,
+    default: React.forwardRef(({ value, onChange }, ref) => {
+      React.useImperativeHandle(ref, () => ({
+        getValue: () => value,
+        setValue: (v) => {
+          if (onChange) onChange(v);
+        },
+        focus: () => {},
+      }));
+      return (
+        <textarea
+          data-testid="mock-codemirror-editor"
+          value={value || ""}
+          onChange={(e) => onChange && onChange(e.target.value)}
+        />
+      );
+    }),
+  };
+});
+
 describe("Schema Composition Features", () => {
   describe("Schema Toggle Functionality", () => {
     test("should initialize schemas with toggle checkboxes", async () => {
