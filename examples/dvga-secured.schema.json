@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/dvga-secured",
+  "title": "DVGASecuredSchema",
+  "type": "object",
+  "x-graphql-schema-config": {
+    "query-type": "Query",
+    "mutation-type": "Mutation"
+  },
+  "$defs": {
+    "Query": {
+      "type": "object",
+      "x-graphql-type": "Query",
+      "properties": {
+        "systemHealth": {
+          "type": "string",
+          "description": "Public system health check. No auth required."
+        },
+        "me": {
+          "$ref": "#/$defs/User",
+          "x-graphql-federation-authenticated": true,
+          "description": "Get current logged-in user. Mitigates Broken User Authentication."
+        },
+        "auditLogs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AuditLog" },
+          "x-graphql-federation-requires-scopes": [
+            ["read:admin", "read:audit"]
+          ],
+          "description": "Get system audit logs. Mitigates Broken Function Level Authorization."
+        },
+        "document": {
+          "$ref": "#/$defs/Document",
+          "x-graphql-arguments": {
+            "id": { "type": "string", "x-graphql-type": "ID!" }
+          },
+          "description": "Fetch a specific document. Handled securely by @policy."
+        }
+      }
+    },
+    "Mutation": {
+      "type": "object",
+      "x-graphql-type": "Mutation",
+      "properties": {
+        "deleteUser": {
+          "type": "boolean",
+          "x-graphql-arguments": {
+            "id": { "type": "string", "x-graphql-type": "ID!" }
+          },
+          "x-graphql-federation-requires-scopes": [
+            ["write:admin"]
+          ],
+          "description": "Delete user by ID. Mitigates unauthorized administrative mutations."
+        },
+        "generateExpensiveReport": {
+          "type": "string",
+          "x-graphql-federation-authenticated": true,
+          "description": "Generates report."
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "x-graphql-federation-keys": [{ "fields": "id" }],
+      "properties": {
+        "id": { "type": "string", "x-graphql-type": "ID" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "privateToken": {
+          "type": "string",
+          "x-graphql-federation-inaccessible": true,
+          "description": "Private token never exposed to clients."
+        }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "Document": {
+      "type": "object",
+      "x-graphql-federation-keys": [{ "fields": "id" }],
+      "x-graphql-federation-policy": [["viewer_can_read_document"]],
+      "properties": {
+        "id": { "type": "string", "x-graphql-type": "ID" },
+        "content": { "type": "string" }
+      },
+      "required": ["id", "content"]
+    },
+    "AuditLog": {
+      "type": "object",
+      "x-graphql-type": "AuditLog",
+      "properties": {
+        "timestamp": { "type": "string" },
+        "action": { "type": "string" }
+      },
+      "required": ["timestamp", "action"]
+    }
+  }
+}
