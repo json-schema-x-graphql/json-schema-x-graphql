@@ -5,6 +5,18 @@ module.exports = {
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
+  transform: {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        useESM: true,
+        isolatedModules: true,
+        tsconfig: {
+          ignoreDeprecations: "6.0",
+        },
+      },
+    ],
+  },
   testMatch: ["<rootDir>/converters/node/src/**/*.test.ts"],
   testPathIgnorePatterns: [
     "<rootDir>/pkg/",

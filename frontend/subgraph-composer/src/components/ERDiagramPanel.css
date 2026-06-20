@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #0b0f19;
+  background: transparent;
   border-radius: var(--radius-lg, 12px);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.4),
@@ -88,7 +88,7 @@
   --xy-edge-stroke: rgba(255, 255, 255, 0.2);
   --xy-edge-stroke-selected: #6366f1;
   --xy-connectionline-stroke: #818cf8;
-  --xy-background-color: #0b0f19;
+  --xy-background-color: transparent;
   --xy-background-pattern-color: rgba(255, 255, 255, 0.08);
 }
 

@@ -325,9 +325,11 @@ pre {
 
   .sidebar,
   .editor-section,
+  .editor-and-directives,
   .preview-section {
     width: 100%;
     max-width: none;
+    min-width: 0;
     height: auto;
     min-height: 300px;
   }
@@ -465,15 +467,23 @@ pre {
   display: none !important;
 }
 
-/* Dark Mode Support */
+/* Dark Mode Support (Nextra compatible) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-text: #f9fafb;
+    --color-text: #ffffff;
     --color-text-light: #9ca3af;
-    --color-border: #374151;
-    --color-bg: #111827;
-    --color-bg-secondary: #1f2937;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-bg: transparent;
+    --color-bg-secondary: rgba(0, 0, 0, 0.2);
     --color-bg-overlay: rgba(0, 0, 0, 0.7);
+  }
+
+  body {
+    background-color: #111111;
+  }
+
+  .app-container {
+    background-color: transparent;
   }
 
   .app-header,
@@ -482,11 +492,11 @@ pre {
   .editor-section,
   .directives-panel,
   .preview-section {
-    background-color: var(--color-bg);
+    background-color: transparent;
   }
 
   .resizer-col {
-    background: #374151;
+    background: rgba(255, 255, 255, 0.1);
   }
 
   /* Make sure buttons stand out */
@@ -498,4 +508,49 @@ pre {
   .tab-btn {
     color: var(--color-text);
   }
+}
+
+:root.dark,
+.dark {
+  --color-text: #ffffff;
+  --color-text-light: #9ca3af;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-bg: transparent;
+  --color-bg-secondary: rgba(0, 0, 0, 0.2);
+  --color-bg-overlay: rgba(0, 0, 0, 0.7);
+}
+
+.dark .app-container,
+.dark .app-header,
+.dark .app-footer,
+.dark .sidebar,
+.dark .editor-section,
+.dark .directives-panel,
+.dark .preview-section {
+  background-color: transparent;
+}
+
+.dark .resizer-col {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark .btn-icon-lg {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+}
+
+.dark .tab-btn {
+  color: var(--color-text);
+}
+
+/* Make JSON Editor Transparent to blend into Nextra */
+.custom-json-editor {
+  --jse-background-color: transparent;
+  --jse-panel-background: transparent;
+  --jse-main-background: transparent;
+  --jse-contents-background-color: transparent;
+}
+.custom-json-editor .jse-main,
+.custom-json-editor .jse-contents {
+  background-color: transparent !important;
 }
