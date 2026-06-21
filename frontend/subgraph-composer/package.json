@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.33",
-    "@graphql-tools/utils": "^10.11.0",
+    "@graphql-tools/utils": "^11.1.0",
     "@internal/ui": "workspace:*",
     "@json-schema-x-graphql/core": "file:../../converters/node",
     "@opentelemetry/api": "^1.9.0",
