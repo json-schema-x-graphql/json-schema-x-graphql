@@ -137,7 +137,7 @@
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
     "remark-gfm": "^4.0.1",
-    "styled-components": "^6.1.19",
+    "styled-components": "^6.4.2",
     "toml": "^3.0.0",
     "use-long-press": "^3.3.0",
     "zustand": "^4.5.7"
