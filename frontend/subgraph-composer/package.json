@@ -40,7 +40,7 @@
     "@visual-json/core": "workspace:*",
     "@visual-json/react": "workspace:*",
     "@xyflow/react": "^12.11.0",
-    "graphql": "^16.14.0",
+    "graphql": "^17.0.1",
     "graphql-editor": "^7.3.1",
     "graphql-voyager": "^2.1.0",
     "mermaid": "11.15.0",
