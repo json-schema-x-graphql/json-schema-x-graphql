@@ -83,7 +83,7 @@
     "@theguild/federation-composition": "^0.22.3",
     "@types/jest": "^29.5.14",
     "@types/node": "^25.9.2",
-    "@typescript-eslint/eslint-plugin": "^8.60.1",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.60.1",
     "axios": "1.16.1",
     "dompurify": "3.4.2",
