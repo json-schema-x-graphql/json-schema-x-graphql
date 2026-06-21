@@ -151,7 +151,7 @@
     "@graphql-tools/merge": "^9.0.25",
     "@graphql-tools/mock": "^9.0.25",
     "@graphql-tools/schema": "^10.0.25",
-    "@next/bundle-analyzer": "^14.2.33",
+    "@next/bundle-analyzer": "^16.2.9",
     "@slidev/cli": "^52.11.0",
     "@slidev/theme-default": "^0.25.0",
     "@theguild/federation-composition": "^0.20.2",
