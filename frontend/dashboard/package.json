@@ -155,7 +155,7 @@
     "@slidev/cli": "^52.11.0",
     "@slidev/theme-default": "^0.25.0",
     "@theguild/federation-composition": "^0.20.2",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/jest": "^29.5.12",
     "@types/js-cookie": "^3.0.6",
     "@types/js-yaml": "^4.0.9",
