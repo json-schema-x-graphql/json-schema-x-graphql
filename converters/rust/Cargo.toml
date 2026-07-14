@@ -51,7 +51,7 @@ getrandom = { version = "0.3", features = ["wasm_js"] }
 # Optional caching is implemented in-crate to avoid pulling in an external LRU dependency.
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-simd-json = { version = "0.13", features = ["serde_impl"] }
+simd-json = { version = "0.17", features = ["serde_impl"] }
 
 [dev-dependencies]
 pretty_assertions = "1.4"
