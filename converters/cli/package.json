@@ -22,7 +22,7 @@
     "@json-schema-x-graphql/core": "workspace:*",
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
-    "graphql": "^16.14.0"
+    "graphql": "^17.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.19.40",
