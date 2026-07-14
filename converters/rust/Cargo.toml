@@ -55,7 +55,7 @@ simd-json = { version = "0.17", features = ["serde_impl"] }
 
 [dev-dependencies]
 pretty_assertions = "1.4"
-criterion = "0.5"
+criterion = "0.8"
 opentelemetry_sdk = { version = "0.32", features = ["rt-tokio"] }
 
 
