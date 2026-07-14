@@ -110,7 +110,7 @@
     "jq-web": "^0.5.1",
     "js-cookie": "^3.0.7",
     "js-yaml": "^4.2.0",
-    "json-2-csv": "^5.5.9",
+    "json-2-csv": "^5.5.11",
     "json-schema-faker": "^0.5.9",
     "json_typegen_wasm": "^0.7.0",
     "jsonc-parser": "^3.3.1",
