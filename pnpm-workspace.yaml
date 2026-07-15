@@ -68,4 +68,5 @@ overrides:
   js-yaml: ^4.1.2
   ts-deepmerge: ^8.0.0
 
-
+patchedDependencies:
+  gray-matter@4.0.3: patches/gray-matter@4.0.3.patch

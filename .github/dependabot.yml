@@ -1,46 +1,26 @@
 version: 2
 updates:
-  # Root pnpm workspace — use npm ecosystem for pnpm-lock.yaml
+  # Root pnpm workspace (automatically manages all workspace packages listed in pnpm-workspace.yaml)
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
+    groups:
+      workspace-npm-dependencies:
+        patterns:
+          - "*"
 
-  # Frontend dashboard workspace
+  # Standalone Frontend dashboard (not in workspace)
   - package-ecosystem: "npm"
     directory: "/frontend/dashboard"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
-
-  # Converter node workspace
-  - package-ecosystem: "npm"
-    directory: "/converters/node"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-
-  # Converter CLI workspace
-  - package-ecosystem: "npm"
-    directory: "/converters/cli"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-
-  # Frontend subgraph-composer workspace
-  - package-ecosystem: "npm"
-    directory: "/frontend/subgraph-composer"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-
-  # Website workspace
-  - package-ecosystem: "npm"
-    directory: "/website"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
+    groups:
+      dashboard-npm-dependencies:
+        patterns:
+          - "*"
 
   # Rust Cargo ecosystem
   - package-ecosystem: "cargo"
@@ -48,6 +28,10 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      cargo-dependencies:
+        patterns:
+          - "*"
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
@@ -55,3 +39,8 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - "*"
+
