@@ -10,17 +10,11 @@ export interface XGraphQLExtensions {
   // Type-level extensions
   typeName?: string;
   typeKind?:
-    | "OBJECT"
-    | "INTERFACE"
-    | "UNION"
-    | "ENUM"
-    | "INPUT_OBJECT"
-    | "SCALAR";
+    "OBJECT" | "INTERFACE" | "UNION" | "ENUM" | "INPUT_OBJECT" | "SCALAR";
   implements?: string[];
   unionTypes?: string[];
   typeDirectives?:
-    | string[]
-    | Array<{ name: string; arguments?: Record<string, unknown> }>;
+    string[] | Array<{ name: string; arguments?: Record<string, unknown> }>;
 
   // Field-level extensions
   fieldName?: string;
@@ -28,8 +22,7 @@ export interface XGraphQLExtensions {
   fieldNonNull?: boolean;
   fieldListItemNonNull?: boolean;
   fieldDirectives?:
-    | string[]
-    | Array<{ name: string; arguments?: Record<string, unknown> }>;
+    string[] | Array<{ name: string; arguments?: Record<string, unknown> }>;
   fieldArguments?: Record<string, FieldArgument>;
 
   // P0 Feature: Skip

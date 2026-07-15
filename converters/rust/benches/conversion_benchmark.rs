@@ -1,5 +1,6 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use json_schema_x_graphql::{ConversionOptions, Converter};
+use std::hint::black_box;
 
 const JSON_SCHEMA: &str = r#"{
     "$schema": "https://json-schema.org/draft/2020-12/schema",
