@@ -134,6 +134,31 @@ function normalizeAstDocument(ast: DocumentNode): DocumentNode {
   }
 
   const stripped = stripLoc(ast as any);
+
+  // Clean empty arrays to ensure parity between JS and Rust AST serialization styles
+  const cleanVisited = new WeakSet<object>();
+  const cleanEmptyArrays = (node: any) => {
+    if (!node || typeof node !== "object") return;
+    if (cleanVisited.has(node)) return;
+    cleanVisited.add(node);
+
+    for (const key of Object.keys(node)) {
+      const val = node[key];
+      if (Array.isArray(val)) {
+        if (val.length === 0) {
+          delete node[key];
+        } else {
+          for (const item of val) {
+            cleanEmptyArrays(item);
+          }
+        }
+      } else if (val && typeof val === "object") {
+        cleanEmptyArrays(val);
+      }
+    }
+  };
+  cleanEmptyArrays(stripped);
+
   const sorted = sortDefinitions(stripped as DocumentNode);
   return sorted as DocumentNode;
 }

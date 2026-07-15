@@ -274,10 +274,10 @@ mod tests {
     #[cfg(all(not(target_arch = "wasm32"), feature = "telemetry"))]
     #[test]
     fn test_opentelemetry_instrumentation() {
-        use opentelemetry_sdk::trace::TracerProvider;
+        use opentelemetry_sdk::trace::SdkTracerProvider;
 
         // Initialize a local trace provider
-        let provider = TracerProvider::builder().build();
+        let provider = SdkTracerProvider::builder().build();
         opentelemetry::global::set_tracer_provider(provider);
 
         let converter = Converter::new();
