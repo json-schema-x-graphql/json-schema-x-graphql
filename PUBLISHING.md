@@ -342,19 +342,26 @@ Release notes include:
 - Links to related PRs and issues
 - Contributors list
 
-### npm Package
+### npm Packages
 
-The npm package includes:
+The npm ecosystem consists of three published packages:
 
-- Built WASM binaries from `converters/rust/pkg/`
-- TypeScript definitions
-- README.md and LICENSE
+1. **`json-schema-x-graphql`** (root wrapper)
+   - Built WASM binaries from `converters/rust/pkg/`
+   - TypeScript definitions
+   - README.md and LICENSE
+2. **`@json-schema-x-graphql/core`** (TypeScript Core library)
+   - Pure TypeScript implementation of converter and utilities
+   - Compiled JS files under `dist/`
+3. **`@json-schema-x-graphql/cli`** (Node CLI)
+   - Executable wrapper for command line conversion: `npm install -g @json-schema-x-graphql/cli`
 
 ### Cargo Package
 
-The Cargo package includes:
+The Cargo package `json-schema-x-graphql` includes:
 
-- All Rust source code
+- All Rust source code and library
+- The `jxql` CLI binary (installable via `cargo install json-schema-x-graphql --features cli`)
 - README.md and LICENSE
 
 ---

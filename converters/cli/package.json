@@ -2,6 +2,12 @@
   "name": "@json-schema-x-graphql/cli",
   "version": "2.0.0",
   "description": "CLI tools for json-schema-x-graphql",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "json-schema-x-graphql": "dist/index.js",
     "jxql-validate": "dist/validate.js",

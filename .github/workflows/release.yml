@@ -279,7 +279,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm publish --access public
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          # 1. Build TS compilation for Core and CLI packages
+          pnpm --filter @json-schema-x-graphql/core run build
+          pnpm --filter @json-schema-x-graphql/cli run build
+          # 2. Publish core package
+          pnpm publish --filter @json-schema-x-graphql/core --no-git-checks --access public
+          # 3. Publish CLI package
+          pnpm publish --filter @json-schema-x-graphql/cli --no-git-checks --access public
+          # 4. Publish root wrapper package containing WASM bundle
+          pnpm publish --no-git-checks --access public
 
       - name: Publish to crates.io
         working-directory: converters/rust
