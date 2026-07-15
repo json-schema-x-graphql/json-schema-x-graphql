@@ -72,7 +72,7 @@
     "@graphql-codegen/cli": "^7.1.3",
     "@graphql-codegen/typescript": "^6.1.0",
     "@opentelemetry/sdk-trace-base": "^2.9.0",
-    "@opentelemetry/sdk-trace-node": "^1.26.0",
+    "@opentelemetry/sdk-trace-node": "^2.9.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.1.1",
     "eslint": "9.20.0",
@@ -84,7 +84,7 @@
   },
   "optionalDependencies": {
     "@opentelemetry/sdk-trace-base": "^2.9.0",
-    "@opentelemetry/sdk-trace-node": "^1.26.0"
+    "@opentelemetry/sdk-trace-node": "^2.9.0"
   },
   "engines": {
     "node": ">=24.0.0",
