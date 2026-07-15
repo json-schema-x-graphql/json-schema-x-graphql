@@ -24,6 +24,7 @@ onlyBuiltDependencies:
   - "esbuild"
 
 overrides:
+  auto-bind: 4.0.0
   minimatch: ^10.2.5
   serialize-javascript: ^7.0.3
   webpack: ^5.106.0
