@@ -52,10 +52,11 @@ jobs:
 
       - name: Run cargo deny
         run: |
-          cargo-deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml advisories
-          cargo-deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml licenses
-          cargo-deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml bans
-          cargo-deny --manifest-path converters/rust/Cargo.toml check --config converters/rust/deny.toml sources
+          cd converters/rust
+          cargo-deny check advisories
+          cargo-deny check licenses
+          cargo-deny check bans
+          cargo-deny check sources
 
   security-audit-node:
     name: Node.js Security Audit
