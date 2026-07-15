@@ -48,7 +48,7 @@ overrides:
   "@tootallnate/once": 3.0.1
   fast-uri: ^3.1.2
   postcss: ^8.5.10
-  vite: 7.3.5
+  vite: ^6.4.3
   diff: ^5.2.2
   lodash: ^4.17.23
   tar@<7: 7.5.16

@@ -18,7 +18,17 @@ export default defineConfig({
       // initialized in CI. The dynamic import in CodeMirrorEditor.jsx handles the missing
       // package gracefully at runtime via .catch(). Marking it external prevents Vite from
       // failing to resolve the package during the production build.
-      external: ["@visual-json/react"],
+      external: [
+        "@visual-json/react",
+        // @graphql-codegen packages use Node.js-only APIs (createRequire, path, process)
+        // and are pulled in transitively via the converter's generateTypeScript re-export.
+        // They are only used by the CLI, never in the browser app.
+        "@graphql-codegen/core",
+        "@graphql-codegen/plugin-helpers",
+        "@graphql-codegen/typescript",
+        "@graphql-codegen/visitor-plugin-common",
+        "@graphql-codegen/schema-ast",
+      ],
     },
   },
   define: {
