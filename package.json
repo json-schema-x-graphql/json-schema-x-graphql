@@ -86,7 +86,7 @@
     "@typescript-eslint/eslint-plugin": "^8.64.0",
     "@typescript-eslint/parser": "^8.60.1",
     "axios": "1.16.1",
-    "dompurify": "3.4.2",
+    "dompurify": "3.4.12",
     "eslint": "^9.39.4",
     "glob": "^13.0.6",
     "graphql": "^17.0.2",
