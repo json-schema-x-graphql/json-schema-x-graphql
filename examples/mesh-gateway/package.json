@@ -5,11 +5,11 @@
   "main": "gateway.js",
   "dependencies": {
     "@apollo/server": "^5.5.0",
-    "@apollo/subgraph": "^2.9.0",
-    "@apollo/gateway": "^2.9.0",
-    "axios": "^1.16.1",
-    "graphql": "^16.14.0",
-    "graphql-tag": "^2.12.6",
+    "@apollo/subgraph": "^2.14.2",
+    "@apollo/gateway": "^2.14.2",
+    "axios": "^1.18.1",
+    "graphql": "^17.0.2",
+    "graphql-tag": "^2.12.7",
     "yaml": "^2.3.4",
     "@json-schema-x-graphql/core": "file:../../converters/node"
   },
