@@ -18,16 +18,16 @@
     "validate:graphql": "tsx src/scripts/validate-graphql.ts"
   },
   "dependencies": {
-    "@apollo/subgraph": "^2.9.3",
+    "@apollo/subgraph": "^2.14.1",
     "@json-schema-x-graphql/core": "workspace:*",
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
-    "graphql": "^16.14.0"
+    "graphql": "^17.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.40",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "@types/node": "^26.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=24.0.0"
