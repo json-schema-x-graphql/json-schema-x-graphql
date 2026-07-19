@@ -80,7 +80,7 @@
     "@apollo/subgraph": "^2.14.2",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-typescript": "^12.3.0",
-    "@theguild/federation-composition": "^0.22.3",
+    "@theguild/federation-composition": "^0.23.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.1.1",
     "@typescript-eslint/eslint-plugin": "^8.64.0",
