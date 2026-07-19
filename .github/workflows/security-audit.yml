@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88 # stable
+        uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # stable
         with:
           toolchain: stable
           components: rustfmt, clippy
@@ -125,16 +125,16 @@ jobs:
           persist-credentials: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v3
+        uses: github/codeql-action/init@7188fc363630916deb702c7fdcf4e481b751f97a # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
 
       - name: Autobuild
-        uses: github/codeql-action/autobuild@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v3
+        uses: github/codeql-action/autobuild@7188fc363630916deb702c7fdcf4e481b751f97a # v3
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v3
+        uses: github/codeql-action/analyze@7188fc363630916deb702c7fdcf4e481b751f97a # v3
         with:
           upload: false
           output: sarif-results
