@@ -97,7 +97,7 @@
     "@omnigraph/json-schema": "^0.109.42",
     "@tanstack/react-query": "^5.101.2",
     "allotment": "^1.20.4",
-    "axios": "1.18.1",
+    "axios": "0.33.0",
     "dayjs": "^1.11.21",
     "fast-xml-parser": "^5.10.0",
     "gofmt.js": "^0.0.2",
