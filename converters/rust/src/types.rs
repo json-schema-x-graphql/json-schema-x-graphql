@@ -51,6 +51,9 @@ pub struct ConversionOptions {
     pub inline_object_threshold: usize,
     /// Strategy for naming types derived from $ref values
     pub ref_naming: RefNaming,
+    /// Directive filtering mode for SDL output.
+    /// Controls which directives are included in generated SDL.
+    pub directive_filter_mode: DirectiveFilterMode,
 }
 
 impl Default for ConversionOptions {
@@ -88,6 +91,7 @@ impl Default for ConversionOptions {
             emit_empty_types: false,
             inline_object_threshold: 3,
             ref_naming: RefNaming::Basename,
+            directive_filter_mode: DirectiveFilterMode::All,
         }
     }
 }
@@ -114,6 +118,23 @@ pub enum RefNaming {
     Basename,
     FileAndPath,
     Hash,
+}
+
+/// Filter mode for GraphQL directives in SDL output.
+///
+/// Controls which directives are included in generated SDL.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum DirectiveFilterMode {
+    /// Include all directives.
+    All,
+    /// Only include GraphQL spec-level directives (@deprecated, @skip, @include).
+    /// Strips federation, custom, and infrastructure directives.
+    ViewerFriendly,
+    /// Include everything except draft/unstable directives.
+    ExcludeDraft,
+    /// User-provided exclusion list of directive names to omit.
+    Custom(Vec<String>),
 }
 
 /// Naming conventions for generated GraphQL artifacts

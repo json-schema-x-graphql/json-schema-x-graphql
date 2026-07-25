@@ -8,6 +8,7 @@
 
 pub mod graphql_sdl;
 pub mod json_schema;
+pub mod lint;
 
 pub use json_schema::{
     ComprehensiveValidator as JsonSchemaValidator, ValidationError as JsonSchemaValidationError,
