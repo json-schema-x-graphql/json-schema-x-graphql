@@ -1,3 +1,53 @@
+scalar FieldSet
+scalar link__Import
+
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+
+directive @key(fields: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+directive @requires(fields: FieldSet!) on FIELD_DEFINITION
+directive @provides(fields: FieldSet!) on FIELD_DEFINITION
+directive @external(reason: String) on FIELD_DEFINITION | OBJECT
+directive @shareable on FIELD_DEFINITION | OBJECT
+directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @override(from: String!, label: String) on FIELD_DEFINITION
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @interfaceObject on OBJECT
+directive @composeDirective(name: String) repeatable on SCHEMA
+directive @authenticated on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
+directive @requiresScopes(scopes: [[String!]!]!) on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
+directive @policy(policies: [[String!]!]!) on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
+directive @cost(weight: Int!) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
+directive @listSize(assumedSize: Int, slicingArguments: [String!], sizedFields: [String!], requireOneSlicingArgument: Boolean = true) on FIELD_DEFINITION
+
+# Custom validation and performance directives
+directive @constraint(pattern: String, min: Int, max: Int, minLength: Int, maxLength: Int) on FIELD_DEFINITION | ARGUMENT_DEFINITION
+directive @cache(ttl: Int, scope: String) on FIELD_DEFINITION | OBJECT
+directive @authorize(requires: String, roles: [String], scopes: [String]) on FIELD_DEFINITION | OBJECT | INTERFACE
+directive @mask(pattern: String, if: String, value: String, maskLevel: String, maskFor: [String]) on FIELD_DEFINITION
+directive @rateLimit(limit: Int, window: String, roles: [String]) on FIELD_DEFINITION
+"""ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"""
+scalar date_time
+"""ISO 8601 date string (YYYY-MM-DD)"""
+scalar date
+"""High-precision decimal number for amounts"""
+scalar decimal
+"""Arbitrary JSON value"""
+scalar json
+"""Valid email address"""
+scalar email
+"""Valid URI/URL"""
+scalar uri
 # Custom Scalars
 "ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
 scalar DateTime
@@ -117,3 +167,14 @@ type LegacyProcurementCanonicalSchema {
 scalar Date
 scalar DateTime
 scalar Email
+type Query {
+  """Fetch a single Legacy Procurement record by IA PIID or unique ID"""
+  legacy_procurement_record(
+    """Interagency agreement PIID or the Legacy Procurement unique identifier"""
+    ia_piid_or_unique_id: String!
+    """Optional source record identifier for disambiguation"""
+    source_record_id: ID
+  ): AssistRecord
+  """Return a list of Legacy Procurement records (non-paginated)"""
+  legacy_procurement_records: [AssistRecord!]!
+}

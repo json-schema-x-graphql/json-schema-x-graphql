@@ -143,7 +143,7 @@ function parseWithFallback(content) {
             error: `yaml parse error: ${String(yamlErr)}`,
           };
         }
-      } catch (_requireErr) {
+      } catch {
         // 'yaml' package not installed — return combined errors and guidance.
         return {
           data: null,
@@ -190,7 +190,7 @@ function snippetForNode(node, maxLen = 400) {
     if (s.length <= maxLen) return JSON.parse(s);
     // Return truncated stringified snippet to avoid JSON parse errors
     return s.slice(0, maxLen) + "...";
-  } catch (_err) {
+  } catch {
     return null;
   }
 }

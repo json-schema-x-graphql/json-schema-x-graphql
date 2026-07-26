@@ -394,7 +394,7 @@ function graphqlToJsonSchemaInternal(
     }
 
     return JSON.stringify(schema, null, 2);
-  } catch (_e) {
+  } catch {
     // Fallback to simple parsing if AST parsing fails
     return fallbackGraphqlToJsonSchema(graphqlSdl, normalized);
   }

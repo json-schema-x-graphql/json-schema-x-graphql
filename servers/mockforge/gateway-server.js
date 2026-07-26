@@ -43,7 +43,7 @@ const subgraphs = [
   { name: "easi", localPort: 4004, dockerHost: "easi-mock" },
   { name: "calm", localPort: 4005, dockerHost: "calm-mock" },
   { name: "example", localPort: 4006, dockerHost: "example-mock" },
-].map(sg => ({
+].map((sg) => ({
   ...sg,
   url: IS_DOCKER
     ? `http://${sg.dockerHost}:${sg.localPort}/graphql`
@@ -63,7 +63,10 @@ console.log(`   Mode: ${IS_DOCKER ? "Docker" : "Local development"}`);
  */
 function loadFieldMappings() {
   // Try GSDM mapping-resolved.json first (richest cross-system data)
-  const gsdmPath = path.join(__dirname, "../../../generated-schemas/gsdm/mapping-resolved.json");
+  const gsdmPath = path.join(
+    __dirname,
+    "../../../generated-schemas/gsdm/mapping-resolved.json",
+  );
 
   if (fs.existsSync(gsdmPath)) {
     try {
@@ -71,8 +74,8 @@ function loadFieldMappings() {
       const entries = Array.isArray(raw.entries) ? raw.entries : [];
 
       return entries
-        .filter(e => e.canonical_path && typeof e.canonical_path === "string")
-        .map(e => {
+        .filter((e) => e.canonical_path && typeof e.canonical_path === "string")
+        .map((e) => {
           // canonical_path looks like "common_elements.contract_identification.piid"
           const parts = e.canonical_path.split(".");
           const leaf = parts[parts.length - 1];
@@ -96,7 +99,8 @@ function loadFieldMappings() {
   return [
     {
       canonicalName: "piid",
-      description: "Procurement Instrument Identifier — primary join key across all systems",
+      description:
+        "Procurement Instrument Identifier — primary join key across all systems",
       fpdsField: "awardContractId.piid",
       usaspendingField: "piid",
       assistField: "award_piid",
@@ -150,7 +154,8 @@ function loadFieldMappings() {
     },
     {
       canonicalName: "classification.naicsCode",
-      description: "North American Industry Classification System (NAICS) code — 6 digits",
+      description:
+        "North American Industry Classification System (NAICS) code — 6 digits",
       fpdsField: "productOrServiceInformation.principalNaicsCode",
       usaspendingField: "naics",
       assistField: "naics_code",
@@ -263,7 +268,11 @@ async function pingSubgraph(sg) {
     });
     const latencyMs = Date.now() - start;
     if (!res.ok) {
-      latestHealth[sg.name] = { status: "degraded", latencyMs, error: `HTTP ${res.status}` };
+      latestHealth[sg.name] = {
+        status: "degraded",
+        latencyMs,
+        error: `HTTP ${res.status}`,
+      };
     } else {
       latestHealth[sg.name] = { status: "ok", latencyMs, error: null };
     }
@@ -299,10 +308,10 @@ const subgraphResults = await Promise.all(
       console.error(`❌ Failed to load ${name} from ${url}: ${error.message}`);
       return null;
     }
-  })
+  }),
 );
 
-const validResults = subgraphResults.filter(r => r !== null);
+const validResults = subgraphResults.filter((r) => r !== null);
 
 if (validResults.length === 0) {
   console.error("❌ No subgraphs available. Exiting.");
@@ -311,7 +320,10 @@ if (validResults.length === 0) {
 
 // Build a lookup: subgraph name → SubschemaConfig (for Contract field delegation)
 const subschemaByName = Object.fromEntries(
-  validResults.map(({ name, schema, executor }) => [name, { schema, executor }])
+  validResults.map(({ name, schema, executor }) => [
+    name,
+    { schema, executor },
+  ]),
 );
 
 // Check which types exist across loaded subgraphs
@@ -331,7 +343,10 @@ const subschemaConfigs = validResults.map(({ schema, executor }) => ({
 function schemaHasField(typeName, fieldName) {
   return validResults.some(({ schema }) => {
     const type = schema.getType(typeName);
-    return typeof type?.getFields === "function" && Boolean(type.getFields()[fieldName]);
+    return (
+      typeof type?.getFields === "function" &&
+      Boolean(type.getFields()[fieldName])
+    );
   });
 }
 
@@ -351,12 +366,18 @@ function buildExtensionTypeDefs() {
   if (availableTypes.has("FpdsRecord") && !schemaHasField("Contract", "fpds")) {
     contractFields.push(`  """FPDS procurement record"""\n  fpds: FpdsRecord`);
   }
-  if (availableTypes.has("UsaspendingProcurement") && !schemaHasField("Contract", "usaspending")) {
+  if (
+    availableTypes.has("UsaspendingProcurement") &&
+    !schemaHasField("Contract", "usaspending")
+  ) {
     contractFields.push(
-      `  """USAspending procurement record"""\n  usaspending: UsaspendingProcurement`
+      `  """USAspending procurement record"""\n  usaspending: UsaspendingProcurement`,
     );
   }
-  if (availableTypes.has("AssistAward") && !schemaHasField("Contract", "assist")) {
+  if (
+    availableTypes.has("AssistAward") &&
+    !schemaHasField("Contract", "assist")
+  ) {
     contractFields.push(`  """ASSIST award record"""\n  assist: AssistAward`);
   }
   if (contractFields.length > 0) {
@@ -367,7 +388,10 @@ function buildExtensionTypeDefs() {
     `);
   }
 
-  if (!schemaHasField("Query", "fieldMappings") || !schemaHasField("Query", "fieldMapping")) {
+  if (
+    !schemaHasField("Query", "fieldMappings") ||
+    !schemaHasField("Query", "fieldMapping")
+  ) {
     blocks.push(`
     """
     Cross-system field name mapping entry.
@@ -426,9 +450,11 @@ function buildExtensionTypeDefs() {
   return blocks.join("\n");
 }
 
-const shouldExtendContractFpds = availableTypes.has("FpdsRecord") && !schemaHasField("Contract", "fpds");
+const shouldExtendContractFpds =
+  availableTypes.has("FpdsRecord") && !schemaHasField("Contract", "fpds");
 const shouldExtendContractUsaspending =
-  availableTypes.has("UsaspendingProcurement") && !schemaHasField("Contract", "usaspending");
+  availableTypes.has("UsaspendingProcurement") &&
+  !schemaHasField("Contract", "usaspending");
 const shouldExtendContractAssist =
   availableTypes.has("AssistAward") && !schemaHasField("Contract", "assist");
 const shouldExtendFieldMappings = !schemaHasField("Query", "fieldMappings");
@@ -452,14 +478,16 @@ if (shouldExtendFieldMappings) {
 
 if (shouldExtendFieldMapping) {
   queryResolvers.fieldMapping = (_parent, { canonicalName }) =>
-    FIELD_MAPPINGS.find(m => m.canonicalName === canonicalName) ?? null;
+    FIELD_MAPPINGS.find((m) => m.canonicalName === canonicalName) ?? null;
 }
 
 const contractResolvers = {
   availableSystems: {
     selectionSet: `{ piid }`,
     resolve(contract) {
-      return buildContractSourceRecords(contract).map(record => record.system);
+      return buildContractSourceRecords(contract).map(
+        (record) => record.system,
+      );
     },
   },
 
@@ -475,7 +503,8 @@ if (shouldExtendContractFpds) {
   contractResolvers.fpds = {
     selectionSet: `{ piid }`,
     resolve(contract, _args, context, info) {
-      if (!subschemaByName.fpds || !availableTypes.has("FpdsRecord")) return null;
+      if (!subschemaByName.fpds || !availableTypes.has("FpdsRecord"))
+        return null;
       return delegateToSchema({
         schema: subschemaByName.fpds,
         operation: "query",
@@ -492,7 +521,10 @@ if (shouldExtendContractUsaspending) {
   contractResolvers.usaspending = {
     selectionSet: `{ piid }`,
     resolve(contract, _args, context, info) {
-      if (!subschemaByName.usaspending || !availableTypes.has("UsaspendingProcurement"))
+      if (
+        !subschemaByName.usaspending ||
+        !availableTypes.has("UsaspendingProcurement")
+      )
         return null;
       return delegateToSchema({
         schema: subschemaByName.usaspending,
@@ -510,7 +542,8 @@ if (shouldExtendContractAssist) {
   contractResolvers.assist = {
     selectionSet: `{ piid }`,
     resolve(contract, _args, context, info) {
-      if (!subschemaByName.assist || !availableTypes.has("AssistAward")) return null;
+      if (!subschemaByName.assist || !availableTypes.has("AssistAward"))
+        return null;
       return delegateToSchema({
         schema: subschemaByName.assist,
         operation: "query",
@@ -541,11 +574,15 @@ function buildContractSourceRecords(contract) {
       identifierArg: "piid",
       identifierSourceField: "piid",
       recordId: contract.piid,
-      notes: "Use FPDS for procurement identifiers, competition, and obligation detail.",
+      notes:
+        "Use FPDS for procurement identifiers, competition, and obligation detail.",
     });
   }
 
-  if (subschemaByName.usaspending && availableTypes.has("UsaspendingProcurement")) {
+  if (
+    subschemaByName.usaspending &&
+    availableTypes.has("UsaspendingProcurement")
+  ) {
     records.push({
       system: "USASPENDING",
       subgraphName: "usaspending",
@@ -553,7 +590,8 @@ function buildContractSourceRecords(contract) {
       identifierArg: "piid",
       identifierSourceField: "piid",
       recordId: contract.piid,
-      notes: "Use USAspending for public spending, vendor classification, and award rollups.",
+      notes:
+        "Use USAspending for public spending, vendor classification, and award rollups.",
     });
   }
 
@@ -565,7 +603,8 @@ function buildContractSourceRecords(contract) {
       identifierArg: "award_piid",
       identifierSourceField: "piid",
       recordId: contract.piid,
-      notes: "Use ASSIST for award documents, modifications, and supporting agreement records.",
+      notes:
+        "Use ASSIST for award documents, modifications, and supporting agreement records.",
     });
   }
 
@@ -577,7 +616,8 @@ function buildContractSourceRecords(contract) {
       identifierArg: "solicitation_number",
       identifierSourceField: "piid",
       recordId: contract.piid,
-      notes: "Use CALM for solicitation and pre-award lifecycle details tied to the PIID.",
+      notes:
+        "Use CALM for solicitation and pre-award lifecycle details tied to the PIID.",
     });
   }
 
@@ -605,7 +645,9 @@ try {
 // Count operations
 const queryType = gatewaySchema.getQueryType();
 const opCount = queryType ? Object.keys(queryType.getFields()).length : 0;
-const typeCount = Object.keys(gatewaySchema.getTypeMap()).filter(t => !t.startsWith("__")).length;
+const typeCount = Object.keys(gatewaySchema.getTypeMap()).filter(
+  (t) => !t.startsWith("__"),
+).length;
 
 console.log(`\n✅ Stitched ${validResults.length} subgraphs`);
 console.log(`   ${opCount} query operations`);
@@ -621,7 +663,7 @@ console.log(`   ${typeCount} types`);
  *  2. Adds extensions.systemHealth to every response
  */
 const systemHealthPlugin = {
-  onRequest({ request, serverContext }) {
+  onRequest({ serverContext }) {
     const requestId = `req-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     // Initialise the health snapshot from the latest background poll
     const snapshot = {};
@@ -638,7 +680,9 @@ const systemHealthPlugin = {
       }
     } catch (err) {
       // Fallback: nothing we can do — health info won't be attached for this request
-      console.warn(`⚠️  Could not attach requestId to serverContext: ${err.message}`);
+      console.warn(
+        `⚠️  Could not attach requestId to serverContext: ${err.message}`,
+      );
     }
   },
 
@@ -670,7 +714,7 @@ const systemHealthPlugin = {
     setResult({
       ...result,
       extensions: {
-        ...(result.extensions ?? {}),
+        ...result.extensions,
         systemHealth,
       },
     });
@@ -683,10 +727,10 @@ const systemHealthPlugin = {
 
 const yoga = createYoga({
   schema: (() => {
-    const dir = gatewaySchema.getDirective('deprecated');
+    const dir = gatewaySchema.getDirective("deprecated");
     if (dir && dir.locations) {
       // Python's graphql-core 3 doesn't support DIRECTIVE_DEFINITION yet
-      dir.locations = dir.locations.filter(l => l !== 'DIRECTIVE_DEFINITION');
+      dir.locations = dir.locations.filter((l) => l !== "DIRECTIVE_DEFINITION");
     }
     return gatewaySchema;
   })(),
@@ -694,7 +738,7 @@ const yoga = createYoga({
   graphiql: {
     title: "Example Forest Federation Gateway",
     defaultQuery: `# Federation Gateway — ${validResults.length} subgraphs available
-# Subgraphs: ${validResults.map(r => r.name).join(", ")}
+# Subgraphs: ${validResults.map((r) => r.name).join(", ")}
 # Operations: ${opCount}
 #
 # ── Recommended Consumer Flow ──────────────────────────────────────────────
@@ -759,19 +803,25 @@ query ContractOverview {
 const server = createServer(yoga);
 
 server.listen(PORT, "0.0.0.0", async () => {
-  console.log(`\n🚀 Federation Gateway running on http://localhost:${PORT}/graphql`);
+  console.log(
+    `\n🚀 Federation Gateway running on http://localhost:${PORT}/graphql`,
+  );
   console.log(`   Mode: ${IS_DOCKER ? "Docker" : "Local"}`);
   console.log(`   Subgraphs: ${validResults.length}/${subgraphs.length}`);
-  validResults.forEach(r => console.log(`   - ${r.name}: ${r.url}`));
-  console.log(`\n   Phase 2a: contractByPiid(piid) query — unified cross-system entity`);
+  validResults.forEach((r) => console.log(`   - ${r.name}: ${r.url}`));
   console.log(
-    `   Phase 2b: fieldMappings / fieldMapping queries — ${FIELD_MAPPINGS.length} entries`
+    `\n   Phase 2a: contractByPiid(piid) query — unified cross-system entity`,
+  );
+  console.log(
+    `   Phase 2b: fieldMappings / fieldMapping queries — ${FIELD_MAPPINGS.length} entries`,
   );
   console.log(`   Phase 2c: extensions.systemHealth on every response`);
   console.log("");
 
   // Start background health polling (non-blocking)
-  startHealthPolling().catch(err => console.warn(`⚠️  Health polling error: ${err.message}`));
+  startHealthPolling().catch((err) =>
+    console.warn(`⚠️  Health polling error: ${err.message}`),
+  );
 });
 
 // ---------------------------------------------------------------------------

@@ -12,7 +12,7 @@ let graphqlParser = null;
 try {
   graphqlPlugin = require("@graphql-eslint/eslint-plugin");
   graphqlParser = graphqlPlugin.parser;
-} catch (_err) {
+} catch {
   console.warn(
     "Warning: @graphql-eslint/eslint-plugin not found. GraphQL linting disabled.",
   );

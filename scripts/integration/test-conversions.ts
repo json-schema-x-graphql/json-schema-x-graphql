@@ -105,7 +105,7 @@ class IntegrationTestHarness {
       try {
         const content = readFileSync(optionsPath, "utf-8");
         return JSON.parse(content);
-      } catch (_err) {
+      } catch {
         // Invalid options file, use defaults
         return {};
       }
@@ -150,7 +150,7 @@ class IntegrationTestHarness {
         }
       }
       return count;
-    } catch (_err) {
+    } catch {
       return 0;
     }
   }

@@ -35,7 +35,7 @@ if (typeof document !== "undefined") {
       // Use append rather than prepend to avoid interfering with critical app styles
       document.head?.appendChild(styleEl);
     }
-  } catch (_e) {
+  } catch {
     // Silence any DOM-related errors — shim must be safe.
   }
 }

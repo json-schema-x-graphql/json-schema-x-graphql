@@ -49,7 +49,7 @@ export default function SchemaEditor({
     try {
       JSON.parse(schema.content);
       await onGenerate();
-    } catch (_err) {
+    } catch {
       setError(`Cannot generate: Invalid JSON`);
     }
   };

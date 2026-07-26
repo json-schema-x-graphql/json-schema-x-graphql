@@ -58,7 +58,7 @@ export default function ClientMonacoEditor({
         // Fallback: try local package (only works in dev mode with bundler)
         try {
           return await import("@monaco-editor/react");
-        } catch (_localErr) {
+        } catch {
           // Both failed, throw the CDN error as it's more likely to succeed
           throw cdnErr;
         }
@@ -92,10 +92,8 @@ export default function ClientMonacoEditor({
               });
             }
           }
-        } catch (_e) {
+        } catch {
           // Non-fatal: continue even if loader config fails.
-
-          console.debug?.("monaco loader config failed:", _e);
         }
 
         setEditorComp(() => Comp as React.ComponentType<any>);

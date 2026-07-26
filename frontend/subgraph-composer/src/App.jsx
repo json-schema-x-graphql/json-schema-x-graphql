@@ -23,8 +23,6 @@ import { getTemplate } from "./lib/templates.js";
 const ERDiagramPanel = React.lazy(
   () => import("./components/ERDiagramPanel.jsx"),
 );
-// Lazy-load Voyager panel to avoid bundling graphql-voyager on initial load
-const VoyagerPanel = React.lazy(() => import("./components/VoyagerPanel.jsx"));
 
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);

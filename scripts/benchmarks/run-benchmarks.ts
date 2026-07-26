@@ -117,7 +117,7 @@ class BenchmarkRunner {
       try {
         const content = readFileSync(optionsPath, "utf-8");
         return JSON.parse(content);
-      } catch (_err) {
+      } catch {
         return {};
       }
     }
@@ -169,7 +169,7 @@ class BenchmarkRunner {
       }
 
       return { types, fields };
-    } catch (_err) {
+    } catch {
       return { types: 0, fields: 0 };
     }
   }
@@ -266,7 +266,7 @@ class BenchmarkRunner {
         const ast = parseGraphQL(generatedSDL);
         const graphqlSchema = buildSchema(generatedSDL);
         validate(graphqlSchema, ast);
-      } catch (_err) {
+      } catch {
         // Validation errors don't affect timing
       }
       const end = process.hrtime.bigint();

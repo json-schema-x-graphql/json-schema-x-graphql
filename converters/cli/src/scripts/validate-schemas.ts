@@ -99,7 +99,7 @@ class SchemaValidator {
             }
           }
         }
-      } catch (_err) {
+      } catch {
         // Directory might not exist, skip
       }
     };

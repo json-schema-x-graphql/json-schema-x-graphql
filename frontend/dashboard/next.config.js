@@ -245,7 +245,7 @@ const config = {
                 /(?:graphql-editor|@monaco-editor|monaco-editor|@monaco-editor\/react)/,
             }),
           );
-        } catch (_err) {
+        } catch {
           // If IgnorePlugin isn't available for some reason, continue gracefully.
         }
       }

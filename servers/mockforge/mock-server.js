@@ -27,7 +27,10 @@ try {
   readFileSync(SUBGRAPH_PATH);
 } catch {
   // Fallback to local development path
-  SUBGRAPH_PATH = resolve(__dirname, `../../../generated-schemas/${SYSTEM}.subgraph.graphql`);
+  SUBGRAPH_PATH = resolve(
+    __dirname,
+    `../../../generated-schemas/${SYSTEM}.subgraph.graphql`,
+  );
 }
 
 // Seed faker for deterministic data per system
@@ -38,10 +41,12 @@ faker.seed(
     assist: 34567,
     easi: 45678,
     calm: 56789,
-  }[SYSTEM] || 12345
+  }[SYSTEM] || 12345,
 );
 
-console.log(`✅ Initialized ${SYSTEM} mock server (lightweight Yoga + faker.js)`);
+console.log(
+  `✅ Initialized ${SYSTEM} mock server (lightweight Yoga + faker.js)`,
+);
 
 /**
  * Load subgraph schema for specific system
@@ -92,7 +97,7 @@ type _Service {
 /**
  * Generate lightweight resolvers with faker.js (no persistence)
  */
-function generateResolvers(system) {
+function generateResolvers() {
   const resolvers = {};
 
   // mockforge.config.js exports resolvers keyed by GraphQL type name.
@@ -105,7 +110,7 @@ function generateResolvers(system) {
 
 // Load schema and create executable schema with mocks
 const typeDefs = loadSystemSchema(SYSTEM);
-const baseResolvers = generateResolvers(SYSTEM);
+const baseResolvers = generateResolvers();
 
 const baseSchema = makeExecutableSchema({
   typeDefs,
@@ -137,7 +142,8 @@ const SCALAR_MOCKS = {
   },
   // Numeric scalars
   Decimal: () => faker.number.float({ min: 0, max: 1000000, precision: 0.01 }),
-  PositiveDecimal: () => faker.number.float({ min: 0.01, max: 1000000, precision: 0.01 }),
+  PositiveDecimal: () =>
+    faker.number.float({ min: 0.01, max: 1000000, precision: 0.01 }),
   Percentage: () => faker.number.float({ min: 0, max: 100, precision: 0.01 }),
   // Contact scalars
   Email: () => faker.internet.email(),
@@ -179,11 +185,15 @@ function buildScalarMocks(sdl) {
     if (!mocks[name] && !builtins.has(name)) {
       // Provide a sensible fallback for unknown scalars
       mocks[name] = () => faker.lorem.words(2);
-      console.warn(`⚠️  Auto-mocking unknown scalar '${name}' with string fallback`);
+      console.warn(
+        `⚠️  Auto-mocking unknown scalar '${name}' with string fallback`,
+      );
     }
   }
 
-  console.log(`📊 Scalar coverage: ${declaredScalars.length} custom scalars, all mocked`);
+  console.log(
+    `📊 Scalar coverage: ${declaredScalars.length} custom scalars, all mocked`,
+  );
   return mocks;
 }
 

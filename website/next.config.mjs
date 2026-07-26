@@ -14,7 +14,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer: _isServer }) => {
     // Serialize module compilation
     config.parallelism = 1;
     // Force Webpack cache to file-system in production rather than memory

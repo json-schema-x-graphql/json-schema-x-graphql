@@ -22,7 +22,13 @@ import ERDiagramNode from "./ERDiagramNode.jsx";
 // ReactFlow collapses edges where source === target to zero length;
 // this custom type applies a curvature so the arc is visible.
 function SelfConnectingEdge(props) {
-  const { sourceX, sourceY, targetX, targetY, ...rest } = props;
+  const {
+    sourceX,
+    sourceY,
+    targetX: _targetX,
+    targetY: _targetY,
+    ...rest
+  } = props;
   // Offset target slightly so BezierEdge computes a visible arc
   return (
     <BezierEdge

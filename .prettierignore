@@ -15,5 +15,5 @@ output/
 frontend/dashboard/scripts/
 **/generated/
 frontend/dashboard/src/data/
-**/salvaged/**/wasm/
+**/salvaged/**
 website/next-env.d.ts
