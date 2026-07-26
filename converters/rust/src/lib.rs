@@ -28,6 +28,7 @@ pub mod analysis;
 pub mod api_types;
 pub mod case_conversion;
 pub mod ddl;
+pub mod diagram;
 pub mod error;
 pub mod graphql_ast_json;
 pub mod graphql_to_json;
