@@ -2,6 +2,7 @@ import {
   ConvertInput,
   ConversionResult,
   ConverterOptions,
+  DirectiveFilterMode,
   FederationVersion,
   NamingConvention,
   IdInferenceStrategy,
@@ -39,6 +40,7 @@ export interface NormalizedConverterOptions {
   refNaming: "basename" | "file_and_path" | "hash";
   excludeTypeSuffixes: string[];
   includeOperationalTypes: boolean;
+  directiveFilterMode: DirectiveFilterMode;
 }
 
 export interface JsonSchema {

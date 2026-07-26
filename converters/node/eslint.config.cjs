@@ -32,6 +32,7 @@ module.exports = [
         ecmaVersion: 2020,
         sourceType: "module",
         projectService: true,
+        allowDefaultProject: true,
       },
     },
     plugins: {

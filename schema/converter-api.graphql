@@ -74,6 +74,31 @@ input ConverterOptions {
   Patterns are applied to Type names and Field names individually.
   """
   excludePatterns: [String!]
+
+  """
+  Filter mode for GraphQL directives in SDL output.
+  Controls which directives are included in generated SDL.
+  """
+  directiveFilterMode: DirectiveFilterMode = ALL
+}
+
+"""
+Filter modes for GraphQL directives in SDL output.
+"""
+enum DirectiveFilterMode {
+  """
+  Include all directives.
+  """
+  ALL
+  """
+  Only include GraphQL spec-level directives (@deprecated, @skip, @include).
+  Strips federation, custom, and infrastructure directives.
+  """
+  VIEWER_FRIENDLY
+  """
+  Include everything except draft/unstable directives.
+  """
+  EXCLUDE_DRAFT
 }
 
 """

@@ -40,6 +40,20 @@ import { ensureConnectionType } from "./features/relay.js";
 import { otelTracer } from "./otel.js";
 export * from "./standard-schema.js";
 export { generateTypeScript } from "./codegen.js";
+import {
+  filterSdlDirectives,
+  ensureFederationDirectives,
+  type DirectiveFilterMode as LibDirectiveFilterMode,
+} from "./directive-filter.js";
+import { applyHints } from "./hints/index.js";
+export {
+  filterSdlDirectives,
+  ensureFederationDirectives,
+  type DirectiveFilterMode as LibDirectiveFilterMode,
+  type DirectiveTier,
+} from "./directive-filter.js";
+export * from "./hints/index.js";
+export { lintSchema, lintAll } from "./validation-lint.js";
 
 // ExtendedConverterOptions and others moved to interfaces.ts
 
@@ -219,12 +233,28 @@ function jsonSchemaToGraphQLInternal(
     return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
   }
 
+  // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
+  let processedSDL = applyHints(finalSDL, schema);
+
+  // Ensure federation directive definitions are present
+  if (resolvedOptions.federationVersion !== "NONE") {
+    processedSDL = ensureFederationDirectives(processedSDL);
+  }
+
+  // Apply directive filtering if mode is not ALL
+  if (resolvedOptions.directiveFilterMode !== "ALL") {
+    processedSDL = filterSdlDirectives(
+      processedSDL,
+      resolvedOptions.directiveFilterMode as LibDirectiveFilterMode,
+    );
+  }
+
   if (resolvedOptions.outputFormat === "AST_JSON") {
-    const ast = parse(finalSDL, { noLocation: true });
+    const ast = parse(processedSDL, { noLocation: true });
     return JSON.stringify(ast);
   }
 
-  return finalSDL;
+  return processedSDL;
 }
 
 export function graphqlToJsonSchema(
@@ -1276,6 +1306,7 @@ function normalizeOptions(
     "Args",
   ];
   const includeOperationalTypes = options.includeOperationalTypes ?? false;
+  const directiveFilterMode = options.directiveFilterMode ?? "ALL";
 
   return {
     excludeTypeSuffixes,
@@ -1298,6 +1329,7 @@ function normalizeOptions(
     emitEmptyTypes,
     inlineObjectThreshold,
     refNaming,
+    directiveFilterMode,
   };
 }
 
