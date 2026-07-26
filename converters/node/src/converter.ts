@@ -1245,7 +1245,7 @@ function escapeRegExp(pattern: string): string {
   // Allow safe regex characters but prevent ReDoS / catastrophic backtracking.
   // If the pattern has nested quantifiers or multiple wildcards, escape it.
   const isSafe =
-    /^[a-zA-Z0-9_*?|\-^$().+\[\]]+$/.test(pattern) &&
+    /^[a-zA-Z0-9_*?|\-^$().+[\]]+$/.test(pattern) &&
     !/(\*|\+){2,}/.test(pattern) &&
     !/(\+|\*).*(?:\+|\*)/.test(pattern);
 

@@ -6,7 +6,6 @@ import {
   DirectiveFilterMode,
   classifyDirective,
   shouldIncludeDirective,
-  filterDirectiveList,
   filterLineDirectives,
   filterSdlDirectives,
   ensureFederationDirectives,
