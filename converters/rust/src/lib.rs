@@ -31,6 +31,7 @@ pub mod error;
 pub mod graphql_ast_json;
 pub mod graphql_to_json;
 pub mod json_to_graphql;
+pub mod mapping;
 #[cfg(feature = "graphql-server")]
 pub mod schema;
 pub mod types;
