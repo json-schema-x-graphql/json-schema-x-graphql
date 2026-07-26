@@ -27,6 +27,7 @@ pub mod analysis;
 #[cfg(any(feature = "graphql-server", feature = "wasm"))]
 pub mod api_types;
 pub mod case_conversion;
+pub mod datacontract;
 pub mod ddl;
 pub mod diagram;
 pub mod directive_filter;
@@ -191,6 +192,34 @@ impl Converter {
 
         match self.options.output_format {
             types::OutputFormat::AstJson => graphql_ast_json::sdl_to_ast_json(&graphql_sdl),
+            types::OutputFormat::Mermaid => {
+                // Route through DDL → diagram pipeline
+                let root_def = schema
+                    .get("$defs")
+                    .or_else(|| schema.get("definitions"))
+                    .and_then(|d| d.as_object())
+                    .and_then(|obj| obj.keys().next().map(|s| s.as_str()))
+                    .unwrap_or("contract");
+                let relational = ddl::schema_to_relational(&schema, root_def);
+                Ok(diagram::to_mermaid_er(
+                    &relational.tables,
+                    &relational.relations,
+                ))
+            }
+            types::OutputFormat::DataContractYaml => {
+                let shim = match &self.options.shim_path {
+                    Some(path) => Some(
+                        datacontract::shim::load_shim(path)
+                            .map_err(ConversionError::InvalidJsonSchema)?,
+                    ),
+                    None => None,
+                };
+                Ok(datacontract::generate_data_contract_yaml(
+                    &schema,
+                    shim.as_ref(),
+                    self.options.shim_path.as_deref(),
+                ))
+            }
             _ => Ok(graphql_sdl),
         }
     }
@@ -310,6 +339,95 @@ mod tests {
 
         let result = converter.json_schema_to_graphql(json_schema);
         assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_mermaid_output_format() {
+        let options = ConversionOptions {
+            output_format: OutputFormat::Mermaid,
+            validate: true,
+            ..Default::default()
+        };
+        let converter = Converter::with_options(options);
+        let json_schema = r#"{
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" }
+                    },
+                    "required": ["id"]
+                }
+            }
+        }"#;
+
+        let result = converter.json_schema_to_graphql(json_schema);
+        assert!(result.is_ok());
+        let mermaid = result.unwrap();
+        assert!(mermaid.starts_with("erDiagram"));
+        assert!(mermaid.contains("User"));
+    }
+
+    #[test]
+    fn test_datacontract_yaml_output_format() {
+        let options = ConversionOptions {
+            output_format: OutputFormat::DataContractYaml,
+            validate: true,
+            ..Default::default()
+        };
+        let converter = Converter::with_options(options);
+        let json_schema = r#"{
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "Test Schema",
+            "type": "object",
+            "$defs": {
+                "User": {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string", "description": "User ID" },
+                        "name": { "type": "string" }
+                    },
+                    "required": ["id", "name"]
+                }
+            }
+        }"#;
+
+        let result = converter.json_schema_to_graphql(json_schema);
+        assert!(result.is_ok());
+        let yaml = result.unwrap();
+        assert!(yaml.contains("# Data Contract"));
+        assert!(yaml.contains("name: Test Schema"));
+        assert!(yaml.contains("schema:"));
+        assert!(yaml.contains("relational:"));
+    }
+
+    #[test]
+    fn test_mermaid_output_without_defs() {
+        let options = ConversionOptions {
+            output_format: OutputFormat::Mermaid,
+            validate: false,
+            ..Default::default()
+        };
+        let converter = Converter::with_options(options);
+        // Schema with $defs but no types that would create tables
+        let json_schema = r#"{
+            "type": "object",
+            "$defs": {
+                "Empty": {
+                    "type": "object",
+                    "properties": {}
+                }
+            }
+        }"#;
+
+        let result = converter.json_schema_to_graphql(json_schema);
+        // Empty table list produces just "erDiagram" header
+        assert!(result.is_ok(), "Error: {:?}", result.err());
+        let mermaid = result.unwrap();
+        assert!(mermaid.starts_with("erDiagram"));
     }
 
     #[cfg(feature = "caching")]

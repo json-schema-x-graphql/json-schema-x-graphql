@@ -51,6 +51,8 @@ pub struct ConversionOptions {
     pub inline_object_threshold: usize,
     /// Strategy for naming types derived from $ref values
     pub ref_naming: RefNaming,
+    /// Optional path to a JSON shim configuration file for data contract YAML output
+    pub shim_path: Option<String>,
     /// Directive filtering mode for SDL output.
     /// Controls which directives are included in generated SDL.
     pub directive_filter_mode: DirectiveFilterMode,
@@ -91,6 +93,7 @@ impl Default for ConversionOptions {
             emit_empty_types: false,
             inline_object_threshold: 3,
             ref_naming: RefNaming::Basename,
+            shim_path: None,
             directive_filter_mode: DirectiveFilterMode::All,
         }
     }
@@ -110,6 +113,10 @@ pub enum OutputFormat {
     Sdl,
     SdlWithFederationMetadata,
     AstJson,
+    /// Mermaid ER diagram (.mmd) — outputs a Mermaid entity-relationship diagram
+    Mermaid,
+    /// Data Contract YAML — outputs a YAML data contract with optional shim configuration
+    DataContractYaml,
 }
 
 /// Strategies for deriving names from $ref values

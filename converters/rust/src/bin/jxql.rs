@@ -47,9 +47,13 @@ struct Args {
     #[arg(long, default_value = "NONE")]
     id_strategy: String,
 
-    /// Output format (SDL, SDL_WITH_FEDERATION_METADATA, AST_JSON)
+    /// Output format (SDL, SDL_WITH_FEDERATION_METADATA, AST_JSON, MERMAID, DATA_CONTRACT_YAML)
     #[arg(long, default_value = "SDL")]
     output_format: String,
+
+    /// Path to JSON shim configuration for data contract YAML output
+    #[arg(long)]
+    shim: Option<String>,
 
     /// Treat warnings as errors
     #[arg(long, default_value_t = false)]
@@ -106,6 +110,9 @@ async fn main() -> Result<()> {
     let output_format = match args.output_format.to_uppercase().as_str() {
         "SDL_WITH_FEDERATION_METADATA" => OutputFormat::SdlWithFederationMetadata,
         "AST_JSON" => OutputFormat::AstJson,
+        "MERMAID" => OutputFormat::Mermaid,
+        "DATA_CONTRACT_YAML" => OutputFormat::DataContractYaml,
+        "YAML" => OutputFormat::DataContractYaml,
         _ => OutputFormat::Sdl,
     };
 
@@ -125,6 +132,7 @@ async fn main() -> Result<()> {
             .exclude_types
             .unwrap_or(ConversionOptions::default().exclude_types),
         exclude_patterns: args.exclude_patterns,
+        shim_path: args.shim,
         exclude_type_suffixes: args
             .exclude_type_suffixes
             .unwrap_or(ConversionOptions::default().exclude_type_suffixes),
