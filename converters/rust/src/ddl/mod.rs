@@ -2,9 +2,6 @@
 //!
 //! Decomposes a JSON Schema into relational tables and parent/child
 //! relations, then emits Spark/Delta-compatible `CREATE TABLE` DDL.
-//!
-//! Ported from TTSE-petrified-forest's `petrified_schema.relational`
-//! and `petrified_schema.ddl` Python modules.
 
 use serde_json::Value;
 use std::collections::HashSet;

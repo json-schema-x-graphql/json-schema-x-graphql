@@ -1,6 +1,4 @@
 //! Mermaid ER diagram generation from a relational schema.
-//!
-//! Ported from TTSE-petrified-forest's `petrified_schema.mermaid` module.
 
 use crate::ddl::{RelationDef, TableDef};
 

@@ -4,9 +4,6 @@
 //! multiple candidate locations per field (JSON pointers) and pointer
 //! resolution that prefers mapped locations before falling back to
 //! direct resolution.
-//!
-//! Ported from TTSE-petrified-forest's `field-mapping-helper.mjs` and
-//! the `fieldMapping` parameter in `ir-to-graphql.mjs`.
 
 use serde_json::Value;
 use std::collections::HashMap;
