@@ -42,7 +42,6 @@ export * from "./standard-schema.js";
 export { generateTypeScript } from "./codegen.js";
 import {
   filterSdlDirectives,
-  ensureFederationDirectives,
   type DirectiveFilterMode as LibDirectiveFilterMode,
 } from "./directive-filter.js";
 import { applyHints } from "./hints/index.js";
@@ -236,10 +235,9 @@ function jsonSchemaToGraphQLInternal(
   // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
   let processedSDL = applyHints(finalSDL, schema);
 
-  // Ensure federation directive definitions are present
-  if (resolvedOptions.federationVersion !== "NONE") {
-    processedSDL = ensureFederationDirectives(processedSDL);
-  }
+  // Note: federation directive definitions are NOT auto-injected to preserve
+  // parity with the Rust converter. Call `ensureFederationDirectives(sdl)` from
+  // the federation directive library when building executable schemas.
 
   // Apply directive filtering if mode is not ALL
   if (resolvedOptions.directiveFilterMode !== "ALL") {
