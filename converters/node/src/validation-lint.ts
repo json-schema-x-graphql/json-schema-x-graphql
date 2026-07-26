@@ -1,8 +1,7 @@
 /**
  * X-GraphQL attribute linting.
  *
- * Ported from TTSE-petrified-forest's `validate-x-graphql-attributes.mjs`.
- * Provides rules for detecting deprecated attributes, missing type names,
+ * Detects deprecated attributes, missing type names,
  * and naming convention violations.
  */
 
