@@ -23,6 +23,7 @@
 //! let result = converter.convert(json_schema, ConversionDirection::JsonSchemaToGraphQL);
 //! ```
 
+pub mod analysis;
 #[cfg(any(feature = "graphql-server", feature = "wasm"))]
 pub mod api_types;
 pub mod case_conversion;
