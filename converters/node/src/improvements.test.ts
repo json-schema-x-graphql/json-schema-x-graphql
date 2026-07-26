@@ -76,7 +76,6 @@ describe("Converter Improvements", () => {
         "../../../test-data/case-mismatch.schema.json",
       );
       if (!fs.existsSync(testDataPath)) {
-        // eslint-disable-next-line jest/no-conditional-expect
         return;
       }
       const schema = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));

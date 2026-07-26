@@ -86,6 +86,15 @@ impl ComprehensiveValidator {
         // Validate naming conventions
         self.validate_naming_conventions(schema, &mut warnings);
 
+        // Run x-graphql attribute linting
+        let lint_issues = crate::validation::lint::lint_all(schema);
+        for issue in lint_issues {
+            match issue.severity {
+                ValidationSeverity::Error => errors.push(issue),
+                ValidationSeverity::Warning => warnings.push(issue),
+            }
+        }
+
         let valid = jsonschema_valid && boon_valid && errors.is_empty();
 
         Ok(ValidationResult {
