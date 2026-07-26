@@ -41,8 +41,8 @@ pub fn federation_link_directive() -> String {
 /// Complete Federation v2.9 directive SDL definitions.
 ///
 /// Includes the standard Apollo Federation directives plus
-/// custom production directives used by the Petrified Forest
-/// project (@constraint, @cache, @authorize, @mask, @rateLimit).
+/// custom production directives (@constraint, @cache, @authorize,
+/// @mask, @rateLimit) that complement the federation spec.
 ///
 /// Callers can inject this block into an SDL string when the
 /// schema does not already contain these definitions.

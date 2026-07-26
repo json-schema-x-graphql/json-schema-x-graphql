@@ -1,6 +1,5 @@
 //! X-GraphQL attribute linting and completeness validation.
 //!
-//! Ported from TTSE-petrified-forest's `validate-x-graphql-attributes.mjs`.
 //! Validates naming conventions, deprecated attributes, required field
 //! completeness, and federation key presence.
 
