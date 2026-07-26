@@ -169,6 +169,35 @@ Fully supports the Apollo Federation specification:
 - **Authorization**: `@authenticated`, `@requiresScopes`, `@policy`
 - **Viaduct Support**: Deep integration with `@resolver`, `@backingData`, and `@idOf`.
 
+### Schema Hint Post-Processing
+
+Generate additional GraphQL artifacts from JSON Schema annotations:
+
+- **Custom Scalars** (`x-graphql-scalars`): Define scalar types once, with descriptions and `specifiedByURL` metadata.
+- **Operation Types** (`x-graphql-operations`): Declare Query, Mutation, and Subscription fields with typed arguments, defaults, and descriptions.
+- **Relay Pagination** (`x-graphql-pagination`): Auto-generate `PageInfo`, `Connection`, and `Edge` types for paginated collections.
+- **Field-Level Scalar Overrides** (`x-graphql-scalar`): Map a property to a custom scalar on a per-field basis.
+
+### Directive Filtering
+
+Strip or retain GraphQL directives in the generated SDL based on tier:
+
+- **`ALL`** (default): Include every directive in the output.
+- **`VIEWER_FRIENDLY`**: Only include GraphQL spec directives (`@deprecated`, `@skip`, `@include`). Strip federation, custom, and infrastructure directives for end-user consumption.
+- **`EXCLUDE_DRAFT`**: Include everything except draft/unstable directives.
+- **Custom exclusion list**: Provide an explicit list of directive names to omit.
+
+Configure in the Node converter via the `directiveFilterMode` option, or via the CLI with `--directive-filter`.
+
+### Schema Analysis & Mapping
+
+Govern multi-source schemas with these companion modules (available in both Rust and Node):
+
+- **Statistics**: Per-type field counts, federation key detection, reference graph, max nesting depth.
+- **Diffs**: Detect breaking changes between schema versions (removed types, new required fields, federation key changes).
+- **Coverage Reports**: Track what percentage of a source schema is mapped to a target schema.
+- **Field Mapping**: Define multi-location JSON pointer lookups for unifying heterogeneous source schemas into a single canonical schema.
+
 ### Federated REST Emulation & API Stitching Gateway
 
 A major production application of the `json-schema-x-graphql` standard is emulating legacy or remote REST APIs as federated subgraphs to form a stitched API gateway. By combining lightweight registration manifests (`endpoints-config.yaml`) and extended JSON Schemas, you can unify separate microservices (e.g., forward geocoding, reverse coordinates lookup, IP routing, and ZIP code services) into a single, cohesive federated schema.
@@ -227,12 +256,22 @@ To handle naming conflicts and conventions cleanly, we use three distinct namesp
   - ✅ Strict Meta-Schema closures
   - ✅ Native Zod and Standard Schema integrations
   - ✅ Seamless GraphQL-Codegen output pipeline
+- **Phase 5: Schema Tooling**
+  - ✅ Hints post-processing (custom scalars, operations, Relay pagination)
+  - ✅ Directive filtering (ALL, VIEWER_FRIENDLY, EXCLUDE_DRAFT, custom)
+  - ✅ Schema analysis (statistics, diffs, coverage reports)
+  - ✅ Field mapping system for multi-source unification
+  - ✅ Schema → DDL pipeline (Spark/Delta) and Mermaid ER diagrams
 
 ### In Progress 🚧
 
 - **Performance Benchmarking**
   - Rust SIMD benchmark suite calibration
 - **Cross-browser validation**
+
+### New CLI Options
+
+- `--directive-filter <mode>`: Filter directives in output (`ALL`, `VIEWER_FRIENDLY`, `EXCLUDE_DRAFT`)
 
 ### Future Roadmap 📋
 

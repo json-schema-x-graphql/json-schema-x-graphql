@@ -43,6 +43,9 @@ const { values, positionals } = parseArgs({
         "output-format": {
             type: "string",
         },
+        "directive-filter": {
+            type: "string",
+        },
         "fail-on-warning": {
             type: "boolean",
             default: false,
@@ -86,6 +89,7 @@ Options:
       --infer-ids        Infer ID scalars for common patterns (deprecated in favor of --id-strategy)
       --id-strategy <NONE|COMMON_PATTERNS|ALL_STRINGS>  ID inference strategy
       --output-format <SDL|SDL_WITH_FEDERATION_METADATA|AST_JSON>  Output format
+      --directive-filter <ALL|VIEWER_FRIENDLY|EXCLUDE_DRAFT>  Filter directives in output
       --fail-on-warning  Treat warnings as errors
       --exclude-type <NAME>          Exclude a type (repeatable)
       --exclude-pattern <REGEX>      Exclude types/fields matching pattern (repeatable)
@@ -124,6 +128,9 @@ try {
             : undefined,
         outputFormat: values["output-format"]
             ? toEnum(values["output-format"], "SDL")
+            : undefined,
+        directiveFilterMode: values["directive-filter"]
+            ? toEnum(values["directive-filter"], "ALL")
             : undefined,
         failOnWarning: values["fail-on-warning"],
         excludeTypes: values["exclude-type"],

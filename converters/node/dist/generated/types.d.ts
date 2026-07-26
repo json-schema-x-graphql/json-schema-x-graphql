@@ -108,7 +108,11 @@ export type ConverterOptions = {
     inlineObjectThreshold?: InputMaybe<Scalars["Int"]["input"]>;
     /** Strategy for naming types derived from $ref values */
     refNaming?: InputMaybe<"basename" | "file_and_path" | "hash">;
+    /** Filter mode for GraphQL directives in SDL output. */
+    directiveFilterMode?: InputMaybe<DirectiveFilterMode>;
 };
+/** Filter modes for GraphQL directives in SDL output. */
+export type DirectiveFilterMode = "ALL" | "VIEWER_FRIENDLY" | "EXCLUDE_DRAFT";
 /** Strategies for inferring ID fields from JSON Schema properties. */
 export type IdInferenceStrategy = "NONE" | "COMMON_PATTERNS" | "ALL_STRINGS";
 /** Supported Apollo Federation versions. */
