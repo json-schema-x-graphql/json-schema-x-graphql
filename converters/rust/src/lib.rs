@@ -23,13 +23,20 @@
 //! let result = converter.convert(json_schema, ConversionDirection::JsonSchemaToGraphQL);
 //! ```
 
+pub mod analysis;
 #[cfg(any(feature = "graphql-server", feature = "wasm"))]
 pub mod api_types;
 pub mod case_conversion;
+pub mod ddl;
+pub mod diagram;
+pub mod directive_filter;
 pub mod error;
+pub mod federation;
 pub mod graphql_ast_json;
 pub mod graphql_to_json;
+pub mod hints;
 pub mod json_to_graphql;
+pub mod mapping;
 #[cfg(feature = "graphql-server")]
 pub mod schema;
 pub mod types;
@@ -41,7 +48,8 @@ pub mod wasm;
 
 pub use error::{ConversionError, Result};
 pub use types::{
-    ConversionDirection, ConversionOptions, IdInferenceStrategy, NamingConvention, OutputFormat,
+    ConversionDirection, ConversionOptions, DirectiveFilterMode, IdInferenceStrategy,
+    NamingConvention, OutputFormat,
 };
 
 #[cfg(feature = "caching")]
@@ -167,6 +175,20 @@ impl Converter {
         }
 
         let graphql_sdl = json_to_graphql::convert(&schema, &self.options)?;
+
+        // Apply directive filtering if mode is not All
+        let graphql_sdl = if self.options.directive_filter_mode != types::DirectiveFilterMode::All {
+            directive_filter::filter_sdl_directives(
+                &graphql_sdl,
+                &self.options.directive_filter_mode,
+            )
+        } else {
+            graphql_sdl
+        };
+
+        // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
+        let graphql_sdl = hints::apply_hints(&graphql_sdl, &schema);
+
         match self.options.output_format {
             types::OutputFormat::AstJson => graphql_ast_json::sdl_to_ast_json(&graphql_sdl),
             _ => Ok(graphql_sdl),

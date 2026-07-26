@@ -6,13 +6,14 @@
 //! - Conversion performance (JSON Schema ↔ GraphQL)
 //! - Memory usage and optimization opportunities
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 use json_schema_x_graphql::{
     validation::{ComprehensiveGraphQLValidator, FullStackValidator, JsonSchemaValidator},
     ConversionDirection, Converter,
 };
 use serde_json::json;
 use std::fs;
+use std::hint::black_box;
 use std::path::PathBuf;
 
 fn get_test_data_path() -> PathBuf {
