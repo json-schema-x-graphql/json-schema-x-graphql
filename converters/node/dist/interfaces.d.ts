@@ -1,4 +1,4 @@
-import { ConvertInput, ConversionResult, ConverterOptions, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat } from "./generated/types.js";
+import { ConvertInput, ConversionResult, ConverterOptions, DirectiveFilterMode, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat } from "./generated/types.js";
 export interface IJsonSchemaConverter {
     convert(input: ConvertInput): Promise<ConversionResult>;
 }
@@ -28,6 +28,7 @@ export interface NormalizedConverterOptions {
     refNaming: "basename" | "file_and_path" | "hash";
     excludeTypeSuffixes: string[];
     includeOperationalTypes: boolean;
+    directiveFilterMode: DirectiveFilterMode;
 }
 export interface JsonSchema {
     $schema?: string;

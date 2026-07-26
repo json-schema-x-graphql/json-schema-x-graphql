@@ -14,6 +14,11 @@ import { ensureConnectionType } from "./features/relay.js";
 import { otelTracer } from "./otel.js";
 export * from "./standard-schema.js";
 export { generateTypeScript } from "./codegen.js";
+import { filterSdlDirectives, } from "./directive-filter.js";
+import { applyHints } from "./hints/index.js";
+export { filterSdlDirectives, ensureFederationDirectives, } from "./directive-filter.js";
+export * from "./hints/index.js";
+export { lintSchema, lintAll } from "./validation-lint.js";
 // ExtendedConverterOptions and others moved to interfaces.ts
 // NormalizedConverterOptions moved to interfaces.ts
 // JsonSchema moved to interfaces.ts
@@ -152,11 +157,20 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
     if (!finalSDL) {
         return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
     }
+    // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
+    let processedSDL = applyHints(finalSDL, schema);
+    // Note: federation directive definitions are NOT auto-injected to preserve
+    // parity with the Rust converter. Call `ensureFederationDirectives(sdl)` from
+    // the federation directive library when building executable schemas.
+    // Apply directive filtering if mode is not ALL
+    if (resolvedOptions.directiveFilterMode !== "ALL") {
+        processedSDL = filterSdlDirectives(processedSDL, resolvedOptions.directiveFilterMode);
+    }
     if (resolvedOptions.outputFormat === "AST_JSON") {
-        const ast = parse(finalSDL, { noLocation: true });
+        const ast = parse(processedSDL, { noLocation: true });
         return JSON.stringify(ast);
     }
-    return finalSDL;
+    return processedSDL;
 }
 export function graphqlToJsonSchema(graphqlSdl, options = {}) {
     return otelTracer.startActiveSpan("graphqlToJsonSchema", (span) => {
@@ -277,7 +291,7 @@ function graphqlToJsonSchemaInternal(graphqlSdl, options = {}) {
         }
         return JSON.stringify(schema, null, 2);
     }
-    catch (_e) {
+    catch {
         // Fallback to simple parsing if AST parsing fails
         return fallbackGraphqlToJsonSchema(graphqlSdl, normalized);
     }
@@ -913,7 +927,7 @@ function escapeRegExp(pattern) {
     }
     // Allow safe regex characters but prevent ReDoS / catastrophic backtracking.
     // If the pattern has nested quantifiers or multiple wildcards, escape it.
-    const isSafe = /^[a-zA-Z0-9_*?|\-^$().+\[\]]+$/.test(pattern) &&
+    const isSafe = /^[a-zA-Z0-9_*?|\-^$().+[\]]+$/.test(pattern) &&
         !/(\*|\+){2,}/.test(pattern) &&
         !/(\+|\*).*(?:\+|\*)/.test(pattern);
     if (isSafe) {
@@ -958,6 +972,7 @@ function normalizeOptions(options) {
         "Args",
     ];
     const includeOperationalTypes = options.includeOperationalTypes ?? false;
+    const directiveFilterMode = options.directiveFilterMode ?? "ALL";
     return {
         excludeTypeSuffixes,
         includeOperationalTypes,
@@ -979,6 +994,7 @@ function normalizeOptions(options) {
         emitEmptyTypes,
         inlineObjectThreshold,
         refNaming,
+        directiveFilterMode,
     };
 }
 function detectFederationVersion(schema) {

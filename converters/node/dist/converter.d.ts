@@ -12,6 +12,9 @@ import { normalizeFederationExtensions } from "./normalization/directives.js";
 export { normalizeFederationExtensions };
 export * from "./standard-schema.js";
 export { generateTypeScript } from "./codegen.js";
+export { filterSdlDirectives, ensureFederationDirectives, type DirectiveFilterMode as LibDirectiveFilterMode, type DirectiveTier, } from "./directive-filter.js";
+export * from "./hints/index.js";
+export { lintSchema, lintAll } from "./validation-lint.js";
 export declare function jsonSchemaToGraphQL(jsonSchemaInput: JsonSchemaInput, options?: ExtendedConverterOptions): string;
 export declare function graphqlToJsonSchema(graphqlSdl: string, options?: ConverterOptions): string;
 export declare class Converter implements IJsonSchemaConverter {
