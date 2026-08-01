@@ -20,7 +20,7 @@ hooks = [
   # Ensure files end with a newline
   { id = "end-of-file-fixer", exclude = "pnpm-lock.yaml|Cargo.lock" },
   # Validate JSON syntax
-  { id = "check-json", exclude = "tsconfig.*" },
+  { id = "check-json", exclude = "tsconfig.*|.*\\.mapping\\.json" },
   # Prevent large files from being committed accidentally
   { id = "check-added-large-files", args = ["--maxkb=500"] },
   # Detect merge conflict markers left in files
@@ -67,14 +67,34 @@ hooks = [
 [[repos]]
 repo = "local"
 hooks = [
-  # prettier: auto-format JS/TS/JSON/YAML/CSS/Markdown
+  # prettier: auto-format JS/TS/JSON/YAML/CSS/Markdown (excluding test schemas handled by dprint)
   {
     id = "prettier",
     name = "prettier (formatter)",
     language = "system",
     entry = "pnpm exec prettier --write",
     types_or = ["ts", "tsx", "javascript", "jsx", "json", "yaml", "markdown", "css"],
-    exclude = "pnpm-lock.yaml|Cargo.lock|dist/",
+    exclude = "pnpm-lock.yaml|Cargo.lock|dist/|converters/test-data/x-graphql/",
+    pass_filenames = true,
+  },
+
+  # dprint: auto-format JSON schemas with native Rust speed
+  {
+    id = "dprint",
+    name = "dprint (JSON schema formatter)",
+    language = "system",
+    entry = "dprint fmt",
+    files = "converters/test-data/x-graphql/.*\\.json$",
+    pass_filenames = true,
+  },
+
+  # x-graphql-validator: validate JSON schemas for x-graphql extensions
+  {
+    id = "x-graphql-validator",
+    name = "X-GraphQL Schema Validator",
+    language = "system",
+    entry = "./scripts/prek-validate.sh",
+    files = "converters/test-data/x-graphql/.*\\.json$",
     pass_filenames = true,
   },
 

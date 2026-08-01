@@ -1,0 +1,5 @@
+[tools]
+rust = "latest"
+uv = "latest"
+prek = "latest"
+dprint = "latest"
