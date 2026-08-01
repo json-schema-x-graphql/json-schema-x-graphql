@@ -15,7 +15,7 @@
     "@graphql-mesh/merger-stitching": "^0.105.0",
     "@graphql-tools/schema": "^10.0.3",
     "@json-schema-x-graphql/core": "file:../../converters/node",
-    "axios": "^1.6.8",
+    "axios": "^1.19.0",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6"
   }
