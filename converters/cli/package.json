@@ -24,15 +24,15 @@
     "validate:graphql": "tsx src/scripts/validate-graphql.ts"
   },
   "dependencies": {
-    "@apollo/subgraph": "^2.14.2",
+    "@apollo/subgraph": "^2.14.3",
     "@json-schema-x-graphql/core": "workspace:*",
     "ajv": "^8.18.0",
     "ajv-formats": "^3.0.1",
     "graphql": "^17.0.2"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
-    "tsx": "^4.22.4",
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
     "typescript": "^6.0.3"
   },
   "engines": {
