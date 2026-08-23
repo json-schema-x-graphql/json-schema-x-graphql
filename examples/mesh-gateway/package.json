@@ -5,8 +5,8 @@
   "main": "gateway.js",
   "dependencies": {
     "@apollo/server": "^5.5.0",
-    "@apollo/subgraph": "^2.14.2",
-    "@apollo/gateway": "^2.14.2",
+    "@apollo/subgraph": "^2.14.4",
+    "@apollo/gateway": "^2.14.4",
     "axios": "^1.19.0",
     "graphql": "^17.0.2",
     "graphql-tag": "^2.12.7",
