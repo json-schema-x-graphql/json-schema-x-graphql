@@ -38,7 +38,7 @@
     "test:integration": "node --test test/integration/**/*.test.js"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.4.1",
+    "@faker-js/faker": "^10.5.0",
     "@graphql-hive/gateway": "^1.16.5",
     "@graphql-mesh/cli": "^0.100.34",
     "@graphql-mesh/graphql": "^0.96.6",
