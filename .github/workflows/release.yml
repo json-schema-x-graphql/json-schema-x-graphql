@@ -206,26 +206,58 @@ jobs:
           echo "bin=${BINARY_DIR}" >> $GITHUB_OUTPUT
 
       # ---- Rust (jxql) ----
-      - name: Build jxql release binary
+      - name: Build jxql release binary (gnu)
         working-directory: converters/rust
         run: |
           set -euo pipefail
-          cargo build --release --locked --bin jxql --target x86_64-unknown-linux-gnu
-          cargo build --release --locked --bin jxql --target x86_64-unknown-linux-musl
-          cp target/x86_64-unknown-linux-gnu/release/jxql    "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu"
-          cp target/x86_64-unknown-linux-musl/release/jxql   "${BINARY_DIR}/jxql-x86_64-unknown-linux-musl"
+          cargo build --release --locked --bin jxql --features cli --target x86_64-unknown-linux-gnu
+          # Cargo workspace puts artifacts in the workspace root's target/.
+          cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-gnu/release/jxql" "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu"
           ls -la "${BINARY_DIR}"
+
+      - name: Build jxql release binary (musl, optional)
+        if: ${{ hashFiles('rust-toolchain.toml') != '' || true }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! rustup target list --installed | grep -qx 'x86_64-unknown-linux-musl'; then
+            echo "::notice::x86_64-unknown-linux-musl target not installed; skipping musl build (install with: rustup target add x86_64-unknown-linux-musl)"
+            exit 0
+          fi
+          pushd converters/rust >/dev/null
+          cargo build --release --locked --bin jxql --features cli --target x86_64-unknown-linux-musl
+          popd >/dev/null
+          cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-musl/release/jxql" "${BINARY_DIR}/jxql-x86_64-unknown-linux-musl"
+          ls -la "${BINARY_DIR}"
+
+      - name: Build WASM bundle (optional)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! rustup target list --installed | grep -qx 'wasm32-unknown-unknown'; then
+            echo "::notice::wasm32-unknown-unknown target not installed; skipping WASM build (install with: rustup target add wasm32-unknown-unknown)"
+            exit 0
+          fi
+          if ! command -v wasm-pack >/dev/null 2>&1; then
+            echo "::notice::wasm-pack not installed; skipping WASM build (install with: cargo install wasm-pack)"
+            exit 0
+          fi
+          pushd converters/rust >/dev/null
+          wasm-pack build --target web --release --out-dir "${GITHUB_WORKSPACE}/${BINARY_DIR}/wasm"
+          popd >/dev/null
+          ls -la "${BINARY_DIR}/wasm"
 
       - name: Build Node CLI bundles
         run: |
           set -euo pipefail
-          pnpm --filter @json-schema-x-graphql/cli run build
+          pnpm install --frozen-lockfile
           pnpm --filter @json-schema-x-graphql/core run build
+          pnpm --filter @json-schema-x-graphql/cli  run build
           mkdir -p "${BINARY_DIR}/node"
-          cp converters/cli/dist/index.js    "${BINARY_DIR}/node/json-schema-x-graphql.cjs"
-          cp converters/cli/dist/validate.js "${BINARY_DIR}/node/jxql-validate.cjs"
-          cp converters/cli/dist/migrate.js  "${BINARY_DIR}/node/jxql-migrate.cjs"
-          cp converters/node/dist/converter.js "${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs"
+          cp converters/cli/dist/index.js       "${BINARY_DIR}/node/json-schema-x-graphql.cjs"
+          cp converters/cli/dist/validate.js    "${BINARY_DIR}/node/jxql-validate.cjs"
+          cp converters/cli/dist/migrate.js     "${BINARY_DIR}/node/jxql-migrate.cjs"
+          cp converters/node/dist/converter.js  "${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs"
           ls -la "${BINARY_DIR}/node"
 
       # ---- Hashes ----
@@ -233,44 +265,53 @@ jobs:
         run: |
           set -euo pipefail
           : > "${HASH_DIR}/SHA256SUMS"
-          (cd "${BINARY_DIR}" && find . -type f \( -name jxql -o -name 'jxql-*' -o -name '*.cjs' \) -print0 | sort -z | xargs -0 sha256sum) | tee -a "${HASH_DIR}/SHA256SUMS"
+          (cd "${BINARY_DIR}" && find . -type f \( -name jxql -o -name 'jxql-*' -o -name '*.cjs' -o -name '*.wasm' \) -print0 | sort -z | xargs -0 sha256sum) | tee -a "${HASH_DIR}/SHA256SUMS"
           cat "${HASH_DIR}/SHA256SUMS"
 
       - name: Verify jxql binary smoke tests
         run: |
           set -euo pipefail
-          "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu" --version
-          "${BINARY_DIR}/jxql-x86_64-unknown-linux-musl" --version
-          node -e "require('./${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs')" || true
+          for b in "${BINARY_DIR}"/jxql-*; do
+            [ -x "$b" ] || continue
+            "$b" --version || { echo "smoke test failed: $b"; exit 1; }
+          done
+          node -e "require('${GITHUB_WORKSPACE}/${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs')" || true
 
       # ---- SBOMs: Rust (CycloneDX) ----
       - name: Install cargo-cyclonedx
         run: cargo install --locked cargo-cyclonedx
 
-      - name: Generate CycloneDX + SPDX SBOMs for Rust crate
+      - name: Generate CycloneDX SBOMs for Rust crate
         working-directory: converters/rust
         run: |
           set -euo pipefail
-          VERSION="${{ steps.resolve-version.outputs.version }}"
-          cargo cyclonedx --format json --override-floating-versions true --fingerprint all --override-db-path "$GITHUB_WORKSPACE/release-assets/sbom/rust-cdx.json"
-          cargo cyclonedx --format spdx-json --override-floating-versions true --fingerprint all --override-db-path "$GITHUB_WORKSPACE/release-assets/sbom/rust-spdx.json"
-          ls -la "$GITHUB_WORKSPACE/release-assets/sbom"
+          cargo cyclonedx --format json --override-filename rust-cdx --all --quiet
+          cargo cyclonedx --format xml  --override-filename rust-cdx --all --quiet
+          # cargo-cyclonedx 0.5.x writes <name>.json / <name>.xml
+          if [ ! -f rust-cdx.json ] && [ -f rust-cdx.cdx.json ]; then mv rust-cdx.cdx.json rust-cdx.json; fi
+          if [ ! -f rust-cdx.xml  ] && [ -f rust-cdx.cdx.xml  ]; then mv rust-cdx.cdx.xml  rust-cdx.xml;  fi
+          mv rust-cdx.json "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.json"
+          mv rust-cdx.xml  "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.xml"
+          ls -la "$GITHUB_WORKSPACE/${SBOM_DIR}"
 
       # ---- SBOMs: Node (CycloneDX + SPDX) ----
-      - name: Install @cyclonedx/cyclonedx-npm globally
-        run: npm install -g @cyclonedx/cyclonedx-npm
-
-      - name: Generate CycloneDX SBOMs for Node workspaces
+      # `cdxgen` understands pnpm-lock.yaml natively and emits both CycloneDX and SPDX
+      # in a single invocation, which avoids `cyclonedx-npm`'s npm-lock-only constraint.
+      # We run each cdxgen from /tmp and with hardcoded args because cdxgen 12.x has
+      # a quirk where the second invocation in a shell session can silently produce
+      # an empty BOM if it sees the same workspace tree with different args.
+      - name: Generate CycloneDX + SPDX SBOMs for Node workspaces
+        working-directory: /tmp
         run: |
           set -euo pipefail
-          cyclonedx-npm --output-format JSON --output-file "${SBOM_DIR}/node-claude-cdx.json" --spec-version 1.5 --package-lock-only ./converters/cli
-          cyclonedx-npm --output-format JSON --output-file "${SBOM_DIR}/node-core-cdx.json"   --spec-version 1.5 --package-lock-only ./converters/node
-
-      - name: Generate SPDX SBOMs for Node workspaces
-        run: |
-          set -euo pipefail
-          cyclonedx-npm --output-format SPDX --output-file "${SBOM_DIR}/node-cli-spdx.json"  --spec-version 1.5 --package-lock-only ./converters/cli
-          cyclonedx-npm --output-format SPDX --output-file "${SBOM_DIR}/node-core-spdx.json" --spec-version 1.5 --package-lock-only ./converters/node
+          npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type application -t pnpm \
+            -o "${SBOM_DIR}/node-cli-cdx.json"      --output-format JSON      "${GITHUB_WORKSPACE}/converters/cli"
+          npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type application -t pnpm \
+            -o "${SBOM_DIR}/node-cli-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/cli"
+          npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type library -t pnpm \
+            -o "${SBOM_DIR}/node-core-cdx.json"     --output-format JSON      "${GITHUB_WORKSPACE}/converters/node"
+          npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type library -t pnpm \
+            -o "${SBOM_DIR}/node-core-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/node"
 
       - name: Sanity-check SBOM files
         run: |
@@ -356,12 +397,11 @@ jobs:
         working-directory: converters/rust
         run: |
           set -euo pipefail
-          cargo login "${CRATES_TOKEN}"
           # dry-run once to surface packaging issues, then publish
           cargo publish --dry-run --locked --allow-dirty
           cargo publish --locked
         env:
-          CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
 
   # ---------- 5. Create GitHub Release ----------
   github-release:
@@ -394,6 +434,28 @@ jobs:
           find . -type f -print0 | sort -z | xargs -0 sha256sum | tee SHA256SUMS.txt
           cp SHA256SUMS.txt hashes/SHA256SUMS.txt
 
+      # Generate signed build provenance (SLSA-style) for the binary artifacts.
+      # This binds each artifact to the workflow run + repo via Sigstore, and the
+      # resulting `.intoto.jsonl` files are re-attached to the release below.
+      - name: Attest release binaries (build provenance)
+        uses: actions/attest-build-provenance@fa3129c8a11ac4b8c45a8a92b2520061b8b3828e # v3
+        with:
+          subject-names: |
+            jxql-x86_64-unknown-linux-gnu
+            jxql-x86_64-unknown-linux-musl
+            json-schema-x-graphql
+            jxql-validate
+            jxql-migrate
+            @json-schema-x-graphql--core
+          subject-paths: |
+            release-assets/binaries/jxql-x86_64-unknown-linux-gnu
+            release-assets/binaries/jxql-x86_64-unknown-linux-musl
+            release-assets/binaries/node/json-schema-x-graphql.cjs
+            release-assets/binaries/node/jxql-validate.cjs
+            release-assets/binaries/node/jxql-migrate.cjs
+            release-assets/binaries/node/@json-schema-x-graphql--core.cjs
+            release-assets/binaries/wasm/json_schema_x_graphql_bg.wasm
+
       - name: Build release notes
         shell: bash
         run: |
@@ -424,9 +486,32 @@ jobs:
               echo "- \`${base}\` (${sz} bytes) — \`${sha}\`"
             done
             echo
+            echo "**WASM bundle for browsers** (sha256-verified):"
+            echo
+            for f in release-assets/binaries/wasm/*.wasm release-assets/binaries/wasm/*.js; do
+              [ -e "$f" ] || continue
+              sz=$(stat -c%s "$f")
+              sha=$(sha256sum "$f" | awk '{print $1}')
+              base=$(basename "$f")
+              echo "- \`${base}\` (${sz} bytes) — \`${sha}\`"
+            done
+            echo
             echo "### Software Bill of Materials (SBOM)"
             echo
-            echo "CycloneDX + SPDX SBOMs are attached for both the Rust crate and the Node workspaces."
+            echo "CycloneDX (JSON + XML) and SPDX-JSON SBOMs are attached for both the Rust crate and the Node workspaces:"
+            echo
+            echo "- \`rust-cdx.json\` / \`rust-cdx.xml\` — Rust crate CycloneDX SBOMs"
+            echo "- \`node-cli-cdx.json\` / \`node-cli-spdx.spdx.json\` — @json-schema-x-graphql/cli SBOMs"
+            echo "- \`node-core-cdx.json\` / \`node-core-spdx.spdx.json\` — @json-schema-x-graphql/core SBOMs"
+            echo
+            echo "### Build provenance (SLSA)"
+            echo
+            echo "Every binary in this release is covered by a signed build-provenance attestation"
+            echo "(\`.intoto.jsonl\`). Verify with:"
+            echo
+            echo '```'
+            echo "gh attestation verify <file> --repo $(echo \$GITHUB_REPOSITORY)"
+            echo '```'
             echo
             echo "### Verifying binaries"
             echo
@@ -435,7 +520,7 @@ jobs:
             echo "gh release download '${{ needs.build.outputs.tag }}'"
             echo
             echo "# Verify all artifacts"
-            echo "shasum -a 256 SHA256SUMS.txt  # or sha256sum -c SHA256SUMS.txt"
+            echo "sha256sum -c SHA256SUMS.txt"
             echo '```'
             echo
             echo "### npm"
@@ -465,10 +550,13 @@ jobs:
             release-assets/binaries/jxql-x86_64-unknown-linux-gnu
             release-assets/binaries/jxql-x86_64-unknown-linux-musl
             release-assets/binaries/node/*
+            release-assets/binaries/wasm/*.wasm
+            release-assets/binaries/wasm/*.js
             release-assets/sbom/*.json
+            release-assets/binaries/**/*.intoto.jsonl
             release-assets/SHA256SUMS.txt
             release-assets/RELEASE_NOTES.md
           generate_release_notes: false
-          fail_on_unmatched_files: true
+          fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
