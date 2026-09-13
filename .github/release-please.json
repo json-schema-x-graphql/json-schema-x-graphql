@@ -1,52 +1,65 @@
 {
   "release-type": "node",
+  "package-root": ".",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "always-link-local": false,
+  "draft": false,
+  "prerelease": false,
+  "include-v-in-tag": true,
+  "tag-separator": "/",
+  "include-component-in-tag": false,
+  "pull-request-header": "chore(release): release-please v{{version}}",
   "packages": {
     ".": {
+      "package-name": "json-schema-x-graphql",
       "changelog-path": "CHANGELOG.md",
       "version-file": "package.json",
-      "extra-files": ["converters/rust/Cargo.toml"]
+      "extra-files": [
+        "converters/rust/Cargo.toml",
+        "converters/node/package.json",
+        "converters/cli/package.json"
+      ],
+      "bump": {
+        "from": "package.json"
+      }
+    },
+    "converters/node": {
+      "package-name": "@json-schema-x-graphql/core",
+      "changelog-path": "converters/node/CHANGELOG.md",
+      "version-file": "converters/node/package.json",
+      "bump": {
+        "from": "../../package.json"
+      }
+    },
+    "converters/cli": {
+      "package-name": "@json-schema-x-graphql/cli",
+      "changelog-path": "converters/cli/CHANGELOG.md",
+      "version-file": "converters/cli/package.json",
+      "bump": {
+        "from": "../../package.json"
+      }
     }
   },
+  "plugins": [
+    {
+      "type": "node-workspace",
+      "package-name": "json-schema-x-graphql",
+      "update": "true"
+    }
+  ],
   "changelog-sections": [
-    {
-      "type": "feat",
-      "section": "🎉 Features",
-      "hidden": false
-    },
-    {
-      "type": "fix",
-      "section": "🐛 Bug Fixes",
-      "hidden": false
-    },
-    {
-      "type": "perf",
-      "section": "⚡ Performance",
-      "hidden": false
-    },
-    {
-      "type": "refactor",
-      "section": "♻️ Refactoring",
-      "hidden": false
-    },
-    {
-      "type": "docs",
-      "section": "📚 Documentation",
-      "hidden": false
-    },
-    {
-      "type": "style",
-      "section": "🎨 Styling",
-      "hidden": false
-    },
+    { "type": "feat", "section": "🎉 Features", "hidden": false },
+    { "type": "fix", "section": "🐛 Bug Fixes", "hidden": false },
+    { "type": "perf", "section": "⚡ Performance", "hidden": false },
+    { "type": "refactor", "section": "♻️ Refactoring", "hidden": false },
+    { "type": "docs", "section": "📚 Documentation", "hidden": false },
+    { "type": "style", "section": "🎨 Styling", "hidden": false },
     {
       "type": "chore",
       "section": "🏗️ Build System & Dependencies",
       "hidden": false
     },
-    {
-      "type": "ci",
-      "section": "🔄 CI/CD",
-      "hidden": false
-    }
+    { "type": "ci", "section": "🔄 CI/CD", "hidden": false }
   ]
 }
