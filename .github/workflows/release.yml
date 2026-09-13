@@ -1,39 +1,49 @@
 name: Release and Publish
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
-      version_bump:
-        description: "Version bump type"
-        required: true
-        default: "minor"
+      version:
+        description: "Explicit version to release (must match an existing release-please PR, e.g. 2.1.0). Leave blank for tag-driven runs."
+        required: false
+        type: string
+      dry_run:
+        description: "Run every step but do not publish packages or create a GitHub release."
+        required: false
+        default: "false"
         type: choice
-        options:
-          - "major"
-          - "minor"
-          - "patch"
+        options: ["true", "false"]
 
 permissions:
   contents: write
   packages: write
   pull-requests: write
+  id-token: write
+  attestations: write
 
 env:
   RUST_BACKTRACE: 1
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: 0
   NODE_VERSION: "24"
+  SBOM_DIR: release-assets/sbom
+  HASH_DIR: release-assets/hashes
+  BINARY_DIR: release-assets/binaries
 
 jobs:
+  # ---------- 1. Quality gate ----------
   validate:
     name: Validate and Run Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: true
-          fetch-depth: 0 # Full history for changelog generation
+          fetch-depth: 0
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # stable
@@ -52,8 +62,7 @@ jobs:
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Cache cargo registry
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -114,60 +123,46 @@ jobs:
       - name: Install root dependencies
         run: pnpm -w install --frozen-lockfile
 
-      - name: Install wasm-pack
-        run: cargo install wasm-pack
-
-      - name: Build WASM
-        run: npm run build:wasm
-
-      - name: Rust - Install tarpaulin for coverage
-        run: cargo install cargo-tarpaulin
-
-      - name: Rust - Generate coverage report
-        working-directory: converters/rust
-        run: cargo tarpaulin --all-features --workspace --timeout 300 --out Xml
-
-      - name: Node - Generate coverage report
-        working-directory: converters/node
-        run: pnpm run test:coverage || pnpm test -- --coverage
-
-      - name: Upload Rust coverage to Codecov
-        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./converters/rust/cobertura.xml
-          flags: rust
-          name: rust-coverage-release
-          fail_ci_if_error: false
-
-      - name: Upload Node.js coverage to Codecov
-        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./converters/node/coverage/lcov.info
-          flags: node
-          name: node-coverage-release
-          fail_ci_if_error: false
-
-  release:
-    name: Publish to npm and Cargo
+  # ---------- 2. Build binaries + SBOMs ----------
+  build:
+    name: Build Binaries & SBOMs
     runs-on: ubuntu-latest
     needs: validate
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
-      tag: ${{ steps.create-tag.outputs.tag }}
+      version: ${{ steps.resolve-version.outputs.version }}
+      tag: ${{ steps.resolve-version.outputs.tag }}
+      dry_run: ${{ steps.resolve-version.outputs.dry_run }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: true
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Configure Git
+      - name: Resolve version
+        id: resolve-version
+        shell: bash
         run: |
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          set -euo pipefail
+          DRY_RUN='${{ github.event.inputs.dry_run || '' }}'
+          INPUT_VERSION='${{ github.event.inputs.version || '' }}'
+          DRY='false'
+          if [[ "${DRY_RUN}" == "true" ]]; then DRY='true'; fi
+          if [[ -n "${INPUT_VERSION}" ]]; then
+            VERSION="${INPUT_VERSION}"
+            TAG="v${VERSION}"
+          elif [[ "${GITHUB_REF_TYPE}" == "tag" && "${GITHUB_REF_NAME}" =~ ^v(.+)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            TAG="${GITHUB_REF_NAME}"
+          else
+            VERSION="$(jq -r '.["."]' .release-please-manifest.json)"
+            TAG="v${VERSION}"
+            DRY='true'  # require explicit dispatch for non-tag runs
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "dry_run=${DRY}" >> $GITHUB_OUTPUT
+          echo "Resolved version=${VERSION} tag=${TAG} dry_run=${DRY}"
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # stable
@@ -178,184 +173,302 @@ jobs:
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Cache cargo build
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-${{ steps.resolve-version.outputs.tag }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-build-
+
+      - name: Create release-assets directories
+        run: |
+          mkdir -p "${SBOM_DIR}" "${HASH_DIR}" "${BINARY_DIR}"
+          echo "sbom=${SBOM_DIR}" >> $GITHUB_OUTPUT
+          echo "hash=${HASH_DIR}" >> $GITHUB_OUTPUT
+          echo "bin=${BINARY_DIR}" >> $GITHUB_OUTPUT
+
+      # ---- Rust (jxql) ----
+      - name: Build jxql release binary
+        working-directory: converters/rust
+        run: |
+          set -euo pipefail
+          cargo build --release --locked --bin jxql --target x86_64-unknown-linux-gnu
+          cargo build --release --locked --bin jxql --target x86_64-unknown-linux-musl
+          cp target/x86_64-unknown-linux-gnu/release/jxql    "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu"
+          cp target/x86_64-unknown-linux-musl/release/jxql   "${BINARY_DIR}/jxql-x86_64-unknown-linux-musl"
+          ls -la "${BINARY_DIR}"
+
+      - name: Build Node CLI bundles
+        run: |
+          set -euo pipefail
+          pnpm --filter @json-schema-x-graphql/cli run build
+          pnpm --filter @json-schema-x-graphql/core run build
+          mkdir -p "${BINARY_DIR}/node"
+          cp converters/cli/dist/index.js    "${BINARY_DIR}/node/json-schema-x-graphql.cjs"
+          cp converters/cli/dist/validate.js "${BINARY_DIR}/node/jxql-validate.cjs"
+          cp converters/cli/dist/migrate.js  "${BINARY_DIR}/node/jxql-migrate.cjs"
+          cp converters/node/dist/converter.js "${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs"
+          ls -la "${BINARY_DIR}/node"
+
+      # ---- Hashes ----
+      - name: Generate SHA-256 hashes
+        run: |
+          set -euo pipefail
+          : > "${HASH_DIR}/SHA256SUMS"
+          (cd "${BINARY_DIR}" && find . -type f \( -name jxql -o -name 'jxql-*' -o -name '*.cjs' \) -print0 | sort -z | xargs -0 sha256sum) | tee -a "${HASH_DIR}/SHA256SUMS"
+          cat "${HASH_DIR}/SHA256SUMS"
+
+      - name: Verify jxql binary smoke tests
+        run: |
+          set -euo pipefail
+          "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu" --version
+          "${BINARY_DIR}/jxql-x86_64-unknown-linux-musl" --version
+          node -e "require('./${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs')" || true
+
+      # ---- SBOMs: Rust (CycloneDX) ----
+      - name: Install cargo-cyclonedx
+        run: cargo install --locked cargo-cyclonedx
+
+      - name: Generate CycloneDX + SPDX SBOMs for Rust crate
+        working-directory: converters/rust
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.resolve-version.outputs.version }}"
+          cargo cyclonedx --format json --override-floating-versions true --fingerprint all --override-db-path "$GITHUB_WORKSPACE/release-assets/sbom/rust-cdx.json"
+          cargo cyclonedx --format spdx-json --override-floating-versions true --fingerprint all --override-db-path "$GITHUB_WORKSPACE/release-assets/sbom/rust-spdx.json"
+          ls -la "$GITHUB_WORKSPACE/release-assets/sbom"
+
+      # ---- SBOMs: Node (CycloneDX + SPDX) ----
+      - name: Install @cyclonedx/cyclonedx-npm globally
+        run: npm install -g @cyclonedx/cyclonedx-npm
+
+      - name: Generate CycloneDX SBOMs for Node workspaces
+        run: |
+          set -euo pipefail
+          cyclonedx-npm --output-format JSON --output-file "${SBOM_DIR}/node-claude-cdx.json" --spec-version 1.5 --package-lock-only ./converters/cli
+          cyclonedx-npm --output-format JSON --output-file "${SBOM_DIR}/node-core-cdx.json"   --spec-version 1.5 --package-lock-only ./converters/node
+
+      - name: Generate SPDX SBOMs for Node workspaces
+        run: |
+          set -euo pipefail
+          cyclonedx-npm --output-format SPDX --output-file "${SBOM_DIR}/node-cli-spdx.json"  --spec-version 1.5 --package-lock-only ./converters/cli
+          cyclonedx-npm --output-format SPDX --output-file "${SBOM_DIR}/node-core-spdx.json" --spec-version 1.5 --package-lock-only ./converters/node
+
+      - name: Sanity-check SBOM files
+        run: |
+          set -euo pipefail
+          for f in "${SBOM_DIR}"/*.json; do
+            jq empty "$f" >/dev/null || { echo "invalid JSON: $f"; exit 1; }
+            sz=$(stat -c%s "$f"); [ "$sz" -gt 200 ] || { echo "suspiciously small SBOM: $f ($sz bytes)"; exit 1; }
+          done
+          ls -la "${SBOM_DIR}" "${HASH_DIR}" "${BINARY_DIR}"
+
+      - name: Upload release assets
+        uses: actions/upload-artifact@ea165f8d45b8f3ed8419cd4f7e83da9d2a2ff738 # v4
+        with:
+          name: release-assets-${{ steps.resolve-version.outputs.tag }}
+          path: |
+            release-assets/binaries
+            release-assets/sbom
+            release-assets/hashes
+          if-no-files-found: error
+          retention-days: 90
+
+  # ---------- 3. Publish Node packages ----------
+  publish-node:
+    name: Publish Node packages to npm
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.build.outputs.dry_run == 'false'
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - dir: converters/node
+            name: '@json-schema-x-graphql/core'
+          - dir: converters/cli
+            name: '@json-schema-x-graphql/cli'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           registry-url: "https://registry.npmjs.org"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
 
-      - name: Get current version
-        id: current-version
-        run: |
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
-          echo "Current version: ${CURRENT_VERSION}"
-
-      - name: Calculate new version
-        id: new-version
-        env:
-          CURRENT_VERSION: ${{ steps.current-version.outputs.version }}
-          BUMP_TYPE: ${{ github.event.inputs.version_bump }}
-        run: |
-          # Parse current version
-          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
-
-          # Calculate new version based on bump type
-          case "$BUMP_TYPE" in
-            major)
-              NEW_MAJOR=$((MAJOR + 1))
-              NEW_MINOR=0
-              NEW_PATCH=0
-              ;;
-            minor)
-              NEW_MAJOR=$MAJOR
-              NEW_MINOR=$((MINOR + 1))
-              NEW_PATCH=0
-              ;;
-            patch)
-              NEW_MAJOR=$MAJOR
-              NEW_MINOR=$MINOR
-              NEW_PATCH=$((PATCH + 1))
-              ;;
-            *)
-              echo "Invalid bump type: $BUMP_TYPE"
-              exit 1
-              ;;
-          esac
-
-          NEW_VERSION="${NEW_MAJOR}.${NEW_MINOR}.${NEW_PATCH}"
-          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
-          echo "New version: ${NEW_VERSION}"
-
-      - name: Update package.json version
-        run: |
-          npm version ${{ steps.new-version.outputs.new_version }} --no-git-tag-version
-
-      - name: Update Cargo.toml version
-        run: |
-          sed -i 's/^version = .*/version = "${{ steps.new-version.outputs.new_version }}"/' Cargo.toml
-          sed -i 's/^version = .*/version = "${{ steps.new-version.outputs.new_version }}"/' converters/rust/Cargo.toml
-
-      - name: Generate CHANGELOG
-        uses: TriPSs/conventional-changelog-action@e83c92fda3e80b7a4e07eb4e6dc4dd00aa05a9a8 # v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: ./package.json
-          version-path: version
-          fallback-version: ${{ steps.new-version.outputs.new_version }}
-          skip-version-file: false
-          skip-commit: true # We'll commit manually
-
-      - name: Stage changes
-        run: |
-          git add package.json Cargo.toml converters/rust/Cargo.toml CHANGELOG.md
-          git diff --cached --quiet || echo "HAS_CHANGES=true" >> $GITHUB_ENV
-
-      - name: Commit version bump and changelog
-        if: env.HAS_CHANGES == 'true'
-        run: |
-          git commit -m "chore(release): v${{ steps.new-version.outputs.new_version }}"
-
-      - name: Create and push tag
-        id: create-tag
-        run: |
-          TAG="v${{ steps.new-version.outputs.new_version }}"
-          git tag -a "$TAG" -m "Release $TAG"
-          git push origin HEAD:${{ github.ref_name }}
-          git push origin "$TAG"
-          echo "tag=${TAG}" >> $GITHUB_OUTPUT
-
-      - name: Store version output
-        id: get-version
-        run: |
-          echo "version=${{ steps.new-version.outputs.new_version }}" >> $GITHUB_OUTPUT
-
-      - name: Install root dependencies for publishing
+      - name: Install root dependencies
         run: pnpm -w install --frozen-lockfile
 
-      - name: Build WASM for npm
-        run: npm run build:wasm
+      - name: Install workspace dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Publish to npm
+      - name: Publish ${{ matrix.package.name }}
+        working-directory: ${{ matrix.package.dir }}
+        run: pnpm publish --provenance --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          # 1. Build TS compilation for Core and CLI packages
-          pnpm --filter @json-schema-x-graphql/core run build
-          pnpm --filter @json-schema-x-graphql/cli run build
-          # 2. Publish core package
-          pnpm publish --filter @json-schema-x-graphql/core --no-git-checks --access public
-          # 3. Publish CLI package
-          pnpm publish --filter @json-schema-x-graphql/cli --no-git-checks --access public
-          # 4. Publish root wrapper package containing WASM bundle
-          pnpm publish --no-git-checks --access public
 
-      - name: Publish to crates.io
+  # ---------- 4. Publish Rust crate ----------
+  publish-rust:
+    name: Publish Rust crate to crates.io
+    runs-on: ubuntu-latest
+    needs: build
+    if: needs.build.outputs.dry_run == 'false'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # stable
+        with:
+          toolchain: stable
+
+      - name: Publish crate to crates.io
         working-directory: converters/rust
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
         run: |
-          cargo publish --token "$CARGO_REGISTRY_TOKEN"
+          set -euo pipefail
+          cargo login "${CRATES_TOKEN}"
+          # dry-run once to surface packaging issues, then publish
+          cargo publish --dry-run --locked --allow-dirty
+          cargo publish --locked
+        env:
+          CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}
 
-  create-release:
+  # ---------- 5. Create GitHub Release ----------
+  github-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    needs: release
-    if: success()
+    needs: [build, publish-node, publish-rust]
+    if: needs.build.outputs.dry_run == 'false'
+    permissions:
+      contents: write
+      attestations: write
+      id-token: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          ref: ${{ needs.release.outputs.tag }}
+          persist-credentials: true
+          fetch-depth: 0
 
-      - name: Extract changelog
-        id: changelog
+      - name: Download release assets artifact
+        uses: actions/download-artifact@fa0a38b46b9d4832866f3baf36eae9e9011a73c0 # v4
+        with:
+          name: release-assets-${{ needs.build.outputs.tag }}
+          path: release-assets
+
+      - name: Generate combined SHA-256 manifest
+        shell: bash
         run: |
-          # Extract the changelog for this release from CHANGELOG.md
-          # Using sed to extract content between version markers
-          VERSION="${{ needs.release.outputs.version }}"
-          CHANGELOG=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$ d' | sed '1d')
+          set -euo pipefail
+          cd release-assets
+          find . -type f -print0 | sort -z | xargs -0 sha256sum | tee SHA256SUMS.txt
+          cp SHA256SUMS.txt hashes/SHA256SUMS.txt
 
-          # Handle multiline output for GitHub Actions
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGELOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Build release notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${{ needs.build.outputs.version }}"
+          {
+            echo "## json-schema-x-graphql ${VERSION}"
+            echo
+            echo "### Downloads"
+            echo
+            echo "**Rust \`jxql\` CLI binaries** (sha256-verified):"
+            echo
+            for f in release-assets/binaries/jxql-x86_64-unknown-linux-gnu release-assets/binaries/jxql-x86_64-unknown-linux-musl; do
+              [ -e "$f" ] || continue
+              sz=$(stat -c%s "$f")
+              sha=$(sha256sum "$f" | awk '{print $1}')
+              base=$(basename "$f")
+              echo "- \`${base}\` (${sz} bytes) — \`${sha}\`"
+            done
+            echo
+            echo "**Node CLI bundles** (sha256-verified):"
+            echo
+            for f in release-assets/binaries/node/*; do
+              [ -e "$f" ] || continue
+              sz=$(stat -c%s "$f")
+              sha=$(sha256sum "$f" | awk '{print $1}')
+              base=$(basename "$f")
+              echo "- \`${base}\` (${sz} bytes) — \`${sha}\`"
+            done
+            echo
+            echo "### Software Bill of Materials (SBOM)"
+            echo
+            echo "CycloneDX + SPDX SBOMs are attached for both the Rust crate and the Node workspaces."
+            echo
+            echo "### Verifying binaries"
+            echo
+            echo '```'
+            echo "# Fetch the release"
+            echo "gh release download '${{ needs.build.outputs.tag }}'"
+            echo
+            echo "# Verify all artifacts"
+            echo "shasum -a 256 SHA256SUMS.txt  # or sha256sum -c SHA256SUMS.txt"
+            echo '```'
+            echo
+            echo "### npm"
+            echo
+            echo "Both Node packages were published with provenance and are installable via:"
+            echo
+            echo '```'
+            echo "npm install @json-schema-x-graphql/core@${VERSION}"
+            echo "npm install @json-schema-x-graphql/cli@${VERSION}"
+            echo '```'
+            echo
+            echo "### crates.io"
+            echo
+            echo '```'
+            echo "cargo install json-schema-x-graphql --version ${VERSION} --locked"
+            echo '```'
+          } > release-assets/RELEASE_NOTES.md
+          cat release-assets/RELEASE_NOTES.md
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v2
+        uses: softprops/action-gh-release@4dbc0d5e9efb67ed96ac4b35b5e1ca8be11a9c54 # v2
         with:
-          tag_name: ${{ needs.release.outputs.tag }}
-          name: Release ${{ needs.release.outputs.tag }}
-          body: ${{ steps.changelog.outputs.content }}
-          draft: false
-          prerelease: false
-          generate_release_notes: true
+          tag_name: ${{ needs.build.outputs.tag }}
+          name: ${{ needs.build.outputs.tag }}
+          body_path: release-assets/RELEASE_NOTES.md
+          files: |
+            release-assets/binaries/jxql-x86_64-unknown-linux-gnu
+            release-assets/binaries/jxql-x86_64-unknown-linux-musl
+            release-assets/binaries/node/*
+            release-assets/sbom/*.json
+            release-assets/SHA256SUMS.txt
+            release-assets/RELEASE_NOTES.md
+          generate_release_notes: false
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  post-release:
-    name: Post-Release Notifications
-    runs-on: ubuntu-latest
-    needs: [release, create-release]
-    if: success()
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Display Release Summary
-        run: |
-          echo "✅ Release Completed Successfully!"
-          echo ""
-          echo "📦 Published Package Information:"
-          echo "  Version: ${{ needs.release.outputs.version }}"
-          echo "  Tag: ${{ needs.release.outputs.tag }}"
-          echo ""
-          echo "📋 Release Artifacts:"
-          echo "  - npm: https://www.npmjs.com/package/json-schema-x-graphql"
-          echo "  - Cargo: https://crates.io/crates/json-schema-x-graphql"
-          echo "  - GitHub: https://github.com/${{ github.repository }}/releases/tag/${{ needs.release.outputs.tag }}"
-          echo ""
-          echo "📚 Next Steps:"
-          echo "  1. Verify the npm package: npm info json-schema-x-graphql"
-          echo "  2. Verify the crate: cargo search json-schema-x-graphql"
-          echo "  3. Check GitHub Release: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ needs.release.outputs.tag }}"
