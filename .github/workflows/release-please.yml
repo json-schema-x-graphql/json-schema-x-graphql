@@ -14,11 +14,32 @@ jobs:
   release-please:
     name: Create/Update Release PR
     runs-on: ubuntu-latest
+    # The organization policy for this repo disables the ability of the
+    # default GITHUB_TOKEN to create or approve pull requests, which makes
+    # release-please fail at the "open the release PR" step. When a
+    # RELEASE_PLEASE_TOKEN secret (a PAT or GitHub App installation token with
+    # repo + pull-requests write) is configured we use it and release-please
+    # behaves normally. Otherwise we still run release-please with
+    # skip-github-pull-request so version/changelog computation and the
+    # release-please branch stay up to date without failing the job.
+    env:
+      RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
     steps:
-      - name: Run release-please
+      - name: Run release-please (opens/updates the release PR)
+        if: ${{ env.RELEASE_PLEASE_TOKEN != '' }}
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ env.RELEASE_PLEASE_TOKEN }}
+          config-file: .github/release-please.json
+          manifest-file: .release-please-manifest.json
+          target-branch: main
+
+      - name: Run release-please (no PR token configured; org policy blocks GITHUB_TOKEN PR creation)
+        if: ${{ env.RELEASE_PLEASE_TOKEN == '' }}
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: .github/release-please.json
           manifest-file: .release-please-manifest.json
           target-branch: main
+          skip-github-pull-request: true
