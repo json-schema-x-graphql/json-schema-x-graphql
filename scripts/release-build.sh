@@ -5,10 +5,10 @@
 # is in place. Produces:
 #   release-assets/binaries/jxql-x86_64-unknown-linux-gnu
 #   release-assets/binaries/jxql-x86_64-unknown-linux-musl
-#   release-assets/binaries/node/json-schema-x-graphql.cjs
-#   release-assets/binaries/node/jxql-validate.cjs
-#   release-assets/binaries/node/jxql-migrate.cjs
-#   release-assets/binaries/node/@json-schema-x-graphql--core.cjs
+#   release-assets/binaries/node/json-schema-x-graphql.mjs
+#   release-assets/binaries/node/jxql-validate.mjs
+#   release-assets/binaries/node/jxql-migrate.mjs
+#   release-assets/binaries/node/@json-schema-x-graphql--core.mjs
 #   release-assets/hashes/SHA256SUMS.txt
 #   release-assets/sbom/rust-cdx.json
 #   release-assets/sbom/rust-spdx.json
@@ -96,10 +96,12 @@ pnpm --filter @json-schema-x-graphql/core run build
 pnpm --filter @json-schema-x-graphql/cli run build
 
 mkdir -p "$BINARY_DIR/node"
-cp converters/cli/dist/index.js     "$BINARY_DIR/node/json-schema-x-graphql.cjs"
-cp converters/cli/dist/validate.js  "$BINARY_DIR/node/jxql-validate.cjs"
-cp converters/cli/dist/migrate.js   "$BINARY_DIR/node/jxql-migrate.cjs"
-cp converters/node/dist/converter.js "$BINARY_DIR/node/@json-schema-x-graphql--core.cjs"
+# The TS config emits ES modules (module: esnext), so we copy with .mjs so Node
+# treats the files as ESM regardless of the parent package.json "type" field.
+cp converters/cli/dist/index.js      "$BINARY_DIR/node/json-schema-x-graphql.mjs"
+cp converters/cli/dist/validate.js   "$BINARY_DIR/node/jxql-validate.mjs"
+cp converters/cli/dist/migrate.js    "$BINARY_DIR/node/jxql-migrate.mjs"
+cp converters/node/dist/converter.js "$BINARY_DIR/node/@json-schema-x-graphql--core.mjs"
 
 # ---------- WASM bundle for the browser editor ----------
 log "Building WASM bundle (Rust -> wasm32-unknown-unknown)"
@@ -128,6 +130,8 @@ for b in "$BINARY_DIR"/jxql-*; do
   [ -x "$b" ] || continue
   "$b" --version || fail "smoke test failed: $b"
 done
+log "Smoke testing ESM bundle"
+node --input-type=module -e "import('$BINARY_DIR/node/@json-schema-x-graphql--core.mjs').then(() => console.log('esm smoke OK')).catch(e => { console.error(e.message); process.exit(1); })"
 
 # ---------- SBOMs: Rust ----------
 log "Installing cargo-cyclonedx (SBOM generator for Rust)"

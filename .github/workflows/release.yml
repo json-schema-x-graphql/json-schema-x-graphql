@@ -256,10 +256,14 @@ jobs:
           pnpm --filter @json-schema-x-graphql/core run build
           pnpm --filter @json-schema-x-graphql/cli  run build
           mkdir -p "${BINARY_DIR}/node"
-          cp converters/cli/dist/index.js       "${BINARY_DIR}/node/json-schema-x-graphql.cjs"
-          cp converters/cli/dist/validate.js    "${BINARY_DIR}/node/jxql-validate.cjs"
-          cp converters/cli/dist/migrate.js     "${BINARY_DIR}/node/jxql-migrate.cjs"
-          cp converters/node/dist/converter.js  "${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs"
+          # The TS config emits ES modules (module: esnext), so the built .js files
+          # contain `export` statements. We copy them with an .mjs extension so
+          # Node treats them as ESM, regardless of the parent package.json's
+          # "type" field.
+          cp converters/cli/dist/index.js       "${BINARY_DIR}/node/json-schema-x-graphql.mjs"
+          cp converters/cli/dist/validate.js    "${BINARY_DIR}/node/jxql-validate.mjs"
+          cp converters/cli/dist/migrate.js     "${BINARY_DIR}/node/jxql-migrate.mjs"
+          cp converters/node/dist/converter.js  "${BINARY_DIR}/node/@json-schema-x-graphql--core.mjs"
           ls -la "${BINARY_DIR}/node"
 
       # ---- Hashes ----
@@ -267,7 +271,7 @@ jobs:
         run: |
           set -euo pipefail
           : > "${HASH_DIR}/SHA256SUMS"
-          (cd "${BINARY_DIR}" && find . -type f \( -name jxql -o -name 'jxql-*' -o -name '*.cjs' -o -name '*.wasm' \) -print0 | sort -z | xargs -0 sha256sum) | tee -a "${HASH_DIR}/SHA256SUMS"
+          (cd "${BINARY_DIR}" && find . -type f \( -name jxql -o -name 'jxql-*' -o -name '*.mjs' -o -name '*.wasm' \) -print0 | sort -z | xargs -0 sha256sum) | tee -a "${HASH_DIR}/SHA256SUMS"
           cat "${HASH_DIR}/SHA256SUMS"
 
       - name: Verify jxql binary smoke tests
@@ -277,7 +281,8 @@ jobs:
             [ -x "$b" ] || continue
             "$b" --version || { echo "smoke test failed: $b"; exit 1; }
           done
-          node -e "require('${GITHUB_WORKSPACE}/${BINARY_DIR}/node/@json-schema-x-graphql--core.cjs')" || true
+          # The TS-compiled bundles are ESM; load them with --input-type=module.
+          node --input-type=module -e "import('${GITHUB_WORKSPACE}/${BINARY_DIR}/node/@json-schema-x-graphql--core.mjs').then(() => console.log('esm smoke OK')).catch(e => { console.error(e.message); process.exit(1); })"
 
       # ---- SBOMs: Rust (CycloneDX) ----
       - name: Install cargo-cyclonedx
@@ -452,10 +457,10 @@ jobs:
           subject-path: |
             release-assets/binaries/jxql-x86_64-unknown-linux-gnu
             release-assets/binaries/jxql-x86_64-unknown-linux-musl
-            release-assets/binaries/node/json-schema-x-graphql.cjs
-            release-assets/binaries/node/jxql-validate.cjs
-            release-assets/binaries/node/jxql-migrate.cjs
-            release-assets/binaries/node/@json-schema-x-graphql--core.cjs
+            release-assets/binaries/node/json-schema-x-graphql.mjs
+            release-assets/binaries/node/jxql-validate.mjs
+            release-assets/binaries/node/jxql-migrate.mjs
+            release-assets/binaries/node/@json-schema-x-graphql--core.mjs
             release-assets/binaries/wasm/json_schema_x_graphql_bg.wasm
 
       - name: Build release notes
