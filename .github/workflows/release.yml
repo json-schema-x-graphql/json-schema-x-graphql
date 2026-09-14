@@ -207,11 +207,13 @@ jobs:
 
       # ---- Rust (jxql) ----
       - name: Build jxql release binary (gnu)
-        working-directory: converters/rust
         run: |
           set -euo pipefail
+          pushd converters/rust >/dev/null
           cargo build --release --locked --bin jxql --features cli --target x86_64-unknown-linux-gnu
+          popd >/dev/null
           # Cargo workspace puts artifacts in the workspace root's target/.
+          mkdir -p "${BINARY_DIR}"
           cp "${GITHUB_WORKSPACE}/target/x86_64-unknown-linux-gnu/release/jxql" "${BINARY_DIR}/jxql-x86_64-unknown-linux-gnu"
           ls -la "${BINARY_DIR}"
 
@@ -282,16 +284,17 @@ jobs:
         run: cargo install --locked cargo-cyclonedx
 
       - name: Generate CycloneDX SBOMs for Rust crate
-        working-directory: converters/rust
         run: |
           set -euo pipefail
+          pushd converters/rust >/dev/null
           cargo cyclonedx --format json --override-filename rust-cdx --all --quiet
           cargo cyclonedx --format xml  --override-filename rust-cdx --all --quiet
           # cargo-cyclonedx 0.5.x writes <name>.json / <name>.xml
           if [ ! -f rust-cdx.json ] && [ -f rust-cdx.cdx.json ]; then mv rust-cdx.cdx.json rust-cdx.json; fi
           if [ ! -f rust-cdx.xml  ] && [ -f rust-cdx.cdx.xml  ]; then mv rust-cdx.cdx.xml  rust-cdx.xml;  fi
-          mv rust-cdx.json "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.json"
-          mv rust-cdx.xml  "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.xml"
+          popd >/dev/null
+          mv converters/rust/rust-cdx.json "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.json"
+          mv converters/rust/rust-cdx.xml  "$GITHUB_WORKSPACE/${SBOM_DIR}/rust-cdx.xml"
           ls -la "$GITHUB_WORKSPACE/${SBOM_DIR}"
 
       # ---- SBOMs: Node (CycloneDX + SPDX) ----
