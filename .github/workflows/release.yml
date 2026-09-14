@@ -445,14 +445,8 @@ jobs:
       - name: Attest release binaries (build provenance)
         uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
         with:
-          subject-names: |
-            jxql-x86_64-unknown-linux-gnu
-            jxql-x86_64-unknown-linux-musl
-            json-schema-x-graphql
-            jxql-validate
-            jxql-migrate
-            @json-schema-x-graphql--core
-          subject-paths: |
+          subject-name: jxql-cli-binaries
+          subject-path: |
             release-assets/binaries/jxql-x86_64-unknown-linux-gnu
             release-assets/binaries/jxql-x86_64-unknown-linux-musl
             release-assets/binaries/node/json-schema-x-graphql.cjs
