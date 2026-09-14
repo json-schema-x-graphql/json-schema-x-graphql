@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-09-13
+
+### Changed
+
+- **Release pipeline overhaul.** `release.yml` now produces a tagged, signed, SBOM-attested release for the Rust `jxql` CLI, the Node CLI bundles, *and* the WASM bundle. Every binary carries a Sigstore-signed SLSA build-provenance attestation (`.intoto.jsonl`). CycloneDX JSON+XML SBOMs are generated for the Rust crate; CycloneDX JSON + SPDX JSON SBOMs are generated for both Node workspaces (`@cyclonedx/cdxgen`); a combined `SHA256SUMS.txt` and a `RELEASE_NOTES.md` are attached to the GitHub Release. See [scripts/release-build.sh](scripts/release-build.sh) for the locally-runnable equivalent.
+- **release-please configuration.** release-please now manages both Node packages (`@json-schema-x-graphql/core`, `@json-schema-x-graphql/cli`) in lockstep with the root crate. The release-please workflow tolerates the org-level policy that blocks `GITHUB_TOKEN` PR creation, and falls back gracefully when no `RELEASE_PLEASE_TOKEN` is configured (#249, #250).
+- **Dependency housekeeping.** `csv-parse` bumped 5.6.0 → 7.0.2, GitHub Actions dependency groups, dashboard & workspace npm groups, and `simd-json` (Rust) updated. Pre-existing yanked crates (`chacha20`, `quinn-proto`) remediated. Security audit reintroduced `--deny yanked` with all transitive issues resolved.
+
+### Fixed
+
+- **Rust crate:** `cargo build --bin jxql` now passes `--features cli` (the binary is `required-features = ["cli"]`). Workspace-root-anchored artifact paths.
+- **Node CLI bundles:** `pnpm install --frozen-lockfile` is now run before per-package builds so `node_modules` is populated for `pnpm --filter`.
+- **`secrets.CRATES_TOKEN` → `secrets.CARGO_TOKEN`** (the latter exists in the repo; the former was a phantom). Removed the redundant `cargo login` step.
+
 ## [Unreleased]
 
 ### Fixed
