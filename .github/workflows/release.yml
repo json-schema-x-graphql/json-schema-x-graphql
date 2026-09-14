@@ -300,26 +300,29 @@ jobs:
       # ---- SBOMs: Node (CycloneDX + SPDX) ----
       # `cdxgen` understands pnpm-lock.yaml natively and emits both CycloneDX and SPDX
       # in a single invocation, which avoids `cyclonedx-npm`'s npm-lock-only constraint.
-      # We run each cdxgen from /tmp and with hardcoded args because cdxgen 12.x has
-      # a quirk where the second invocation in a shell session can silently produce
-      # an empty BOM if it sees the same workspace tree with different args.
+      # We cd to /tmp inside the script (not via working-directory:) so the SBOM_DIR
+      # env var keeps resolving relative to $GITHUB_WORKSPACE.
       - name: Generate CycloneDX + SPDX SBOMs for Node workspaces
-        working-directory: /tmp
         run: |
           set -euo pipefail
+          pushd /tmp >/dev/null
           npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type application -t pnpm \
-            -o "${SBOM_DIR}/node-cli-cdx.json"      --output-format JSON      "${GITHUB_WORKSPACE}/converters/cli"
+            -o "${GITHUB_WORKSPACE}/${SBOM_DIR}/node-cli-cdx.json"     --output-format JSON      "${GITHUB_WORKSPACE}/converters/cli"
           npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type application -t pnpm \
-            -o "${SBOM_DIR}/node-cli-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/cli"
+            -o "${GITHUB_WORKSPACE}/${SBOM_DIR}/node-cli-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/cli"
           npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type library -t pnpm \
-            -o "${SBOM_DIR}/node-core-cdx.json"     --output-format JSON      "${GITHUB_WORKSPACE}/converters/node"
+            -o "${GITHUB_WORKSPACE}/${SBOM_DIR}/node-core-cdx.json"    --output-format JSON      "${GITHUB_WORKSPACE}/converters/node"
           npx --yes @cyclonedx/cdxgen@^12 --no-install-deps --spec-version 1.6 --type library -t pnpm \
-            -o "${SBOM_DIR}/node-core-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/node"
+            -o "${GITHUB_WORKSPACE}/${SBOM_DIR}/node-core-spdx.spdx.json" --output-format SPDXJSON "${GITHUB_WORKSPACE}/converters/node"
+          popd >/dev/null
 
       - name: Sanity-check SBOM files
         run: |
           set -euo pipefail
-          for f in "${SBOM_DIR}"/*.json; do
+          shopt -s nullglob
+          sbom_files=( "${SBOM_DIR}"/*.json )
+          [ "${#sbom_files[@]}" -ge 6 ] || { echo "expected at least 6 SBOM files (rust cdx json+xml, node cli/core cdx+spdx), got ${#sbom_files[@]}"; ls -la "${SBOM_DIR}"; exit 1; }
+          for f in "${sbom_files[@]}"; do
             jq empty "$f" >/dev/null || { echo "invalid JSON: $f"; exit 1; }
             sz=$(stat -c%s "$f"); [ "$sz" -gt 200 ] || { echo "suspiciously small SBOM: $f ($sz bytes)"; exit 1; }
           done
