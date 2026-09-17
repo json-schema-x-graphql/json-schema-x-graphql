@@ -355,10 +355,14 @@ jobs:
         run: |
           set -euo pipefail
           shopt -s nullglob
-          sbom_files=( "${SBOM_DIR}"/*.json )
+          # rust-cdx.xml is the XML CycloneDX, the others are JSON/.spdx.json. Match
+          # both .json and .xml so the XML artifact isn't double-counted.
+          sbom_files=( "${SBOM_DIR}"/*.json "${SBOM_DIR}"/*.xml )
           [ "${#sbom_files[@]}" -ge 6 ] || { echo "expected at least 6 SBOM files (rust cdx json+xml, node cli/core cdx+spdx), got ${#sbom_files[@]}"; ls -la "${SBOM_DIR}"; exit 1; }
           for f in "${sbom_files[@]}"; do
-            jq empty "$f" >/dev/null || { echo "invalid JSON: $f"; exit 1; }
+            if [[ "$f" == *.json ]]; then
+              jq empty "$f" >/dev/null || { echo "invalid JSON: $f"; exit 1; }
+            fi
             sz=$(stat -c%s "$f"); [ "$sz" -gt 200 ] || { echo "suspiciously small SBOM: $f ($sz bytes)"; exit 1; }
           done
           ls -la "${SBOM_DIR}" "${HASH_DIR}" "${BINARY_DIR}"
