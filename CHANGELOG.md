@@ -5,11 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2026-09-28
+
+### Security
+
+- **rustls (RUSTSEC-2026-0049):** Upgraded `rustls` to 0.23.45, `aws-lc-rs` to 1.18.1, and `aws-lc-sys` to 0.45.0 in `Cargo.lock`. Security audit passes with zero vulnerabilities (`--deny warnings --deny unmaintained --deny unsound --deny yanked`).
+- **devalue (GHSA-9rgm-9g3h-6x36):** Enforced `devalue: 5.9.4` via workspace overrides to address prototype pollution vulnerability in Vite and SvelteKit toolchains.
+- **@xmldom/xmldom:** Added override `"@xmldom/xmldom@<0.9.12": ^0.9.12` to prevent vulnerable transitive resolutions.
+
+### Changed
+
+- **Consolidated Dependabot upgrades:**
+  - Bumped GitHub Actions dependencies across all workflows (PR #257).
+  - Bumped Cargo dependencies `opentelemetry` and `opentelemetry_sdk` to `0.33.0` (PR #259).
+  - Bumped dashboard dependencies (PR #260).
+  - Bumped workspace npm dependencies (PR #261).
+- **Build system:**
+  - Configured `@parcel/watcher` in `onlyBuiltDependencies` and `allowBuilds` in `pnpm-workspace.yaml` for pnpm v11 compatibility.
+  - Aligned `@vitejs/plugin-react` to `^5.2.0` in `frontend/subgraph-composer` for compatibility with Vite 6.
+  - Maintained Nextra 3 compatibility for `website` on Next 15 and React 18.
+
 ## [2.0.1] - 2026-09-13
 
 ### Changed
 
-- **Release pipeline overhaul.** `release.yml` now produces a tagged, signed, SBOM-attested release for the Rust `jxql` CLI, the Node CLI bundles, *and* the WASM bundle. Every binary carries a Sigstore-signed SLSA build-provenance attestation (`.intoto.jsonl`). CycloneDX JSON+XML SBOMs are generated for the Rust crate; CycloneDX JSON + SPDX JSON SBOMs are generated for both Node workspaces (`@cyclonedx/cdxgen`); a combined `SHA256SUMS.txt` and a `RELEASE_NOTES.md` are attached to the GitHub Release. See [scripts/release-build.sh](scripts/release-build.sh) for the locally-runnable equivalent.
+- **Release pipeline overhaul.** `release.yml` now produces a tagged, signed, SBOM-attested release for the Rust `jxql` CLI, the Node CLI bundles, _and_ the WASM bundle. Every binary carries a Sigstore-signed SLSA build-provenance attestation (`.intoto.jsonl`). CycloneDX JSON+XML SBOMs are generated for the Rust crate; CycloneDX JSON + SPDX JSON SBOMs are generated for both Node workspaces (`@cyclonedx/cdxgen`); a combined `SHA256SUMS.txt` and a `RELEASE_NOTES.md` are attached to the GitHub Release. See [scripts/release-build.sh](scripts/release-build.sh) for the locally-runnable equivalent.
 - **release-please configuration.** release-please now manages both Node packages (`@json-schema-x-graphql/core`, `@json-schema-x-graphql/cli`) in lockstep with the root crate. The release-please workflow tolerates the org-level policy that blocks `GITHUB_TOKEN` PR creation, and falls back gracefully when no `RELEASE_PLEASE_TOKEN` is configured (#249, #250).
 - **Dependency housekeeping.** `csv-parse` bumped 5.6.0 → 7.0.2, GitHub Actions dependency groups, dashboard & workspace npm groups, and `simd-json` (Rust) updated. Pre-existing yanked crates (`chacha20`, `quinn-proto`) remediated. Security audit reintroduced `--deny yanked` with all transitive issues resolved.
 
@@ -394,5 +414,5 @@ This project follows [Semantic Versioning](https://semver.org/):
 
 ---
 
-**Maintained by**: @JJediny and contributors  
+**Maintained by**: @JJediny and contributors
 **License**: MIT

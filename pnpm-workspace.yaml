@@ -16,6 +16,7 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   wasm-pack: false
+  "@parcel/watcher": true
 
 onlyBuiltDependencies:
   - "visual-json"
@@ -23,6 +24,7 @@ onlyBuiltDependencies:
   - "@apollo/protobufjs"
   - "protobufjs"
   - "esbuild"
+  - "@parcel/watcher"
 
 overrides:
   auto-bind: 4.0.0
@@ -34,7 +36,8 @@ overrides:
   turbo: 2.9.14
   uuid: 11.1.1
   uuid@<11.1.1: 11.1.1
-  devalue: 5.8.1
+  devalue: 5.9.4
+  devalue@<5.9.2: 5.9.4
   svelte: 5.55.9
   mermaid: 11.17.0
   "@eslint/plugin-kit": 0.3.4
@@ -61,6 +64,7 @@ overrides:
   postcss@<8.5.25: ^8.5.25
   qs: ^6.16.0
   "@xmldom/xmldom": ^0.9.12
+  "@xmldom/xmldom@<0.9.12": ^0.9.12
   vite: ^6.4.3
   diff: ^5.2.2
   lodash: ^4.17.23

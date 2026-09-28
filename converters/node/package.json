@@ -1,6 +1,6 @@
 {
   "name": "@json-schema-x-graphql/core",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Bidirectional JSON Schema ↔ GraphQL SDL converter with x-graphql extensions and full Apollo Federation v2 support",
   "keywords": [
     "apollo",
@@ -60,31 +60,31 @@
   },
   "dependencies": {
     "@graphql-codegen/core": "^6.2.0",
-    "@graphql-codegen/plugin-helpers": "^7.1.0",
+    "@graphql-codegen/plugin-helpers": "^7.3.0",
     "@opentelemetry/api": "^1.9.0",
     "@standard-schema/spec": "^1.1.0",
     "graphql": "^17.0.2",
-    "zod": "^4.4.3",
+    "zod": "^4.6.5",
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@graphql-codegen/cli": "^7.1.3",
+    "@graphql-codegen/cli": "^7.4.3",
     "@graphql-codegen/typescript": "^6.1.0",
-    "@opentelemetry/sdk-trace-base": "^2.10.0",
-    "@opentelemetry/sdk-trace-node": "^2.10.0",
+    "@opentelemetry/sdk-trace-base": "^2.11.0",
+    "@opentelemetry/sdk-trace-node": "^2.11.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.6.2",
     "eslint": "9.20.0",
-    "jest": "^30.4.2",
-    "ts-jest": "^29.4.12",
-    "tsx": "^4.23.12",
+    "jest": "^30.5.2",
+    "ts-jest": "^29.4.13",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.2"
   },
   "optionalDependencies": {
-    "@opentelemetry/sdk-trace-base": "^2.10.0",
-    "@opentelemetry/sdk-trace-node": "^2.10.0"
+    "@opentelemetry/sdk-trace-base": "^2.11.0",
+    "@opentelemetry/sdk-trace-node": "^2.11.0"
   },
   "engines": {
     "node": ">=24.0.0",
