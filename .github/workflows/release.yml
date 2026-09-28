@@ -3,7 +3,7 @@ name: Release and Publish
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
@@ -390,9 +390,9 @@ jobs:
       matrix:
         package:
           - dir: converters/node
-            name: '@json-schema-x-graphql/core'
+            name: "@json-schema-x-graphql/core"
           - dir: converters/cli
-            name: '@json-schema-x-graphql/cli'
+            name: "@json-schema-x-graphql/cli"
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -521,7 +521,7 @@ jobs:
             echo
             echo "**Node CLI bundles** (sha256-verified):"
             echo
-            for f in release-assets/binaries/node/*; do
+            for f in release-assets/binaries/node/*.mjs; do
               [ -e "$f" ] || continue
               sz=$(stat -c%s "$f")
               sha=$(sha256sum "$f" | awk '{print $1}')
@@ -592,7 +592,7 @@ jobs:
           files: |
             release-assets/binaries/jxql-x86_64-unknown-linux-gnu
             release-assets/binaries/jxql-x86_64-unknown-linux-musl
-            release-assets/binaries/node/*
+            release-assets/binaries/node/*.mjs
             release-assets/binaries/wasm/*.wasm
             release-assets/binaries/wasm/*.js
             release-assets/sbom/*.json
