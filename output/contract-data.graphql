@@ -18,6 +18,15 @@ scalar Email
 "Uniform Resource Identifier or URL string"
 scalar Uri
 
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
+  PRISM
+}
+
 """Root Contract Data record combining system metadata, identifiers, financial data, vendor information, agency details, and all procurement-related fields."""
 type Fpdsrecord {
   systemMetadata: SystemMetadata!

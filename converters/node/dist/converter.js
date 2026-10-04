@@ -114,6 +114,7 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         typeNames: new Map(),
     };
     emitCustomScalars(schema, context);
+    emitCustomEnums(schema, context);
     const definitions = schema.$defs || schema.definitions;
     if (definitions) {
         const entries = normalized.preserveFieldOrder
@@ -927,6 +928,36 @@ function emitCustomScalars(schema, context) {
             context.output.push(formatDescription(scalarDef.description, context.options));
         }
         context.output.push(`scalar ${toPascalCase(scalarName)}\n`);
+    }
+}
+/**
+ * Emit enum definitions declared in the root-level `x-graphql-enums`
+ * registry. Without this, fields typed via `x-graphql-field-type` reference
+ * an enum that is never defined, producing invalid SDL.
+ */
+function emitCustomEnums(schema, context) {
+    const enums = schema["x-graphql-enums"];
+    if (!enums || typeof enums !== "object")
+        return;
+    for (const [enumName, enumDef] of Object.entries(enums)) {
+        if (!enumDef || typeof enumDef !== "object")
+            continue;
+        const def = enumDef;
+        // Registry keys are referenced verbatim by `x-graphql-field-type`, so
+        // emit them verbatim (no case transformation) to keep references valid.
+        if (context.generatedTypes.has(enumName))
+            continue;
+        // renderEnum reads values from `x-graphql-enum`; wrap the registry entry
+        // so both `{ values: [...] }` and explicit `x-graphql-enum` shapes work.
+        const entry = {
+            ...def,
+            "x-graphql-enum": def["x-graphql-enum"] ?? def,
+        };
+        const rendered = renderEnum(enumName, entry, context.options);
+        if (rendered) {
+            context.output.push(rendered);
+            context.generatedTypes.add(enumName);
+        }
     }
 }
 function emitOperations(schema, context) {

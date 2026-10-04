@@ -33,9 +33,95 @@ fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
     true
 }
 
+/// Sanitize an enum value into a valid GraphQL enum value name.
+/// Mirrors the Node converter: replace non-`[_a-zA-Z0-9]` with `_`, then
+/// uppercase.
+fn sanitize_enum_value(value: &str) -> String {
+    value
+        .chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '_' {
+                c
+            } else {
+                '_'
+            }
+        })
+        .collect::<String>()
+        .to_uppercase()
+}
+
+/// Emit enum definitions from the root-level `x-graphql-enums` registry.
+/// Registry keys are referenced verbatim by `x-graphql-field-type`, so they
+/// are emitted without case transformation to keep references valid.
+fn emit_custom_enums(root: &JsonValue, context: &mut ConversionContext) {
+    let Some(enums) = root.get("x-graphql-enums").and_then(|v| v.as_object()) else {
+        return;
+    };
+
+    for (enum_name, enum_def) in enums {
+        let Some(def) = enum_def.as_object() else {
+            continue;
+        };
+        if context.generated_types.contains(enum_name) {
+            continue;
+        }
+
+        // Values: prefer x-graphql-enum.values, then the entry's own
+        // `values`/`enum` (mirrors Node's renderEnum lookup order).
+        let values = def
+            .get("x-graphql-enum")
+            .and_then(|v| v.get("values"))
+            .or_else(|| def.get("values"))
+            .or_else(|| def.get("enum"));
+
+        let mut lines: Vec<String> = Vec::new();
+        let mut emitted = false;
+        if let Some(arr) = values.and_then(|v| v.as_array()) {
+            for value in arr {
+                if let Some(val_str) = value.as_str() {
+                    lines.push(format!("  {}\n", sanitize_enum_value(val_str)));
+                    emitted = true;
+                } else if let Some(val_name) = value.get("name").and_then(|n| n.as_str()) {
+                    lines.push(format!("  {}\n", val_name));
+                    emitted = true;
+                }
+            }
+        } else if let Some(map) = values.and_then(|v| v.as_object()) {
+            for (key, config) in map {
+                let name = if let Some(cfg) = config.as_object() {
+                    cfg.get("name").and_then(|n| n.as_str()).unwrap_or(key)
+                } else {
+                    config.as_str().unwrap_or(key)
+                };
+                lines.push(format!("  {}\n", name));
+                emitted = true;
+            }
+        }
+        if !emitted {
+            continue;
+        }
+
+        if context.options.include_descriptions {
+            if let Some(description) = def.get("description").and_then(|v| v.as_str()) {
+                context
+                    .output
+                    .push(format_description(description, context.options));
+            }
+        }
+        context.output.push(format!("enum {} {{\n", enum_name));
+        context.output.extend(lines);
+        context.output.push("}\n\n".to_string());
+        context.generated_types.insert(enum_name.clone());
+    }
+}
+
 /// Convert JSON Schema to GraphQL SDL
 pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String> {
     let mut context = ConversionContext::with_root(options, schema);
+
+    // Emit registry enums before type processing so $defs definitions with
+    // the same name are deduplicated against the explicit declarations.
+    emit_custom_enums(schema, &mut context);
 
     // Process the schema
     if let Some(obj) = schema.as_object() {
@@ -629,7 +715,10 @@ fn convert_type_definition(
     }
 
     // Vocabulary concept extension
-    if let Some(concept) = obj.get("x-graphql-field-vocabulary").and_then(|v| v.as_str()) {
+    if let Some(concept) = obj
+        .get("x-graphql-field-vocabulary")
+        .and_then(|v| v.as_str())
+    {
         directives_json.push(serde_json::json!({
             "name": "vocabulary",
             "arguments": { "concept": concept }
@@ -678,7 +767,9 @@ fn convert_type_definition(
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
-                        output.push_str(&format!("  {}\n", val_str));
+                        // Sanitize to valid GraphQL enum value names (parity
+                        // with the Node converter's renderEnum).
+                        output.push_str(&format!("  {}\n", sanitize_enum_value(val_str)));
                     }
                 }
             } else {
@@ -1152,7 +1243,10 @@ fn convert_field(
         }
     }
 
-    if let Some(concept) = obj.get("x-graphql-field-vocabulary").and_then(|v| v.as_str()) {
+    if let Some(concept) = obj
+        .get("x-graphql-field-vocabulary")
+        .and_then(|v| v.as_str())
+    {
         directives_json.push(serde_json::json!({
             "name": "vocabulary",
             "arguments": { "concept": concept }
@@ -1316,7 +1410,10 @@ fn infer_graphql_type(
 
         if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
             let is_root_ref = ref_path == "#" || ref_path == "#/" || ref_path.is_empty();
-            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) && !is_root_ref {
+            if !context.generated_types.contains(&type_name)
+                && !is_top_level_def(ref_path)
+                && !is_root_ref
+            {
                 if let Some(s) = context.resolve_ref_schema(ref_path) {
                     let schema_clone = s.clone();
                     convert_type_definition(&schema_clone, &type_name, context)?;

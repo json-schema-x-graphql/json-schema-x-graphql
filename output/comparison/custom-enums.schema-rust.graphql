@@ -1,0 +1,18 @@
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  PRISM
+}
+
+enum Status {
+  IN_PROGRESS
+  ON_HOLD
+  DONE
+}
+
+type Enumregistry {
+  systemName: SystemName
+  status: Status
+}
+

@@ -205,6 +205,28 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     expect(sdl).not.toMatch(/items:\s*Tag(\s|$)/);
   });
 
+  it("emits enum definitions from the root x-graphql-enums registry", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Agent",
+      "x-graphql-enums": {
+        SystemName: {
+          description: "Enumeration of system identifiers",
+          values: ["Legacy Procurement", "PRISM"],
+        },
+      },
+      properties: {
+        systemName: { "x-graphql-field-type": "SystemName" },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("enum SystemName {");
+    expect(sdl).toContain("LEGACY_PROCUREMENT");
+    expect(sdl).toContain("PRISM");
+  });
+
   it("resolves $ref: '/' lenient root pointers to the root type (parity with Rust)", () => {
     const schema = {
       $schema: "https://json-schema.org/draft/2020-12/schema",

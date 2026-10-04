@@ -29,6 +29,15 @@ scalar Email
 "Valid URI/URL"
 scalar Uri
 
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
+  PRISM
+}
+
 """Root Legacy Procurement entity record combining system metadata and Legacy Procurement-specific data."""
 type AssistRecord @key(fields: "ia_piid_or_unique_id source_record_id") {
   "System-level metadata for lineage, versioning, and ingestion."

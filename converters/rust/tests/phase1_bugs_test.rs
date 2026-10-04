@@ -28,7 +28,10 @@ fn test_phase1_issue_245_one_of_null_union() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("anchorReceipt: AnchorReceipt"));
@@ -54,7 +57,10 @@ fn test_phase1_issue_234_null_primitive_unions() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("title: String"));
@@ -80,7 +86,10 @@ fn test_phase1_issue_233_explicit_field_type_array() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("hasPart: [DcatCatalog]"));
@@ -100,7 +109,10 @@ fn test_phase1_issue_231_root_type_name_respected() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("type DcatCatalog"));
@@ -126,7 +138,10 @@ fn test_phase1_issue_236_237_root_self_reference() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("type DcatCatalog"));
@@ -160,10 +175,14 @@ fn test_phase1_issue_232_vocabulary_concept() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
-    assert!(result.contains("hadRole: String @vocabulary(concept: \"http://www.w3.org/ns/dcat#hadRole\")"));
+    assert!(result
+        .contains("hadRole: String @vocabulary(concept: \"http://www.w3.org/ns/dcat#hadRole\")"));
     assert!(!result.contains("hadRole: DcatConcept"));
 }
 
@@ -191,11 +210,74 @@ fn test_phase1_issue_235_query_arg_formatting() {
 
     let converter = Converter::new();
     let result = converter
-        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
         .expect("Conversion failed");
 
     assert!(result.contains("\"\"\"@id IRI of the dataset.\"\"\""));
     assert!(result.contains("id: ID!"));
     // Verify docstring is followed by a newline, not on the same line with excessive spaces
     assert!(!result.contains("\"\"\"    id: ID!"));
+}
+
+#[test]
+fn test_custom_enum_registry_emission() {
+    let schema = json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "title": "Agent",
+        "x-graphql-enums": {
+            "SystemName": {
+                "description": "Enumeration of system identifiers",
+                "values": ["Legacy Procurement", "PRISM"]
+            }
+        },
+        "properties": {
+            "systemName": { "x-graphql-field-type": "SystemName" }
+        }
+    });
+
+    let converter = Converter::new();
+    let result = converter
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
+        .expect("Conversion failed");
+
+    assert!(result.contains("enum SystemName {"));
+    assert!(result.contains("LEGACY_PROCUREMENT"));
+    assert!(result.contains("PRISM"));
+}
+
+#[test]
+fn test_enum_value_sanitization() {
+    let schema = json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "title": "Ticket",
+        "$defs": {
+            "Status": {
+                "enum": ["in progress", "on hold", "DONE"]
+            }
+        },
+        "properties": {
+            "status": { "$ref": "#/$defs/Status" }
+        }
+    });
+
+    let converter = Converter::new();
+    let result = converter
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
+        .expect("Conversion failed");
+
+    assert!(result.contains("enum Status {"));
+    assert!(result.contains("IN_PROGRESS"));
+    assert!(result.contains("ON_HOLD"));
+    assert!(result.contains("DONE"));
 }

@@ -26,6 +26,22 @@ scalar Uri
 "Arbitrary JSON value serialized as a string."
 scalar Json
 
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
+  PRISM
+}
+
+"Indicates whether items are unpriced"
+enum UnipricedFlag {
+  Y
+  N
+  UNKNOWN
+}
+
 type Site {
   """The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map."""
   siteCode: JSON!

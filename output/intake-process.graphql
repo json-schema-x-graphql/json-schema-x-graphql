@@ -29,6 +29,15 @@ scalar Email
 "Valid URI/URL"
 scalar Uri
 
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
+  PRISM
+}
+
 """Root Intake Process entity combining system metadata and Intake Process-specific extension data."""
 type EasiRecord @key(fields: "business_owner system_owner source_record_id") {
   "System-level lineage and ingestion metadata."
