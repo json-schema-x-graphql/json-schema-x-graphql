@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "NullableUnionEdge",
+  "properties": {
+    "nestedUnion": {
+      "oneOf": [
+        { "type": "null" },
+        { "oneOf": [{ "type": "string" }, { "type": "integer" }] }
+      ]
+    },
+    "wrappedListOverride": {
+      "type": ["array", "null"],
+      "items": { "type": "string" },
+      "x-graphql-field-type": "String"
+    },
+    "nullableTypeArray": {
+      "type": ["null", "string"]
+    },
+    "refNullUnion": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/Item" }
+      ]
+    },
+    "rootSelfRef": {
+      "$ref": "/"
+    }
+  },
+  "$defs": {
+    "Item": {
+      "type": "object",
+      "title": "Item",
+      "properties": {
+        "id": { "type": "string" }
+      }
+    }
+  }
+}

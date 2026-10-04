@@ -1072,7 +1072,10 @@ function ensureReferencedType(
   refPath: string,
   context: ConversionContext,
 ): string | null {
-  if (refPath === "#" || refPath === "#/") {
+  // Root self-references. Rust resolves "#/", "#", and the lenient
+  // pointer forms "" and "/" to the root type via its type_names map;
+  // align here so a bare "/" is not mistaken for an external reference.
+  if (refPath === "#" || refPath === "#/" || refPath === "/") {
     return context.typeNames.get("#") ?? null;
   }
 

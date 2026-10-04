@@ -205,6 +205,21 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     expect(sdl).not.toMatch(/items:\s*Tag(\s|$)/);
   });
 
+  it("resolves $ref: '/' lenient root pointers to the root type (parity with Rust)", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Catalog",
+      properties: {
+        self: { $ref: "/" },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("self: Catalog");
+    expect(sdl).not.toContain("Externaltype");
+  });
+
   it("emits @vocabulary even when federation directives are disabled (parity with Rust)", () => {
     const schema = {
       $schema: "https://json-schema.org/draft/2020-12/schema",
