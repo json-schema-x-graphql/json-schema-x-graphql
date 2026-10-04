@@ -214,6 +214,12 @@ function jsonSchemaToGraphQLInternal(
   }
 
   const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
+  if (rootTypeName) {
+    context.typeNames.set("", rootTypeName);
+    context.typeNames.set("/", rootTypeName);
+    context.typeNames.set("#", rootTypeName);
+    context.typeNames.set("#/", rootTypeName);
+  }
   if (rootTypeName && !shouldExcludeType(rootTypeName, context.options)) {
     convertTypeDefinition(schema, rootTypeName, context);
   }
@@ -914,6 +920,16 @@ function inferGraphQLType(
       : schema["x-graphql-type"]?.name);
 
   if (explicitType) {
+    if (schema.type === "array") {
+      const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
+      const itemRequired =
+        typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+      const inner =
+        itemRequired && !explicitType.endsWith("!")
+          ? `${explicitType}!`
+          : explicitType;
+      return finalizeType(`[${inner}]`, isRequired);
+    }
     return finalizeType(explicitType, isRequired);
   }
 
@@ -926,7 +942,26 @@ function inferGraphQLType(
 
   const multiType = Array.isArray(schema.type) ? schema.type : null;
   if (multiType && multiType.length > 1) {
+    const nonNullTypes = multiType.filter((t: string) => t !== "null");
+    if (nonNullTypes.length === 1 && multiType.includes("null")) {
+      const collapsedSchema = { ...schema, type: nonNullTypes[0] };
+      return inferGraphQLType(collapsedSchema, false, context, depth, nameHint);
+    }
     return finalizeType("JSON", isRequired);
+  }
+
+  if (schema.oneOf && Array.isArray(schema.oneOf) && schema.oneOf.length === 2) {
+    const isNullType = (s: any) =>
+      s &&
+      (s.type === "null" ||
+        (Array.isArray(s.type) && s.type.length === 1 && s.type[0] === "null"));
+    const nullIdx = schema.oneOf.findIndex(isNullType);
+    if (nullIdx !== -1) {
+      const nonNullSchema = schema.oneOf[nullIdx === 0 ? 1 : 0];
+      const merged = { ...schema, ...nonNullSchema };
+      delete (merged as any).oneOf;
+      return inferGraphQLType(merged, false, context, depth, nameHint);
+    }
   }
 
   if (schema.oneOf || schema.anyOf || schema.allOf) {

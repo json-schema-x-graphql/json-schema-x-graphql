@@ -173,15 +173,15 @@ describe("Converter Improvements", () => {
   });
 
   describe("Circular Reference Protection", () => {
-    test("should detect circular reference on root self-reference", () => {
+    test("should handle root self-reference without error", () => {
       const schema = {
         type: "object",
         "x-graphql-type-name": "Node",
         properties: { next: { $ref: "#" } },
       };
-      expect(() => jsonSchemaToGraphQL(schema)).toThrow(
-        /Circular reference detected/,
-      );
+      const result = jsonSchemaToGraphQL(schema);
+      expect(result).toContain("type Node");
+      expect(result).toContain("next: Node");
     });
 
     test("should detect circular $ref chain", () => {

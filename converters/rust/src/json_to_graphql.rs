@@ -128,17 +128,30 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
             .or_else(|| obj.get("title").and_then(|v| v.as_str()));
 
         if let Some(name) = root_type_name {
-            let sanitized_name = if obj
-                .get("x-graphql")
-                .and_then(|v| v.as_object())
-                .and_then(|x| x.get("typeName"))
-                .and_then(|v| v.as_str())
-                .is_some()
-            {
+            let is_explicit = obj.get("x-graphql-type-name").is_some()
+                || obj
+                    .get("x-graphql")
+                    .and_then(|v| v.as_object())
+                    .and_then(|x| x.get("typeName"))
+                    .is_some();
+            let sanitized_name = if is_explicit {
                 sanitize_type_name(name, NamingConvention::Preserve)
             } else {
                 sanitize_type_name(name, options.naming_convention)
             };
+
+            context
+                .type_names
+                .insert("".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("/".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("#".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("#/".to_string(), sanitized_name.clone());
 
             if should_include_type(&sanitized_name, options) {
                 convert_type_definition(schema, &sanitized_name, &mut context)?;
@@ -1206,6 +1219,28 @@ fn infer_graphql_type(
         });
 
     if let Some(gql_type) = explicit_type {
+        let is_array = obj
+            .get("type")
+            .and_then(|v| v.as_str())
+            .map(|t| t == "array")
+            .unwrap_or(false)
+            || obj
+                .get("type")
+                .and_then(|v| v.as_array())
+                .map(|arr| arr.iter().any(|v| v.as_str() == Some("array")))
+                .unwrap_or(false);
+        if is_array {
+            let list_item_non_null = obj
+                .get("x-graphql-field-list-item-non-null")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false);
+            let inner = if list_item_non_null && !gql_type.ends_with("!") {
+                format!("{}!", gql_type)
+            } else {
+                gql_type.to_string()
+            };
+            return Ok(finalize(format!("[{}]", inner)));
+        }
         return Ok(finalize(gql_type.to_string()));
     }
 
@@ -1260,7 +1295,8 @@ fn infer_graphql_type(
         };
 
         if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
-            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
+            let is_root_ref = ref_path == "#" || ref_path == "#/" || ref_path.is_empty();
+            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) && !is_root_ref {
                 if let Some(s) = context.resolve_ref_schema(ref_path) {
                     let schema_clone = s.clone();
                     convert_type_definition(&schema_clone, &type_name, context)?;
@@ -1313,7 +1349,34 @@ fn infer_graphql_type(
         }
     }
 
-    // 3a. Combinators map to JSON in GraphQL
+    // 3a. Check for oneOf null union before collapsing combinators to JSON
+    if let Some(one_of) = obj.get("oneOf").and_then(|v| v.as_array()) {
+        if one_of.len() == 2 {
+            let is_null_schema = |v: &serde_json::Value| -> bool {
+                if let Some(t) = v.get("type").and_then(|t| t.as_str()) {
+                    t == "null"
+                } else if let Some(arr) = v.get("type").and_then(|t| t.as_array()) {
+                    arr.len() == 1 && arr[0].as_str() == Some("null")
+                } else {
+                    false
+                }
+            };
+            let null_idx = one_of.iter().position(is_null_schema);
+            if let Some(idx) = null_idx {
+                let non_null = if idx == 0 { &one_of[1] } else { &one_of[0] };
+                if let Some(non_null_obj) = non_null.as_object() {
+                    let mut merged_obj = obj.clone();
+                    merged_obj.remove("oneOf");
+                    for (k, v) in non_null_obj {
+                        merged_obj.insert(k.clone(), v.clone());
+                    }
+                    let merged = serde_json::Value::Object(merged_obj);
+                    return infer_graphql_type(&merged, false, context, name_hint);
+                }
+            }
+        }
+    }
+
     if obj.get("oneOf").is_some() || obj.get("anyOf").is_some() || obj.get("allOf").is_some() {
         return Ok(finalize("JSON".to_string()));
     }
@@ -1326,6 +1389,21 @@ fn infer_graphql_type(
 
     if let Some(type_array) = obj.get("type").and_then(|v| v.as_array()) {
         if type_array.len() > 1 {
+            let non_null_types: Vec<&str> = type_array
+                .iter()
+                .filter_map(|v| v.as_str())
+                .filter(|&t| t != "null")
+                .collect();
+            let has_null = type_array.iter().any(|v| v.as_str() == Some("null"));
+            if has_null && non_null_types.len() == 1 {
+                let mut collapsed_obj = obj.clone();
+                collapsed_obj.insert(
+                    "type".to_string(),
+                    serde_json::Value::String(non_null_types[0].to_string()),
+                );
+                let collapsed_schema = serde_json::Value::Object(collapsed_obj);
+                return infer_graphql_type(&collapsed_schema, false, context, name_hint);
+            }
             return Ok(finalize("JSON".to_string()));
         }
 
