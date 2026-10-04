@@ -18,6 +18,9 @@ allowBuilds:
   wasm-pack: false
   "@parcel/watcher": true
 
+minimumReleaseAgeExclude:
+  - http-cache-semantics@4.3.0
+
 onlyBuiltDependencies:
   - "visual-json"
   - "sharp"
@@ -103,6 +106,8 @@ overrides:
   "@vitest/mocker": ^4.1.11
   ts-deepmerge: ^8.0.0
   ts-deepmerge@<8.0.0: ^8.0.0
+  http-cache-semantics: ^4.3.0
+  http-cache-semantics@<4.3.0: 4.3.0
 
 patchedDependencies:
   gray-matter@4.0.3: patches/gray-matter@4.0.3.patch
