@@ -628,6 +628,14 @@ fn convert_type_definition(
         }
     }
 
+    // Vocabulary concept extension
+    if let Some(concept) = obj.get("x-graphql-field-vocabulary").and_then(|v| v.as_str()) {
+        directives_json.push(serde_json::json!({
+            "name": "vocabulary",
+            "arguments": { "concept": concept }
+        }));
+    }
+
     // Viaduct extensions
     if let Some(val) = obj.get("x-graphql-viaduct-resolver") {
         if let Some(args) = val.as_object() {
@@ -1144,6 +1152,13 @@ fn convert_field(
         }
     }
 
+    if let Some(concept) = obj.get("x-graphql-field-vocabulary").and_then(|v| v.as_str()) {
+        directives_json.push(serde_json::json!({
+            "name": "vocabulary",
+            "arguments": { "concept": concept }
+        }));
+    }
+
     output.push_str(&format_directives(&JsonValue::Array(directives_json))?);
 
     Ok(output)
@@ -1242,6 +1257,11 @@ fn infer_graphql_type(
             return Ok(finalize(format!("[{}]", inner)));
         }
         return Ok(finalize(gql_type.to_string()));
+    }
+
+    // Vocabulary concept override (preserve String type)
+    if obj.get("x-graphql-field-vocabulary").is_some() {
+        return Ok(finalize("String".to_string()));
     }
 
     // 2. Reference

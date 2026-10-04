@@ -48,6 +48,12 @@ export function extractDirectives(
     if (schema["x-graphql-federation-interface-object"]) {
       directives.push({ name: "interfaceObject" });
     }
+    if (typeof schema["x-graphql-field-vocabulary"] === "string") {
+      directives.push({
+        name: "vocabulary",
+        args: { concept: schema["x-graphql-field-vocabulary"] },
+      });
+    }
     if (schema["x-graphql-federation-requires-scopes"]) {
       directives.push({
         name: "requiresScopes",

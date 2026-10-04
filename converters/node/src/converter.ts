@@ -232,14 +232,14 @@ function jsonSchemaToGraphQLInternal(
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
-  // If no types are generated, return empty string instead of throwing,
-  // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
-  if (!finalSDL) {
-    return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
-  }
-
   // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
   let processedSDL = applyHints(finalSDL, schema);
+
+  // If no types are generated, return empty string instead of throwing,
+  // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
+  if (!processedSDL) {
+    return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
+  }
 
   // Note: federation directive definitions are NOT auto-injected to preserve
   // parity with the Rust converter. Call `ensureFederationDirectives(sdl)` from
@@ -918,6 +918,10 @@ function inferGraphQLType(
     (typeof schema["x-graphql-type"] === "string"
       ? schema["x-graphql-type"]
       : schema["x-graphql-type"]?.name);
+
+  if (schema["x-graphql-field-vocabulary"] && !explicitType) {
+    return finalizeType("String", isRequired);
+  }
 
   if (explicitType) {
     if (schema.type === "array") {

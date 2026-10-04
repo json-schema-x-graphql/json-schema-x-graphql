@@ -445,6 +445,10 @@
     "^x-graphql-field-type$": {
       "$ref": "#/$defs/graphqlTypeReference"
     },
+    "^x-graphql-field-vocabulary$": {
+      "type": "string",
+      "description": "Associates a field with a controlled vocabulary or concept IRI while preserving String in GraphQL"
+    },
     "^x-graphql-field-non-null$": {
       "type": "boolean"
     },

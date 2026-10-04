@@ -134,3 +134,68 @@ fn test_phase1_issue_236_237_root_self_reference() {
     assert!(!result.contains("type Catalog"));
     assert!(!result.contains("type DcatCatalog1"));
 }
+
+#[test]
+fn test_phase1_issue_232_vocabulary_concept() {
+    let schema = json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$defs": {
+            "Concept": {
+                "type": "object",
+                "x-graphql-type-name": "DcatConcept",
+                "properties": {
+                    "prefLabel": { "type": "string" }
+                }
+            }
+        },
+        "type": "object",
+        "title": "Agent",
+        "properties": {
+            "hadRole": {
+                "$ref": "#/$defs/Concept",
+                "x-graphql-field-vocabulary": "http://www.w3.org/ns/dcat#hadRole"
+            }
+        }
+    });
+
+    let converter = Converter::new();
+    let result = converter
+        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .expect("Conversion failed");
+
+    assert!(result.contains("hadRole: String @vocabulary(concept: \"http://www.w3.org/ns/dcat#hadRole\")"));
+    assert!(!result.contains("hadRole: DcatConcept"));
+}
+
+#[test]
+fn test_phase1_issue_235_query_arg_formatting() {
+    let schema = json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "title": "Dataset",
+        "x-graphql-operations": {
+            "queries": {
+                "dcatDataset": {
+                    "type": "DcatDataset",
+                    "description": "Fetch a dataset by ID",
+                    "args": {
+                        "id": {
+                            "type": "ID!",
+                            "description": "@id IRI of the dataset."
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    let converter = Converter::new();
+    let result = converter
+        .convert(&schema.to_string(), ConversionDirection::JsonSchemaToGraphQL)
+        .expect("Conversion failed");
+
+    assert!(result.contains("\"\"\"@id IRI of the dataset.\"\"\""));
+    assert!(result.contains("id: ID!"));
+    // Verify docstring is followed by a newline, not on the same line with excessive spaces
+    assert!(!result.contains("\"\"\"    id: ID!"));
+}

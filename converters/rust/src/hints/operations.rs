@@ -174,27 +174,32 @@ pub fn generate_operation_type(
         // Build arguments
         let args_str = if field.arguments.is_empty() {
             String::new()
+        } else if field.arguments.iter().any(|a| a.description.is_some()) {
+            let mut arg_lines = Vec::new();
+            for arg in &field.arguments {
+                if let Some(ref desc) = arg.description {
+                    arg_lines.push(format!("    \"\"\"{}\"\"\"", desc.trim()));
+                }
+                let mut decl = format!("    {}: {}", arg.name, arg.graphql_type);
+                if let Some(ref default) = arg.default_value {
+                    decl.push_str(&format!(" = {}", default));
+                }
+                arg_lines.push(decl);
+            }
+            format!("(\n{}\n  )", arg_lines.join("\n"))
         } else {
             let arg_parts: Vec<String> = field
                 .arguments
                 .iter()
                 .map(|arg| {
-                    let mut arg_str = String::new();
-                    if let Some(ref desc) = arg.description {
-                        arg_str.push_str(&format!("\n    {}", format_description(desc, "    ")));
-                    }
-                    arg_str.push_str(&format!("    {}: {}", arg.name, arg.graphql_type));
+                    let mut arg_str = format!("{}: {}", arg.name, arg.graphql_type);
                     if let Some(ref default) = arg.default_value {
                         arg_str.push_str(&format!(" = {}", default));
                     }
                     arg_str
                 })
                 .collect();
-            if field.arguments.iter().any(|a| a.description.is_some()) {
-                format!("(\n{}\n  )", arg_parts.join("\n"))
-            } else {
-                format!("({})", arg_parts.join(", "))
-            }
+            format!("({})", arg_parts.join(", "))
         };
 
         // Field declaration

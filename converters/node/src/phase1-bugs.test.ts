@@ -111,4 +111,59 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     expect(sdl).not.toContain("type Catalog");
     expect(sdl).not.toContain("type DcatCatalog1");
   });
+
+  it("resolves #232: x-graphql-field-vocabulary preserves String scalar and emits @vocabulary directive", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      $defs: {
+        Concept: {
+          type: "object",
+          "x-graphql-type-name": "DcatConcept",
+          properties: {
+            prefLabel: { type: "string" },
+          },
+        },
+      },
+      type: "object",
+      title: "Agent",
+      properties: {
+        hadRole: {
+          $ref: "#/$defs/Concept",
+          "x-graphql-field-vocabulary": "http://www.w3.org/ns/dcat#hadRole",
+        },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain('hadRole: String @vocabulary(concept: "http://www.w3.org/ns/dcat#hadRole")');
+    expect(sdl).not.toContain("hadRole: DcatConcept");
+  });
+
+  it("resolves #235: Query argument docstring formatting places description on its own line", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Dataset",
+      "x-graphql-operations": {
+        queries: {
+          dcatDataset: {
+            type: "DcatDataset",
+            description: "Fetch a dataset by ID",
+            args: {
+              id: {
+                type: "ID!",
+                description: "@id IRI of the dataset.",
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain('"""@id IRI of the dataset."""');
+    expect(sdl).toContain("id: ID!");
+    expect(sdl).toContain("\"\"\"@id IRI of the dataset.\"\"\"\n    id: ID!");
+    expect(sdl).not.toMatch(/\"\"\"[^\S\r\n]+id: ID!/);
+  });
 });

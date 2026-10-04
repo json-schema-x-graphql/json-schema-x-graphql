@@ -148,5 +148,5 @@ export function injectPaginationTypes(
 ): string {
   const paginationSdl = generatePaginationTypesSdl(config, sdl);
   if (!paginationSdl) return sdl;
-  return `${sdl.trimEnd()}\n${paginationSdl}`;
+  return sdl.trim().length > 0 ? `${sdl.trimEnd()}\n\n${paginationSdl.trim()}` : paginationSdl.trim();
 }
