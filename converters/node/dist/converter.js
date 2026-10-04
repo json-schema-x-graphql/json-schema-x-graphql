@@ -680,7 +680,9 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
         return finalizeType("String", isRequired);
     }
     if (explicitType) {
-        if (schema.type === "array" && !explicitType.startsWith("[")) {
+        const isArrayType = schema.type === "array" ||
+            (Array.isArray(schema.type) && schema.type.includes("array"));
+        if (isArrayType && !explicitType.startsWith("[")) {
             const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
             const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
             const inner = itemRequired && !explicitType.endsWith("!")
@@ -702,15 +704,20 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
         }
         return finalizeType("JSON", isRequired);
     }
-    if (schema.oneOf && Array.isArray(schema.oneOf) && schema.oneOf.length === 2) {
+    if (schema.oneOf &&
+        Array.isArray(schema.oneOf) &&
+        schema.oneOf.length === 2) {
         const isNullType = (s) => s &&
             (s.type === "null" ||
                 (Array.isArray(s.type) && s.type.length === 1 && s.type[0] === "null"));
         const nullIdx = schema.oneOf.findIndex(isNullType);
         if (nullIdx !== -1) {
             const nonNullSchema = schema.oneOf[nullIdx === 0 ? 1 : 0];
-            const merged = { ...schema, ...nonNullSchema };
-            delete merged.oneOf;
+            // Drop the parent's oneOf before merging so a nested oneOf on the
+            // non-null branch is preserved (matches the Rust converter).
+            const base = { ...schema };
+            delete base.oneOf;
+            const merged = { ...base, ...nonNullSchema };
             return inferGraphQLType(merged, false, context, depth, nameHint);
         }
     }
@@ -995,7 +1002,17 @@ function normalizeOptions(options) {
     const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
     const emitEmptyTypes = options.emitEmptyTypes ?? false;
     const inlineObjectThreshold = options.inlineObjectThreshold ?? 3;
-    const refNaming = options.refNaming ?? "basename";
+    // Accept both the GraphQL API enum form (BASENAME) and the internal
+    // lowercase form (basename) for backwards compatibility.
+    const REF_NAMING_ALIASES = {
+        basename: "basename",
+        BASENAME: "basename",
+        file_and_path: "file_and_path",
+        FILE_AND_PATH: "file_and_path",
+        hash: "hash",
+        HASH: "hash",
+    };
+    const refNaming = REF_NAMING_ALIASES[options.refNaming] ?? "basename";
     const excludeTypeSuffixes = options.excludeTypeSuffixes ?? [
         "Filter",
         "Sort",

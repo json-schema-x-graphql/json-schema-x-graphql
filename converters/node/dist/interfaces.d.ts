@@ -1,8 +1,9 @@
-import { ConvertInput, ConversionResult, ConverterOptions, DirectiveFilterMode, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat } from "./generated/types.js";
+import { ConvertInput, ConversionResult, ConverterOptions, DirectiveFilterMode, FederationVersion, NamingConvention, IdInferenceStrategy, OutputFormat, RefNaming } from "./generated/types.js";
 export interface IJsonSchemaConverter {
     convert(input: ConvertInput): Promise<ConversionResult>;
 }
-export type ExtendedConverterOptions = ConverterOptions & {
+export type ExtendedConverterOptions = Omit<ConverterOptions, "refNaming"> & {
+    refNaming?: RefNaming | "basename" | "file_and_path" | "hash" | null;
     maxDepth?: number;
     excludeTypeSuffixes?: string[];
     includeOperationalTypes?: boolean;

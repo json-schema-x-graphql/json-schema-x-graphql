@@ -17,10 +17,7 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
       title: "Contract",
       properties: {
         anchorReceipt: {
-          oneOf: [
-            { type: "null" },
-            { $ref: "#/$defs/AnchorReceipt" },
-          ],
+          oneOf: [{ type: "null" }, { $ref: "#/$defs/AnchorReceipt" }],
         },
       },
     };
@@ -135,7 +132,9 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     };
 
     const sdl = jsonSchemaToGraphQL(schema);
-    expect(sdl).toContain('hadRole: String @vocabulary(concept: "http://www.w3.org/ns/dcat#hadRole")');
+    expect(sdl).toContain(
+      'hadRole: String @vocabulary(concept: "http://www.w3.org/ns/dcat#hadRole")',
+    );
     expect(sdl).not.toContain("hadRole: DcatConcept");
   });
 
@@ -163,7 +162,67 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     const sdl = jsonSchemaToGraphQL(schema);
     expect(sdl).toContain('"""@id IRI of the dataset."""');
     expect(sdl).toContain("id: ID!");
-    expect(sdl).toContain("\"\"\"@id IRI of the dataset.\"\"\"\n    id: ID!");
+    expect(sdl).toContain('"""@id IRI of the dataset."""\n    id: ID!');
     expect(sdl).not.toMatch(/\"\"\"[^\S\r\n]+id: ID!/);
+  });
+
+  it("preserves nested oneOf on the non-null branch of a null union (parity with Rust)", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Meta",
+      properties: {
+        value: {
+          oneOf: [
+            { type: "null" },
+            { oneOf: [{ type: "string" }, { type: "integer" }] },
+          ],
+        },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("value: JSON");
+    expect(sdl).not.toContain("value: String");
+  });
+
+  it('wraps x-graphql-field-type in a list when type is ["array", "null"] (parity with Rust)', () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Holder",
+      properties: {
+        items: {
+          type: ["array", "null"],
+          items: { type: "string" },
+          "x-graphql-field-type": "Tag",
+        },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("items: [Tag]");
+    expect(sdl).not.toMatch(/items:\s*Tag(\s|$)/);
+  });
+
+  it("emits @vocabulary even when federation directives are disabled (parity with Rust)", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Agent",
+      properties: {
+        hadRole: {
+          type: "string",
+          "x-graphql-field-vocabulary": "http://www.w3.org/ns/dcat#hadRole",
+        },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema, {
+      includeFederationDirectives: false,
+    });
+    expect(sdl).toContain(
+      'hadRole: String @vocabulary(concept: "http://www.w3.org/ns/dcat#hadRole")',
+    );
   });
 });

@@ -19,7 +19,7 @@ type SpecialKeysObject {
 type UnusualTypes {
   nullType: JSON
   multiTypeSimple: JSON
-  multiTypeWithNull: JSON
+  multiTypeWithNull: String
   anyType: String
 }
 

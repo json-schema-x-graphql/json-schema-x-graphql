@@ -99,7 +99,25 @@ input ConverterOptions {
   """
   Strategy for naming types derived from $ref values
   """
-  refNaming: String = "basename"
+  refNaming: RefNaming = BASENAME
+}
+
+"""
+Strategies for naming types derived from $ref values.
+"""
+enum RefNaming {
+  """
+  Use the last path segment of the reference (default).
+  """
+  BASENAME
+  """
+  Combine the file name and path segments for external references.
+  """
+  FILE_AND_PATH
+  """
+  Derive a compact, collision-resistant hash identifier.
+  """
+  HASH
 }
 
 """

@@ -922,7 +922,10 @@ function inferGraphQLType(
   }
 
   if (explicitType) {
-    if (schema.type === "array" && !explicitType.startsWith("[")) {
+    const isArrayType =
+      schema.type === "array" ||
+      (Array.isArray(schema.type) && schema.type.includes("array"));
+    if (isArrayType && !explicitType.startsWith("[")) {
       const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
       const itemRequired =
         typeof listItemNonNull === "boolean" ? listItemNonNull : false;
@@ -952,7 +955,11 @@ function inferGraphQLType(
     return finalizeType("JSON", isRequired);
   }
 
-  if (schema.oneOf && Array.isArray(schema.oneOf) && schema.oneOf.length === 2) {
+  if (
+    schema.oneOf &&
+    Array.isArray(schema.oneOf) &&
+    schema.oneOf.length === 2
+  ) {
     const isNullType = (s: any) =>
       s &&
       (s.type === "null" ||
@@ -960,8 +967,11 @@ function inferGraphQLType(
     const nullIdx = schema.oneOf.findIndex(isNullType);
     if (nullIdx !== -1) {
       const nonNullSchema = schema.oneOf[nullIdx === 0 ? 1 : 0];
-      const merged = { ...schema, ...nonNullSchema };
-      delete (merged as any).oneOf;
+      // Drop the parent's oneOf before merging so a nested oneOf on the
+      // non-null branch is preserved (matches the Rust converter).
+      const base = { ...schema };
+      delete (base as any).oneOf;
+      const merged = { ...base, ...nonNullSchema };
       return inferGraphQLType(merged, false, context, depth, nameHint);
     }
   }
@@ -1332,7 +1342,21 @@ function normalizeOptions(
   const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
   const emitEmptyTypes = options.emitEmptyTypes ?? false;
   const inlineObjectThreshold = options.inlineObjectThreshold ?? 3;
-  const refNaming = (options.refNaming as any) ?? "basename";
+  // Accept both the GraphQL API enum form (BASENAME) and the internal
+  // lowercase form (basename) for backwards compatibility.
+  const REF_NAMING_ALIASES: Record<
+    string,
+    "basename" | "file_and_path" | "hash"
+  > = {
+    basename: "basename",
+    BASENAME: "basename",
+    file_and_path: "file_and_path",
+    FILE_AND_PATH: "file_and_path",
+    hash: "hash",
+    HASH: "hash",
+  };
+  const refNaming =
+    REF_NAMING_ALIASES[options.refNaming as string] ?? "basename";
 
   const excludeTypeSuffixes = options.excludeTypeSuffixes ?? [
     "Filter",

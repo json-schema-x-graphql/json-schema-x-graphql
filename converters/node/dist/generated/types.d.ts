@@ -121,7 +121,7 @@ export type ConverterOptions = {
      */
     preserveFieldOrder?: InputMaybe<Scalars['Boolean']['input']>;
     /** Strategy for naming types derived from $ref values */
-    refNaming?: InputMaybe<Scalars['String']['input']>;
+    refNaming?: InputMaybe<RefNaming>;
     /**
      * Whether to validate the input JSON Schema before conversion.
      * Default: true
@@ -213,3 +213,11 @@ export type Query = {
     /** Returns the version of the converter service/library. */
     version: Scalars['String']['output'];
 };
+/** Strategies for naming types derived from $ref values. */
+export type RefNaming = 
+/** Use the last path segment of the reference (default). */
+'BASENAME'
+/** Combine the file name and path segments for external references. */
+ | 'FILE_AND_PATH'
+/** Derive a compact, collision-resistant hash identifier. */
+ | 'HASH';
