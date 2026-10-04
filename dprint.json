@@ -3,10 +3,7 @@
     "indentWidth": 2,
     "useTabs": false
   },
-  "includes": [
-    "schema/**/*.graphql",
-    "examples/**/*.graphql"
-  ],
+  "includes": ["schema/**/*.graphql"],
   "excludes": [
     "**/node_modules",
     "**/target",
