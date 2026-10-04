@@ -15,6 +15,7 @@ import {
   parseERDiagram,
   generateMermaidER,
   exportMermaidER,
+  exportD2Diagram,
 } from "../lib/erDiagramParser.js";
 import ERDiagramNode from "./ERDiagramNode.jsx";
 
@@ -142,6 +143,10 @@ export default function ERDiagramPanel({
     renderDiagram();
   }, [viewMode, mermaidViewMode, mermaidText, isTest]);
 
+  const handleExportD2 = useCallback(() => {
+    exportD2Diagram(erData, "federation-er-diagram.d2");
+  }, [erData]);
+
   const handleExport = useCallback(() => {
     exportMermaidER(erData, "federation-er-diagram.mmd");
   }, [erData]);
@@ -217,13 +222,22 @@ export default function ERDiagramPanel({
         </div>
 
         {hasData && (
-          <button
-            className="er-diagram-export-btn"
-            onClick={handleExport}
-            title="Export Mermaid ER diagram"
-          >
-            Export Mermaid
-          </button>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              className="er-diagram-export-btn"
+              onClick={handleExport}
+              title="Export Mermaid ER diagram"
+            >
+              Export Mermaid
+            </button>
+            <button
+              className="er-diagram-export-btn"
+              onClick={handleExportD2}
+              title="Export D2 UML diagram"
+            >
+              Export D2
+            </button>
+          </div>
         )}
       </div>
 

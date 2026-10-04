@@ -143,6 +143,10 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         }
     }
     const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
+    if (rootTypeName) {
+        context.typeNames.set("#", rootTypeName);
+        context.typeNames.set("#/", rootTypeName);
+    }
     if (rootTypeName && !shouldExcludeType(rootTypeName, context.options)) {
         convertTypeDefinition(schema, rootTypeName, context);
     }
@@ -152,13 +156,13 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         .join("\n")
         .replace(/\n{3,}/g, "\n\n")
         .trim();
-    // If no types are generated, return empty string instead of throwing,
-    // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
-    if (!finalSDL) {
-        return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
-    }
     // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
     let processedSDL = applyHints(finalSDL, schema);
+    // If no types are generated, return empty string instead of throwing,
+    // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
+    if (!processedSDL) {
+        return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
+    }
     // Note: federation directive definitions are NOT auto-injected to preserve
     // parity with the Rust converter. Call `ensureFederationDirectives(sdl)` from
     // the federation directive library when building executable schemas.
@@ -672,7 +676,18 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
         (typeof schema["x-graphql-type"] === "string"
             ? schema["x-graphql-type"]
             : schema["x-graphql-type"]?.name);
+    if (schema["x-graphql-field-vocabulary"] && !explicitType) {
+        return finalizeType("String", isRequired);
+    }
     if (explicitType) {
+        if (schema.type === "array" && !explicitType.startsWith("[")) {
+            const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
+            const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+            const inner = itemRequired && !explicitType.endsWith("!")
+                ? `${explicitType}!`
+                : explicitType;
+            return finalizeType(`[${inner}]`, isRequired);
+        }
         return finalizeType(explicitType, isRequired);
     }
     if (schema["x-graphql-scalar"]) {
@@ -680,7 +695,24 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
     }
     const multiType = Array.isArray(schema.type) ? schema.type : null;
     if (multiType && multiType.length > 1) {
+        const nonNullTypes = multiType.filter((t) => t !== "null");
+        if (nonNullTypes.length === 1 && multiType.includes("null")) {
+            const collapsedSchema = { ...schema, type: nonNullTypes[0] };
+            return inferGraphQLType(collapsedSchema, false, context, depth, nameHint);
+        }
         return finalizeType("JSON", isRequired);
+    }
+    if (schema.oneOf && Array.isArray(schema.oneOf) && schema.oneOf.length === 2) {
+        const isNullType = (s) => s &&
+            (s.type === "null" ||
+                (Array.isArray(s.type) && s.type.length === 1 && s.type[0] === "null"));
+        const nullIdx = schema.oneOf.findIndex(isNullType);
+        if (nullIdx !== -1) {
+            const nonNullSchema = schema.oneOf[nullIdx === 0 ? 1 : 0];
+            const merged = { ...schema, ...nonNullSchema };
+            delete merged.oneOf;
+            return inferGraphQLType(merged, false, context, depth, nameHint);
+        }
     }
     if (schema.oneOf || schema.anyOf || schema.allOf) {
         return finalizeType("JSON", isRequired);
@@ -750,6 +782,9 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
     }
 }
 function ensureReferencedType(refPath, context) {
+    if (refPath === "#" || refPath === "#/") {
+        return context.typeNames.get("#") ?? null;
+    }
     const { schema: target, pointer } = resolveRef(refPath, context);
     if (!target || typeof target !== "object") {
         return null;
@@ -758,7 +793,7 @@ function ensureReferencedType(refPath, context) {
     if (primitive) {
         return primitive;
     }
-    if (context.typeNames.has(pointer)) {
+    if (pointer && context.typeNames.has(pointer)) {
         return context.typeNames.get(pointer);
     }
     const fallback = pointerLastSegment(refPath);

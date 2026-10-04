@@ -1,4 +1,19 @@
 {
-  "excludes": ["**/node_modules"],
-  "plugins": ["https://plugins.dprint.dev/json-0.23.0.wasm"]
+  "graphql": {
+    "indentWidth": 2,
+    "useTabs": false
+  },
+  "includes": [
+    "schema/**/*.graphql",
+    "examples/**/*.graphql"
+  ],
+  "excludes": [
+    "**/node_modules",
+    "**/target",
+    "**/dist",
+    "**/.git"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/g-plane/pretty_graphql-v0.2.1.wasm"
+  ]
 }

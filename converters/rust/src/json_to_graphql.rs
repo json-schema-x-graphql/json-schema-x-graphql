@@ -1244,7 +1244,7 @@ fn infer_graphql_type(
                 .and_then(|v| v.as_array())
                 .map(|arr| arr.iter().any(|v| v.as_str() == Some("array")))
                 .unwrap_or(false);
-        if is_array {
+        if is_array && !gql_type.starts_with('[') {
             let list_item_non_null = obj
                 .get("x-graphql-field-list-item-non-null")
                 .and_then(|v| v.as_bool())

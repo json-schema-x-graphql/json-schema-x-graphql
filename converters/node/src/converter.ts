@@ -215,8 +215,6 @@ function jsonSchemaToGraphQLInternal(
 
   const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
   if (rootTypeName) {
-    context.typeNames.set("", rootTypeName);
-    context.typeNames.set("/", rootTypeName);
     context.typeNames.set("#", rootTypeName);
     context.typeNames.set("#/", rootTypeName);
   }
@@ -924,7 +922,7 @@ function inferGraphQLType(
   }
 
   if (explicitType) {
-    if (schema.type === "array") {
+    if (schema.type === "array" && !explicitType.startsWith("[")) {
       const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
       const itemRequired =
         typeof listItemNonNull === "boolean" ? listItemNonNull : false;
@@ -1064,6 +1062,10 @@ function ensureReferencedType(
   refPath: string,
   context: ConversionContext,
 ): string | null {
+  if (refPath === "#" || refPath === "#/") {
+    return context.typeNames.get("#") ?? null;
+  }
+
   const { schema: target, pointer } = resolveRef(refPath, context);
 
   if (!target || typeof target !== "object") {
@@ -1075,7 +1077,7 @@ function ensureReferencedType(
     return primitive;
   }
 
-  if (context.typeNames.has(pointer)) {
+  if (pointer && context.typeNames.has(pointer)) {
     return context.typeNames.get(pointer)!;
   }
 

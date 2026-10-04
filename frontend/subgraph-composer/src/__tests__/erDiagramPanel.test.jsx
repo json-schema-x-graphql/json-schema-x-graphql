@@ -152,6 +152,9 @@ describe("ERDiagramPanel", () => {
     expect(
       screen.getByRole("button", { name: /Export Mermaid/i }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /Export D2/i }),
+    ).toBeInTheDocument();
   });
 
   test("hides export button when no data is available", () => {
@@ -165,6 +168,9 @@ describe("ERDiagramPanel", () => {
     );
     expect(
       screen.queryByRole("button", { name: /Export Mermaid/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Export D2/i }),
     ).not.toBeInTheDocument();
   });
 
