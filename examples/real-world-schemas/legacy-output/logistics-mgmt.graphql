@@ -29,10 +29,10 @@ scalar URI
 Enumeration of system identifiers
 """
 enum SystemName {
-  Legacy Procurement
-  Intake Process
-  Logistics Mgmt
-  Contract Data
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
   PRISM
 }
 

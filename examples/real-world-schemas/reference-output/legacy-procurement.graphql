@@ -18,7 +18,7 @@ directive @link(url: String, as: String, for: String, import: [String]) repeatab
 """
 Legacy Procurement subgraph: minimal set of mapped fields
 """
-type Legacy Procurement_Contract {
+type LegacyProcurement_Contract {
   piid: String @mapFrom(path: "systemExtensions.legacy_procurement.acquisitionData.iaPiidOrUniqueId")
   originalAwardPiid: String
     @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
@@ -40,5 +40,5 @@ type Legacy Procurement_Contract {
 }
 
 type Query {
-  legacy_procurementContract: Legacy Procurement_Contract
+  legacy_procurementContract: LegacyProcurement_Contract
 }

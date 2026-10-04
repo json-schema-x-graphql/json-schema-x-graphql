@@ -26,7 +26,7 @@ type Vendor @key(fields: "vendorUei") {
 """
 Contract Data subgraph: minimal set of mapped fields
 """
-type Contract Data_Contract {
+type ContractData_Contract {
   piid: String @mapFrom(path: "commonElements.contractIdentification.piid")
   originalAwardPiid: String
     @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
