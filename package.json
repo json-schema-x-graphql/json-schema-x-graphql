@@ -71,7 +71,7 @@
     "validate-schemas": "pnpm --filter @json-schema-x-graphql/cli run validate:schemas",
     "validate-graphql": "pnpm --filter @json-schema-x-graphql/cli run validate:graphql",
     "prepublishOnly": "npm run build",
-    "changelog": "git-cliff -o CHANGELOG.md"
+    "changelog": "git-cliff --unreleased"
   },
   "dependencies": {
     "ajv": "^8.20.0",
