@@ -22,6 +22,17 @@ updates:
         patterns:
           - "*"
 
+  # Independent Visual JSON workspace submodule
+  - package-ecosystem: "npm"
+    directory: "/external/visual-json"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      visual-json-npm-dependencies:
+        patterns:
+          - "*"
+
   # Rust Cargo ecosystem
   - package-ecosystem: "cargo"
     directory: "/converters/rust"

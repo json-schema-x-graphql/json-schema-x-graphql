@@ -1,8 +1,6 @@
 import nextra from "nextra";
 
 const withNextra = nextra({
-  theme: "nextra-theme-docs",
-  themeConfig: "./theme.config.jsx",
   defaultShowCopyCode: true,
 });
 
@@ -15,9 +13,7 @@ const nextConfig = {
     unoptimized: true,
   },
   webpack: (config, { isServer: _isServer }) => {
-    // Serialize module compilation
     config.parallelism = 1;
-    // Force Webpack cache to file-system in production rather than memory
     config.cache = {
       type: "filesystem",
       allowCollectingMemory: true,
