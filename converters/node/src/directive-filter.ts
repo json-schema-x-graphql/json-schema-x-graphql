@@ -170,7 +170,7 @@ export function filterLineDirectives(
     }
   }
 
-  return result.replace(/\s+$/, "");
+  return result.trimEnd();
 }
 
 /** Apply directive filtering to an entire SDL string. */
