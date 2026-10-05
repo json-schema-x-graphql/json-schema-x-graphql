@@ -205,6 +205,46 @@ describe("Phase 1 Converter Bug Fixes (#245, #234, #233, #231, #236, #237)", () 
     expect(sdl).not.toMatch(/items:\s*Tag(\s|$)/);
   });
 
+  it("emits registry scalars verbatim exactly once (hints pipeline only)", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Event",
+      "x-graphql-scalars": {
+        DateTime: { description: "ISO 8601 date-time string" },
+        URI: { description: "Uniform Resource Identifier" },
+      },
+      properties: {
+        startsAt: { type: "string", "x-graphql-scalar": "DateTime" },
+        link: { type: "string", "x-graphql-scalar": "URI" },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("scalar DateTime");
+    expect(sdl).toContain("scalar URI");
+    expect(sdl).not.toContain("scalar Datetime");
+    expect(sdl).not.toContain("scalar Uri");
+    expect(sdl.match(/scalar DateTime/g)?.length).toBe(1);
+    expect(sdl).toContain("startsAt: DateTime");
+  });
+
+  it("uses explicitly declared scalar names verbatim (no case transformation)", () => {
+    const schema = {
+      $schema: "https://json-schema.org/draft/2020-12/schema",
+      type: "object",
+      title: "Span",
+      properties: {
+        stamp: { type: "string", "x-graphql-scalar": "my_ts" },
+      },
+    };
+
+    const sdl = jsonSchemaToGraphQL(schema);
+    expect(sdl).toContain("stamp: my_ts");
+    expect(sdl).toContain("scalar my_ts");
+    expect(sdl).not.toContain("MyTs");
+  });
+
   it("emits enum definitions from the root x-graphql-enums registry", () => {
     const schema = {
       $schema: "https://json-schema.org/draft/2020-12/schema",

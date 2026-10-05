@@ -135,6 +135,12 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                         .get("x-graphql-type-name")
                         .and_then(|v| v.as_str())
                         .or_else(|| {
+                            // A $defs entry declaring a named scalar uses
+                            // the declared name verbatim (mirrors the Node
+                            // converter's getTypeName resolution order).
+                            def_schema.get("x-graphql-scalar").and_then(|v| v.as_str())
+                        })
+                        .or_else(|| {
                             def_schema.get("x-graphql-type").and_then(|v| {
                                 v.as_str()
                                     .or_else(|| v.get("name").and_then(|n| n.as_str()))
@@ -542,6 +548,14 @@ fn convert_type_definition(
     // Fix 1: Check for INTERFACE (uppercase) as well as interface (lowercase)
     let kind = if kind_hint == "enum" || obj.contains_key("enum") {
         "enum"
+    } else if obj
+        .get("x-graphql-scalar")
+        .and_then(|v| v.as_str())
+        .is_some()
+    {
+        // $defs entries declaring a named scalar (mirrors the Node
+        // converter's convertTypeDefinition scalar branch)
+        "scalar"
     } else if kind_hint == "union" || obj.contains_key("oneOf") {
         "union"
     } else if kind_hint == "interface" {
@@ -1358,12 +1372,38 @@ fn infer_graphql_type(
         return Ok(finalize("String".to_string()));
     }
 
+    // Explicitly declared scalar names are used verbatim (no case
+    // transformation), matching the Node converter's in-core resolution.
+    // Previously this was only handled by the hints scalar-field
+    // replacement, which missed properties outside $defs.
+    if let Some(scalar_name) = obj.get("x-graphql-scalar").and_then(|v| v.as_str()) {
+        let trimmed = scalar_name.trim();
+        if !trimmed.is_empty() {
+            context.used_scalars.insert(trimmed.to_string());
+            return Ok(finalize(trimmed.to_string()));
+        }
+    }
+
     // 2. Reference
     if let Some(ref_path) = obj.get("$ref").and_then(|v| v.as_str()) {
         // Check if the referenced schema is a primitive type
         if let Some(schema) = context.resolve_ref_schema(ref_path) {
             // Clone schema to avoid borrow checker issues
             let schema_clone = schema.clone();
+
+            // A $ref target that explicitly declares a scalar name resolves
+            // to that scalar verbatim, matching the Node converter's
+            // derivePrimitiveGraphQLType path.
+            if let Some(scalar_name) = schema_clone
+                .get("x-graphql-scalar")
+                .and_then(|v| v.as_str())
+            {
+                let trimmed = scalar_name.trim();
+                if !trimmed.is_empty() {
+                    context.used_scalars.insert(trimmed.to_string());
+                    return Ok(finalize(trimmed.to_string()));
+                }
+            }
 
             let x_graphql = schema_clone.get("x-graphql").and_then(|v| v.as_object());
             let is_custom_scalar = x_graphql

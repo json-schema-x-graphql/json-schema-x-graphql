@@ -1,23 +1,13 @@
 """ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"""
 scalar DateTime
+"""ISO 8601 date string (YYYY-MM-DD)"""
+scalar Date
+"""Decimal number as string to preserve precision"""
+scalar Decimal
+"""Email address conforming to RFC 5322 (simplified)"""
+scalar Email
 """Uniform Resource Identifier or URL string"""
 scalar URI
-# Custom Scalars
-"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
-scalar Datetime
-
-"ISO 8601 date string (YYYY-MM-DD)"
-scalar Date
-
-"Decimal number as string to preserve precision"
-scalar Decimal
-
-"Email address conforming to RFC 5322 (simplified)"
-scalar Email
-
-"Uniform Resource Identifier or URL string"
-scalar Uri
-
 "Enumeration of system identifiers"
 enum SystemName {
   LEGACY_PROCUREMENT

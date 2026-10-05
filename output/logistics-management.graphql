@@ -1,31 +1,17 @@
+"""Calendar date in ISO 8601 format (YYYY-MM-DD)."""
+scalar Date
 """Timestamp in ISO 8601 format (includes time and optional offset)."""
 scalar DateTime
+"""Time in HH:mm:ss format"""
+scalar Time
+"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
+scalar Decimal
+"""Email address conforming to RFC 5322 (simplified)."""
+scalar Email
 """Uniform Resource Identifier or URL string."""
 scalar URI
 """Arbitrary JSON value serialized as a string."""
 scalar JSON
-# Custom Scalars
-"Calendar date in ISO 8601 format (YYYY-MM-DD)."
-scalar Date
-
-"Timestamp in ISO 8601 format (includes time and optional offset)."
-scalar Datetime
-
-"Time in HH:mm:ss format"
-scalar Time
-
-"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
-scalar Decimal
-
-"Email address conforming to RFC 5322 (simplified)."
-scalar Email
-
-"Uniform Resource Identifier or URL string."
-scalar Uri
-
-"Arbitrary JSON value serialized as a string."
-scalar Json
-
 "Enumeration of system identifiers"
 enum SystemName {
   LEGACY_PROCUREMENT

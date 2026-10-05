@@ -253,6 +253,52 @@ fn test_custom_enum_registry_emission() {
 }
 
 #[test]
+fn test_explicit_scalar_verbatim_resolution() {
+    let schema = json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "title": "Span",
+        "x-graphql-scalars": {
+            "DateTime": { "description": "ISO 8601 date-time string" }
+        },
+        "$defs": {
+            "CreatedTs": {
+                "description": "Creation timestamp",
+                "x-graphql-scalar": "EpochMs"
+            }
+        },
+        "properties": {
+            "stamp": { "type": "string", "x-graphql-scalar": "my_ts" },
+            "createdAt": { "type": "string", "x-graphql-scalar": "DateTime" },
+            "updatedAt": { "$ref": "#/$defs/CreatedTs" }
+        }
+    });
+
+    let converter = Converter::new();
+    let result = converter
+        .convert(
+            &schema.to_string(),
+            ConversionDirection::JsonSchemaToGraphQL,
+        )
+        .expect("Conversion failed");
+
+    // Explicitly declared scalar names are used verbatim (no case
+    // transformation), including for root-level properties that the hints
+    // scalar-field replacement previously missed.
+    assert!(result.contains("stamp: my_ts"));
+    assert!(result.contains("scalar my_ts"));
+    assert!(!result.contains("MyTs"));
+
+    // $ref targets that declare a scalar resolve to that scalar.
+    assert!(result.contains("updatedAt: EpochMs"));
+
+    // Registry scalars are injected verbatim by the hints pipeline.
+    assert!(result.contains("scalar DateTime"));
+    assert!(!result.contains("scalar Datetime"));
+    assert!(result.contains("createdAt: DateTime"));
+}
+
+#[test]
 fn test_enum_value_sanitization() {
     let schema = json!({
         "$schema": "https://json-schema.org/draft/2020-12/schema",

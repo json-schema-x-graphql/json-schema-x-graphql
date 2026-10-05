@@ -10,25 +10,6 @@ scalar json
 scalar email
 """Valid URI/URL"""
 scalar uri
-# Custom Scalars
-"ISO 8601 date-time string (YYYY-MM-DDTHH:mm:ss.sssZ)"
-scalar DateTime
-
-"ISO 8601 date string (YYYY-MM-DD)"
-scalar Date
-
-"High-precision decimal number"
-scalar Decimal
-
-"Arbitrary JSON value"
-scalar Json
-
-"Valid email address"
-scalar Email
-
-"Valid URI/URL"
-scalar Uri
-
 "Enumeration of system identifiers"
 enum SystemName {
   LEGACY_PROCUREMENT

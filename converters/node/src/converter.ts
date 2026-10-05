@@ -177,7 +177,12 @@ function jsonSchemaToGraphQLInternal(
     typeNames: new Map(),
   };
 
-  emitCustomScalars(schema, context);
+  // Note: root-level x-graphql-scalars definitions are intentionally NOT
+  // emitted by the core. Both engines define them via the hints pipeline
+  // (hints/scalars.ts, mirrored in Rust's hints::scalars) using the registry
+  // keys verbatim. Emitting them here with transformed names previously
+  // produced duplicate scalars ("scalar Datetime" next to "scalar DateTime")
+  // and dangling references.
   emitCustomEnums(schema, context);
 
   const definitions = schema.$defs || schema.definitions;
@@ -940,10 +945,12 @@ function inferGraphQLType(
   }
 
   if (schema["x-graphql-scalar"]) {
-    return finalizeType(
-      sanitizeTypeName(schema["x-graphql-scalar"], options.namingConvention),
-      isRequired,
-    );
+    // Explicitly declared scalar names are used verbatim (no case
+    // transformation), matching getTypeName's handling of the same
+    // extension and the Rust converter.
+    const scalarName = String(schema["x-graphql-scalar"]).trim();
+    context.usedScalars.add(scalarName);
+    return finalizeType(scalarName, isRequired);
   }
 
   const multiType = Array.isArray(schema.type) ? schema.type : null;
@@ -1226,27 +1233,12 @@ function emitImpliedScalars(context: ConversionContext) {
   }
 
   if (lines.length > 0) {
-    // Determine where to insert:
-    // If Custom Scalars are emitted first, append after them.
-    // However, context.output has everything mixed.
-    // Simple approach: unshift to top, or append to end.
-    // Appending to end is safer for now.
+    // Implied scalars are appended after type definitions. Registry
+    // scalars from x-graphql-scalars are NOT emitted here (or anywhere in
+    // the core); both engines define them exclusively via the hints
+    // pipeline, which uses the registry keys verbatim so field references
+    // stay valid.
     context.output.push(lines.join("\n") + "\n");
-  }
-}
-
-function emitCustomScalars(schema: JsonSchema, context: ConversionContext) {
-  const scalars = schema["x-graphql-scalars"];
-  if (!scalars || typeof scalars !== "object") return;
-
-  context.output.push("# Custom Scalars");
-  for (const [scalarName, scalarDef] of Object.entries(scalars)) {
-    if (scalarDef.description && context.options.includeDescriptions) {
-      context.output.push(
-        formatDescription(scalarDef.description, context.options),
-      );
-    }
-    context.output.push(`scalar ${toPascalCase(scalarName)}\n`);
   }
 }
 
@@ -1719,7 +1711,9 @@ function derivePrimitiveGraphQLType(
   }
 
   if (schema["x-graphql-scalar"]) {
-    const sName = toPascalCase(schema["x-graphql-scalar"]);
+    // Explicitly declared scalar names are used verbatim (no case
+    // transformation), matching getTypeName and the Rust converter.
+    const sName = String(schema["x-graphql-scalar"]).trim();
     if (context) context.usedScalars.add(sName);
     return sName;
   }
