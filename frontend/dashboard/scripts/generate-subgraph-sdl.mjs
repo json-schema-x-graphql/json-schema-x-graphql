@@ -34,6 +34,25 @@ const repoRoot = path.resolve(__dirname, "..");
 const GENERATED_SCHEMAS_DIR = path.join(repoRoot, "generated-schemas");
 const SRC_GENERATED_DIR = path.join(repoRoot, "src", "data", "generated");
 
+async function resolveInputPath(inputPath) {
+  if (path.isAbsolute(inputPath)) {
+    return inputPath;
+  }
+
+  const candidates = [path.resolve(process.cwd(), inputPath), path.resolve(repoRoot, inputPath)];
+
+  for (const candidate of candidates) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // Try the canonical dashboard root.
+    }
+  }
+
+  return candidates[0];
+}
+
 /**
  * Convert snake_case to PascalCase
  */
@@ -623,7 +642,7 @@ Examples:
     process.exit(1);
   }
 
-  const inputPath = path.resolve(args[0]);
+  const inputPath = await resolveInputPath(args[0]);
   const outputPath = args[1] ? path.resolve(args[1]) : null;
 
   try {
