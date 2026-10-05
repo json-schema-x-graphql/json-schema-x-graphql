@@ -26,11 +26,7 @@ fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
     }
 
     // Check regexes
-    if is_excluded(type_name, &options.exclude_patterns) {
-        return false;
-    }
-
-    true
+    !is_excluded(type_name, &options.exclude_patterns)
 }
 
 /// Sanitize an enum value into a valid GraphQL enum value name.
