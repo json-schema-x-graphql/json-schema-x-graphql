@@ -101,11 +101,20 @@ jobs:
 
       - name: Run npm audit
         run: |
+          # These lockfiles are maintained in this repository and must remain
+          # free of unapproved production advisories.
           node scripts/audit-pnpm-workspaces.mjs \
             . \
             frontend/dashboard \
-            servers/mockforge \
-            external/visual-json
+            servers/mockforge
+
+      # Visual JSON is a pinned, read-only upstream submodule with its own
+      # lockfile. Its advisories remain visible in every audit run, but cannot
+      # be remediated from this repository without an upstream release or a
+      # deliberately maintained fork and submodule-pointer update.
+      - name: Report Visual JSON upstream advisories
+        continue-on-error: true
+        run: node scripts/audit-pnpm-workspaces.mjs external/visual-json
 
       - name: Check for outdated packages with known vulnerabilities
         run: pnpm outdated --recursive || true
