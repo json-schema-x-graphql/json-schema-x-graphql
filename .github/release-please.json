@@ -26,7 +26,7 @@
     },
     "converters/node": {
       "package-name": "@json-schema-x-graphql/core",
-      "changelog-path": "converters/node/CHANGELOG.md",
+      "changelog-path": "CHANGELOG.md",
       "version-file": "converters/node/package.json",
       "bump": {
         "from": "../../package.json"
@@ -34,7 +34,7 @@
     },
     "converters/cli": {
       "package-name": "@json-schema-x-graphql/cli",
-      "changelog-path": "converters/cli/CHANGELOG.md",
+      "changelog-path": "CHANGELOG.md",
       "version-file": "converters/cli/package.json",
       "bump": {
         "from": "../../package.json"
