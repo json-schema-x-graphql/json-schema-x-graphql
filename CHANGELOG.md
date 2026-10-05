@@ -41,6 +41,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- Updated the documentation website to Next.js 16.3.8 and aligned the Nextra and React dependency set with its compatible, patched releases.
+- Expanded production dependency audits to every independently locked pnpm workspace and enabled recursive submodule checkout for the security audit workflow.
+
+### Fixed
+
+- Corrected subgraph SDL generator path resolution for CI-style relative schema paths. Generated SDL is now written only beneath `frontend/dashboard`, never `scripts/src/data`.
+- Updated dashboard subgraph generation commands to use the canonical hyphenated schema filenames.
+
 ### Fixed
 
 #### Rust Converter Parity (2024-01-XX)

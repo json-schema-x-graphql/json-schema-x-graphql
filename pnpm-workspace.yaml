@@ -99,7 +99,7 @@ overrides:
   "@fastify/busboy": ^3.2.2
   "@fastify/busboy@<3.2.2": ^3.2.2
   "next@>=15.0.0 <16.0.0": 15.5.24
-  "next@>=16.0.0": 16.3.2
+  "next@>=16.0.0": 16.3.8
   sharp: ^0.35.4
   sharp@<0.35.4: ^0.35.4
   vitest: ^4.1.11
@@ -108,6 +108,3 @@ overrides:
   ts-deepmerge@<8.0.0: ^8.0.0
   http-cache-semantics: ^4.3.0
   http-cache-semantics@<4.3.0: 4.3.0
-
-patchedDependencies:
-  gray-matter@4.0.3: patches/gray-matter@4.0.3.patch

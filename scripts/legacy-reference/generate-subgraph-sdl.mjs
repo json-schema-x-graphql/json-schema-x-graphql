@@ -17,8 +17,8 @@
  *   node scripts/generate-subgraph-sdl.mjs <input-schema.json> [output-file.graphql]
  *
  * Examples:
- *   node scripts/generate-subgraph-sdl.mjs src/data/legacy_procurement.schema.json
- *   node scripts/generate-subgraph-sdl.mjs src/data/intake_process.schema.json generated-schemas/intake_process.subgraph.graphql
+ *   node scripts/legacy-reference/generate-subgraph-sdl.mjs src/data/legacy-procurement.schema.json
+ *   node scripts/legacy-reference/generate-subgraph-sdl.mjs src/data/intake-process.schema.json generated-schemas/intake-process.subgraph.graphql
  */
 
 import fs from "fs/promises";
@@ -28,11 +28,35 @@ import { snakeToCamel } from "./helpers/case-conversion.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, "..");
+const repoRoot = path.resolve(__dirname, "../..");
+const dashboardRoot = path.join(repoRoot, "frontend", "dashboard");
 
 // Output directories
-const GENERATED_SCHEMAS_DIR = path.join(repoRoot, "generated-schemas");
-const SRC_GENERATED_DIR = path.join(repoRoot, "src", "data", "generated");
+const GENERATED_SCHEMAS_DIR = path.join(dashboardRoot, "generated-schemas");
+const SRC_GENERATED_DIR = path.join(dashboardRoot, "src", "data", "generated");
+
+async function resolveInputPath(inputPath) {
+  if (path.isAbsolute(inputPath)) {
+    return inputPath;
+  }
+
+  const candidates = [
+    path.resolve(process.cwd(), inputPath),
+    path.resolve(repoRoot, inputPath),
+    path.resolve(dashboardRoot, inputPath),
+  ];
+
+  for (const candidate of candidates) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // Try the next stable project root.
+    }
+  }
+
+  return candidates[0];
+}
 
 /**
  * Convert snake_case to PascalCase
@@ -617,13 +641,13 @@ async function main() {
 Usage: node scripts/generate-subgraph-sdl.mjs <input-schema.json> [output-file.graphql]
 
 Examples:
-  node scripts/generate-subgraph-sdl.mjs src/data/legacy_procurement.schema.json
-  node scripts/generate-subgraph-sdl.mjs src/data/intake_process.schema.json generated-schemas/intake_process.subgraph.graphql
+  node scripts/legacy-reference/generate-subgraph-sdl.mjs src/data/legacy-procurement.schema.json
+  node scripts/legacy-reference/generate-subgraph-sdl.mjs src/data/intake-process.schema.json generated-schemas/intake-process.subgraph.graphql
     `);
     process.exit(1);
   }
 
-  const inputPath = path.resolve(args[0]);
+  const inputPath = await resolveInputPath(args[0]);
   const outputPath = args[1] ? path.resolve(args[1]) : null;
 
   try {
