@@ -13,16 +13,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.4.5",
+    "next": "^16.3.8",
     "nextra": "^3.3.1",
-    "nextra-theme-docs": "^3.3.1",
+    "nextra-theme-docs": "^4.6.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.4",
     "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react-dom": "^19.3.0",
     "linkinator": "^8.1.0",
     "typescript": "^6.0.3"
   },
