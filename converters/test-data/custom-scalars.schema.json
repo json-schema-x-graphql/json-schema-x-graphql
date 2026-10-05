@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "ScalarRegistry",
+  "x-graphql-scalars": {
+    "DateTime": {
+      "description": "ISO 8601 date-time string"
+    },
+    "EpochMs": {
+      "description": "Milliseconds since the epoch"
+    }
+  },
+  "$defs": {
+    "CreatedTs": {
+      "description": "Creation timestamp",
+      "x-graphql-scalar": "EpochMs"
+    }
+  },
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "x-graphql-scalar": "DateTime"
+    },
+    "updatedAt": {
+      "$ref": "#/$defs/CreatedTs"
+    },
+    "externalCode": {
+      "type": "string",
+      "x-graphql-scalar": "ExternalRef"
+    }
+  }
+}

@@ -120,3 +120,6 @@ frontend/**/*.zip
 # Node lock (we use PNPM)
 **/package-lock.json
 **/yarn.lock
+
+# Release pipeline artifacts (binaries, SBOMs, checksums)
+release-assets/

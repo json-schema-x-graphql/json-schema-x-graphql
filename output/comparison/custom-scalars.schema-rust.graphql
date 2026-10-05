@@ -1,0 +1,14 @@
+"""ISO 8601 date-time string"""
+scalar DateTime
+"Creation timestamp"
+scalar EpochMs
+
+type Scalarregistry {
+  createdAt: DateTime
+  updatedAt: EpochMs
+  externalCode: ExternalRef
+}
+
+# Implied Scalars
+scalar ExternalRef
+

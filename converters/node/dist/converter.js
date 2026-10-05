@@ -113,7 +113,13 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         output: [],
         typeNames: new Map(),
     };
-    emitCustomScalars(schema, context);
+    // Note: root-level x-graphql-scalars definitions are intentionally NOT
+    // emitted by the core. Both engines define them via the hints pipeline
+    // (hints/scalars.ts, mirrored in Rust's hints::scalars) using the registry
+    // keys verbatim. Emitting them here with transformed names previously
+    // produced duplicate scalars ("scalar Datetime" next to "scalar DateTime")
+    // and dangling references.
+    emitCustomEnums(schema, context);
     const definitions = schema.$defs || schema.definitions;
     if (definitions) {
         const entries = normalized.preserveFieldOrder
@@ -143,6 +149,10 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         }
     }
     const rootTypeName = getTypeName(schema, context, schema.title ?? "Root");
+    if (rootTypeName) {
+        context.typeNames.set("#", rootTypeName);
+        context.typeNames.set("#/", rootTypeName);
+    }
     if (rootTypeName && !shouldExcludeType(rootTypeName, context.options)) {
         convertTypeDefinition(schema, rootTypeName, context);
     }
@@ -152,13 +162,13 @@ function jsonSchemaToGraphQLInternal(jsonSchemaInput, options = {}) {
         .join("\n")
         .replace(/\n{3,}/g, "\n\n")
         .trim();
-    // If no types are generated, return empty string instead of throwing,
-    // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
-    if (!finalSDL) {
-        return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
-    }
     // Apply x-graphql-* hint post-processing (scalars, operations, pagination)
     let processedSDL = applyHints(finalSDL, schema);
+    // If no types are generated, return empty string instead of throwing,
+    // to allow for deterministic comparison of empty outputs (e.g. adr_empty_object).
+    if (!processedSDL) {
+        return resolvedOptions.outputFormat === "AST_JSON" ? "null" : "";
+    }
     // Note: federation directive definitions are NOT auto-injected to preserve
     // parity with the Rust converter. Call `ensureFederationDirectives(sdl)` from
     // the federation directive library when building executable schemas.
@@ -672,15 +682,55 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
         (typeof schema["x-graphql-type"] === "string"
             ? schema["x-graphql-type"]
             : schema["x-graphql-type"]?.name);
+    if (schema["x-graphql-field-vocabulary"] && !explicitType) {
+        return finalizeType("String", isRequired);
+    }
     if (explicitType) {
+        const isArrayType = schema.type === "array" ||
+            (Array.isArray(schema.type) && schema.type.includes("array"));
+        if (isArrayType && !explicitType.startsWith("[")) {
+            const listItemNonNull = schema["x-graphql-field-list-item-non-null"];
+            const itemRequired = typeof listItemNonNull === "boolean" ? listItemNonNull : false;
+            const inner = itemRequired && !explicitType.endsWith("!")
+                ? `${explicitType}!`
+                : explicitType;
+            return finalizeType(`[${inner}]`, isRequired);
+        }
         return finalizeType(explicitType, isRequired);
     }
     if (schema["x-graphql-scalar"]) {
-        return finalizeType(sanitizeTypeName(schema["x-graphql-scalar"], options.namingConvention), isRequired);
+        // Explicitly declared scalar names are used verbatim (no case
+        // transformation), matching getTypeName's handling of the same
+        // extension and the Rust converter.
+        const scalarName = String(schema["x-graphql-scalar"]).trim();
+        context.usedScalars.add(scalarName);
+        return finalizeType(scalarName, isRequired);
     }
     const multiType = Array.isArray(schema.type) ? schema.type : null;
     if (multiType && multiType.length > 1) {
+        const nonNullTypes = multiType.filter((t) => t !== "null");
+        if (nonNullTypes.length === 1 && multiType.includes("null")) {
+            const collapsedSchema = { ...schema, type: nonNullTypes[0] };
+            return inferGraphQLType(collapsedSchema, false, context, depth, nameHint);
+        }
         return finalizeType("JSON", isRequired);
+    }
+    if (schema.oneOf &&
+        Array.isArray(schema.oneOf) &&
+        schema.oneOf.length === 2) {
+        const isNullType = (s) => s &&
+            (s.type === "null" ||
+                (Array.isArray(s.type) && s.type.length === 1 && s.type[0] === "null"));
+        const nullIdx = schema.oneOf.findIndex(isNullType);
+        if (nullIdx !== -1) {
+            const nonNullSchema = schema.oneOf[nullIdx === 0 ? 1 : 0];
+            // Drop the parent's oneOf before merging so a nested oneOf on the
+            // non-null branch is preserved (matches the Rust converter).
+            const base = { ...schema };
+            delete base.oneOf;
+            const merged = { ...base, ...nonNullSchema };
+            return inferGraphQLType(merged, false, context, depth, nameHint);
+        }
     }
     if (schema.oneOf || schema.anyOf || schema.allOf) {
         return finalizeType("JSON", isRequired);
@@ -750,6 +800,12 @@ function inferGraphQLType(schema, isRequired, context, depth = 0, nameHint) {
     }
 }
 function ensureReferencedType(refPath, context) {
+    // Root self-references. Rust resolves "#/", "#", and the lenient
+    // pointer forms "" and "/" to the root type via its type_names map;
+    // align here so a bare "/" is not mistaken for an external reference.
+    if (refPath === "#" || refPath === "#/" || refPath === "/") {
+        return context.typeNames.get("#") ?? null;
+    }
     const { schema: target, pointer } = resolveRef(refPath, context);
     if (!target || typeof target !== "object") {
         return null;
@@ -758,7 +814,7 @@ function ensureReferencedType(refPath, context) {
     if (primitive) {
         return primitive;
     }
-    if (context.typeNames.has(pointer)) {
+    if (pointer && context.typeNames.has(pointer)) {
         return context.typeNames.get(pointer);
     }
     const fallback = pointerLastSegment(refPath);
@@ -864,24 +920,42 @@ function emitImpliedScalars(context) {
         lines.push(`scalar ${scalar}`);
     }
     if (lines.length > 0) {
-        // Determine where to insert:
-        // If Custom Scalars are emitted first, append after them.
-        // However, context.output has everything mixed.
-        // Simple approach: unshift to top, or append to end.
-        // Appending to end is safer for now.
+        // Implied scalars are appended after type definitions. Registry
+        // scalars from x-graphql-scalars are NOT emitted here (or anywhere in
+        // the core); both engines define them exclusively via the hints
+        // pipeline, which uses the registry keys verbatim so field references
+        // stay valid.
         context.output.push(lines.join("\n") + "\n");
     }
 }
-function emitCustomScalars(schema, context) {
-    const scalars = schema["x-graphql-scalars"];
-    if (!scalars || typeof scalars !== "object")
+/**
+ * Emit enum definitions declared in the root-level `x-graphql-enums`
+ * registry. Without this, fields typed via `x-graphql-field-type` reference
+ * an enum that is never defined, producing invalid SDL.
+ */
+function emitCustomEnums(schema, context) {
+    const enums = schema["x-graphql-enums"];
+    if (!enums || typeof enums !== "object")
         return;
-    context.output.push("# Custom Scalars");
-    for (const [scalarName, scalarDef] of Object.entries(scalars)) {
-        if (scalarDef.description && context.options.includeDescriptions) {
-            context.output.push(formatDescription(scalarDef.description, context.options));
+    for (const [enumName, enumDef] of Object.entries(enums)) {
+        if (!enumDef || typeof enumDef !== "object")
+            continue;
+        const def = enumDef;
+        // Registry keys are referenced verbatim by `x-graphql-field-type`, so
+        // emit them verbatim (no case transformation) to keep references valid.
+        if (context.generatedTypes.has(enumName))
+            continue;
+        // renderEnum reads values from `x-graphql-enum`; wrap the registry entry
+        // so both `{ values: [...] }` and explicit `x-graphql-enum` shapes work.
+        const entry = {
+            ...def,
+            "x-graphql-enum": def["x-graphql-enum"] ?? def,
+        };
+        const rendered = renderEnum(enumName, entry, context.options);
+        if (rendered) {
+            context.output.push(rendered);
+            context.generatedTypes.add(enumName);
         }
-        context.output.push(`scalar ${toPascalCase(scalarName)}\n`);
     }
 }
 function emitOperations(schema, context) {
@@ -960,7 +1034,17 @@ function normalizeOptions(options) {
     const descriptionBlockThreshold = options.descriptionBlockThreshold ?? 80;
     const emitEmptyTypes = options.emitEmptyTypes ?? false;
     const inlineObjectThreshold = options.inlineObjectThreshold ?? 3;
-    const refNaming = options.refNaming ?? "basename";
+    // Accept both the GraphQL API enum form (BASENAME) and the internal
+    // lowercase form (basename) for backwards compatibility.
+    const REF_NAMING_ALIASES = {
+        basename: "basename",
+        BASENAME: "basename",
+        file_and_path: "file_and_path",
+        FILE_AND_PATH: "file_and_path",
+        hash: "hash",
+        HASH: "hash",
+    };
+    const refNaming = REF_NAMING_ALIASES[options.refNaming] ?? "basename";
     const excludeTypeSuffixes = options.excludeTypeSuffixes ?? [
         "Filter",
         "Sort",
@@ -1239,7 +1323,9 @@ function derivePrimitiveGraphQLType(schema, context) {
         return explicit;
     }
     if (schema["x-graphql-scalar"]) {
-        const sName = toPascalCase(schema["x-graphql-scalar"]);
+        // Explicitly declared scalar names are used verbatim (no case
+        // transformation), matching getTypeName and the Rust converter.
+        const sName = String(schema["x-graphql-scalar"]).trim();
         if (context)
             context.usedScalars.add(sName);
         return sName;

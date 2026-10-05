@@ -1,68 +1,32 @@
-scalar FieldSet
-scalar link__Import
-
-enum link__Purpose {
-  """
-  `SECURITY` features provide metadata necessary to securely resolve fields.
-  """
-  SECURITY
-
-  """
-  `EXECUTION` features provide metadata necessary for operation execution.
-  """
-  EXECUTION
-}
-
-directive @key(fields: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
-directive @requires(fields: FieldSet!) on FIELD_DEFINITION
-directive @provides(fields: FieldSet!) on FIELD_DEFINITION
-directive @external(reason: String) on FIELD_DEFINITION | OBJECT
-directive @shareable on FIELD_DEFINITION | OBJECT
-directive @link(url: String!, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
-directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-directive @override(from: String!, label: String) on FIELD_DEFINITION
-directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
-directive @interfaceObject on OBJECT
-directive @composeDirective(name: String) repeatable on SCHEMA
-directive @authenticated on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
-directive @requiresScopes(scopes: [[String!]!]!) on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
-directive @policy(policies: [[String!]!]!) on FIELD_DEFINITION | OBJECT | INTERFACE | SCALAR | ENUM
-directive @cost(weight: Int!) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
-directive @listSize(assumedSize: Int, slicingArguments: [String!], sizedFields: [String!], requireOneSlicingArgument: Boolean = true) on FIELD_DEFINITION
-
-# Custom validation and performance directives
-directive @constraint(pattern: String, min: Int, max: Int, minLength: Int, maxLength: Int) on FIELD_DEFINITION | ARGUMENT_DEFINITION
-directive @cache(ttl: Int, scope: String) on FIELD_DEFINITION | OBJECT
-directive @authorize(requires: String, roles: [String], scopes: [String]) on FIELD_DEFINITION | OBJECT | INTERFACE
-directive @mask(pattern: String, if: String, value: String, maskLevel: String, maskFor: [String]) on FIELD_DEFINITION
-directive @rateLimit(limit: Int, window: String, roles: [String]) on FIELD_DEFINITION
+"""Calendar date in ISO 8601 format (YYYY-MM-DD)."""
+scalar Date
 """Timestamp in ISO 8601 format (includes time and optional offset)."""
 scalar DateTime
+"""Time in HH:mm:ss format"""
+scalar Time
+"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
+scalar Decimal
+"""Email address conforming to RFC 5322 (simplified)."""
+scalar Email
 """Uniform Resource Identifier or URL string."""
 scalar URI
 """Arbitrary JSON value serialized as a string."""
 scalar JSON
-# Custom Scalars
-"Calendar date in ISO 8601 format (YYYY-MM-DD)."
-scalar Date
+"Enumeration of system identifiers"
+enum SystemName {
+  LEGACY_PROCUREMENT
+  INTAKE_PROCESS
+  LOGISTICS_MGMT
+  CONTRACT_DATA
+  PRISM
+}
 
-"Timestamp in ISO 8601 format (includes time and optional offset)."
-scalar Datetime
-
-"Time in HH:mm:ss format"
-scalar Time
-
-"""Arbitrary precision decimal represented as a string to avoid float rounding issues."""
-scalar Decimal
-
-"Email address conforming to RFC 5322 (simplified)."
-scalar Email
-
-"Uniform Resource Identifier or URL string."
-scalar Uri
-
-"Arbitrary JSON value serialized as a string."
-scalar Json
+"Indicates whether items are unpriced"
+enum UnipricedFlag {
+  Y
+  N
+  UNKNOWN
+}
 
 type Site {
   """The unique identifier for the site. NOTE: This is derived from a source string code via a lookup map."""
@@ -474,6 +438,7 @@ type ProcurementDataSchema {
   solicitation: Solicitation
   requisition: Requisition
 }
+
 type Query {
   """Placeholder query for library-only subgraph"""
   _empty: String

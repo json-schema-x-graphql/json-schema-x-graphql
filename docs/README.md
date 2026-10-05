@@ -271,12 +271,13 @@ jxql --input schema.json \
 | `x-graphql-description` | Description       | `"..."`             |
 | `x-graphql-enum`        | Enum config       | `{...}`             |
 
-### Field-Level (8 attributes)
+### Field-Level (9 attributes)
 
 | Attribute                            | Description       | Example    |
 | ------------------------------------ | ----------------- | ---------- |
 | `x-graphql-field-name`               | Custom field name | `"userId"` |
 | `x-graphql-field-type`               | Custom field type | `"Email"`  |
+| `x-graphql-field-vocabulary`          | Controlled vocabulary / concept IRI (field stays `String`) | `"http://www.w3.org/ns/dcat#hadRole"` |
 | `x-graphql-field-non-null`           | Force non-null    | `true`     |
 | `x-graphql-nullable`                 | Force nullable    | `true`     |
 | `x-graphql-field-list-item-non-null` | Array items       | `true`     |

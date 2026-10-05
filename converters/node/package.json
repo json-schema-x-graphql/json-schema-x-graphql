@@ -56,7 +56,8 @@
     "ci:validate": "pnpm --filter @json-schema-x-graphql/cli run validate:all -- --fail-on-error --output=validation-report.json",
     "ci:test": "npm run test:integration:ci && npm test",
     "ci:benchmark": "npm run benchmark:full",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@graphql-codegen/core": "^6.2.0",

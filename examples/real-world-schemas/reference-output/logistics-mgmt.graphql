@@ -18,7 +18,7 @@ directive @link(url: String, as: String, for: String, import: [String]) repeatab
 """
 Logistics Mgmt subgraph: minimal set of mapped fields (uses Logistics Mgmt-specific pointers where applicable)
 """
-type Logistics Mgmt_Contract {
+type LogisticsMgmt_Contract {
   piid: String @mapFrom(path: "systemMetadata.systemChain[0].recordId")
   originalAwardPiid: String
     @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
@@ -40,5 +40,5 @@ type Logistics Mgmt_Contract {
 }
 
 type Query {
-  logistics_mgmtContract: Logistics Mgmt_Contract
+  logistics_mgmtContract: LogisticsMgmt_Contract
 }

@@ -7,13 +7,19 @@ import {
   NamingConvention,
   IdInferenceStrategy,
   OutputFormat,
+  RefNaming,
 } from "./generated/types.js";
 
 export interface IJsonSchemaConverter {
   convert(input: ConvertInput): Promise<ConversionResult>;
 }
 
-export type ExtendedConverterOptions = ConverterOptions & {
+// The GraphQL API enum uses SCREAMING_SNAKE_CASE (BASENAME, FILE_AND_PATH,
+// HASH) while the internal pipeline uses the original lowercase values
+// (basename, file_and_path, hash). Both are accepted here and normalized
+// in `normalizeOptions`.
+export type ExtendedConverterOptions = Omit<ConverterOptions, "refNaming"> & {
+  refNaming?: RefNaming | "basename" | "file_and_path" | "hash" | null;
   maxDepth?: number;
   excludeTypeSuffixes?: string[];
   includeOperationalTypes?: boolean;

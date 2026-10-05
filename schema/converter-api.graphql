@@ -80,6 +80,44 @@ input ConverterOptions {
   Controls which directives are included in generated SDL.
   """
   directiveFilterMode: DirectiveFilterMode = ALL
+
+  """
+  Threshold at which descriptions become block strings (characters). Default: 80
+  """
+  descriptionBlockThreshold: Int = 80
+
+  """
+  When false, do not emit empty object types (no fields). Default: false
+  """
+  emitEmptyTypes: Boolean = false
+
+  """
+  Maximum number of properties for an anonymous object to be inlined as `JSON`. Default: 3
+  """
+  inlineObjectThreshold: Int = 3
+
+  """
+  Strategy for naming types derived from $ref values
+  """
+  refNaming: RefNaming = BASENAME
+}
+
+"""
+Strategies for naming types derived from $ref values.
+"""
+enum RefNaming {
+  """
+  Use the last path segment of the reference (default).
+  """
+  BASENAME
+  """
+  Combine the file name and path segments for external references.
+  """
+  FILE_AND_PATH
+  """
+  Derive a compact, collision-resistant hash identifier.
+  """
+  HASH
 }
 
 """

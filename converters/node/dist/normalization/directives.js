@@ -109,7 +109,14 @@ export function extractDirectives(schema, options) {
             });
         }
     }
-    // 3. Process x-graphql-viaduct-* extensions
+    // 3. Controlled vocabulary concepts (not federation-gated; matches Rust)
+    if (typeof schema["x-graphql-field-vocabulary"] === "string") {
+        directives.push({
+            name: "vocabulary",
+            args: { concept: schema["x-graphql-field-vocabulary"] },
+        });
+    }
+    // 4. Process x-graphql-viaduct-* extensions
     if (schema["x-graphql-viaduct-resolver"] !== undefined) {
         directives.push({
             name: "resolver",

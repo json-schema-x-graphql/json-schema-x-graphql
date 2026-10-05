@@ -26,16 +26,98 @@ fn should_include_type(type_name: &str, options: &ConversionOptions) -> bool {
     }
 
     // Check regexes
-    if is_excluded(type_name, &options.exclude_patterns) {
-        return false;
-    }
+    !is_excluded(type_name, &options.exclude_patterns)
+}
 
-    true
+/// Sanitize an enum value into a valid GraphQL enum value name.
+/// Mirrors the Node converter: replace non-`[_a-zA-Z0-9]` with `_`, then
+/// uppercase.
+fn sanitize_enum_value(value: &str) -> String {
+    value
+        .chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() || c == '_' {
+                c
+            } else {
+                '_'
+            }
+        })
+        .collect::<String>()
+        .to_uppercase()
+}
+
+/// Emit enum definitions from the root-level `x-graphql-enums` registry.
+/// Registry keys are referenced verbatim by `x-graphql-field-type`, so they
+/// are emitted without case transformation to keep references valid.
+fn emit_custom_enums(root: &JsonValue, context: &mut ConversionContext) {
+    let Some(enums) = root.get("x-graphql-enums").and_then(|v| v.as_object()) else {
+        return;
+    };
+
+    for (enum_name, enum_def) in enums {
+        let Some(def) = enum_def.as_object() else {
+            continue;
+        };
+        if context.generated_types.contains(enum_name) {
+            continue;
+        }
+
+        // Values: prefer x-graphql-enum.values, then the entry's own
+        // `values`/`enum` (mirrors Node's renderEnum lookup order).
+        let values = def
+            .get("x-graphql-enum")
+            .and_then(|v| v.get("values"))
+            .or_else(|| def.get("values"))
+            .or_else(|| def.get("enum"));
+
+        let mut lines: Vec<String> = Vec::new();
+        let mut emitted = false;
+        if let Some(arr) = values.and_then(|v| v.as_array()) {
+            for value in arr {
+                if let Some(val_str) = value.as_str() {
+                    lines.push(format!("  {}\n", sanitize_enum_value(val_str)));
+                    emitted = true;
+                } else if let Some(val_name) = value.get("name").and_then(|n| n.as_str()) {
+                    lines.push(format!("  {}\n", val_name));
+                    emitted = true;
+                }
+            }
+        } else if let Some(map) = values.and_then(|v| v.as_object()) {
+            for (key, config) in map {
+                let name = if let Some(cfg) = config.as_object() {
+                    cfg.get("name").and_then(|n| n.as_str()).unwrap_or(key)
+                } else {
+                    config.as_str().unwrap_or(key)
+                };
+                lines.push(format!("  {}\n", name));
+                emitted = true;
+            }
+        }
+        if !emitted {
+            continue;
+        }
+
+        if context.options.include_descriptions {
+            if let Some(description) = def.get("description").and_then(|v| v.as_str()) {
+                context
+                    .output
+                    .push(format_description(description, context.options));
+            }
+        }
+        context.output.push(format!("enum {} {{\n", enum_name));
+        context.output.extend(lines);
+        context.output.push("}\n\n".to_string());
+        context.generated_types.insert(enum_name.clone());
+    }
 }
 
 /// Convert JSON Schema to GraphQL SDL
 pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String> {
     let mut context = ConversionContext::with_root(options, schema);
+
+    // Emit registry enums before type processing so $defs definitions with
+    // the same name are deduplicated against the explicit declarations.
+    emit_custom_enums(schema, &mut context);
 
     // Process the schema
     if let Some(obj) = schema.as_object() {
@@ -48,6 +130,12 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
                     let explicit_type_name = def_schema
                         .get("x-graphql-type-name")
                         .and_then(|v| v.as_str())
+                        .or_else(|| {
+                            // A $defs entry declaring a named scalar uses
+                            // the declared name verbatim (mirrors the Node
+                            // converter's getTypeName resolution order).
+                            def_schema.get("x-graphql-scalar").and_then(|v| v.as_str())
+                        })
                         .or_else(|| {
                             def_schema.get("x-graphql-type").and_then(|v| {
                                 v.as_str()
@@ -128,17 +216,30 @@ pub fn convert(schema: &JsonValue, options: &ConversionOptions) -> Result<String
             .or_else(|| obj.get("title").and_then(|v| v.as_str()));
 
         if let Some(name) = root_type_name {
-            let sanitized_name = if obj
-                .get("x-graphql")
-                .and_then(|v| v.as_object())
-                .and_then(|x| x.get("typeName"))
-                .and_then(|v| v.as_str())
-                .is_some()
-            {
+            let is_explicit = obj.get("x-graphql-type-name").is_some()
+                || obj
+                    .get("x-graphql")
+                    .and_then(|v| v.as_object())
+                    .and_then(|x| x.get("typeName"))
+                    .is_some();
+            let sanitized_name = if is_explicit {
                 sanitize_type_name(name, NamingConvention::Preserve)
             } else {
                 sanitize_type_name(name, options.naming_convention)
             };
+
+            context
+                .type_names
+                .insert("".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("/".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("#".to_string(), sanitized_name.clone());
+            context
+                .type_names
+                .insert("#/".to_string(), sanitized_name.clone());
 
             if should_include_type(&sanitized_name, options) {
                 convert_type_definition(schema, &sanitized_name, &mut context)?;
@@ -443,6 +544,14 @@ fn convert_type_definition(
     // Fix 1: Check for INTERFACE (uppercase) as well as interface (lowercase)
     let kind = if kind_hint == "enum" || obj.contains_key("enum") {
         "enum"
+    } else if obj
+        .get("x-graphql-scalar")
+        .and_then(|v| v.as_str())
+        .is_some()
+    {
+        // $defs entries declaring a named scalar (mirrors the Node
+        // converter's convertTypeDefinition scalar branch)
+        "scalar"
     } else if kind_hint == "union" || obj.contains_key("oneOf") {
         "union"
     } else if kind_hint == "interface" {
@@ -615,6 +724,17 @@ fn convert_type_definition(
         }
     }
 
+    // Vocabulary concept extension
+    if let Some(concept) = obj
+        .get("x-graphql-field-vocabulary")
+        .and_then(|v| v.as_str())
+    {
+        directives_json.push(serde_json::json!({
+            "name": "vocabulary",
+            "arguments": { "concept": concept }
+        }));
+    }
+
     // Viaduct extensions
     if let Some(val) = obj.get("x-graphql-viaduct-resolver") {
         if let Some(args) = val.as_object() {
@@ -657,7 +777,9 @@ fn convert_type_definition(
             if let Some(enum_vals) = obj.get("enum").and_then(|v| v.as_array()) {
                 for value in enum_vals {
                     if let Some(val_str) = value.as_str() {
-                        output.push_str(&format!("  {}\n", val_str));
+                        // Sanitize to valid GraphQL enum value names (parity
+                        // with the Node converter's renderEnum).
+                        output.push_str(&format!("  {}\n", sanitize_enum_value(val_str)));
                     }
                 }
             } else {
@@ -1131,6 +1253,16 @@ fn convert_field(
         }
     }
 
+    if let Some(concept) = obj
+        .get("x-graphql-field-vocabulary")
+        .and_then(|v| v.as_str())
+    {
+        directives_json.push(serde_json::json!({
+            "name": "vocabulary",
+            "arguments": { "concept": concept }
+        }));
+    }
+
     output.push_str(&format_directives(&JsonValue::Array(directives_json))?);
 
     Ok(output)
@@ -1206,7 +1338,46 @@ fn infer_graphql_type(
         });
 
     if let Some(gql_type) = explicit_type {
+        let is_array = obj
+            .get("type")
+            .and_then(|v| v.as_str())
+            .map(|t| t == "array")
+            .unwrap_or(false)
+            || obj
+                .get("type")
+                .and_then(|v| v.as_array())
+                .map(|arr| arr.iter().any(|v| v.as_str() == Some("array")))
+                .unwrap_or(false);
+        if is_array && !gql_type.starts_with('[') {
+            let list_item_non_null = obj
+                .get("x-graphql-field-list-item-non-null")
+                .and_then(|v| v.as_bool())
+                .unwrap_or(false);
+            let inner = if list_item_non_null && !gql_type.ends_with("!") {
+                format!("{}!", gql_type)
+            } else {
+                gql_type.to_string()
+            };
+            return Ok(finalize(format!("[{}]", inner)));
+        }
         return Ok(finalize(gql_type.to_string()));
+    }
+
+    // Vocabulary concept override (preserve String type)
+    if obj.get("x-graphql-field-vocabulary").is_some() {
+        return Ok(finalize("String".to_string()));
+    }
+
+    // Explicitly declared scalar names are used verbatim (no case
+    // transformation), matching the Node converter's in-core resolution.
+    // Previously this was only handled by the hints scalar-field
+    // replacement, which missed properties outside $defs.
+    if let Some(scalar_name) = obj.get("x-graphql-scalar").and_then(|v| v.as_str()) {
+        let trimmed = scalar_name.trim();
+        if !trimmed.is_empty() {
+            context.used_scalars.insert(trimmed.to_string());
+            return Ok(finalize(trimmed.to_string()));
+        }
     }
 
     // 2. Reference
@@ -1215,6 +1386,20 @@ fn infer_graphql_type(
         if let Some(schema) = context.resolve_ref_schema(ref_path) {
             // Clone schema to avoid borrow checker issues
             let schema_clone = schema.clone();
+
+            // A $ref target that explicitly declares a scalar name resolves
+            // to that scalar verbatim, matching the Node converter's
+            // derivePrimitiveGraphQLType path.
+            if let Some(scalar_name) = schema_clone
+                .get("x-graphql-scalar")
+                .and_then(|v| v.as_str())
+            {
+                let trimmed = scalar_name.trim();
+                if !trimmed.is_empty() {
+                    context.used_scalars.insert(trimmed.to_string());
+                    return Ok(finalize(trimmed.to_string()));
+                }
+            }
 
             let x_graphql = schema_clone.get("x-graphql").and_then(|v| v.as_object());
             let is_custom_scalar = x_graphql
@@ -1260,7 +1445,11 @@ fn infer_graphql_type(
         };
 
         if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
-            if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
+            let is_root_ref = ref_path == "#" || ref_path == "#/" || ref_path.is_empty();
+            if !context.generated_types.contains(&type_name)
+                && !is_top_level_def(ref_path)
+                && !is_root_ref
+            {
                 if let Some(s) = context.resolve_ref_schema(ref_path) {
                     let schema_clone = s.clone();
                     convert_type_definition(&schema_clone, &type_name, context)?;
@@ -1313,7 +1502,34 @@ fn infer_graphql_type(
         }
     }
 
-    // 3a. Combinators map to JSON in GraphQL
+    // 3a. Check for oneOf null union before collapsing combinators to JSON
+    if let Some(one_of) = obj.get("oneOf").and_then(|v| v.as_array()) {
+        if one_of.len() == 2 {
+            let is_null_schema = |v: &serde_json::Value| -> bool {
+                if let Some(t) = v.get("type").and_then(|t| t.as_str()) {
+                    t == "null"
+                } else if let Some(arr) = v.get("type").and_then(|t| t.as_array()) {
+                    arr.len() == 1 && arr[0].as_str() == Some("null")
+                } else {
+                    false
+                }
+            };
+            let null_idx = one_of.iter().position(is_null_schema);
+            if let Some(idx) = null_idx {
+                let non_null = if idx == 0 { &one_of[1] } else { &one_of[0] };
+                if let Some(non_null_obj) = non_null.as_object() {
+                    let mut merged_obj = obj.clone();
+                    merged_obj.remove("oneOf");
+                    for (k, v) in non_null_obj {
+                        merged_obj.insert(k.clone(), v.clone());
+                    }
+                    let merged = serde_json::Value::Object(merged_obj);
+                    return infer_graphql_type(&merged, false, context, name_hint);
+                }
+            }
+        }
+    }
+
     if obj.get("oneOf").is_some() || obj.get("anyOf").is_some() || obj.get("allOf").is_some() {
         return Ok(finalize("JSON".to_string()));
     }
@@ -1326,6 +1542,21 @@ fn infer_graphql_type(
 
     if let Some(type_array) = obj.get("type").and_then(|v| v.as_array()) {
         if type_array.len() > 1 {
+            let non_null_types: Vec<&str> = type_array
+                .iter()
+                .filter_map(|v| v.as_str())
+                .filter(|&t| t != "null")
+                .collect();
+            let has_null = type_array.iter().any(|v| v.as_str() == Some("null"));
+            if has_null && non_null_types.len() == 1 {
+                let mut collapsed_obj = obj.clone();
+                collapsed_obj.insert(
+                    "type".to_string(),
+                    serde_json::Value::String(non_null_types[0].to_string()),
+                );
+                let collapsed_schema = serde_json::Value::Object(collapsed_obj);
+                return infer_graphql_type(&collapsed_schema, false, context, name_hint);
+            }
             return Ok(finalize("JSON".to_string()));
         }
 

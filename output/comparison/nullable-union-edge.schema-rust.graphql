@@ -1,0 +1,12 @@
+type Item {
+  id: ID
+}
+
+type Nullableunionedge {
+  nestedUnion: JSON
+  wrappedListOverride: [String]
+  nullableTypeArray: String
+  refNullUnion: Item
+  rootSelfRef: Nullableunionedge
+}
+

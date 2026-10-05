@@ -6,6 +6,8 @@ import {
   parseERDiagram,
   generateMermaidER,
   exportMermaidER,
+  generateD2Diagram,
+  exportD2Diagram,
   FEDERATION_DIRECTIVES,
   DIRECTIVE_EDGE_STYLES,
   SUBGRAPH_COLORS,
@@ -188,6 +190,37 @@ describe("Mermaid ER Export", () => {
     const mermaid = exportMermaidER(erData, "test.mmd");
 
     expect(mermaid).toContain("erDiagram");
+    expect(createElementSpy).toHaveBeenCalledWith("a");
+    expect(appendChildSpy).toHaveBeenCalled();
+    expect(removeChildSpy).toHaveBeenCalled();
+
+    createElementSpy.mockRestore();
+    appendChildSpy.mockRestore();
+    removeChildSpy.mockRestore();
+  });
+  test("generateD2Diagram produces D2 UML class syntax", () => {
+    const erData = parseERDiagram(sampleSDL, typeSources, schemas);
+    const d2 = generateD2Diagram(erData);
+    expect(d2).toContain("Product: {");
+    expect(d2).toContain("shape: class");
+    expect(d2).toContain("id: ID {constraint: primary_key}");
+    expect(d2).toContain("name: String");
+    expect(d2).toContain("Product -> Review");
+  });
+
+  test("generateD2Diagram returns empty string for empty data", () => {
+    expect(generateD2Diagram({ nodes: [], edges: [], subgraphs: [] })).toBe("");
+  });
+
+  test("exportD2Diagram triggers download", () => {
+    const erData = parseERDiagram(sampleSDL, typeSources, schemas);
+    const createElementSpy = jest.spyOn(document, "createElement");
+    const appendChildSpy = jest.spyOn(document.body, "appendChild");
+    const removeChildSpy = jest.spyOn(document.body, "removeChild");
+
+    const d2 = exportD2Diagram(erData, "test.d2");
+
+    expect(d2).toContain("shape: class");
     expect(createElementSpy).toHaveBeenCalledWith("a");
     expect(appendChildSpy).toHaveBeenCalled();
     expect(removeChildSpy).toHaveBeenCalled();

@@ -171,6 +171,8 @@ export function injectOperations(sdl, config) {
     const opsSdl = generateOperationsSdl(config, sdl);
     if (!opsSdl)
         return sdl;
-    return `${sdl.trimEnd()}\n${opsSdl}`;
+    return sdl.trim().length > 0
+        ? `${sdl.trimEnd()}\n\n${opsSdl.trim()}`
+        : opsSdl.trim();
 }
 //# sourceMappingURL=operations.js.map

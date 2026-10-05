@@ -18,7 +18,7 @@ directive @link(url: String, as: String, for: String, import: [String]) repeatab
 """
 Intake Process subgraph: minimal set of mapped fields
 """
-type Intake Process_Contract {
+type IntakeProcess_Contract {
   piid: String @mapFrom(path: "commonElements.contractIdentification.piid")
   originalAwardPiid: String
     @mapFrom(path: "commonElements.contractIdentification.originalAwardPiid")
@@ -38,5 +38,5 @@ type Intake Process_Contract {
 }
 
 type Query {
-  intake_processContract: Intake Process_Contract
+  intake_processContract: IntakeProcess_Contract
 }

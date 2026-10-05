@@ -84,7 +84,7 @@ type Complextestschema @auth @key(fields: "id") {
   phoneNumbers: [Phonenumbers]
   preferences: Preferences
   "Field that can be null"
-  nullableField: JSON
+  nullableField: String
   "Array with mixed types"
   mixedArray: [JSON]
   dateFields: Datefields

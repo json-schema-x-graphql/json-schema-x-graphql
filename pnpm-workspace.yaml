@@ -18,6 +18,9 @@ allowBuilds:
   wasm-pack: false
   "@parcel/watcher": true
 
+minimumReleaseAgeExclude:
+  - http-cache-semantics@4.3.0
+
 onlyBuiltDependencies:
   - "visual-json"
   - "sharp"
@@ -43,23 +46,23 @@ overrides:
   "@eslint/plugin-kit": 0.3.4
   esbuild: ^0.25.0
   ajv@^8.0.0: ^8.18.0
-  axios: 1.19.0
-  axios@<1.19.0: 1.19.0
+  axios: 1.20.0
+  axios@<1.20.0: 1.20.0
   tar: 7.5.22
   tar@<7.5.22: 7.5.22
   flatted: ^3.4.2
-  dompurify: 3.4.14
-  dompurify@<3.4.14: 3.4.14
+  dompurify: 3.4.16
+  dompurify@<3.4.16: 3.4.16
   picomatch: ^4.0.4
-  brace-expansion: ^5.0.9
-  brace-expansion@<5.0.9: 5.0.9
+  brace-expansion: ^5.0.12
+  brace-expansion@<5.0.12: 5.0.12
   nanoid: ^3.3.18
   yaml: ^2.7.0
   "@tootallnate/once": 3.0.1
   browserslist: ^4.28.7
   baseline-browser-mapping: ^2.11.0
-  fast-uri: ^3.1.6
-  fast-uri@<3.1.6: ^3.1.6
+  fast-uri: ^3.1.8
+  fast-uri@<3.1.8: ^3.1.8
   postcss: ^8.5.25
   postcss@<8.5.25: ^8.5.25
   qs: ^6.16.0
@@ -83,12 +86,18 @@ overrides:
   "@opentelemetry/context-zone@<2.8.0": ^2.8.0
   "@opentelemetry/resources": ^2.8.0
   "@opentelemetry/resources@<2.8.0": ^2.8.0
-  undici: ^7.29.0
+  undici: ^7.29.1
+  undici@<7.29.1: ^7.29.1
   shell-quote: ^1.8.4
   protobufjs: ^7.6.3
   form-data: ^4.0.6
   js-yaml: ^4.3.2
-  ip-address: ^10.3.1
+  ip-address: ^10.7.1
+  ip-address@<10.7.1: ^10.7.1
+  markdown-it: ^14.3.1
+  markdown-it@<14.3.1: ^14.3.1
+  "@fastify/busboy": ^3.2.2
+  "@fastify/busboy@<3.2.2": ^3.2.2
   "next@>=15.0.0 <16.0.0": 15.5.24
   "next@>=16.0.0": 16.3.2
   sharp: ^0.35.4
@@ -97,6 +106,8 @@ overrides:
   "@vitest/mocker": ^4.1.11
   ts-deepmerge: ^8.0.0
   ts-deepmerge@<8.0.0: ^8.0.0
+  http-cache-semantics: ^4.3.0
+  http-cache-semantics@<4.3.0: 4.3.0
 
 patchedDependencies:
   gray-matter@4.0.3: patches/gray-matter@4.0.3.patch
