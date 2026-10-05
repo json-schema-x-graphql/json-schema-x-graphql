@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/json-schema-x-graphql/json-schema-x-graphql/compare/v2.0.2...v2.1.0) (2026-10-05)
+
+
+### 🎉 Features
+
+* **converter:** Phase 1 core fixes, vocabulary extension, and tooling (review follow-ups included) ([69100a1](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/69100a1229a7823f242b637a81ab58a847394a3d))
+* **schema:** add x-graphql-field-vocabulary and fix query argument SDL formatting ([#232](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/232), [#235](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/235)) ([ee07f5f](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/ee07f5f8ad82e01087554fb11ae31517652413f4))
+* **tooling:** implement changelog, dprint, D2 export, and sync codegen types ([#11](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/11), [#210](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/210), [#211](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/211), [#212](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/212)) ([063403d](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/063403d80beed50ea0dd1bd627ba01abf8ca33fd))
+
+
+### 🐛 Bug Fixes
+
+* **ci:** align composer Vite plugin and vendor audits ([9c8f638](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/9c8f638e8264c56e03ad8e535da2f795a12ea5c0))
+* **ci:** resolve beta clippy needless_bool and prettier format gate ([6cc16d2](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/6cc16d2f2dae0f5e28d81a1e13fa8f268128adb8))
+* **converter:** close Node/Rust parity gaps found in review ([812ce2f](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/812ce2fbfe922e0690b1c43bcf6c0c6cc2a8c2f1))
+* **converter:** emit root-level x-graphql-enums registry definitions ([60254a0](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/60254a00dd5b00aeeb6a362c0dc1832988fd19a7))
+* **converter:** resolve lenient root pointers to the root type (parity with Rust) ([51e57a5](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/51e57a5fdbd49fc1af07ac986272099ec0ae91e0))
+* **converter:** resolve nullability unions, array wrapping, root naming, and self-references ([#245](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/245), [#234](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/234), [#233](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/233), [#231](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/231), [#236](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/236), [#237](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/237)) ([27046ff](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/27046ff8cb8f90d155a2eb395188cb2c4d411c0b))
+* **converter:** verbatim explicit names; shared scalar logic between engines ([c746e0d](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/c746e0dc0bdcc517032b210513e09c88f781be4c))
+* **examples:** repair invalid identifiers in legacy reference SDL ([5308941](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/5308941341c3f53915f6eb7f7ea32cad01c84d06))
+* **generator:** resolve CI schema paths ([b480acf](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/b480acf381222f642a8de81b70b7c4b8ee2ac205))
+* **security:** broaden audit coverage and resolve generator paths ([daa07d1](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/daa07d1a180af8227e7f4da69a24cf18c5367324))
+* **security:** expand dependency audit coverage ([4524ddf](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/4524ddf13eb8edc897459b7a33a75e259df094d7))
+
+
+### 🏗️ Build System & Dependencies
+
+* **deps:** bump next from 16.3.2 to 16.3.6 ([6496c8d](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/6496c8deaf762896148469953ea1a30ebbfbf848))
+* **deps:** bump the dashboard-npm-dependencies group across 1 directory with 2 updates ([d9e264e](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/d9e264e8e7db1a1f5d4c84eb0d90511d62fdbe01))
+* **deps:** bump the dashboard-npm-dependencies group across 1 directory with 2 updates ([26f386c](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/26f386ce9f02d32676ffea676f3561801c7ed1d7))
+* **deps:** clear resolvable Dependabot npm advisories ([6e6709b](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/6e6709bd9391716ac74ee4463a74d2cee46cf901))
+* **deps:** complete nested workspace security remediation ([4441eae](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/4441eae4098edcd0624c97be91caf01107391aa6))
+* **deps:** drop unused ajv-cli/json-schema-to-graphql-types dev deps ([f90c888](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/f90c888dfa437a26316f4a295963382af1b69515))
+* **deps:** override http-cache-semantics to clear GHSA-ch52-4w7c-c8xp ([7c05819](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/7c05819f123c41ab8cf89b59a85cf18a897babd1))
+* **deps:** refresh pnpm lockfiles to clear resolvable Dependabot advisories ([1eb6d5f](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/1eb6d5f5621c3232bd0269f8af8c7c810725facc))
+* **deps:** sync nested workspace security floors; clear 86 advisories ([0d6840e](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/0d6840ea151b62dabe11f37e71d01e9c9d41090a))
+* **deps:** update GitHub Actions dependencies ([00ac026](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/00ac026682f5fe68daaab79c96cca7c9e393acc3))
+* **deps:** update workspace npm dependencies ([7022c4c](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/7022c4c9617e242697a7a515a9f7b7ecfaf3cf0e))
+* **deps:** update workspace overrides and remediate 34 security audit vulnerabilities ([1bd43db](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/1bd43dbfb6264d58236229d2744aa32d32ef68be))
+* **tooling:** fix changelog generation and document vocabulary extension ([c12c379](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/c12c379ee7e17c9716db2bfe6f07a608666d5fc3))
+* **tooling:** scope dprint to maintained SDL and drop orphaned mirror ([80a3c38](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/80a3c38927eee186a730221efd5902c206d536dd))
+
 ## [2.0.2] - 2026-09-28
 
 ### Security
