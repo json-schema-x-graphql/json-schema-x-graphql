@@ -4,7 +4,16 @@ import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 
 const npmRegistry = "https://registry.npmjs.org/";
-const allowedAdvisories = new Set(["GHSA-vfj7-8cjw-p6xm"]);
+// Advisories without an upstream-published fix or whose only fix would
+// require a breaking dependency change. Each entry is justified in
+// issue #265 and the corresponding security-tracking follow-ups.
+const allowedAdvisories = new Set([
+  "GHSA-vfj7-8cjw-p6xm", // braces <=3.0.3 (in-tree patched, no 3.0.4 on npm)
+  "GHSA-hp3w-g68c-fv3c", // sprintf-js <=1.1.3 (no patched npm release published)
+  "GHSA-238p-pmpm-9mq7", // katex <0.18.2 (patch is a major version bump that
+                         //   breaks the mermaid 11.x peer requirement
+                         //   "katex": "^0.16.47"; pinned in #265)
+]);
 const workspaces = process.argv.slice(2);
 
 if (workspaces.length === 0) {
