@@ -1,0 +1,5 @@
+# Generated reports — not committed. Run `./run.sh --target=local` to regenerate.
+*
+
+# Keep the directory tracked
+!.gitignore
