@@ -86,6 +86,9 @@ overrides:
   http-cache-semantics: ^4.3.0
   http-cache-semantics@<4.3.0: 4.3.0
 
+patchedDependencies:
+  braces@3.0.3: 4d5628d7ff8809805eaa9bd5290ad0ab125033314bee5b6c7e611139125c8af7
+
 importers:
 
   .:
@@ -15212,7 +15215,7 @@ snapshots:
     dependencies:
       balanced-match: 4.0.4
 
-  braces@3.0.3:
+  braces@3.0.3(patch_hash=4d5628d7ff8809805eaa9bd5290ad0ab125033314bee5b6c7e611139125c8af7):
     dependencies:
       fill-range: 7.1.1
 
@@ -18724,7 +18727,7 @@ snapshots:
 
   micromatch@4.0.8:
     dependencies:
-      braces: 3.0.3
+      braces: 3.0.3(patch_hash=4d5628d7ff8809805eaa9bd5290ad0ab125033314bee5b6c7e611139125c8af7)
       picomatch: 4.0.5
 
   mime-db@1.52.0: {}

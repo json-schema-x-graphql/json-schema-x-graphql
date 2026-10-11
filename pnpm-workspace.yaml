@@ -115,3 +115,6 @@ overrides:
   ts-deepmerge@<8.0.0: ^8.0.0
   http-cache-semantics: ^4.3.0
   http-cache-semantics@<4.3.0: 4.3.0
+
+patchedDependencies:
+  braces@3.0.3: patches/braces@3.0.3.patch
