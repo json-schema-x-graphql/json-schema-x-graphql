@@ -21,16 +21,25 @@ const __dirname = dirname(__filename);
 // Configuration
 const PORT = process.env.PORT || 3000;
 const SYSTEM = process.env.SYSTEM || "fpds";
-// Try mounted volume path first (Docker), fallback to local development path
-let SUBGRAPH_PATH = `/workspace/generated-schemas/${SYSTEM}.subgraph.graphql`;
-try {
-  readFileSync(SUBGRAPH_PATH);
-} catch {
-  // Fallback to local development path
-  SUBGRAPH_PATH = resolve(
-    __dirname,
-    `../../../generated-schemas/${SYSTEM}.subgraph.graphql`,
-  );
+// Resolve the subgraph SDL location. Priority:
+//   1. SUBGRAPH_PATH env var (explicit override — used by the benchmarking
+//      gauntlet at servers/mockforge/benchmarks/mockforge-local/)
+//   2. Docker-mounted /workspace/generated-schemas/<system>.subgraph.graphql
+//   3. Local-development fallback at <repo>/generated-schemas/<system>.subgraph.graphql
+let SUBGRAPH_PATH = process.env.SUBGRAPH_PATH;
+if (!SUBGRAPH_PATH) {
+  const dockerPath = `/workspace/generated-schemas/${SYSTEM}.subgraph.graphql`;
+  try {
+    readFileSync(dockerPath);
+    SUBGRAPH_PATH = dockerPath;
+  } catch {
+    // From servers/mockforge/, the generated-schemas directory lives two
+    // levels up at the repo root: ../../generated-schemas/<system>.subgraph.graphql.
+    SUBGRAPH_PATH = resolve(
+      __dirname,
+      `../../generated-schemas/${SYSTEM}.subgraph.graphql`,
+    );
+  }
 }
 
 // Seed faker for deterministic data per system
@@ -118,6 +127,7 @@ const baseSchema = makeExecutableSchema({
   resolverValidationOptions: {
     requireResolversToMatchSchema: "ignore",
   },
+  assumeValidSDL: true, // generated subgraphs may contain forward type references
 });
 
 /**
