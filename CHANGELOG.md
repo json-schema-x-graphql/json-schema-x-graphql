@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1](https://github.com/json-schema-x-graphql/json-schema-x-graphql/compare/v2.2.0...v2.2.1) (2026-10-11)
+
+
+### 🐛 Bug Fixes
+
+* **security:** patch braces to bound AST depth and detect parent cycles ([#283](https://github.com/json-schema-x-graphql/json-schema-x-graphql/issues/283)) ([e93b468](https://github.com/json-schema-x-graphql/json-schema-x-graphql/commit/e93b468f4f747f4b55ffb60f95129b66f4160552))
+
 ## [2.2.0](https://github.com/json-schema-x-graphql/json-schema-x-graphql/compare/v2.1.0...v2.2.0) (2026-10-05)
 
 
