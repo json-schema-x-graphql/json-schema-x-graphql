@@ -1,0 +1,23 @@
+{
+  "_comment": "Shared workloads for the mock server gauntlet. Both local and upstream servers MUST be able to execute these queries against the same FPDS subgraph schema. The queries are intentionally simple and idempotent so latency measurements are stable.",
+
+  "warmQuery": "query Probe { fpds { record(_mockInputPiid: \"GS-0001-00000001\", _mockAgencyCode: \"9700\") { piid awardDate obligatedAmount } } }",
+
+  "latencyVariety": [
+    "query A { fpds { record(_mockInputPiid: \"GS-0001-00000001\", _mockAgencyCode: \"9700\") { piid } } }",
+    "query B { fpds { record(_mockInputPiid: \"GS-0001-00000001\", _mockAgencyCode: \"9700\") { piid vendorName vendorUei } } }",
+    "query C { fpds { record(_mockInputPiid: \"GS-0001-00000001\", _mockAgencyCode: \"9700\") { piid awardAmount obligatedAmount baseAndAllOptionsValue } } }",
+    "query D { fpds { record(_mockInputPiid: \"GS-0001-00000001\", _mockAgencyCode: \"9700\") { piid actionDate awardDate effectiveDate currentCompletionDate } } }"
+  ],
+
+  "federationEntities": {
+    "query": "query Probe($reps: [_Any!]!) { _entities(representations: $reps) { ... on FpdsRecord { piid awardAmount } } }",
+    "variables": { "reps": [{ "__typename": "FpdsRecord", "piid": "GS-0001-00000001" }] },
+    "expected": "_entities array with 1 element"
+  },
+
+  "serviceSDL": {
+    "query": "{ _service { sdl } }",
+    "expected": "_service.sdl contains federation directives (@key, @external, etc.) and at least one type definition"
+  }
+}

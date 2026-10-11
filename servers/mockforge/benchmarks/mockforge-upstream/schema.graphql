@@ -1,0 +1,86 @@
+# Minimal FPDS subgraph schema for the MockForge upstream comparison run.
+#
+# This is the SAME schema that our custom server (../mock-server.js) loads via
+# generated-schemas/fpds.subgraph.graphql, stripped to the bare minimum the
+# gauntlet probes actually exercise:
+#   - one Query.record resolver
+#   - one FpdsRecord type with the fields the warm probe reads
+#   - the Apollo Federation v2 directives (_service, _entities) so the
+#     federation probe can verify whether upstream implements or strips them
+#
+# If upstream ignores these directives, the federation probe will record
+# entitiesError / serviceSdlChars=0 — which is itself a useful finding.
+#
+# Apollo Federation v2 directives are NOT auto-prepended here the way our
+# custom server does. We want the upstream to demonstrate whether it knows
+# what to do with them on its own.
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+directive @requires(fields: String!) on FIELD_DEFINITION
+directive @provides(fields: String!) on FIELD_DEFINITION
+directive @external on FIELD_DEFINITION | OBJECT
+directive @shareable on OBJECT | FIELD_DEFINITION
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | INTERFACE | OBJECT | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @extends on OBJECT | INTERFACE
+directive @link(url: String!, as: String, import: [String]) repeatable on SCHEMA
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+directive @override(from: String!) on FIELD_DEFINITION
+directive @composeDirective(name: String!) repeatable on SCHEMA
+directive @interfaceObject on OBJECT
+
+scalar _Any
+scalar _FieldSet
+
+# Custom scalars that our domain-specific generators handle.
+# These are intentionally declared so the scalar-coverage probe can verify
+# whether upstream knows about them.
+scalar DateTime
+scalar Date
+scalar Time
+scalar PIID
+scalar UEI
+scalar AgencyCode
+scalar NAICSCode
+scalar PSCCode
+scalar FiscalYear
+scalar Decimal
+scalar PositiveDecimal
+scalar Percentage
+scalar Email
+scalar PhoneNumber
+scalar URI
+
+type _Service {
+  sdl: String!
+}
+
+type Query {
+  fpds: FpdsQuery!
+  _service: _Service!
+}
+
+type FpdsQuery {
+  record(_mockInputPiid: String, _mockAgencyCode: String): FpdsRecord
+}
+
+type FpdsRecord @key(fields: "piid") {
+  piid: String!
+  vendorName: String
+  vendorUei: UEI
+  awardAmount: Decimal
+  obligatedAmount: PositiveDecimal
+  baseAndAllOptionsValue: Decimal
+  actionDate: Date
+  awardDate: Date
+  effectiveDate: Date
+  currentCompletionDate: Date
+  contractingOfficeAgencyId: AgencyCode
+  fundingAgencyCode: AgencyCode
+  naicsCode: NAICSCode
+  productOrServiceCode: PSCCode
+}
+
+# Entities resolver for federation
+type _Entity {
+  ... on FpdsRecord { piid }
+}
