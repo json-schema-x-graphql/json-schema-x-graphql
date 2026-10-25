@@ -60,32 +60,32 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@graphql-codegen/core": "^6.2.1",
-    "@graphql-codegen/plugin-helpers": "^7.4.0",
-    "@opentelemetry/api": "^1.9.0",
+    "@graphql-codegen/core": "^6.2.2",
+    "@graphql-codegen/plugin-helpers": "^7.4.2",
+    "@opentelemetry/api": "^1.10.0",
     "@standard-schema/spec": "^1.1.0",
     "graphql": "^17.0.2",
-    "zod": "^4.6.5",
+    "zod": "^4.6.7",
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@graphql-codegen/cli": "^7.4.3",
-    "@graphql-codegen/typescript": "^6.1.0",
-    "@opentelemetry/sdk-trace-base": "^2.11.0",
-    "@opentelemetry/sdk-trace-node": "^2.11.0",
+    "@graphql-codegen/cli": "^7.4.6",
+    "@graphql-codegen/typescript": "^6.1.2",
+    "@opentelemetry/sdk-trace-base": "^2.12.0",
+    "@opentelemetry/sdk-trace-node": "^2.12.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "eslint": "9.20.0",
     "jest": "^30.5.2",
-    "ts-jest": "^29.4.13",
+    "ts-jest": "^29.4.15",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.59.2"
   },
   "optionalDependencies": {
-    "@opentelemetry/sdk-trace-base": "^2.11.0",
-    "@opentelemetry/sdk-trace-node": "^2.11.0"
+    "@opentelemetry/sdk-trace-base": "^2.12.0",
+    "@opentelemetry/sdk-trace-node": "^2.12.0"
   },
   "engines": {
     "node": ">=24.0.0",
