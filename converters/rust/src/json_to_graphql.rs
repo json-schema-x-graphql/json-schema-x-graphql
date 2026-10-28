@@ -325,13 +325,15 @@ impl<'a> ConversionContext<'a> {
         }
     }
 
-    fn resolve_ref_type_name(&mut self, ref_path: &str) -> Option<String> {
+    fn resolve_ref_type_name(&mut self, ref_path: &str) -> Result<Option<String>> {
         if let Some(name) = self.type_names.get(ref_path) {
-            return Some(name.clone());
+            return Ok(Some(name.clone()));
         }
 
-        let schema = self.resolve_ref_schema(ref_path)?;
-        let type_name = schema
+        let Some(schema) = self.resolve_ref_schema(ref_path)? else {
+            return Ok(None);
+        };
+        let Some(type_name) = schema
             .as_object()
             .and_then(|obj| {
                 obj.get("x-graphql-type-name")
@@ -357,7 +359,10 @@ impl<'a> ConversionContext<'a> {
                     self.options.naming_convention,
                     self.options.ref_naming,
                 )
-            })?;
+            })
+        else {
+            return Ok(None);
+        };
 
         // Ensure uniqueness of the derived type name to avoid collisions.
         let mut candidate = type_name.clone();
@@ -369,7 +374,7 @@ impl<'a> ConversionContext<'a> {
         self.type_names
             .insert(ref_path.to_string(), candidate.clone());
 
-        Some(candidate)
+        Ok(Some(candidate))
     }
 
     fn resolve_ref(
@@ -449,11 +454,20 @@ impl<'a> ConversionContext<'a> {
         )))
     }
 
-    fn resolve_ref_schema(&mut self, ref_path: &str) -> Option<&JsonValue> {
+    fn resolve_ref_schema(&mut self, ref_path: &str) -> Result<Option<&JsonValue>> {
         // Try recursive resolution first
         let mut visited = HashSet::new();
-        if let Ok(Some(resolved)) = Self::resolve_ref(self.root_schema, ref_path, &mut visited) {
-            return Some(resolved);
+        match Self::resolve_ref(self.root_schema, ref_path, &mut visited) {
+            Ok(Some(resolved)) => return Ok(Some(resolved)),
+            Ok(None) => {}
+            Err(ConversionError::InvalidReference(message)) => {
+                return Err(ConversionError::InvalidReference(format!(
+                    "{ref_path}: {message}"
+                )));
+            }
+            // Root-level recursive refs use the existing graceful degradation path.
+            Err(ConversionError::CircularReference(_)) => {}
+            Err(error) => return Err(error),
         }
 
         // Fallback to external schema handling (existing logic)
@@ -480,10 +494,10 @@ impl<'a> ConversionContext<'a> {
                 self.external_schemas
                     .insert(ref_path.to_string(), placeholder);
             }
-            return self.external_schemas.get(ref_path);
+            return Ok(self.external_schemas.get(ref_path));
         }
 
-        None
+        Ok(None)
     }
 }
 
@@ -816,7 +830,7 @@ fn convert_type_definition(
                 for item in one_of {
                     // Extract ref
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
-                        if let Some(name) = context.resolve_ref_type_name(ref_path) {
+                        if let Some(name) = context.resolve_ref_type_name(ref_path)? {
                             members.push(name);
                         } else if let Some(name) = extract_type_name_from_ref(
                             ref_path,
@@ -872,7 +886,7 @@ fn convert_type_definition(
             if let Some(all_of) = obj.get("allOf").and_then(|v| v.as_array()) {
                 for item in all_of {
                     if let Some(ref_path) = item.get("$ref").and_then(|v| v.as_str()) {
-                        if let Some(name) = context.resolve_ref_type_name(ref_path) {
+                        if let Some(name) = context.resolve_ref_type_name(ref_path)? {
                             // Assuming all refs in allOf are interfaces if this is an object type
                             implements.push(name);
                         } else if let Some(name) = extract_type_name_from_ref(
@@ -1383,7 +1397,7 @@ fn infer_graphql_type(
     // 2. Reference
     if let Some(ref_path) = obj.get("$ref").and_then(|v| v.as_str()) {
         // Check if the referenced schema is a primitive type
-        if let Some(schema) = context.resolve_ref_schema(ref_path) {
+        if let Some(schema) = context.resolve_ref_schema(ref_path)? {
             // Clone schema to avoid borrow checker issues
             let schema_clone = schema.clone();
 
@@ -1444,13 +1458,13 @@ fn infer_graphql_type(
             }
         };
 
-        if let Some(type_name) = context.resolve_ref_type_name(ref_path) {
+        if let Some(type_name) = context.resolve_ref_type_name(ref_path)? {
             let is_root_ref = ref_path == "#" || ref_path == "#/" || ref_path.is_empty();
             if !context.generated_types.contains(&type_name)
                 && !is_top_level_def(ref_path)
                 && !is_root_ref
             {
-                if let Some(s) = context.resolve_ref_schema(ref_path) {
+                if let Some(s) = context.resolve_ref_schema(ref_path)? {
                     let schema_clone = s.clone();
                     convert_type_definition(&schema_clone, &type_name, context)?;
                 }
@@ -1462,7 +1476,7 @@ fn infer_graphql_type(
             context.options.ref_naming,
         ) {
             if !context.generated_types.contains(&type_name) && !is_top_level_def(ref_path) {
-                if let Some(s) = context.resolve_ref_schema(ref_path) {
+                if let Some(s) = context.resolve_ref_schema(ref_path)? {
                     let schema_clone = s.clone();
                     convert_type_definition(&schema_clone, &type_name, context)?;
                 }
