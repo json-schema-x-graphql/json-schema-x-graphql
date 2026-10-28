@@ -123,3 +123,8 @@ frontend/**/*.zip
 
 # Release pipeline artifacts (binaries, SBOMs, checksums)
 release-assets/
+
+# Mock server benchmarking gauntlet reports (regenerate via
+# `servers/mockforge/benchmarks/run.sh`; reports/ inside that dir is
+# already ignored by its own .gitignore)
+servers/mockforge/benchmarks/reports/*.md

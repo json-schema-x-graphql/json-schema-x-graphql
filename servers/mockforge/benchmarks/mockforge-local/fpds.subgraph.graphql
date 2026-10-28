@@ -1,0 +1,71 @@
+# Minimal FPDS subgraph SDL for the mock server benchmarking gauntlet.
+# This file is hand-written and guaranteed valid; the generated-schemas
+# from generate-subgraph-sdl.mjs currently contain unresolved type
+# references that prevent makeExecutableSchema from succeeding.
+#
+# Goal: a clean SDL that the custom mock-server.js can load so the
+# gauntlet's probes (cold-start, warm latency, throughput, federation,
+# scalar coverage) all have something realistic to hit.
+
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key", "@shareable", "@external", "@provides", "@requires"])
+
+scalar DateTime
+scalar Date
+scalar Time
+scalar PIID
+scalar UEI
+scalar AgencyCode
+scalar NAICSCode
+scalar PSCCode
+scalar FiscalYear
+scalar Decimal
+scalar PositiveDecimal
+scalar Percentage
+scalar Email
+scalar PhoneNumber
+scalar URI
+
+type _Service {
+  sdl: String!
+}
+
+type Query {
+  fpds: FpdsQuery!
+  _service: _Service!
+}
+
+type FpdsQuery {
+  record(_mockInputPiid: String, _mockAgencyCode: String): FpdsRecord
+  records(limit: Int): [FpdsRecord!]!
+}
+
+type FpdsRecord @key(fields: "piid") {
+  piid: String!
+  vendorName: String
+  vendorUei: UEI
+  awardAmount: Decimal
+  obligatedAmount: PositiveDecimal
+  baseAndAllOptionsValue: Decimal
+  actionDate: Date
+  awardDate: Date
+  effectiveDate: Date
+  currentCompletionDate: Date
+  contractingOfficeAgencyId: AgencyCode
+  fundingAgencyCode: AgencyCode
+  naicsCode: NAICSCode
+  productOrServiceCode: PSCCode
+  classification: FpdsClassification
+  vendor: FpdsVendor
+}
+
+type FpdsClassification {
+  naicsCode: NAICSCode
+  productOrServiceCode: PSCCode
+}
+
+type FpdsVendor {
+  vendorName: String
+  vendorUei: UEI
+  vendorEmail: Email
+  vendorPhone: PhoneNumber
+}

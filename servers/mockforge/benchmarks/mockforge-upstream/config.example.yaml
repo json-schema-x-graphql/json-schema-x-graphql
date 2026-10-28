@@ -1,0 +1,9 @@
+# MockForge upstream config (informational; the harness calls
+# `mockforge serve --graphql schema.graphql --graphql-port $PORT` directly).
+#
+# Reference only. The actual command-line is in ./up.sh.
+
+# No additional GraphQL config — the upstream binary currently exposes only
+# the SDL path and port via CLI. See EVALUATION.md §4 for the full feature gap.
+
+graphql: {}  # placeholder

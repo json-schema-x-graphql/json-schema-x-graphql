@@ -84,7 +84,7 @@ function getDescription(schema) {
   const raw = schema["x-graphql-description"] || schema.description || "";
   if (typeof raw !== "string" || !raw) return "";
   // Escape triple quotes for SDL
-  return raw.replace(/\"\"\"/g, '\\"\\"\\"');
+  return raw.replace(/"""/g, "\\\"\\\"\\\"");
 }
 
 /**
@@ -128,12 +128,19 @@ function getScalarType(schema) {
 /**
  * Map JSON Schema type to GraphQL type
  */
-function mapType(schema, propName, parentRequired = []) {
+function mapType(schema, propName, parentRequired = [], defs = {}) {
   // Handle $ref
   if (schema.$ref) {
     const refParts = schema.$ref.split("/");
     const refName = refParts[refParts.length - 1];
-    const typeName = snakeToPascal(refName);
+    // The emitted type name may be renamed via x-graphql-type-name on the
+    // target schema in $defs (the generator emits using getTypeName, which
+    // honours that hint). Honour the same hint here so references resolve
+    // to the same name that was actually emitted. Falls back to
+    // PascalCase of the ref key when no hint is present.
+    const targetSchema = defs[refName];
+    const typeName = targetSchema?.["x-graphql-type-name"]
+      || snakeToPascal(refName);
     const nullable = isNullable(schema, propName, parentRequired);
     return nullable ? typeName : `${typeName}!`;
   }
@@ -143,7 +150,7 @@ function mapType(schema, propName, parentRequired = []) {
     const unionSchema = schema.oneOf || schema.anyOf;
     const types = unionSchema
       .filter((s) => s.type && s.type !== "null")
-      .map((s) => mapType(s, propName, parentRequired));
+      .map((s) => mapType(s, propName, parentRequired, defs));
     if (types.length === 1) return types[0];
     // For unions, return first type (proper union handling requires x-graphql-union hint)
     return types[0] || "String";
@@ -151,7 +158,7 @@ function mapType(schema, propName, parentRequired = []) {
 
   // Handle arrays
   if (schema.type === "array" && schema.items) {
-    const itemType = mapType(schema.items, propName, []);
+    const itemType = mapType(schema.items, propName, [], defs);
     const nullable = isNullable(schema, propName, parentRequired);
     return nullable ? `[${itemType}]` : `[${itemType}]!`;
   }
@@ -277,7 +284,7 @@ function generateEnum(name, schema, output) {
 /**
  * Generate object type from schema
  */
-function generateObjectType(name, schema, output, generatedTypes) {
+function generateObjectType(name, schema, output, generatedTypes, defs = {}) {
   const typeName = getTypeName(schema, name);
 
   // Skip if already generated
@@ -353,7 +360,7 @@ function generateObjectType(name, schema, output, generatedTypes) {
     if (shouldSkipField(propSchema)) return;
 
     const fieldName = getFieldName(propSchema, propName);
-    const fieldType = mapType(propSchema, propName, required);
+    const fieldType = mapType(propSchema, propName, required, defs);
     const fieldDesc = getDescription(propSchema);
     const fieldArgs = propSchema["x-graphql-args"];
     const fieldDirectives = propSchema["x-graphql-directives"] || [];
@@ -406,19 +413,36 @@ function generateUnion(name, schema, output) {
 
 /**
  * Generate custom scalar definitions
+ *
+ * Emits declarations for every scalar that appears in `usedScalars` and is
+ * not a GraphQL built-in (Int / Float / String / Boolean / ID). The
+ * declarations come from `x-graphql-scalars` when present (so descriptions
+ * and overrides are preserved), and from format-based detection otherwise
+ * (e.g. `format: email` -> Email). Without the format-derived path the
+ * generated SDL references a scalar that is never declared.
  */
+const BUILTIN_SCALARS = new Set(["Int", "Float", "String", "Boolean", "ID"]);
 function generateCustomScalars(schema, output, usedScalars) {
   const scalars = schema["x-graphql-scalars"] || {};
 
-  Object.entries(scalars).forEach(([scalarName, config]) => {
-    const scalarTypeName = snakeToPascal(scalarName);
-    if (usedScalars.has(scalarTypeName)) {
-      const desc = config.description || "";
-      if (desc) {
-        output.push(`"""\n${desc}\n"""`);
+  usedScalars.forEach((scalarTypeName) => {
+    if (BUILTIN_SCALARS.has(scalarTypeName)) return;
+
+    // Look up the canonical key in x-graphql-scalars (snake_case) so we can
+    // pull its description if the user provided one.
+    let config = null;
+    for (const [scalarName, c] of Object.entries(scalars)) {
+      if (snakeToPascal(scalarName) === scalarTypeName) {
+        config = c;
+        break;
       }
-      output.push(`scalar ${scalarTypeName}\n`);
     }
+
+    const desc = config?.description || "";
+    if (desc) {
+      output.push(`"""\n${desc}\n"""`);
+    }
+    output.push(`scalar ${scalarTypeName}\n`);
   });
 }
 
@@ -496,7 +520,7 @@ function processDefinitions(defs, output, generatedTypes) {
 
     // Generate object/interface types
     if (schema.type === "object" || !schema.type) {
-      generateObjectType(name, schema, output, generatedTypes);
+      generateObjectType(name, schema, output, generatedTypes, defs);
       return;
     }
   });
@@ -561,6 +585,7 @@ async function generateSubgraphSDL(inputPath, outputPath) {
 
   const output = [];
   const generatedTypes = new Set();
+  const defs = schema.$defs || {};
 
   // Collect used scalars
   const usedScalars = new Set();
@@ -569,10 +594,10 @@ async function generateSubgraphSDL(inputPath, outputPath) {
     Object.values(schema.$defs).forEach((def) => collectUsedScalars(def, usedScalars));
   }
 
-  // Generate custom scalars
-  if (Object.keys(schema["x-graphql-scalars"] || {}).length > 0) {
-    generateCustomScalars(schema, output, usedScalars);
-  }
+  // Generate custom scalars (always run — usedScalars may contain
+  // format-derived scalars like Email even when x-graphql-scalars is
+  // empty; the function itself filters out built-in scalars).
+  generateCustomScalars(schema, output, usedScalars);
 
   // Generate enums
   if (Object.keys(schema["x-graphql-enums"] || {}).length > 0) {
@@ -580,18 +605,18 @@ async function generateSubgraphSDL(inputPath, outputPath) {
   }
 
   // Process $defs
-  if (schema.$defs) {
-    processDefinitions(schema.$defs, output, generatedTypes);
+  if (Object.keys(defs).length > 0) {
+    processDefinitions(defs, output, generatedTypes);
   }
 
   // Generate root type if schema defines properties
   // Skip root type generation if title looks like a description (contains spaces)
   if (schema.properties && Object.keys(schema.properties).length > 0) {
     const rootTypeName = schema.title?.replace(/\s+/g, "") || "RootType";
-    
+
     // Only generate if the type name is valid and not already generated
     if (rootTypeName && /^[A-Z][A-Za-z0-9_]*$/.test(rootTypeName) && !generatedTypes.has(rootTypeName)) {
-      generateObjectType(rootTypeName, schema, output, generatedTypes);
+      generateObjectType(rootTypeName, schema, output, generatedTypes, defs);
     }
   }
 
