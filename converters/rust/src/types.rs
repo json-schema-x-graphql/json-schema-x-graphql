@@ -21,7 +21,7 @@ pub struct ConversionOptions {
     pub include_descriptions: bool,
     /// Whether to preserve field order from source
     pub preserve_field_order: bool,
-    /// Apollo Federation version (1 or 2)
+    /// Apollo Federation version (0 = none, 1, or 2)
     pub federation_version: u8,
     /// Whether to include federation directives in output
     pub include_federation_directives: bool,
@@ -93,6 +93,23 @@ impl Default for ConversionOptions {
             ref_naming: RefNaming::Basename,
             directive_filter_mode: DirectiveFilterMode::All,
         }
+    }
+}
+
+impl ConversionOptions {
+    /// Validate that all option values are within their documented contracts.
+    ///
+    /// # Errors
+    ///
+    /// Returns `UnsupportedFeature` if `federation_version` is not 0, 1, or 2.
+    pub fn validate(&self) -> crate::Result<()> {
+        if self.federation_version > 2 {
+            return Err(crate::ConversionError::UnsupportedFeature(format!(
+                "federation_version must be 0, 1, or 2, got {}",
+                self.federation_version
+            )));
+        }
+        Ok(())
     }
 }
 

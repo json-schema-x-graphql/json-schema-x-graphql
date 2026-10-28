@@ -121,6 +121,8 @@ impl Converter {
 
     /// Convert between JSON Schema and GraphQL SDL
     pub fn convert(&self, input: &str, direction: ConversionDirection) -> Result<String> {
+        self.options.validate()?;
+
         #[cfg(feature = "caching")]
         {
             let cache_key = format!("{:?}:{}", direction, input);
@@ -149,6 +151,8 @@ impl Converter {
 
     /// Convert JSON Schema to GraphQL SDL
     pub fn json_schema_to_graphql(&self, json_schema: &str) -> Result<String> {
+        self.options.validate()?;
+
         #[cfg(feature = "telemetry")]
         let _span = {
             use opentelemetry::trace::Tracer;
@@ -197,6 +201,8 @@ impl Converter {
 
     /// Convert GraphQL SDL to JSON Schema
     pub fn graphql_to_json_schema(&self, graphql_sdl: &str) -> Result<String> {
+        self.options.validate()?;
+
         #[cfg(feature = "telemetry")]
         let _span = {
             use opentelemetry::trace::Tracer;
