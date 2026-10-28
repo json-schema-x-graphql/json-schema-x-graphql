@@ -2,6 +2,7 @@
  * Tests for the Directive Filter Framework.
  */
 
+import { parse } from "graphql";
 import {
   DirectiveFilterMode,
   classifyDirective,
@@ -106,6 +107,74 @@ describe("filterSdlDirectives", () => {
   it("is a noop for ALL mode", () => {
     const sdl = 'type User @key(fields: "id") { id: ID! }';
     expect(filterSdlDirectives(sdl, "ALL")).toBe(sdl);
+  });
+
+  it("preserves email addresses in description strings", () => {
+    const description = '"Contact support@acme.com for help"';
+    const sdl = `type Query { ${description} help: String }`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain(description);
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves email addresses in argument defaults and returns parseable SDL", () => {
+    const sdl = 'type Query { email(notify: String = "a@b.com"): Boolean }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain('notify: String = "a@b.com"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("ignores parentheses inside directive string arguments", () => {
+    const sdl =
+      'type User @key(fields: "value(with") @deprecated(reason: "value(with)parens") { id: ID }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).not.toContain("@key");
+    expect(result).toContain('@deprecated(reason: "value(with)parens")');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves at signs in multiline block-string descriptions", () => {
+    const sdl = `type Query {
+  """
+  Contact support@acme.com for help
+  or mention @admins
+  """
+  help: String @shareable
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("Contact support@acme.com for help");
+    expect(result).toContain("or mention @admins");
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("does not treat at signs after escaped quotes as directives", () => {
+    const sdl = 'type Query { field(arg: String = "a\\"@b"): String }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain('"a\\"@b"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("filters directives after strings containing at signs", () => {
+    const sdl =
+      'type Query { "Contact support@acme.com" help: String @shareable @deprecated }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("Contact support@acme.com");
+    expect(result).not.toContain("@shareable");
+    expect(result).toContain("@deprecated");
+    expect(() => parse(result)).not.toThrow();
   });
 });
 
