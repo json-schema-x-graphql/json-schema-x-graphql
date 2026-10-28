@@ -112,25 +112,96 @@ export function filterDirectiveList(
   });
 }
 
-/** Filter directive tokens from a single line of SDL output. */
-export function filterLineDirectives(
-  line: string,
-  mode: DirectiveFilterMode,
-): string {
+type ScannerState =
+  | "normal"
+  | "singleQuotedString"
+  | "doubleQuotedString"
+  | "blockString";
+
+function trimCurrentLineEnd(value: string): string {
+  return value.replace(/[^\S\n]+$/, "");
+}
+
+function filterDirectives(input: string, mode: DirectiveFilterMode): string {
   if (mode === "ALL") {
-    return line;
+    return input;
   }
 
   let result = "";
+  let state: ScannerState = "normal";
+  let escaped = false;
   let inDirective = false;
   let directiveBuffer = "";
   let parenDepth = 0;
 
-  for (const ch of line) {
-    if (ch === "@" && !inDirective) {
+  const append = (text: string) => {
+    if (inDirective) {
+      directiveBuffer += text;
+    } else {
+      result += text;
+    }
+  };
+
+  const finishDirective = () => {
+    const name =
+      directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
+      directiveBuffer;
+    if (shouldIncludeDirective(name, mode)) {
+      result += directiveBuffer;
+    }
+    inDirective = false;
+    directiveBuffer = "";
+    parenDepth = 0;
+  };
+
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+
+    if (state === "blockString") {
+      if (ch === '"' && input.startsWith('"""', i)) {
+        append('"""');
+        i += 2;
+        state = "normal";
+      } else {
+        append(ch);
+      }
+      continue;
+    }
+
+    if (state !== "normal") {
+      append(ch);
+      if (escaped) {
+        escaped = false;
+      } else if (ch === "\\") {
+        escaped = true;
+      } else if (
+        (state === "singleQuotedString" && ch === "'") ||
+        (state === "doubleQuotedString" && ch === '"')
+      ) {
+        state = "normal";
+      }
+      continue;
+    }
+
+    if (ch === "\n") {
+      if (inDirective) {
+        finishDirective();
+      }
+      result = trimCurrentLineEnd(result) + ch;
+      continue;
+    }
+
+    if (ch === '"' && input.startsWith('"""', i)) {
+      append('"""');
+      i += 2;
+      state = "blockString";
+    } else if (ch === '"' || ch === "'") {
+      append(ch);
+      state = ch === '"' ? "doubleQuotedString" : "singleQuotedString";
+      escaped = false;
+    } else if (ch === "@" && !inDirective) {
       inDirective = true;
-      directiveBuffer = "";
-      directiveBuffer += ch;
+      directiveBuffer = ch;
     } else if (inDirective) {
       directiveBuffer += ch;
       if (ch === "(") {
@@ -138,14 +209,7 @@ export function filterLineDirectives(
       } else if (ch === ")") {
         parenDepth--;
         if (parenDepth === 0) {
-          const name =
-            directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
-            directiveBuffer;
-          if (shouldIncludeDirective(name, mode)) {
-            result += directiveBuffer;
-          }
-          inDirective = false;
-          directiveBuffer = "";
+          finishDirective();
         }
       } else if (parenDepth === 0 && /\s/.test(ch)) {
         const name = directiveBuffer.replace(/^@/, "").trim();
@@ -162,15 +226,18 @@ export function filterLineDirectives(
   }
 
   if (inDirective && directiveBuffer) {
-    const name =
-      directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
-      directiveBuffer;
-    if (shouldIncludeDirective(name, mode)) {
-      result += directiveBuffer;
-    }
+    finishDirective();
   }
 
-  return result.trimEnd();
+  return state === "normal" ? trimCurrentLineEnd(result) : result;
+}
+
+/** Filter directive tokens from a single line of SDL output. */
+export function filterLineDirectives(
+  line: string,
+  mode: DirectiveFilterMode,
+): string {
+  return filterDirectives(line, mode);
 }
 
 /** Apply directive filtering to an entire SDL string. */
@@ -178,13 +245,7 @@ export function filterSdlDirectives(
   sdl: string,
   mode: DirectiveFilterMode,
 ): string {
-  if (mode === "ALL") {
-    return sdl;
-  }
-  return sdl
-    .split("\n")
-    .map((line) => filterLineDirectives(line, mode))
-    .join("\n");
+  return filterDirectives(sdl, mode);
 }
 
 export const FEDERATION_VERSION = "2.9";
