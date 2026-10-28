@@ -22,7 +22,7 @@
 
 import { spawn } from 'node:child_process';
 import { performance } from 'node:perf_hooks';
-import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

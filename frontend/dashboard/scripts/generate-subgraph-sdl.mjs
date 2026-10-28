@@ -84,7 +84,7 @@ function getDescription(schema) {
   const raw = schema["x-graphql-description"] || schema.description || "";
   if (typeof raw !== "string" || !raw) return "";
   // Escape triple quotes for SDL
-  return raw.replace(/\"\"\"/g, '\\"\\"\\"');
+  return raw.replace(/"""/g, "\\\"\\\"\\\"");
 }
 
 /**
