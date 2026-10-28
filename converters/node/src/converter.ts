@@ -1490,17 +1490,10 @@ export class Converter implements IJsonSchemaConverter {
         federationVersion: resolvedFederation,
       };
 
-      const sdl = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
-
-      let output = sdl;
-      if (resolvedOptions.outputFormat === "AST_JSON") {
-        if (!sdl) {
-          output = "null";
-        } else {
-          const ast = parse(sdl, { noLocation: true });
-          output = JSON.stringify(ast);
-        }
-      }
+      // jsonSchemaToGraphQL already returns serialized AST JSON (or the
+      // literal "null" for empty output) when outputFormat is "AST_JSON";
+      // re-parsing that JSON text as SDL would always fail.
+      const output = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
 
       const diagnostics: Diagnostic[] = [];
       const warningCount = diagnostics.filter(
