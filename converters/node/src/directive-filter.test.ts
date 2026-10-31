@@ -235,6 +235,31 @@ type Query { help: String @shareable }`;
     expect(result).not.toContain("@shareable");
     expect(() => parse(result)).not.toThrow();
   });
+
+  // Guards the output assembly staying linear in the SDL size. Trimming each
+  // line's trailing whitespace by re-scanning (or re-slicing) the whole buffer
+  // made this quadratic: ~11s for the input below, versus ~0.1s.
+  it("stays linear on large SDL while still trimming trailing whitespace", () => {
+    const lines = 12_000;
+    const sdl = Array.from(
+      { length: lines },
+      (_, i) =>
+        `  field${i}: String @deprecated(reason: "old") @key(fields: "id")   `,
+    ).join("\n");
+
+    const started = performance.now();
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+    const elapsed = performance.now() - started;
+
+    const outputLines = result.split("\n");
+    expect(outputLines).toHaveLength(lines);
+    expect(outputLines[0]).toBe('  field0: String @deprecated(reason: "old")');
+    expect(outputLines[lines - 1]).toBe(
+      `  field${lines - 1}: String @deprecated(reason: "old")`,
+    );
+    expect(result).not.toContain("@key");
+    expect(elapsed).toBeLessThan(5_000);
+  }, 20_000);
 });
 
 describe("ensureFederationDirectives", () => {
