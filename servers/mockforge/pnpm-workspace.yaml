@@ -32,7 +32,12 @@ overrides:
   js-yaml: ^4.3.2
   js-yaml@<4.3.2: ^4.3.2
   lodash: ^4.18.1
-  minimatch: ^10.2.5
+  glob: ^14.0.2
+  glob@<14.0.2: ^14.0.2
+  graphql-scalars: ^2.0.1
+  graphql-scalars@<2.0.1: ^2.0.1
+  minimatch: ^11.0.1
+  minimatch@<11.0.1: ^11.0.1
   picomatch: ^4.0.4
   protobufjs: ^7.6.3
   tmp: ^0.2.7
