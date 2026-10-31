@@ -1,10 +1,80 @@
 //! Error types for JSON Schema x GraphQL conversion
 
 use serde::Serialize;
+use std::error::Error as StdError;
+use std::fmt;
 use thiserror::Error;
 
 /// Result type for conversion operations
 pub type Result<T> = std::result::Result<T, ConversionError>;
+
+/// Payload for JSON errors that preserves the original error chain
+#[derive(Debug)]
+pub struct JsonErrorPayload {
+    inner: serde_json::Error,
+}
+
+impl JsonErrorPayload {
+    pub fn new(err: serde_json::Error) -> Self {
+        Self { inner: err }
+    }
+}
+
+impl fmt::Display for JsonErrorPayload {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.inner)
+    }
+}
+
+impl StdError for JsonErrorPayload {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        Some(&self.inner)
+    }
+}
+
+impl Serialize for JsonErrorPayload {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        // Serialize as the display string to preserve wire format
+        serializer.serialize_str(&self.to_string())
+    }
+}
+
+/// Payload for regex errors that preserves the original error chain
+#[derive(Debug, Clone)]
+pub struct RegexErrorPayload {
+    inner: regex::Error,
+}
+
+impl RegexErrorPayload {
+    pub fn new(err: regex::Error) -> Self {
+        Self { inner: err }
+    }
+}
+
+impl fmt::Display for RegexErrorPayload {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.inner)
+    }
+}
+
+impl StdError for RegexErrorPayload {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        Some(&self.inner)
+    }
+}
+
+impl Serialize for RegexErrorPayload {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        // Serialize as the display string to preserve wire format
+        serializer.serialize_str(&self.to_string())
+    }
+}
 
 /// Errors that can occur during conversion
 #[derive(Error, Debug, Serialize)]
@@ -68,11 +138,13 @@ pub enum ConversionError {
 
     /// JSON serialization/deserialization error
     #[error("JSON error: {0}")]
-    JsonError(String),
+    #[serde(serialize_with = "serialize_json_error_payload")]
+    JsonError(#[source] JsonErrorPayload),
 
     /// Regex error
     #[error("Regex error: {0}")]
-    RegexError(String),
+    #[serde(serialize_with = "serialize_regex_error_payload")]
+    RegexError(#[source] RegexErrorPayload),
 
     /// Internal conversion error
     #[error("Internal error: {0}")]
@@ -81,6 +153,28 @@ pub enum ConversionError {
     /// Multiple errors occurred
     #[error("Multiple errors: {0:?}")]
     MultipleErrors(Vec<ConversionError>),
+}
+
+/// Serialize JsonErrorPayload as a string to preserve wire format
+fn serialize_json_error_payload<S>(
+    payload: &JsonErrorPayload,
+    serializer: S,
+) -> std::result::Result<S::Ok, S::Error>
+where
+    S: serde::Serializer,
+{
+    payload.serialize(serializer)
+}
+
+/// Serialize RegexErrorPayload as a string to preserve wire format
+fn serialize_regex_error_payload<S>(
+    payload: &RegexErrorPayload,
+    serializer: S,
+) -> std::result::Result<S::Ok, S::Error>
+where
+    S: serde::Serializer,
+{
+    payload.serialize(serializer)
 }
 
 impl ConversionError {
@@ -126,13 +220,13 @@ impl ConversionError {
 
 impl From<serde_json::Error> for ConversionError {
     fn from(err: serde_json::Error) -> Self {
-        ConversionError::JsonError(err.to_string())
+        ConversionError::JsonError(JsonErrorPayload::new(err))
     }
 }
 
 impl From<regex::Error> for ConversionError {
     fn from(err: regex::Error) -> Self {
-        ConversionError::RegexError(err.to_string())
+        ConversionError::RegexError(RegexErrorPayload::new(err))
     }
 }
 
@@ -178,5 +272,143 @@ mod tests {
         let errors = vec![ConversionError::validation("single error")];
         let combined = ConversionError::combine(errors);
         assert!(matches!(combined, ConversionError::ValidationError(_)));
+    }
+
+    #[test]
+    fn test_from_serde_json_error_preserves_source_chain() {
+        let json_err = serde_json::from_str::<serde_json::Value>("{").unwrap_err();
+        let err: ConversionError = json_err.into();
+
+        // Check that source() returns Some
+        assert!(
+            err.source().is_some(),
+            "source() should be Some for JsonError"
+        );
+
+        // Check that the source chain contains the original error message
+        let source = err.source().unwrap();
+        let source_str = source.to_string();
+        assert!(
+            source_str.contains("EOF") || source_str.contains("end of input"),
+            "source chain should contain original error message, got: {}",
+            source_str
+        );
+    }
+
+    #[test]
+    fn test_json_error_display_format() {
+        let json_err = serde_json::from_str::<serde_json::Value>("{").unwrap_err();
+        let err: ConversionError = json_err.into();
+
+        // Display output should be byte-identical to old format: "JSON error: <msg>"
+        let display_str = err.to_string();
+        assert!(display_str.starts_with("JSON error: "));
+        assert!(
+            display_str.contains("EOF") || display_str.contains("end of input"),
+            "display should contain original error message"
+        );
+    }
+
+    #[test]
+    fn test_json_error_serde_wire_format() {
+        let json_err = serde_json::from_str::<serde_json::Value>("{").unwrap_err();
+        let err: ConversionError = json_err.into();
+
+        // Serialize to value and check wire format
+        let value = serde_json::to_value(&err).expect("serialization should succeed");
+
+        // Should match old format: {"type":"JsonError","details":"<display string>"}
+        assert_eq!(value["type"], "JsonError");
+        assert!(value["details"].is_string());
+        let details = value["details"].as_str().unwrap();
+        assert!(details.starts_with("EOF") || details.contains("end of input"));
+    }
+
+    #[test]
+    #[allow(clippy::invalid_regex)]
+    fn test_from_regex_error_preserves_source_chain() {
+        // Create an invalid regex to trigger an error
+        let regex_err = regex::Regex::new("*").unwrap_err();
+        let err: ConversionError = regex_err.into();
+
+        // Check that source() returns Some
+        assert!(
+            err.source().is_some(),
+            "source() should be Some for RegexError"
+        );
+
+        // Check that the source chain contains the original error message
+        let source = err.source().unwrap();
+        let source_str = source.to_string();
+        assert!(
+            !source_str.is_empty(),
+            "source chain should contain original error message, got: {}",
+            source_str
+        );
+    }
+
+    #[test]
+    #[allow(clippy::invalid_regex)]
+    fn test_regex_error_display_format() {
+        let regex_err = regex::Regex::new("*").unwrap_err();
+        let err: ConversionError = regex_err.into();
+
+        // Display output should be byte-identical to old format: "Regex error: <msg>"
+        let display_str = err.to_string();
+        assert!(display_str.starts_with("Regex error: "));
+        assert!(!display_str.is_empty());
+    }
+
+    #[test]
+    #[allow(clippy::invalid_regex)]
+    fn test_regex_error_serde_wire_format() {
+        let regex_err = regex::Regex::new("*").unwrap_err();
+        let err: ConversionError = regex_err.into();
+
+        // Serialize to value and check wire format
+        let value = serde_json::to_value(&err).expect("serialization should succeed");
+
+        // Should match old format: {"type":"RegexError","details":"<display string>"}
+        assert_eq!(value["type"], "RegexError");
+        assert!(value["details"].is_string());
+        let details = value["details"].as_str().unwrap();
+        assert!(!details.is_empty());
+    }
+
+    #[test]
+    fn test_json_error_payload_direct_construction() {
+        let json_err = serde_json::from_str::<serde_json::Value>("{").unwrap_err();
+        let payload = JsonErrorPayload::new(json_err);
+
+        // Test Display
+        let display_str = payload.to_string();
+        assert!(display_str.contains("EOF") || display_str.contains("end of input"));
+
+        // Test source()
+        let source = payload.source();
+        assert!(source.is_some());
+
+        // Test Serialize
+        let value = serde_json::to_value(&payload).expect("serialization should succeed");
+        assert!(value.is_string());
+    }
+
+    #[test]
+    #[allow(clippy::invalid_regex)]
+    fn test_regex_error_payload_direct_construction() {
+        let regex_err = regex::Regex::new("*").unwrap_err();
+        let payload = RegexErrorPayload::new(regex_err);
+
+        // Test Display
+        let display_str = payload.to_string();
+        assert!(!display_str.is_empty());
+
+        // Test source()
+        let source = payload.source();
+        assert!(source.is_some());
+
+        // Test Serialize
+        let value = serde_json::to_value(&payload).expect("serialization should succeed");
+        assert!(value.is_string());
     }
 }

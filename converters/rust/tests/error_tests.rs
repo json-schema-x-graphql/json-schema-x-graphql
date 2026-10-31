@@ -21,7 +21,9 @@ fn test_from_serde_json_error() {
     let err: ConversionError = json_err.into();
 
     match err {
-        ConversionError::JsonError(msg) => {
+        ConversionError::JsonError(payload) => {
+            // Assert on the payload's display output
+            let msg = payload.to_string();
             assert!(msg.contains("EOF") || msg.contains("end of input"));
         }
         _ => panic!("Expected JsonError variant"),
