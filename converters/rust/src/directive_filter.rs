@@ -95,6 +95,7 @@ enum ScannerState {
     SingleQuotedString,
     DoubleQuotedString,
     BlockString,
+    Comment,
 }
 
 /// Remove trailing whitespace (except newlines) from the end of a string.
@@ -152,18 +153,27 @@ fn filter_directives(input: &str, mode: &DirectiveFilterMode) -> String {
         let ch = chars[i];
 
         match state {
-            ScannerState::BlockString => {
-                // Block strings have no escape processing; the terminator is
-                // exactly three quotes. Everything else is literal text.
-                if ch == '"' && chars.get(i + 1) == Some(&'"') && chars.get(i + 2) == Some(&'"') {
-                    let target: &mut String = if in_directive {
-                        &mut directive_buffer
-                    } else {
-                        &mut result
-                    };
-                    target.push_str("\"\"\"");
-                    i += 2;
+            ScannerState::Comment => {
+                if ch == '\n' {
                     state = ScannerState::Normal;
+                    if in_directive {
+                        if paren_depth == 0 {
+                            finish_directive(
+                                &mut result,
+                                &mut directive_buffer,
+                                &mut paren_depth,
+                                mode,
+                            );
+                            in_directive = false;
+                            trim_current_line_end(&mut result);
+                            result.push('\n');
+                        } else {
+                            directive_buffer.push(ch);
+                        }
+                    } else {
+                        trim_current_line_end(&mut result);
+                        result.push('\n');
+                    }
                 } else {
                     let target: &mut String = if in_directive {
                         &mut directive_buffer
@@ -172,6 +182,37 @@ fn filter_directives(input: &str, mode: &DirectiveFilterMode) -> String {
                     };
                     target.push(ch);
                 }
+            }
+            ScannerState::BlockString => {
+                // Block strings have no escape processing except an escaped
+                // triple quote (\"""). An even number of preceding backslashes
+                // means the triple quote ends the block string.
+                if ch == '"' && chars.get(i + 1) == Some(&'"') && chars.get(i + 2) == Some(&'"') {
+                    let mut backslashes = 0;
+                    let mut k = i;
+                    while k > 0 && chars[k - 1] == '\\' {
+                        backslashes += 1;
+                        k -= 1;
+                    }
+                    if backslashes % 2 == 0 {
+                        let target: &mut String = if in_directive {
+                            &mut directive_buffer
+                        } else {
+                            &mut result
+                        };
+                        target.push_str("\"\"\"");
+                        i += 2;
+                        state = ScannerState::Normal;
+                        i += 1;
+                        continue;
+                    }
+                }
+                let target: &mut String = if in_directive {
+                    &mut directive_buffer
+                } else {
+                    &mut result
+                };
+                target.push(ch);
             }
             ScannerState::SingleQuotedString | ScannerState::DoubleQuotedString => {
                 let target: &mut String = if in_directive {
@@ -193,6 +234,25 @@ fn filter_directives(input: &str, mode: &DirectiveFilterMode) -> String {
             ScannerState::Normal => {
                 if ch == '\n' {
                     if in_directive {
+                        if paren_depth == 0 {
+                            finish_directive(
+                                &mut result,
+                                &mut directive_buffer,
+                                &mut paren_depth,
+                                mode,
+                            );
+                            in_directive = false;
+                            trim_current_line_end(&mut result);
+                            result.push('\n');
+                        } else {
+                            directive_buffer.push(ch);
+                        }
+                    } else {
+                        trim_current_line_end(&mut result);
+                        result.push('\n');
+                    }
+                } else if ch == '#' {
+                    if in_directive && paren_depth == 0 {
                         finish_directive(
                             &mut result,
                             &mut directive_buffer,
@@ -201,8 +261,13 @@ fn filter_directives(input: &str, mode: &DirectiveFilterMode) -> String {
                         );
                         in_directive = false;
                     }
-                    trim_current_line_end(&mut result);
-                    result.push('\n');
+                    let target: &mut String = if in_directive {
+                        &mut directive_buffer
+                    } else {
+                        &mut result
+                    };
+                    target.push(ch);
+                    state = ScannerState::Comment;
                 } else if ch == '"'
                     && chars.get(i + 1) == Some(&'"')
                     && chars.get(i + 2) == Some(&'"')
@@ -268,7 +333,7 @@ fn filter_directives(input: &str, mode: &DirectiveFilterMode) -> String {
         finish_directive(&mut result, &mut directive_buffer, &mut paren_depth, mode);
     }
 
-    if state == ScannerState::Normal {
+    if state == ScannerState::Normal || state == ScannerState::Comment {
         trim_current_line_end(&mut result);
     }
     result
@@ -450,6 +515,42 @@ mod tests {
         let line = "  name: String \"desc with @here\" @shareable";
         let result = filter_line_directives(line, &DirectiveFilterMode::ViewerFriendly);
         assert!(result.contains("@here"));
+        assert!(!result.contains("@shareable"));
+    }
+
+    #[test]
+    fn comments_with_at_signs_are_preserved() {
+        let sdl = "# Contact us at support@example.com\ntype Query {\n  # Mentions @admins or @oncall\n  id: ID @shareable\n}";
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::ViewerFriendly);
+        assert!(result.contains("# Contact us at support@example.com"));
+        assert!(result.contains("# Mentions @admins or @oncall"));
+        assert!(!result.contains("@shareable"));
+    }
+
+    #[test]
+    fn multiline_directive_arguments_do_not_corrupt_sdl() {
+        let sdl = "type User @key(\n  fields: \"id\"\n) {\n  id: ID!\n}";
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::ViewerFriendly);
+        assert!(!result.contains("@key"));
+        assert!(!result.contains("fields: \"id\""));
+        assert!(result.contains("type User"));
+        assert!(result.contains("id: ID!"));
+    }
+
+    #[test]
+    fn multiline_retained_directive_is_preserved() {
+        let sdl = "type User @deprecated(\n  reason: \"use NewUser instead\"\n) {\n  id: ID!\n}";
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::ViewerFriendly);
+        assert!(result.contains("@deprecated"));
+        assert!(result.contains("reason: \"use NewUser instead\""));
+    }
+
+    #[test]
+    fn escaped_triple_quotes_inside_block_strings() {
+        let sdl = "\"\"\"\nThis block string contains an escaped \\\"\"\" triple quote and an email: support@acme.com\n\"\"\"\ntype Query { help: String @shareable }";
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::ViewerFriendly);
+        assert!(result.contains("support@acme.com"));
+        assert!(result.contains("\\\"\"\""));
         assert!(!result.contains("@shareable"));
     }
 }
