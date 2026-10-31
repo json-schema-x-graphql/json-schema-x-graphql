@@ -52,6 +52,7 @@ export {
   type DirectiveTier,
 } from "./directive-filter.js";
 export * from "./hints/index.js";
+import { lintAll, type ValidationIssue } from "./validation-lint.js";
 export { lintSchema, lintAll } from "./validation-lint.js";
 
 // ExtendedConverterOptions and others moved to interfaces.ts
@@ -1472,6 +1473,33 @@ function detectFederationVersion(schema: JsonSchema): FederationVersion {
   return "NONE";
 }
 
+/**
+ * Maps a lint issue path ("$.properties.foo", "$.items[0].x-cost") to the
+ * Diagnostic path array (["properties","foo"], ["items","0","x-cost"]).
+ * The root "$" maps to [] (the issue sits at the schema root); null is
+ * reserved for diagnostics without a schema location (convert()'s catch path).
+ */
+function lintPathToDiagnosticPath(lintPath: string): string[] {
+  const withoutRoot = lintPath.startsWith("$") ? lintPath.slice(1) : lintPath;
+  const rest = withoutRoot.startsWith(".") ? withoutRoot.slice(1) : withoutRoot;
+  if (rest === "") return [];
+  return rest
+    .split(".")
+    .flatMap((segment) => segment.split(/[[\]]/))
+    .filter((segment) => segment.length > 0);
+}
+
+/** Maps a lint ValidationIssue onto the published Diagnostic contract. */
+function lintIssueToDiagnostic(issue: ValidationIssue): Diagnostic {
+  return {
+    severity: issue.severity === "error" ? "ERROR" : "WARNING",
+    kind: "JSON_SCHEMA_VALIDATION" as DiagnosticKind,
+    message: issue.message,
+    path: lintPathToDiagnosticPath(issue.path),
+    code: issue.validator,
+  };
+}
+
 export class Converter implements IJsonSchemaConverter {
   async convert(input: ConvertInput): Promise<ConversionResult> {
     try {
@@ -1490,19 +1518,17 @@ export class Converter implements IJsonSchemaConverter {
         federationVersion: resolvedFederation,
       };
 
-      const sdl = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
+      // jsonSchemaToGraphQL already returns serialized AST JSON (or the
+      // literal "null" for empty output) when outputFormat is "AST_JSON";
+      // re-parsing that JSON text as SDL would always fail.
+      const output = jsonSchemaToGraphQL(jsonSchema, resolvedOptions);
 
-      let output = sdl;
-      if (resolvedOptions.outputFormat === "AST_JSON") {
-        if (!sdl) {
-          output = "null";
-        } else {
-          const ast = parse(sdl, { noLocation: true });
-          output = JSON.stringify(ast);
-        }
-      }
-
-      const diagnostics: Diagnostic[] = [];
+      // When validate is on (the default), lint the parsed schema and map the
+      // issues to Diagnostics, so the counts below — and failOnWarning —
+      // reflect real findings instead of an always-empty list.
+      const diagnostics: Diagnostic[] = resolvedOptions.validate
+        ? lintAll(jsonSchema).map(lintIssueToDiagnostic)
+        : [];
       const warningCount = diagnostics.filter(
         (d) => d.severity === "WARNING",
       ).length;
