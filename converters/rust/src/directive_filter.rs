@@ -99,12 +99,19 @@ enum ScannerState {
 }
 
 /// Remove trailing whitespace (except newlines) from the end of a string.
+///
+/// Uses `char::is_whitespace` rather than `is_ascii_whitespace` to match both
+/// the `str::trim_end` this replaced and the Node converter's `\s`-based trim,
+/// which strip Unicode whitespace such as U+00A0 and U+2003. The count is
+/// summed over `len_utf8` so multi-byte whitespace truncates on a char
+/// boundary.
 fn trim_current_line_end(value: &mut String) {
     let trailing = value
-        .bytes()
+        .chars()
         .rev()
-        .take_while(|&b| b.is_ascii_whitespace() && b != b'\n')
-        .count();
+        .take_while(|c| c.is_whitespace() && *c != '\n')
+        .map(char::len_utf8)
+        .sum::<usize>();
     value.truncate(value.len() - trailing);
 }
 
@@ -552,5 +559,43 @@ mod tests {
         assert!(result.contains("support@acme.com"));
         assert!(result.contains("\\\"\"\""));
         assert!(!result.contains("@shareable"));
+    }
+
+    /// Trailing-whitespace stripping has to cover Unicode whitespace, matching
+    /// both the `str::trim_end` this scanner replaced and the Node converter's
+    /// `\s`-based trim. An ASCII-only predicate silently kept U+00A0, U+000B
+    /// and U+2003 at the end of each line.
+    #[test]
+    fn strips_unicode_trailing_whitespace_per_line() {
+        for (name, ws) in [
+            ("NBSP", "\u{00a0}"),
+            ("VTAB", "\u{000b}"),
+            ("EM SPACE", "\u{2003}"),
+            ("IDEOGRAPHIC SPACE", "\u{3000}"),
+            ("tab", "\t"),
+            ("CR", "\r"),
+        ] {
+            let sdl = format!("type A @key(fields: \"id\"){ws}\ntype B {{ id: ID }}");
+            let result = filter_sdl_directives(&sdl, &DirectiveFilterMode::ViewerFriendly);
+            let first = result.lines().next().unwrap_or("");
+            assert_eq!(
+                first,
+                "type A",
+                "{name} (U+{:04X}) should be stripped from the line end",
+                ws.chars().next().unwrap() as u32
+            );
+        }
+    }
+
+    /// A newline inside a line's trailing run must survive: only whitespace
+    /// after the last non-whitespace character on that line is removed.
+    #[test]
+    fn unicode_trim_stops_at_newline() {
+        let sdl = "type A {\u{00a0}\n  id: ID\u{2003}\n}";
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::All);
+        assert_eq!(result, sdl, "ALL mode must not modify the input");
+
+        let result = filter_sdl_directives(sdl, &DirectiveFilterMode::ViewerFriendly);
+        assert_eq!(result, "type A {\n  id: ID\n}");
     }
 }
