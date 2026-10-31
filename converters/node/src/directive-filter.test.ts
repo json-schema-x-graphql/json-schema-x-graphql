@@ -176,6 +176,65 @@ describe("filterSdlDirectives", () => {
     expect(result).toContain("@deprecated");
     expect(() => parse(result)).not.toThrow();
   });
+
+  it("preserves at signs inside SDL comments", () => {
+    const sdl = `# Contact us at support@example.com
+type Query {
+  # Mentions @admins or @oncall
+  id: ID @shareable
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("# Contact us at support@example.com");
+    expect(result).toContain("# Mentions @admins or @oncall");
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("handles multiline directive arguments without corrupting SDL", () => {
+    const sdl = `type User @key(
+  fields: "id"
+) {
+  id: ID!
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).not.toContain("@key");
+    expect(result).not.toContain('fields: "id"');
+    expect(result).toContain("type User");
+    expect(result).toContain("id: ID!");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves multiline retained directive arguments", () => {
+    const sdl = `type User @deprecated(
+  reason: "use NewUser instead"
+) {
+  id: ID!
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("@deprecated");
+    expect(result).toContain('reason: "use NewUser instead"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("handles escaped triple quotes inside block strings", () => {
+    const sdl = `"""
+This block string contains an escaped \\""" triple quote and an email: support@acme.com
+"""
+type Query { help: String @shareable }`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("support@acme.com");
+    expect(result).toContain('\\"""');
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
 });
 
 describe("ensureFederationDirectives", () => {

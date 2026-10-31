@@ -16,7 +16,10 @@ export type DirectiveTier = "spec" | "federation" | "custom" | "draft";
  * with a list of directive names to exclude.
  */
 export type DirectiveFilterMode =
-  "ALL" | "VIEWER_FRIENDLY" | "EXCLUDE_DRAFT" | { CUSTOM: string[] };
+  | "ALL"
+  | "VIEWER_FRIENDLY"
+  | "EXCLUDE_DRAFT"
+  | { CUSTOM: string[] };
 
 /** Classify a directive by its tier. */
 export function classifyDirective(name: string): DirectiveTier {
@@ -116,7 +119,8 @@ type ScannerState =
   | "normal"
   | "singleQuotedString"
   | "doubleQuotedString"
-  | "blockString";
+  | "blockString"
+  | "comment";
 
 function trimCurrentLineEnd(value: string): string {
   return value.replace(/[^\S\n]+$/, "");
@@ -157,14 +161,41 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
   for (let i = 0; i < input.length; i++) {
     const ch = input[i];
 
-    if (state === "blockString") {
-      if (ch === '"' && input.startsWith('"""', i)) {
-        append('"""');
-        i += 2;
+    if (state === "comment") {
+      if (ch === "\n") {
         state = "normal";
+        if (inDirective) {
+          if (parenDepth === 0) {
+            finishDirective();
+            result = trimCurrentLineEnd(result) + ch;
+          } else {
+            directiveBuffer += ch;
+          }
+        } else {
+          result = trimCurrentLineEnd(result) + ch;
+        }
       } else {
         append(ch);
       }
+      continue;
+    }
+
+    if (state === "blockString") {
+      if (ch === '"' && input.startsWith('"""', i)) {
+        let backslashes = 0;
+        let k = i - 1;
+        while (k >= 0 && input[k] === "\\") {
+          backslashes++;
+          k--;
+        }
+        if (backslashes % 2 === 0) {
+          append('"""');
+          i += 2;
+          state = "normal";
+          continue;
+        }
+      }
+      append(ch);
       continue;
     }
 
@@ -185,13 +216,25 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
 
     if (ch === "\n") {
       if (inDirective) {
-        finishDirective();
+        if (parenDepth === 0) {
+          finishDirective();
+          result = trimCurrentLineEnd(result) + ch;
+        } else {
+          directiveBuffer += ch;
+        }
+      } else {
+        result = trimCurrentLineEnd(result) + ch;
       }
-      result = trimCurrentLineEnd(result) + ch;
       continue;
     }
 
-    if (ch === '"' && input.startsWith('"""', i)) {
+    if (ch === "#") {
+      if (inDirective && parenDepth === 0) {
+        finishDirective();
+      }
+      append(ch);
+      state = "comment";
+    } else if (ch === '"' && input.startsWith('"""', i)) {
       append('"""');
       i += 2;
       state = "blockString";
@@ -229,7 +272,9 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
     finishDirective();
   }
 
-  return state === "normal" ? trimCurrentLineEnd(result) : result;
+  return state === "normal" || state === "comment"
+    ? trimCurrentLineEnd(result)
+    : result;
 }
 
 /** Filter directive tokens from a single line of SDL output. */
