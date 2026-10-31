@@ -16,10 +16,7 @@ export type DirectiveTier = "spec" | "federation" | "custom" | "draft";
  * with a list of directive names to exclude.
  */
 export type DirectiveFilterMode =
-  | "ALL"
-  | "VIEWER_FRIENDLY"
-  | "EXCLUDE_DRAFT"
-  | { CUSTOM: string[] };
+  "ALL" | "VIEWER_FRIENDLY" | "EXCLUDE_DRAFT" | { CUSTOM: string[] };
 
 /** Classify a directive by its tier. */
 export function classifyDirective(name: string): DirectiveTier {
@@ -122,8 +119,27 @@ type ScannerState =
   | "blockString"
   | "comment";
 
-function trimCurrentLineEnd(value: string): string {
-  return value.replace(/[^\S\n]+$/, "");
+/** Matches a single whitespace character, newline included. */
+const WHITESPACE_CHAR = /\s/;
+
+/**
+ * Index at which the trailing run of whitespace (excluding a newline) in
+ * `text` begins; `text.length` when there is none.
+ *
+ * Deliberately a backwards scan rather than `/[^\S\n]+$/`: the regex form is a
+ * polynomial-ReDoS risk on untrusted input, which is why d25e217 replaced the
+ * earlier `/\s+$/` with `trimEnd()`.
+ */
+function trailingWhitespaceStart(text: string): number {
+  let end = text.length;
+  while (end > 0) {
+    const ch = text[end - 1];
+    if (ch === "\n" || !WHITESPACE_CHAR.test(ch)) {
+      break;
+    }
+    end--;
+  }
+  return end;
 }
 
 function filterDirectives(input: string, mode: DirectiveFilterMode): string {
@@ -131,18 +147,45 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
     return input;
   }
 
-  let result = "";
+  // Output is assembled as chunks so that dropping a line's trailing
+  // whitespace stays O(1) amortized; re-trimming a growing string per line
+  // made whole-SDL filtering quadratic.
+  const chunks: string[] = [];
+  let pendingWhitespace = "";
   let state: ScannerState = "normal";
   let escaped = false;
   let inDirective = false;
   let directiveBuffer = "";
   let parenDepth = 0;
 
+  const push = (text: string) => {
+    if (text.length === 0) {
+      return;
+    }
+    const cut = trailingWhitespaceStart(text);
+    if (cut > 0) {
+      if (pendingWhitespace.length > 0) {
+        chunks.push(pendingWhitespace);
+        pendingWhitespace = "";
+      }
+      chunks.push(cut === text.length ? text : text.slice(0, cut));
+    }
+    if (cut < text.length) {
+      pendingWhitespace += text.slice(cut);
+    }
+  };
+
+  /** Emit a newline, discarding the trailing whitespace buffered for the line. */
+  const pushNewline = () => {
+    pendingWhitespace = "";
+    chunks.push("\n");
+  };
+
   const append = (text: string) => {
     if (inDirective) {
       directiveBuffer += text;
     } else {
-      result += text;
+      push(text);
     }
   };
 
@@ -151,7 +194,7 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
       directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
       directiveBuffer;
     if (shouldIncludeDirective(name, mode)) {
-      result += directiveBuffer;
+      push(directiveBuffer);
     }
     inDirective = false;
     directiveBuffer = "";
@@ -167,12 +210,12 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
         if (inDirective) {
           if (parenDepth === 0) {
             finishDirective();
-            result = trimCurrentLineEnd(result) + ch;
+            pushNewline();
           } else {
             directiveBuffer += ch;
           }
         } else {
-          result = trimCurrentLineEnd(result) + ch;
+          pushNewline();
         }
       } else {
         append(ch);
@@ -218,12 +261,12 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
       if (inDirective) {
         if (parenDepth === 0) {
           finishDirective();
-          result = trimCurrentLineEnd(result) + ch;
+          pushNewline();
         } else {
           directiveBuffer += ch;
         }
       } else {
-        result = trimCurrentLineEnd(result) + ch;
+        pushNewline();
       }
       continue;
     }
@@ -254,17 +297,17 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
         if (parenDepth === 0) {
           finishDirective();
         }
-      } else if (parenDepth === 0 && /\s/.test(ch)) {
+      } else if (parenDepth === 0 && WHITESPACE_CHAR.test(ch)) {
         const name = directiveBuffer.replace(/^@/, "").trim();
         if (shouldIncludeDirective(name, mode)) {
-          result += directiveBuffer;
+          push(directiveBuffer);
         }
-        result += ch;
         inDirective = false;
         directiveBuffer = "";
+        push(ch);
       }
     } else {
-      result += ch;
+      push(ch);
     }
   }
 
@@ -272,9 +315,14 @@ function filterDirectives(input: string, mode: DirectiveFilterMode): string {
     finishDirective();
   }
 
-  return state === "normal" || state === "comment"
-    ? trimCurrentLineEnd(result)
-    : result;
+  if (state === "normal" || state === "comment") {
+    pendingWhitespace = "";
+  } else if (pendingWhitespace.length > 0) {
+    chunks.push(pendingWhitespace);
+    pendingWhitespace = "";
+  }
+
+  return chunks.join("");
 }
 
 /** Filter directive tokens from a single line of SDL output. */
