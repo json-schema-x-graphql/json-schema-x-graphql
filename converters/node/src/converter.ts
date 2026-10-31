@@ -905,6 +905,23 @@ function convertField(
 
 // --- Type inference & $ref resolution ------------------------------------------
 
+/**
+ * Register and return the `JSON` fallback scalar.
+ *
+ * Used wherever a JSON Schema has no faithful GraphQL equivalent (combinators,
+ * depth overflow, untyped arrays and objects). The name is recorded in
+ * `usedScalars` so a matching `scalar JSON` declaration is emitted alongside it:
+ * referencing the type without declaring it produces invalid GraphQL
+ * (`Unknown type "JSON"`) and round-trips back through GraphQL → JSON Schema as
+ * a dangling `#/definitions/JSON` reference.
+ *
+ * Mirrors `json_scalar` in `converters/rust/src/json_to_graphql.rs`.
+ */
+function jsonScalar(context: ConversionContext): string {
+  context.usedScalars.add("JSON");
+  return "JSON";
+}
+
 function inferGraphQLType(
   schema: JsonSchema,
   isRequired: boolean,
@@ -914,7 +931,8 @@ function inferGraphQLType(
 ): string {
   const { options } = context;
   if (depth > options.maxDepth) {
-    return isRequired ? "JSON!" : "JSON";
+    const json = jsonScalar(context);
+    return isRequired ? `${json}!` : json;
   }
 
   // Check for field-level type override first, then type-level
@@ -961,7 +979,7 @@ function inferGraphQLType(
       const collapsedSchema = { ...schema, type: nonNullTypes[0] };
       return inferGraphQLType(collapsedSchema, false, context, depth, nameHint);
     }
-    return finalizeType("JSON", isRequired);
+    return finalizeType(jsonScalar(context), isRequired);
   }
 
   if (
@@ -986,7 +1004,7 @@ function inferGraphQLType(
   }
 
   if (schema.oneOf || schema.anyOf || schema.allOf) {
-    return finalizeType("JSON", isRequired);
+    return finalizeType(jsonScalar(context), isRequired);
   }
 
   if (schema.$ref) {
@@ -1012,7 +1030,7 @@ function inferGraphQLType(
     case "boolean":
       return finalizeType("Boolean", isRequired);
     case "null":
-      return finalizeType("JSON", isRequired);
+      return finalizeType(jsonScalar(context), isRequired);
     case "array": {
       const items = schema.items ?? {};
       // Check for explicit list item nullability
@@ -1051,7 +1069,7 @@ function inferGraphQLType(
         !schema.anyOf &&
         !schema.allOf;
       if (shouldInline) {
-        return finalizeType("JSON", isRequired);
+        return finalizeType(jsonScalar(context), isRequired);
       }
 
       let typeName = getTypeName(schema, context, fallback);
@@ -1070,7 +1088,7 @@ function inferGraphQLType(
         convertTypeDefinition(schema, typeName, context);
         return finalizeType(typeName, isRequired);
       }
-      return finalizeType("JSON", isRequired);
+      return finalizeType(jsonScalar(context), isRequired);
     }
     default:
       return finalizeType("String", isRequired);

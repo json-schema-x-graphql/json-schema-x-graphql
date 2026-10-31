@@ -1282,6 +1282,19 @@ fn convert_field(
     Ok(output)
 }
 
+/// Register and return the `JSON` fallback scalar.
+///
+/// Used wherever a JSON Schema has no faithful GraphQL equivalent (combinators,
+/// tuple/boolean schemas, untyped arrays and objects, depth overflow). The name
+/// is recorded in `used_scalars` so a matching `scalar JSON` declaration is
+/// emitted alongside it: referencing the type without declaring it produces
+/// invalid GraphQL (`Unknown type "JSON"`) and round-trips back through
+/// GraphQL → JSON Schema as a dangling `#/definitions/JSON` reference.
+fn json_scalar(context: &mut ConversionContext) -> String {
+    context.used_scalars.insert("JSON".to_string());
+    "JSON".to_string()
+}
+
 fn infer_graphql_type(
     schema: &JsonValue,
     is_required: bool,
@@ -1290,10 +1303,11 @@ fn infer_graphql_type(
 ) -> Result<String> {
     // Be lenient with tuple/boolean schemas: treat arrays/booleans as generic JSON
     if schema.is_boolean() {
+        let json = json_scalar(context);
         return Ok(if is_required {
-            "JSON!".to_string()
+            format!("{json}!")
         } else {
-            "JSON".to_string()
+            json
         });
     }
 
@@ -1308,10 +1322,11 @@ fn infer_graphql_type(
                 t
             });
         }
+        let json = json_scalar(context);
         return Ok(if is_required {
-            "JSON!".to_string()
+            format!("{json}!")
         } else {
-            "JSON".to_string()
+            json
         });
     }
 
@@ -1545,7 +1560,7 @@ fn infer_graphql_type(
     }
 
     if obj.get("oneOf").is_some() || obj.get("anyOf").is_some() || obj.get("allOf").is_some() {
-        return Ok(finalize("JSON".to_string()));
+        return Ok(finalize(json_scalar(context)));
     }
 
     // 4. Type Mapping
@@ -1571,7 +1586,7 @@ fn infer_graphql_type(
                 let collapsed_schema = serde_json::Value::Object(collapsed_obj);
                 return infer_graphql_type(&collapsed_schema, false, context, name_hint);
             }
-            return Ok(finalize("JSON".to_string()));
+            return Ok(finalize(json_scalar(context)));
         }
 
         if let Some(first) = type_array.first().and_then(|v| v.as_str()) {
@@ -1584,7 +1599,7 @@ fn infer_graphql_type(
         Some("integer") => "Int".to_string(),
         Some("number") => "Float".to_string(),
         Some("boolean") => "Boolean".to_string(),
-        Some("null") => "JSON".to_string(),
+        Some("null") => json_scalar(context),
         Some("array") => {
             if let Some(items) = obj.get("items") {
                 // Fix 6: Check for x-graphql-field-list-item-non-null
@@ -1607,7 +1622,7 @@ fn infer_graphql_type(
                 let item_type = infer_graphql_type(items, item_is_required, context, name_hint)?;
                 format!("[{}]", item_type)
             } else {
-                "JSON".to_string()
+                json_scalar(context)
             }
         }
         Some("object") => {
@@ -1644,7 +1659,7 @@ fn infer_graphql_type(
 
                 unique_name
             } else {
-                "JSON".to_string()
+                json_scalar(context)
             }
         }
         _ => "String".to_string(),
