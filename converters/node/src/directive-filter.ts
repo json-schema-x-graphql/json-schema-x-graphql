@@ -112,25 +112,182 @@ export function filterDirectiveList(
   });
 }
 
-/** Filter directive tokens from a single line of SDL output. */
-export function filterLineDirectives(
-  line: string,
-  mode: DirectiveFilterMode,
-): string {
+type ScannerState =
+  | "normal"
+  | "singleQuotedString"
+  | "doubleQuotedString"
+  | "blockString"
+  | "comment";
+
+/** Matches a single whitespace character, newline included. */
+const WHITESPACE_CHAR = /\s/;
+
+/**
+ * Index at which the trailing run of whitespace (excluding a newline) in
+ * `text` begins; `text.length` when there is none.
+ *
+ * Deliberately a backwards scan rather than `/[^\S\n]+$/`: the regex form is a
+ * polynomial-ReDoS risk on untrusted input, which is why d25e217 replaced the
+ * earlier `/\s+$/` with `trimEnd()`.
+ */
+function trailingWhitespaceStart(text: string): number {
+  let end = text.length;
+  while (end > 0) {
+    const ch = text[end - 1];
+    if (ch === "\n" || !WHITESPACE_CHAR.test(ch)) {
+      break;
+    }
+    end--;
+  }
+  return end;
+}
+
+function filterDirectives(input: string, mode: DirectiveFilterMode): string {
   if (mode === "ALL") {
-    return line;
+    return input;
   }
 
-  let result = "";
+  // Output is assembled as chunks so that dropping a line's trailing
+  // whitespace stays O(1) amortized; re-trimming a growing string per line
+  // made whole-SDL filtering quadratic.
+  const chunks: string[] = [];
+  let pendingWhitespace = "";
+  let state: ScannerState = "normal";
+  let escaped = false;
   let inDirective = false;
   let directiveBuffer = "";
   let parenDepth = 0;
 
-  for (const ch of line) {
-    if (ch === "@" && !inDirective) {
+  const push = (text: string) => {
+    if (text.length === 0) {
+      return;
+    }
+    const cut = trailingWhitespaceStart(text);
+    if (cut > 0) {
+      if (pendingWhitespace.length > 0) {
+        chunks.push(pendingWhitespace);
+        pendingWhitespace = "";
+      }
+      chunks.push(cut === text.length ? text : text.slice(0, cut));
+    }
+    if (cut < text.length) {
+      pendingWhitespace += text.slice(cut);
+    }
+  };
+
+  /** Emit a newline, discarding the trailing whitespace buffered for the line. */
+  const pushNewline = () => {
+    pendingWhitespace = "";
+    chunks.push("\n");
+  };
+
+  const append = (text: string) => {
+    if (inDirective) {
+      directiveBuffer += text;
+    } else {
+      push(text);
+    }
+  };
+
+  const finishDirective = () => {
+    const name =
+      directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
+      directiveBuffer;
+    if (shouldIncludeDirective(name, mode)) {
+      push(directiveBuffer);
+    }
+    inDirective = false;
+    directiveBuffer = "";
+    parenDepth = 0;
+  };
+
+  for (let i = 0; i < input.length; i++) {
+    const ch = input[i];
+
+    if (state === "comment") {
+      if (ch === "\n") {
+        state = "normal";
+        if (inDirective) {
+          if (parenDepth === 0) {
+            finishDirective();
+            pushNewline();
+          } else {
+            directiveBuffer += ch;
+          }
+        } else {
+          pushNewline();
+        }
+      } else {
+        append(ch);
+      }
+      continue;
+    }
+
+    if (state === "blockString") {
+      if (ch === '"' && input.startsWith('"""', i)) {
+        let backslashes = 0;
+        let k = i - 1;
+        while (k >= 0 && input[k] === "\\") {
+          backslashes++;
+          k--;
+        }
+        if (backslashes % 2 === 0) {
+          append('"""');
+          i += 2;
+          state = "normal";
+          continue;
+        }
+      }
+      append(ch);
+      continue;
+    }
+
+    if (state !== "normal") {
+      append(ch);
+      if (escaped) {
+        escaped = false;
+      } else if (ch === "\\") {
+        escaped = true;
+      } else if (
+        (state === "singleQuotedString" && ch === "'") ||
+        (state === "doubleQuotedString" && ch === '"')
+      ) {
+        state = "normal";
+      }
+      continue;
+    }
+
+    if (ch === "\n") {
+      if (inDirective) {
+        if (parenDepth === 0) {
+          finishDirective();
+          pushNewline();
+        } else {
+          directiveBuffer += ch;
+        }
+      } else {
+        pushNewline();
+      }
+      continue;
+    }
+
+    if (ch === "#") {
+      if (inDirective && parenDepth === 0) {
+        finishDirective();
+      }
+      append(ch);
+      state = "comment";
+    } else if (ch === '"' && input.startsWith('"""', i)) {
+      append('"""');
+      i += 2;
+      state = "blockString";
+    } else if (ch === '"' || ch === "'") {
+      append(ch);
+      state = ch === '"' ? "doubleQuotedString" : "singleQuotedString";
+      escaped = false;
+    } else if (ch === "@" && !inDirective) {
       inDirective = true;
-      directiveBuffer = "";
-      directiveBuffer += ch;
+      directiveBuffer = ch;
     } else if (inDirective) {
       directiveBuffer += ch;
       if (ch === "(") {
@@ -138,39 +295,42 @@ export function filterLineDirectives(
       } else if (ch === ")") {
         parenDepth--;
         if (parenDepth === 0) {
-          const name =
-            directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
-            directiveBuffer;
-          if (shouldIncludeDirective(name, mode)) {
-            result += directiveBuffer;
-          }
-          inDirective = false;
-          directiveBuffer = "";
+          finishDirective();
         }
-      } else if (parenDepth === 0 && /\s/.test(ch)) {
+      } else if (parenDepth === 0 && WHITESPACE_CHAR.test(ch)) {
         const name = directiveBuffer.replace(/^@/, "").trim();
         if (shouldIncludeDirective(name, mode)) {
-          result += directiveBuffer;
+          push(directiveBuffer);
         }
-        result += ch;
         inDirective = false;
         directiveBuffer = "";
+        push(ch);
       }
     } else {
-      result += ch;
+      push(ch);
     }
   }
 
   if (inDirective && directiveBuffer) {
-    const name =
-      directiveBuffer.replace(/^@/, "").split(/[(\s]/).shift() ??
-      directiveBuffer;
-    if (shouldIncludeDirective(name, mode)) {
-      result += directiveBuffer;
-    }
+    finishDirective();
   }
 
-  return result.trimEnd();
+  if (state === "normal" || state === "comment") {
+    pendingWhitespace = "";
+  } else if (pendingWhitespace.length > 0) {
+    chunks.push(pendingWhitespace);
+    pendingWhitespace = "";
+  }
+
+  return chunks.join("");
+}
+
+/** Filter directive tokens from a single line of SDL output. */
+export function filterLineDirectives(
+  line: string,
+  mode: DirectiveFilterMode,
+): string {
+  return filterDirectives(line, mode);
 }
 
 /** Apply directive filtering to an entire SDL string. */
@@ -178,13 +338,7 @@ export function filterSdlDirectives(
   sdl: string,
   mode: DirectiveFilterMode,
 ): string {
-  if (mode === "ALL") {
-    return sdl;
-  }
-  return sdl
-    .split("\n")
-    .map((line) => filterLineDirectives(line, mode))
-    .join("\n");
+  return filterDirectives(sdl, mode);
 }
 
 export const FEDERATION_VERSION = "2.9";
