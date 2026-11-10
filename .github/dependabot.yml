@@ -10,6 +10,13 @@ updates:
       workspace-npm-dependencies:
         patterns:
           - "*"
+    ignore:
+      # plugin-react 6.x requires Vite 7, but subgraph-composer builds on Vite 6
+      # (root override `vite: ^6.4.3`): 6.2.1 fails `vite build` with
+      # ERR_PACKAGE_PATH_NOT_EXPORTED for `vite/internal` (seen in #356).
+      # Remove this rule once the Vite 7 migration lands.
+      - dependency-name: "@vitejs/plugin-react"
+        update-types: ["version-update:semver-major"]
 
   # Standalone Frontend dashboard (not in workspace)
   - package-ecosystem: "npm"
@@ -33,9 +40,13 @@ updates:
         patterns:
           - "*"
 
-  # Rust Cargo ecosystem
+  # Rust Cargo ecosystem. The workspace root is the repository root (virtual
+  # manifest with member converters/rust) and Cargo.lock lives there, so
+  # Dependabot must run from "/" to keep the lockfile in sync with
+  # converters/rust/Cargo.toml (see #350, which merged a Cargo.toml bump
+  # without a Cargo.lock update).
   - package-ecosystem: "cargo"
-    directory: "/converters/rust"
+    directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5
