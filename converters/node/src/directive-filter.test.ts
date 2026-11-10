@@ -2,6 +2,7 @@
  * Tests for the Directive Filter Framework.
  */
 
+import { parse } from "graphql";
 import {
   DirectiveFilterMode,
   classifyDirective,
@@ -107,6 +108,158 @@ describe("filterSdlDirectives", () => {
     const sdl = 'type User @key(fields: "id") { id: ID! }';
     expect(filterSdlDirectives(sdl, "ALL")).toBe(sdl);
   });
+
+  it("preserves email addresses in description strings", () => {
+    const description = '"Contact support@acme.com for help"';
+    const sdl = `type Query { ${description} help: String }`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain(description);
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves email addresses in argument defaults and returns parseable SDL", () => {
+    const sdl = 'type Query { email(notify: String = "a@b.com"): Boolean }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain('notify: String = "a@b.com"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("ignores parentheses inside directive string arguments", () => {
+    const sdl =
+      'type User @key(fields: "value(with") @deprecated(reason: "value(with)parens") { id: ID }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).not.toContain("@key");
+    expect(result).toContain('@deprecated(reason: "value(with)parens")');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves at signs in multiline block-string descriptions", () => {
+    const sdl = `type Query {
+  """
+  Contact support@acme.com for help
+  or mention @admins
+  """
+  help: String @shareable
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("Contact support@acme.com for help");
+    expect(result).toContain("or mention @admins");
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("does not treat at signs after escaped quotes as directives", () => {
+    const sdl = 'type Query { field(arg: String = "a\\"@b"): String }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain('"a\\"@b"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("filters directives after strings containing at signs", () => {
+    const sdl =
+      'type Query { "Contact support@acme.com" help: String @shareable @deprecated }';
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("Contact support@acme.com");
+    expect(result).not.toContain("@shareable");
+    expect(result).toContain("@deprecated");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves at signs inside SDL comments", () => {
+    const sdl = `# Contact us at support@example.com
+type Query {
+  # Mentions @admins or @oncall
+  id: ID @shareable
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("# Contact us at support@example.com");
+    expect(result).toContain("# Mentions @admins or @oncall");
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("handles multiline directive arguments without corrupting SDL", () => {
+    const sdl = `type User @key(
+  fields: "id"
+) {
+  id: ID!
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).not.toContain("@key");
+    expect(result).not.toContain('fields: "id"');
+    expect(result).toContain("type User");
+    expect(result).toContain("id: ID!");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("preserves multiline retained directive arguments", () => {
+    const sdl = `type User @deprecated(
+  reason: "use NewUser instead"
+) {
+  id: ID!
+}`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("@deprecated");
+    expect(result).toContain('reason: "use NewUser instead"');
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  it("handles escaped triple quotes inside block strings", () => {
+    const sdl = `"""
+This block string contains an escaped \\""" triple quote and an email: support@acme.com
+"""
+type Query { help: String @shareable }`;
+
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+
+    expect(result).toContain("support@acme.com");
+    expect(result).toContain('\\"""');
+    expect(result).not.toContain("@shareable");
+    expect(() => parse(result)).not.toThrow();
+  });
+
+  // Guards the output assembly staying linear in the SDL size. Trimming each
+  // line's trailing whitespace by re-scanning (or re-slicing) the whole buffer
+  // made this quadratic: ~11s for the input below, versus ~0.1s.
+  it("stays linear on large SDL while still trimming trailing whitespace", () => {
+    const lines = 12_000;
+    const sdl = Array.from(
+      { length: lines },
+      (_, i) =>
+        `  field${i}: String @deprecated(reason: "old") @key(fields: "id")   `,
+    ).join("\n");
+
+    const started = performance.now();
+    const result = filterSdlDirectives(sdl, "VIEWER_FRIENDLY");
+    const elapsed = performance.now() - started;
+
+    const outputLines = result.split("\n");
+    expect(outputLines).toHaveLength(lines);
+    expect(outputLines[0]).toBe('  field0: String @deprecated(reason: "old")');
+    expect(outputLines[lines - 1]).toBe(
+      `  field${lines - 1}: String @deprecated(reason: "old")`,
+    );
+    expect(result).not.toContain("@key");
+    expect(elapsed).toBeLessThan(5_000);
+  }, 20_000);
 });
 
 describe("ensureFederationDirectives", () => {
