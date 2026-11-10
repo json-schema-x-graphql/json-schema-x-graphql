@@ -34,8 +34,9 @@
 import { spawnSync } from "child_process";
 import { existsSync, mkdirSync } from "fs";
 import fs from "fs/promises";
-import globPkg from "glob";
-const globSync = globPkg.sync;
+// glob v14 dropped the default export; `globSync` is the supported named
+// equivalent of the removed `glob.sync`.
+import { globSync } from "glob";
 import { parse, buildSchema, graphql, getIntrospectionQuery, visit, Kind } from "graphql";
 import path from "path";
 

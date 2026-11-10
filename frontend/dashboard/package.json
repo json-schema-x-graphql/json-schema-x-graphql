@@ -174,7 +174,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "glob": "^13.0.6",
+    "glob": "^14.0.2",
     "jest": "^30.5.2",
     "linkinator": "^8.1.0",
     "null-loader": "^4.0.1",
