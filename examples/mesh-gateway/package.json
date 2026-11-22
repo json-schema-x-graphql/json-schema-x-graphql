@@ -4,13 +4,13 @@
   "description": "Gateway Stitching & Federated REST Emulation using json-schema-x-graphql",
   "main": "gateway.js",
   "dependencies": {
-    "@apollo/server": "^5.5.0",
-    "@apollo/subgraph": "^2.15.1",
+    "@apollo/server": "^5.5.2",
+    "@apollo/subgraph": "^2.17.0",
     "@apollo/gateway": "^2.14.4",
-    "axios": "^1.21.0",
+    "axios": "^1.21.1",
     "graphql": "^17.1.0",
     "graphql-tag": "^2.12.7",
-    "yaml": "^2.3.4",
+    "yaml": "^2.9.1",
     "@json-schema-x-graphql/core": "file:../../converters/node"
   },
   "packageManager": "pnpm@11.5.2",
