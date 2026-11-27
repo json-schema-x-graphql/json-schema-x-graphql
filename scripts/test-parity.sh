@@ -31,14 +31,31 @@ FAILED_TESTS=0
 TMP_DIR=$(mktemp -d)
 trap "rm -rf $TMP_DIR" EXIT
 
-echo -e "${BLUE}╔════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║  JSON Schema x GraphQL - Converter Parity Test        ║${NC}"
-echo -e "${BLUE}╚════════════════════════════════════════════════════════╝${NC}"
-echo ""
+# Helper function for Node.js JSON -> SDL conversion
+node_json_to_sdl() {
+    local input_file="$1"
+    local output_file="$2"
+    node --input-type=module -e "
+        import { readFileSync, writeFileSync } from 'fs';
+        import { jsonSchemaToGraphQL } from './converters/node/dist/converter.js';
+        const jsonSchema = readFileSync('$input_file', 'utf-8');
+        const result = jsonSchemaToGraphQL(jsonSchema, { validate: false, includeDescriptions: true, preserveFieldOrder: true, includeFederationDirectives: true, federationVersion: 'V2', namingConvention: 'GRAPHQL_IDIOMATIC', idStrategy: 'COMMON_PATTERNS', outputFormat: 'SDL', failOnWarning: false });
+        writeFileSync('$output_file', result, 'utf-8');
+    " 2>&1
+}
 
-#############################################################################
-# Helper Functions
-#############################################################################
+# Helper function for Node.js SDL -> JSON conversion
+node_sdl_to_json() {
+    local input_file="$1"
+    local output_file="$2"
+    node --input-type=module -e "
+        import { readFileSync, writeFileSync } from 'fs';
+        import { graphqlToJsonSchema } from './converters/node/dist/converter.js';
+        const sdl = readFileSync('$input_file', 'utf-8');
+        const result = graphqlToJsonSchema(sdl, { validate: false, includeDescriptions: true, preserveFieldOrder: true, includeFederationDirectives: true, federationVersion: 'V2', namingConvention: 'GRAPHQL_IDIOMATIC', idStrategy: 'COMMON_PATTERNS', outputFormat: 'SDL', failOnWarning: false });
+        writeFileSync('$output_file', result, 'utf-8');
+    " 2>&1
+}
 
 log_info() {
     echo -e "${BLUE}ℹ${NC} $1"
@@ -89,6 +106,11 @@ compare_files() {
 #############################################################################
 # Setup
 #############################################################################
+
+echo -e "${BLUE}╔════════════════════════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║  JSON Schema x GraphQL - Converter Parity Test        ║${NC}"
+echo -e "${BLUE}╚════════════════════════════════════════════════════════╝${NC}"
+echo ""
 
 log_info "Setting up test environment..."
 
@@ -173,7 +195,7 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
     # Test 1: JSON -> SDL (Rust)
     log_info "  Converting JSON -> SDL with Rust..."
     RUST_SDL="$TMP_DIR/${BASENAME}-rust.graphql"
-    if cargo run --manifest-path converters/rust/Cargo.toml --release --example convert_json_to_sdl -- "$TEST_FILE" > "$RUST_SDL" 2>&1; then
+    if cargo run --manifest-path converters/rust/Cargo.toml --release --example json_to_sdl -- "$TEST_FILE" > "$RUST_SDL" 2>/dev/null; then
         normalize_sdl "$RUST_SDL"
         log_success "  Rust conversion completed"
     else
@@ -185,7 +207,7 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
     # Test 2: JSON -> SDL (Node.js)
     log_info "  Converting JSON -> SDL with Node.js..."
     NODE_SDL="$TMP_DIR/${BASENAME}-node.graphql"
-    if node converters/node/dist/examples/convert-json-to-sdl.js "$TEST_FILE" > "$NODE_SDL" 2>&1; then
+    if node_json_to_sdl "$TEST_FILE" "$NODE_SDL"; then
         normalize_sdl "$NODE_SDL"
         log_success "  Node.js conversion completed"
     else
@@ -209,7 +231,7 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
         # Test 4: SDL -> JSON (Rust)
         log_info "    Converting SDL -> JSON with Rust..."
         RUST_JSON="$TMP_DIR/${BASENAME}-rust.json"
-        if cargo run --manifest-path converters/rust/Cargo.toml --release --example convert_sdl_to_json -- "$GRAPHQL_FILE" > "$RUST_JSON" 2>&1; then
+        if cargo run --manifest-path converters/rust/Cargo.toml --release --example sdl_to_json -- "$GRAPHQL_FILE" > "$RUST_JSON" 2>/dev/null; then
             log_success "    Rust SDL -> JSON completed"
         else
             log_error "    Rust SDL -> JSON failed"
@@ -220,7 +242,7 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
         # Test 5: SDL -> JSON (Node.js)
         log_info "    Converting SDL -> JSON with Node.js..."
         NODE_JSON="$TMP_DIR/${BASENAME}-node.json"
-        if node converters/node/dist/examples/convert-sdl-to-json.js "$GRAPHQL_FILE" > "$NODE_JSON" 2>&1; then
+        if node_sdl_to_json "$GRAPHQL_FILE" "$NODE_JSON"; then
             log_success "    Node.js SDL -> JSON completed"
         else
             log_error "    Node.js SDL -> JSON failed"
@@ -235,12 +257,12 @@ for TEST_FILE in "${TEST_FILES[@]}"; do
 
         # Test 7: Validate round-trip (JSON -> SDL -> JSON)
         RUST_ROUNDTRIP_JSON="$TMP_DIR/${BASENAME}-rust-roundtrip.json"
-        if cargo run --manifest-path converters/rust/Cargo.toml --release --example convert_sdl_to_json -- "$RUST_SDL" > "$RUST_ROUNDTRIP_JSON" 2>&1; then
+        if cargo run --manifest-path converters/rust/Cargo.toml --release --example sdl_to_json -- "$RUST_SDL" > "$RUST_ROUNDTRIP_JSON" 2>/dev/null; then
             compare_files "$TEST_FILE" "$RUST_ROUNDTRIP_JSON" "    Round-trip fidelity (Rust): JSON -> SDL -> JSON"
         fi
 
         NODE_ROUNDTRIP_JSON="$TMP_DIR/${BASENAME}-node-roundtrip.json"
-        if node converters/node/dist/examples/convert-sdl-to-json.js "$NODE_SDL" > "$NODE_ROUNDTRIP_JSON" 2>&1; then
+        if node_sdl_to_json "$NODE_SDL" "$NODE_ROUNDTRIP_JSON"; then
             compare_files "$TEST_FILE" "$NODE_ROUNDTRIP_JSON" "    Round-trip fidelity (Node): JSON -> SDL -> JSON"
         fi
 
