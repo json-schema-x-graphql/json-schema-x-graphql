@@ -17,3 +17,6 @@ frontend/dashboard/scripts/
 frontend/dashboard/src/data/
 **/salvaged/**
 website/next-env.d.ts
+servers/mockforge/
+test-output/
+pnpm-lock.yaml
