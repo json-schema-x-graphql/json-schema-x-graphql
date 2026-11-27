@@ -514,7 +514,7 @@ importers:
         version: 17.1.0
       graphql-editor:
         specifier: ^7.3.1
-        version: 7.3.1(@emotion/css@11.13.5)(@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/node@26.6.6)(@types/react@19.2.17)(css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))(date-fns@3.6.0)(file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))(graphql@17.1.0)(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))
+        version: 7.3.1(@emotion/css@11.13.5)(@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/node@26.6.6)(@types/react@19.2.17)(css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))(date-fns@3.6.0)(file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))(graphql@17.1.0)(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))
       graphql-voyager:
         specifier: ^2.1.0
         version: 2.1.0(@types/react@18.3.31)(graphql@17.1.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -5088,6 +5088,11 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  baseline-browser-mapping@2.11.38:
+    resolution: {integrity: sha512-rMgy5YW7x28SMfXHLlVZDBqlWzYZ0x2rVR/6FWrNBF0chjigARK1H6nM0hKA1Um3kPOlkQFVtjJs00d2N1ezuw==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
   better-react-mathjax@2.3.0:
     resolution: {integrity: sha512-K0ceQC+jQmB+NLDogO5HCpqmYf18AU2FxDbLdduYgkHYWZApFggkHE4dIaXCV1NqeoscESYXXo1GSkY6fA295w==}
     peerDependencies:
@@ -5174,6 +5179,9 @@ packages:
 
   caniuse-lite@1.0.30001823:
     resolution: {integrity: sha512-TQ5s/djDjNk1axreUW+4rULH+BmdCMLiJkhaXnO5wqivG7tITkSUj4ItIdzqdZHKaXcHAV8dhH3JxOM7/7bwqw==}
+
+  caniuse-lite@1.0.30001826:
+    resolution: {integrity: sha512-wTB+9tIbLro/BCXwLuNV1meHE4L9dS6dArMDwgYfNBPMYScqClHyGunhkCSDtHhe/69Xl0sHlKgBVZ+fNsYtWA==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -8443,6 +8451,10 @@ packages:
 
   postcss@8.5.32:
     resolution: {integrity: sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==}
+    engines: {node: ^10 || ^12 || >=14}
+
+  postcss@8.5.33:
+    resolution: {integrity: sha512-RVHEU9/Pp1Fnjr/MpAJsZoADukCKhfIi15OunEYiGktIkYLkPVvC1sioWolGDS7XByMTx9m/IGbro0Js13zhnQ==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -15151,6 +15163,8 @@ snapshots:
 
   baseline-browser-mapping@2.11.35: {}
 
+  baseline-browser-mapping@2.11.38: {}
+
   better-react-mathjax@2.3.0(react@19.3.1):
     dependencies:
       mathjax-full: 3.2.2
@@ -15250,6 +15264,8 @@ snapshots:
   camelcase@6.3.0: {}
 
   caniuse-lite@1.0.30001823: {}
+
+  caniuse-lite@1.0.30001826: {}
 
   ccount@2.0.1: {}
 
@@ -15475,18 +15491,18 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)):
+  css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.32)
-      postcss: 8.5.32
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.32)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.32)
-      postcss-modules-scope: 3.2.1(postcss@8.5.32)
-      postcss-modules-values: 4.0.0(postcss@8.5.32)
+      icss-utils: 5.1.0(postcss@8.5.33)
+      postcss: 8.5.33
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.33)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.33)
+      postcss-modules-scope: 3.2.1(postcss@8.5.33)
+      postcss-modules-values: 4.0.0(postcss@8.5.33)
       postcss-value-parser: 4.2.0
       semver: 7.8.6
     optionalDependencies:
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
 
   css.escape@1.5.1: {}
 
@@ -16597,11 +16613,11 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)):
+  file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
 
   file-saver@2.0.5: {}
 
@@ -16862,15 +16878,15 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  graphql-editor-worker@7.3.1(@types/node@26.6.6)(graphql@17.1.0)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))):
+  graphql-editor-worker@7.3.1(@types/node@26.6.6)(graphql@17.1.0)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))):
     dependencies:
       '@qix/elkjs-patched': 0.8.0-patch3
       d3: 7.9.0
       elkjs: 0.8.2
       graphql-js-tree: 3.0.4(graphql@17.1.0)
       graphql-language-service: 3.2.5(@types/node@26.6.6)(graphql@17.1.0)
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
-      worker-loader: 3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
+      worker-loader: 3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -16879,7 +16895,7 @@ snapshots:
       - graphql
       - utf-8-validate
 
-  graphql-editor@7.3.1(@emotion/css@11.13.5)(@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/node@26.6.6)(@types/react@19.2.17)(css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))(date-fns@3.6.0)(file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))(graphql@17.1.0)(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))):
+  graphql-editor@7.3.1(@emotion/css@11.13.5)(@monaco-editor/react@4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@types/node@26.6.6)(@types/react@19.2.17)(css-loader@7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))(date-fns@3.6.0)(file-loader@6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))(graphql@17.1.0)(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))):
     dependencies:
       '@aexol-studio/hooks': 0.2.26(react@19.3.1)
       '@aexol-studio/styling-system': 0.2.26(@emotion/css@11.13.5)(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.3.1))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.3.1))(@types/react@19.2.17)(react@19.3.1))(date-fns@3.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -16887,14 +16903,14 @@ snapshots:
       '@emotion/styled': 11.14.1(@emotion/react@11.14.0(@types/react@19.2.17)(react@19.3.1))(@types/react@19.2.17)(react@19.3.1)
       '@monaco-editor/react': 4.7.0(monaco-editor@0.55.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       color2k: 1.2.5
-      css-loader: 7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      css-loader: 7.1.4(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
       d3: 7.9.0
       diff: 5.2.2
-      file-loader: 6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      file-loader: 6.2.0(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
       file-saver: 2.0.5
       framer-motion: 10.18.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       fuzzyjs: 5.0.1
-      graphql-editor-worker: 7.3.1(@types/node@26.6.6)(graphql@17.1.0)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)))
+      graphql-editor-worker: 7.3.1(@types/node@26.6.6)(graphql@17.1.0)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))(worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)))
       graphql-js-tree: 3.0.4(graphql@17.1.0)
       graphql-language-service: 3.2.5(@types/node@26.6.6)(graphql@17.1.0)
       html-to-image: 1.11.13
@@ -16906,8 +16922,8 @@ snapshots:
       react-zoom-pan-pinch: 3.7.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       remarkable: 2.0.1
       unstated-next: 1.1.0
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
-      worker-loader: 3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
+      worker-loader: 3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
       yup: 1.7.1
     transitivePeerDependencies:
       - '@emotion/css'
@@ -17277,9 +17293,9 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  icss-utils@5.1.0(postcss@8.5.32):
+  icss-utils@5.1.0(postcss@8.5.33):
     dependencies:
-      postcss: 8.5.32
+      postcss: 8.5.33
 
   ignore@5.3.2: {}
 
@@ -18859,16 +18875,16 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minimizer-webpack-plugin@5.13.1(lightningcss@1.32.0)(postcss@8.5.32)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)):
+  minimizer-webpack-plugin@5.13.1(lightningcss@1.32.0)(postcss@8.5.33)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
-      schema-utils: 4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      schema-utils: 4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
       terser: 5.51.2
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
     optionalDependencies:
       lightningcss: 1.32.0
-      postcss: 8.5.32
+      postcss: 8.5.33
 
   minimizer-webpack-plugin@5.13.1(webpack@5.112.2):
     dependencies:
@@ -18965,9 +18981,9 @@ snapshots:
     dependencies:
       '@next/env': 16.4.3
       '@swc/helpers': 0.5.23
-      baseline-browser-mapping: 2.11.35
-      caniuse-lite: 1.0.30001823
-      postcss: 8.5.32
+      baseline-browser-mapping: 2.11.38
+      caniuse-lite: 1.0.30001826
+      postcss: 8.5.33
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
       styled-jsx: 5.1.6(@babel/core@7.29.7)(babel-plugin-macros@3.1.0)(react@19.3.1)
@@ -19395,26 +19411,26 @@ snapshots:
       tsx: 4.23.15
       yaml: 2.9.1
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.5.32):
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.33):
     dependencies:
-      postcss: 8.5.32
+      postcss: 8.5.33
 
-  postcss-modules-local-by-default@4.2.0(postcss@8.5.32):
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.33):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.32)
-      postcss: 8.5.32
+      icss-utils: 5.1.0(postcss@8.5.33)
+      postcss: 8.5.33
       postcss-selector-parser: 7.1.6
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.1(postcss@8.5.32):
+  postcss-modules-scope@3.2.1(postcss@8.5.33):
     dependencies:
-      postcss: 8.5.32
+      postcss: 8.5.33
       postcss-selector-parser: 7.1.6
 
-  postcss-modules-values@4.0.0(postcss@8.5.32):
+  postcss-modules-values@4.0.0(postcss@8.5.33):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.32)
-      postcss: 8.5.32
+      icss-utils: 5.1.0(postcss@8.5.33)
+      postcss: 8.5.33
 
   postcss-safe-parser@7.0.1(postcss@8.5.25):
     dependencies:
@@ -19444,6 +19460,12 @@ snapshots:
       source-map-js: 1.2.2
 
   postcss@8.5.32:
+    dependencies:
+      nanoid: 3.3.18
+      picocolors: 1.1.1
+      source-map-js: 1.2.2
+
+  postcss@8.5.33:
     dependencies:
       nanoid: 3.3.18
       picocolors: 1.1.1
@@ -20003,14 +20025,14 @@ snapshots:
       ajv: 6.15.0
       ajv-keywords: 3.5.2(ajv@6.15.0)
 
-  schema-utils@4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)):
+  schema-utils@4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)):
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
       ajv-keywords: 5.1.0(ajv@8.20.0)
     optionalDependencies:
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
 
   schema-utils@4.8.1(webpack@5.112.2):
     dependencies:
@@ -21026,7 +21048,7 @@ snapshots:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.7)
       picomatch: 4.0.7
-      postcss: 8.5.32
+      postcss: 8.5.33
       rollup: 4.68.0
       tinyglobby: 0.2.17
     optionalDependencies:
@@ -21156,7 +21178,7 @@ snapshots:
       - svgo
       - uglify-js
 
-  webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32):
+  webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
@@ -21170,8 +21192,8 @@ snapshots:
       events: 3.3.0
       graceful-fs: 4.2.11
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.13.1(lightningcss@1.32.0)(postcss@8.5.32)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
-      schema-utils: 4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32))
+      minimizer-webpack-plugin: 5.13.1(lightningcss@1.32.0)(postcss@8.5.33)(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
+      schema-utils: 4.8.1(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33))
       tapable: 2.3.3
       watchpack: 2.6.3
       webpack-sources: 3.6.0
@@ -21267,11 +21289,11 @@ snapshots:
 
   wordwrap@1.0.0: {}
 
-  worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.32)):
+  worker-loader@3.0.8(webpack@5.112.2(lightningcss@1.32.0)(postcss@8.5.33)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.32)
+      webpack: 5.112.2(lightningcss@1.32.0)(postcss@8.5.33)
 
   wrap-ansi@10.0.2:
     dependencies:
